@@ -54,9 +54,11 @@ GitHub Actions 的 **Deploy static preview** 是唯一部署入口。推送 `mai
 当前部署开关保持关闭：仓库 variable `CLOUDFLARE_DEPLOY_ENABLED` 应保持未设置或 `false`。用户自行配置凭据，代理不读取、抓取或请求令牌展示页，也不要求把令牌发到聊天中。准备步骤如下：
 
 1. 用户先在目标账户创建用于本项目的 `model-observatory` 占位 Worker；确认没有同名既有业务，使用平台 `workers.dev` 地址，不绑定自定义域名或连接 Git 自动构建。单 Worker 权限只能授予已存在的 Worker，`Editor` 不能创建或删除 Worker。
-2. 进入 **Manage Account → Account API Tokens → Create Token**，选择 **Specified Workers → 仅 `model-observatory` → Editor**，创建账户所属（account-owned）API token。不要选择 All Workers、其他 Worker 或 Admin，也不推荐旧版账户全局 `Workers Scripts Edit`。
+2. 进入 **Manage Account → Account API Tokens → Create Token**。在 **Permission policies** 中打开账户策略卡片的 **Edit policy**，展开当前显示 **Entire Account** 的资源范围下拉菜单，再选择 **Specified Workers → 仅 `model-observatory` → Editor**，由用户创建账户所属（account-owned）API token。`Specified Workers` 是资源范围选项，不在权限名称搜索框里。不要选择 All Workers、其他 Worker 或 Admin，也不推荐旧版账户全局 `Workers Scripts Edit`。
 3. 用户在 GitHub 创建 `cloudflare-preview` Environment，只允许 `main`；建议指定人工审核人。将令牌直接保存为该 Environment 的 `CLOUDFLARE_API_TOKEN` secret，将已核对账户 ID 保存为该 Environment 的 `CLOUDFLARE_ACCOUNT_ID` variable。令牌不得写入仓库、命令参数、聊天或日志。
 4. 配置完成后仍保持部署开关关闭。首次平台预览发布须在发布改动通过审阅并合入 `main` 后另行确认；确认后再启用仓库 variable `CLOUDFLARE_DEPLOY_ENABLED=true` 并运行现有发布入口。
+
+2026-10-16 已在实际 Account API Tokens 创建页展开上述资源菜单并确认存在 `Specified Workers`，入口不是个人 User API Tokens。若从模板进入，草稿可能同时带有“所有域名的 Workers Routes Write”和整账户多项权限；用户须移除这些宽泛策略，再检查 **Review token** 摘要只包含指定的 `model-observatory` 及其 `Editor` 权限后自行创建。不要把模板原有策略与新增的单 Worker 策略一起保留。当天复核 Worker 列表仍只有 `rproxy`、`vless`，目标占位 Worker 尚未创建，不能选择现有业务 Worker 来代替。代理此次仅展开菜单，未选择权限、提交策略或创建令牌。
 
 Cloudflare 于 [2026-09-15 发布单 Worker 权限](https://developers.cloudflare.com/changelog/post/2026-09-15-granular-worker-permissions/)。[Workers 权限文档](https://developers.cloudflare.com/workers/authorization/workers/)说明：指定 Worker 的 `Editor` 可读取、更新和部署该 Worker，`wrangler deploy` 更新已有 Worker 的最低角色为该 Worker 的 `Editor`。本项目仅使用静态资源与平台地址，不申请 Zone/DNS、KV、R2、D1 或计费权限。
 
