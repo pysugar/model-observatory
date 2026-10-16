@@ -49,7 +49,7 @@ python scripts/smoke.py --base-url http://127.0.0.1:8787 --cloudflare
 
 ## 唯一发布入口
 
-GitHub Actions 的 **Deploy static preview** 是唯一部署入口。推送 `main` 或手动执行时，先调用 **Verify static report**。验证生成并上传一次 `dist/`；部署下载同一不可变产物，复核提交与 SHA256 后才执行 Wrangler，不重新构建。部署串行且不会取消正在执行的上传；旧提交若已不再是 `main`，停止发布。发布后检查线上版本、HTML/JSON/CSV 哈希及缓存/安全响应头，失败会使工作流失败，不能据此宣称上线成功。
+GitHub Actions 的 **Deploy static preview** 是唯一部署入口。推送 `main` 或手动执行时，先调用 **Verify static report**。验证生成并上传一次 `dist/`；部署下载同一不可变产物，复核提交与 SHA256 后才执行 Wrangler，不重新构建。部署串行且不会取消正在执行的上传；旧提交若已不再是 `main`，停止发布。发布后分别检查自定义域名与 workers.dev 的线上版本、HTML/JSON/CSV 哈希及缓存/安全响应头，失败会使工作流失败，不能据此宣称上线成功。
 
 部署开关使用非敏感的 Repository variable `CLOUDFLARE_DEPLOY_ENABLED`：未设置或 `false` 时关闭，明确授权发布后设为 `true`。工作流的 job `if` 只读取该 variable，不直接引用 Secret；即使存在同名 Secret，也不会用它打开部署门控。用户自行配置凭据，代理不读取、抓取或请求令牌展示页，也不要求把令牌发到聊天中。准备步骤如下：
 
@@ -60,17 +60,27 @@ GitHub Actions 的 **Deploy static preview** 是唯一部署入口。推送 `mai
 
 2026-10-16 已在实际 Account API Tokens 创建页展开上述资源菜单并确认存在 `Specified Workers`，入口不是个人 User API Tokens。若从模板进入，草稿可能同时带有“所有域名的 Workers Routes Write”和整账户多项权限；用户须移除这些宽泛策略，再检查 **Review token** 摘要只包含指定的 `model-observatory` 及其 `Editor` 权限后自行创建。不要把模板原有策略与新增的单 Worker 策略一起保留。当天复核 Worker 列表仍只有 `rproxy`、`vless`，目标占位 Worker 尚未创建，不能选择现有业务 Worker 来代替。代理此次仅展开菜单，未选择权限、提交策略或创建令牌。
 
-Cloudflare 于 [2026-09-15 发布单 Worker 权限](https://developers.cloudflare.com/changelog/post/2026-09-15-granular-worker-permissions/)。[Workers 权限文档](https://developers.cloudflare.com/workers/authorization/workers/)说明：指定 Worker 的 `Editor` 可读取、更新和部署该 Worker，`wrangler deploy` 更新已有 Worker 的最低角色为该 Worker 的 `Editor`。本项目仅使用静态资源与平台地址，不申请 Zone/DNS、KV、R2、D1 或计费权限。
+Cloudflare 于 [2026-09-15 发布单 Worker 权限](https://developers.cloudflare.com/changelog/post/2026-09-15-granular-worker-permissions/)。[Workers 权限文档](https://developers.cloudflare.com/workers/authorization/workers/)说明：指定 Worker 的 `Editor` 可读取、更新和部署该 Worker，`wrangler deploy` 更新已有 Worker 的最低角色为该 Worker 的 `Editor`。CI 仅更新已有 Worker 的静态资源，不申请 Zone/DNS、KV、R2、D1 或计费权限；自定义域名由已授权的控制台会话管理。
 
-**待实际部署验证：**当前锁定的 Wrangler 4.151.1、静态资源上传及完整发布链路尚未使用此 granular token 实测；文档支持最低权限，不等于此项目已验证兼容。首次经确认的部署若出现权限错误，应定位失败操作与端点，不自动改成账户全局权限；任何额外权限或资源范围扩展须重新说明并确认。新建 token、复用现有 token 到 CI、OAuth/GitHub App 授权仍由用户在动作时确认。自定义域名另行核验其权限与绑定要求，不据本预览授权执行。
+**实际部署状态：**2026-10-16 的 [发布工作流 38899413377](https://github.com/pysugar/model-observatory/actions/runs/38899413377) 已完成静态资源上传与线上验收。它证明用户提供的凭据可用于当前链路，不证明令牌实际收窄到了建议的 granular 范围。若以后出现权限错误，应定位失败操作与端点，不自动改成账户全局权限；任何额外权限或资源范围扩展须重新说明并确认。新建 token、复用现有 token 到 CI、OAuth/GitHub App 授权仍由用户在动作时确认。
 
-配置只上传静态资源，没有 Worker 运行代码、数据库、动态模型调用、自定义域名或 routes。不接入 Cloudflare Git 自动构建，以免与 GitHub Actions 形成第二个发布入口。Hermes 后续若需发布，也应触发同一 GitHub workflow。
+配置只上传静态资源，没有 Worker 运行代码、数据库或动态模型调用。`wrangler.json` 有意省略 `route` / `routes`，自定义域名按下节在控制台管理。不接入 Cloudflare Git 自动构建，以免与 GitHub Actions 形成第二个发布入口。Hermes 后续若需发布，也应触发同一 GitHub workflow。
 
 2026-10-16 浏览器只读核对：`localgpt.net` 为 Active / Free / DNS Full，没有连接 Worker；账户已有 `rproxy`、`vless`，尚无 `model-observatory`。账户 Workers 子域为 `openai-proxy-local.workers.dev`。计划创建的新 Worker 名为 `model-observatory`，预期平台地址为 `https://model-observatory.openai-proxy-local.workers.dev`；此记录不表示它已创建或上线。首次启用前再次核查同名 Worker，确认仅更新用户为本项目创建的占位 Worker，避免覆盖其他业务。自定义域名可考虑 `models.localgpt.net`，需用户另行选定并确认 DNS/绑定动作。
 
 2026-10-16 后续部署核查：用户已创建 `model-observatory`，平台地址与上面的计划一致；`cloudflare-preview` 中已存在 `CLOUDFLARE_API_TOKEN` 和 `CLOUDFLARE_ACCOUNT_ID` 两个 Secret。部署环境现已限制为分支 `main`（0 个 tag），未设置 Required reviewers。额外的 S3 相关 Secrets 不被本流水线引用，也不在此流程中修改。凭据实际是否可用，以经用户授权的部署结果为准；不因值不可见而更换令牌。
 
 首次实际发布的上传步骤已成功，浏览器能读取报告与版本清单；默认 `Python-urllib` 客户端的验收请求收到 Cloudflare [1010 客户端签名拦截](https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/)。探针现在发送明确的项目 User-Agent（含仓库链接），不伪装浏览器、不更改 Cloudflare 防护或凭据，并继续严格核验 TLS、版本、数据哈希与响应头。若仍收到 HTTP 错误，日志包含状态码与请求路径；不能因页面可见就跳过发布验收。上传成功只证明用户当前提供的凭据可用，不证明其权限已收窄到文档建议的单 Worker 范围。
+
+## 自定义域名与后续发布
+
+正式入口为 <https://models.localgpt.net>；<https://model-observatory.openai-proxy-local.workers.dev> 保留用于独立验收。2026-10-16 用户明确授权后，先确认 `models` 和通配符 DNS 搜索无记录、`localgpt.net` 无 Worker Routes，再通过目标 Worker 的 **Domains → Add Domain → localgpt.net → models → Production** 绑定。Cloudflare 自动管理对应的 Worker DNS 记录和证书；不手工 CNAME 到 workers.dev。参见 [Custom Domains 官方说明](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/)。上文未创建/未绑定的记录是此前准备阶段的历史状态。
+
+域名由控制台管理，CI 不写入域名绑定，也不扩展部署令牌权限。保持 `wrangler.json` 省略 `route` / `routes`，部署命令不传 `--route` / `--domain`：锁定的 Wrangler 4.151.1 在没有域名条目时跳过 Custom Domain 发布，保留已存在的绑定。已核对其 `resolveRoutes` 与 `triggersDeploy` 实现；`publishCustomDomains` 只在 Custom Domain 列表非空时调用。不要随意加上其他域名条目，因为该接口会替换此 Worker 的域名集合。升级 Wrangler 时须复核行为，并在正常发布后确认域名仍有效。
+
+首次自定义域名验收发现 Zone 现有 Web Analytics 会自动注入 beacon，导致 HTML 哈希与原产物不同。发布响应头因此包含 `Cache-Control: public, max-age=0, must-revalidate, no-transform`；[Cloudflare 官方文档](https://developers.cloudflare.com/web-analytics/get-started/#sites-proxied-through-cloudflare)说明 `public, no-transform` 会阻止自动注入。此设置只作用于本项目响应，保留原 HTML 和 CSP，不修改其他站点的统计或安全设置。
+
+同一发布工作流现在同时探测两个 HTTPS 入口，并要求它们都匹配已验证产物中的 Git 提交、HTML/JSON/CSV 哈希与缓存/安全响应头。任一入口证书失败、不可访问或内容不一致，发布验收都会失败；不降低 TLS 校验、不跳过自定义域名。GitHub Environment 的展示 URL 使用正式入口。
 
 ## 回滚与失败恢复
 
