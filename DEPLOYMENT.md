@@ -20,7 +20,7 @@ npm run check:wrangler
 python scripts/smoke.py --wrangler
 ```
 
-macOS 若使用已安装的 Chrome，可用 `python scripts/smoke.py --browser-channel chrome`。由 Codex 启动浏览器时须遵循主机审批限制，不能用 `--no-sandbox` 绕过。Linux 首次安装浏览器系统依赖可运行 `python -m playwright install --with-deps chromium`。
+macOS 若使用已安装的 Chrome，可用 `python scripts/smoke.py --browser-channel chrome`。由 Codex 启动浏览器时须遵循主机审批限制，不能用 `--no-sandbox` 绕过。Linux 首次安装浏览器系统依赖可运行 `python -m playwright install --with-deps chromium`。Ubuntu 23.10+ 若限制下载版 Chromium 的 user namespace，使用系统 Chrome：`python -m playwright install --with-deps chrome`，再给 smoke 命令加 `--browser-channel chrome`。CI 采用此通道并保持 sandbox 开启；不修改 AppArmor/sysctl。[Chromium 说明](https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md)。实际浏览器版本记入 `test-results/smoke.json`，随 runner 系统 Chrome 更新。
 
 `smoke.py` 自动创建临时本地 HTTP 服务并关闭；`--wrangler` 自动启停实际 Wrangler 本地服务，并检查响应头。验证 6 个报告面板、筛选、CSV 缺值、预算边界、4 种 Opus 证据、桌面与 390/320px 布局，以及无外部请求。输出在被 Git 忽略的 `test-results/`。它也可检查已经启动的 Wrangler 本地服务：
 
