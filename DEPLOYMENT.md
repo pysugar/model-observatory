@@ -55,7 +55,7 @@ GitHub Actions 的 **Deploy static preview** 是唯一部署入口。推送 `mai
 
 1. 用户先在目标账户创建用于本项目的 `model-observatory` 占位 Worker；确认没有同名既有业务，使用平台 `workers.dev` 地址，不绑定自定义域名或连接 Git 自动构建。单 Worker 权限只能授予已存在的 Worker，`Editor` 不能创建或删除 Worker。
 2. 进入 **Manage Account → Account API Tokens → Create Token**。在 **Permission policies** 中打开账户策略卡片的 **Edit policy**，展开当前显示 **Entire Account** 的资源范围下拉菜单，再选择 **Specified Workers → 仅 `model-observatory` → Editor**，由用户创建账户所属（account-owned）API token。`Specified Workers` 是资源范围选项，不在权限名称搜索框里。不要选择 All Workers、其他 Worker 或 Admin，也不推荐旧版账户全局 `Workers Scripts Edit`。
-3. 用户在 GitHub 创建 `cloudflare-preview` Environment，只允许 `main`；建议指定人工审核人。将令牌直接保存为该 Environment 的 `CLOUDFLARE_API_TOKEN` secret，将已核对账户 ID 保存为同一 Environment 的 `CLOUDFLARE_ACCOUNT_ID` secret；工作流使用 `secrets.CLOUDFLARE_ACCOUNT_ID`。GitHub 保存后不回显 Secret 值是正常行为，无需为了核验而重填；先由部署任务校验账户并尝试已保存凭据，不能打印其值。令牌不得写入仓库、命令参数、聊天或日志。
+3. 用户在 GitHub 创建 `cloudflare-preview` Environment，只允许 `main`；建议指定人工审核人。将令牌直接保存为该 Environment 的 `CLOUDFLARE_API_TOKEN` secret，将已核对的账户 ID 保存为同一 Environment 的 `CLOUDFLARE_ACCOUNT_ID` variable；工作流使用 `vars.CLOUDFLARE_ACCOUNT_ID`，API Token 仍使用 `secrets.CLOUDFLARE_API_TOKEN`。`deploy` job 保留 `environment: cloudflare-preview`，运行步骤才能取得该环境的配置。GitHub 保存后不回显 Token Secret 值是正常行为，无需为了核验而重填；部署任务会校验目标账户并使用已保存令牌，不能打印令牌。令牌不得写入仓库、命令参数、聊天或日志。
 4. 配置完成后仍保持部署开关关闭。首次平台预览发布须在发布改动通过审阅并合入 `main` 后另行确认；确认后再启用仓库 variable `CLOUDFLARE_DEPLOY_ENABLED=true` 并运行现有发布入口。
 
 2026-10-16 已在实际 Account API Tokens 创建页展开上述资源菜单并确认存在 `Specified Workers`，入口不是个人 User API Tokens。若从模板进入，草稿可能同时带有“所有域名的 Workers Routes Write”和整账户多项权限；用户须移除这些宽泛策略，再检查 **Review token** 摘要只包含指定的 `model-observatory` 及其 `Editor` 权限后自行创建。不要把模板原有策略与新增的单 Worker 策略一起保留。当天复核 Worker 列表仍只有 `rproxy`、`vless`，目标占位 Worker 尚未创建，不能选择现有业务 Worker 来代替。代理此次仅展开菜单，未选择权限、提交策略或创建令牌。
@@ -68,9 +68,23 @@ Cloudflare 于 [2026-09-15 发布单 Worker 权限](https://developers.cloudflar
 
 2026-10-16 浏览器只读核对：`localgpt.net` 为 Active / Free / DNS Full，没有连接 Worker；账户已有 `rproxy`、`vless`，尚无 `model-observatory`。账户 Workers 子域为 `openai-proxy-local.workers.dev`。计划创建的新 Worker 名为 `model-observatory`，预期平台地址为 `https://model-observatory.openai-proxy-local.workers.dev`；此记录不表示它已创建或上线。首次启用前再次核查同名 Worker，确认仅更新用户为本项目创建的占位 Worker，避免覆盖其他业务。自定义域名可考虑 `models.localgpt.net`，需用户另行选定并确认 DNS/绑定动作。
 
-2026-10-16 后续部署核查：用户已创建 `model-observatory`，平台地址与上面的计划一致；`cloudflare-preview` 中已存在 `CLOUDFLARE_API_TOKEN` 和 `CLOUDFLARE_ACCOUNT_ID` 两个 Secret。部署环境现已限制为分支 `main`（0 个 tag），未设置 Required reviewers。额外的 S3 相关 Secrets 不被本流水线引用，也不在此流程中修改。凭据实际是否可用，以经用户授权的部署结果为准；不因值不可见而更换令牌。
+2026-10-16 后续部署核查：用户已创建 `model-observatory`，平台地址与上面的计划一致；用户现已更换 Token，并将账户 ID 从 Secret 迁移到 variable：`cloudflare-preview` 使用 `CLOUDFLARE_API_TOKEN` Secret 与 `CLOUDFLARE_ACCOUNT_ID` variable。部署环境现已限制为分支 `main`（0 个 tag），未设置 Required reviewers。额外的 S3 相关 Secrets 不被本流水线引用，也不在此流程中修改。凭据实际是否可用，以经用户授权的部署结果为准；不因值不可见而更换令牌。
 
 首次实际发布的上传步骤已成功，浏览器能读取报告与版本清单；默认 `Python-urllib` 客户端的验收请求收到 Cloudflare [1010 客户端签名拦截](https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/)。探针现在发送明确的项目 User-Agent（含仓库链接），不伪装浏览器、不更改 Cloudflare 防护或凭据，并继续严格核验 TLS、版本、数据哈希与响应头。若仍收到 HTTP 错误，日志包含状态码与请求路径；不能因页面可见就跳过发布验收。上传成功只证明用户当前提供的凭据可用，不证明其权限已收窄到文档建议的单 Worker 范围。
+
+## 修改内容与自动上线条件
+
+发布入口读取源码，调用 `build_report.py` 在临时目录重建，再把生成的 HTML 放到 `dist/index.html`。根目录的 `model-capability-cost.html`、`report-data.json` 和 `report-data.csv` 是离线产物，不是发布构建的直接输入。仅修改这些产物并推送 `main` 也会触发工作流，但线上内容仍由源码决定，手改产物的内容不会进入发布。具体编辑文件及证据输入见 [README 的更新入口](README.md#更新线上报告)。
+
+自动发布需要同时满足：
+
+1. 提交已经推送到 `main`（包括 PR 合并），或手动运行 **Deploy static preview** 并选择 `main`。工作流没有文件路径过滤；本地未推送的修改、其他分支推送不会发布，PR 验证本身也不部署。
+2. Repository variable `CLOUDFLARE_DEPLOY_ENABLED` 为字符串 `true`。它用于 job 启动前的门控，继续放在 Repository variables；不要随账户 ID 一起搬到 Environment variables。
+3. **Verify static report** 的测试、干净构建、产物审计、Wrangler 检查及浏览器冒烟测试全部通过。
+4. `cloudflare-preview` 环境允许 `main`，环境的有效 `CLOUDFLARE_API_TOKEN` Secret 与匹配目标账户的 `CLOUDFLARE_ACCOUNT_ID` variable 已配置；若以后设置人工审批，审批也须通过。
+5. 部署下载同一份已验证产物，提交及哈希核验通过，而且该提交在上传前仍是远程 `main` 最新提交。上传串行执行。
+
+发布后两个域名都必须通过版本、HTML/JSON/CSV 哈希和响应头验收，才能认定上线成功。修改 GitHub Secret / variable 本身不会触发发布；需要新的 `main` 提交或上述手动入口。构建离线执行，不会自动抓取或调研新的模型数据。
 
 ## 自定义域名与后续发布
 
