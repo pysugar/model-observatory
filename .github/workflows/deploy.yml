@@ -1,0 +1,62 @@
+name: Deploy static preview
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    uses: ./.github/workflows/verify.yml
+  deploy:
+    needs: verify
+    # Explicitly opt in after the owner approves persistent credentials.
+    if: github.ref == 'refs/heads/main' && vars.CLOUDFLARE_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: cloudflare-preview
+      url: https://model-observatory.openai-proxy-local.workers.dev
+    concurrency:
+      group: cloudflare-model-observatory
+      cancel-in-progress: false
+    env:
+      WRANGLER_SEND_METRICS: 'false'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - name: Download the verified artifact (do not rebuild)
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: site-${{ github.sha }}-${{ github.run_attempt }}
+          path: dist/
+      - name: Verify artifact and reject stale runs
+        env:
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          python scripts/publish.py check --expected-commit "$GITHUB_SHA"
+          current="$(git ls-remote "https://github.com/${REPOSITORY}.git" refs/heads/main | cut -f1)"
+          test "$current" = "$GITHUB_SHA" || { echo 'main advanced; deploy its current successful run instead.'; exit 1; }
+      - name: Publish only the tested static assets
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN" || { echo 'Approved Cloudflare token is not configured.'; exit 1; }
+          test "$CLOUDFLARE_ACCOUNT_ID" = 'cf37bfe5ee78022d9099c57673e50dbc' || { echo 'Unexpected Cloudflare account.'; exit 1; }
+          npx --no-install wrangler deploy
+      - name: Verify live version, hashes and headers
+        run: python scripts/publish.py probe --url https://model-observatory.openai-proxy-local.workers.dev
