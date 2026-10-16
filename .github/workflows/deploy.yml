@@ -19,7 +19,7 @@ jobs:
     timeout-minutes: 10
     environment:
       name: cloudflare-preview
-      url: https://model-observatory.openai-proxy-local.workers.dev
+      url: https://models.localgpt.net
     concurrency:
       group: cloudflare-model-observatory
       cancel-in-progress: false
@@ -58,5 +58,7 @@ jobs:
           test -n "$CLOUDFLARE_API_TOKEN" || { echo 'Approved Cloudflare token is not configured.'; exit 1; }
           test "$CLOUDFLARE_ACCOUNT_ID" = 'cf37bfe5ee78022d9099c57673e50dbc' || { echo 'Unexpected Cloudflare account.'; exit 1; }
           npx --no-install wrangler deploy
-      - name: Verify live version, hashes and headers
-        run: python scripts/publish.py probe --url https://model-observatory.openai-proxy-local.workers.dev
+      - name: Verify both public hosts against the tested release
+        run: |
+          python scripts/publish.py probe --url https://model-observatory.openai-proxy-local.workers.dev
+          python scripts/publish.py probe --url https://models.localgpt.net
