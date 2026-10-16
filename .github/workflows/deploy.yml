@@ -53,7 +53,7 @@ jobs:
       - name: Publish only the tested static assets
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           test -n "$CLOUDFLARE_API_TOKEN" || { echo 'Approved Cloudflare token is not configured.'; exit 1; }
           test "$CLOUDFLARE_ACCOUNT_ID" = 'cf37bfe5ee78022d9099c57673e50dbc' || { echo 'Unexpected Cloudflare account.'; exit 1; }
