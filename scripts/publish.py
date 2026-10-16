@@ -101,7 +101,7 @@ def headers_for(html):
     hashes = " ".join("'sha256-" + base64.b64encode(hashlib.sha256(s.encode()).digest()).decode() + "'" for s in scripts)
     return (
         "/*\n"
-        "  Cache-Control: public, max-age=0, must-revalidate\n"
+        "  Cache-Control: public, max-age=0, must-revalidate, no-transform\n"
         "  X-Content-Type-Options: nosniff\n"
         "  X-Frame-Options: DENY\n"
         "  Referrer-Policy: no-referrer\n"

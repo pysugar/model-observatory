@@ -78,6 +78,8 @@ Cloudflare 于 [2026-09-15 发布单 Worker 权限](https://developers.cloudflar
 
 域名由控制台管理，CI 不写入域名绑定，也不扩展部署令牌权限。保持 `wrangler.json` 省略 `route` / `routes`，部署命令不传 `--route` / `--domain`：锁定的 Wrangler 4.151.1 在没有域名条目时跳过 Custom Domain 发布，保留已存在的绑定。已核对其 `resolveRoutes` 与 `triggersDeploy` 实现；`publishCustomDomains` 只在 Custom Domain 列表非空时调用。不要随意加上其他域名条目，因为该接口会替换此 Worker 的域名集合。升级 Wrangler 时须复核行为，并在正常发布后确认域名仍有效。
 
+首次自定义域名验收发现 Zone 现有 Web Analytics 会自动注入 beacon，导致 HTML 哈希与原产物不同。发布响应头因此包含 `Cache-Control: public, max-age=0, must-revalidate, no-transform`；[Cloudflare 官方文档](https://developers.cloudflare.com/web-analytics/get-started/#sites-proxied-through-cloudflare)说明 `public, no-transform` 会阻止自动注入。此设置只作用于本项目响应，保留原 HTML 和 CSP，不修改其他站点的统计或安全设置。
+
 同一发布工作流现在同时探测两个 HTTPS 入口，并要求它们都匹配已验证产物中的 Git 提交、HTML/JSON/CSV 哈希与缓存/安全响应头。任一入口证书失败、不可访问或内容不一致，发布验收都会失败；不降低 TLS 校验、不跳过自定义域名。GitHub Environment 的展示 URL 使用正式入口。
 
 ## 回滚与失败恢复
