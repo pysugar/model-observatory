@@ -51,11 +51,11 @@ python scripts/smoke.py --base-url http://127.0.0.1:8787 --cloudflare
 
 GitHub Actions 的 **Deploy static preview** 是唯一部署入口。推送 `main` 或手动执行时，先调用 **Verify static report**。验证生成并上传一次 `dist/`；部署下载同一不可变产物，复核提交与 SHA256 后才执行 Wrangler，不重新构建。部署串行且不会取消正在执行的上传；旧提交若已不再是 `main`，停止发布。发布后检查线上版本、HTML/JSON/CSV 哈希及缓存/安全响应头，失败会使工作流失败，不能据此宣称上线成功。
 
-当前部署开关保持关闭：仓库 variable `CLOUDFLARE_DEPLOY_ENABLED` 应保持未设置或 `false`。用户自行配置凭据，代理不读取、抓取或请求令牌展示页，也不要求把令牌发到聊天中。准备步骤如下：
+部署开关使用非敏感的 Repository variable `CLOUDFLARE_DEPLOY_ENABLED`：未设置或 `false` 时关闭，明确授权发布后设为 `true`。工作流的 job `if` 只读取该 variable，不直接引用 Secret；即使存在同名 Secret，也不会用它打开部署门控。用户自行配置凭据，代理不读取、抓取或请求令牌展示页，也不要求把令牌发到聊天中。准备步骤如下：
 
 1. 用户先在目标账户创建用于本项目的 `model-observatory` 占位 Worker；确认没有同名既有业务，使用平台 `workers.dev` 地址，不绑定自定义域名或连接 Git 自动构建。单 Worker 权限只能授予已存在的 Worker，`Editor` 不能创建或删除 Worker。
 2. 进入 **Manage Account → Account API Tokens → Create Token**。在 **Permission policies** 中打开账户策略卡片的 **Edit policy**，展开当前显示 **Entire Account** 的资源范围下拉菜单，再选择 **Specified Workers → 仅 `model-observatory` → Editor**，由用户创建账户所属（account-owned）API token。`Specified Workers` 是资源范围选项，不在权限名称搜索框里。不要选择 All Workers、其他 Worker 或 Admin，也不推荐旧版账户全局 `Workers Scripts Edit`。
-3. 用户在 GitHub 创建 `cloudflare-preview` Environment，只允许 `main`；建议指定人工审核人。将令牌直接保存为该 Environment 的 `CLOUDFLARE_API_TOKEN` secret，将已核对账户 ID 保存为该 Environment 的 `CLOUDFLARE_ACCOUNT_ID` variable。令牌不得写入仓库、命令参数、聊天或日志。
+3. 用户在 GitHub 创建 `cloudflare-preview` Environment，只允许 `main`；建议指定人工审核人。将令牌直接保存为该 Environment 的 `CLOUDFLARE_API_TOKEN` secret，将已核对账户 ID 保存为同一 Environment 的 `CLOUDFLARE_ACCOUNT_ID` secret；工作流使用 `secrets.CLOUDFLARE_ACCOUNT_ID`。GitHub 保存后不回显 Secret 值是正常行为，无需为了核验而重填；先由部署任务校验账户并尝试已保存凭据，不能打印其值。令牌不得写入仓库、命令参数、聊天或日志。
 4. 配置完成后仍保持部署开关关闭。首次平台预览发布须在发布改动通过审阅并合入 `main` 后另行确认；确认后再启用仓库 variable `CLOUDFLARE_DEPLOY_ENABLED=true` 并运行现有发布入口。
 
 2026-10-16 已在实际 Account API Tokens 创建页展开上述资源菜单并确认存在 `Specified Workers`，入口不是个人 User API Tokens。若从模板进入，草稿可能同时带有“所有域名的 Workers Routes Write”和整账户多项权限；用户须移除这些宽泛策略，再检查 **Review token** 摘要只包含指定的 `model-observatory` 及其 `Editor` 权限后自行创建。不要把模板原有策略与新增的单 Worker 策略一起保留。当天复核 Worker 列表仍只有 `rproxy`、`vless`，目标占位 Worker 尚未创建，不能选择现有业务 Worker 来代替。代理此次仅展开菜单，未选择权限、提交策略或创建令牌。
@@ -67,6 +67,8 @@ Cloudflare 于 [2026-09-15 发布单 Worker 权限](https://developers.cloudflar
 配置只上传静态资源，没有 Worker 运行代码、数据库、动态模型调用、自定义域名或 routes。不接入 Cloudflare Git 自动构建，以免与 GitHub Actions 形成第二个发布入口。Hermes 后续若需发布，也应触发同一 GitHub workflow。
 
 2026-10-16 浏览器只读核对：`localgpt.net` 为 Active / Free / DNS Full，没有连接 Worker；账户已有 `rproxy`、`vless`，尚无 `model-observatory`。账户 Workers 子域为 `openai-proxy-local.workers.dev`。计划创建的新 Worker 名为 `model-observatory`，预期平台地址为 `https://model-observatory.openai-proxy-local.workers.dev`；此记录不表示它已创建或上线。首次启用前再次核查同名 Worker，确认仅更新用户为本项目创建的占位 Worker，避免覆盖其他业务。自定义域名可考虑 `models.localgpt.net`，需用户另行选定并确认 DNS/绑定动作。
+
+2026-10-16 后续部署核查：用户已创建 `model-observatory`，平台地址与上面的计划一致；`cloudflare-preview` 中已存在 `CLOUDFLARE_API_TOKEN` 和 `CLOUDFLARE_ACCOUNT_ID` 两个 Secret。部署环境现已限制为分支 `main`（0 个 tag），未设置 Required reviewers。额外的 S3 相关 Secrets 不被本流水线引用，也不在此流程中修改。凭据实际是否可用，以经用户授权的部署结果为准；不因值不可见而更换令牌。
 
 ## 回滚与失败恢复
 
