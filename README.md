@@ -2,7 +2,7 @@
 
 打开 [model-capability-cost.html](model-capability-cost.html)。这是包含数据、样式和脚本的单文件报告，可直接离线打开，无需安装依赖或联网加载。
 
-静态发布准备、跨 macOS/Linux 验证、GitHub Actions、公开产物边界与回滚步骤见 [DEPLOYMENT.md](DEPLOYMENT.md)。发布使用独立 `dist/` 白名单；默认关闭实际 Cloudflare 部署，研究结论保持不变。
+在线报告：<https://models.localgpt.net>。静态发布、跨 macOS/Linux 验证、GitHub Actions、公开产物边界与回滚步骤见 [DEPLOYMENT.md](DEPLOYMENT.md)。发布使用独立 `dist/` 白名单，研究结论保持不变。
 
 报告更新于 **2026-10-16（Asia/Taipei）**；本轮核验 Claude，并复核 Sol 6.1 的官方档位、选型及工具协议；其余 GPT / Gemini 规格仍为 10-15。范围是通用模型的 API 规格与公开评测；包括 20 个选型与兼容候选（含 14 款 Claude）、3 个 GPT 代际基线，另列 Mythos 的受限入口。专用图像、语音、视频生成模型及产品订阅配额不属于此次比较范围。选型建议是基于已列证据的判断，没有执行新的付费模型实验或中文实测。
 
@@ -14,6 +14,24 @@
 4. **规格与预算**：官方 Standard 单价、输入能力、上下文、档位、缓存、推理用量、阶梯价与已公布优惠结束价。
 5. **推理档位**：同模型相邻已测档位的分差与额外投入；区分收益变小、点估计下降和预算耗尽。2026-10-16 补充 Opus / Vulcan 的四种可切换证据：Frontier 完整配置、共同无回退 6 题子集、Routine v1 日常工单、官方 SWE-bench Pro 子集；各自保留限制和来源，支持单独导出 CSV。
 6. **证据与方法**：核验时间、证据层级、方法、限制与直接来源。
+
+## 更新线上报告
+
+修改下面的源文件后提交 PR，通过验证并合入 `main`，既有流水线会自动构建并发布。`model-capability-cost.html` 与根目录 `report-data.json` / `report-data.csv` 是生成的离线产物；仅手改它们不会改变重建后的线上内容。
+
+| 要修改的内容 | 编辑入口 |
+| --- | --- |
+| 页面文字、章节和静态表格 | [`report.template.html`](report.template.html) |
+| 样式、布局 | [`report.css`](report.css) |
+| 筛选、计算、图表与导出交互 | [`report.js`](report.js) |
+| 模型目录、官方规格、价格、补充指标与来源 | [`report-content.json`](report-content.json) |
+| 基准记录与证据汇总逻辑 | [`build_report.py`](build_report.py) 及下列证据输入 |
+
+当前构建直接读取的补充证据是 `research/2026-10-15/aa-pair-*.json`、`research/2026-10-15/tonebench-leaderboard.json`、`research/2026-10-15/arena-web-extract.json`、`research/2026-10-16/claude-catalog/claude-supplement.json` 和 `research/2026-10-16/opus55-coding-supplement.json`。原 121 条记录来自 `archive/model-capability-cost-2026-10-14.html`，ToneBench 指纹还与 `九模型图表数据与来源/tonebench.json` 对照；这两处是保真基线，保留不改。
+
+新增研究应保留带日期的快照、来源和核验记录，按需更新构建逻辑及验收预期。Claude / Opus 补充数据的复算命令见下文；CI 只读已有补充 JSON，不会自动运行复算脚本或联网调研。需要同步仓库里的离线报告时运行 `python3 build_report.py`，将生成变化随源码一起提交。
+
+自动上线还取决于部署开关、`cloudflare-preview` 环境配置和全部验证通过，详见 [完整触发条件](DEPLOYMENT.md#修改内容与自动上线条件)。
 
 ## 数据与维护
 
