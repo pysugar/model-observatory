@@ -70,6 +70,8 @@ Cloudflare 于 [2026-09-15 发布单 Worker 权限](https://developers.cloudflar
 
 2026-10-16 后续部署核查：用户已创建 `model-observatory`，平台地址与上面的计划一致；`cloudflare-preview` 中已存在 `CLOUDFLARE_API_TOKEN` 和 `CLOUDFLARE_ACCOUNT_ID` 两个 Secret。部署环境现已限制为分支 `main`（0 个 tag），未设置 Required reviewers。额外的 S3 相关 Secrets 不被本流水线引用，也不在此流程中修改。凭据实际是否可用，以经用户授权的部署结果为准；不因值不可见而更换令牌。
 
+首次实际发布的上传步骤已成功，浏览器能读取报告与版本清单；默认 `Python-urllib` 客户端的验收请求收到 Cloudflare [1010 客户端签名拦截](https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/)。探针现在发送明确的项目 User-Agent（含仓库链接），不伪装浏览器、不更改 Cloudflare 防护或凭据，并继续严格核验 TLS、版本、数据哈希与响应头。若仍收到 HTTP 错误，日志包含状态码与请求路径；不能因页面可见就跳过发布验收。上传成功只证明用户当前提供的凭据可用，不证明其权限已收窄到文档建议的单 Worker 范围。
+
 ## 回滚与失败恢复
 
 若线上探针失败，先看工作流日志、`version.json` 与已保存产物，不重复创建凭据或改变 DNS。默认不自动回滚，因为探针可能因临时网络失败；先确认实际线上版本。

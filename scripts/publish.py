@@ -21,6 +21,7 @@ from urllib.request import Request, urlopen
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = {"index.html", "report-data.json", "report-data.csv", "_headers"}
 FILES = ASSETS | {"version.json"}
+PROBE_USER_AGENT = "model-observatory-release-probe/1.0 (+https://github.com/pysugar/model-observatory)"
 SENSITIVE = {
     "private key": r"-----BEGIN (?:[A-Z ]+ )?PRIVATE KEY-----",
     "access token": r"\b(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9_-]{20,}|AKIA[A-Z0-9]{16})\b",
@@ -181,7 +182,8 @@ def probe(url, output, attempts=6, delay=5, require_headers=True):
         try:
             for name in ("version.json", "index.html", "report-data.json", "report-data.csv"):
                 path = "/" if name == "index.html" else "/" + name
-                request = Request(origin + path + "?release=" + expected["source_commit"], headers={"Cache-Control": "no-cache"})
+                request = Request(origin + path + "?release=" + expected["source_commit"],
+                                  headers={"Cache-Control": "no-cache", "User-Agent": PROBE_USER_AGENT})
                 with urlopen(request, timeout=15) as response:
                     content = response.read(5_000_001)
                     require(response.status == 200, f"Unexpected HTTP status for {path}")
@@ -195,7 +197,7 @@ def probe(url, output, attempts=6, delay=5, require_headers=True):
                     require(sha256(content) == expected["assets"][name], f"Live content differs: {path}")
             return {"status": "PASS", "url": origin, "commit": expected["source_commit"]}
         except (HTTPError, URLError, TimeoutError, ValueError) as error:
-            last_error = error
+            last_error = ValueError(f"HTTP {error.code} for {urlsplit(error.url).path}") if isinstance(error, HTTPError) else error
             if attempt + 1 < attempts:
                 time.sleep(delay)
     raise ValueError(f"Deployment probe failed: {last_error}")
