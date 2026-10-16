@@ -1,0 +1,253 @@
+{
+  "url": "https://artificialanalysis.ai/models/comparisons/gemini-4-argon-vs-gemini-3-8-flash",
+  "sha256": "895e5483c78c77f4ffb623dbd86e2a383a32b1c472ca62eeb7971cc7268d4367",
+  "tables": [
+    [
+      [
+        "",
+        "Google Gemini 4 Argon (High)",
+        "Google Gemini 3.8 Flash (High)",
+        "Add model"
+      ],
+      [
+        "Intelligence"
+      ],
+      [
+        "Intelligence Index",
+        "53",
+        "41",
+        ""
+      ],
+      [
+        "AA-Briefcase v1.1",
+        "1488",
+        "1203",
+        ""
+      ],
+      [
+        "GDPval-AA v2.1",
+        "1624",
+        "1436",
+        ""
+      ],
+      [
+        "AutomationBench-AA",
+        "78%",
+        "60%",
+        ""
+      ],
+      [
+        "Terminal-Bench 4.0",
+        "57%",
+        "20%",
+        ""
+      ],
+      [
+        "SciCode",
+        "62%",
+        "57%",
+        ""
+      ],
+      [
+        "Humanity's Last Exam",
+        "57%",
+        "48%",
+        ""
+      ],
+      [
+        "GDP.pdf",
+        "22%",
+        "21%",
+        ""
+      ],
+      [
+        "CritPt",
+        "27%",
+        "18%",
+        ""
+      ],
+      [
+        "AA-Omniscience",
+        "42",
+        "30",
+        ""
+      ],
+      [
+        "AA-LCR v1.1",
+        "80%",
+        "81%",
+        ""
+      ],
+      [
+        "Cost"
+      ],
+      [
+        "Price per 1M Tokens",
+        "$1.47",
+        "$0.5775",
+        ""
+      ],
+      [
+        "Input Price per 1M Tokens",
+        "$2.00",
+        "$0.75",
+        ""
+      ],
+      [
+        "Output Price per 1M Tokens",
+        "$10.00",
+        "$3.75",
+        ""
+      ],
+      [
+        "Cache Hit Price per 1M Tokens",
+        "$0.10",
+        "$0.075",
+        ""
+      ],
+      [
+        "Cost per Task",
+        "$1.99",
+        "$1.24",
+        ""
+      ],
+      [
+        "Cost to Run Intelligence Index",
+        "$2,407",
+        "$1,623",
+        ""
+      ],
+      [
+        "Token Use"
+      ],
+      [
+        "Output Tokens per Task",
+        "62k",
+        "71k",
+        ""
+      ],
+      [
+        "Reasoning Tokens per Task",
+        "36k",
+        "43k",
+        ""
+      ],
+      [
+        "Output Tokens to Run Intelligence Index",
+        "113M",
+        "172M",
+        ""
+      ],
+      [
+        "Performance"
+      ],
+      [
+        "Output Speed",
+        "",
+        "145 tokens/s",
+        ""
+      ],
+      [
+        "Time to First Token",
+        "",
+        "24.21s",
+        ""
+      ],
+      [
+        "Time to First Answer Token",
+        "",
+        "24.21s",
+        ""
+      ],
+      [
+        "End-to-End Response Time",
+        "",
+        "27.66s",
+        ""
+      ],
+      [
+        "Time per Task",
+        "",
+        "476.05s",
+        ""
+      ],
+      [
+        "Technical specifications"
+      ],
+      [
+        "Context Window",
+        "1000k tokens ~1,500 A4 pages of size 12 Arial font",
+        "1000k tokens ~1,500 A4 pages of size 12 Arial font",
+        ""
+      ],
+      [
+        "Release Date",
+        "September 2026",
+        "September 2026",
+        ""
+      ],
+      [
+        "Reasoning",
+        "Yes",
+        "Yes",
+        ""
+      ],
+      [
+        "Input modality",
+        "Supports: text and image",
+        "Supports: text, image, speech, and video",
+        ""
+      ],
+      [
+        "Output modality",
+        "Supports: text",
+        "Supports: text",
+        ""
+      ],
+      [
+        "Open Source (Weights)",
+        "No",
+        "No",
+        ""
+      ]
+    ]
+  ],
+  "links": [
+    {
+      "text": "Methodology page.",
+      "url": "/methodology"
+    },
+    {
+      "text": "Intelligence Index methodology",
+      "url": "/methodology/intelligence-benchmarking"
+    },
+    {
+      "text": "Intelligence Index methodology",
+      "url": "/methodology/intelligence-benchmarking"
+    },
+    {
+      "text": "Intelligence Index methodology",
+      "url": "/methodology/intelligence-benchmarking"
+    },
+    {
+      "text": "Intelligence Index methodology",
+      "url": "/methodology/intelligence-benchmarking"
+    },
+    {
+      "text": "Intelligence Index methodology",
+      "url": "/methodology/intelligence-benchmarking"
+    },
+    {
+      "text": "methodology details",
+      "url": "/methodology/performance-benchmarking"
+    },
+    {
+      "text": "About",
+      "url": "/about"
+    },
+    {
+      "text": "Methodology",
+      "url": "/methodology"
+    }
+  ]
+}

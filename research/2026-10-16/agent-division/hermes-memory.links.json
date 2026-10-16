@@ -1,0 +1,310 @@
+[
+  {
+    "title": "​",
+    "href": "#how-it-works"
+  },
+  {
+    "title": "profile",
+    "href": "/docs/user-guide/profiles"
+  },
+  {
+    "title": "external memory provider",
+    "href": "/docs/user-guide/features/memory-providers"
+  },
+  {
+    "title": "What Happens When Memory\nis Full",
+    "href": "#what-happens-when-memory-is-full"
+  },
+  {
+    "title": "​",
+    "href": "#how-memory-appears-in-the-system-prompt"
+  },
+  {
+    "title": "​",
+    "href": "#memory-needs-session-boundaries"
+  },
+  {
+    "title": "one continuous session",
+    "href": "/docs/user-guide/sessions#session-continuity"
+  },
+  {
+    "title": "​",
+    "href": "#troubleshooting-i-told-it-to-remember-and-the-next-session-it-forgot"
+  },
+  {
+    "title": "Controlling memory writes",
+    "href": "#controlling-memory-writes-write_approval"
+  },
+  {
+    "title": "profile",
+    "href": "/docs/user-guide/profiles"
+  },
+  {
+    "title": "Configuration",
+    "href": "#configuration"
+  },
+  {
+    "title": "skill",
+    "href": "/docs/user-guide/features/skills"
+  },
+  {
+    "title": "​",
+    "href": "#memory-tool-actions"
+  },
+  {
+    "title": "​",
+    "href": "#substring-matching"
+  },
+  {
+    "title": "​",
+    "href": "#two-targets-explained"
+  },
+  {
+    "title": "​",
+    "href": "#memory--agents-personal-notes"
+  },
+  {
+    "title": "​",
+    "href": "#user--user-profile"
+  },
+  {
+    "title": "​",
+    "href": "#what-to-save-vs-skip"
+  },
+  {
+    "title": "​",
+    "href": "#save-these-proactively"
+  },
+  {
+    "title": "​",
+    "href": "#skip-these"
+  },
+  {
+    "title": "​",
+    "href": "#capacity-management"
+  },
+  {
+    "title": "​",
+    "href": "#what-happens-when-memory-is-full"
+  },
+  {
+    "title": "​",
+    "href": "#practical-examples-of-good-memory-entries"
+  },
+  {
+    "title": "​",
+    "href": "#duplicate-prevention"
+  },
+  {
+    "title": "​",
+    "href": "#security-scanning"
+  },
+  {
+    "title": "​",
+    "href": "#session-search"
+  },
+  {
+    "title": "Session Search Tool",
+    "href": "/docs/user-guide/sessions#session-search-tool"
+  },
+  {
+    "title": "​",
+    "href": "#session_search-vs-memory"
+  },
+  {
+    "title": "​",
+    "href": "#learning-journey-journey"
+  },
+  {
+    "title": "​",
+    "href": "#configuration"
+  },
+  {
+    "title": "​",
+    "href": "#external-recall-size"
+  },
+  {
+    "title": "oversized prefetch results",
+    "href": "/docs/developer-guide/memory-provider-plugin#oversized-prefetch-results"
+  },
+  {
+    "title": "​",
+    "href": "#controlling-memory-writes-write_approval"
+  },
+  {
+    "title": "​",
+    "href": "#background-review-notifications-displaymemory_notifications"
+  },
+  {
+    "title": "​",
+    "href": "#running-the-review-on-a-cheaper-model-auxiliarybackground_review"
+  },
+  {
+    "title": "​",
+    "href": "#same-model-review-reasoning"
+  },
+  {
+    "title": "​",
+    "href": "#disabling-automatic-reviews-enabled"
+  },
+  {
+    "title": "​",
+    "href": "#capping-review-cost-max_input_tokens"
+  },
+  {
+    "title": "​",
+    "href": "#allowing-a-narrowly-scoped-extra-review-tool-extra_tools"
+  },
+  {
+    "title": "​",
+    "href": "#local-models-reviews-wait-for-an-idle-gpu-defer"
+  },
+  {
+    "title": "​",
+    "href": "#controlling-skill-writes-skillswrite_approval"
+  },
+  {
+    "title": "Gating agent skill writes",
+    "href": "/docs/user-guide/features/skills#gating-agent-skill-writes-skillswrite_approval"
+  },
+  {
+    "title": "​",
+    "href": "#external-memory-providers"
+  },
+  {
+    "title": "plugin catalog",
+    "href": "/docs/user-guide/features/plugins"
+  },
+  {
+    "title": "Memory Providers",
+    "href": "/docs/user-guide/features/memory-providers"
+  },
+  {
+    "title": "How It Works",
+    "href": "#how-it-works"
+  },
+  {
+    "title": "How Memory Appears in the System Prompt",
+    "href": "#how-memory-appears-in-the-system-prompt"
+  },
+  {
+    "title": "Memory Needs Session Boundaries",
+    "href": "#memory-needs-session-boundaries"
+  },
+  {
+    "title": "Troubleshooting: \"I told it to remember, and the next session it forgot\"",
+    "href": "#troubleshooting-i-told-it-to-remember-and-the-next-session-it-forgot"
+  },
+  {
+    "title": "Memory Tool Actions",
+    "href": "#memory-tool-actions"
+  },
+  {
+    "title": "Substring Matching",
+    "href": "#substring-matching"
+  },
+  {
+    "title": "Two Targets Explained",
+    "href": "#two-targets-explained"
+  },
+  {
+    "title": "memory — Agent's Personal Notes",
+    "href": "#memory--agents-personal-notes"
+  },
+  {
+    "title": "user — User Profile",
+    "href": "#user--user-profile"
+  },
+  {
+    "title": "What to Save vs Skip",
+    "href": "#what-to-save-vs-skip"
+  },
+  {
+    "title": "Save These (Proactively)",
+    "href": "#save-these-proactively"
+  },
+  {
+    "title": "Skip These",
+    "href": "#skip-these"
+  },
+  {
+    "title": "Capacity Management",
+    "href": "#capacity-management"
+  },
+  {
+    "title": "What Happens When Memory is Full",
+    "href": "#what-happens-when-memory-is-full"
+  },
+  {
+    "title": "Practical Examples of Good Memory Entries",
+    "href": "#practical-examples-of-good-memory-entries"
+  },
+  {
+    "title": "Duplicate Prevention",
+    "href": "#duplicate-prevention"
+  },
+  {
+    "title": "Security Scanning",
+    "href": "#security-scanning"
+  },
+  {
+    "title": "Session Search",
+    "href": "#session-search"
+  },
+  {
+    "title": "session_search vs memory",
+    "href": "#session_search-vs-memory"
+  },
+  {
+    "title": "Learning Journey ( /journey )",
+    "href": "#learning-journey-journey"
+  },
+  {
+    "title": "Configuration",
+    "href": "#configuration"
+  },
+  {
+    "title": "External recall size",
+    "href": "#external-recall-size"
+  },
+  {
+    "title": "Controlling memory writes ( write_approval )",
+    "href": "#controlling-memory-writes-write_approval"
+  },
+  {
+    "title": "Background review notifications ( display.memory_notifications )",
+    "href": "#background-review-notifications-displaymemory_notifications"
+  },
+  {
+    "title": "Running the review on a cheaper model ( auxiliary.background_review )",
+    "href": "#running-the-review-on-a-cheaper-model-auxiliarybackground_review"
+  },
+  {
+    "title": "Same-model review reasoning",
+    "href": "#same-model-review-reasoning"
+  },
+  {
+    "title": "Disabling automatic reviews ( enabled )",
+    "href": "#disabling-automatic-reviews-enabled"
+  },
+  {
+    "title": "Capping review cost ( max_input_tokens )",
+    "href": "#capping-review-cost-max_input_tokens"
+  },
+  {
+    "title": "Allowing a narrowly scoped extra review tool ( extra_tools )",
+    "href": "#allowing-a-narrowly-scoped-extra-review-tool-extra_tools"
+  },
+  {
+    "title": "Local models: reviews wait for an idle GPU ( defer )",
+    "href": "#local-models-reviews-wait-for-an-idle-gpu-defer"
+  },
+  {
+    "title": "Controlling skill writes ( skills.write_approval )",
+    "href": "#controlling-skill-writes-skillswrite_approval"
+  },
+  {
+    "title": "External Memory Providers",
+    "href": "#external-memory-providers"
+  }
+]

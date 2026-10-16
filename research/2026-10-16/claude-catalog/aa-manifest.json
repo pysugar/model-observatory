@@ -1,0 +1,77 @@
+[
+  {
+    "file": "aa-claude-opus-5-vs-claude-fable-5.json",
+    "url": "https://artificialanalysis.ai/models/comparisons/claude-opus-5-vs-claude-fable-5",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "9705c6b83bfd025b155a04ad8aa0d2b9ce5c113109933f03e9a84d19dc93431c",
+    "version": "4.3.2",
+    "header": [
+      "",
+      "Anthropic Claude Opus 5 (Max)",
+      "Anthropic Claude Fable 5 (Max, Opus 4.8 Fallback)",
+      "Add model"
+    ],
+    "rows": 37
+  },
+  {
+    "file": "aa-claude-opus-4-8-vs-claude-opus-4-7.json",
+    "url": "https://artificialanalysis.ai/models/comparisons/claude-opus-4-8-vs-claude-opus-4-7",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "e59837a63e1de0ccec6dab3232da4043ea2f26992dcdecfb6f3ffb39c028c2e5",
+    "version": "4.3.2",
+    "header": [
+      "",
+      "Anthropic Claude Opus 4.8 (Max)",
+      "Anthropic Claude Opus 4.7 (Max)",
+      "Add model"
+    ],
+    "rows": 38
+  },
+  {
+    "file": "aa-claude-sonnet-5-vs-claude-4-5-haiku-reasoning.json",
+    "url": "https://artificialanalysis.ai/models/comparisons/claude-sonnet-5-vs-claude-4-5-haiku-reasoning",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "513000c2686dc906a909dfea2b4a3098354a727182896a990de4f26f827bb956",
+    "version": "4.3.2",
+    "header": [
+      "",
+      "Anthropic Claude Sonnet 5 (Max)",
+      "Anthropic Claude 4.5 Haiku (Reasoning)",
+      "Add model"
+    ],
+    "rows": 38
+  },
+  {
+    "file": "aa-claude-opus-4-6-adaptive-vs-claude-sonnet-4-6-adaptive.json",
+    "url": "https://artificialanalysis.ai/models/comparisons/claude-opus-4-6-adaptive-vs-claude-sonnet-4-6-adaptive",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "b9001e434cc5119cc9043674da9264e2373c6feee207f223c9643b1aec42d3c3",
+    "version": "4.3.2",
+    "header": [
+      "",
+      "Anthropic Claude Sonnet 4.6 (Max)",
+      "Anthropic Claude Opus 4.6 (Max)",
+      "Add model"
+    ],
+    "rows": 37
+  },
+  {
+    "file": "aa-claude-opus-4-5-thinking-vs-claude-4-5-sonnet-thinking.json",
+    "url": "https://artificialanalysis.ai/models/comparisons/claude-opus-4-5-thinking-vs-claude-4-5-sonnet-thinking",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "204c6b2bdfe6fa9b66414dbedd7dcf468f9c326945283f453349ec6c9093a90a",
+    "version": "4.3.2",
+    "header": [
+      "",
+      "Anthropic Claude Opus 4.5 (Reasoning)",
+      "Anthropic Claude 4.5 Sonnet (Reasoning)",
+      "Add model"
+    ],
+    "rows": 38
+  }
+]

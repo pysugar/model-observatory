@@ -1,0 +1,104 @@
+Gemini 4 Argon
+Model evaluation
+Approach, methodology & results
+Approach
+We evaluated Gemini 4 Argon across a range of benchmarks, including agentic coding, ML
+engineering, computer use, knowledge work, science and math, multimodal capabilities,
+long-context and cybersecurity.
+
+
+Methodology
+All Gemini 4 Argon scores are pass @1 except where otherwise noted. "Single attempt" settings
+allow no majority voting or parallel test-time compute. All of the results are run with the Gemini
+API with the highest thinking settings unless indicated otherwise below. To reduce variance, we
+average over multiple trials for smaller benchmarks.
+
+All the results for non-Gemini models are sourced from providers' self reported numbers
+unless otherwise mentioned below. For GPT-6 Astra, Fable 5.1 and Opus 5.5, we default to
+reporting maximum thinking/reasoning settings available, but when reported results are not
+available we use best available reasoning results.
+
+
+
+Additional Details
+Our benchmarks span several capabilities as of September, 2026:
+
+   ●​ Knowledge work:
+         ○​ Vals Index results are sourced from Vals AI.
+         ○​ AutomationBench results use the private set and are sourced from the official
+            Zapier public leaderboard.
+         ○​ Vals Finance Agent v2 results are sourced from Vals AI.
+         ○​ Harvey’s Legal Agent Benchmark results are sourced from Vals AI.
+   ●​ Coding
+         ○​ DeepSWE v1.1 results for Gemini 4 Argon are self computed, using a mini-swe
+            agent harness. GPT-6 Astra results are reported from the official public
+            leaderboard, Fable 5.1 and Opus 5.5 results are taken from their respective
+            system cards. We use the highest scoring thinking level for each model as
+            reported by Datacurve on the main leaderboard.
+         ○​ FrontierSWE results are reported from Proximal's official public leaderboard.
+         ○​ Vibe Code Bench results are reported from the official Vals AI public
+            leaderboard.
+         ○​ Terminal-Bench 4.0 results for Gemini 4 Argon are self computed, all other
+            models are reported from the official public leaderboard. We use the highest
+            scoring thinking level for each model as reported by the Terminal Bench authors.
+●​ ML Engineering:
+
+       ○​ PostTrainBench v1.1 results for all models are self-computed. We use v1.1 with the
+          OpenCode harness for all models and a 10-hour budget on a single NVIDIA H100
+          GPU. Performance is measured by a weighted aggregate across four base
+          models and seven benchmarks.
+
+●​ Science and math
+      ○​ Terminal-Bench Science 0.1 results for Gemini 4 Argon are self computed, with
+         6x verifier timeout to address timeout issues with verification. All other results
+         are reported from the official public leaderboard.
+      ○​ RiemannBench results are reported from the official Surge public leaderboard.
+      ○​ LABBench2 results for all models are self computed. Models are given access to
+         a Linux terminal with pre-installed bioinfo tools, Python, and R, as well as internet
+         access.
+●​ Long Context:
+      ○​ Graphwalks results for all models are self-computed. The “Up to 128k” subset
+         uses the 650 items with context length up to 128k tokens. The “256 to 1M”
+         subset uses the 200 GraphWalks problems with context lengths between 256k
+         and 1M tokens.
+●​ Computer use:
+      ○​ Agent’s Last Exam results for Gemini 4 Argon are self computed using the
+         default ALE-Claw harness and a 5-hour window, with safety filters enabled.
+         Responses flagged by safety filters are returned as empty strings, though the
+         episode can continue. GPT-6 Astra and Opus 5.5 results are taken from the
+         official public leaderboard. Fable 5.1 results are missing from the public
+         leaderboard so are not included. We report the binary pass rate.
+      ○​ OSWorld 2.0 score for Gemini 4 Argon is self computed, maxed over 3 runs with
+         a single attempt per run. Responses flagged by safety filters are returned as
+         empty strings, though the episode can continue. We report the partial score
+         from the offline subset, which has more robust verifiers. We use the github
+         OSWorld 2.0 docker, official evaluator, default 1080p resolution, and max step
+         length of 500. We use the Gemini CUA harness in the OSWorld 2.0 repo, with
+         parallel batch tool calling enabled. We also include a compaction procedure
+         following the same setup as reported in the Opus 5.5 system card. We use
+         pyautogui for actuation with screenshot-only observation space, and for tools
+         we use UI-specific function declarations. Runs were completed with the official
+         OSWorld 2.0 team’s 08.08 patch. GPT Astra results were taken from the official
+         blog post. Anthropic only reports aggregated results for the online and offline
+         subsets combined, so results from Anthropic are not included.
+●​ Multimodal:
+      ○​ Chartography results are without tools and taken from the official Surge public
+         leaderboard.
+      ○​ LVBench results are self computed without tools. We use 1FPS for Gemini, 800
+         frames for GPT-6 Astra and 300 frames for fable 5.1 and 600 for opus 5.5 due to
+         API limitations.
+●​ Cybersecurity:
+      ○​ CWE-bench v1 results are taken from the official public leaderboard. Scores are
+         ranked based on pass@1 and ties broken based on pass@4.
+      ○​ Real world vulnerability is measured using an internal dataset that tests recall
+         over recent, confirmed historical vulnerabilities across a diverse set of
+         programming languages in popular open source projects. Our models ran in an
+         internal version of the Antigravity harness that is not cyber specialized and are
+         given access to the source code.
+      ○​ Wiz Penetration Testing Benchmark is an internal cybersecurity benchmark
+         measuring ability to write exploits against real web application vulnerabilities,
+         without access to the codebase.
+      ○​ Gray Swan IPI Benchmark results were sourced from Gray Swan.
+Results
+Gemini 4 Argon results as of October, 2026 are below:
+

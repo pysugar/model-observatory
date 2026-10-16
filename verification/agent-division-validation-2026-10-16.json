@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "date": "2026-10-16",
+  "checks": [
+    "Data preservation: all existing data except source catalogue unchanged; 166 records, 20 AA profiles and Opus evidence retained",
+    "Existing task, writing, controller and evidence tables unchanged; JS unchanged",
+    "Six subagent roles, six auxiliary roles, five framework mappings; evidence labels, Chinese caveat, valid anchors and 12 snapshot hashes",
+    "Desktop: quick link works; three new tables readable without horizontal overflow",
+    "Mobile 390px: cards and labels present; long configuration keys wrap without page overflow",
+    "Mobile 320px: cards and labels present; long configuration keys wrap without page overflow",
+    "Coding evidence jump and source rendering work; no JS errors or remote requests"
+  ],
+  "html_sha256": "6aa463b1358361885b820bc29f79fb066752fa17e8f9d93c54086b73fefde7b5",
+  "screenshots": [
+    "subagent-division-desktop.png",
+    "auxiliary-division-desktop.png",
+    "agent-framework-desktop.png",
+    "subagent-division-mobile.png",
+    "auxiliary-division-mobile.png",
+    "agent-framework-mobile.png"
+  ],
+  "scope": "Report-only targeted verification; no model benchmark or live agent configuration changed."
+}

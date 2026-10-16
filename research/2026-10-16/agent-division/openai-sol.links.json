@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Models",
+    "href": "/api/docs/models"
+  },
+  {
+    "title": "Ultrafast mode",
+    "href": "/api/docs/guides/ultrafast-mode"
+  },
+  {
+    "title": "data residency eligibility",
+    "href": "/api/docs/guides/your-data#which-models-and-features-are-eligible-for-data-residency"
+  },
+  {
+    "title": "GPT-6.1 Sol in the GPT-6 guide",
+    "href": "/api/docs/guides/latest-model?model=gpt-6-astra#gpt-61-sol"
+  },
+  {
+    "title": "model-selection guidance",
+    "href": "/api/docs/guides/model-selection#when-to-consider-gpt-61-sol"
+  },
+  {
+    "title": "pricing page",
+    "href": "/api/docs/pricing"
+  }
+]

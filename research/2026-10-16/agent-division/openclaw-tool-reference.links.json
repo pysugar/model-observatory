@@ -1,0 +1,54 @@
+[
+  {
+    "title": "View as Markdown View this page as plain text",
+    "href": "/tools/subagents/tool-reference.md"
+  },
+  {
+    "title": "Open in ChatGPT Ask questions about this page",
+    "href": "https://chatgpt.com/?hints=search&q=Read%20from%20https%3A%2F%2Fdocs.openclaw.ai%2Ftools%2Fsubagents%2Ftool-reference.md%20so%20I%20can%20ask%20questions%20about%20it."
+  },
+  {
+    "title": "Open in Claude Ask questions about this page",
+    "href": "https://claude.ai/new?q=Read%20from%20https%3A%2F%2Fdocs.openclaw.ai%2Ftools%2Fsubagents%2Ftool-reference.md%20so%20I%20can%20ask%20questions%20about%20it."
+  },
+  {
+    "title": "per-session concurrency",
+    "href": "/tools/subagents/operations#concurrency"
+  },
+  {
+    "title": "completion paths",
+    "href": "/tools/subagents/slash-command#spawn-behavior"
+  },
+  {
+    "title": "Operator scopes",
+    "href": "/gateway/operator-scopes#scope-levels"
+  },
+  {
+    "title": "post-cleanup access rules",
+    "href": "/tools/subagents/announce#announce"
+  },
+  {
+    "title": "Private parent completion",
+    "href": "/tools/subagents/announce#private-parent-completion"
+  },
+  {
+    "title": "deny-only target delegation grant",
+    "href": "/tools/subagents/tool-policy#delegate-tools-to-a-coding-agent"
+  },
+  {
+    "title": "Session tools",
+    "href": "/concepts/session-tool#visibility"
+  },
+  {
+    "title": "Managed worktrees",
+    "href": "/concepts/managed-worktrees"
+  },
+  {
+    "title": "Multi-user mode",
+    "href": "/concepts/multi-user#agent-spawned-sessions"
+  },
+  {
+    "title": "Subagent yield handoff",
+    "href": "/concepts/subagent-yield-handoff"
+  }
+]

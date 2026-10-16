@@ -1,0 +1,330 @@
+[
+  {
+    "title": "​",
+    "href": "#completion-delivery"
+  },
+  {
+    "title": "​",
+    "href": "#background-process-lifetime"
+  },
+  {
+    "title": "​",
+    "href": "#single-task"
+  },
+  {
+    "title": "​",
+    "href": "#parallel-batch"
+  },
+  {
+    "title": "​",
+    "href": "#structured-output-output_schema"
+  },
+  {
+    "title": "​",
+    "href": "#how-subagent-context-works"
+  },
+  {
+    "title": "​",
+    "href": "#forwarding-images-to-a-subagent"
+  },
+  {
+    "title": "​",
+    "href": "#practical-examples"
+  },
+  {
+    "title": "​",
+    "href": "#parallel-research"
+  },
+  {
+    "title": "​",
+    "href": "#code-review--fix"
+  },
+  {
+    "title": "​",
+    "href": "#multi-file-refactoring"
+  },
+  {
+    "title": "​",
+    "href": "#batch-mode-details"
+  },
+  {
+    "title": "​",
+    "href": "#independent-completions-opt-in"
+  },
+  {
+    "title": "​",
+    "href": "#durable-background-completions"
+  },
+  {
+    "title": "​",
+    "href": "#child-background-process-notifications"
+  },
+  {
+    "title": "​",
+    "href": "#handing-a-process-to-the-parent"
+  },
+  {
+    "title": "​",
+    "href": "#model-override"
+  },
+  {
+    "title": "​",
+    "href": "#cost-strategy-frontier-planner-inexpensive-workers"
+  },
+  {
+    "title": "Configuration",
+    "href": "#configuration"
+  },
+  {
+    "title": "kanban board",
+    "href": "/docs/user-guide/features/kanban#per-task-model-override"
+  },
+  {
+    "title": "​",
+    "href": "#the-review-command"
+  },
+  {
+    "title": "​",
+    "href": "#review-model"
+  },
+  {
+    "title": "​",
+    "href": "#inherited-tool-access"
+  },
+  {
+    "title": "Depth Limit and Nested Orchestration",
+    "href": "#depth-limit-and-nested-orchestration"
+  },
+  {
+    "title": "​",
+    "href": "#max-iterations"
+  },
+  {
+    "title": "​",
+    "href": "#child-timeout"
+  },
+  {
+    "title": "​",
+    "href": "#failure-visibility"
+  },
+  {
+    "title": "​",
+    "href": "#stall-detection-for-background-subagents"
+  },
+  {
+    "title": "​",
+    "href": "#monitoring-running-subagents-agents"
+  },
+  {
+    "title": "​",
+    "href": "#live-activity-above-the-composer"
+  },
+  {
+    "title": "TUI — Slash commands",
+    "href": "/docs/user-guide/tui#slash-commands"
+  },
+  {
+    "title": "​",
+    "href": "#steering-a-running-subagent"
+  },
+  {
+    "title": "​",
+    "href": "#from-the-parent-agent-model-facing"
+  },
+  {
+    "title": "​",
+    "href": "#from-the-tui--gateway-session-facing"
+  },
+  {
+    "title": "/steer",
+    "href": "/docs/reference/slash-commands"
+  },
+  {
+    "title": "​",
+    "href": "#live-transcripts"
+  },
+  {
+    "title": "​",
+    "href": "#depth-limit-and-nested-orchestration"
+  },
+  {
+    "title": "​",
+    "href": "#finite-chat-runs"
+  },
+  {
+    "title": "​",
+    "href": "#lifetime-and-durability"
+  },
+  {
+    "title": "​",
+    "href": "#key-properties"
+  },
+  {
+    "title": "​",
+    "href": "#worktree-isolation"
+  },
+  {
+    "title": "​",
+    "href": "#delegation-vs-execute_code"
+  },
+  {
+    "title": "​",
+    "href": "#configuration"
+  },
+  {
+    "title": "Configuration → Delegation",
+    "href": "/docs/user-guide/configuration#delegation"
+  },
+  {
+    "title": "Completion delivery",
+    "href": "#completion-delivery"
+  },
+  {
+    "title": "Background process lifetime",
+    "href": "#background-process-lifetime"
+  },
+  {
+    "title": "Single Task",
+    "href": "#single-task"
+  },
+  {
+    "title": "Parallel Batch",
+    "href": "#parallel-batch"
+  },
+  {
+    "title": "Structured Output ( output_schema )",
+    "href": "#structured-output-output_schema"
+  },
+  {
+    "title": "How Subagent Context Works",
+    "href": "#how-subagent-context-works"
+  },
+  {
+    "title": "Forwarding Images to a Subagent",
+    "href": "#forwarding-images-to-a-subagent"
+  },
+  {
+    "title": "Practical Examples",
+    "href": "#practical-examples"
+  },
+  {
+    "title": "Parallel Research",
+    "href": "#parallel-research"
+  },
+  {
+    "title": "Code Review + Fix",
+    "href": "#code-review--fix"
+  },
+  {
+    "title": "Multi-File Refactoring",
+    "href": "#multi-file-refactoring"
+  },
+  {
+    "title": "Batch Mode Details",
+    "href": "#batch-mode-details"
+  },
+  {
+    "title": "Independent completions (opt-in)",
+    "href": "#independent-completions-opt-in"
+  },
+  {
+    "title": "Durable background completions",
+    "href": "#durable-background-completions"
+  },
+  {
+    "title": "Child background-process notifications",
+    "href": "#child-background-process-notifications"
+  },
+  {
+    "title": "Handing a process to the parent",
+    "href": "#handing-a-process-to-the-parent"
+  },
+  {
+    "title": "Model Override",
+    "href": "#model-override"
+  },
+  {
+    "title": "Cost strategy: frontier planner, inexpensive workers",
+    "href": "#cost-strategy-frontier-planner-inexpensive-workers"
+  },
+  {
+    "title": "The /review Command",
+    "href": "#the-review-command"
+  },
+  {
+    "title": "Review model",
+    "href": "#review-model"
+  },
+  {
+    "title": "Inherited Tool Access",
+    "href": "#inherited-tool-access"
+  },
+  {
+    "title": "Max Iterations",
+    "href": "#max-iterations"
+  },
+  {
+    "title": "Child Timeout",
+    "href": "#child-timeout"
+  },
+  {
+    "title": "Failure Visibility",
+    "href": "#failure-visibility"
+  },
+  {
+    "title": "Stall Detection for Background Subagents",
+    "href": "#stall-detection-for-background-subagents"
+  },
+  {
+    "title": "Monitoring Running Subagents ( /agents )",
+    "href": "#monitoring-running-subagents-agents"
+  },
+  {
+    "title": "Live activity above the composer",
+    "href": "#live-activity-above-the-composer"
+  },
+  {
+    "title": "Steering a Running Subagent",
+    "href": "#steering-a-running-subagent"
+  },
+  {
+    "title": "From the parent agent (model-facing)",
+    "href": "#from-the-parent-agent-model-facing"
+  },
+  {
+    "title": "From the TUI / gateway (session-facing)",
+    "href": "#from-the-tui--gateway-session-facing"
+  },
+  {
+    "title": "Live Transcripts",
+    "href": "#live-transcripts"
+  },
+  {
+    "title": "Depth Limit and Nested Orchestration",
+    "href": "#depth-limit-and-nested-orchestration"
+  },
+  {
+    "title": "Finite chat runs",
+    "href": "#finite-chat-runs"
+  },
+  {
+    "title": "Lifetime and Durability",
+    "href": "#lifetime-and-durability"
+  },
+  {
+    "title": "Key Properties",
+    "href": "#key-properties"
+  },
+  {
+    "title": "Worktree Isolation",
+    "href": "#worktree-isolation"
+  },
+  {
+    "title": "Delegation vs execute_code",
+    "href": "#delegation-vs-execute_code"
+  },
+  {
+    "title": "Configuration",
+    "href": "#configuration"
+  }
+]

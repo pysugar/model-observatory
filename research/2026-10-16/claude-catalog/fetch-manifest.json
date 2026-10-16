@@ -1,0 +1,157 @@
+[
+  {
+    "file": "effort.txt",
+    "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "373bb57723bcabf981d761ec73fcf13e8d16a2717db3a907ba379384f0ea618e",
+    "chars": 23300,
+    "tables": 2
+  },
+  {
+    "file": "thinking.txt",
+    "url": "https://platform.claude.com/docs/en/build-with-claude/extended-thinking",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "f67bc0cd29af589b079a2bedead23f7557552a371aadff81b824cf1b80bc1f56",
+    "chars": 13173,
+    "tables": 0
+  },
+  {
+    "file": "pricing.txt",
+    "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "060e17516b1f00fbf47b52210bfb00b1beab7a41a21170e5a6b6f625229cc48f",
+    "chars": 28010,
+    "tables": 13
+  },
+  {
+    "file": "lifecycle.txt",
+    "url": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "a6cddc3095b656d22e98acbd588b462264ee0afb9d696084efb00520eda12bc4",
+    "chars": 10688,
+    "tables": 12
+  },
+  {
+    "file": "fable-5.txt",
+    "url": "https://platform.claude.com/docs/en/models/fable-5/overview",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "055fa35f394391f541a476ad5f8d03afc00832d1aa35fd08e130ad333de635e3",
+    "chars": 3545,
+    "tables": 1
+  },
+  {
+    "file": "opus-5.txt",
+    "url": "https://platform.claude.com/docs/en/models/opus-5/overview",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "4801372a6ecf7502d4ccfac346d6583adbade7c0273a565774b94de93d4204f2",
+    "chars": 3370,
+    "tables": 1
+  },
+  {
+    "file": "opus-4-8.txt",
+    "url": "https://platform.claude.com/docs/en/models/opus-4-8/overview",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "e30351905203fdff5da3e0a95579b2510ac971a24c387289b22c75a059e77350",
+    "chars": 3116,
+    "tables": 1
+  },
+  {
+    "file": "opus-4-7.txt",
+    "url": "https://platform.claude.com/docs/en/models/opus-4-7/overview",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "225d082c435983774bf921509f925830c26aead52fe2309a9277485b22f9b059",
+    "chars": 3057,
+    "tables": 1
+  },
+  {
+    "file": "opus-4-6.txt",
+    "url": "https://platform.claude.com/docs/en/models/opus-4-6/overview",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "fe7797dc85f725d71a64a9ca835c9518ea6b06b3d0e718f2cb4cfabc80e04189",
+    "chars": 3262,
+    "tables": 1
+  },
+  {
+    "file": "opus-4-5.txt",
+    "url": "https://platform.claude.com/docs/en/models/opus-4-5/overview",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "836952ef90e8f97deaa75c85a44d4e979eec9a4c260b3f395818af62a4706a35",
+    "chars": 3253,
+    "tables": 1
+  },
+  {
+    "file": "sonnet-5.txt",
+    "url": "https://platform.claude.com/docs/en/models/sonnet-5/overview",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "8cc04b00f9c8660c10af3d7e1a0e6b403e51fc3e33f67bcf58885b91497ecebc",
+    "chars": 3677,
+    "tables": 1
+  },
+  {
+    "file": "sonnet-4-6.txt",
+    "url": "https://platform.claude.com/docs/en/models/sonnet-4-6/overview",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "2413bc3131ad76aee1aca96f85ceabefd6172db3fef797d667ad10c9242d9145",
+    "chars": 3300,
+    "tables": 1
+  },
+  {
+    "file": "sonnet-4-5.txt",
+    "url": "https://platform.claude.com/docs/en/models/sonnet-4-5/overview",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "df6ff61112eddc1d1be7e0d70818699c879b37a4f21dc252e0e733323b18df0d",
+    "chars": 3392,
+    "tables": 1
+  },
+  {
+    "file": "haiku-4-5.txt",
+    "url": "https://platform.claude.com/docs/en/models/haiku-4-5/overview",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "fb87cad4d1768118c1ac5fc54c7a007a0462bc216f6f7fbd7777504bc47e8c1a",
+    "chars": 3764,
+    "tables": 1
+  },
+  {
+    "file": "mythos-5.txt",
+    "url": "https://platform.claude.com/docs/en/models/mythos-5/overview",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "5933c42b07b02e1c36f14662f40d18758657d78542bfdb83166784d39d4e759f",
+    "chars": 3177,
+    "tables": 1
+  },
+  {
+    "file": "mythos-5-1.txt",
+    "url": "https://platform.claude.com/docs/en/models/mythos-5-1/overview",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "bfdb2a60adb85f11c558f4896be091f3e2d30cc7cba8a8233c56c6657a8742bd",
+    "chars": 3168,
+    "tables": 1
+  },
+  {
+    "file": "mythos-preview.txt",
+    "url": "https://platform.claude.com/docs/en/models/mythos-preview/overview",
+    "fetched_at": "2026-10-16",
+    "status": 200,
+    "sha256": "b948603b628fa046c6b27f61a7f3d3116d43765e0b9fe2ed0966461b7f32d5fc",
+    "chars": 31,
+    "tables": 0,
+    "usable": false,
+    "note": "HTTP 200 returned a Page Not Found shell; not used as evidence. Lifecycle and Anthropic transparency page used instead."
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "date": "2026-10-16",
+  "scope": "Opus coding evidence supplement",
+  "views": 4,
+  "csv_exports": 4,
+  "widths": [
+    1440,
+    390,
+    320
+  ],
+  "page_errors": [],
+  "remote_requests": [],
+  "original_144_rows_unchanged": true,
+  "mixed_fallback_still_excluded_from_frontier": true,
+  "screenshots": [
+    "opus55-frontier-observed-desktop.png",
+    "opus55-frontier-common-desktop.png",
+    "opus55-routine-desktop.png",
+    "opus55-official-desktop.png",
+    "opus55-routine-mobile.png"
+  ]
+}

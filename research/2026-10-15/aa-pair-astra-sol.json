@@ -1,0 +1,259 @@
+{
+  "url": "https://artificialanalysis.ai/models/comparisons/gpt-6-astra-vs-gpt-6-1-sol",
+  "sha256": "1eaeb8bb92f4fba3bb5f1ec2bc41023dd762874d3de1b20cb2929d3adbe6bb6b",
+  "tables": [
+    [
+      [
+        "",
+        "OpenAI GPT-6.1 Sol (Max)",
+        "OpenAI GPT-6 Astra (Max)",
+        "Add model"
+      ],
+      [
+        "Intelligence"
+      ],
+      [
+        "Intelligence Index",
+        "52",
+        "53",
+        ""
+      ],
+      [
+        "AA-Briefcase v1.1",
+        "1558",
+        "1570",
+        ""
+      ],
+      [
+        "GDPval-AA v2.1",
+        "1594",
+        "1573",
+        ""
+      ],
+      [
+        "AutomationBench-AA",
+        "65%",
+        "68%",
+        ""
+      ],
+      [
+        "Terminal-Bench 4.0",
+        "56%",
+        "59%",
+        ""
+      ],
+      [
+        "SciCode",
+        "54%",
+        "56%",
+        ""
+      ],
+      [
+        "Humanity's Last Exam",
+        "53%",
+        "55%",
+        ""
+      ],
+      [
+        "GDP.pdf",
+        "31%",
+        "31%",
+        ""
+      ],
+      [
+        "CritPt",
+        "32%",
+        "32%",
+        ""
+      ],
+      [
+        "AA-Omniscience",
+        "42",
+        "43",
+        ""
+      ],
+      [
+        "AA-LCR v1.1",
+        "83%",
+        "81%",
+        ""
+      ],
+      [
+        "Cost"
+      ],
+      [
+        "Price per 1M Tokens",
+        "$1.47",
+        "$7.70",
+        ""
+      ],
+      [
+        "Input Price per 1M Tokens",
+        "$2.00",
+        "$10.00",
+        ""
+      ],
+      [
+        "Output Price per 1M Tokens",
+        "$10.00",
+        "$50.00",
+        ""
+      ],
+      [
+        "Cache Hit Price per 1M Tokens",
+        "$0.10",
+        "$1.00",
+        ""
+      ],
+      [
+        "Cost per Task",
+        "$0.72",
+        "$3.26",
+        ""
+      ],
+      [
+        "Cost to Run Intelligence Index",
+        "$1,082",
+        "$5,324",
+        ""
+      ],
+      [
+        "Token Use"
+      ],
+      [
+        "Output Tokens per Task",
+        "38k",
+        "27k",
+        ""
+      ],
+      [
+        "Reasoning Tokens per Task",
+        "25k",
+        "17k",
+        ""
+      ],
+      [
+        "Output Tokens to Run Intelligence Index",
+        "67M",
+        "60M",
+        ""
+      ],
+      [
+        "Performance"
+      ],
+      [
+        "Output Speed",
+        "49 tokens/s",
+        "44 tokens/s",
+        ""
+      ],
+      [
+        "Time to First Token",
+        "301.67s",
+        "288.16s",
+        ""
+      ],
+      [
+        "Time to First Answer Token",
+        "301.67s",
+        "288.16s",
+        ""
+      ],
+      [
+        "End-to-End Response Time",
+        "311.98s",
+        "299.46s",
+        ""
+      ],
+      [
+        "Time per Task",
+        "778.36s",
+        "593.42s",
+        ""
+      ],
+      [
+        "Technical specifications"
+      ],
+      [
+        "Context Window",
+        "1000k tokens ~1,500 A4 pages of size 12 Arial font",
+        "1000k tokens ~1,500 A4 pages of size 12 Arial font",
+        ""
+      ],
+      [
+        "Release Date",
+        "September 2026",
+        "September 2026",
+        ""
+      ],
+      [
+        "Knowledge Cutoff",
+        "",
+        "April 2026",
+        ""
+      ],
+      [
+        "Reasoning",
+        "Yes",
+        "Yes",
+        ""
+      ],
+      [
+        "Input modality",
+        "Supports: text and image",
+        "Supports: text and image",
+        ""
+      ],
+      [
+        "Output modality",
+        "Supports: text",
+        "Supports: text",
+        ""
+      ],
+      [
+        "Open Source (Weights)",
+        "No",
+        "No",
+        ""
+      ]
+    ]
+  ],
+  "links": [
+    {
+      "text": "Methodology page.",
+      "url": "/methodology"
+    },
+    {
+      "text": "Intelligence Index methodology",
+      "url": "/methodology/intelligence-benchmarking"
+    },
+    {
+      "text": "Intelligence Index methodology",
+      "url": "/methodology/intelligence-benchmarking"
+    },
+    {
+      "text": "Intelligence Index methodology",
+      "url": "/methodology/intelligence-benchmarking"
+    },
+    {
+      "text": "Intelligence Index methodology",
+      "url": "/methodology/intelligence-benchmarking"
+    },
+    {
+      "text": "Intelligence Index methodology",
+      "url": "/methodology/intelligence-benchmarking"
+    },
+    {
+      "text": "methodology details",
+      "url": "/methodology/performance-benchmarking"
+    },
+    {
+      "text": "About",
+      "url": "/about"
+    },
+    {
+      "text": "Methodology",
+      "url": "/methodology"
+    }
+  ]
+}

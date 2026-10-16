@@ -1,0 +1,67 @@
+{
+  "url": "https://platform.claude.com/docs/en/models/mythos-5-1/overview",
+  "tables": [
+    [
+      [
+        "Model",
+        "Context ",
+        "Max output ",
+        "Price / MTok ",
+        "Latency ",
+        "Thinking ",
+        "Default effort ",
+        "Knowledge cutoff "
+      ],
+      [
+        "Claude Fable 5.1",
+        "1M",
+        "128K",
+        "$10 / $50",
+        "Slower",
+        "Adaptive (always on)",
+        "high",
+        "Jun 2026"
+      ],
+      [
+        "Claude Mythos 5.1 This model",
+        "1M",
+        "128K",
+        "$10 / $50",
+        "Slower",
+        "Adaptive (always on)",
+        "high",
+        "Jun 2026"
+      ],
+      [
+        "Claude Opus 5.5",
+        "1M",
+        "128K",
+        "$4 / $20",
+        "Moderate",
+        "Adaptive (always on)",
+        "medium",
+        "Jun 2026"
+      ],
+      [
+        "Claude Sonnet 5.5",
+        "1M",
+        "128K",
+        "$2 / $10",
+        "Fast",
+        "Adaptive",
+        "high",
+        "Jun 2026"
+      ],
+      [
+        "Claude Haiku 5.5",
+        "1M",
+        "128K",
+        "From $0.10 / $0.50",
+        "Fastest",
+        "Adaptive",
+        "medium",
+        "Jun 2026"
+      ]
+    ]
+  ]
+}

@@ -1,0 +1,58 @@
+[
+  {
+    "key": "aa-argon",
+    "url": "https://artificialanalysis.ai/models/gemini-4-argon",
+    "bytes": 4026979,
+    "sha256": "b20de814738111aa4f96360babfb24c93e2f1d05c9fa454737dd6bfda43daa1a",
+    "text_chars": 16360,
+    "status": "ok"
+  },
+  {
+    "key": "aa-flash",
+    "url": "https://artificialanalysis.ai/models/gemini-3-8-flash",
+    "bytes": 1488152,
+    "sha256": "296cabebdcfc2df5b2794a0a22804b7c827a864432617b597373b76b47a0b59a",
+    "text_chars": 20029,
+    "status": "ok"
+  },
+  {
+    "key": "aa-lite",
+    "url": "https://artificialanalysis.ai/models/gemini-3-5-flash-lite",
+    "bytes": 4199175,
+    "sha256": "510b746ab97db1199a712e66adc22bc41eec8eeff102236935be37155725dccd",
+    "text_chars": 19908,
+    "status": "ok"
+  },
+  {
+    "key": "aa-fable",
+    "url": "https://artificialanalysis.ai/models/claude-fable-5-1",
+    "bytes": 1493046,
+    "sha256": "cc7b6ee31414aee2937398b39d61686439b83b8f4696216bc9fa7f1a02edf1db",
+    "text_chars": 20754,
+    "status": "ok"
+  },
+  {
+    "key": "claude-effort",
+    "url": "https://platform.claude.com/docs/en/build-with-claude/effort.md",
+    "bytes": 42983,
+    "sha256": "60ab9707701eb92ea0b21059de490d49fd93b81e194d4e442c03133c26dac118",
+    "text_chars": 42983,
+    "status": "ok"
+  },
+  {
+    "key": "google-thinking",
+    "url": "https://ai.google.dev/gemini-api/docs/thinking",
+    "bytes": 288272,
+    "sha256": "9febc821aa5941bc151c197349f398127a77b15b974cd5b30d8ea1d6b123608c",
+    "text_chars": 30647,
+    "status": "ok"
+  },
+  {
+    "key": "openai-reasoning",
+    "url": "https://developers.openai.com/api/docs/guides/reasoning.md",
+    "bytes": 70779,
+    "sha256": "a561487dd41db8828b5b9920d77275bdced3c3c07ba1fb9f3c3230c5aaeb925b",
+    "text_chars": 70761,
+    "status": "ok"
+  }
+]

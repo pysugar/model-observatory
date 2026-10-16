@@ -1,0 +1,61 @@
+{
+  "url": "https://platform.claude.com/docs/en/models/sonnet-5/overview",
+  "tables": [
+    [
+      [
+        "Model",
+        "Context ",
+        "Max output ",
+        "Price / MTok ",
+        "Thinking ",
+        "Default effort ",
+        "Knowledge cutoff "
+      ],
+      [
+        "Claude Fable 5.1",
+        "1M",
+        "128K",
+        "$10 / $50",
+        "Adaptive (always on)",
+        "high",
+        "Jun 2026"
+      ],
+      [
+        "Claude Opus 5.5",
+        "1M",
+        "128K",
+        "$4 / $20",
+        "Adaptive (always on)",
+        "medium",
+        "Jun 2026"
+      ],
+      [
+        "Claude Sonnet 5.5",
+        "1M",
+        "128K",
+        "$2 / $10",
+        "Adaptive",
+        "high",
+        "Jun 2026"
+      ],
+      [
+        "Claude Sonnet 5 This model Legacy",
+        "1M",
+        "128K",
+        "$2 / $10",
+        "Adaptive",
+        "high",
+        "Jan 2026"
+      ],
+      [
+        "Claude Haiku 5.5",
+        "1M",
+        "128K",
+        "From $0.10 / $0.50",
+        "Adaptive",
+        "medium",
+        "Jun 2026"
+      ]
+    ]
+  ]
+}

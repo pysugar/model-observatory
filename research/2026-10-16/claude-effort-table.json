@@ -1,0 +1,56 @@
+{
+  "url": "https://platform.claude.com/docs/en/about-claude/models/optimizing-for-cost-and-intelligence",
+  "accessed": "2026-10-16",
+  "section": "Tune effort",
+  "table": [
+    [
+      "Benchmark",
+      "Model",
+      "Effort",
+      "Score",
+      "Cost per task"
+    ],
+    [
+      "SWE-bench Pro 3 subset",
+      "Claude Opus 5.5",
+      "low",
+      "87.4% of tasks solved",
+      "$0.11 USD"
+    ],
+    [
+      "SWE-bench Pro subset",
+      "Claude Opus 5.5",
+      "medium (default)",
+      "92.8% of tasks solved",
+      "$0.21 USD"
+    ],
+    [
+      "SWE-bench Pro subset",
+      "Claude Opus 5.5",
+      "high",
+      "95.3% of tasks solved",
+      "$0.29 USD"
+    ],
+    [
+      "SWE-bench Pro subset",
+      "Claude Opus 5.5",
+      "xhigh",
+      "96.7% of tasks solved (a single run)",
+      "$0.74 USD"
+    ],
+    [
+      "DeepResearch Bench II 7",
+      "Claude Fable 5.1",
+      "low",
+      "Rubric score 66%",
+      "$4.48 USD"
+    ],
+    [
+      "DeepResearch Bench II",
+      "Claude Fable 5.1",
+      "high (default)",
+      "Rubric score 65%",
+      "$6.89 USD"
+    ]
+  ]
+}

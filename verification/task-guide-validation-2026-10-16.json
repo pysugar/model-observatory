@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "date": "2026-10-16",
+  "scope": "Overview task-selection addition",
+  "engineering_tasks": 9,
+  "writing_research_tasks": 7,
+  "chinese_unvalidated_rows": 2,
+  "data_and_other_panels_unchanged": true,
+  "desktop_width": 1440,
+  "mobile_widths": [
+    390,
+    320
+  ],
+  "offline": true,
+  "page_errors": [],
+  "source_links": [
+    "https://ai.google.dev/gemini-api/docs/models",
+    "https://ai.google.dev/gemini-api/docs/thinking",
+    "https://arxiv.org/html/2610.09633v1#A1",
+    "https://benchmark.towardsai.com/data/leaderboard.json",
+    "https://developers.openai.com/api/docs/guides/model-selection",
+    "https://developers.openai.com/api/docs/guides/reasoning",
+    "https://forcebench.ai/studies/max-effort/",
+    "https://platform.claude.com/docs/en/build-with-claude/effort",
+    "https://platform.claude.com/docs/en/models/overview",
+    "https://swtbench.com/",
+    "https://vulcanbench.com/benchmarks/swe-v4-astra-fable51-v34.html",
+    "https://vulcanbench.com/benchmarks/swe-v4-gpt61-sol-v318.html"
+  ],
+  "screenshots": [
+    "task-guide-engineering-guide-desktop.png",
+    "task-guide-writing-research-guide-desktop.png",
+    "task-guide-chinese-mobile.png"
+  ],
+  "checks": [
+    "Four-column task tables",
+    "Explicit Chinese evidence limits",
+    "Mobile field labels and no page overflow",
+    "Print table layout",
+    "Existing explorer tab smoke check"
+  ]
+}

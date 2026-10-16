@@ -1,0 +1,21 @@
+﻿编号,来源,实验边界,URL
+S1,VulcanBench Sonnet 5.5 五档代码实验,2026-10-08发布，10月6至8日运行；23题×5档，每格一次，Claude Code2.1.291至293；API等价估算。,https://vulcanbench.com/benchmarks/swe-v4-sonnet55-v323.html
+S2,ToneBench Sonnet 5.5 正式配置页,10月8日生成，10月14日访问；页面更新标签抓取有12/13日差异。10个brief×5稿/配置，4评委含3个LLM及Jev；固定13k提示，耗时含重试。不同于早期Reddit三评委版本。,https://benchmark.towardsai.com/models/claude-sonnet-5-5-xhigh.html
+S3,Simon Willison 的 Sonnet SVG 单例,2026-09-28；max耗尽128k未交付，xhigh成功；单任务，不代表发生概率，未报告max耗时。,https://simonwillison.net/2026/Sep/28/claude-sonnet-5-5/
+S4,VulcanBench GPT 6.1 Sol,2026-10-01；9月29至30日，23题×5档；Codex0.159.0，单次单元，近饱和题集，费用排除判题。,https://vulcanbench.com/benchmarks/swe-v4-gpt61-sol-v318.html
+S5,VulcanBench GPT 6 Luna,2026-09-28；23题×5档，3小时上限；部分超时收据缺失，完成子集分数和全体失败计零分数不同。,https://vulcanbench.com/benchmarks/swe-v4-gpt6-luna-v316.html
+S6,VulcanBench GPT 6 Sol 与旧代际对照,2026-09-30；23个旧二进制重建任务；模型间CLI版本不同，每格一次，不是通用仓库工程排名。,https://vulcanbench.com/benchmarks/swe-v4-gpt6-sol-v317.html
+S7,VulcanBench Haiku 5.5,2026-10-08至11；23题×5档，115次，Claude Code2.1.293至296；安全停止及部分未判分，费用为API等价估算。,https://vulcanbench.com/benchmarks/swe-v4-haiku55-v324.html
+S8,ForceBench Haiku Salesforce,访问2026-10-14，运行日期未披露；每档272个首答，领域特定；首答通过率不能与重试指标混用。,https://forcebench.ai/models/claude-haiku-5-5/
+S9,5.6 Luna 任务路由与重复实验,2026-07-31；14题×10配置及60次针对性复测，共200次；基础每格1次，复测只覆盖3题。,https://github.com/ruyari-cupcake/terra-luna-routing-benchmark
+S10,ForceBench max effort 固定预算研究,2026-10-13；60个Salesforce任务配对，32768输出预算含推理；未测xhigh或更大输出预算。,https://forcebench.ai/studies/max-effort/
+S11,一题算法任务的 Sol 与 Luna 成本,约2026年9月，准确日期未确认；LeetCode3348单题，各配置通过；公开题、缓存、单次结果限制外推。,https://www.reddit.com/r/codex/comments/1w3nc2m/gpt56_sol_or_luna_as_a_daily_coding_default_i_ran/
+S12,Spectrum GPT 6.1 Sol 构建实验,2026-10-04；2提示×6设置=12次，单个盲评Sonnet评委；max均排名首位，第二题平均分与ultra并列。,https://spectrumailab.com/blog/gpt-6-1-sol-reasoning-effort-test-2026
+S13,Astra 桌面任务 low 与 xhigh,2026年9月新增；Energy50与OSWorld2共两类任务，50/52题；Codex订阅、8并发，无中档对照或可靠美元成本。,https://huggingface.co/datasets/anonymousmypcbench/cua-speedrun-trajectories/blame/main/README.md
+S14,Opus 5.5 低中高小型实验,2026-09-30发布，9月24日测量；OpenRouter，逻辑题和波兰语写作，每变体一次；有联盟营销利益，样本极小。,https://quantslant.com/claude-opus-5-5-effort-levels-tested/
+S15,OpenAI 推理计费与模式说明,官方文档，仅支持隐藏推理/输出计费等口径，不作为社区经验或独立测量。访问2026-10-14。,https://developers.openai.com/api/docs/guides/reasoning
+S16,Claude 定价与工具计费说明,官方文档，仅支持完整请求成本口径；不同服务、缓存与工具费用需分开。访问2026-10-14。,https://platform.claude.com/docs/en/about-claude/pricing
+S17,Thariq 的低档实施高档验证实践,2026-09-25；作者为厂商员工，Claude Code实践与厂商测试，非独立共识。,https://claude.dev/blog/spending-your-effort/
+S18,Sonnet 官方停止条件与成本治理,访问2026-10-14；厂商测试，样本和完整方法未充分披露；不是社区独立复现。,https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-sonnet-5-5
+S19,ToneBench 作者的当前选择,2026-10-13 max页快照；Louis偏好固定Sonnet用max、不限模型用Opus5.5 xhigh。不要与早期帖子或其他日期Elo混拼。,https://benchmark.towardsai.com/models/claude-sonnet-5-5-max.html
+S20,ToneBench 作者早期脚本实验讨论,约2026年9月底，日期未确认；早期三评委版，作者权衡high批量与xhigh质量，不与新版混用。,https://www.reddit.com/r/ClaudeAI/comments/1wsw08f/sonnet_55_ranks_2_on_our_writing_benchmark/

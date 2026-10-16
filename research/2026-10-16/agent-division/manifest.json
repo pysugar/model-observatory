@@ -1,0 +1,110 @@
+[
+  {
+    "id": "openai-luna",
+    "url": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+    "resolved_url": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+    "retrieved_utc": "2026-10-16T06:06:03.204667+00:00",
+    "file": "openai-luna.txt",
+    "sha256": "c7afda4f7787c87297744c2e8dfbfcbed1fff1c8836d004e0ecb344ed1c3587c",
+    "extraction": "HTML main/article text; navigation removed; no model calls"
+  },
+  {
+    "id": "openai-sol",
+    "url": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+    "resolved_url": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+    "retrieved_utc": "2026-10-16T06:06:03.206298+00:00",
+    "file": "openai-sol.txt",
+    "sha256": "938347642340a7ba341f92302501a27eae3d19adcebf3f5eac1d24191ba44e03",
+    "extraction": "HTML main/article text; navigation removed; no model calls"
+  },
+  {
+    "id": "openclaw-subagents",
+    "url": "https://docs.openclaw.ai/tools/subagents",
+    "resolved_url": "https://docs.openclaw.ai/tools/subagents",
+    "retrieved_utc": "2026-10-16T06:06:03.550351+00:00",
+    "file": "openclaw-subagents.txt",
+    "sha256": "2d6257d9a5e1445adaca4c8cb6f5f580f2ad892eb79e801dc9dece905b631233",
+    "extraction": "HTML main/article text; navigation removed; no model calls"
+  },
+  {
+    "id": "openclaw-tool-reference",
+    "url": "https://docs.openclaw.ai/tools/subagents/tool-reference",
+    "resolved_url": "https://docs.openclaw.ai/tools/subagents/tool-reference",
+    "retrieved_utc": "2026-10-16T06:06:04.613856+00:00",
+    "file": "openclaw-tool-reference.txt",
+    "sha256": "63d7086717ea9353887d1982f118fe1ae6aeeb507f111b8236ffc564cf0f52f1",
+    "extraction": "HTML main/article text; navigation removed; no model calls"
+  },
+  {
+    "id": "openclaw-nesting",
+    "url": "https://docs.openclaw.ai/tools/subagents/nesting",
+    "resolved_url": "https://docs.openclaw.ai/tools/subagents/nesting",
+    "retrieved_utc": "2026-10-16T06:06:04.810907+00:00",
+    "file": "openclaw-nesting.txt",
+    "sha256": "c49ed145fdb67b158015cb1397030e5179b06607de2638acc6f321e44a0052b0",
+    "extraction": "HTML main/article text; navigation removed; no model calls"
+  },
+  {
+    "id": "hermes-delegation",
+    "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/delegation",
+    "resolved_url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/delegation",
+    "retrieved_utc": "2026-10-16T06:06:04.715697+00:00",
+    "file": "hermes-delegation.txt",
+    "sha256": "ececd2c4361cd7d47084cc58da3142e5ad28bd64e255ceb71ef59aebc4f8c9f3",
+    "extraction": "HTML main/article text; navigation removed; no model calls"
+  },
+  {
+    "id": "hermes-models",
+    "url": "https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models",
+    "resolved_url": "https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models",
+    "retrieved_utc": "2026-10-16T06:06:05.640337+00:00",
+    "file": "hermes-models.txt",
+    "sha256": "888d0825f06eeafe78597143c124bbb63a95bed493f03c44b02d89029c00fea2",
+    "extraction": "HTML main/article text; navigation removed; no model calls"
+  },
+  {
+    "id": "hermes-configuration",
+    "url": "https://hermes-agent.nousresearch.com/docs/user-guide/configuration",
+    "resolved_url": "https://hermes-agent.nousresearch.com/docs/user-guide/configuration",
+    "retrieved_utc": "2026-10-16T06:06:07.603223+00:00",
+    "file": "hermes-configuration.txt",
+    "sha256": "fd58fa7cab50fa88b9cd64bfafcb287cda6dd91cdebec3964fa756e65cc18784",
+    "extraction": "HTML main/article text; navigation removed; no model calls"
+  },
+  {
+    "id": "hermes-memory",
+    "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/memory",
+    "resolved_url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/memory",
+    "retrieved_utc": "2026-10-16T06:06:05.955777+00:00",
+    "file": "hermes-memory.txt",
+    "sha256": "85115bb82d59b847cf7363620f5b6cc35a4fc38eff307eb8fb64da66b7a9b329",
+    "extraction": "HTML main/article text; navigation removed; no model calls"
+  },
+  {
+    "id": "openclaw-compaction",
+    "url": "https://docs.openclaw.ai/reference/session-management-compaction/compaction",
+    "resolved_url": "https://docs.openclaw.ai/reference/session-management-compaction/compaction",
+    "retrieved_utc": "2026-10-16T06:06:07.291183+00:00",
+    "file": "openclaw-compaction.txt",
+    "sha256": "6a7101a8a81293112dd4f1e5823e02c0e17c1acac574c2dc8a9af4528709db9e",
+    "extraction": "HTML main/article text; navigation removed; no model calls"
+  },
+  {
+    "id": "openclaw-heartbeat",
+    "url": "https://docs.openclaw.ai/gateway/heartbeat",
+    "resolved_url": "https://docs.openclaw.ai/gateway/heartbeat",
+    "retrieved_utc": "2026-10-16T06:06:07.752339+00:00",
+    "file": "openclaw-heartbeat.txt",
+    "sha256": "bf3ef752ae21aa385d92756ea303af800d5f05708a4c9a880988969b627690f4",
+    "extraction": "HTML main/article text; navigation removed; no model calls"
+  },
+  {
+    "id": "hermes-delegate-implementation",
+    "url": "https://github.com/NousResearch/hermes-agent/blob/main/tools/delegate_tool_config.py",
+    "resolved_url": "https://raw.githubusercontent.com/NousResearch/hermes-agent/main/tools/delegate_tool_config.py",
+    "retrieved_utc": "2026-10-16T06:10:21.440604+00:00",
+    "file": "hermes-delegate-tool-config.py.txt",
+    "sha256": "a0360af946ad929fac017d5299438c400f48ebe5e82edb0c8cd2e38d8d170dcb",
+    "extraction": "Raw source text; read only, not executed"
+  }
+]
