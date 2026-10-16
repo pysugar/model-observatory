@@ -7,6 +7,9 @@ import json
 import shutil
 import sys
 import tempfile
+import threading
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from urllib.parse import urlsplit
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -97,6 +100,39 @@ class ReleaseTests(unittest.TestCase):
         with patch.object(publish, "urlopen", return_value=Response(json.dumps(old).encode())):
             with self.assertRaisesRegex(ValueError, "does not match"):
                 publish.probe("https://example.org", self.site, attempts=1)
+
+    def test_live_probe_identifies_itself_and_verifies_all_public_assets(self):
+        site, requested = self.site, []
+
+        class Handler(BaseHTTPRequestHandler):
+            def log_message(self, *_args):
+                pass
+
+            def do_GET(self):
+                agent = self.headers.get("User-Agent", "")
+                if not agent or agent.startswith("Python-urllib/"):
+                    self.send_error(403, "Unidentified generic client")
+                    return
+                path = urlsplit(self.path).path
+                requested.append(path)
+                name = "index.html" if path == "/" else path.lstrip("/")
+                self.send_response(200)
+                self.send_header("X-Content-Type-Options", "nosniff")
+                self.send_header("Cache-Control", "no-store")
+                self.end_headers()
+                self.wfile.write((site / name).read_bytes())
+
+        server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        try:
+            result = publish.probe(f"http://127.0.0.1:{server.server_port}", site, attempts=1)
+            self.assertEqual(result["status"], "PASS")
+            self.assertEqual(requested, ["/version.json", "/", "/report-data.json", "/report-data.csv"])
+        finally:
+            server.shutdown()
+            server.server_close()
+            thread.join()
 
     def test_release_has_no_runtime_or_research_copies(self):
         config = json.loads((publish.ROOT / "wrangler.json").read_text())
