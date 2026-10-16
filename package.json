@@ -1,0 +1,11 @@
+{
+  "name": "model-observatory",
+  "private": true,
+  "version": "0.1.0",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "preview": "wrangler dev --local --port 8787",
+    "check:wrangler": "wrangler deploy --dry-run --outdir test-results/wrangler"
+  },
+  "devDependencies": { "wrangler": "4.151.1" }
+}

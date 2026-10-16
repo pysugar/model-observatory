@@ -5,6 +5,7 @@ import csv
 import hashlib
 import json
 import re
+import argparse
 
 ROOT = Path(__file__).resolve().parent
 RESEARCH = ROOT / "research" / "2026-10-15"
@@ -27,7 +28,9 @@ def number(value):
     return float(match[0].replace(",", "")) if match else None
 
 
-def build():
+def build(output_dir=ROOT):
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
     original = ORIGINAL.read_text()
     base = json.loads(re.search(r'<script id="dataset" type="application/json">(.*?)</script>', original, re.S)[1])
     methods = json.loads(re.search(r'<script id="method-data" type="application/json">(.*?)</script>', original, re.S)[1])
@@ -148,9 +151,9 @@ def build():
                  "tonebench_sha256": tone_hash, "tonebench_fingerprint": tone["provenance"],
                  "not_run": "未做新的模型调用或中文任务实验；使用原始附件与公开证据。"},
     }
-    (ROOT / "report-data.json").write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+    (output_dir / "report-data.json").write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     fields = list(dict.fromkeys(key for row in rows for key in row))
-    with (ROOT / "report-data.csv").open("w", encoding="utf-8-sig", newline="") as file:
+    with (output_dir / "report-data.csv").open("w", encoding="utf-8-sig", newline="") as file:
         writer = csv.DictWriter(file, fieldnames=fields)
         writer.writeheader()
         for row in rows:
@@ -160,11 +163,13 @@ def build():
     html = html.replace("/* REPORT_CSS */", (ROOT / "report.css").read_text())
     html = html.replace("REPORT_DATA_JSON", payload)
     html = html.replace("/* REPORT_JS */", (ROOT / "report.js").read_text())
-    (ROOT / "model-capability-cost.html").write_text(html)
+    (output_dir / "model-capability-cost.html").write_text(html, encoding="utf-8")
     print(json.dumps({"rows": len(rows), "original_rows": 121, "aa_profiles": len(profiles),
                       "models": len(model_names), "groups": {g: sum(r["benchmark"] == g for r in rows) for g in ["general", "coding", "writing", "arena"]},
                       "html_bytes": len(html.encode())}, ensure_ascii=False))
 
 
 if __name__ == "__main__":
-    build()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output-dir", type=Path, default=ROOT)
+    build(parser.parse_args().output_dir)
