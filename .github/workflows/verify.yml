@@ -31,7 +31,7 @@ jobs:
       - name: Install pinned tooling
         run: |
           python -m pip install -r requirements-test.txt
-          python -m playwright install --with-deps chromium
+          python -m playwright install --with-deps chrome
           npm ci
       - name: Test release gates and build once
         run: |
@@ -40,7 +40,8 @@ jobs:
           python scripts/publish.py check --expected-commit "$GITHUB_SHA"
           npm run check:wrangler
       - name: Smoke-test the release
-        run: python scripts/smoke.py --wrangler
+        # Ubuntu's AppArmor policy supports the system Chrome installation.
+        run: python scripts/smoke.py --wrangler --browser-channel chrome
       - name: Keep the tested release
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:

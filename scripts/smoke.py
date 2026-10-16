@@ -83,6 +83,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
         if channel:
             options["channel"] = channel
         browser = p.chromium.launch(**options)
+        browser_version = browser.version
         try:
             page = browser.new_page(viewport={"width": 1440, "height": 1000}, device_scale_factor=1)
             page.on("pageerror", lambda error: errors.append(str(error)))
@@ -138,7 +139,8 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
         finally:
             browser.close()
     probe(origin, site, attempts=1, require_headers=cloudflare)
-    result = {"status": "PASS", "viewports": [1440, 390, 320], "rows": len(data["rows"]),
+    result = {"status": "PASS", "browser_version": browser_version, "browser_channel": channel or "bundled-chromium",
+              "viewports": [1440, 390, 320], "rows": len(data["rows"]),
               "checks": ["six panels", "Claude filter", "CSV missing values", "budget boundaries", "four Opus evidence views",
                          "source index", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
               "cloudflare_headers_checked": cloudflare}
