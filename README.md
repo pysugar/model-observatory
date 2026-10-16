@@ -2,6 +2,8 @@
 
 打开 [model-capability-cost.html](model-capability-cost.html)。这是包含数据、样式和脚本的单文件报告，可直接离线打开，无需安装依赖或联网加载。
 
+静态发布准备、跨 macOS/Linux 验证、GitHub Actions、公开产物边界与回滚步骤见 [DEPLOYMENT.md](DEPLOYMENT.md)。发布使用独立 `dist/` 白名单；默认关闭实际 Cloudflare 部署，研究结论保持不变。
+
 报告更新于 **2026-10-16（Asia/Taipei）**；本轮核验 Claude，并复核 Sol 6.1 的官方档位、选型及工具协议；其余 GPT / Gemini 规格仍为 10-15。范围是通用模型的 API 规格与公开评测；包括 20 个选型与兼容候选（含 14 款 Claude）、3 个 GPT 代际基线，另列 Mythos 的受限入口。专用图像、语音、视频生成模型及产品订阅配额不属于此次比较范围。选型建议是基于已列证据的判断，没有执行新的付费模型实验或中文实测。
 
 ## 阅读顺序
@@ -33,8 +35,10 @@
 重建：
 
 ```sh
-cd /opt/foundry/labs
-UV_CACHE_DIR=/private/tmp/model-capability-uv uv run --no-project /opt/local/.venv/bin/python model-capability/build_report.py
+# 在仓库根目录运行（仅 Python 标准库）：
+python3 build_report.py
+# 发布目录构建，不改写根目录报告：
+python3 scripts/publish.py build
 ```
 
 修改 Opus 原始补充证据后，先运行 `research/2026-10-16/recompute_opus55.py`，再重建报告。复算过程不访问网络或调用模型。
@@ -44,13 +48,12 @@ UV_CACHE_DIR=/private/tmp/model-capability-uv uv run --no-project /opt/local/.ve
 如需复跑浏览器验证，在一个终端启动本地服务，在另一个终端运行验证脚本。脚本使用已安装的 Google Chrome 和临时空白配置，不读取个人浏览器资料；Codex 在 macOS 上执行启动 Chrome 的命令时，必须从第一次尝试就使用 `sandbox_permissions="require_escalated"` 并获准后执行，不在默认沙箱中启动，不用 `--no-sandbox` 绕过主机限制。
 
 ```sh
-cd /opt/foundry/labs
-UV_CACHE_DIR=/private/tmp/model-capability-uv uv run --no-project /opt/local/.venv/bin/python -m http.server 8766 --bind 127.0.0.1 --directory model-capability
+# 在仓库根目录运行：
+python3 -m http.server 8766 --bind 127.0.0.1
 ```
 
 ```sh
-cd /opt/foundry/labs
-UV_CACHE_DIR=/private/tmp/model-capability-uv uv run --no-project /opt/local/.venv/bin/python model-capability/validate_report.py
+python3 validate_report.py
 ```
 
 ## 已保留的解释边界
@@ -59,4 +62,4 @@ UV_CACHE_DIR=/private/tmp/model-capability-uv uv run --no-project /opt/local/.ve
 
 用户截图只证明选择器可见，不证明 API 授权或实际调用成功。Sonnet 4.5 已弃用但到 2026-11-30 才退役；Haiku 4.5 当前仍 Active。Haiku 4.5 / Sonnet 4.5 没有 effort 档位，Opus 4.5 的 thinking 预算独立于 effort；Opus / Sonnet 4.6 没有 xhigh。中文任务甜蜜点全部未实测。AA 中 Sonnet 4.5 的 1M 标注与当前官方 200k 不一致，规格和预算采用官方 200k / 64k，保留原始评测而不据此声称在当前窗口下复测过。
 
-官方 API 单价不能换算产品订阅额度。预算计算器固定各模型使用相同 token 数，未保证同任务同用量；推理输出计费，工具、缓存写入/存储、税费和重试另算。Google 优惠结束情景只应用已公布的 Google 价格，其余维持核验日价格。未执行任何推送、发布或部署。
+官方 API 单价不能换算产品订阅额度。预算计算器固定各模型使用相同 token 数，未保证同任务同用量；推理输出计费，工具、缓存写入/存储、税费和重试另算。Google 优惠结束情景只应用已公布的 Google 价格，其余维持核验日价格。研究整理阶段未执行发布或部署；静态发布阶段的范围和操作入口见 DEPLOYMENT.md。
