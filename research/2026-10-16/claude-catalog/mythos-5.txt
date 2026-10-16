@@ -1,0 +1,219 @@
+Models & pricing
+
+Specialized models
+Claude Mythos
+5
+Verification required
+Most capable model for cybersecurity and biology research
+
+Copy page
+
+claude-mythos-5
+
+How refusals and fallback work
+
+
+Copy page
+
+Context window
+1M
+tokens
+Max output
+128K
+tokens
+Input pricing
+$10
+/ MTok
+Output pricing
+$50
+/ MTok
+
+Claude Mythos 5 is available only to organizations verified through Anthropic’s verification programs, such as the
+Cyber Verification Program
+(opens in new tab)
+. It has the same specifications and pricing as Claude Fable 5. To request access, apply to the program that covers your use case.
+See Claude Fable 5
+How it compares
+
+Model
+Context
+
+Max output
+
+Price / MTok
+
+Thinking
+
+Default effort
+
+Knowledge cutoff
+
+Claude Fable 5.1
+1M
+128K
+$10 / $50
+Adaptive (always on)
+high
+Jun 2026
+Claude Mythos 5
+This model
+1M
+128K
+$10 / $50
+Adaptive (always on)
+high
+Jan 2026
+Claude Opus 5.5
+1M
+128K
+$4 / $20
+Adaptive (always on)
+medium
+Jun 2026
+Claude Sonnet 5.5
+1M
+128K
+$2 / $10
+Adaptive
+high
+Jun 2026
+Claude Haiku 5.5
+1M
+128K
+From $0.10 / $0.50
+Adaptive
+medium
+Jun 2026
+Specifications
+
+Model IDs
+Claude API
+claude-mythos-5
+Amazon Bedrock
+anthropic.claude-mythos-5
+Google Cloud
+claude-mythos-5
+Microsoft Foundry
+claude-mythos-5
+Pricing
+Input
+$10 / MTok
+Output
+$50 / MTok
+5m cache write
+$12.50 / MTok
+1h cache write
+$20 / MTok
+Cache read
+$1 / MTok
+Batch API
+50% discount on input and output
+Full price list
+Capabilities
+Context window
+1M tokens
+Max output
+128K tokens
+Thinking
+Adaptive (always on)
+Default effort
+high
+Input → output
+Text and images → text
+Reliable knowledge cutoff
+Jan 2026
+Training data cutoff
+Jan 2026
+Availability
+Status
+Active (verification required)
+Released
+June 9, 2026
+Retirement
+Not sooner than June 9, 2027
+Platforms
+Claude API
+Amazon Bedrock
+Google Cloud
+Microsoft Foundry
+Resources
+
+Migrate to Claude Mythos 5.1
+What changes when moving from Claude Mythos 5 to Claude Mythos 5.1.
+
+Claude Mythos 5.1
+The current Mythos model: overview, specs, and resources.
+Reference
+
+
+System card
+
+Safety evaluations and deployment decisions for Claude Fable 5 and Claude Mythos 5.
+Pricing
+Full price list, including batch discounts and prompt caching rates.
+Model IDs and versioning
+How model IDs, aliases, and pinned snapshots work.
+
+Model deprecations
+Lifecycle status and retirement commitments for every Claude model.
+Was this page helpful?
+
+
+Claude Platform Docs
+
+
+Solutions
+AI agents
+Code modernization
+Coding
+Customer support
+Financial services
+Government
+Higher education
+K-12 teachers
+Life sciences
+Partners
+Claude on AWS
+Claude on Google Cloud
+Learn
+Blog
+Courses
+Use cases
+Connectors
+Customer stories
+Engineering at Anthropic
+Events
+Powered by Claude
+Service partners
+Startups program
+Company
+Anthropic
+Careers
+Economic Futures
+Research
+News
+Responsible Scaling Policy
+Security and compliance
+Transparency
+Learn
+Blog
+Courses
+Use cases
+Connectors
+Customer stories
+Engineering at Anthropic
+Events
+Powered by Claude
+Service partners
+Startups program
+Help and security
+Availability
+Status
+Support
+Discord
+Terms and policies
+Privacy policy
+Responsible disclosure policy
+Terms of service: Commercial
+Terms of service: Consumer
+Usage policy

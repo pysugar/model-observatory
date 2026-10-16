@@ -1,0 +1,477 @@
+{
+  "reviewed_at": "2026-10-16",
+  "model": "Claude Opus 5.5",
+  "views": [
+    {
+      "id": "frontier-observed",
+      "title": "Frontier v4 · 完整配置（含回退）",
+      "scope": "2026-09-22 至 24；Claude Code 2.1.280；23 道二进制重建题 × 5 档，各一次。所有失败均保留在通过率、费用和耗时中。",
+      "columns": [
+        "档位",
+        "完整通过 / 23",
+        "综合分 ± SE（评审 n）",
+        "均费 / 题",
+        "分钟 / 题",
+        "回退任务；4.8 回复占比"
+      ],
+      "display_rows": [
+        [
+          "low",
+          "17/23（73.9%）",
+          "86.36 ± 1.30（n=23）",
+          "$1.70",
+          "13.7",
+          "0/23；0.0%"
+        ],
+        [
+          "medium",
+          "23/23（100.0%）",
+          "90.86 ± 0.64（n=23）",
+          "$2.84",
+          "18.6",
+          "3/23；6.4%"
+        ],
+        [
+          "high",
+          "22/23（95.7%）",
+          "91.11 ± 0.57（n=22）",
+          "$3.27",
+          "21.4",
+          "7/23；20.9%"
+        ],
+        [
+          "xhigh",
+          "22/23（95.7%）",
+          "90.68 ± 1.10（n=23）",
+          "$4.11",
+          "20.7",
+          "8/23；32.4%"
+        ],
+        [
+          "max",
+          "21/23（91.3%）",
+          "90.22 ± 1.02（n=23）",
+          "$8.75",
+          "37.5",
+          "12/23；47.8%"
+        ]
+      ],
+      "rows": [
+        {
+          "effort": "low",
+          "n": 23,
+          "passed": 17,
+          "combined": 86.36309565217391,
+          "combined_se": 1.3002950230830224,
+          "judged_n": 23,
+          "cost_usd": 1.6953085217391304,
+          "time_s": 821.417652173913,
+          "fallback_runs": 0,
+          "fallback_reply_pct": 0.0
+        },
+        {
+          "effort": "medium",
+          "n": 23,
+          "passed": 23,
+          "combined": 90.8635,
+          "combined_se": 0.6415714355525782,
+          "judged_n": 23,
+          "cost_usd": 2.8422010869565217,
+          "time_s": 1118.6757391304347,
+          "fallback_runs": 3,
+          "fallback_reply_pct": 6.380368098159509
+        },
+        {
+          "effort": "high",
+          "n": 23,
+          "passed": 22,
+          "combined": 91.10810454545455,
+          "combined_se": 0.5657896673143726,
+          "judged_n": 22,
+          "cost_usd": 3.2694439130434785,
+          "time_s": 1285.151,
+          "fallback_runs": 7,
+          "fallback_reply_pct": 20.8596214511041
+        },
+        {
+          "effort": "xhigh",
+          "n": 23,
+          "passed": 22,
+          "combined": 90.67883043478261,
+          "combined_se": 1.0967952620318913,
+          "judged_n": 23,
+          "cost_usd": 4.111557043478261,
+          "time_s": 1244.8224782608695,
+          "fallback_runs": 8,
+          "fallback_reply_pct": 32.427770590771885
+        },
+        {
+          "effort": "max",
+          "n": 23,
+          "passed": 21,
+          "combined": 90.21975652173913,
+          "combined_se": 1.0241378076047476,
+          "judged_n": 23,
+          "cost_usd": 8.748013913043478,
+          "time_s": 2250.6766956521737,
+          "fallback_runs": 12,
+          "fallback_reply_pct": 47.77837259100642
+        }
+      ],
+      "takeaway": "这批实际配置中，medium 已 23/23 通过；max 更贵且少通过两题。可用于评估当时的默认回退工作流，不能归因为纯 Opus 5.5 的升档效果。",
+      "caveat": "medium 及以上包含 Opus 4.8。high 有一个安全停止产生空补丁：完整通过为 22/23，综合分只评审 22 份。SE 是任务间标准误，不是档位差分的置信区间；费用为含回退的 CLI API 等价总价。",
+      "sources": [
+        [
+          "https://vulcanbench.com/benchmarks/swe-v4-opus55-v315.html",
+          "Vulcan 原报告"
+        ],
+        [
+          "https://vulcanbench.com/assets/data/swe-v4-opus55-v315/runs.csv",
+          "115 条原始运行 CSV"
+        ]
+      ]
+    },
+    {
+      "id": "frontier-common",
+      "title": "Frontier v4 · 共同无回退 6 题（探索性）",
+      "scope": "由同一份 115 条运行记录复算，仅保留五档都没有 Opus 4.8 回复的共同题目；每档 6 题，均为同题配对。",
+      "columns": [
+        "档位",
+        "完整通过 / 6",
+        "均费 / 题",
+        "分钟 / 题",
+        "回退"
+      ],
+      "display_rows": [
+        [
+          "low",
+          "5/6",
+          "$1.27",
+          "8.6",
+          "0"
+        ],
+        [
+          "medium",
+          "6/6",
+          "$2.69",
+          "22.3",
+          "0"
+        ],
+        [
+          "high",
+          "6/6",
+          "$1.73",
+          "10.1",
+          "0"
+        ],
+        [
+          "xhigh",
+          "6/6",
+          "$2.27",
+          "12.4",
+          "0"
+        ],
+        [
+          "max",
+          "6/6",
+          "$4.32",
+          "24.5",
+          "0"
+        ]
+      ],
+      "rows": [
+        {
+          "effort": "low",
+          "n": 6,
+          "passed": 5,
+          "combined": 90.34653333333334,
+          "combined_se": 1.3862834817517586,
+          "judged_n": 6,
+          "cost_usd": 1.268198,
+          "time_s": 514.5805,
+          "fallback_runs": 0,
+          "fallback_reply_pct": 0.0
+        },
+        {
+          "effort": "medium",
+          "n": 6,
+          "passed": 6,
+          "combined": 90.95081666666667,
+          "combined_se": 1.1928504067754866,
+          "judged_n": 6,
+          "cost_usd": 2.6922625,
+          "time_s": 1338.5421666666666,
+          "fallback_runs": 0,
+          "fallback_reply_pct": 0.0
+        },
+        {
+          "effort": "high",
+          "n": 6,
+          "passed": 6,
+          "combined": 91.50986666666667,
+          "combined_se": 0.9803709191480088,
+          "judged_n": 6,
+          "cost_usd": 1.7250241666666666,
+          "time_s": 607.5113333333334,
+          "fallback_runs": 0,
+          "fallback_reply_pct": 0.0
+        },
+        {
+          "effort": "xhigh",
+          "n": 6,
+          "passed": 6,
+          "combined": 92.635,
+          "combined_se": 0.3901852312257163,
+          "judged_n": 6,
+          "cost_usd": 2.2721768333333334,
+          "time_s": 745.0553333333334,
+          "fallback_runs": 0,
+          "fallback_reply_pct": 0.0
+        },
+        {
+          "effort": "max",
+          "n": 6,
+          "passed": 6,
+          "combined": 92.61343333333333,
+          "combined_se": 0.36547609649758295,
+          "judged_n": 6,
+          "cost_usd": 4.3163358333333335,
+          "time_s": 1471.0473333333334,
+          "fallback_runs": 0,
+          "fallback_reply_pct": 0.0
+        }
+      ],
+      "common_tasks": [
+        "legacy-freightcore-binary-parity",
+        "legacy-lodgecore-binary-parity",
+        "legacy-pacecore-binary-parity",
+        "legacy-qlite-store-parity",
+        "legacy-reflowcore-binary-parity",
+        "legacy-vaultcore-binary-parity"
+      ],
+      "takeaway": "在这 6 题中 medium 起均全部通过；high 的均费和耗时比 medium 低。样本太小且经事后筛选，不能据此宣布 high 或 medium 是普遍甜蜜点。",
+      "caveat": "这是按运行后的回退事件筛出的子集，排除了 17/23 题，仍有选择偏差。不能代表整套 23 题，也不是关闭回退后重跑的实验。各档分别删回退会留下 23/20/16/15/11 道不同题，更不能直接比较。未新跑模型，未做显著性检验。",
+      "sources": [
+        [
+          "https://vulcanbench.com/assets/data/swe-v4-opus55-v315/runs.csv",
+          "共同题目筛选所用的原始 CSV"
+        ]
+      ]
+    },
+    {
+      "id": "routine",
+      "title": "Routine v1 · 日常小修小改（独立题集）",
+      "scope": "12 道私有小型 Python 工单 × 5 档，各一次；涵盖局部 BUG、小功能、输入校验与日期、金额、文本边界。来源按“最低档容易完成”筛题。",
+      "columns": [
+        "档位",
+        "完整通过 / 12",
+        "综合分 ± SE",
+        "均费 / 题",
+        "秒 / 题"
+      ],
+      "display_rows": [
+        [
+          "low",
+          "12/12",
+          "94.22 ± 0.73",
+          "$0.0722",
+          "32.0"
+        ],
+        [
+          "medium",
+          "12/12",
+          "95.30 ± 0.77",
+          "$0.1139",
+          "42.3"
+        ],
+        [
+          "high",
+          "12/12",
+          "95.90 ± 0.60",
+          "$0.1425",
+          "51.3"
+        ],
+        [
+          "xhigh",
+          "12/12",
+          "96.74 ± 0.34",
+          "$0.1990",
+          "66.4"
+        ],
+        [
+          "max",
+          "12/12",
+          "96.50 ± 0.45",
+          "$1.12",
+          "341.9"
+        ]
+      ],
+      "rows": [
+        {
+          "effort": "low",
+          "n": 12,
+          "passed": 12,
+          "combined": 94.22,
+          "combined_se": 0.73,
+          "cost_usd": 0.0722,
+          "time_s": 32.0,
+          "solver_fallback": null,
+          "protocol": "code-quality-maintenance-v3.14"
+        },
+        {
+          "effort": "medium",
+          "n": 12,
+          "passed": 12,
+          "combined": 95.3,
+          "combined_se": 0.77,
+          "cost_usd": 0.1139,
+          "time_s": 42.3,
+          "solver_fallback": null,
+          "protocol": "code-quality-maintenance-v3.14"
+        },
+        {
+          "effort": "high",
+          "n": 12,
+          "passed": 12,
+          "combined": 95.9,
+          "combined_se": 0.6,
+          "cost_usd": 0.1425,
+          "time_s": 51.3,
+          "solver_fallback": null,
+          "protocol": "code-quality-maintenance-v3.14"
+        },
+        {
+          "effort": "xhigh",
+          "n": 12,
+          "passed": 12,
+          "combined": 96.74,
+          "combined_se": 0.34,
+          "cost_usd": 0.199,
+          "time_s": 66.4,
+          "solver_fallback": null,
+          "protocol": "code-quality-maintenance-v3.14"
+        },
+        {
+          "effort": "max",
+          "n": 12,
+          "passed": 12,
+          "combined": 96.5,
+          "combined_se": 0.45,
+          "cost_usd": 1.1237,
+          "time_s": 341.9,
+          "solver_fallback": null,
+          "protocol": "code-quality-maintenance-v3.14"
+        }
+      ],
+      "takeaway": "这类简单工单可从 low 试起；五档通过数相同。max 的均费约为 low 的 15.6 倍，耗时约 10.7 倍，没有增加完整通过数。",
+      "caveat": "仅公开聚合数据，未披露 solver 回退分布，不能标成经逐条身份核验的纯模型。协议为 v3.14；Routine 综合分与 Frontier v4 不可跨表比较。题集小、难度预先筛选、无重复运行；low 的来源推荐还使用了“距最佳综合分不超过 3 分”的规则。",
+      "sources": [
+        [
+          "https://vulcanbench.com/leaderboard.html#routine-v1-board",
+          "Vulcan Routine v1 榜单与方法"
+        ],
+        [
+          "https://vulcanbench.com/assets/data/routine-v1-board.csv",
+          "Routine 聚合 CSV"
+        ]
+      ]
+    },
+    {
+      "id": "official",
+      "title": "官方 SWE-bench Pro 子集（独立实验）",
+      "scope": "Anthropic 自测，2026-09-19 至 20；经评测环境筛选后 478 题。low/medium/high 各两轮，xhigh 一轮；每次响应上限 16,384 token。",
+      "columns": [
+        "档位",
+        "解决率",
+        "均费 / 尝试",
+        "每题轮数",
+        "耗时"
+      ],
+      "display_rows": [
+        [
+          "low",
+          "87.4%",
+          "$0.11",
+          "2",
+          "未公布"
+        ],
+        [
+          "medium",
+          "92.8%",
+          "$0.21",
+          "2",
+          "未公布"
+        ],
+        [
+          "high",
+          "95.3%",
+          "$0.29",
+          "2",
+          "未公布"
+        ],
+        [
+          "xhigh",
+          "96.7%",
+          "$0.74",
+          "1",
+          "未公布"
+        ]
+      ],
+      "rows": [
+        {
+          "effort": "low",
+          "score_pct": 87.4,
+          "cost_usd": 0.11,
+          "n_tasks": 478,
+          "repeats": 2,
+          "time_s": null,
+          "run_dates": "2026-09-19/20",
+          "per_turn_token_cap": 16384
+        },
+        {
+          "effort": "medium",
+          "score_pct": 92.8,
+          "cost_usd": 0.21,
+          "n_tasks": 478,
+          "repeats": 2,
+          "time_s": null,
+          "run_dates": "2026-09-19/20",
+          "per_turn_token_cap": 16384
+        },
+        {
+          "effort": "high",
+          "score_pct": 95.3,
+          "cost_usd": 0.29,
+          "n_tasks": 478,
+          "repeats": 2,
+          "time_s": null,
+          "run_dates": "2026-09-19/20",
+          "per_turn_token_cap": 16384
+        },
+        {
+          "effort": "xhigh",
+          "score_pct": 96.7,
+          "cost_usd": 0.74,
+          "n_tasks": 478,
+          "repeats": 1,
+          "time_s": null,
+          "run_dates": "2026-09-19/20",
+          "per_turn_token_cap": 16384
+        }
+      ],
+      "takeaway": "medium→high 多解决 2.5 个百分点；high→xhigh 再增 1.4 个百分点，费用约为 high 的 2.5 倍。对较长编码任务，medium 可作成本起点，high 用于优先提高完成率。",
+      "caveat": "厂商实验不是独立复现；不可与 Vulcan、公榜或 system card 混算。费用是含失败的每次尝试成本，非每个成功任务成本；数字已取整。xhigh 两次尝试被输出上限截断；此实验未公布 max、耗时及逐题回退身份明细。",
+      "sources": [
+        [
+          "https://platform.claude.com/docs/en/about-claude/models/optimizing-for-cost-and-intelligence#tune-effort",
+          "官方档位表"
+        ],
+        [
+          "https://platform.claude.com/docs/en/about-claude/models/optimizing-for-cost-and-intelligence#refs",
+          "官方方法与脚注 3"
+        ]
+      ]
+    }
+  ],
+  "not_run": "仅复算公开数据，没有新的模型调用或付费实验。"
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "id": "openai-sol",
+    "url": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+    "resolved_url": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+    "retrieved_utc": "2026-10-16T05:16:42.686028+00:00",
+    "file": "openai-sol.txt",
+    "sha256": "a587bd07376d31c84345368c9a656bc1123d2406043d1d9a544c5b5bfbef103c",
+    "extraction": "HTML main/article text; navigation removed; no model calls"
+  },
+  {
+    "id": "openai-selection",
+    "url": "https://developers.openai.com/api/docs/guides/model-selection",
+    "resolved_url": "https://developers.openai.com/api/docs/guides/model-selection",
+    "retrieved_utc": "2026-10-16T05:16:42.536459+00:00",
+    "file": "openai-selection.txt",
+    "sha256": "35d7242b2762ea3bda67f790089a224a7aab22c167a3585d54c336f11a535891",
+    "extraction": "HTML main/article text; navigation removed; no model calls"
+  },
+  {
+    "id": "claude-effort",
+    "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+    "resolved_url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+    "retrieved_utc": "2026-10-16T05:16:43.087756+00:00",
+    "file": "claude-effort.txt",
+    "sha256": "868e0332b86c979108a2b54296d94f94ce7476eda633c02afe5d36c393babd18",
+    "extraction": "HTML main/article text; navigation removed; no model calls"
+  },
+  {
+    "id": "openclaw-thinking",
+    "url": "https://docs.openclaw.ai/tools/thinking",
+    "resolved_url": "https://docs.openclaw.ai/tools/thinking",
+    "retrieved_utc": "2026-10-16T05:16:43.110485+00:00",
+    "file": "openclaw-thinking.txt",
+    "sha256": "94498f53e50512a7be16a49d0c19ec8394dc7dd35cf8005c3da31bc642923e86",
+    "extraction": "HTML main/article text; navigation removed; no model calls"
+  },
+  {
+    "id": "openclaw-openai",
+    "url": "https://docs.openclaw.ai/providers/openai",
+    "resolved_url": "https://docs.openclaw.ai/providers/openai",
+    "retrieved_utc": "2026-10-16T05:16:44.239383+00:00",
+    "file": "openclaw-openai.txt",
+    "sha256": "eeb0888c66bda6a1b4c3382b5112f6c1197f1c20c5d01a92bab84494e13beb04",
+    "extraction": "HTML main/article text; navigation removed; no model calls"
+  },
+  {
+    "id": "hermes-configuration",
+    "url": "https://hermes-agent.nousresearch.com/docs/user-guide/configuration",
+    "resolved_url": "https://hermes-agent.nousresearch.com/docs/user-guide/configuration",
+    "retrieved_utc": "2026-10-16T05:16:44.966203+00:00",
+    "file": "hermes-configuration.txt",
+    "sha256": "fd58fa7cab50fa88b9cd64bfafcb287cda6dd91cdebec3964fa756e65cc18784",
+    "extraction": "HTML main/article text; navigation removed; no model calls"
+  },
+  {
+    "id": "vulcan-sol",
+    "url": "https://vulcanbench.com/benchmarks/swe-v4-gpt61-sol-v318.html",
+    "resolved_url": "https://vulcanbench.com/benchmarks/swe-v4-gpt61-sol-v318.html",
+    "retrieved_utc": "2026-10-16T05:16:44.493033+00:00",
+    "file": "vulcan-sol.txt",
+    "sha256": "919cd5c99aaaecf4661fd6c40ba7f48de494a03ccaefccf24f5c6826c79f5b72",
+    "extraction": "HTML main/article text; navigation removed; no model calls"
+  }
+]

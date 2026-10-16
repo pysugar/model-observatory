@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "checks": [
+    "Original 121 records preserved",
+    "166 JSON/CSV records agree",
+    "23 models, including 14 Claude and 8 screenshot models",
+    "Estimated scores, Unicode minus, and Fable 5 fallback preserved",
+    "Claude availability table, screenshot scope, honest reasoning gaps, and CSV export",
+    "Capability sorting, missing values, and CSV export",
+    "All four benchmarks, model filters, axes, null receipts, keyboard points, CSV export",
+    "Budget arithmetic, cache, exact tier boundaries, promotion scenario, context/output limits",
+    "Reasoning deltas, exclusion rules, source index, accessible tabs",
+    "390px responsive layout; standalone file works offline; no page errors or remote requests"
+  ],
+  "rows": 166,
+  "screenshots": [
+    "arena-desktop.png",
+    "calculator-desktop.png",
+    "capabilities-speed.png",
+    "opus55-frontier-common-desktop.png",
+    "opus55-frontier-observed-desktop.png",
+    "opus55-official-desktop.png",
+    "opus55-routine-desktop.png",
+    "opus55-routine-mobile.png",
+    "overview-desktop.png",
+    "overview-mobile.png",
+    "task-guide-chinese-mobile.png",
+    "task-guide-engineering-guide-desktop.png",
+    "task-guide-writing-research-guide-desktop.png",
+    "writing-mobile.png"
+  ],
+  "reviewed_at": "2026-10-16",
+  "claude_models": 14,
+  "screenshot_models": 8,
+  "previous_144_rows_preserved": true,
+  "prior_opus_evidence_preserved": true,
+  "viewports": [
+    1440,
+    390,
+    320
+  ],
+  "catalog_screenshots": [
+    "claude-screenshot-catalog-desktop.png",
+    "claude-screenshot-catalog-mobile.png"
+  ],
+  "report_sha256": "a763d454b8da89d2d607af905df1a184521fc83ac376a2f6561ba85a0d6f1cea"
+}

@@ -1,0 +1,180 @@
+Copy page
+View as Markdown
+View this page as plain text
+Open in ChatGPT
+Ask questions about this page
+Open in Claude
+Ask questions about this page
+Agent coordination
+Sub-agents
+Capabilities
+Agent coordination
+Sub-agents are background agent runs spawned from an existing agent run.
+Each one runs in its own session (
+agent:<agentId>:subagent:<uuid>
+) and,
+by default,
+announces
+its result back to the requester for review.
+Subagent runs are tracked by the native subagent lifecycle owner.
+Goals:
+Parallelize research, long tasks, and slow tool work without blocking the main run.
+Keep sub-agents isolated by default (session separation, optional sandboxing).
+Keep the tool surface hard to misuse: sub-agents do
+not
+get session or message tools by default.
+Support configurable nesting depth for orchestrator patterns.
+The Control UI shows the assigned task without model-only subagent instructions.
+Named subagent sessions use their task title without an automatic “Subagent:”
+prefix; their parent relationship and view-only state still identify the run.
+A subagent run ends; a session does not. In the Control UI, open
+Subagents
+from the parent conversation to see child runs, including swarm workers, under
+Running
+and
+Finished
+. Selecting a run opens its existing view-only transcript beside
+the parent.
+Back to Subagents
+returns to the list without replacing the
+parent conversation or its draft. The panel loads all child pages automatically;
+older running workers remain visible even when newer children have finished.
+The parallel-tasks view also shows aggregate swarm progress.
+A directly opened subagent page keeps a compact notice naming its parent and an
+Open parent session
+button. The embedded panel omits that notice because the
+parent is already beside it. You can still use
+Stop
+when the Gateway reports
+an abortable run and your session access permits it. Persistent sessions created
+with
+visible: true
+are ordinary sessions in the session tree: they keep their
+parent for navigation and completion announcements, and you can always type in
+them and steer them like any other session.
+Use ordinary subagents for internal QA, research, coding, review, and test lanes,
+with results returning to the parent task. Create a persistent visible session
+only when the user requests a separate session or needs to return to and steer
+that work independently. A PR or report, a long run, or an isolated worktree alone
+does not make a worker a separate user-facing task. Asking for subagents does not
+ask for new sidebar sessions or categories.
+This page is an index. Sub-agents are documented on seven pages, one per
+reader job. Open the page that matches your task.
+Page
+Read it when
+Sub-agent slash command
+You want to inspect a run from chat, or need the completion-delivery rules.
+Sub-agent tool reference
+You are calling
+sessions_spawn
+,
+sessions_yield
+, or
+subagents
+and need parameters.
+Thread-bound sub-agent sessions
+You are binding a sub-agent to a channel thread, or need allowlist and archive rules.
+Nested sub-agents and authentication
+You are building an orchestrator and need depth caps, the announce chain, or auth.
+Sub-agent announce
+You are debugging how a child result reaches the requester.
+Sub-agent tool policy
+You need the tools a sub-agent always loses, or want to narrow them further.
+Sub-agent concurrency, recovery, and stopping
+You are tuning concurrency, recovering after a restart, or stopping a child tree.
+Where each section moved
+Every section heading, accordion, step, and parameter id from the previous
+single-page version keeps its anchor here, so an existing link such as
+/tools/subagents#thread-bound-sessions
+still resolves. Each entry points at
+the page that now holds the content.
+Slash command
+Thread binding controls
+Spawn behavior
+Non-blocking, push-based completion
+Completion delivery
+Completion handoff metadata
+Modes and ACP runtime
+Context modes
+Tool:
+sessions_spawn
+Delegation prompt mode
+Tool parameters
+task
+taskName
+label
+agentId
+cwd
+runtime
+resumeSessionId
+streamTo
+model
+runTimeoutSeconds
+thinking
+thread
+mode
+cleanup
+expectsCompletionMessage
+sandbox
+context
+projectId
+projectGitUrl
+visible
+group
+worktree
+worktreeName
+worktreeBaseRef
+Task names and targeting
+Tool:
+sessions_yield
+Tool:
+subagents
+Thread-bound sessions
+Thread supporting channels
+Quick flow
+Spawn
+Bind
+Route follow-ups
+Inspect timeouts
+Detach
+Manual controls
+Config switches
+Allowlist
+agents.entries.*.subagents.allowAgents
+agents.defaults.subagents.allowAgents
+agents.defaults.subagents.requireAgentId
+agents.defaults.subagents.announceTimeoutMs
+Discovery
+Auto-archive
+Nested sub-agents
+Depth levels
+Announce chain
+Tool policy by depth
+Per-agent spawn limit
+Reset a conversation
+Cascade stop
+Authentication
+Announce
+Announce context
+Stats line
+Why prefer
+sessions_history
+Tool policy
+Override via config
+Concurrency
+Liveness and recovery
+Stopping
+Limitations
+Related
+Session tools and state changes
+ACP agents
+Agent send
+Multi-agent sandbox tools
+Parallel specialist lanes
+— role-scoped lanes for a single job
+Steer
+— redirect a running agent mid-task
+Was this useful?
+Yes
+No
+Open issue

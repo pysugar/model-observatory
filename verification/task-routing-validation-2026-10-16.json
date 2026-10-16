@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "date": "2026-10-16",
+  "checks": [
+    "Desktop: 9 five-column task rows with evidence labels, 3 controller modes, 4 measured tiers, working quick links, no overflow",
+    "Mobile 390px: stacked task/controller cards, field labels, no page overflow including configuration details",
+    "Mobile 320px: stacked task/controller cards, field labels, no page overflow including configuration details",
+    "Existing reasoning panel and four Opus evidence options preserved; new official sources rendered; no JS errors or remote requests"
+  ],
+  "data_preservation": "Separate static check passed: original 166 records, 20 AA profiles, models, Claude advice, Opus evidence, JS and writing table unchanged.",
+  "screenshots": [
+    "task-routing-desktop.png",
+    "agent-default-desktop.png",
+    "agent-evidence-desktop.png",
+    "task-routing-mobile.png",
+    "agent-default-mobile.png"
+  ],
+  "scope": "Targeted verification of task-routing edit; prior full-suite results retained.",
+  "html_sha256": "6195f8ff81db4446c349049800bd6863687a8b3f98151ad2119a93a78b4bc5bc",
+  "static_final": "PASS: all report data keys except source catalogue unchanged; final HTML embeds exact JSON."
+}

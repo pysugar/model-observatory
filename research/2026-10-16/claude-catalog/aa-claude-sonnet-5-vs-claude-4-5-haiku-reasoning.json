@@ -1,0 +1,222 @@
+{
+  "url": "https://artificialanalysis.ai/models/comparisons/claude-sonnet-5-vs-claude-4-5-haiku-reasoning",
+  "snapshot": "2026-10-16",
+  "version": "4.3.2",
+  "tables": [
+    [
+      [
+        "",
+        "Anthropic Claude Sonnet 5 (Max)",
+        "Anthropic Claude 4.5 Haiku (Reasoning)",
+        "Add model"
+      ],
+      [
+        "Intelligence"
+      ],
+      [
+        "Intelligence Index",
+        "38",
+        "17",
+        ""
+      ],
+      [
+        "AA-Briefcase v1.1",
+        "1358",
+        "616",
+        ""
+      ],
+      [
+        "GDPval-AA v2.1",
+        "1464",
+        "732",
+        ""
+      ],
+      [
+        "AutomationBench-AA",
+        "37%",
+        "3%",
+        ""
+      ],
+      [
+        "Terminal-Bench 4.0",
+        "14%",
+        "0%",
+        ""
+      ],
+      [
+        "SciCode",
+        "54%",
+        "42%",
+        ""
+      ],
+      [
+        "Humanity's Last Exam",
+        "41%",
+        "10%",
+        ""
+      ],
+      [
+        "GDP.pdf",
+        "13%",
+        "4%",
+        ""
+      ],
+      [
+        "CritPt",
+        "17%",
+        "0%",
+        ""
+      ],
+      [
+        "AA-Omniscience",
+        "16",
+        "−4",
+        ""
+      ],
+      [
+        "AA-LCR v1.1",
+        "82%",
+        "74%",
+        ""
+      ],
+      [
+        "Cost"
+      ],
+      [
+        "Price per 1M Tokens",
+        "$1.54",
+        "$0.77",
+        ""
+      ],
+      [
+        "Input Price per 1M Tokens",
+        "$2.00",
+        "$1.00",
+        ""
+      ],
+      [
+        "Output Price per 1M Tokens",
+        "$10.00",
+        "$5.00",
+        ""
+      ],
+      [
+        "Cache Hit Price per 1M Tokens",
+        "$0.20",
+        "$0.10",
+        ""
+      ],
+      [
+        "Cost per Task",
+        "$5.09",
+        "$0.28",
+        ""
+      ],
+      [
+        "Cost to Run Intelligence Index",
+        "$6,998",
+        "$594",
+        ""
+      ],
+      [
+        "Token Use"
+      ],
+      [
+        "Output Tokens per Task",
+        "118k",
+        "18k",
+        ""
+      ],
+      [
+        "Reasoning Tokens per Task",
+        "88k",
+        "8k",
+        ""
+      ],
+      [
+        "Output Tokens to Run Intelligence Index",
+        "367M",
+        "78M",
+        ""
+      ],
+      [
+        "Performance"
+      ],
+      [
+        "Output Speed",
+        "77 tokens/s",
+        "96 tokens/s",
+        ""
+      ],
+      [
+        "Time to First Token",
+        "146.82s",
+        "20.78s",
+        ""
+      ],
+      [
+        "Time to First Answer Token",
+        "146.82s",
+        "20.78s",
+        ""
+      ],
+      [
+        "End-to-End Response Time",
+        "153.30s",
+        "26.00s",
+        ""
+      ],
+      [
+        "Time per Task",
+        "960.06s",
+        "150.36s",
+        ""
+      ],
+      [
+        "Technical specifications"
+      ],
+      [
+        "Context Window",
+        "1000k tokens ~1,500 A4 pages of size 12 Arial font",
+        "200k tokens ~300 A4 pages of size 12 Arial font",
+        ""
+      ],
+      [
+        "Release Date",
+        "June 2026",
+        "October 2025",
+        ""
+      ],
+      [
+        "Knowledge Cutoff",
+        "",
+        "July 2025",
+        ""
+      ],
+      [
+        "Reasoning",
+        "Yes",
+        "Yes",
+        ""
+      ],
+      [
+        "Input modality",
+        "Supports: text and image",
+        "Supports: text and image",
+        ""
+      ],
+      [
+        "Output modality",
+        "Supports: text",
+        "Supports: text",
+        ""
+      ],
+      [
+        "Open Source (Weights)",
+        "No",
+        "No",
+        ""
+      ]
+    ]
+  ]
+}

@@ -1,0 +1,249 @@
+
+Although Claude Haiku 4.5 is still available, you should consider migrating to Claude Haiku 5.5.
+See Claude Haiku 5.5
+Models & pricing
+
+Legacy models
+Claude Haiku
+4.5
+Legacy
+
+Copy page
+
+claude-haiku-4-5-20251001
+
+Migrate to Claude Haiku 5.5
+
+
+Copy page
+
+Context window
+200K
+tokens
+Max output
+64K
+tokens
+Input pricing
+$1
+/ MTok
+Output pricing
+$5
+/ MTok
+How it compares to the current lineup
+
+Model
+Context
+
+Max output
+
+Price / MTok
+
+Thinking
+
+Default effort
+
+Knowledge cutoff
+
+Claude Fable 5.1
+1M
+128K
+$10 / $50
+Adaptive (always on)
+high
+Jun 2026
+Claude Opus 5.5
+1M
+128K
+$4 / $20
+Adaptive (always on)
+medium
+Jun 2026
+Claude Sonnet 5.5
+1M
+128K
+$2 / $10
+Adaptive
+high
+Jun 2026
+Claude Haiku 5.5
+1M
+128K
+From $0.10 / $0.50
+Adaptive
+medium
+Jun 2026
+Claude Haiku 4.5
+This model
+Legacy
+200K
+64K
+$1 / $5
+Extended
+—
+Feb 2025
+Specifications
+
+Model IDs
+Claude API
+claude-haiku-4-5-20251001
+Claude API alias
+claude-haiku-4-5
+Amazon Bedrock
+anthropic.claude-haiku-4-5
+Amazon Bedrock (InvokeModel)
+anthropic.claude-haiku-4-5-20251001-v1:0
+Google Cloud
+claude-haiku-4-5@20251001
+Microsoft Foundry
+claude-haiku-4-5
+Claude Platform on AWS
+claude-haiku-4-5
+Pricing
+Input
+$1 / MTok
+Output
+$5 / MTok
+5m cache write
+$1.25 / MTok
+1h cache write
+$2 / MTok
+Cache read
+$0.10 / MTok
+Batch API
+50% discount on input and output
+Full price list
+Capabilities
+Context window
+200K tokens
+Max output
+64K tokens
+Thinking
+Extended
+Default effort
+Not supported
+Input → output
+Text and images → text
+Reliable knowledge cutoff
+Feb 2025
+Training data cutoff
+Jul 2025
+Availability
+Status
+Active (legacy)
+Released
+October 15, 2025
+Retirement
+Not sooner than October 15, 2026
+Platforms
+Claude API
+Amazon Bedrock
+Amazon Bedrock (InvokeModel)
+Google Cloud
+Microsoft Foundry
+Claude Platform on AWS
+Good to know
+
+claude-haiku-4-5
+is a convenience alias that resolves to the pinned snapshot
+claude-haiku-4-5-20251001
+. See
+Model IDs and versioning
+.
+Claude Haiku 4.5 uses manual extended thinking (
+thinking.type: "enabled"
+), not adaptive thinking.
+Query limits and capabilities programmatically with the
+Models API
+.
+Resources
+
+Migrate to Claude Haiku 5.5
+What changes when moving from Claude Haiku 4.5 to Claude Haiku 5.5.
+
+Claude Haiku 5.5
+The current Haiku model: overview, specs, and resources.
+
+Extended thinking
+Claude Haiku 4.5 supports manual extended thinking with
+budget_tokens
+.
+Reference
+
+
+System prompt
+The system prompt Claude Haiku 4.5 uses on claude.ai and the Claude apps.
+
+System card
+
+Safety evaluations and deployment decisions for Claude Haiku 4.5.
+Pricing
+Full price list, including batch discounts and prompt caching rates.
+Model IDs and versioning
+How model IDs, aliases, and pinned snapshots work.
+
+Model deprecations
+Lifecycle status and retirement commitments for every Claude model.
+
+Amazon Bedrock (Opus 4.6 and earlier)
+Claude Haiku 4.5 is also available through the InvokeModel Bedrock integration and Bedrock-style model IDs.
+Was this page helpful?
+
+
+Claude Platform Docs
+
+
+Solutions
+AI agents
+Code modernization
+Coding
+Customer support
+Financial services
+Government
+Higher education
+K-12 teachers
+Life sciences
+Partners
+Claude on AWS
+Claude on Google Cloud
+Learn
+Blog
+Courses
+Use cases
+Connectors
+Customer stories
+Engineering at Anthropic
+Events
+Powered by Claude
+Service partners
+Startups program
+Company
+Anthropic
+Careers
+Economic Futures
+Research
+News
+Responsible Scaling Policy
+Security and compliance
+Transparency
+Learn
+Blog
+Courses
+Use cases
+Connectors
+Customer stories
+Engineering at Anthropic
+Events
+Powered by Claude
+Service partners
+Startups program
+Help and security
+Availability
+Status
+Support
+Discord
+Terms and policies
+Privacy policy
+Responsible disclosure policy
+Terms of service: Commercial
+Terms of service: Consumer
+Usage policy

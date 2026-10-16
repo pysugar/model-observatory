@@ -1,0 +1,11 @@
+{
+  "url": "https://deepmind.google/models/evals-methodology/gemini-4-argon",
+  "tables": [],
+  "links": [],
+  "response_sha256": "ff1df6bdeddc4c0f48840c09a8a7813b10ae7ad9e053892da68dabf64f09bff7",
+  "capture_note": "PDF",
+  "text_file": "google-argon-method.txt",
+  "text_sha256": "d5ef6cf0e21d51dce97b2fdf57d6b147b2946d672eb3dd5b12d9896353029481",
+  "pdf_file": "google-argon-method.pdf",
+  "pdf_sha256": "ff1df6bdeddc4c0f48840c09a8a7813b10ae7ad9e053892da68dabf64f09bff7"
+}

@@ -1,0 +1,512 @@
+All VulcanBench Frontier v4 reports
+October 1, 2026 · 115 runs · Code quality protocol v3.18
+GPT-6.1 Sol across every effort level
+115 runs of GPT-6.1 Sol through the Codex CLI on a ChatGPT Pro subscription, 23 tasks at each of five effort levels, Low to Max. GPT-6.1 Sol is a new model, the third Sol on the board after
+GPT-6 Sol
+and
+GPT-5.6 Sol
+. Code quality carries 33% of the combined score and is judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the same frozen protocol as the other Frontier v4 reports, so GPT-6.1 Sol takes its place on the
+Frontier v4 leaderboard
+. Every run finished inside the 3-hour task bound, and every cell is judged on all 23 runs.
+How the test works
+1
+A retired program to rebuild
+Each of the 23 tasks is a legacy binary with a written specification and an issue. Its real behaviour departs from the specification in documented ways, and hidden tests check the rewrite against the binary.
+2
+One attempt per task and level
+GPT-6.1 Sol works in Codex with the binary, the specification and the code, once per task at each effort level, inside a flat 3-hour bound.
+3
+Tests and two judges score it
+Hidden tests give functional correctness. Two calibrated judges from labs with no model on the board rate the code for a human reader and try to recover the documented departures.
+4
+Scores, time and cost per level
+Each level gets a combined score, tasks passed, minutes and API-equivalent cost. A run with only one valid judge review is scored from that judge alone, under the protocol's frozen rule.
+Combined score = 50% functional correctness + 8.5% lint and complexity + 8.5% security + 33% Code quality, averaged over the 23 runs in each level, as on every other board column. Tasks passed, minutes and cost cover the same 23 runs.
+Report
+Full technical report
+PDF, 11 pages
+Card
+Score card
+PNG, combined score, runtime and Code quality by effort
+Card
+Cost and tokens card
+PNG, API-equivalent cost and tokens by effort
+Card
+Three generations of Sol
+PNG, GPT-6.1 Sol, GPT-6 Sol and GPT-5.6 Sol at every level
+Card
+Beside Opus 5.5 and Astra
+PNG, combined score, passes, cost and minutes
+Card
+Time, tokens and Code quality
+PNG, beside Opus 5.5 and Astra
+Data
+All 115 runs
+CSV, one row per run with both judges' scores
+Data
+Scores by effort
+CSV, five effort aggregates
+Evidence
+Run records and judge protocol
+GitHub, JSON and CSV bundle
+Evidence
+Reproduction guide
+GitHub, public arithmetic checks
+Share
+Post on X
+A link to this report, ready to post
+Across every effort level
+GPT-6.1 Sol ran every task once at each of its five effort levels, 23 tasks per cell, through Codex CLI 0.159.0 on a ChatGPT Pro subscription from September 29 to 30, 2026. Combined score weights are 50% functional correctness, 8.5% lint and complexity, 8.5% security and 33% Code quality, judged for a named human reader by Muse Spark 1.3 and Grok 4.6 with a ground-truth intent-recovery probe. Judging ran September 30 to October 1. No run reached the flat 3-hour task bound; the longest, Medium paddockcore, took 80 minutes. All 115 runs carry a published Code quality score. One of them, Medium paddockcore, is scored from Muse Spark 1.3 alone, because Grok 4.6's review of it had no valid response; see the note under the results table.
+Combined score
+86.22 at Low to 88.78 at Extra-high
+A flat curve: 86.22 at Low, 86.44 at Medium, 88.23 at High, 88.78 at Extra-high and 88.35 at Max. High, Extra-high and Max sit within 0.55 points of each other, and Low is 2.56 points below the best level.
+Tasks passed
+20 of 23 at Low, 23 of 23 from High up
+GPT-6.1 Sol passes 20 tasks at Low, 22 at Medium and every task at High, Extra-high and Max. Of the 231 hidden behaviours the tasks test for, it fixes 225 at Low, 228 at Medium and all 231 from High up.
+Code quality
+70.25 to 74.99
+The judges rate the code from 70.79 at Low and 70.25 at Medium to 73.67 at High, 74.99 at Extra-high and 73.80 at Max, with standard errors of 0.85 to 1.25.
+Runtime and cost
+6.9 to 15.4 min · $0.31 to $0.46 per task
+Low is the fastest and cheapest level; High costs less than Medium ($0.33 against $0.40). The whole sweep prices at $44.33, $0.39 per task, at about 1.2M raw tokens per task.
+Combined score, tasks passed, Code quality and runtime at each effort level, 23 runs per cell
+Metric
+Low
+Medium
+High
+Extra-high
+Max
+Combined score
+86.22
+86.44
+88.23
+88.78
+88.35
+Standard error
+0.82
+0.78
+0.40
+0.40
+0.33
+Judged runs
+23
+23
+23
+23
+23
+Tasks passed
+20/23
+22/23
+23/23
+23/23
+23/23
+Hidden behaviours fixed
+225/231
+228/231
+231/231
+231/231
+231/231
+Code quality
+70.79
+70.25
+73.67
+74.99
+73.80
+Human readability
+61.5
+60.9
+64.8
+66.6
+64.8
+Minutes per task
+6.9
+10.6
+10.2
+15.4
+14.5
+API-equivalent $ per task
+$0.31
+$0.40
+$0.33
+$0.43
+$0.46
+Under the prior 50/15/15/20 profile applied to the same Code quality scores the ladder has the same shape, 87.93 to 89.76. The card and the full per-effort table follow.
+Combined score uses a focused scale; runtime starts at zero. Whiskers show ±1 task standard error, not statistical significance.
+Open full-size card
+.
+GPT-6.1 Sol starts high and gains little with effort: Low already passes 20 of 23 tasks, and from High up it passes all 23, so the remaining spread comes from Code quality and the automated factors. These runs compare a model-and-harness combination, not an isolated base model; the
+Frontier v4 leaderboard
+places every GPT-6.1 Sol effort level beside the other models judged under the same protocol.
+Combined score and Code quality by effort
+n=23 at every level. Combined (33%) is the published score. Combined (20% profile) applies the prior 50/15/15/20 weights to the same Code quality scores for comparison. Code quality, human readability, maintainability and intent recovery are out of 100 and equal means of the two judges, or of Muse Spark 1.3 alone on Medium paddockcore (see the note below). Passed counts all 23 runs. Runtime is solver wall-clock per task over every run in the cell.
+VulcanBench Frontier v4: GPT-6.1 Sol effort results under Code quality protocol v3.18
+Model / harness
+Effort
+Combined (33%)
+SE
+Combined (20% profile)
+Code quality
+Human readability
+Maintainability
+Intent recovery
+Judged
+Passed
+Min/task
+GPT-6.1 Sol
+/ Codex
+Low
+86.22
+0.82
+87.93
+70.79
+61.5
+72.7
+80.6
+23/23
+20/23
+6.9
+GPT-6.1 Sol
+/ Codex
+Medium
+86.44
+0.78
+87.95
+70.25
+60.9
+73.4
+78.6
+23/23*
+22/23
+10.6
+GPT-6.1 Sol
+/ Codex
+High
+88.23
+0.40
+89.31
+73.67
+64.8
+76.6
+81.6
+23/23
+23/23
+10.2
+GPT-6.1 Sol
+/ Codex
+Extra-high
+88.78
+0.40
+89.76
+74.99
+66.6
+77.7
+82.6
+23/23
+23/23
+15.4
+GPT-6.1 Sol
+/ Codex
+Max
+88.35
+0.33
+89.46
+73.80
+64.8
+77.6
+80.7
+23/23
+23/23
+14.5
+*Medium paddockcore is scored from Muse Spark 1.3 alone.
+Grok 4.6's primary review of that run had no valid response after the protocol's single retry: both attempts quoted
+self.standing[pony] += 2
+as evidence where the code reads
+self.standing[parts[1]] += 2
+, a changed token that no recovery rule accepts. As the owner decided for the same case under v3.14, the operator wrapper marked the call invalid, and the frozen summary, which publishes a submission from the panels with a valid review, scores it from Muse alone: reviewed layer and intent recovery both (Code quality 54.00, combined 80.76). Grok's probe answer for that run is not used and not published. Every other run is the equal mean of both judges, and the run passed its tests.
+Intent recovery
+is scored over the specification departures a submission actually passed tests for. Every GPT-6.1 Sol run passed at least one, so no run fell back to the reviewed score alone.
+SE
+is one sample standard error of the combined score across the cell's tasks. It describes task sampling, not judge uncertainty, repeated runs or a significance test. No solver fallback occurred, and neither judge produced a reviewer fallback on any of the 115 submissions.
+Perfect hidden tests from High up
+From High to Max, GPT-6.1 Sol passes every hidden test on every task: 23 of 23 tasks and all 231 tested behaviours at each of the three levels. Frontier v4 therefore no longer separates GPT-6.1 Sol's top levels on correctness. What still separates them is Code quality, the lint and security scans, and cost: Extra-high scores 0.55 points above High on the combined score and costs 32% more per task, and Max is 0.43 points below Extra-high at 5% more.
+We checked the two obvious alternative explanations. The harness's integrity audit is clean on all 115 runs: no web access, and no reads of benchmark data or answer-key paths. (The filesystem audit records paths outside the task workspace on every run, as it does for every Codex column, such as the shell and temporary scratch folders; none of them is benchmark data or an answer key.) And OpenAI's
+model page
+gives GPT-6.1 Sol a knowledge cutoff of April 30, 2026, before the Frontier v4 tasks were built and admitted in August 2026. Neither rules out every form of overlap, but the perfect results are not explained by the run reaching the answers.
+The suite's charter already plans for this. Its saturation-pruning rule says that when a new frontier model generation lands, the suite is re-gated with three runs per model per task, and tasks that the weaker reference now solves every time, or that the stronger reference finishes in a median under 10 minutes, are pruned. Re-gating Frontier v4 against this generation is a planned follow-up; until then, read GPT-6.1 Sol's High to Max columns as at the suite's correctness ceiling.
+Cost and tokens across effort levels
+All 115 runs priced from their Codex receipts at list API rates, cache-aware, with judging excluded. These are API-equivalent estimates, not subscription charges: GPT-6.1 Sol ran on a ChatGPT Pro subscription, and what the plan actually bills is not observable from the receipts. Cost per task is $0.31 at Low, $0.40 at Medium, $0.33 at High, $0.43 at Extra-high and $0.46 at Max. Medium uses the most tokens per task (1.62M) and High the fewest (0.91M), which is why High costs less than Medium. The whole sweep comes to $44.33 for 115 runs.
+Whiskers show ±1 task standard error. Cost, tokens and runtime cover all 23 runs per level.
+Open full-size card
+.
+API-equivalent cost, raw tokens and runtime at each effort level
+Effort
+Runs
+$/task
+Level total
+Tokens/task
+Min/task
+Low
+23
+$0.31
+$7.04
+1.24M
+6.9
+Medium
+23
+$0.40
+$9.17
+1.62M
+10.6
+High
+23
+$0.33
+$7.59
+0.91M
+10.2
+Extra-high
+23
+$0.43
+$10.00
+1.12M
+15.4
+Max
+23
+$0.46
+$10.54
+1.04M
+14.5
+Full sweep
+115
+$0.39
+$44.33
+136M
+22.0 h
+Pricing.
+Rates checked 2026-09-29 from
+OpenAI
+: GPT-6.1 Sol at $2.00 input, $0.10 cached input and $10.00 output per million tokens. Codex receipts report input, cached input, output and reasoning tokens per run, so cached input is billed at the cache-read rate and the rest at the standard rate. OpenAI bills prompts over 272K input tokens at a higher rate, but Codex keeps each request within its 272K context window, so no long-context premium applies. The sweep stamped each run at these rates at run time; the export recomputed every run from its receipt and matched every stamp.
+Tokens
+are Codex's raw totals including cache reads. Runtime covers all 115 runs, 22.0 hours in all. Per-run estimates, token usage breakdowns and the rate table are in
+economics.json
+and
+runs.csv
+.
+Three generations of Sol
+GPT-6 Sol and GPT-5.6 Sol ran the same 23 tasks through Codex in September and were judged by the same two judges under v3.17 and v3.7. GPT-6.1 Sol leads both at every effort level on combined score, tasks passed and cost per task. Its combined score is 86.22 to 88.78, against 67.62 to 86.82 for GPT-6 Sol and 69.05 to 87.18 for GPT-5.6 Sol; the lead is largest at Low (18.60 and 17.17 points) and smallest at Max (1.53 and 1.17). It costs 14% to 30% of GPT-6 Sol's price per task and 16% to 27% of GPT-5.6 Sol's, using 0.91M to 1.62M raw tokens per task against 3.26M to 8.32M and 1.79M to 2.83M. Its Code quality is also higher at every level (70.25 to 74.99, against 62.53 to 70.78 and 64.98 to 68.19).
+Combined score on the left, API-equivalent cost per priced task on a log scale on the right; whiskers show ±1 task standard error. Each model was judged in its own protocol run (v3.18, v3.17 and v3.7) with the same rubric and judges, and each is priced at its own list rates. GPT-6 Sol at Medium and GPT-5.6 Sol at Max are judged on 22 of 23 runs.
+Open full-size card
+.
+GPT-6.1 Sol, GPT-6 Sol and GPT-5.6 Sol on Frontier v4, 23 runs per cell (judged: GPT-6 Sol 22 at Medium, GPT-5.6 Sol 22 at Max)
+Metric
+Low
+Medium
+High
+Extra-high
+Max
+Combined, GPT-6.1 Sol
+86.22
+86.44
+88.23
+88.78
+88.35
+Combined, GPT-6 Sol
+67.62
+80.60
+82.83
+85.94
+86.82
+Combined, GPT-5.6 Sol
+69.05
+82.56
+85.76
+86.47
+87.18
+Tasks passed, GPT-6.1 Sol
+20/23
+22/23
+23/23
+23/23
+23/23
+Tasks passed, GPT-6 Sol
+4/23
+13/23
+15/23
+18/23
+19/23
+Tasks passed, GPT-5.6 Sol
+6/23
+12/23
+20/23
+21/23
+22/23
+Code quality, GPT-6.1 Sol
+70.79
+70.25
+73.67
+74.99
+73.80
+Code quality, GPT-6 Sol
+62.53
+66.79
+70.09
+70.77
+70.78
+Code quality, GPT-5.6 Sol
+64.98
+68.19
+67.65
+67.31
+67.58
+$ per task, GPT-6.1 Sol
+$0.31
+$0.40
+$0.33
+$0.43
+$0.46
+$ per task, GPT-6 Sol
+$1.02
+$1.76
+$2.33
+$2.00
+$2.52
+$ per task, GPT-5.6 Sol
+$1.36
+$1.72
+$2.05
+$1.61
+$1.77
+Minutes per task, GPT-6.1 Sol
+6.9
+10.6
+10.2
+15.4
+14.5
+Minutes per task, GPT-6 Sol
+13.0
+17.5
+23.8
+20.9
+24.5
+Minutes per task, GPT-5.6 Sol
+9.8
+11.1
+12.0
+10.6
+11.6
+On speed the picture is mixed: GPT-6.1 Sol is faster than GPT-6 Sol at every level and faster than GPT-5.6 Sol at Low, Medium and High, but slower at Extra-high (15.4 against 10.6 minutes) and Max (14.5 against 11.6). Three cautions on the speed figures: the three sweeps ran on different Codex CLI versions (0.159.0, 0.155.0 and 0.153.4); GPT-6.1 Sol's Low, Medium and High runs overlapped GPT-6 Sol's judging on the same machine, as GPT-6 Sol's sweep had overlapped GPT-6 Luna's (see How it was run); and its Extra-high and Max runs, the two slower than GPT-5.6 Sol, mostly ran after that window. Each model was judged in its own protocol run of the same frozen rubric.
+On the Frontier v4 board
+GPT-6.1 Sol's best level, Extra-high at 88.78, ranks 13th of the board's 49 model and effort columns, with Max 14th and High 15th. Above it are every Fable 5.1 level, Opus 5.5 from Medium to Max, GPT-6 Astra at Max and Extra-high, and GPT-5.6 Terra at Max. The leaders are Claude Fable 5.1 at Max (91.84), Opus 5.5 at High (91.11) and GPT-6 Astra at Max (89.30), 3.06, 2.33 and 0.52 points above GPT-6.1 Sol's best.
+The gap is not correctness: Fable 5.1 at Max and GPT-6 Astra at Max also pass 23 of 23, and Opus 5.5 at High passes all 22 of its judged runs, so on functional correctness they tie. The gap is in the judged and scanned factors, Code quality above all. GPT-6.1 Sol's best Code quality is 74.99, against 82.43 for Fable 5.1 at Max, 77.32 to 79.98 for Opus 5.5 from Medium to Max, and 76.26 for GPT-6 Astra at Max. Against Fable 5.1 at Max, Code quality accounts for 2.46 of the 3.06 points and security for 0.48; against GPT-6 Astra at Max, Code quality accounts for 0.42 of 0.52. Against Opus 5.5 at High the security scan matters as much: Code quality accounts for 0.99 of the 2.33 points and security for 1.29 (99.55 against 84.35). GPT-5.6 Terra at Max has lower Code quality (72.52) and ranks just above GPT-6.1 Sol on its security score (99.13). On cost the order reverses: of the 16 columns scoring 88 or more, GPT-6.1 Sol's three are the cheapest, $0.33 to $0.46 per task against $1.71 to $14.49 for the rest. The
+leaderboard
+carries every column.
+Two cards set GPT-6.1 Sol beside Claude Opus 5.5 and GPT-6 Astra at every effort level. The first gives combined score and cost per task; the second gives time and tokens per task and Code quality layer by layer. Opus 5.5 writes the code the judges rate highest, about 3 to 7 points of Code quality above the other two from Medium up, mostly in readability, and uses the most time and tokens (2.8M to 8.7M per task). GPT-6 Astra is the fastest and leanest, 3.8 to 10.3 minutes and under 1M tokens per task. GPT-6.1 Sol is close to Astra on Code quality and tokens, a little slower, and the cheapest of the three per task.
+Combined score on the left, API-equivalent cost per task on a log scale on the right; whiskers show ±1 task standard error. Each model is read as its own report reads it: Opus 5.5 with Claude Code’s refusal fallback on and its list-price totals, fallback turns included (High judged on 22); GPT-6 Astra at its report’s central cost estimate.
+Open full-size card
+.
+Minutes and raw tokens per task cover all 23 runs at each level; tokens for Opus 5.5 are Claude Code’s usage over every serving model, cache reads and writes included. Code quality is the mean of the judges with a valid review, as each frozen summary publishes it.
+Open full-size card
+.
+What Code quality measures
+Every judge receives the same rubric, frozen by hash before any review. It names the reader it scores for: an engineer who has never seen the code, reads it top to bottom without running it, and must make a correct change in one sitting. It tells the judge that its own ease at parsing dense code is not evidence of readability. Six dimensions are scored 0 to 4 in half steps against written anchors: naming, presentation and intent form the human readability sub-score; structure, changeability and verifiability form the maintainability sub-score. Every score must cite an exact excerpt from the code and a concrete consequence for that reader. The host computes the sub-scores; the judge does no arithmetic.
+The 33 points have three designed layers. The reviewed panel carries 24 points. An intent-recovery probe carries 9: the judge, given only the specification and the code, lists where the code departs from the specification, and a separate call matches that list against a frozen answer key, over the departures the submission passed tests for. The third layer, measured maintenance, is designed for 12 points but is not yet built, so the pre-registered 24 plus 9 split is in force.
+Code quality components at each effort level, out of 100, mean of both judges over 23 runs (Medium paddockcore: Muse Spark 1.3 alone)
+Component
+Low
+Medium
+High
+Extra-high
+Max
+Code quality
+70.79
+70.25
+73.67
+74.99
+73.80
+Human readability
+61.5
+60.9
+64.8
+66.6
+64.8
+Maintainability
+72.7
+73.4
+76.6
+77.7
+77.6
+Intent recovery
+80.6
+78.6
+81.6
+82.6
+80.7
+Rated by Muse Spark 1.3
+65.6
+64.7
+69.9
+71.2
+69.2
+Rated by Grok 4.6
+68.7
+70.3
+71.5
+73.1
+73.2
+Standard error of Code quality
+1.22
+1.25
+1.18
+1.20
+0.85
+Code quality is about 70.5 at Low and Medium and about 74 from High up, with Grok 4.6 the higher rater at every level. Grok's Medium mean covers the 22 runs it reviewed validly. Human readability is the weaker sub-score at every level, 60.9 to 66.6 against 72.7 to 77.7 for maintainability. Per-run sub-scores from each judge are in
+runs.csv
+; the exact rubric, system text, probe and match instructions are in
+judge-protocols.json
+.
+Judges and calibration
+The scored panel is Muse Spark 1.3 (Meta) through the Muse CLI on its Standard tier, and Grok 4.6 (xAI) through the Cursor CLI at medium effort, with equal weight, the same pinned binaries as under v3.7. Neither lab has a model on this board, so neither judge grades a relative. Every session is fresh, tools are disabled, the workspace is empty, model identity is checked per call from the CLI's own records, and solver labels are withheld. Protocol v3.18 changes nothing in the rubric, controls, quirk keys, gates, repeats, seed, weights or judges from v3.7; it applies the protocol to this population, and both judges retook the calibration exam under it before any counted call.
+Before scoring a single submission, each judge reviews ten held-out programs that implement the same ledger specification: clear, compressed, compressed then auto-formatted, verbose with duplicated policy, needlessly abstracted, misleadingly commented, narrated with a comment on every line, a documented legacy quirk, an embedded instruction to give full marks, and hidden module state. Each program is reviewed five times in a seeded order. Twenty gates fixed in advance check that the judge sees the construct; a judge may miss at most one gate by at most half a point.
+Calibration verdicts
+Judge
+Protocol
+Calls
+Result
+Allowance used
+Failing gates
+Muse Spark 1.3
+code-quality-maintenance-v3.18
+80
+passed
+no
+none
+Grok 4.6
+code-quality-maintenance-v3.18
+80
+passed
+no
+none
+Both judges passed every gate with no allowance used, as under v3.17. Every gate value and control mean is in
+calibration.json
+.
+Under v3.18 each judge made 440 counted calls: 80 in calibration, 115 primary reviews, 5 repeats, 10 pairwise checks, 115 intent probes and 115 answer-key matches. One of Grok 4.6's 115 primary reviews, Medium paddockcore, has no valid response, as described above. Muse needed a second attempt on eight calls and Grok on nine. Muse's probe on High codeccore was recovered by a new operator rule, described under How it was run. Grok's calls reported the display label "Grok 4.6 Medium" for the pinned model id, which the operator wrapper's display-rename rule accepts, as under earlier amendments. Neither judge produced a reviewer fallback. Every attempt is archived beside its replacement in the harness run directory.
+How it was run
+Codex CLI 0.159.0.
+Codex 0.155.0, 0.157.0 and 0.158.0 refuse GPT-6.1 Sol on a ChatGPT account before any work; 0.159.0 is the first release that serves it, so the column runs on 0.159.0 from its own install, and the earlier Codex columns keep their versions.
+The sweep overlapped another model's judging.
+The GPT-6.1 Sol solver sweep ran from September 29, 19:18 PDT, to September 30, 17:21 PDT. At the owner's request its first 11.5 hours, to September 30, 06:51 PDT, ran alongside GPT-6 Sol's v3.17 Code quality judging on the same machine. Every Low, Medium and High run and the first five Extra-high runs started inside that window, which matters for the wall-clock speed figures.
+Three evidence rebuilds.
+Three runs add test fixtures that the saved text patch cannot re-apply: Low payrollcore and Medium lodgecore add fixtures git treats as binary, and Low cellarcore's fixture text was altered by the text-mode capture. The v3.18 runner rebuilt their judging evidence from the saved workspace's index diff after checking it against the run's patch. Only test fixtures differ; the reviewed module is rebuilt as for every other run. The three method records are hashed in the evidence bundle.
+One escaping recovery on a Muse probe.
+On High codeccore, Muse Spark 1.3's first probe attempt wrote an invalid JSON escape, and its second quoted a code line with the string escapes decoded into control characters, so the excerpt no longer matched the source text. By owner decision this was treated as a JSON-escaping slip, not an invented quote: a new operator rule respells such an excerpt with the source's escapes, after which it must be verbatim and the attempt must pass every other check. The second attempt was selected, and the original excerpt is kept in the receipt.
+One Grok review scored from Muse alone.
+Grok 4.6's primary review of Medium paddockcore quoted a changed line on both attempts and was marked invalid under the owner's v3.14 precedent, so that run's Code quality is Muse Spark 1.3's alone, as described under the results table.
+Judging windows.
+Judging ran September 30, 20:58 PDT, to October 1, 06:01 PDT, and resumed from 06:04 to 12:52 PDT after the Grok finding above. No solver sweep ran during judging; the Grok 4.7 sweep waited for it to finish.
+One attempt per task and level.
+Runs were not repeated, no run was retried, and effort labels are Codex's own.
+Evidence and reproduction
+Public files contain all 115 run measurements, both judges' six-dimension sub-scores and intent-recovery scores per run (Muse's alone on Medium paddockcore), hidden behaviours fixed, integrity-audit verdicts, raw tokens and API-equivalent cost estimates per run, five aggregates, every calibration gate value, the exact judge protocol text, the operator records for the invalid Grok review, the Muse escaping recovery and the three evidence rebuilds, and source hashes. Each run's Code quality is (0.24 × reviewed score + 0.09 × intent recovery) / 0.33, where both terms are the equal mean of the judges with a valid review. The combined score is 100 × (0.50F + 0.085Q + 0.085S + 0.33C / 100). The
+reproduction guide
+gives the public arithmetic checks and links the protocol documents, controls, runner, operator wrapper and decision records.
+No human rated anything; the scores are model judgment for a human reader, not human validation. Hash checks bind the export to frozen files, including the operator's invalid-review marker and the recovered probe; they do not prove that judges were unbiased or that no training overlap exists.
+Withheld: raw prompts and responses, submitted patches and reconstructed sources, the quirk answer keys (they describe hidden-test behaviour), reviewer session identifiers and usage receipts, and Grok's unused probe answer on Medium paddockcore. Summed solver time is 22.05 hours; judging is excluded.

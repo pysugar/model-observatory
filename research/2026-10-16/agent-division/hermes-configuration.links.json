@@ -1,0 +1,1290 @@
+[
+  {
+    "title": "PM-prepared source checkout",
+    "href": "/docs/reference/package-management#developer-workflow"
+  },
+  {
+    "title": "Nous Portal",
+    "href": "/docs/integrations/nous-portal"
+  },
+  {
+    "title": "​",
+    "href": "#directory-structure"
+  },
+  {
+    "title": "​",
+    "href": "#managing-configuration"
+  },
+  {
+    "title": "​",
+    "href": "#configuration-precedence"
+  },
+  {
+    "title": "Managed Scope",
+    "href": "/docs/user-guide/managed-scope"
+  },
+  {
+    "title": "​",
+    "href": "#runtime-limits"
+  },
+  {
+    "title": "​",
+    "href": "#database-settings"
+  },
+  {
+    "title": "​",
+    "href": "#environment-variable-substitution"
+  },
+  {
+    "title": "multiplexed multi-profile gateway",
+    "href": "/docs/user-guide/multi-profile-gateways"
+  },
+  {
+    "title": "What is isolated per profile",
+    "href": "/docs/user-guide/multi-profile-gateways#what-is-isolated-per-profile"
+  },
+  {
+    "title": "AI Providers",
+    "href": "/docs/integrations/providers"
+  },
+  {
+    "title": "​",
+    "href": "#provider-timeouts"
+  },
+  {
+    "title": "cli-config.yaml.example",
+    "href": "https://github.com/NousResearch/hermes-agent/blob/main/cli-config.yaml.example"
+  },
+  {
+    "title": "​",
+    "href": "#update-behavior"
+  },
+  {
+    "title": "​",
+    "href": "#background-checks"
+  },
+  {
+    "title": "​",
+    "href": "#ssh-authentication"
+  },
+  {
+    "title": "​",
+    "href": "#terminal-backend-configuration"
+  },
+  {
+    "title": "​",
+    "href": "#backend-overview"
+  },
+  {
+    "title": "​",
+    "href": "#local-backend"
+  },
+  {
+    "title": "​",
+    "href": "#terminalhome_mode"
+  },
+  {
+    "title": "​",
+    "href": "#docker-backend"
+  },
+  {
+    "title": "​",
+    "href": "#container-lifecycle"
+  },
+  {
+    "title": "​",
+    "href": "#environment-variable-overrides"
+  },
+  {
+    "title": "​",
+    "href": "#ssh-backend"
+  },
+  {
+    "title": "Persistent Shell",
+    "href": "#persistent-shell"
+  },
+  {
+    "title": "Env Var Passthrough",
+    "href": "/docs/user-guide/security#environment-variable-passthrough"
+  },
+  {
+    "title": "​",
+    "href": "#modal-backend"
+  },
+  {
+    "title": "Modal",
+    "href": "https://modal.com"
+  },
+  {
+    "title": "​",
+    "href": "#daytona-backend"
+  },
+  {
+    "title": "Daytona",
+    "href": "https://daytona.io"
+  },
+  {
+    "title": "​",
+    "href": "#vercel-sandbox-backend"
+  },
+  {
+    "title": "Vercel Sandbox",
+    "href": "https://vercel.com/docs/vercel-sandbox"
+  },
+  {
+    "title": "Vercel managed image",
+    "href": "https://vercel.com/docs/sandbox/concepts/images"
+  },
+  {
+    "title": "deprecated by Vercel",
+    "href": "https://vercel.com/docs/sandbox/concepts/runtimes"
+  },
+  {
+    "title": "​",
+    "href": "#singularityapptainer-backend"
+  },
+  {
+    "title": "Singularity/Apptainer",
+    "href": "https://apptainer.org"
+  },
+  {
+    "title": "​",
+    "href": "#common-terminal-backend-issues"
+  },
+  {
+    "title": "​",
+    "href": "#remote-to-host-state-sync-on-teardown"
+  },
+  {
+    "title": "​",
+    "href": "#docker-volume-mounts"
+  },
+  {
+    "title": "​",
+    "href": "#docker-credential-forwarding"
+  },
+  {
+    "title": "​",
+    "href": "#running-the-container-as-your-host-user"
+  },
+  {
+    "title": "​",
+    "href": "#snap-packaged-docker-apparmor"
+  },
+  {
+    "title": "LP#1908448",
+    "href": "https://bugs.launchpad.net/snapd/+bug/1908448"
+  },
+  {
+    "title": "​",
+    "href": "#optional-mount-the-launch-directory-into-workspace"
+  },
+  {
+    "title": "​",
+    "href": "#persistent-shell"
+  },
+  {
+    "title": "Code Execution",
+    "href": "/docs/user-guide/features/code-execution"
+  },
+  {
+    "title": "Terminal section of the README",
+    "href": "/docs/user-guide/features/tools"
+  },
+  {
+    "title": "​",
+    "href": "#skill-settings"
+  },
+  {
+    "title": "Creating Skills — Config Settings",
+    "href": "/docs/developer-guide/creating-skills#config-settings-configyaml"
+  },
+  {
+    "title": "​",
+    "href": "#auto-loading-skills-every-session"
+  },
+  {
+    "title": "CLI — persistent auto-load",
+    "href": "/docs/user-guide/cli#persistent-auto-load-via-config"
+  },
+  {
+    "title": "​",
+    "href": "#guard-on-agent-created-skill-writes"
+  },
+  {
+    "title": "​",
+    "href": "#write-approval-for-skill-writes"
+  },
+  {
+    "title": "Gating agent skill writes",
+    "href": "/docs/user-guide/features/skills#gating-agent-skill-writes-skillswrite_approval"
+  },
+  {
+    "title": "​",
+    "href": "#memory-configuration"
+  },
+  {
+    "title": "Controlling memory writes",
+    "href": "/docs/user-guide/features/memory#controlling-memory-writes-write_approval"
+  },
+  {
+    "title": "​",
+    "href": "#context-file-truncation"
+  },
+  {
+    "title": "​",
+    "href": "#file-read-safety"
+  },
+  {
+    "title": "​",
+    "href": "#tool-output-truncation-limits"
+  },
+  {
+    "title": "​",
+    "href": "#tool-result-spillover-budget"
+  },
+  {
+    "title": "​",
+    "href": "#global-toolset-disable"
+  },
+  {
+    "title": "​",
+    "href": "#git-worktree-isolation"
+  },
+  {
+    "title": "​",
+    "href": "#context-compression"
+  },
+  {
+    "title": "​",
+    "href": "#full-reference"
+  },
+  {
+    "title": "​",
+    "href": "#common-setups"
+  },
+  {
+    "title": "​",
+    "href": "#how-the-three-knobs-interact"
+  },
+  {
+    "title": "​",
+    "href": "#stream-progress-timeout"
+  },
+  {
+    "title": "​",
+    "href": "#gateway-turn-lease-timeout"
+  },
+  {
+    "title": "​",
+    "href": "#session-stall-watchdog"
+  },
+  {
+    "title": "​",
+    "href": "#reconnect-attention-escalation"
+  },
+  {
+    "title": "​",
+    "href": "#gateway-agent-cache"
+  },
+  {
+    "title": "​",
+    "href": "#context-engine"
+  },
+  {
+    "title": "Context Compression",
+    "href": "/docs/developer-guide/context-compression-and-caching"
+  },
+  {
+    "title": "Memory Providers",
+    "href": "/docs/user-guide/features/memory-providers"
+  },
+  {
+    "title": "​",
+    "href": "#iteration-budget"
+  },
+  {
+    "title": "fallback providers",
+    "href": "/docs/user-guide/features/fallback-providers"
+  },
+  {
+    "title": "​",
+    "href": "#wall-clock-run-budget"
+  },
+  {
+    "title": "​",
+    "href": "#verify-on-stop-coding-verification"
+  },
+  {
+    "title": "pre_verify hook",
+    "href": "/docs/user-guide/features/hooks#pre_verify"
+  },
+  {
+    "title": "​",
+    "href": "#standing-goals-goal"
+  },
+  {
+    "title": "Goals",
+    "href": "/docs/user-guide/features/goals"
+  },
+  {
+    "title": "​",
+    "href": "#api-timeouts"
+  },
+  {
+    "title": "​",
+    "href": "#disabling-api-streaming"
+  },
+  {
+    "title": "​",
+    "href": "#context-pressure-warnings"
+  },
+  {
+    "title": "​",
+    "href": "#credential-pool-strategies"
+  },
+  {
+    "title": "Credential Pools",
+    "href": "/docs/user-guide/features/credential-pools"
+  },
+  {
+    "title": "​",
+    "href": "#prompt-caching"
+  },
+  {
+    "title": "xAI prompt caching",
+    "href": "/docs/integrations/providers#xai-grok--responses-api--prompt-caching"
+  },
+  {
+    "title": "​",
+    "href": "#auxiliary-models"
+  },
+  {
+    "title": "Full auxiliary config reference",
+    "href": "#full-auxiliary-config-reference"
+  },
+  {
+    "title": "​",
+    "href": "#configuring-auxiliary-models-interactively"
+  },
+  {
+    "title": "Voice chat model",
+    "href": "/docs/user-guide/features/voice-mode#voice-chat-model"
+  },
+  {
+    "title": "​",
+    "href": "#stream-only-endpoints"
+  },
+  {
+    "title": "​",
+    "href": "#video-tutorial"
+  },
+  {
+    "title": "​",
+    "href": "#the-universal-config-pattern"
+  },
+  {
+    "title": "background review reasoning",
+    "href": "/docs/user-guide/features/memory#same-model-review-reasoning"
+  },
+  {
+    "title": "Mixture of Agents",
+    "href": "/docs/user-guide/features/mixture-of-agents"
+  },
+  {
+    "title": "provider registry",
+    "href": "/docs/reference/environment-variables"
+  },
+  {
+    "title": "MiniMax OAuth guide",
+    "href": "/docs/guides/minimax-oauth"
+  },
+  {
+    "title": "xAI Grok OAuth guide",
+    "href": "/docs/guides/xai-grok-oauth"
+  },
+  {
+    "title": "OAuth over SSH / Remote Hosts",
+    "href": "/docs/guides/oauth-over-ssh"
+  },
+  {
+    "title": "AI Providers",
+    "href": "/docs/integrations/providers"
+  },
+  {
+    "title": "​",
+    "href": "#full-auxiliary-config-reference"
+  },
+  {
+    "title": "Context Compression",
+    "href": "#context-compression"
+  },
+  {
+    "title": "Fallback Providers",
+    "href": "/docs/integrations/providers#fallback-providers"
+  },
+  {
+    "title": "​",
+    "href": "#per-task-fallback-chain-for-auxiliary-tasks"
+  },
+  {
+    "title": "​",
+    "href": "#native-vision-embed-budgets-top-level-vision"
+  },
+  {
+    "title": "Vision → Native embeds ride the session",
+    "href": "/docs/user-guide/features/vision#native-embeds-ride-the-session-visionembed_target_bytes-and-visionmax_calls_per_image"
+  },
+  {
+    "title": "​",
+    "href": "#limiting-auxiliary-concurrency"
+  },
+  {
+    "title": "​",
+    "href": "#openrouter-routing--pareto-code-for-auxiliary-tasks"
+  },
+  {
+    "title": "Pareto Code router",
+    "href": "/docs/integrations/providers#openrouter-pareto-code-router"
+  },
+  {
+    "title": "openrouter.ai/docs",
+    "href": "https://openrouter.ai/docs"
+  },
+  {
+    "title": "​",
+    "href": "#changing-the-vision-model"
+  },
+  {
+    "title": "​",
+    "href": "#provider-options"
+  },
+  {
+    "title": "​",
+    "href": "#common-setups-1"
+  },
+  {
+    "title": "MiniMax OAuth guide",
+    "href": "/docs/guides/minimax-oauth"
+  },
+  {
+    "title": "​",
+    "href": "#environment-variables-legacy"
+  },
+  {
+    "title": "​",
+    "href": "#reasoning-effort"
+  },
+  {
+    "title": "​",
+    "href": "#answer-length-text_verbosity"
+  },
+  {
+    "title": "​",
+    "href": "#per-model-reasoning-overrides"
+  },
+  {
+    "title": "​",
+    "href": "#custom-reasoning-tier-names"
+  },
+  {
+    "title": "Dots inside key names",
+    "href": "/docs/reference/cli-commands#dots-inside-key-names"
+  },
+  {
+    "title": "extra_body",
+    "href": "/docs/integrations/providers#named-custom-providers"
+  },
+  {
+    "title": "​",
+    "href": "#fast-mode"
+  },
+  {
+    "title": "Priority Processing",
+    "href": "https://openai.com/api-priority-processing/"
+  },
+  {
+    "title": "Fast Mode",
+    "href": "https://platform.claude.com/docs/en/build-with-claude/fast-mode"
+  },
+  {
+    "title": "​",
+    "href": "#fast-tiers-behind-a-gateway-or-proxy"
+  },
+  {
+    "title": "named custom provider",
+    "href": "/docs/integrations/providers#named-custom-providers"
+  },
+  {
+    "title": "​",
+    "href": "#tool-use-enforcement"
+  },
+  {
+    "title": "​",
+    "href": "#what-it-injects"
+  },
+  {
+    "title": "​",
+    "href": "#when-to-turn-it-on"
+  },
+  {
+    "title": "​",
+    "href": "#execution-discipline-guidance"
+  },
+  {
+    "title": "​",
+    "href": "#tool-loop-guardrails"
+  },
+  {
+    "title": "Docker / unattended deployments",
+    "href": "/docs/user-guide/docker"
+  },
+  {
+    "title": "​",
+    "href": "#per-turn-runaway-loop-caps"
+  },
+  {
+    "title": "​",
+    "href": "#runtime-anti-stall-guards"
+  },
+  {
+    "title": "​",
+    "href": "#turn-liveness-watchdog"
+  },
+  {
+    "title": "​",
+    "href": "#tts-configuration"
+  },
+  {
+    "title": "​",
+    "href": "#display-settings"
+  },
+  {
+    "title": "​",
+    "href": "#per-turn-summary-and-spinner-token-flow"
+  },
+  {
+    "title": "file-mutation verifier",
+    "href": "#file-mutation-verifier"
+  },
+  {
+    "title": "​",
+    "href": "#file-mutation-verifier"
+  },
+  {
+    "title": "File write safety",
+    "href": "/docs/user-guide/security#file-write-safety"
+  },
+  {
+    "title": "​",
+    "href": "#ui-language-for-static-messages"
+  },
+  {
+    "title": "language pack",
+    "href": "/docs/user-guide/features/language-packs"
+  },
+  {
+    "title": "​",
+    "href": "#focus-view-focus-cli--tui"
+  },
+  {
+    "title": "​",
+    "href": "#status-bar-field-selection-clitui"
+  },
+  {
+    "title": "​",
+    "href": "#runtime-metadata-footer-gateway-only"
+  },
+  {
+    "title": "​",
+    "href": "#per-platform-progress-overrides"
+  },
+  {
+    "title": "​",
+    "href": "#privacy"
+  },
+  {
+    "title": "​",
+    "href": "#openai-codex-request-identity"
+  },
+  {
+    "title": "​",
+    "href": "#speech-to-text-stt"
+  },
+  {
+    "title": "Long recordings and upload limits",
+    "href": "/docs/user-guide/features/voice-mode#long-recordings-and-upload-limits"
+  },
+  {
+    "title": "​",
+    "href": "#transcription-prompt-vocabulary-hints"
+  },
+  {
+    "title": "pre_transcription",
+    "href": "/docs/user-guide/features/hooks#pre_transcription"
+  },
+  {
+    "title": "​",
+    "href": "#voice-mode-cli"
+  },
+  {
+    "title": "Voice Mode",
+    "href": "/docs/user-guide/features/voice-mode"
+  },
+  {
+    "title": "​",
+    "href": "#streaming"
+  },
+  {
+    "title": "​",
+    "href": "#cli-streaming"
+  },
+  {
+    "title": "​",
+    "href": "#gateway-streaming-telegram-discord-slack"
+  },
+  {
+    "title": "​",
+    "href": "#group-chat-session-isolation"
+  },
+  {
+    "title": "Sessions",
+    "href": "/docs/user-guide/sessions"
+  },
+  {
+    "title": "Discord guide",
+    "href": "/docs/user-guide/messaging/discord"
+  },
+  {
+    "title": "​",
+    "href": "#unauthorized-dm-behavior"
+  },
+  {
+    "title": "​",
+    "href": "#quick-commands"
+  },
+  {
+    "title": "​",
+    "href": "#human-delay"
+  },
+  {
+    "title": "​",
+    "href": "#code-execution"
+  },
+  {
+    "title": "​",
+    "href": "#web-search-backends"
+  },
+  {
+    "title": "Web Search guide",
+    "href": "/docs/user-guide/features/web-search"
+  },
+  {
+    "title": "Web Search setup guide",
+    "href": "/docs/user-guide/features/web-search"
+  },
+  {
+    "title": "​",
+    "href": "#browser"
+  },
+  {
+    "title": "browser feature page",
+    "href": "/docs/user-guide/features/browser#browser_dialog"
+  },
+  {
+    "title": "Browser feature page",
+    "href": "/docs/user-guide/features/browser"
+  },
+  {
+    "title": "​",
+    "href": "#timezone"
+  },
+  {
+    "title": "​",
+    "href": "#discord"
+  },
+  {
+    "title": "​",
+    "href": "#security"
+  },
+  {
+    "title": "Content-Level Command Checks",
+    "href": "/docs/user-guide/security#content-level-command-checks"
+  },
+  {
+    "title": "​",
+    "href": "#website-blocklist"
+  },
+  {
+    "title": "​",
+    "href": "#smart-approvals"
+  },
+  {
+    "title": "​",
+    "href": "#denial-circuit-breaker"
+  },
+  {
+    "title": "​",
+    "href": "#deny-rules"
+  },
+  {
+    "title": "Security — User-Defined Deny Rules",
+    "href": "/docs/user-guide/security#user-defined-deny-rules-approvalsdeny"
+  },
+  {
+    "title": "​",
+    "href": "#custom-smart-approval-policy"
+  },
+  {
+    "title": "​",
+    "href": "#checkpoints"
+  },
+  {
+    "title": "Checkpoints & Rollback",
+    "href": "/docs/user-guide/checkpoints-and-rollback"
+  },
+  {
+    "title": "​",
+    "href": "#delegation"
+  },
+  {
+    "title": "Subagent Delegation → Depth Limit and Nested Orchestration",
+    "href": "/docs/user-guide/features/delegation#depth-limit-and-nested-orchestration"
+  },
+  {
+    "title": "Subagent Delegation → Child background-process notifications",
+    "href": "/docs/user-guide/features/delegation#child-background-process-notifications"
+  },
+  {
+    "title": "​",
+    "href": "#clarify"
+  },
+  {
+    "title": "​",
+    "href": "#context-files-soulmd-agentsmd"
+  },
+  {
+    "title": "Personality & SOUL.md",
+    "href": "/docs/user-guide/features/personality"
+  },
+  {
+    "title": "Context Files",
+    "href": "/docs/user-guide/features/context-files"
+  },
+  {
+    "title": "​",
+    "href": "#working-directory"
+  },
+  {
+    "title": "​",
+    "href": "#network"
+  },
+  {
+    "title": "​",
+    "href": "#onboarding"
+  },
+  {
+    "title": "​",
+    "href": "#dashboard"
+  },
+  {
+    "title": "web dashboard",
+    "href": "/docs/user-guide/features/web-dashboard"
+  },
+  {
+    "title": "Web Dashboard",
+    "href": "/docs/user-guide/features/web-dashboard"
+  },
+  {
+    "title": "Directory Structure",
+    "href": "#directory-structure"
+  },
+  {
+    "title": "Managing Configuration",
+    "href": "#managing-configuration"
+  },
+  {
+    "title": "Configuration Precedence",
+    "href": "#configuration-precedence"
+  },
+  {
+    "title": "Runtime Limits",
+    "href": "#runtime-limits"
+  },
+  {
+    "title": "Database Settings",
+    "href": "#database-settings"
+  },
+  {
+    "title": "Environment Variable Substitution",
+    "href": "#environment-variable-substitution"
+  },
+  {
+    "title": "Provider Timeouts",
+    "href": "#provider-timeouts"
+  },
+  {
+    "title": "Update Behavior",
+    "href": "#update-behavior"
+  },
+  {
+    "title": "Background checks",
+    "href": "#background-checks"
+  },
+  {
+    "title": "SSH authentication",
+    "href": "#ssh-authentication"
+  },
+  {
+    "title": "Terminal Backend Configuration",
+    "href": "#terminal-backend-configuration"
+  },
+  {
+    "title": "Backend Overview",
+    "href": "#backend-overview"
+  },
+  {
+    "title": "Local Backend",
+    "href": "#local-backend"
+  },
+  {
+    "title": "Docker Backend",
+    "href": "#docker-backend"
+  },
+  {
+    "title": "SSH Backend",
+    "href": "#ssh-backend"
+  },
+  {
+    "title": "Modal Backend",
+    "href": "#modal-backend"
+  },
+  {
+    "title": "Daytona Backend",
+    "href": "#daytona-backend"
+  },
+  {
+    "title": "Vercel Sandbox Backend",
+    "href": "#vercel-sandbox-backend"
+  },
+  {
+    "title": "Singularity/Apptainer Backend",
+    "href": "#singularityapptainer-backend"
+  },
+  {
+    "title": "Common Terminal Backend Issues",
+    "href": "#common-terminal-backend-issues"
+  },
+  {
+    "title": "Remote-to-Host State Sync on Teardown",
+    "href": "#remote-to-host-state-sync-on-teardown"
+  },
+  {
+    "title": "Docker Volume Mounts",
+    "href": "#docker-volume-mounts"
+  },
+  {
+    "title": "Docker Credential Forwarding",
+    "href": "#docker-credential-forwarding"
+  },
+  {
+    "title": "Running the Container as Your Host User",
+    "href": "#running-the-container-as-your-host-user"
+  },
+  {
+    "title": "Snap-packaged Docker (AppArmor)",
+    "href": "#snap-packaged-docker-apparmor"
+  },
+  {
+    "title": "Optional: Mount the Launch Directory into /workspace",
+    "href": "#optional-mount-the-launch-directory-into-workspace"
+  },
+  {
+    "title": "Persistent Shell",
+    "href": "#persistent-shell"
+  },
+  {
+    "title": "Skill Settings",
+    "href": "#skill-settings"
+  },
+  {
+    "title": "Auto-loading skills every session",
+    "href": "#auto-loading-skills-every-session"
+  },
+  {
+    "title": "Guard on agent-created skill writes",
+    "href": "#guard-on-agent-created-skill-writes"
+  },
+  {
+    "title": "Write approval for skill writes",
+    "href": "#write-approval-for-skill-writes"
+  },
+  {
+    "title": "Memory Configuration",
+    "href": "#memory-configuration"
+  },
+  {
+    "title": "Context File Truncation",
+    "href": "#context-file-truncation"
+  },
+  {
+    "title": "File Read Safety",
+    "href": "#file-read-safety"
+  },
+  {
+    "title": "Tool Output Truncation Limits",
+    "href": "#tool-output-truncation-limits"
+  },
+  {
+    "title": "Tool-Result Spillover Budget",
+    "href": "#tool-result-spillover-budget"
+  },
+  {
+    "title": "Global Toolset Disable",
+    "href": "#global-toolset-disable"
+  },
+  {
+    "title": "Git Worktree Isolation",
+    "href": "#git-worktree-isolation"
+  },
+  {
+    "title": "Context Compression",
+    "href": "#context-compression"
+  },
+  {
+    "title": "Full reference",
+    "href": "#full-reference"
+  },
+  {
+    "title": "Common setups",
+    "href": "#common-setups"
+  },
+  {
+    "title": "How the three knobs interact",
+    "href": "#how-the-three-knobs-interact"
+  },
+  {
+    "title": "Stream progress timeout",
+    "href": "#stream-progress-timeout"
+  },
+  {
+    "title": "Gateway Turn Lease Timeout",
+    "href": "#gateway-turn-lease-timeout"
+  },
+  {
+    "title": "Session Stall Watchdog",
+    "href": "#session-stall-watchdog"
+  },
+  {
+    "title": "Reconnect Attention Escalation",
+    "href": "#reconnect-attention-escalation"
+  },
+  {
+    "title": "Gateway Agent Cache",
+    "href": "#gateway-agent-cache"
+  },
+  {
+    "title": "Context Engine",
+    "href": "#context-engine"
+  },
+  {
+    "title": "Iteration Budget",
+    "href": "#iteration-budget"
+  },
+  {
+    "title": "Wall-Clock Run Budget",
+    "href": "#wall-clock-run-budget"
+  },
+  {
+    "title": "Verify-on-Stop (coding verification)",
+    "href": "#verify-on-stop-coding-verification"
+  },
+  {
+    "title": "Standing Goals ( /goal )",
+    "href": "#standing-goals-goal"
+  },
+  {
+    "title": "API Timeouts",
+    "href": "#api-timeouts"
+  },
+  {
+    "title": "Disabling API streaming",
+    "href": "#disabling-api-streaming"
+  },
+  {
+    "title": "Context Pressure Warnings",
+    "href": "#context-pressure-warnings"
+  },
+  {
+    "title": "Credential Pool Strategies",
+    "href": "#credential-pool-strategies"
+  },
+  {
+    "title": "Prompt caching",
+    "href": "#prompt-caching"
+  },
+  {
+    "title": "Auxiliary Models",
+    "href": "#auxiliary-models"
+  },
+  {
+    "title": "Configuring auxiliary models interactively",
+    "href": "#configuring-auxiliary-models-interactively"
+  },
+  {
+    "title": "Stream-only endpoints",
+    "href": "#stream-only-endpoints"
+  },
+  {
+    "title": "Video Tutorial",
+    "href": "#video-tutorial"
+  },
+  {
+    "title": "The universal config pattern",
+    "href": "#the-universal-config-pattern"
+  },
+  {
+    "title": "Full auxiliary config reference",
+    "href": "#full-auxiliary-config-reference"
+  },
+  {
+    "title": "Per-task fallback chain for auxiliary tasks",
+    "href": "#per-task-fallback-chain-for-auxiliary-tasks"
+  },
+  {
+    "title": "Native vision embed budgets (top-level vision: )",
+    "href": "#native-vision-embed-budgets-top-level-vision"
+  },
+  {
+    "title": "Limiting auxiliary concurrency",
+    "href": "#limiting-auxiliary-concurrency"
+  },
+  {
+    "title": "OpenRouter routing & Pareto Code for auxiliary tasks",
+    "href": "#openrouter-routing--pareto-code-for-auxiliary-tasks"
+  },
+  {
+    "title": "Changing the Vision Model",
+    "href": "#changing-the-vision-model"
+  },
+  {
+    "title": "Provider Options",
+    "href": "#provider-options"
+  },
+  {
+    "title": "Common Setups",
+    "href": "#common-setups-1"
+  },
+  {
+    "title": "Environment Variables (legacy)",
+    "href": "#environment-variables-legacy"
+  },
+  {
+    "title": "Reasoning Effort",
+    "href": "#reasoning-effort"
+  },
+  {
+    "title": "Answer length ( text_verbosity )",
+    "href": "#answer-length-text_verbosity"
+  },
+  {
+    "title": "Fast Mode",
+    "href": "#fast-mode"
+  },
+  {
+    "title": "Fast tiers behind a gateway or proxy",
+    "href": "#fast-tiers-behind-a-gateway-or-proxy"
+  },
+  {
+    "title": "Tool-Use Enforcement",
+    "href": "#tool-use-enforcement"
+  },
+  {
+    "title": "What it injects",
+    "href": "#what-it-injects"
+  },
+  {
+    "title": "When to turn it on",
+    "href": "#when-to-turn-it-on"
+  },
+  {
+    "title": "Execution-Discipline Guidance",
+    "href": "#execution-discipline-guidance"
+  },
+  {
+    "title": "Tool-Loop Guardrails",
+    "href": "#tool-loop-guardrails"
+  },
+  {
+    "title": "Per-turn runaway-loop caps",
+    "href": "#per-turn-runaway-loop-caps"
+  },
+  {
+    "title": "Runtime anti-stall guards",
+    "href": "#runtime-anti-stall-guards"
+  },
+  {
+    "title": "Turn liveness watchdog",
+    "href": "#turn-liveness-watchdog"
+  },
+  {
+    "title": "TTS Configuration",
+    "href": "#tts-configuration"
+  },
+  {
+    "title": "Display Settings",
+    "href": "#display-settings"
+  },
+  {
+    "title": "Per-turn summary and spinner token flow",
+    "href": "#per-turn-summary-and-spinner-token-flow"
+  },
+  {
+    "title": "File-mutation verifier",
+    "href": "#file-mutation-verifier"
+  },
+  {
+    "title": "UI language for static messages",
+    "href": "#ui-language-for-static-messages"
+  },
+  {
+    "title": "Focus view ( /focus , CLI + TUI)",
+    "href": "#focus-view-focus-cli--tui"
+  },
+  {
+    "title": "Status-bar field selection (CLI/TUI)",
+    "href": "#status-bar-field-selection-clitui"
+  },
+  {
+    "title": "Runtime-metadata footer (gateway only)",
+    "href": "#runtime-metadata-footer-gateway-only"
+  },
+  {
+    "title": "Per-platform progress overrides",
+    "href": "#per-platform-progress-overrides"
+  },
+  {
+    "title": "Privacy",
+    "href": "#privacy"
+  },
+  {
+    "title": "OpenAI Codex request identity",
+    "href": "#openai-codex-request-identity"
+  },
+  {
+    "title": "Speech-to-Text (STT)",
+    "href": "#speech-to-text-stt"
+  },
+  {
+    "title": "Transcription prompt (vocabulary hints)",
+    "href": "#transcription-prompt-vocabulary-hints"
+  },
+  {
+    "title": "Voice Mode (CLI)",
+    "href": "#voice-mode-cli"
+  },
+  {
+    "title": "Streaming",
+    "href": "#streaming"
+  },
+  {
+    "title": "CLI Streaming",
+    "href": "#cli-streaming"
+  },
+  {
+    "title": "Gateway Streaming (Telegram, Discord, Slack)",
+    "href": "#gateway-streaming-telegram-discord-slack"
+  },
+  {
+    "title": "Group Chat Session Isolation",
+    "href": "#group-chat-session-isolation"
+  },
+  {
+    "title": "Unauthorized DM Behavior",
+    "href": "#unauthorized-dm-behavior"
+  },
+  {
+    "title": "Quick Commands",
+    "href": "#quick-commands"
+  },
+  {
+    "title": "Human Delay",
+    "href": "#human-delay"
+  },
+  {
+    "title": "Code Execution",
+    "href": "#code-execution"
+  },
+  {
+    "title": "Web Search Backends",
+    "href": "#web-search-backends"
+  },
+  {
+    "title": "Browser",
+    "href": "#browser"
+  },
+  {
+    "title": "Timezone",
+    "href": "#timezone"
+  },
+  {
+    "title": "Discord",
+    "href": "#discord"
+  },
+  {
+    "title": "Security",
+    "href": "#security"
+  },
+  {
+    "title": "Website Blocklist",
+    "href": "#website-blocklist"
+  },
+  {
+    "title": "Smart Approvals",
+    "href": "#smart-approvals"
+  },
+  {
+    "title": "Denial circuit breaker",
+    "href": "#denial-circuit-breaker"
+  },
+  {
+    "title": "Deny rules",
+    "href": "#deny-rules"
+  },
+  {
+    "title": "Custom smart-approval policy",
+    "href": "#custom-smart-approval-policy"
+  },
+  {
+    "title": "Checkpoints",
+    "href": "#checkpoints"
+  },
+  {
+    "title": "Delegation",
+    "href": "#delegation"
+  },
+  {
+    "title": "Clarify",
+    "href": "#clarify"
+  },
+  {
+    "title": "Context Files (SOUL.md, AGENTS.md)",
+    "href": "#context-files-soulmd-agentsmd"
+  },
+  {
+    "title": "Working Directory",
+    "href": "#working-directory"
+  },
+  {
+    "title": "Network",
+    "href": "#network"
+  },
+  {
+    "title": "Onboarding",
+    "href": "#onboarding"
+  },
+  {
+    "title": "Dashboard",
+    "href": "#dashboard"
+  }
+]

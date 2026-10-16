@@ -1,0 +1,22 @@
+核验日：2026-10-15（Asia/Taipei）。
+
+原始九模型附件保持不变；原 HTML 保存在 archive/model-capability-cost-2026-10-14.html。
+ToneBench 原始榜单重新下载 SHA256 与附件记录完全一致：9cb40d5512ca5f338e720edcb12d0fe5368b3812482afa2bd63c225f385b380b。
+因此新增 Gemini / Fable 写作记录与原 31 条记录属于同一 2026-10-13 20:08 UTC 快照与评分指纹。
+
+AA 五个比较页面以实际表头确定列顺序，不能假设 URL 内模型顺序就是表格列顺序。
+AA 分项能力矩阵统一 v4.3.2；10 个代表配置于本日读取；原五档曲线仍是 10 月 14 日附件快照。
+AA Time per Task 是由 token 与独立 API 吞吐测量推算的加权耗时，不能称为逐题实测墙钟耗时。
+AA Argon 页仅列 text/image，但官方模型页列 text/image/video/audio/PDF；规格以官方为准，AA 仅用于其测量结果。
+
+ToneBench Argon 的 no thinking 行 provenance.reasoning_effort=null，与官方 low/medium/high 不吻合；保留原始标签，标记待核验，不进入标准档位前沿。
+其他 provider_default 配置保持原始标签；不把来源未显式设置的档位升级为显式实验。
+
+Arena 使用 web 工具成功读取的 2026-10-14 Code 表；直接 HTTP 返回 403，因此保留 web 提取，不用该失败请求推断源站不可访问。
+Net Improvement 与各信号列是相对随机基线的百分点变化，不是原始通过率；±为 95% CI。
+采用 2026-10-12 更新的信号说明：Bash Reliability 已替代 Bash Recovery。
+Arena Cost/Task 为其平台报告的 P50 估算；部分 Price/M 与官方 Standard 不一致，不作为 API 标准单价，不重计价。
+
+官方规格按模型页及 Standard 价格，不使用搜索摘要中的 Batch/Flex 数字。Google 优惠期单独列出。
+未执行任何付费模型调用、本地模型实测、账户配额检查或发布操作。
+报告中的选型建议为基于有限证据的候选方案；中文质量、用户真实任务、产品工具链仍需专门验收。

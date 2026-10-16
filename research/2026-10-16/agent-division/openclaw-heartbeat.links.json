@@ -1,0 +1,62 @@
+[
+  {
+    "title": "View as Markdown View this page as plain text",
+    "href": "/gateway/heartbeat.md"
+  },
+  {
+    "title": "Open in ChatGPT Ask questions about this page",
+    "href": "https://chatgpt.com/?hints=search&q=Read%20from%20https%3A%2F%2Fdocs.openclaw.ai%2Fgateway%2Fheartbeat.md%20so%20I%20can%20ask%20questions%20about%20it."
+  },
+  {
+    "title": "Open in Claude Ask questions about this page",
+    "href": "https://claude.ai/new?q=Read%20from%20https%3A%2F%2Fdocs.openclaw.ai%2Fgateway%2Fheartbeat.md%20so%20I%20can%20ask%20questions%20about%20it."
+  },
+  {
+    "title": "Background exec notifications",
+    "href": "/gateway/background-process#disable-automatic-completion-turns"
+  },
+  {
+    "title": "Automations",
+    "href": "/automation/cron-jobs#troubleshooting"
+  },
+  {
+    "title": "automations",
+    "href": "/automation/cron-jobs"
+  },
+  {
+    "title": "Timezone",
+    "href": "/concepts/timezone"
+  },
+  {
+    "title": "Session and target routing",
+    "href": "#delivery-behavior"
+  },
+  {
+    "title": "sessions CLI",
+    "href": "/cli/sessions"
+  },
+  {
+    "title": "Sessions",
+    "href": "/concepts/session"
+  },
+  {
+    "title": "Groups",
+    "href": "/channels/groups"
+  },
+  {
+    "title": "automation job",
+    "href": "/automation/cron-jobs"
+  },
+  {
+    "title": "Automation",
+    "href": "/automation"
+  },
+  {
+    "title": "Timezone",
+    "href": "/concepts/timezone"
+  },
+  {
+    "title": "Troubleshooting",
+    "href": "/automation/cron-jobs#troubleshooting"
+  }
+]

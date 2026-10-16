@@ -1,0 +1,63 @@
+{
+  "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+  "tables": [
+    [
+      [
+        "Level",
+        "Description",
+        "Typical use case"
+      ],
+      [
+        "max",
+        "Absolute maximum capability with no constraints on token spending. Available on Claude Fable 5.1, Claude Mythos 5.1, Claude Fable 5, Claude Mythos 5, Claude Mythos Preview, Claude Opus 5.5, Claude Opus 5, Claude Opus 4.8, Claude Opus 4.7, Claude Opus 4.6, Claude Sonnet 5.5, Claude Sonnet 5, Claude Sonnet 4.6, and Claude Haiku 5.5.",
+        "Tasks requiring the deepest possible reasoning and most thorough analysis"
+      ],
+      [
+        "xhigh",
+        "Extended capability for long-horizon work. Available on Claude Fable 5.1, Claude Mythos 5.1, Claude Fable 5, Claude Mythos 5, Claude Opus 5.5, Claude Opus 5, Claude Opus 4.8, Claude Opus 4.7, Claude Sonnet 5.5, Claude Sonnet 5, and Claude Haiku 5.5.",
+        "Long-running agentic and coding tasks (over 30 minutes) with token budgets in the millions"
+      ],
+      [
+        "high",
+        "Spends as many tokens as the task needs for excellent results. The default on every model that supports effort except Claude Opus 5.5 and Claude Haiku 5.5.",
+        "Complex reasoning, difficult coding problems, agentic tasks"
+      ],
+      [
+        "medium",
+        "Balanced approach with moderate token savings. The default on Claude Opus 5.5 and Claude Haiku 5.5.",
+        "Agentic tasks that require a balance of speed, cost, and performance"
+      ],
+      [
+        "low",
+        "Most efficient. Significant token savings with some capability reduction.",
+        "Simpler tasks that need the best speed and lowest costs, such as subagents"
+      ]
+    ],
+    [
+      [
+        "Effort",
+        "Guidance for Claude Opus 4.7"
+      ],
+      [
+        "low",
+        "Efficient, but best for short, scoped tasks. Pair low with explicit checklists if your task has multiple sections."
+      ],
+      [
+        "medium",
+        "The drop-in for the average workflow where you want good results while reducing costs."
+      ],
+      [
+        "high",
+        "Advanced use cases that still need a balance of intelligence and token consumption. This is often the best balance of quality and token efficiency."
+      ],
+      [
+        "xhigh",
+        "The recommended starting point for coding and agentic work, and for exploratory tasks such as repeated tool calling, detailed web search, and knowledge-base search. Expect meaningfully higher token usage than high ."
+      ],
+      [
+        "max",
+        "Reserve for frontier problems. On most workloads max adds significant cost for relatively small quality gains, and on some structured-output or less intelligence-sensitive tasks it can lead to overthinking."
+      ]
+    ]
+  ]
+}

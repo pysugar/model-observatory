@@ -1,0 +1,258 @@
+{
+  "url": "https://deepmind.google/models/model-cards/gemini-4-argon/",
+  "tables": [
+    [
+      [
+        "Category",
+        "Benchmark",
+        "Notes",
+        "Gemini 4 Argon",
+        "GPT-6 Astra",
+        "Claude Fable 5.1",
+        "Claude Opus 5.5"
+      ],
+      [
+        "Knowledge work",
+        "Vals Index",
+        "",
+        "68.9%",
+        "63.1%",
+        "65.8%",
+        "67.0%"
+      ],
+      [
+        "AutomationBench",
+        "Score",
+        "51.3%",
+        "41.4%",
+        "31.4%",
+        "42.5%"
+      ],
+      [
+        "Vals Finance Agent v2",
+        "",
+        "65.4%",
+        "53.5%",
+        "58.9%",
+        "58.6%"
+      ],
+      [
+        "Harvey's Legal Agent Benchmark",
+        "",
+        "19.6%",
+        "5.4%",
+        "6.7%",
+        "3.8%"
+      ],
+      [
+        "Agentic coding",
+        "DeepSWE v1.1",
+        "",
+        "77.9%",
+        "74.1%",
+        "67.4%",
+        "74.2%"
+      ],
+      [
+        "FrontierSWE v2",
+        "",
+        "55.0%",
+        "65.5%",
+        "56.3%",
+        "62.3%"
+      ],
+      [
+        "Vibe Code Bench",
+        "",
+        "91.9%",
+        "89.6%",
+        "90.3%",
+        "90.3%"
+      ],
+      [
+        "Terminal-bench 4.0",
+        "",
+        "57.4%",
+        "58.2%",
+        "57.9%",
+        "66.4%"
+      ],
+      [
+        "ML engineering",
+        "PostTrainBench",
+        "",
+        "45.3%",
+        "44.3%",
+        "40.2%",
+        "49.3%"
+      ],
+      [
+        "Science and math",
+        "Terminal-Bench Science 0.1",
+        "",
+        "57.6%",
+        "68.1%",
+        "52.6%",
+        "63.3%"
+      ],
+      [
+        "LABBench 2",
+        "",
+        "88.8%",
+        "85.4%",
+        "68.6%",
+        "73.1%"
+      ],
+      [
+        "RiemannBench",
+        "",
+        "76.0%",
+        "72.0%",
+        "65.6%",
+        "69.6%"
+      ],
+      [
+        "Long context",
+        "GraphWalks",
+        "Up to 128k, BFS (F1)",
+        "99.7%",
+        "98.7%",
+        "91.4%",
+        "90.6%"
+      ],
+      [
+        "256k to 1M, BFS (F1)",
+        "84.2%",
+        "71.8%",
+        "65.0%",
+        "66.8%"
+      ],
+      [
+        "Computer use",
+        "Agent's Last Exam",
+        "Pass rate",
+        "39.5%",
+        "34.2%",
+        "—",
+        "38.2%"
+      ],
+      [
+        "OSWorld-2.0",
+        "Offline subset Partial score",
+        "69.2%",
+        "72.6%",
+        "—",
+        "—"
+      ],
+      [
+        "Multimodal understanding",
+        "Chartography",
+        "",
+        "71.6%",
+        "71.0%",
+        "46.2%",
+        "66.3%"
+      ],
+      [
+        "LVBench",
+        "",
+        "91.7%",
+        "87.5%",
+        "79.7%",
+        "83.7%"
+      ],
+      [
+        "Cybersecurity",
+        "CWE-bench v1",
+        "",
+        "68.0%",
+        "68.0%",
+        "58.0%",
+        "67.0%"
+      ]
+    ],
+    [
+      [
+        "Evaluation",
+        "Description",
+        "Gemini 4 Argon vs. Gemini 3.1 Pro (percentage point increase/decrease)"
+      ],
+      [
+        "Text to Text Safety (lower is better)",
+        "Automated content safety evaluation measuring adherence to safety policies across text prompts",
+        "+1.57pp"
+      ],
+      [
+        "Multilingual Safety (lower is better)",
+        "Automated safety policy evaluation across multiple languages",
+        "-3.16pp"
+      ],
+      [
+        "Image to Text Safety (lower is better)",
+        "Automated content safety evaluation measuring adherence to safety policies with both images and text as inputs",
+        "-9.29pp"
+      ],
+      [
+        "Tone (higher is better)",
+        "Automated evaluation measuring objective, neutral, and non-preachy tone of model refusals",
+        "+5.50%"
+      ],
+      [
+        "Unjustified-refusals (lower is better)",
+        "Automated evaluation measuring over-refusals on benign or borderline prompts that can be safely fulfilled",
+        "-9.60pp"
+      ]
+    ],
+    [
+      [
+        "Domain",
+        "T/CCL as defined in the FSF",
+        "Key inherent capability results for Gemini 4 Argon",
+        "T/CCL reached?"
+      ],
+      [
+        "CBRN",
+        "Uplift TCL: Provides low to medium resourced actors uplift in reference scenarios, resulting in material risk of CBRN attacks that could result in significant but not severe harm.",
+        "We can rule out the TCL for the chemical, radiological, and nuclear domains with reasonable confidence. While Gemini 4 Argon demonstrates high capability in certain areas of theoretical reasoning, responses lacked nuanced expert knowledge and actionable depth necessary to complete priority harm journeys. We continue to deploy mitigations.",
+        "TCL not reached"
+      ],
+      [
+        "Uplift Level 1 CCL: Provides low to medium resourced actors uplift in reference scenarios resulting in additional expected harm at a severe scale.",
+        "We cannot rule out that Gemini 4 Argon reaches the biological CCL. Expert red teaming demonstrated a measurable capability uplift over web baselines and compared to previously tested models in two separate scenarios, with the model providing comprehensive, accurate, and actionable information for both scenarios. We are therefore applying safeguards that we assess lower risk to below the biological CCL level.",
+        "CCL cannot be ruled out"
+      ],
+      [
+        "Cybersecurity",
+        "Uplift Level 1 CCL: Provides sufficient uplift with high impact cyber attacks for additional expected harm at severe scale.",
+        "We cannot rule out that Gemini 4 Argon reaches the cybersecurity CCL. The model provides substantial uplift by our evaluations and quantitative modeling, and additional evidence about the efficacy of Gemini 4 Argon and other frontier models in cyber contexts suggests the possibility of severe harm without adequate mitigations. We are therefore applying safeguards that we assess lower risk to below the cybersecurity CCL level",
+        "CCL cannot be ruled out"
+      ],
+      [
+        "Harmful Manipulation",
+        "Level 1 CCL: Possesses manipulative capabilities sufficient to enable it to systematically and substantially change beliefs and behavior in identified high stakes contexts over the course of interactions with the model, reasonably resulting in additional expected harm at severe scale.",
+        "Gemini 4 Argon demonstrates some ability to influence user beliefs and behaviors during one-on-one direct conversations in human behavioral studies, and may provide utility in the planning stage of a malicious influence operation but we assess its overall capabilities to be below the CCL threshold. As a nascent risk area we continue to iterate on our harmful manipulation evaluations and improve existing safeguards.",
+        "CCL not reached"
+      ],
+      [
+        "Loss of Control",
+        "Stealth and Situational Awareness TCL: The instrumental reasoning abilities of the model enable enough situational awareness (ability to discover and use relevant details of its deployment setting) and stealth (ability to circumvent basic oversight mechanisms) such that, absent additional mitigations, we cannot rule out the model significantly undermining human control.",
+        "Gemini 4 Argon passes 14/15 of our challenges, and generally displays strong capabilities in these areas. In light of this, we assess that we cannot rule out the TCL. We have deployed safeguards for both internal and external deployments that we assess lower risk to below the TCL level.",
+        "TCL cannot be ruled out"
+      ],
+      [
+        "ML R&D acceleration level 1: Has been used to accelerate AI development, resulting in AI progress substantially accelerating from historical rates.",
+        "We use an internal benchmark to assess performance on complex research engineering tasks. Gemini 4 Argon's performance remains below our CCL threshold.",
+        "CCL not reached"
+      ],
+      [
+        "ML R&D automation level 1: Can fully automate the work of any team of researchers at Google focused on improving AI capabilities, with approximately comparable all-inclusive costs.",
+        "CCL not reached"
+      ]
+    ]
+  ],
+  "links": [],
+  "capture_note": "HTML decoded from gzip response",
+  "response_sha256": "d80cf25a3361f5f58b8ddec94adafd4dc1f30c3747076614489320e0d29bf93f",
+  "text_file": "google-argon-card.txt",
+  "text_sha256": "a3fecede04218a17da4dabea669d39ae853259d5dd505cdcd6008564feb71427"
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "title": "View as Markdown View this page as plain text",
+    "href": "/reference/session-management-compaction/compaction.md"
+  },
+  {
+    "title": "Open in ChatGPT Ask questions about this page",
+    "href": "https://chatgpt.com/?hints=search&q=Read%20from%20https%3A%2F%2Fdocs.openclaw.ai%2Freference%2Fsession-management-compaction%2Fcompaction.md%20so%20I%20can%20ask%20questions%20about%20it."
+  },
+  {
+    "title": "Open in Claude Ask questions about this page",
+    "href": "https://claude.ai/new?q=Read%20from%20https%3A%2F%2Fdocs.openclaw.ai%2Freference%2Fsession-management-compaction%2Fcompaction.md%20so%20I%20can%20ask%20questions%20about%20it."
+  },
+  {
+    "title": "/reference/token-use",
+    "href": "/reference/token-use"
+  },
+  {
+    "title": "/concepts/session-pruning",
+    "href": "/concepts/session-pruning"
+  },
+  {
+    "title": "Compaction",
+    "href": "/concepts/compaction#how-it-works"
+  },
+  {
+    "title": "Auto-compaction",
+    "href": "/concepts/compaction#auto-compaction"
+  }
+]

@@ -1,0 +1,56 @@
+# ---- macOS ----
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ---- 虚拟环境 / uv ----
+.venv/
+venv/
+env/
+.uv-cache/
+
+# ---- 环境变量与密钥（避免误提交 API Key）----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ---- 编辑器 / IDE ----
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ---- 日志与临时文件 ----
+*.log
+*.tmp
+*.bak
+tmp/
+scratch/
+
+# ---- Node（如后续引入前端工具链）----
+node_modules/
+
+# ---- 浏览器验证产生的临时配置（validate_report.py 使用临时空白配置）----
+chrome-profile/
+.playwright/
+
+# 注意：以下为项目产物 / 证据，需要纳入版本控制，故不忽略：
+#   model-capability-cost.html、report-data.*、report-content.json、
+#   archive/、research/、verification/（含截图）、九模型图表数据与来源/

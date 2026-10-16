@@ -1,0 +1,30 @@
+Claude 全型号扩展核验 — 2026-10-16 / Asia-Taipei
+
+范围
+用户提供的模型选择器截图可见 8 款：Haiku 4.5、Sonnet 5、Opus 5、Fable 5、Opus 4.8、Opus 4.7、Opus 4.6、Sonnet 4.6。
+保留原报告 Fable 5.1、Opus 5.5、Sonnet 5.5、Haiku 5.5，并补官方仍可调用的 Opus 4.5、Sonnet 4.5，共 14 款通用 Claude。
+Mythos 5.1、Mythos 5、Mythos Preview 单列访问条件；没有证明用户具备机构验证权限，也没有借用 Fable 成绩填充 Mythos。
+截图的产品名称未知；只记录可见型号和 Fable 5 的 Requires usage credits，不把它解释为 API 权限或调用成功。
+
+官方事实
+fetch-manifest.json 保存日期、URL、文本 SHA256；各型号 JSON 的 This model 行是其规格行，不能误取旁边新版的参数。
+模型生命周期以 Claude API 为范围，合作云平台可能不同。Sonnet 4.5 已弃用，2026-11-30 退役；Haiku 4.5 仍 Active，Not sooner than 不是已经退役。
+Opus / Sonnet 4.6 无 xhigh，支持 max；Opus 4.5 只有 low / medium / high，另设 thinking 预算；Haiku / Sonnet 4.5 不支持 effort，使用 manual extended thinking。
+Opus / Sonnet / Haiku 4.5 当前官方规格是 200k / 64k。AA 的 Sonnet 4.5 表仍标 1M，不拿 AA 的规格覆盖官方，也不宣称旧评测在当前窗口下复测过。
+定价采用官方 Standard、USD / MTok；不把 usage credits 换算成 API 美元。Claude 4.6+ 全窗口标准价，Haiku 5.5 >100k 的整次升档除外。
+mythos-preview 的猜测型号页虽然 HTTP 200，正文为 Page Not Found，已标 usable=false，未用于结论。Preview 的受限访问依据 https://www.anthropic.com/transparency，生命周期来自 lifecycle.txt。
+
+独立评测
+5 个 AA 比较页直接提取为 aa-*.json 和 txt；每页正文确认 v4.3.2，按实际表头而非 URL 顺序映射。aa-manifest.json 固定 JSON SHA256。
+追加 10 个 AA 配置。Opus 4.7 / 4.6 / 4.5 的综合分带 *，保留 score_estimated=true，缺失子项和费用为 null，不参加纯模型前沿或升档差分。
+AA Haiku 4.5 的 AA-Omniscience 为 Unicode 负号 −4；解析为 -4，不能误解析为 +4。
+Fable 5 max 的 AA 配置明确包含 Opus 4.8 Fallback，单列 mixed_fallback；不能当作纯 Fable 5。
+ToneBench 复用 ../../2026-10-15/tonebench-leaderboard.json 中既有原始榜单，SHA256 与用户原附件一致。追加 12 个旧 Claude 配置，不更换成新快照。
+reasoning_effort 为 null 时，thinking 字段的 high / xhigh 只作来源标签，保留 provider_default；Haiku 4.5 extended thinking 不硬映射为 low / medium / high。
+ToneBench Fable 5 max 同样含 Opus 4.8 回退；其它无明确回退标签的配置不凭空补比例。
+本轮没有新增旧 Claude 的同版 Vulcan v4 或 Arena 数据；“缺同版数据”仅限报告纳入的来源，不断言全网不存在。AA 的 Terminal-Bench / SciCode 子项仍可按自身基准查看。
+
+维护与验证
+recompute_claude.py 仅从上述冻结文件生成 claude-supplement.json，不联网。build_report.py 追加这 22 条记录，使 144 变为 166；前一版 144 条及 10 个 AA 分项配置逐字段比较一致。
+选型建议分别标官方起点、API 默认和待验证判断；所有中文任务甜蜜点均未实测。不以官方支持档位推断已经完成该模型的多档评测。
+本轮不调用付费模型、不写外部账户、不推送或发布。

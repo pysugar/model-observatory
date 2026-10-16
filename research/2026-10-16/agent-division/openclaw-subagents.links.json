@@ -1,0 +1,358 @@
+[
+  {
+    "title": "View as Markdown View this page as plain text",
+    "href": "/tools/subagents.md"
+  },
+  {
+    "title": "Open in ChatGPT Ask questions about this page",
+    "href": "https://chatgpt.com/?hints=search&q=Read%20from%20https%3A%2F%2Fdocs.openclaw.ai%2Ftools%2Fsubagents.md%20so%20I%20can%20ask%20questions%20about%20it."
+  },
+  {
+    "title": "Open in Claude Ask questions about this page",
+    "href": "https://claude.ai/new?q=Read%20from%20https%3A%2F%2Fdocs.openclaw.ai%2Ftools%2Fsubagents.md%20so%20I%20can%20ask%20questions%20about%20it."
+  },
+  {
+    "title": "Sub-agent slash command",
+    "href": "/tools/subagents/slash-command"
+  },
+  {
+    "title": "Sub-agent tool reference",
+    "href": "/tools/subagents/tool-reference"
+  },
+  {
+    "title": "Thread-bound sub-agent sessions",
+    "href": "/tools/subagents/thread-bound-sessions"
+  },
+  {
+    "title": "Nested sub-agents and authentication",
+    "href": "/tools/subagents/nesting"
+  },
+  {
+    "title": "Sub-agent announce",
+    "href": "/tools/subagents/announce"
+  },
+  {
+    "title": "Sub-agent tool policy",
+    "href": "/tools/subagents/tool-policy"
+  },
+  {
+    "title": "Sub-agent concurrency, recovery, and stopping",
+    "href": "/tools/subagents/operations"
+  },
+  {
+    "title": "Slash command",
+    "href": "/tools/subagents/slash-command#slash-command"
+  },
+  {
+    "title": "Thread binding controls",
+    "href": "/tools/subagents/slash-command#thread-binding-controls"
+  },
+  {
+    "title": "Spawn behavior",
+    "href": "/tools/subagents/slash-command#spawn-behavior"
+  },
+  {
+    "title": "Non-blocking, push-based completion",
+    "href": "/tools/subagents/slash-command#non-blocking-push-based-completion"
+  },
+  {
+    "title": "Completion delivery",
+    "href": "/tools/subagents/slash-command#completion-delivery"
+  },
+  {
+    "title": "Completion handoff metadata",
+    "href": "/tools/subagents/slash-command#completion-handoff-metadata"
+  },
+  {
+    "title": "Modes and ACP runtime",
+    "href": "/tools/subagents/slash-command#modes-and-acp-runtime"
+  },
+  {
+    "title": "Context modes",
+    "href": "/tools/subagents/tool-reference#context-modes"
+  },
+  {
+    "title": "Tool: sessions_spawn",
+    "href": "/tools/subagents/tool-reference#tool-sessions_spawn"
+  },
+  {
+    "title": "Delegation prompt mode",
+    "href": "/tools/subagents/tool-reference#delegation-prompt-mode"
+  },
+  {
+    "title": "Tool parameters",
+    "href": "/tools/subagents/tool-reference#tool-parameters"
+  },
+  {
+    "title": "task",
+    "href": "/tools/subagents/tool-reference#param-task"
+  },
+  {
+    "title": "taskName",
+    "href": "/tools/subagents/tool-reference#param-task-name"
+  },
+  {
+    "title": "label",
+    "href": "/tools/subagents/tool-reference#param-label"
+  },
+  {
+    "title": "agentId",
+    "href": "/tools/subagents/tool-reference#param-agent-id"
+  },
+  {
+    "title": "cwd",
+    "href": "/tools/subagents/tool-reference#param-cwd"
+  },
+  {
+    "title": "runtime",
+    "href": "/tools/subagents/tool-reference#param-runtime"
+  },
+  {
+    "title": "resumeSessionId",
+    "href": "/tools/subagents/tool-reference#param-resume-session-id"
+  },
+  {
+    "title": "streamTo",
+    "href": "/tools/subagents/tool-reference#param-stream-to"
+  },
+  {
+    "title": "model",
+    "href": "/tools/subagents/tool-reference#param-model"
+  },
+  {
+    "title": "runTimeoutSeconds",
+    "href": "/tools/subagents/tool-reference#param-run-timeout-seconds"
+  },
+  {
+    "title": "thinking",
+    "href": "/tools/subagents/tool-reference#param-thinking"
+  },
+  {
+    "title": "thread",
+    "href": "/tools/subagents/tool-reference#param-thread"
+  },
+  {
+    "title": "mode",
+    "href": "/tools/subagents/tool-reference#param-mode"
+  },
+  {
+    "title": "cleanup",
+    "href": "/tools/subagents/tool-reference#param-cleanup"
+  },
+  {
+    "title": "expectsCompletionMessage",
+    "href": "/tools/subagents/tool-reference#param-expects-completion-message"
+  },
+  {
+    "title": "sandbox",
+    "href": "/tools/subagents/tool-reference#param-sandbox"
+  },
+  {
+    "title": "context",
+    "href": "/tools/subagents/tool-reference#param-context"
+  },
+  {
+    "title": "projectId",
+    "href": "/tools/subagents/tool-reference#param-project-id"
+  },
+  {
+    "title": "projectGitUrl",
+    "href": "/tools/subagents/tool-reference#param-project-git-url"
+  },
+  {
+    "title": "visible",
+    "href": "/tools/subagents/tool-reference#param-visible"
+  },
+  {
+    "title": "group",
+    "href": "/tools/subagents/tool-reference#param-group"
+  },
+  {
+    "title": "worktree",
+    "href": "/tools/subagents/tool-reference#param-worktree"
+  },
+  {
+    "title": "worktreeName",
+    "href": "/tools/subagents/tool-reference#param-worktree-name"
+  },
+  {
+    "title": "worktreeBaseRef",
+    "href": "/tools/subagents/tool-reference#param-worktree-base-ref"
+  },
+  {
+    "title": "Task names and targeting",
+    "href": "/tools/subagents/tool-reference#task-names-and-targeting"
+  },
+  {
+    "title": "Tool: sessions_yield",
+    "href": "/tools/subagents/tool-reference#tool-sessions_yield"
+  },
+  {
+    "title": "Tool: subagents",
+    "href": "/tools/subagents/tool-reference#tool-subagents"
+  },
+  {
+    "title": "Thread-bound sessions",
+    "href": "/tools/subagents/thread-bound-sessions#thread-bound-sessions"
+  },
+  {
+    "title": "Thread supporting channels",
+    "href": "/tools/subagents/thread-bound-sessions#thread-supporting-channels"
+  },
+  {
+    "title": "Quick flow",
+    "href": "/tools/subagents/thread-bound-sessions#quick-flow"
+  },
+  {
+    "title": "Spawn",
+    "href": "/tools/subagents/thread-bound-sessions#spawn"
+  },
+  {
+    "title": "Bind",
+    "href": "/tools/subagents/thread-bound-sessions#bind"
+  },
+  {
+    "title": "Route follow-ups",
+    "href": "/tools/subagents/thread-bound-sessions#route-follow-ups"
+  },
+  {
+    "title": "Inspect timeouts",
+    "href": "/tools/subagents/thread-bound-sessions#inspect-timeouts"
+  },
+  {
+    "title": "Detach",
+    "href": "/tools/subagents/thread-bound-sessions#detach"
+  },
+  {
+    "title": "Manual controls",
+    "href": "/tools/subagents/thread-bound-sessions#manual-controls"
+  },
+  {
+    "title": "Config switches",
+    "href": "/tools/subagents/thread-bound-sessions#config-switches"
+  },
+  {
+    "title": "Allowlist",
+    "href": "/tools/subagents/thread-bound-sessions#allowlist"
+  },
+  {
+    "title": "agents.entries.*.subagents.allowAgents",
+    "href": "/tools/subagents/thread-bound-sessions#param-agents-entries-subagents-allow-agents"
+  },
+  {
+    "title": "agents.defaults.subagents.allowAgents",
+    "href": "/tools/subagents/thread-bound-sessions#param-agents-defaults-subagents-allow-agents"
+  },
+  {
+    "title": "agents.defaults.subagents.requireAgentId",
+    "href": "/tools/subagents/thread-bound-sessions#param-agents-defaults-subagents-require-agent-id"
+  },
+  {
+    "title": "agents.defaults.subagents.announceTimeoutMs",
+    "href": "/tools/subagents/thread-bound-sessions#param-agents-defaults-subagents-announce-timeout-ms"
+  },
+  {
+    "title": "Discovery",
+    "href": "/tools/subagents/thread-bound-sessions#discovery"
+  },
+  {
+    "title": "Auto-archive",
+    "href": "/tools/subagents/thread-bound-sessions#auto-archive"
+  },
+  {
+    "title": "Nested sub-agents",
+    "href": "/tools/subagents/nesting#nested-sub-agents"
+  },
+  {
+    "title": "Depth levels",
+    "href": "/tools/subagents/nesting#depth-levels"
+  },
+  {
+    "title": "Announce chain",
+    "href": "/tools/subagents/nesting#announce-chain"
+  },
+  {
+    "title": "Tool policy by depth",
+    "href": "/tools/subagents/nesting#tool-policy-by-depth"
+  },
+  {
+    "title": "Per-agent spawn limit",
+    "href": "/tools/subagents/nesting#per-agent-spawn-limit"
+  },
+  {
+    "title": "Reset a conversation",
+    "href": "/tools/subagents/nesting#reset-a-conversation"
+  },
+  {
+    "title": "Cascade stop",
+    "href": "/tools/subagents/nesting#cascade-stop"
+  },
+  {
+    "title": "Authentication",
+    "href": "/tools/subagents/nesting#authentication"
+  },
+  {
+    "title": "Announce",
+    "href": "/tools/subagents/announce#announce"
+  },
+  {
+    "title": "Announce context",
+    "href": "/tools/subagents/announce#announce-context"
+  },
+  {
+    "title": "Stats line",
+    "href": "/tools/subagents/announce#stats-line"
+  },
+  {
+    "title": "Why prefer sessions_history",
+    "href": "/tools/subagents/announce#why-prefer-sessions_history"
+  },
+  {
+    "title": "Tool policy",
+    "href": "/tools/subagents/tool-policy#tool-policy"
+  },
+  {
+    "title": "Override via config",
+    "href": "/tools/subagents/tool-policy#override-via-config"
+  },
+  {
+    "title": "Concurrency",
+    "href": "/tools/subagents/operations#concurrency"
+  },
+  {
+    "title": "Liveness and recovery",
+    "href": "/tools/subagents/operations#liveness-and-recovery"
+  },
+  {
+    "title": "Stopping",
+    "href": "/tools/subagents/operations#stopping"
+  },
+  {
+    "title": "Limitations",
+    "href": "/tools/subagents/operations#limitations"
+  },
+  {
+    "title": "Session tools and state changes",
+    "href": "/concepts/session-tool"
+  },
+  {
+    "title": "ACP agents",
+    "href": "/tools/acp-agents"
+  },
+  {
+    "title": "Agent send",
+    "href": "/tools/agent-send"
+  },
+  {
+    "title": "Multi-agent sandbox tools",
+    "href": "/tools/multi-agent-sandbox-tools"
+  },
+  {
+    "title": "Parallel specialist lanes",
+    "href": "/concepts/parallel-specialist-lanes"
+  },
+  {
+    "title": "Steer",
+    "href": "/tools/steer"
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "title": "View as Markdown View this page as plain text",
+    "href": "/tools/subagents/nesting.md"
+  },
+  {
+    "title": "Open in ChatGPT Ask questions about this page",
+    "href": "https://chatgpt.com/?hints=search&q=Read%20from%20https%3A%2F%2Fdocs.openclaw.ai%2Ftools%2Fsubagents%2Fnesting.md%20so%20I%20can%20ask%20questions%20about%20it."
+  },
+  {
+    "title": "Open in Claude Ask questions about this page",
+    "href": "https://claude.ai/new?q=Read%20from%20https%3A%2F%2Fdocs.openclaw.ai%2Ftools%2Fsubagents%2Fnesting.md%20so%20I%20can%20ask%20questions%20about%20it."
+  },
+  {
+    "title": "Stopping",
+    "href": "/tools/subagents/operations#stopping"
+  }
+]

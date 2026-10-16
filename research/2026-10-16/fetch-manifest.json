@@ -1,0 +1,38 @@
+[
+  {
+    "file": "frontier-runs.csv",
+    "url": "https://vulcanbench.com/assets/data/swe-v4-opus55-v315/runs.csv",
+    "accessed": "2026-10-16",
+    "sha256": "f5d4918343f53b339de218af517488622c5095b49ffa92f015dfba477281256d"
+  },
+  {
+    "file": "frontier-opus55.html",
+    "url": "https://vulcanbench.com/benchmarks/swe-v4-opus55-v315.html",
+    "accessed": "2026-10-16",
+    "sha256": "7a1d03219d9323fa24c37806b181cbd489d880781f045081cae2bb3198aee1fa"
+  },
+  {
+    "file": "routine-v1-board.csv",
+    "url": "https://vulcanbench.com/assets/data/routine-v1-board.csv",
+    "accessed": "2026-10-16",
+    "sha256": "2b0bf118654b9e954965aa4977e9e442a6fe529ddb73cbf538927c9398ada14e"
+  },
+  {
+    "file": "vulcan-leaderboard.html",
+    "url": "https://vulcanbench.com/leaderboard.html",
+    "accessed": "2026-10-16",
+    "sha256": "9b87428ec65c3d132b3a4abf946004a9642a019246a013b75ddb263b67687529"
+  },
+  {
+    "file": "vulcan-opus-model.html",
+    "url": "https://vulcanbench.com/models/claude-opus-5-5.html",
+    "accessed": "2026-10-16",
+    "sha256": "c0e53d06405d8c049af319afe236f0c3c7f1dc15546a080c5ec77861182d244e"
+  },
+  {
+    "file": "claude-cost-intelligence.txt",
+    "url": "https://platform.claude.com/docs/en/about-claude/models/optimizing-for-cost-and-intelligence",
+    "accessed": "2026-10-16",
+    "sha256": "0312f2c6b0de2de55dffb148f3bbe2bb6aa8f89ebe76c34602f31e05d2dea284"
+  }
+]

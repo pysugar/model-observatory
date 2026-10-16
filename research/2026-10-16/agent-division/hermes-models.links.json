@@ -1,0 +1,242 @@
+[
+  {
+    "title": "Alternative methods",
+    "href": "#alternative-methods"
+  },
+  {
+    "title": "Local Models",
+    "href": "/docs/user-guide/local-models"
+  },
+  {
+    "title": "Nous Portal",
+    "href": "/docs/user-guide/features/tool-gateway"
+  },
+  {
+    "title": "profiles.md",
+    "href": "/docs/user-guide/profiles"
+  },
+  {
+    "title": "configuration.md",
+    "href": "/docs/user-guide/configuration"
+  },
+  {
+    "title": "​",
+    "href": "#the-models-page"
+  },
+  {
+    "title": "​",
+    "href": "#setting-the-main-model"
+  },
+  {
+    "title": "​",
+    "href": "#subscription-speed-and-extended-context"
+  },
+  {
+    "title": "​",
+    "href": "#mid-session-switches-and-context-warnings"
+  },
+  {
+    "title": "Context Compression",
+    "href": "/docs/user-guide/configuration#context-compression"
+  },
+  {
+    "title": "automatic fallback",
+    "href": "/docs/user-guide/features/fallback-providers"
+  },
+  {
+    "title": "credential-pool",
+    "href": "/docs/user-guide/features/credential-pools"
+  },
+  {
+    "title": "​",
+    "href": "#unattended-data-training-tiers"
+  },
+  {
+    "title": "​",
+    "href": "#setting-auxiliary-models"
+  },
+  {
+    "title": "​",
+    "href": "#common-override-patterns"
+  },
+  {
+    "title": "​",
+    "href": "#per-task-override"
+  },
+  {
+    "title": "​",
+    "href": "#reset-all-to-auto"
+  },
+  {
+    "title": "​",
+    "href": "#the-use-as-shortcut"
+  },
+  {
+    "title": "​",
+    "href": "#what-gets-written-to-configyaml"
+  },
+  {
+    "title": "​",
+    "href": "#per-provider-request-options"
+  },
+  {
+    "title": "​",
+    "href": "#nous-portal-which-wire-carries-claude"
+  },
+  {
+    "title": "​",
+    "href": "#when-does-it-take-effect"
+  },
+  {
+    "title": "​",
+    "href": "#troubleshooting"
+  },
+  {
+    "title": "​",
+    "href": "#no-authenticated-providers-in-the-picker"
+  },
+  {
+    "title": "​",
+    "href": "#main-model-didnt-change-in-my-running-chat"
+  },
+  {
+    "title": "​",
+    "href": "#auxiliary-override-didnt-take-effect"
+  },
+  {
+    "title": "​",
+    "href": "#i-picked-a-model-but-hermes-switched-providers-on-me"
+  },
+  {
+    "title": "​",
+    "href": "#alternative-methods"
+  },
+  {
+    "title": "​",
+    "href": "#cli-slash-command"
+  },
+  {
+    "title": "​",
+    "href": "#custom-aliases"
+  },
+  {
+    "title": "Custom model aliases",
+    "href": "/docs/reference/slash-commands#custom-model-aliases"
+  },
+  {
+    "title": "​",
+    "href": "#hermes-model-subcommand"
+  },
+  {
+    "title": "​",
+    "href": "#direct-config-edit"
+  },
+  {
+    "title": "Configuration reference",
+    "href": "/docs/user-guide/configuration"
+  },
+  {
+    "title": "​",
+    "href": "#rest-api"
+  },
+  {
+    "title": "The Models page",
+    "href": "#the-models-page"
+  },
+  {
+    "title": "Setting the main model",
+    "href": "#setting-the-main-model"
+  },
+  {
+    "title": "Subscription speed and extended context",
+    "href": "#subscription-speed-and-extended-context"
+  },
+  {
+    "title": "Mid-session switches and context warnings",
+    "href": "#mid-session-switches-and-context-warnings"
+  },
+  {
+    "title": "Unattended data-training tiers",
+    "href": "#unattended-data-training-tiers"
+  },
+  {
+    "title": "Setting auxiliary models",
+    "href": "#setting-auxiliary-models"
+  },
+  {
+    "title": "Common override patterns",
+    "href": "#common-override-patterns"
+  },
+  {
+    "title": "Per-task override",
+    "href": "#per-task-override"
+  },
+  {
+    "title": "Reset all to auto",
+    "href": "#reset-all-to-auto"
+  },
+  {
+    "title": "The \"Use as\" shortcut",
+    "href": "#the-use-as-shortcut"
+  },
+  {
+    "title": "What gets written to config.yaml",
+    "href": "#what-gets-written-to-configyaml"
+  },
+  {
+    "title": "Per-provider request options",
+    "href": "#per-provider-request-options"
+  },
+  {
+    "title": "Nous Portal: which wire carries Claude",
+    "href": "#nous-portal-which-wire-carries-claude"
+  },
+  {
+    "title": "When does it take effect?",
+    "href": "#when-does-it-take-effect"
+  },
+  {
+    "title": "Troubleshooting",
+    "href": "#troubleshooting"
+  },
+  {
+    "title": "\"No authenticated providers\" in the picker",
+    "href": "#no-authenticated-providers-in-the-picker"
+  },
+  {
+    "title": "Main model didn't change in my running chat",
+    "href": "#main-model-didnt-change-in-my-running-chat"
+  },
+  {
+    "title": "Auxiliary override \"didn't take effect\"",
+    "href": "#auxiliary-override-didnt-take-effect"
+  },
+  {
+    "title": "I picked a model but Hermes switched providers on me",
+    "href": "#i-picked-a-model-but-hermes-switched-providers-on-me"
+  },
+  {
+    "title": "Alternative methods",
+    "href": "#alternative-methods"
+  },
+  {
+    "title": "CLI slash command",
+    "href": "#cli-slash-command"
+  },
+  {
+    "title": "Custom aliases",
+    "href": "#custom-aliases"
+  },
+  {
+    "title": "hermes model subcommand",
+    "href": "#hermes-model-subcommand"
+  },
+  {
+    "title": "Direct config edit",
+    "href": "#direct-config-edit"
+  },
+  {
+    "title": "REST API",
+    "href": "#rest-api"
+  }
+]
