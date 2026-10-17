@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "model-observatory-preview",
+  "compatibility_date": "2026-10-16",
+  "workers_dev": true,
+  "preview_urls": true,
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none"
+  },
+  "previews": {}
+}
