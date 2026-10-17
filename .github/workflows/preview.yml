@@ -1,0 +1,130 @@
+name: Native PR previews
+
+on:
+  workflow_run:
+    workflows: [Verify static report]
+    types: [completed]
+  pull_request_target:
+    types: [closed]
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Create/update/delete a permission probe, or clean a closed PR
+        type: choice
+        options: [permission-smoke, cleanup, cleanup-smoke]
+        required: true
+      pr:
+        description: Closed PR number (cleanup only)
+        type: string
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  resolve:
+    if: >-
+      github.repository == 'pysugar/model-observatory' && github.ref == 'refs/heads/main' &&
+      (github.event_name == 'workflow_dispatch' || vars.CLOUDFLARE_PREVIEWS_ENABLED == 'true') &&
+      (github.event_name != 'workflow_run' ||
+       (vars.CLOUDFLARE_PREVIEWS_ENABLED == 'true' &&
+        github.event.workflow_run.event == 'pull_request' &&
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.head_repository.full_name == github.repository))
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
+    outputs:
+      mode: ${{ steps.resolve.outputs.mode }}
+      pr: ${{ steps.resolve.outputs.pr }}
+      run_id: ${{ steps.resolve.outputs.run_id }}
+      attempt: ${{ steps.resolve.outputs.attempt }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - name: Resolve the current PR using trusted main code
+        id: resolve
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python scripts/preview_ci.py resolve
+
+  preview:
+    needs: resolve
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: write
+    environment:
+      name: preview
+      url: ${{ steps.publish.outputs.url }}
+    concurrency:
+      group: model-observatory-preview-${{ needs.resolve.outputs.pr }}
+      cancel-in-progress: false
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      WRANGLER_SEND_METRICS: 'false'
+      CI: 'true'
+      PREVIEW_PR: ${{ needs.resolve.outputs.pr }}
+    steps:
+      # workflow_run/PR-target use default-branch code. Never checkout a PR here.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        if: needs.resolve.outputs.mode == 'deploy' || needs.resolve.outputs.mode == 'permission-smoke'
+        with:
+          node-version: '24'
+          # Do not restore a cache written by a PR job.
+      - name: Install trusted pinned tooling without package hooks
+        if: needs.resolve.outputs.mode == 'deploy' || needs.resolve.outputs.mode == 'permission-smoke'
+        run: npm ci --ignore-scripts
+      - name: Validate the exact five-file artifact before accessing Cloudflare
+        if: needs.resolve.outputs.mode == 'deploy'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERIFY_RUN: ${{ needs.resolve.outputs.run_id }}
+          VERIFY_ATTEMPT: ${{ needs.resolve.outputs.attempt }}
+        run: python scripts/preview_ci.py prepare --run-id "$VERIFY_RUN" --attempt "$VERIFY_ATTEMPT" --pr "$PREVIEW_PR"
+      - name: Build only trusted main for the permission probe
+        if: needs.resolve.outputs.mode == 'permission-smoke'
+        run: python scripts/publish.py build --require-clean
+      - name: Publish or clean the isolated native Preview
+        id: publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          MODE: ${{ needs.resolve.outputs.mode }}
+        run: |
+          case "$MODE" in
+            deploy) python scripts/preview_ci.py deploy ;;
+            cleanup) python scripts/preview_ci.py cleanup --pr "$PREVIEW_PR" ;;
+            permission-smoke) python scripts/preview_ci.py smoke ;;
+            cleanup-smoke) python scripts/preview_ci.py cleanup-smoke ;;
+            *) echo 'Unexpected operation'; exit 1 ;;
+          esac
+      - name: Update the PR link after confirmed publication or cleanup
+        if: needs.resolve.outputs.mode == 'deploy' || needs.resolve.outputs.mode == 'cleanup'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/preview_ci.py comment --pr "$PREVIEW_PR"
+      - name: Keep version and permission evidence, including partial outcomes
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: preview-record-${{ github.run_id }}-${{ github.run_attempt }}
+          path: test-results/preview/
+          if-no-files-found: ignore
+          retention-days: 90
