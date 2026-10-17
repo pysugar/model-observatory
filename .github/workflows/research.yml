@@ -1,0 +1,56 @@
+name: Research work packet
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Prepare research instructions or inspect independent reviews
+        type: choice
+        options: [packet, review-status]
+        required: true
+      scope:
+        description: Research topic (packet only)
+        type: choice
+        options: [all, models, pricing, benchmarks]
+        required: true
+      pr:
+        description: PR number (review-status only)
+        type: string
+        required: false
+
+# No schedule, model API secret, writer identity or merge permission is installed.
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  prepare:
+    if: github.repository == 'pysugar/model-observatory' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - name: Prepare or inspect (no LLM call or merge)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OPERATION: ${{ inputs.operation }}
+          SCOPE: ${{ inputs.scope }}
+          PR: ${{ inputs.pr }}
+        run: |
+          mkdir -p test-results/research
+          case "$OPERATION" in
+            packet) python scripts/research_workflow.py packet --scope "$SCOPE" ;;
+            review-status) python scripts/research_workflow.py review-status --pr "$PR" > test-results/research/review-status.json ;;
+            *) exit 1 ;;
+          esac
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: research-work-packet-${{ github.run_id }}
+          path: test-results/research/
+          retention-days: 30
+          if-no-files-found: error
