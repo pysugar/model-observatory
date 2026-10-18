@@ -2,6 +2,8 @@
 
 本阶段只增加静态发布能力，沿用冻结证据与 Python 构建，不改变研究结论。所有命令从仓库根目录执行；路径不依赖 `/opt`、机器名称或个人虚拟环境。后续可将仓库放在 Hermes 机器的同一路径，此阶段不迁移机器、不启用自动调研。
 
+当前正式入口是 <https://models.localgpt.net>，独立验收入口是 <https://model-observatory.openai-proxy-local.workers.dev>。生产 Environment 已于 2026-10-19（Asia/Taipei）切换为 `release`，旧 `cloudflare-preview` 保留备用；下文早期准备记录中的旧环境名属于历史状态，当前配置与成功运行见 [环境迁移记录](RELEASE_ENVIRONMENT.md)和 [版本记录](RELEASES.md)。
+
 ## 本地验证
 
 需要 Python 3.11+、Node.js 24+。CI 固定 Python 3.13 / Node 24，Python 与 npm 依赖分别锁在 `requirements-test.txt`、`package-lock.json`。
@@ -49,9 +51,9 @@ python scripts/smoke.py --base-url http://127.0.0.1:8787 --cloudflare
 
 ## 唯一发布入口
 
-GitHub Actions 的 **Deploy static preview** 是唯一部署入口。推送 `main` 或手动执行时，先调用 **Verify static report**。验证生成并上传一次 `dist/`；部署下载同一不可变产物，复核提交与 SHA256 后才执行 Wrangler，不重新构建。部署串行且不会取消正在执行的上传；旧提交若已不再是 `main`，停止发布。发布后分别检查自定义域名与 workers.dev 的线上版本、HTML/JSON/CSV 哈希及缓存/安全响应头，失败会使工作流失败，不能据此宣称上线成功。
+GitHub Actions 的 **Deploy static preview** 是唯一正式部署入口；工作流名称沿用历史命名，当前生产环境为 `release`。推送 `main` 或手动执行时，先调用 **Verify static report**。验证生成并上传一次 `dist/`；部署下载同一不可变产物，复核提交与 SHA256 后才执行 Wrangler，不重新构建。部署串行且不会取消正在执行的上传；旧提交若已不再是 `main`，停止发布。发布后分别检查自定义域名与 workers.dev 的线上版本、HTML/JSON/CSV 哈希及缓存/安全响应头，失败会使工作流失败，不能据此宣称上线成功。
 
-部署开关使用非敏感的 Repository variable `CLOUDFLARE_DEPLOY_ENABLED`：未设置或 `false` 时关闭，明确授权发布后设为 `true`。工作流的 job `if` 只读取该 variable，不直接引用 Secret；即使存在同名 Secret，也不会用它打开部署门控。用户自行配置凭据，代理不读取、抓取或请求令牌展示页，也不要求把令牌发到聊天中。准备步骤如下：
+部署开关使用非敏感的 Repository variable `CLOUDFLARE_DEPLOY_ENABLED`：未设置或 `false` 时关闭，明确授权发布后设为 `true`。工作流的 job `if` 只读取该 variable，不直接引用 Secret；即使存在同名 Secret，也不会用它打开部署门控。用户自行配置凭据，代理不读取、抓取或请求令牌展示页，也不要求把令牌发到聊天中。首次部署准备步骤如下（保留最初使用 `cloudflare-preview` 的历史记录，当前环境不要重新创建或重填凭据）：
 
 1. 用户先在目标账户创建用于本项目的 `model-observatory` 占位 Worker；确认没有同名既有业务，使用平台 `workers.dev` 地址，不绑定自定义域名或连接 Git 自动构建。单 Worker 权限只能授予已存在的 Worker，`Editor` 不能创建或删除 Worker。
 2. 进入 **Manage Account → Account API Tokens → Create Token**。在 **Permission policies** 中打开账户策略卡片的 **Edit policy**，展开当前显示 **Entire Account** 的资源范围下拉菜单，再选择 **Specified Workers → 仅 `model-observatory` → Editor**，由用户创建账户所属（account-owned）API token。`Specified Workers` 是资源范围选项，不在权限名称搜索框里。不要选择 All Workers、其他 Worker 或 Admin，也不推荐旧版账户全局 `Workers Scripts Edit`。
@@ -78,13 +80,13 @@ Cloudflare 于 [2026-09-15 发布单 Worker 权限](https://developers.cloudflar
 
 自动发布需要同时满足：
 
-1. 提交已经推送到 `main`（包括 PR 合并），或手动运行 **Deploy static preview** 并选择 `main`。工作流没有文件路径过滤；本地未推送的修改、其他分支推送不会发布，PR 验证本身也不部署。
+1. 提交已经推送到 `main`（包括 PR 合并），或手动运行 **Deploy static preview** 并选择 `main`。工作流没有文件路径过滤，因此仅文档变更也会发布；本地未推送的修改、其他分支推送、单独创建 tag 不会触发正式发布。PR 验证与独立预览不更新正式站。
 2. Repository variable `CLOUDFLARE_DEPLOY_ENABLED` 为字符串 `true`。它用于 job 启动前的门控，继续放在 Repository variables；不要随账户 ID 一起搬到 Environment variables。
 3. **Verify static report** 的测试、干净构建、产物审计、Wrangler 检查及浏览器冒烟测试全部通过。
-4. `cloudflare-preview` 环境允许 `main`，环境的有效 `CLOUDFLARE_API_TOKEN` Secret 与匹配目标账户的 `CLOUDFLARE_ACCOUNT_ID` variable 已配置；若以后设置人工审批，审批也须通过。
+4. 当前 `PRODUCTION_ENVIRONMENT=release`，`release` 环境仅允许 `main` 分支、不允许 tag；环境的有效 `CLOUDFLARE_API_TOKEN` Secret 与匹配目标账户的 `CLOUDFLARE_ACCOUNT_ID` variable 已配置；若以后设置人工审批，审批也须通过。
 5. 部署下载同一份已验证产物，提交及哈希核验通过，而且该提交在上传前仍是远程 `main` 最新提交。上传串行执行。
 
-发布后两个域名都必须通过版本、HTML/JSON/CSV 哈希和响应头验收，才能认定上线成功。修改 GitHub Secret / variable 本身不会触发发布；需要新的 `main` 提交或上述手动入口。构建离线执行，不会自动抓取或调研新的模型数据。
+发布后两个域名都必须通过版本、HTML/JSON/CSV 哈希和响应头验收，才能认定上线成功。修改 GitHub Secret / variable 本身不会触发发布；需要新的 `main` 提交或上述手动入口。构建离线执行，不会自动抓取或调研新的模型数据。`verify.yml` 另提供手动验证和被发布工作流复用的入口；手动验证不等于正式发布，也不会自动产生 PR 预览。PR 提交、机器人评论与 Draft 限制集中见 [PREVIEWS.md](PREVIEWS.md#提交-pr-后在哪里找预览)。
 
 ## 自定义域名与后续发布
 
@@ -110,8 +112,10 @@ Cloudflare 于 [2026-09-15 发布单 Worker 权限](https://developers.cloudflar
 
 ## 独立 PR 预览与研究入口
 
-新增 [原生 Previews 流程](PREVIEWS.md)使用另一个 Worker 和 `preview` Environment；上文的 `cloudflare-preview` 保持正式用途。本文件既有准备阶段记录按时间保留，当前已验证基线见 [RELEASES.md](RELEASES.md)。[研究任务包与独立复核](RESEARCH_WORKFLOW.md)已提供手动入口，模型执行器、定时 LLM、长期身份和自动合并仍待用户确认接入。
+新增 [原生 Previews 流程](PREVIEWS.md)使用另一个 Worker 和 `preview` Environment；正式用途现已迁移为 `release`，旧 `cloudflare-preview` 保留备用。本文件既有准备阶段记录按时间保留，当前已验证基线见 [RELEASES.md](RELEASES.md)。[研究任务包与独立复核](RESEARCH_WORKFLOW.md)已提供手动入口，模型执行器、定时 LLM、长期身份和自动合并仍待用户确认接入。
 
 ## 已验证状态与生产环境命名
 
-2026-10-18：main 已要求经 PR 和 GitHub Actions 的 `verify` 检查，禁止强推/删除，强制批准数为 0；两套 Environment 均仅允许 main 分支，无 tag。原生 PR 预览已完成权限 smoke 并启用。生产仍使用既有 `cloudflare-preview`；工作流预留固定的 `release` 选择入口，缺省不切换。GitHub 正式接口未提供保留同一 ID/Secret 的原位改名，创建新环境和重新录入既有生产 Token 需用户另行确认，步骤见 [RELEASE_ENVIRONMENT.md](RELEASE_ENVIRONMENT.md)。不删除旧环境、不导出 Secret。
+2026-10-19（Asia/Taipei）：main 要求经 PR 和 GitHub Actions 的 `verify` 检查，禁止强推/删除，强制批准数为 0。活动的 `preview`、`release` 以及保留的旧环境均仅允许 main 分支、无 tag。原生 PR 预览已完成权限 smoke 并启用；`PRODUCTION_ENVIRONMENT=release`，`CLOUDFLARE_DEPLOY_ENABLED=true`。已通过新环境发布及双入口验收，见 [RELEASES.md](RELEASES.md)。不删除旧环境、不导出 Secret。
+
+公开页脚由构建时的真实 Git/CI metadata 生成，静态写入 HTML 与 `version.json.deployment`，不新增页面请求。正式构建显示 `release / main / commit`；PR 预览显示 `preview / PR / 源分支 / 源提交 / 构建提交`。短 commit 链接到 GitHub；只显示实际指向构建提交的 tag，不自动创建标签。网页底部和 `/version.json` 可确认自己正在查看的版本，研究数据核验日期与构建日期分别保留。

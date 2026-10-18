@@ -1,19 +1,49 @@
 # PR 原生预览与首次配置 SOP
 
-使用独立 Worker `model-observatory-preview` 的 Workers 原生 Previews。每个 PR 对应 `pr-<编号>`，有一个跟随更新的 Preview URL 和每次部署固定的 Unique Deployment URL。正式 Worker `model-observatory`、`cloudflare-preview` Environment 和 `models.localgpt.net` 继续使用原有发布流程。
+使用独立 Worker `model-observatory-preview` 的 Workers 原生 Previews。每个 PR 对应 `pr-<编号>`，有一个跟随更新的 Preview URL 和每次部署固定的 Unique Deployment URL。正式站使用 Worker `model-observatory`、`release` Environment 和 <https://models.localgpt.net>，通过既有 main 发布流程上线。
 
-2026-10-18 已完成独立 Worker 初始化和 [创建/更新/清理权限 smoke](https://github.com/pysugar/model-observatory/actions/runs/39157445322)，随后才开启 `CLOUDFLARE_PREVIEWS_ENABLED=true`。下述首次配置步骤供重建环境时使用。生产 `release` 的准备见 [迁移说明](RELEASE_ENVIRONMENT.md)，切换前保持当前生产环境。
+2026-10-18 已完成独立 Worker 初始化和 [创建/更新/清理权限 smoke](https://github.com/pysugar/model-observatory/actions/runs/39157445322)，随后才开启 `CLOUDFLARE_PREVIEWS_ENABLED=true`。下述首次配置步骤供重建环境时使用。2026-10-19（Asia/Taipei）已完成 `release` 切换及 PR #10 的预览→合并→正式发布→清理，见 [实测记录](RELEASES.md#2026-10-19-预览与-release-实测)。
+
+## 提交 PR 后在哪里找预览
+
+1. 在本仓库分支提交目标为 `main` 的非 Draft PR。打开 PR、重新打开或向其分支推送新提交，会触发 **Verify static report**；没有 `paths` 或目标分支过滤，文档改动也会验证。普通分支在没有 PR 时的 push 不触发这套 PR 构建。
+2. CI 成功后，可信 main 上的 **Native PR previews** 收到 `workflow_run: completed`，核查当前 PR 与产物，再发布并验收。仅 CI 绿色不表示预览已经完成；在 [Actions](https://github.com/pysugar/model-observatory/actions/workflows/preview.yml) 查看第二阶段。
+3. 打开 PR 的 **Conversation**，找到 **github-actions[bot]** 的同一条预览评论，点击“最新预览”。评论只在两个地址均验收成功后创建或更新：
+
+   ```text
+   最新预览 · 本次固定部署
+   Head <PR 最新源提交> · Base <main 基线>
+   Build <CI 合成合并提交> · 验证 run / attempt
+   ```
+
+4. 推送新提交后，旧评论和稳定地址可能暂时仍对应上次成功版本。等评论中的 **Head** 与 PR 最新提交一致，再验收本次变更；Build 是 head 与 base 的合成合并提交，不等于 head，也不能预先当作最终正式合并 SHA。
+
+| 评论链接 | 含义与有效期 |
+| --- | --- |
+| 最新预览 | `https://pr-<编号>-model-observatory-preview.openai-proxy-local.workers.dev`；同一 PR 地址不变，后续成功部署更新其内容 |
+| 本次固定部署 | Cloudflare 返回的 Unique Deployment URL；固定到这一次部署，不能用 Git SHA 自行拼出。可能因历史配额或 PR 清理失效 |
+
+[PR #10 的实际评论](https://github.com/pysugar/model-observatory/pull/10#issuecomment-6254053994)已在合并清理后更新为“临时预览已清理”，其原有两个地址均失效。机器人通过隐藏标记 `<!-- model-observatory-native-preview -->` 找到并更新原评论，不为每次提交追加评论。长期证据看 [版本记录](RELEASES.md)中的运行与 artifact。
+
+## 自动触发限制与手动入口
+
+- PR CI 本身没有排除 Draft 或 fork；能否运行仍受 GitHub 权限/审批和合并冲突等条件影响。**云端预览只接受本仓库分支、打开且非 Draft、目标为 main 的当前 PR**。fork 不发布预览；最新 head、main base、run attempt、七天有效期与 artifact 完整性仍须通过下文的核验。
+- 当前 `pull_request` 未指定 `types`，采用 GitHub 默认的 `opened / synchronize / reopened`。**仅将 Draft 改为 Ready 不会触发新 CI**；可在 Ready 后推送新提交，或重跑原 PR 对应的 CI run。基线已变更或 run 过期时，先更新分支产生新的验证。本次未改动这一行为。参见 [GitHub PR 事件说明](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#pull_request)。
+- 手动运行 **Verify static report** 使用 `workflow_dispatch`，只做验证，不自动发布 PR 预览。**Native PR previews** 的手动菜单仅有 `permission-smoke / initialize / cleanup / cleanup-smoke`，没有手动部署任意开放 PR 的选项；统一从可信 main 运行。
+- 自动创建/更新和关闭清理均要求 Repository variable `CLOUDFLARE_PREVIEWS_ENABLED=true`，目前已开启。关闭或合并 PR 后自动清理；手动清理用于失败恢复，详见下文。
 
 ## 两套 Environment，同名配置项
 
 | 用途 | GitHub Environment | Cloudflare Worker | Secret | Variable |
 | --- | --- | --- | --- | --- |
-| 正式站 | `cloudflare-preview`（历史名称，暂不改名） | `model-observatory` | `CLOUDFLARE_API_TOKEN`：正式令牌 | `CLOUDFLARE_ACCOUNT_ID` |
-| PR 预览 | 新建 `preview` | `model-observatory-preview` | `CLOUDFLARE_API_TOKEN`：独立预览令牌 | `CLOUDFLARE_ACCOUNT_ID` |
+| 正式站 | `release` | `model-observatory` | `CLOUDFLARE_API_TOKEN`：正式令牌 | `CLOUDFLARE_ACCOUNT_ID` |
+| PR 预览 | `preview` | `model-observatory-preview` | `CLOUDFLARE_API_TOKEN`：独立预览令牌 | `CLOUDFLARE_ACCOUNT_ID` |
 
 工作流 job 的 `environment` 决定读哪套配置，因此无需换 Secret/Variable 名称。账户 ID 相同：`cf37bfe5ee78022d9099c57673e50dbc`。不要在 Repository secrets 中放一个两套流程共用的 Cloudflare token。
 
-## 用户配置
+旧 `cloudflare-preview` 及其 Secret、仅 main 规则和历史保留备用；当前生产选择变量为 `PRODUCTION_ENVIRONMENT=release`。两套活动环境均仅允许 main 分支、无 tag 部署。
+
+## 首次配置（仅重建环境时）
 
 1. 在上述账户创建 `model-observatory-preview` 占位 Worker，并启用它的 workers.dev 地址与 **Preview URLs**。新原生 Previews 同样需要此地址开关。保持空白静态用途，不绑定自定义域名、生产资源、Cron、路由或业务 secrets。不需要新 DNS、Pages 项目或 prerelease 分支，也不连接 Cloudflare Git 构建。
 2. 在 **Manage Account → Account API Tokens** 创建独立的 account-owned token：资源范围 **Specified Workers → 仅 `model-observatory-preview` → Editor**。Review token 时移除模板附带的全账户/全 Zone 权限。不要添加生产 Worker，不需要 Zone/DNS 权限。令牌由用户直接保存到 GitHub，不能粘贴到聊天、命令参数、仓库或日志。
@@ -23,7 +53,7 @@
 6. 在 **Actions → Native PR previews → Run workflow**，分支选择 `main`，operation 选择 `permission-smoke`，PR 留空。该入口仅对预览 Worker 创建 `permission-smoke`、更新它、验证两次固定地址与稳定地址，再删除并确认不存在。只有 artifact 中 `deployment.json.status = passed`，才证明当前 token 能完成创建、更新、清理。单独的 Editor 文档不能代替这个实测。若报告没有可用 URL，先检查占位 Worker 的 Preview URLs 开关；不要改正式 Worker。需要应用地址开关时，可在同一可信 main 工作流选择独立的 `initialize` 操作。它只把已检查的五文件静态产物发布到 `model-observatory-preview` 并启用其 Preview URLs，再验证父 Worker 地址；不修改正式 Worker、DNS 或 Token 范围。初始化后重新运行 `permission-smoke`。
 7. 权限验收成功后，由用户设置 Repository variable `CLOUDFLARE_PREVIEWS_ENABLED=true`。新建一个普通源码 PR，等待 Verify static report 与 Native PR previews 完成，检查评论中的两个地址、commit 和数据变化摘要；追加一次提交验证稳定地址更新，然后关闭 PR 验证清理。不要通过直接 push main 来测试临时预览。
 
-配置或权限验收尚未完成时，代码、单元测试与无密钥 PR CI 仍可先完成。当前不能把“实现已提交”写成“单 Worker Editor 已验收”。若 GitHub Actions 策略禁止工作流评论 PR，由用户检查仓库 Actions 权限设置；不要自动提升长期权限。
+配置或权限验收尚未完成时，代码、单元测试与无密钥 PR CI 仍可先完成。重建时不能把“实现已提交”写成“单 Worker Editor 已验收”，须取得新的实际验收结果。若 GitHub Actions 策略禁止工作流评论 PR，由用户检查仓库 Actions 权限设置；不要自动提升长期权限。
 
 ## 构建与凭据边界
 
@@ -47,7 +77,7 @@ Cloudflare token 仅进入单独的发布/清理步骤。发布先确认目标�
 - 权限试验留下了 Preview：operation=`cleanup-smoke`，只清理固定的 `permission-smoke`。
 - HTTP 401/403 或 Cloudflare code：保留 run 链接和 `preview-record` artifact，报告失败动作、端点与错误码。停止该动作，不自动扩成 All Workers/Admin，也不反复创建 token。
 - 上传超时或未收到预期 JSON：记录是 `upload-started` 或 `uploaded`，结果可能不确定。先到指定 Worker 的对应 Preview 检查，不把失败日志理解为没有上传，也不宣称已验证成功。
-- 旧 head/base 的任务失败是保护行为；先更新 PR，再等新的成功验证。draft 改为 ready 后可重跑该 PR 的 Verify 工作流 run；若基线已变更，先更新分支。
+- 旧 head/base 的任务失败是保护行为；先更新 PR，再等新的成功验证。Draft→Ready 的重新验证方式见 [触发限制](#自动触发限制与手动入口)。
 
 关掉 `CLOUDFLARE_PREVIEWS_ENABLED` 会同时停掉自动创建与自动 close 清理；手动清理仍可用。关闭开关前应清理现有临时预览，或记录后续手动清理清单。
 
