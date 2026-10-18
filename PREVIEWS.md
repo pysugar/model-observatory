@@ -33,7 +33,7 @@
 
 ZIP 只允许 `index.html`、`report-data.json`、`report-data.csv`、`_headers`、`version.json` 五个有界普通文件；不接受目录、符号链接、重复项、额外代码或路径穿越。GitHub token 不随签名下载重定向发送。可信校验器再检查内容哈希、HTML/JSON/CSV 一致性及固定 CSP/响应头。
 
-Cloudflare token 仅进入单独的发布/清理步骤。发布先确认目标父 Worker 已存在，使用 `wrangler preview --ignore-base-config --json`；已有 Preview 若含 bindings/secrets 会拒绝。原生 Preview JSON 返回的 URL 和部署 ID 写入记录，不猜测地址。相同 PR 的发布与清理共用并发锁；上传前后检查新旧状态，发现过期时清理本次 Preview。两个地址的版本、数据哈希和安全响应头都通过后，才更新同一条 PR 评论。
+Cloudflare token 仅进入单独的发布/清理步骤。发布先确认目标父 Worker 已存在，使用 `wrangler preview --ignore-base-config --json`；已有 Preview 若含 bindings/secrets 会拒绝。从 Wrangler 的独立 JSONL 输出文件读取版本为 1 的原生 Preview 记录，核对 Worker、Preview、URL 和部署 ID；不把夹杂进度日志的 stdout 当作纯 JSON，也不打印原始响应。相同 PR 的发布与清理共用并发锁；上传前后检查新旧状态，发现过期时清理本次 Preview。两个地址的版本、数据哈希和安全响应头都通过后，才更新同一条 PR 评论。
 
 原生机制由 `previews: {}` 与 `wrangler preview` 决定，而 `preview_urls: true` 也负责它的 workers.dev 地址开关；独立预览配置设为 true。此字段名称沿用了 Version URLs，不能据此误判正在使用旧机制。正式配置仍为 false。静态文件同样使用 `_headers`，不增加 Worker 业务运行代码。
 
