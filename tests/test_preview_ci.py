@@ -130,14 +130,16 @@ class PreviewTests(unittest.TestCase):
 
     def test_upload_accepts_real_static_config_and_drops_github_credentials(self):
         from types import SimpleNamespace
-        result = {"preview": {"name": "pr-5", "id": "preview-1",
-                              "urls": ["https://pr-5-model-observatory-preview.openai-proxy-local.workers.dev"]},
-                  "deployment": {"id": "deployment-1",
-                                 "urls": ["https://version-model-observatory-preview.openai-proxy-local.workers.dev"]}}
+        record = {"type": "preview", "version": 1, "worker_name": ci.WORKER,
+                  "preview_name": "pr-5", "preview_id": "preview-1", "deployment_id": "deployment-1",
+                  "preview_urls": ["https://pr-5-model-observatory-preview.openai-proxy-local.workers.dev"],
+                  "deployment_urls": ["https://version-model-observatory-preview.openai-proxy-local.workers.dev"]}
+        def fake_run(*args, **kwargs):
+            Path(kwargs["env"]["WRANGLER_OUTPUT_FILE_PATH"]).write_text(json.dumps(record) + "\n")
+            return SimpleNamespace(returncode=0, stdout="Asset upload progress\nnot pure JSON\n", stderr="")
         with patch.object(ci, "parent_exists"), patch.object(ci, "cf", return_value=None), \
                 patch.dict(os.environ, {"GH_TOKEN": "unit-test", "GITHUB_TOKEN": "unit-test"}), \
-                patch.object(ci.subprocess, "run", return_value=SimpleNamespace(
-                    returncode=0, stdout=json.dumps(result), stderr="")) as run:
+                patch.object(ci.subprocess, "run", side_effect=fake_run) as run:
             published = ci.upload("pr-5", "config-regression", BUILD)
             self.assertEqual(published["deployment_id"], "deployment-1")
             env = run.call_args.kwargs["env"]
@@ -145,6 +147,21 @@ class PreviewTests(unittest.TestCase):
             self.assertNotIn("GITHUB_TOKEN", env)
             self.assertEqual(env["GITHUB_SHA"], BUILD)
             self.assertIn("preview", run.call_args.args[0])
+
+    def test_upload_requires_one_matching_versioned_machine_record(self):
+        from types import SimpleNamespace
+        for records in (None, [], [{"type": "preview", "version": 2}],
+                        [{"type": "preview", "version": 1}, {"type": "preview", "version": 1}],
+                        [{"type": "preview", "version": 1, "worker_name": "other", "preview_name": "pr-5"}]):
+            def fake_run(*args, **kwargs):
+                if records is not None:
+                    Path(kwargs["env"]["WRANGLER_OUTPUT_FILE_PATH"]).write_text(
+                        "".join(json.dumps(record) + "\n" for record in records))
+                return SimpleNamespace(returncode=0, stdout="untrusted progress", stderr="")
+            with self.subTest(records=records), patch.object(ci, "parent_exists"), \
+                    patch.object(ci, "cf", return_value=None), patch.object(ci.subprocess, "run", side_effect=fake_run):
+                with self.assertRaises(ValueError):
+                    ci.upload("pr-5", "output-contract")
 
     def test_upload_rejects_routes_bindings_and_non_release_asset_directory(self):
         config = json.loads((ci.ROOT / "wrangler.preview.json").read_text())
