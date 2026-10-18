@@ -310,7 +310,7 @@ def upload(name, tag, build_sha=None):
     config = json.loads((ROOT / "wrangler.preview.json").read_text())
     require(config["name"] == WORKER and config["previews"] == {} and config["preview_urls"] is True and config["workers_dev"] is True and
             config["assets"] == {"directory": "./dist", "html_handling": "auto-trailing-slash", "not_found_handling": "none"} and
-            set(config) == {"$schema", "name", "compatibility_date", "workers_dev", "preview_urls", "assets"},
+            set(config) == {"$schema", "name", "compatibility_date", "workers_dev", "preview_urls", "assets", "previews"},
             "Preview configuration must remain static-only without bindings or routes")
     existing = cf(f"/previews/{name}", missing_ok=True)
     if existing is not None:
