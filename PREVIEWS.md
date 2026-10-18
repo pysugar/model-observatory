@@ -2,6 +2,8 @@
 
 使用独立 Worker `model-observatory-preview` 的 Workers 原生 Previews。每个 PR 对应 `pr-<编号>`，有一个跟随更新的 Preview URL 和每次部署固定的 Unique Deployment URL。正式 Worker `model-observatory`、`cloudflare-preview` Environment 和 `models.localgpt.net` 继续使用原有发布流程。
 
+2026-10-18 已完成独立 Worker 初始化和 [创建/更新/清理权限 smoke](https://github.com/pysugar/model-observatory/actions/runs/39157445322)，随后才开启 `CLOUDFLARE_PREVIEWS_ENABLED=true`。下述首次配置步骤供重建环境时使用。生产 `release` 的准备见 [迁移说明](RELEASE_ENVIRONMENT.md)，切换前保持当前生产环境。
+
 ## 两套 Environment，同名配置项
 
 | 用途 | GitHub Environment | Cloudflare Worker | Secret | Variable |

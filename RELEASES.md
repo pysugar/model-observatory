@@ -8,7 +8,12 @@
 | `fad60bb217e1dcdaf56f520f22520fb2eef0c428` | 自定义域名、no-transform、双入口验收 | [run 38904557119](https://github.com/pysugar/model-observatory/actions/runs/38904557119) |
 | `976dbc0b46a173705bd3ad206cd3fb5ba2e84b56` | 账户 ID 改读 Environment variable | [run 38929252801](https://github.com/pysugar/model-observatory/actions/runs/38929252801) |
 
-以上是本次开发开始时确认的生产基线；新增基础设施 PR 尚未合入，不表示已部署。既有 Cloudflare 版本 ID 以相应 run 的上传日志与 Worker 控制台为准，本表不猜测 ID。
+| `12c638cca189eada0bac59fdff2044cad06a8e16` | PR #5：可信原生预览与研究工作流 | [run 39155391041](https://github.com/pysugar/model-observatory/actions/runs/39155391041) |
+| `06af55ffdbe94b7c8b34cb3fcc89dd2e488015b9` | PR #6：补齐静态配置白名单 | [run 39156303630](https://github.com/pysugar/model-observatory/actions/runs/39156303630) |
+| `06b59e39a9ec8085928788e6fb1914ce414bff52` | PR #7：版本化 Wrangler JSONL 输出 | [run 39156779873](https://github.com/pysugar/model-observatory/actions/runs/39156779873) |
+| `7129c59f816b060ef0df846da667a769cc120050` | PR #8：独立预览 Worker 地址初始化入口 | [run 39157322608](https://github.com/pysugar/model-observatory/actions/runs/39157322608) |
+
+以上正式版本均有成功发布 run；新增行对应 2026-10-18 的正常发布，研究数据内容未改。原有说明：以上是本次开发开始时确认的生产基线；新增基础设施 PR 尚未合入，不表示已部署。既有 Cloudflare 版本 ID 以相应 run 的上传日志与 Worker 控制台为准，本表不猜测 ID。
 
 新预览每次生成 `preview-record-<run>-<attempt>` artifact（保留 90 天）：PR、head/base/build、验证 run/attempt、artifact ID/digest、发布脚本的 main SHA、Cloudflare Preview/deployment ID、稳定/固定 URL、内容日期、轻量行数变化及最终状态。`upload-started`/`uploaded` 不等于验收成功；`verified` 才确认两个地址与原产物一致。清理后 PR 评论变为已清理，固定地址也失效。
 
