@@ -107,3 +107,7 @@ Cloudflare 于 [2026-09-15 发布单 Worker 权限](https://developers.cloudflar
 静态校验只能保证构建和证据保真，不能证明模型身份/别名映射、实时可用性或跨基准可比性正确。中文任务与真实 OpenClaw/Hermes 工作流仍未实测；模型身份、默认回退与不同快照的解释沿用原报告。不得把通过 CI 解释为重新验证了研究结论。自动调研、定时任务及大规模数据结构调整留到下一阶段。
 
 参考：[Workers Static Assets](https://developers.cloudflare.com/workers/static-assets/)、[响应头](https://developers.cloudflare.com/workers/static-assets/headers/)、[GitHub Actions 部署](https://developers.cloudflare.com/workers/ci-cd/external-cicd/github-actions/)。
+
+## 独立 PR 预览与研究入口
+
+新增 [原生 Previews 流程](PREVIEWS.md)使用另一个 Worker 和 `preview` Environment；上文的 `cloudflare-preview` 保持正式用途。本文件既有准备阶段记录按时间保留，当前已验证基线见 [RELEASES.md](RELEASES.md)。[研究任务包与独立复核](RESEARCH_WORKFLOW.md)已提供手动入口，模型执行器、定时 LLM、长期身份和自动合并仍待用户确认接入。

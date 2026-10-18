@@ -4,6 +4,8 @@
 
 在线报告：<https://models.localgpt.net>。静态发布、跨 macOS/Linux 验证、GitHub Actions、公开产物边界与回滚步骤见 [DEPLOYMENT.md](DEPLOYMENT.md)。发布使用独立 `dist/` 白名单，研究结论保持不变。
 
+原生 PR 预览及新 `preview` Environment 配置见 [PREVIEWS.md](PREVIEWS.md)；按需研究与独立轻量复核见 [RESEARCH_WORKFLOW.md](RESEARCH_WORKFLOW.md)；已验证版本与回滚见 [RELEASES.md](RELEASES.md)。自动预览等待首次权限验收，定时 LLM 调用和自动合并均未开启。
+
 报告更新于 **2026-10-16（Asia/Taipei）**；本轮核验 Claude，并复核 Sol 6.1 的官方档位、选型及工具协议；其余 GPT / Gemini 规格仍为 10-15。范围是通用模型的 API 规格与公开评测；包括 20 个选型与兼容候选（含 14 款 Claude）、3 个 GPT 代际基线，另列 Mythos 的受限入口。专用图像、语音、视频生成模型及产品订阅配额不属于此次比较范围。选型建议是基于已列证据的判断，没有执行新的付费模型实验或中文实测。
 
 ## 阅读顺序
