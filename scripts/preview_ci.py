@@ -149,7 +149,7 @@ def resolve():
     else:
         require(kind == "workflow_dispatch", "Unexpected workflow event")
         mode = event["inputs"]["operation"]
-        require(mode in {"permission-smoke", "cleanup", "cleanup-smoke"}, "Unexpected manual operation")
+        require(mode in {"permission-smoke", "cleanup", "cleanup-smoke", "initialize"}, "Unexpected manual operation")
         output(mode=mode, pr=positive(event["inputs"]["pr"]) if mode == "cleanup" else "smoke")
 
 
@@ -292,7 +292,7 @@ def preview_urls(result, name):
     urls = []
     for item in (result["preview"], result["deployment"]):
         candidates = item.get("urls", [])
-        require(len(candidates) == 1, "Expected one workers.dev URL; no custom Preview domains")
+        require(len(candidates) == 1, f"Expected one workers.dev URL; returned {len(candidates)}; check dedicated Worker Preview URL settings")
         url = candidates[0]
         parts = urlsplit(url)
         require(parts.scheme == "https" and parts.username is None and parts.port is None and
@@ -306,13 +306,35 @@ def preview_urls(result, name):
             "deployment_id": result["deployment"]["id"]}
 
 
-def upload(name, tag, build_sha=None):
-    parent_exists()  # Prevent Wrangler's parent auto-provision fallback.
+def validate_preview_config():
     config = json.loads((ROOT / "wrangler.preview.json").read_text())
     require(config["name"] == WORKER and config["previews"] == {} and config["preview_urls"] is True and config["workers_dev"] is True and
             config["assets"] == {"directory": "./dist", "html_handling": "auto-trailing-slash", "not_found_handling": "none"} and
             set(config) == {"$schema", "name", "compatibility_date", "workers_dev", "preview_urls", "assets", "previews"},
             "Preview configuration must remain static-only without bindings or routes")
+
+
+def initialize():
+    """Apply the dedicated parent's workers.dev settings before native Previews."""
+    validate_preview_config()
+    parent_exists()
+    commit = publish.git("rev-parse", "HEAD")
+    publish.check(SITE, commit)
+    record = {"worker": WORKER, "source_commit": commit, "status": "initialization-started"}
+    save(RECORD, record)
+    child_env = {key: value for key, value in os.environ.items() if key not in {"GH_TOKEN", "GITHUB_TOKEN"}}
+    result = subprocess.run(["node", "node_modules/wrangler/bin/wrangler.js", "deploy", "--config", "wrangler.preview.json"],
+                            cwd=ROOT, text=True, capture_output=True, timeout=240, env=child_env)
+    require(result.returncode == 0, "Dedicated preview Worker initialization failed; remote outcome may be uncertain. No token scope changed.")
+    url = "https://model-observatory-preview.openai-proxy-local.workers.dev"
+    publish.probe(url, SITE)
+    record.update(status="initialized", preview_urls=True, url=url)
+    save(RECORD, record)
+
+
+def upload(name, tag, build_sha=None):
+    parent_exists()  # Prevent Wrangler's parent auto-provision fallback.
+    validate_preview_config()
     existing = cf(f"/previews/{name}", missing_ok=True)
     if existing is not None:
         latest = cf(f"/previews/{name}/deployments/latest", missing_ok=True, missing_codes=(10025, 10222))
@@ -452,7 +474,7 @@ def comment(pr_number):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=["resolve", "prepare", "deploy", "cleanup", "smoke", "cleanup-smoke", "comment"])
+    parser.add_argument("command", choices=["resolve", "prepare", "deploy", "cleanup", "smoke", "cleanup-smoke", "comment", "initialize"])
     parser.add_argument("--run-id")
     parser.add_argument("--attempt")
     parser.add_argument("--pr")
@@ -462,6 +484,8 @@ def main():
             resolve()
         elif args.command == "prepare":
             prepare(args.run_id, args.attempt, args.pr)
+        elif args.command == "initialize":
+            initialize()
         elif args.command == "deploy":
             deploy()
         elif args.command == "cleanup":
