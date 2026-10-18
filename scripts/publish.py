@@ -13,10 +13,11 @@ import subprocess
 import sys
 import tempfile
 import time
+from html import escape
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.error import HTTPError, URLError
-from urllib.parse import urlsplit
+from urllib.parse import quote, urlsplit
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -133,6 +134,50 @@ def ci_context(commit):
     return context
 
 
+def deployment_identity(commit, dirty, context):
+    """Public identity from the checked-out Git tree and the actual CI event."""
+    branch = git("branch", "--show-current")
+    environment = "local"
+    identity = {"environment": environment, "branch": branch or None,
+                "build_sha": commit, "dirty": dirty,
+                "tags": git("tag", "--points-at", commit).splitlines()}
+    if context:
+        require(context["repository"] == "pysugar/model-observatory", "Unexpected build repository")
+        if context["event"] == "pull_request":
+            event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text())
+            identity.update(environment="preview", branch=event["pull_request"]["head"]["ref"],
+                            pr=context["pr"], head_sha=context["head_sha"])
+        elif os.environ.get("GITHUB_REF") == "refs/heads/main" and context["event"] in {"push", "workflow_dispatch"}:
+            identity.update(environment="release", branch="main")
+        else:
+            identity.update(environment="ci", branch=os.environ.get("GITHUB_REF_NAME") or None)
+    return identity
+
+
+def build_footer(identity):
+    """Render escaped, static metadata so the footer also works without JS."""
+    require(identity["environment"] in {"local", "ci", "preview", "release"}, "Invalid build environment")
+    require(re.fullmatch(r"[0-9a-f]{40}", identity["build_sha"]), "Invalid build commit")
+    repo = "https://github.com/pysugar/model-observatory"
+    def commit_link(sha, label):
+        require(re.fullmatch(r"[0-9a-f]{40}", sha), "Invalid source commit")
+        return f'<span>{label} <a href="{repo}/commit/{sha}" target="_blank" rel="noopener"><code>{sha[:7]}</code></a></span>'
+    parts = [f'<span>{identity["environment"]}</span>']
+    if identity.get("pr"):
+        require(isinstance(identity["pr"], int) and identity["pr"] > 0, "Invalid PR")
+        parts.append(f'<span><a href="{repo}/pull/{identity["pr"]}" target="_blank" rel="noopener">PR #{identity["pr"]}</a></span>')
+    if identity.get("branch"):
+        parts.append(f'<span>分支 <code>{escape(identity["branch"])}</code></span>')
+    if identity.get("head_sha"):
+        parts.append(commit_link(identity["head_sha"], "源提交"))
+    parts.append(commit_link(identity["build_sha"], "构建" if identity.get("head_sha") else "commit"))
+    for tag in identity["tags"]:
+        parts.append(f'<span>tag <a href="{repo}/tree/{quote(tag, safe="")}" target="_blank" rel="noopener"><code>{escape(tag)}</code></a></span>')
+    if identity["dirty"]:
+        parts.append('<span>含未提交改动</span>')
+    return '<p id="build-info" class="build-info" aria-label="构建版本">' + ' · '.join(parts) + '</p>'
+
+
 def build(output, require_clean=False):
     output = Path(output)
     require(not output.is_symlink() and output.resolve() != ROOT, "Unsafe output directory")
@@ -151,11 +196,15 @@ def build(output, require_clean=False):
     html = files["index.html"].decode()
     validate_data(data, files["report-data.csv"], html)
     validate_sources(data, html)
+    context = ci_context(commit)
+    identity = deployment_identity(commit, dirty, context)
+    require(html.count("<!-- BUILD_INFO -->") == 1, "Missing unique build footer slot")
+    html = html.replace("<!-- BUILD_INFO -->", build_footer(identity))
+    files["index.html"] = html.encode()
     files["_headers"] = headers_for(html)
-    version = {"schema_version": 1, "source_commit": commit, "source_time": git("show", "-s", "--format=%cI", "HEAD"),
+    version = {"schema_version": 1, "deployment": identity, "source_commit": commit, "source_time": git("show", "-s", "--format=%cI", "HEAD"),
                "report_reviewed_at": data["meta"]["reviewed_at"], "dirty": dirty,
                "assets": {name: sha256(content) for name, content in sorted(files.items())}}
-    context = ci_context(commit)
     if context:
         version["ci"] = context
     files["version.json"] = (json.dumps(version, ensure_ascii=False, indent=2) + "\n").encode()
@@ -186,6 +235,10 @@ def check(output, expected_commit=None):
         require(sha256(contents[name]) == version["assets"][name], f"Artifact checksum mismatch: {name}")
     html = contents["index.html"].decode()
     require(contents["_headers"] == headers_for(html), "Headers differ from reviewed policy")
+    if "deployment" in version:
+        identity = version["deployment"]
+        require(identity["build_sha"] == version["source_commit"] and identity["dirty"] == version["dirty"], "Footer identity differs from release")
+        require(html.count('id="build-info"') == 1 and build_footer(identity) in html, "Footer differs from version metadata")
     counts = validate_data(json.loads(contents["report-data.json"]), contents["report-data.csv"], html)
     return {"status": "PASS", "commit": version["source_commit"], "dirty": version["dirty"], **counts,
             "files": {name: len(content) for name, content in sorted(contents.items())}}
