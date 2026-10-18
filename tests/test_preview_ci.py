@@ -176,6 +176,19 @@ class PreviewTests(unittest.TestCase):
                 cf.assert_not_called()
                 run.assert_not_called()
 
+    def test_initialization_targets_only_dedicated_worker_with_checked_assets(self):
+        from types import SimpleNamespace
+        with tempfile.TemporaryDirectory() as temp, patch.object(ci, "RECORD", Path(temp) / "record.json"), \
+                patch.object(ci, "parent_exists") as parent, patch.object(ci.publish, "check") as check, \
+                patch.object(ci.publish, "git", return_value=BUILD), patch.object(ci.publish, "probe") as probe, \
+                patch.object(ci.subprocess, "run", return_value=SimpleNamespace(returncode=0)) as run:
+            ci.initialize()
+            parent.assert_called_once()
+            check.assert_called_once_with(ci.SITE, BUILD)
+            self.assertEqual(run.call_args.args[0][-3:], ["deploy", "--config", "wrangler.preview.json"])
+            probe.assert_called_once_with("https://model-observatory-preview.openai-proxy-local.workers.dev", ci.SITE)
+            self.assertEqual(json.loads(ci.RECORD.read_text())["status"], "initialized")
+
     def test_cleanup_requires_closed_pr_and_never_deletes_parent(self):
         with patch.object(ci, "repo_api", return_value=self.pr), patch.object(ci, "delete_preview") as delete:
             with self.assertRaisesRegex(ValueError, "closed PR"):

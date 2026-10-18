@@ -11,7 +11,7 @@ on:
       operation:
         description: Create/update/delete a permission probe, or clean a closed PR
         type: choice
-        options: [permission-smoke, cleanup, cleanup-smoke]
+        options: [permission-smoke, cleanup, cleanup-smoke, initialize]
         required: true
       pr:
         description: Closed PR number (cleanup only)
@@ -83,12 +83,12 @@ jobs:
         with:
           python-version: '3.13'
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        if: needs.resolve.outputs.mode == 'deploy' || needs.resolve.outputs.mode == 'permission-smoke'
+        if: needs.resolve.outputs.mode == 'deploy' || needs.resolve.outputs.mode == 'permission-smoke' || needs.resolve.outputs.mode == 'initialize'
         with:
           node-version: '24'
           # Do not restore a cache written by a PR job.
       - name: Install trusted pinned tooling without package hooks
-        if: needs.resolve.outputs.mode == 'deploy' || needs.resolve.outputs.mode == 'permission-smoke'
+        if: needs.resolve.outputs.mode == 'deploy' || needs.resolve.outputs.mode == 'permission-smoke' || needs.resolve.outputs.mode == 'initialize'
         run: npm ci --ignore-scripts
       - name: Validate the exact five-file artifact before accessing Cloudflare
         if: needs.resolve.outputs.mode == 'deploy'
@@ -98,7 +98,7 @@ jobs:
           VERIFY_ATTEMPT: ${{ needs.resolve.outputs.attempt }}
         run: python scripts/preview_ci.py prepare --run-id "$VERIFY_RUN" --attempt "$VERIFY_ATTEMPT" --pr "$PREVIEW_PR"
       - name: Build only trusted main for the permission probe
-        if: needs.resolve.outputs.mode == 'permission-smoke'
+        if: needs.resolve.outputs.mode == 'permission-smoke' || needs.resolve.outputs.mode == 'initialize'
         run: python scripts/publish.py build --require-clean
       - name: Publish or clean the isolated native Preview
         id: publish
@@ -112,6 +112,7 @@ jobs:
             deploy) python scripts/preview_ci.py deploy ;;
             cleanup) python scripts/preview_ci.py cleanup --pr "$PREVIEW_PR" ;;
             permission-smoke) python scripts/preview_ci.py smoke ;;
+            initialize) python scripts/preview_ci.py initialize ;;
             cleanup-smoke) python scripts/preview_ci.py cleanup-smoke ;;
             *) echo 'Unexpected operation'; exit 1 ;;
           esac
