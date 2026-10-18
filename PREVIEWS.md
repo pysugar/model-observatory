@@ -18,7 +18,7 @@
 3. 到仓库 **Settings → Environments → New environment**，创建 `preview`。添加上述同名 Secret 与 Variable。将 Deployment branches and tags 设为仅分支 `main`（不允许 tag）；这项新持久限制由用户确认并操作。是否加 Required reviewers 也由用户决定。不要修改已有 `cloudflare-preview`。
 4. 保持 Repository variable `CLOUDFLARE_PREVIEWS_ENABLED` 缺省或 `false`。原正式开关 `CLOUDFLARE_DEPLOY_ENABLED` 不变。
 5. 审阅并由用户决定合并本基础设施 PR。新增 workflow 必须先成为可信 `main` 代码；不要为抢先验收而让带 token 的任务执行 PR 分支。此 PR 本身只能验证无密钥 CI，不能自证新的生产权限。
-6. 在 **Actions → Native PR previews → Run workflow**，分支选择 `main`，operation 选择 `permission-smoke`，PR 留空。该入口仅对预览 Worker 创建 `permission-smoke`、更新它、验证两次固定地址与稳定地址，再删除并确认不存在。只有 artifact 中 `deployment.json.status = passed`，才证明当前 token 能完成创建、更新、清理。单独的 Editor 文档不能代替这个实测。若报告没有可用 URL，先检查占位 Worker 的 Preview URLs 开关；不要改正式 Worker。必要时由用户明确授权后从干净 main 运行一次 `wrangler deploy --config wrangler.preview.json` 初始化这个独立父 Worker 的地址设置，再重新试验；本自动入口不会自行发布父 Worker。
+6. 在 **Actions → Native PR previews → Run workflow**，分支选择 `main`，operation 选择 `permission-smoke`，PR 留空。该入口仅对预览 Worker 创建 `permission-smoke`、更新它、验证两次固定地址与稳定地址，再删除并确认不存在。只有 artifact 中 `deployment.json.status = passed`，才证明当前 token 能完成创建、更新、清理。单独的 Editor 文档不能代替这个实测。若报告没有可用 URL，先检查占位 Worker 的 Preview URLs 开关；不要改正式 Worker。需要应用地址开关时，可在同一可信 main 工作流选择独立的 `initialize` 操作。它只把已检查的五文件静态产物发布到 `model-observatory-preview` 并启用其 Preview URLs，再验证父 Worker 地址；不修改正式 Worker、DNS 或 Token 范围。初始化后重新运行 `permission-smoke`。
 7. 权限验收成功后，由用户设置 Repository variable `CLOUDFLARE_PREVIEWS_ENABLED=true`。新建一个普通源码 PR，等待 Verify static report 与 Native PR previews 完成，检查评论中的两个地址、commit 和数据变化摘要；追加一次提交验证稳定地址更新，然后关闭 PR 验证清理。不要通过直接 push main 来测试临时预览。
 
 配置或权限验收尚未完成时，代码、单元测试与无密钥 PR CI 仍可先完成。当前不能把“实现已提交”写成“单 Worker Editor 已验收”。若 GitHub Actions 策略禁止工作流评论 PR，由用户检查仓库 Actions 权限设置；不要自动提升长期权限。
