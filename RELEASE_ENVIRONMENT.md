@@ -11,6 +11,8 @@
 - 用户在 GitHub 页面直接录入已有的生产 Token，Secret 名仍为 `CLOUDFLARE_API_TOKEN`。代理不读取、导出或显示现有 Secret，不为改名生成新凭据。若用户已不保存原 Token，暂停并另行决定是否轮换，不能自动创建。
 - 保留旧 `cloudflare-preview`、原 Secret、保护和部署历史；本次不删除旧环境，也不改变 Token 权限或 DNS。
 
+2026-10-19（Asia/Taipei）用户确认后已回读：新 `release` ID 为 `24650354682`，仅 `main` 分支规则 ID 为 `63502314`，没有 tag 规则；部署 Secret 名称与账户 ID variable 均已配置。旧环境保留。实际切换是否成功仍以使用 `release` 的生产 run 和双入口验收为准。
+
 ## 配置完成后的切换顺序
 
 1. 回读新环境：名称、ID、仅 main 的分支规则、Secret 名称与更新时间、账户 ID；只读元数据，不读取 Secret 值。

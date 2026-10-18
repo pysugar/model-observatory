@@ -83,3 +83,5 @@ python3 validate_report.py
 用户截图只证明选择器可见，不证明 API 授权或实际调用成功。Sonnet 4.5 已弃用但到 2026-11-30 才退役；Haiku 4.5 当前仍 Active。Haiku 4.5 / Sonnet 4.5 没有 effort 档位，Opus 4.5 的 thinking 预算独立于 effort；Opus / Sonnet 4.6 没有 xhigh。中文任务甜蜜点全部未实测。AA 中 Sonnet 4.5 的 1M 标注与当前官方 200k 不一致，规格和预算采用官方 200k / 64k，保留原始评测而不据此声称在当前窗口下复测过。
 
 官方 API 单价不能换算产品订阅额度。预算计算器固定各模型使用相同 token 数，未保证同任务同用量；推理输出计费，工具、缓存写入/存储、税费和重试另算。Google 优惠结束情景只应用已公布的 Google 价格，其余维持核验日价格。研究整理阶段未执行发布或部署；静态发布阶段的范围和操作入口见 DEPLOYMENT.md。
+
+公开页面页脚显示构建来源：正式构建为 `release / main / commit`；PR 预览显示 `preview / PR / 源分支 / 源提交 / 构建提交`，区分 PR head 与 CI 合成合并提交。tag 仅列出 Git 中实际指向构建提交的标签，不自动创建。信息在构建时写入静态 HTML 与 `version.json.deployment`，不新增页面请求。
