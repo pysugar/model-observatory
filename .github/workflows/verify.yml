@@ -39,6 +39,7 @@ jobs:
           python scripts/publish.py build --require-clean
           python scripts/publish.py check --expected-commit "$GITHUB_SHA"
           npm run check:wrangler
+          node node_modules/wrangler/bin/wrangler.js deploy --config wrangler.preview.json --dry-run --outdir test-results/wrangler-preview
       - name: Smoke-test the release
         # Ubuntu's AppArmor policy supports the system Chrome installation.
         run: python scripts/smoke.py --wrangler --browser-channel chrome

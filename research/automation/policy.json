@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "llm_schedule_enabled": false,
+  "auto_merge_enabled": false,
+  "reviewer_logins": [],
+  "auto_merge_allowed_paths": []
+}

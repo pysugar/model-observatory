@@ -7,6 +7,7 @@ import hashlib
 import io
 import json
 import math
+import os
 import re
 import subprocess
 import sys
@@ -114,6 +115,24 @@ def git(*args):
     return subprocess.check_output(["git", "--no-optional-locks", *args], cwd=ROOT, text=True).strip()
 
 
+def ci_context(commit):
+    """Record public build identity; the publisher verifies it against GitHub."""
+    if os.environ.get("GITHUB_ACTIONS") != "true":
+        return None
+    require(os.environ["GITHUB_SHA"] == commit, "Checkout differs from CI build SHA")
+    context = {"repository": os.environ["GITHUB_REPOSITORY"],
+               "run_id": int(os.environ["GITHUB_RUN_ID"]),
+               "run_attempt": int(os.environ["GITHUB_RUN_ATTEMPT"]),
+               "event": os.environ["GITHUB_EVENT_NAME"], "build_sha": commit}
+    if context["event"] == "pull_request":
+        event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text())
+        pr = event["pull_request"]
+        context.update(pr=event["number"], head_sha=pr["head"]["sha"],
+                       base_sha=pr["base"]["sha"], base_ref=pr["base"]["ref"],
+                       head_repository=pr["head"]["repo"]["full_name"])
+    return context
+
+
 def build(output, require_clean=False):
     output = Path(output)
     require(not output.is_symlink() and output.resolve() != ROOT, "Unsafe output directory")
@@ -136,6 +155,9 @@ def build(output, require_clean=False):
     version = {"schema_version": 1, "source_commit": commit, "source_time": git("show", "-s", "--format=%cI", "HEAD"),
                "report_reviewed_at": data["meta"]["reviewed_at"], "dirty": dirty,
                "assets": {name: sha256(content) for name, content in sorted(files.items())}}
+    context = ci_context(commit)
+    if context:
+        version["ci"] = context
     files["version.json"] = (json.dumps(version, ensure_ascii=False, indent=2) + "\n").encode()
     for name, content in files.items():
         audit_text(name, content)
