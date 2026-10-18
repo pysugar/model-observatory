@@ -111,3 +111,7 @@ Cloudflare 于 [2026-09-15 发布单 Worker 权限](https://developers.cloudflar
 ## 独立 PR 预览与研究入口
 
 新增 [原生 Previews 流程](PREVIEWS.md)使用另一个 Worker 和 `preview` Environment；上文的 `cloudflare-preview` 保持正式用途。本文件既有准备阶段记录按时间保留，当前已验证基线见 [RELEASES.md](RELEASES.md)。[研究任务包与独立复核](RESEARCH_WORKFLOW.md)已提供手动入口，模型执行器、定时 LLM、长期身份和自动合并仍待用户确认接入。
+
+## 已验证状态与生产环境命名
+
+2026-10-18：main 已要求经 PR 和 GitHub Actions 的 `verify` 检查，禁止强推/删除，强制批准数为 0；两套 Environment 均仅允许 main 分支，无 tag。原生 PR 预览已完成权限 smoke 并启用。生产仍使用既有 `cloudflare-preview`；工作流预留固定的 `release` 选择入口，缺省不切换。GitHub 正式接口未提供保留同一 ID/Secret 的原位改名，创建新环境和重新录入既有生产 Token 需用户另行确认，步骤见 [RELEASE_ENVIRONMENT.md](RELEASE_ENVIRONMENT.md)。不删除旧环境、不导出 Secret。
