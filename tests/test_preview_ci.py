@@ -128,6 +128,37 @@ class PreviewTests(unittest.TestCase):
             with self.subTest(url=url), self.assertRaises(ValueError):
                 ci.preview_urls(altered, "pr-5")
 
+    def test_upload_accepts_real_static_config_and_drops_github_credentials(self):
+        from types import SimpleNamespace
+        result = {"preview": {"name": "pr-5", "id": "preview-1",
+                              "urls": ["https://pr-5-model-observatory-preview.openai-proxy-local.workers.dev"]},
+                  "deployment": {"id": "deployment-1",
+                                 "urls": ["https://version-model-observatory-preview.openai-proxy-local.workers.dev"]}}
+        with patch.object(ci, "parent_exists"), patch.object(ci, "cf", return_value=None), \
+                patch.dict(os.environ, {"GH_TOKEN": "unit-test", "GITHUB_TOKEN": "unit-test"}), \
+                patch.object(ci.subprocess, "run", return_value=SimpleNamespace(
+                    returncode=0, stdout=json.dumps(result), stderr="")) as run:
+            published = ci.upload("pr-5", "config-regression", BUILD)
+            self.assertEqual(published["deployment_id"], "deployment-1")
+            env = run.call_args.kwargs["env"]
+            self.assertNotIn("GH_TOKEN", env)
+            self.assertNotIn("GITHUB_TOKEN", env)
+            self.assertEqual(env["GITHUB_SHA"], BUILD)
+            self.assertIn("preview", run.call_args.args[0])
+
+    def test_upload_rejects_routes_bindings_and_non_release_asset_directory(self):
+        config = json.loads((ci.ROOT / "wrangler.preview.json").read_text())
+        for changed in ({**config, "routes": []}, {**config, "main": "worker.js"},
+                        {**config, "previews": {"vars": {"UNEXPECTED": "binding"}}},
+                        {**config, "assets": {**config["assets"], "directory": "./"}}):
+            with self.subTest(config=changed), patch.object(ci, "parent_exists"), \
+                    patch.object(Path, "read_text", return_value=json.dumps(changed)), \
+                    patch.object(ci, "cf") as cf, patch.object(ci.subprocess, "run") as run:
+                with self.assertRaisesRegex(ValueError, "static-only"):
+                    ci.upload("pr-5", "config-regression")
+                cf.assert_not_called()
+                run.assert_not_called()
+
     def test_cleanup_requires_closed_pr_and_never_deletes_parent(self):
         with patch.object(ci, "repo_api", return_value=self.pr), patch.object(ci, "delete_preview") as delete:
             with self.assertRaisesRegex(ValueError, "closed PR"):
