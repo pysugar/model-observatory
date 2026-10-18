@@ -14,6 +14,7 @@ import re
 import stat
 import subprocess
 import sys
+import tempfile
 from urllib.error import HTTPError
 from urllib.parse import urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener, urlopen
@@ -320,19 +321,31 @@ def upload(name, tag, build_sha=None):
     child_env = {key: value for key, value in os.environ.items() if key not in {"GH_TOKEN", "GITHUB_TOKEN"}}
     if build_sha:
         child_env["GITHUB_SHA"] = sha(build_sha)  # Artifact identity; checkout remains trusted main.
-    result = subprocess.run(["node", "node_modules/wrangler/bin/wrangler.js", "preview", "--config", "wrangler.preview.json",
-                             "--name", name, "--ignore-base-config", "--tag", tag, "--message", tag, "--json"],
-                            cwd=ROOT, text=True, capture_output=True, timeout=240, env=child_env)
-    if result.returncode != 0:
-        diagnostic = result.stdout + result.stderr
-        codes = sorted(set(re.findall(r"(?:code|status):\s*(\d+)", diagnostic)))
-        endpoints = sorted(set(re.findall(r"/accounts/" + ACCOUNT + r"/workers/[a-zA-Z0-9_/-]+", diagnostic)))
-        raise ValueError(f"Wrangler preview {WORKER}/{name} failed; codes {codes}, endpoints {endpoints}. "
-                         "Remote outcome may be uncertain; inspect this Preview before retrying. Token scope was not changed.")
-    try:
-        value = json.loads(result.stdout)
-    except ValueError:
-        raise ValueError("Wrangler did not return expected JSON; upload outcome is uncertain") from None
+    with tempfile.TemporaryDirectory(prefix="model-observatory-preview-output-") as directory:
+        output_file = Path(directory) / "preview.jsonl"
+        child_env["WRANGLER_OUTPUT_FILE_PATH"] = str(output_file)
+        result = subprocess.run(["node", "node_modules/wrangler/bin/wrangler.js", "preview", "--config", "wrangler.preview.json",
+                                 "--name", name, "--ignore-base-config", "--tag", tag, "--message", tag, "--json"],
+                                cwd=ROOT, text=True, capture_output=True, timeout=240, env=child_env)
+        if result.returncode != 0:
+            diagnostic = result.stdout + result.stderr
+            codes = sorted(set(re.findall(r"(?:code|status):\s*(\d+)", diagnostic)))
+            endpoints = sorted(set(re.findall(r"/accounts/" + ACCOUNT + r"/workers/[a-zA-Z0-9_/-]+", diagnostic)))
+            raise ValueError(f"Wrangler preview {WORKER}/{name} failed; codes {codes}, endpoints {endpoints}. "
+                             "Remote outcome may be uncertain; inspect this Preview before retrying. Token scope was not changed.")
+        # Wrangler 4.151.1 can print asset progress despite --json. Its output-file
+        # contract emits a separate versioned record; never parse or expose raw logs.
+        require(output_file.is_file() and output_file.stat().st_size < 1_000_000,
+                "Wrangler machine output is missing or oversized; upload outcome is uncertain")
+        records = [json.loads(line) for line in output_file.read_text().splitlines() if line.strip()]
+        records = [record for record in records if record.get("type") == "preview"]
+        require(len(records) == 1 and records[0].get("version") == 1,
+                "Expected one version-1 Wrangler Preview record; upload outcome is uncertain")
+        record = records[0]
+        require(record["worker_name"] == WORKER and record["preview_name"] == name,
+                "Wrangler machine output targets another Worker or Preview")
+        value = {"preview": {"name": record["preview_name"], "id": record["preview_id"], "urls": record["preview_urls"]},
+                 "deployment": {"id": record["deployment_id"], "urls": record["deployment_urls"]}}
     return preview_urls(value, name)
 
 
