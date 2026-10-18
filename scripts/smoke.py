@@ -125,6 +125,11 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
                 expect(page.locator("#opusEvidenceTable tbody tr")).to_have_count(len(view["rows"]))
             page.locator('[data-panel="evidence"]').click()
             expect(page.locator("#sourceList .source-item")).to_have_count(len(data["sources"]))
+            footer = page.locator("#build-info")
+            expect(footer).to_have_count(1)
+            expect(footer).to_contain_text(json.loads((site / "version.json").read_text())["deployment"]["build_sha"][:7])
+            footer.scroll_into_view_if_needed()
+            footer.screenshot(path=str(output / "build-footer-desktop.png"))
             for width in (390, 320):
                 page.set_viewport_size({"width": width, "height": 844})
                 for panel in ("overview", "capabilities", "explorer", "specs", "reasoning", "evidence"):
@@ -132,6 +137,8 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
                     require(page.evaluate("document.documentElement.scrollWidth <= innerWidth"), f"Page overflow: {width}px/{panel}")
                 page.locator('[data-panel="overview"]').click()
                 page.screenshot(path=str(output / f"mobile-{width}.png"), full_page=True)
+                footer.scroll_into_view_if_needed()
+                footer.screenshot(path=str(output / f"build-footer-{width}.png"))
             for path in ("/.git/config", "/README.md", "/research/2026-10-16/RESEARCH-NOTES.txt", "/report.template.html"):
                 require(page.request.get(origin + path).status == 404, f"Private source path was served: {path}")
             require(not errors, "Browser errors: " + "; ".join(errors))

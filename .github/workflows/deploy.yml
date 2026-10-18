@@ -18,7 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment:
-      name: cloudflare-preview
+      # Only select release after its protected environment and Secret are ready.
+      name: ${{ vars.PRODUCTION_ENVIRONMENT == 'release' && 'release' || 'cloudflare-preview' }}
       url: https://models.localgpt.net
     concurrency:
       group: cloudflare-model-observatory

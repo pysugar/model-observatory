@@ -4,6 +4,7 @@ import contextlib
 import copy
 import io
 import json
+import os
 import shutil
 import sys
 import tempfile
@@ -133,6 +134,46 @@ class ReleaseTests(unittest.TestCase):
             server.shutdown()
             server.server_close()
             thread.join()
+
+    def test_footer_escapes_refs_and_only_links_verified_commits(self):
+        identity = {"environment": "preview", "branch": 'feature/<img src=x>&"',
+                    "build_sha": "a" * 40, "head_sha": "b" * 40, "pr": 10,
+                    "dirty": False, "tags": ["release/v1&2"]}
+        html = publish.build_footer(identity)
+        self.assertIn("feature/&lt;img src=x&gt;&amp;&quot;", html)
+        self.assertNotIn("<img", html)
+        self.assertIn("/tree/release%2Fv1%262", html)
+        self.assertIn("/commit/" + "a" * 40, html)
+        self.assertIn("/commit/" + "b" * 40, html)
+        self.assertIn("源提交", html)
+        self.assertIn("构建", html)
+        with self.assertRaisesRegex(ValueError, "commit"):
+            publish.build_footer({**identity, "build_sha": "not-a-commit"})
+
+    def test_footer_identity_uses_actual_pr_and_main_build_context(self):
+        event = Path(self.work.name) / "event.json"
+        event.write_text(json.dumps({"pull_request": {"head": {"ref": "feature/footer"}}}))
+        context = {"repository": "pysugar/model-observatory", "event": "pull_request", "pr": 10, "head_sha": "b" * 40}
+        def fake_git(*args):
+            return "v1.2.3" if args[0] == "tag" else ""
+        with patch.dict(os.environ, {"GITHUB_EVENT_PATH": str(event), "GITHUB_REF": "refs/pull/10/merge"}, clear=True), patch.object(publish, "git", side_effect=fake_git):
+            preview = publish.deployment_identity("a" * 40, False, context)
+            self.assertEqual((preview["environment"], preview["branch"], preview["head_sha"], preview["build_sha"]),
+                             ("preview", "feature/footer", "b" * 40, "a" * 40))
+            self.assertEqual(preview["tags"], ["v1.2.3"])
+            os.environ["GITHUB_REF"] = "refs/heads/main"
+            release = publish.deployment_identity("c" * 40, False, {**context, "event": "push"})
+            self.assertEqual((release["environment"], release["branch"]), ("release", "main"))
+            self.assertNotIn("head_sha", release)
+
+    def test_footer_must_match_version_metadata_even_if_hash_is_updated(self):
+        version = json.loads((self.site / "version.json").read_text())
+        html = (self.site / "index.html").read_text().replace('aria-label="构建版本"', 'aria-label="wrong"')
+        (self.site / "index.html").write_text(html)
+        version["assets"]["index.html"] = publish.sha256(html.encode())
+        (self.site / "version.json").write_text(json.dumps(version))
+        with self.assertRaisesRegex(ValueError, "Footer differs"):
+            publish.check(self.site)
 
     def test_release_has_no_runtime_or_research_copies(self):
         config = json.loads((publish.ROOT / "wrangler.json").read_text())
