@@ -4,7 +4,7 @@
 
 在线报告：<https://models.localgpt.net>。静态发布、跨 macOS/Linux 验证、GitHub Actions、公开产物边界与回滚步骤见 [DEPLOYMENT.md](DEPLOYMENT.md)。发布使用独立 `dist/` 白名单，研究结论保持不变。
 
-原生 PR 预览及新 `preview` Environment 配置见 [PREVIEWS.md](PREVIEWS.md)；按需研究与独立轻量复核见 [RESEARCH_WORKFLOW.md](RESEARCH_WORKFLOW.md)；已验证版本与回滚见 [RELEASES.md](RELEASES.md)。自动预览等待首次权限验收，定时 LLM 调用和自动合并均未开启。
+原生 PR 预览及新 `preview` Environment 配置见 [PREVIEWS.md](PREVIEWS.md)；按需研究与独立轻量复核见 [RESEARCH_WORKFLOW.md](RESEARCH_WORKFLOW.md)；已验证版本与回滚见 [RELEASES.md](RELEASES.md)。原生 PR 预览已启用，创建/更新/清理权限 smoke 已通过；定时 LLM 调用和自动合并仍未开启。生产环境暂为 `cloudflare-preview`，改名 `release` 的准备与确认事项见 [迁移说明](RELEASE_ENVIRONMENT.md)。
 
 报告更新于 **2026-10-16（Asia/Taipei）**；本轮核验 Claude，并复核 Sol 6.1 的官方档位、选型及工具协议；其余 GPT / Gemini 规格仍为 10-15。范围是通用模型的 API 规格与公开评测；包括 20 个选型与兼容候选（含 14 款 Claude）、3 个 GPT 代际基线，另列 Mythos 的受限入口。专用图像、语音、视频生成模型及产品订阅配额不属于此次比较范围。选型建议是基于已列证据的判断，没有执行新的付费模型实验或中文实测。
 
@@ -83,3 +83,5 @@ python3 validate_report.py
 用户截图只证明选择器可见，不证明 API 授权或实际调用成功。Sonnet 4.5 已弃用但到 2026-11-30 才退役；Haiku 4.5 当前仍 Active。Haiku 4.5 / Sonnet 4.5 没有 effort 档位，Opus 4.5 的 thinking 预算独立于 effort；Opus / Sonnet 4.6 没有 xhigh。中文任务甜蜜点全部未实测。AA 中 Sonnet 4.5 的 1M 标注与当前官方 200k 不一致，规格和预算采用官方 200k / 64k，保留原始评测而不据此声称在当前窗口下复测过。
 
 官方 API 单价不能换算产品订阅额度。预算计算器固定各模型使用相同 token 数，未保证同任务同用量；推理输出计费，工具、缓存写入/存储、税费和重试另算。Google 优惠结束情景只应用已公布的 Google 价格，其余维持核验日价格。研究整理阶段未执行发布或部署；静态发布阶段的范围和操作入口见 DEPLOYMENT.md。
+
+公开页面页脚显示构建来源：正式构建为 `release / main / commit`；PR 预览显示 `preview / PR / 源分支 / 源提交 / 构建提交`，区分 PR head 与 CI 合成合并提交。tag 仅列出 Git 中实际指向构建提交的标签，不自动创建。信息在构建时写入静态 HTML 与 `version.json.deployment`，不新增页面请求。
