@@ -102,6 +102,34 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
             expect(page.locator("#claudeCatalog tbody tr")).to_have_count(8)
             require("中文未实测" in page.locator("#overview").inner_text(), "Chinese limitation missing")
             page.select_option("#claudeScope", "all")
+            # Exercise task-specific representatives, including declining scores at higher effort.
+            active = [r for r in data["aa_release_series"]["releases"] if any(v.get("taskScores") for v in r["variants"])]
+            expect(page.locator("#taskEffortChart .task-dot")).to_have_count(43)
+            page.select_option("#taskEffortMode", "top_variants")
+            for task in ("complex", "coding", "planning", "agentic", "automation", "knowledge", "intelligenceIndex"):
+                page.locator(f'[data-task-tab="{task}"]').click()
+                expect(page.locator("#taskEffortChart .task-dot")).to_have_count(len(active))
+                for release in active:
+                    def score(variant):
+                        return variant["intelligenceIndex"] if task == "intelligenceIndex" else variant["taskScores"][task]
+                    candidates = [v for v in release["variants"] if v.get("costPerTask") is not None and v["costPerTask"] > 0]
+                    best = min(candidates, key=lambda v: (-score(v), v["costPerTask"]))
+                    dot = page.locator(f'#taskEffortChart .task-dot[data-task-rel="{release["releaseSlug"]}"]')
+                    expect(dot).to_have_attribute("data-task-var", best["slug"])
+                require("NaN" not in page.locator("#taskEffortChart").inner_html(), "Invalid task chart coordinate")
+            page.select_option("#taskEffortMode", "release_trajectories")
+            page.locator('[data-task-tab="complex"]').click()
+            page.select_option("#taskEffortFocus", "high")
+            high_count = sum(any(v["effort"] == "high" and v.get("costPerTask") is not None for v in r["variants"]) for r in active)
+            expect(page.locator("#taskEffortChart .task-dot")).to_have_count(high_count)
+            page.select_option("#taskEffortFocus", "all")
+            page.locator('[data-panel="capabilities"]').click()
+            expect(page.locator("#effortScalingChart .scaling-dot")).to_have_count(44)
+            for task in ("complex", "coding", "planning", "agentic", "automation", "knowledge", "intelligenceIndex"):
+                page.select_option("#effortScalingTask", task)
+                require("NaN" not in page.locator("#effortScalingChart").inner_html(), "Invalid scaling chart coordinate")
+            page.select_option("#effortScalingTask", "complex")
+            page.locator('[data-panel="overview"]').click()
             page.screenshot(path=str(output / "desktop.png"), full_page=True)
             page.locator('[data-panel="explorer"]').click()
             page.locator('[data-group="coding"]').click()
@@ -148,7 +176,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
     probe(origin, site, attempts=1, require_headers=cloudflare)
     result = {"status": "PASS", "browser_version": browser_version, "browser_channel": channel or "bundled-chromium",
               "viewports": [1440, 390, 320], "rows": len(data["rows"]),
-              "checks": ["six panels", "Claude filter", "CSV missing values", "budget boundaries", "four Opus evidence views",
+              "checks": ["task-specific best variants in seven dimensions", "effort filters and scaling charts", "six panels", "Claude filter", "CSV missing values", "budget boundaries", "four Opus evidence views",
                          "source index", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
               "cloudflare_headers_checked": cloudflare}
     (output / "smoke.json").write_text(json.dumps(result, indent=2) + "\n")

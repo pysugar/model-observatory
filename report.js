@@ -761,6 +761,13 @@
   const EFFORT_ORDER = ["non-reasoning", "low", "medium", "high", "xhigh", "max"];
   const EFFORT_SHORT = {"non-reasoning":"non-reas.", low:"low", medium:"med", high:"high", xhigh:"xhigh", max:"max"};
 
+  // Select by the displayed task, breaking equal scores by the lower known cost.
+  function bestTaskVariant(rel, taskDef) {
+    return rel.variants
+      .filter(v => finite(taskDef.getScore(v)) && finite(v.costPerTask) && v.costPerTask > 0)
+      .sort((a,b) => taskDef.getScore(b) - taskDef.getScore(a) || a.costPerTask - b.costPerTask)[0];
+  }
+
   function renderTaskCategoryCards(taskDef, activeReleases) {
     const el = $("taskCategoryCards");
     if (!el) return;
@@ -811,14 +818,15 @@
   function renderTaskEffortDetail(rel, focusVar, taskDef) {
     const el = $("taskEffortDetail");
     if (!el || !rel) return;
-    const v = focusVar || rel.variants.find(x => x.isTopVariant) || rel.variants[rel.variants.length - 1];
+    const best = bestTaskVariant(rel, taskDef);
+    const v = focusVar || best || rel.variants[rel.variants.length - 1];
     const score = taskDef.getScore(v);
     const rowsHtml = rel.variants.map((vr, idx) => {
       const sc = taskDef.getScore(vr);
       const prevSc = idx > 0 ? taskDef.getScore(rel.variants[idx - 1]) : null;
       const delta = finite(sc) && finite(prevSc) ? sc - prevSc : null;
       const em = vr.evalMetrics || {};
-      return `<tr class="${vr.slug === v.slug ? "recommended-controller" : ""}"><th>${esc(vr.effort)} ${vr.isTopVariant ? '<span class="badge">代表档</span>' : ""}</th><td class="metric-value"><strong>${fmt(sc, taskDef.digits)}${taskDef.unit}</strong>${delta !== null ? `<span class="spec-detail ${delta < 0 ? "delta-negative" : "delta-positive"}">${delta > 0 ? "+" : ""}${fmt(delta, taskDef.digits)}</span>` : ""}</td><td class="metric-value">${fmt(vr.intelligenceIndex, 1)}</td><td class="metric-value">${fmt(em["Humanity's Last Exam"], 0)}% / ${fmt(em["CritPt"], 0)}%</td><td class="metric-value">${fmt(em["Terminal-Bench 4.0"], 0)}% / ${fmt(em["SciCode"], 0)}%</td><td class="metric-value">${fmt(em["AA-Briefcase v1.1"], 0)} / ${fmt(em["GDPval-AA v2.1"], 0)} / ${fmt(em["AutomationBench-AA"], 0)}%</td><td class="metric-value">${fmt(em["AA-LCR v1.1"], 0)}% / ${fmt(em["GDP.pdf"], 0)}% / ${fmt(em["AA-Omniscience"], 0)}</td><td class="metric-value">${money(vr.costPerTask)}<span class="task-detail">${fmt(vr.timePerTaskMinutes, 2)}m · ${fmt(vr.outputTokensPerTask, 0)} tok</span></td></tr>`;
+      return `<tr class="${vr.slug === v.slug ? "recommended-controller" : ""}"><th>${esc(vr.effort)} ${vr === best ? '<span class="badge">当前任务最佳档</span>' : ""}</th><td class="metric-value"><strong>${fmt(sc, taskDef.digits)}${taskDef.unit}</strong>${delta !== null ? `<span class="spec-detail ${delta < 0 ? "delta-negative" : "delta-positive"}">${delta > 0 ? "+" : ""}${fmt(delta, taskDef.digits)}</span>` : ""}</td><td class="metric-value">${fmt(vr.intelligenceIndex, 1)}</td><td class="metric-value">${fmt(em["Humanity's Last Exam"], 0)}% / ${fmt(em["CritPt"], 0)}%</td><td class="metric-value">${fmt(em["Terminal-Bench 4.0"], 0)}% / ${fmt(em["SciCode"], 0)}%</td><td class="metric-value">${fmt(em["AA-Briefcase v1.1"], 0)} / ${fmt(em["GDPval-AA v2.1"], 0)} / ${fmt(em["AutomationBench-AA"], 0)}%</td><td class="metric-value">${fmt(em["AA-LCR v1.1"], 0)}% / ${fmt(em["GDP.pdf"], 0)}% / ${fmt(em["AA-Omniscience"], 0)}</td><td class="metric-value">${money(vr.costPerTask)}<span class="task-detail">${fmt(vr.timePerTaskMinutes, 2)}m · ${fmt(vr.outputTokensPerTask, 0)} tok</span></td></tr>`;
     }).join("");
     el.innerHTML = `<div class="topline"><h3><span class="swatch" style="display:inline-block;background:${rel.color};margin-right:7px"></span>${esc(rel.name)} · 全推理档位 × 主流任务实测明细（当前档位：${esc(v.effort)}）</h3><span class="tag">${esc(rel.vendor)} · ${rel.variants.length} 个已测档位 · ${v.evalSourceUrl ? link(v.evalSourceUrl, "AA 比较页来源") : "AA v4.3.2"}</span></div><div class="numbers"><div><b>${fmt(score, taskDef.digits)}${taskDef.unit}</b><span>当前维度：${esc(taskDef.shortLabel)}</span></div><div><b>${fmt(v.intelligenceIndex, 1)}</b><span>AA 综合智力指数</span></div><div><b>${money(v.costPerTask)}</b><span>单任务加权成本</span></div><div><b>${fmt(v.timePerTaskMinutes, 2)} 分钟</b><span>每任务推算耗时（${fmt(v.outputTokensPerTask, 0)} tok）</span></div></div><div class="table-scroll" style="margin-top:10px">${table(["推理档位","当前维度得分 / 升档差分","综合指数 (II)","复杂问题：HLE / CritPt","编程工程：Terminal / SciCode","规划与代理：Briefcase / GDPval / AutoBench","知识与文档：LCR / PDF / Omniscience","单任务成本 / 耗时 / 输出 Token"], rowsHtml)}</div>`;
   }
@@ -854,7 +862,7 @@
 
     $("taskEffortPills").innerHTML = activeReleases.map(r => {
       const col = getReleaseColor(r, colorMode);
-      const topV = r.variants.find(v => v.isTopVariant) || r.variants[r.variants.length - 1];
+      const topV = bestTaskVariant(r, taskDef) || r.variants[r.variants.length - 1];
       const sc = taskDef.getScore(topV);
       return `<button type="button" class="pill-btn ${r.releaseSlug === taskEffortState.selectedReleaseId ? "is-active" : ""}" data-task-pill="${esc(r.releaseSlug)}"><span class="swatch" style="background:${col}"></span>${esc(r.shortName || r.name)} <span class="small">(${fmt(sc, taskDef.digits)}${taskDef.unit})</span></button>`;
     }).join("");
@@ -864,14 +872,14 @@
       renderTaskEffortChart();
     }));
 
-    const variantMatchesFocus = v => {
-      if (focusEffort === "all") return mode === "top_variants" ? v.isTopVariant : true;
+    const variantMatchesFocus = (v, rel) => {
+      if (focusEffort === "all") return mode === "top_variants" ? v === bestTaskVariant(rel, taskDef) : true;
       return v.effort === focusEffort;
     };
 
     const plottedActive = activeReleases.flatMap(rel =>
       rel.variants
-        .filter(v => variantMatchesFocus(v) && finite(v.costPerTask) && v.costPerTask > 0 && finite(taskDef.getScore(v)))
+        .filter(v => variantMatchesFocus(v, rel) && finite(v.costPerTask) && v.costPerTask > 0 && finite(taskDef.getScore(v)))
         .map(v => ({rel, v, score:taskDef.getScore(v)}))
     );
     const backdropMarket = (showBackdrop && taskDef.key === "intelligenceIndex")
@@ -960,7 +968,7 @@
       const isSel = rel.releaseSlug === taskEffortState.selectedReleaseId;
       const col = getReleaseColor(rel, colorMode);
       const pts = rel.variants
-        .filter(v => variantMatchesFocus(v) && finite(v.costPerTask) && v.costPerTask > 0 && finite(taskDef.getScore(v)))
+        .filter(v => variantMatchesFocus(v, rel) && finite(v.costPerTask) && v.costPerTask > 0 && finite(taskDef.getScore(v)))
         .map(v => ({v, score:taskDef.getScore(v)}));
       if (!pts.length) return;
       const poly = pts.length > 1
@@ -968,13 +976,13 @@
         : "";
       const dots = pts.map(p => {
         const cx = x(p.v.costPerTask), cy = y(p.score);
-        const isPrimary = p.v.isTopVariant || pts.length === 1;
+        const isPrimary = p.v === bestTaskVariant(rel, taskDef) || pts.length === 1;
         const r = isPrimary ? (isSel ? 6.8 : 5.6) : (isSel ? 5.2 : 4.3);
         const effTag = isSel && pts.length > 1 ? `<text x="${cx}" y="${cy - r - 4}" text-anchor="middle" font-size="9.5" font-weight="600" fill="${col}">${esc(EFFORT_SHORT[p.v.effort] || p.v.effort)}</text>` : "";
         return `<g class="task-dot" tabindex="0" role="button" data-task-rel="${esc(rel.releaseSlug)}" data-task-var="${esc(p.v.slug)}" aria-label="${esc(p.v.name + "，" + taskDef.shortLabel + " " + fmt(p.score, taskDef.digits) + taskDef.unit + "，成本 " + money(p.v.costPerTask))}"><title>${esc(p.v.name + " · " + taskDef.shortLabel + " " + fmt(p.score, taskDef.digits) + taskDef.unit + " · 单任务 " + money(p.v.costPerTask) + " · 耗时 " + fmt(p.v.timePerTaskMinutes, 2) + "m")}</title><circle cx="${cx}" cy="${cy}" r="${r}" fill="${isPrimary ? col : "#ffffff"}" stroke="${col}" stroke-width="${isPrimary ? 2.2 : 1.9}"/>${effTag}</g>`;
       }).join("");
       parts.push(`<g class="release-series ${isSel ? "is-highlighted" : ""}">${poly}${dots}</g>`);
-      const labelPt = pts.find(p => p.v.isTopVariant) || pts[pts.length - 1];
+      const labelPt = [...pts].sort((a,b) => b.score - a.score || a.v.costPerTask - b.v.costPerTask)[0];
       const suffix = focusEffort !== "all" ? ` (${labelPt.v.effort})` : "";
       topLabels.push({rel, col, v:labelPt.v, score:labelPt.score, text:(rel.shortName || rel.name) + suffix, cx:x(labelPt.v.costPerTask), cy:y(labelPt.score), ly:y(labelPt.score), isSel});
     });
@@ -993,7 +1001,7 @@
     });
 
     const selRel = activeReleases.find(r => r.releaseSlug === taskEffortState.selectedReleaseId) || activeReleases[0];
-    const selVar = selRel?.variants.find(v => v.slug === taskEffortState.selectedVariantSlug) || selRel?.variants.find(v => v.isTopVariant) || selRel?.variants[selRel.variants.length - 1];
+    const selVar = selRel?.variants.find(v => v.slug === taskEffortState.selectedVariantSlug) || (selRel && bestTaskVariant(selRel, taskDef)) || selRel?.variants[selRel.variants.length - 1];
     renderTaskEffortDetail(selRel, selVar, taskDef);
   }
 
