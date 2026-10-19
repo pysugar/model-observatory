@@ -664,7 +664,7 @@
       yTicks: [0, 10, 20, 30, 40, 50],
       attractiveY: 35,
       attractiveX: 1.10,
-      subnote: "行业主流分类（Complex Reasoning & Frontier Science）：等权融合 Humanity's Last Exam（博士级跨学科闭卷难题）与 CritPt（未发表物理研究问题）。该维度对推理档位最敏感：Opus 5.5 从 low 28.0% 跃升至 high 43.5% / max 46.5%；Fable 5.1 xhigh 达 45.0%；GPT 6.1 Sol high（41.0% / $0.32）与 xhigh（42.5% / $0.39）领跑左上浅绿优选象限。",
+      subnote: "本报告任务视图（Complex Reasoning & Frontier Science）：Humanity's Last Exam 与 CritPt 的等权均值，不是 AA 单独发布的任务指数。Opus 5.5 low {{aa:claude-opus-5-5:low:complex:1}}% → high {{aa:claude-opus-5-5:high:complex:1}}% → max {{aa:claude-opus-5-5:max:complex:1}}%；Sol high {{aa:gpt-6-1-sol:high:complex:1}}%，成本 ${{aa:gpt-6-1-sol:high:costPerTask:2}}。点估计差异不证明统计显著性。",
       getScore: v => v.taskScores?.complex
     },
     coding: {
@@ -678,7 +678,7 @@
       yTicks: [20, 30, 40, 50, 60],
       attractiveY: 47,
       attractiveX: 1.10,
-      subnote: "行业主流分类（Coding & Software Engineering）：融合终端实操代理（Terminal-Bench 4.0）与科学计算代码实现（SciCode）。Claude Opus 5.5 max（63.5%）与 Sonnet 5.5 max（61.5% · Terminal-Bench 64%）代表质量上限；GPT 6.1 Sol medium（50.5% / $0.21）与 high（54.0% / $0.32）在左上浅绿象限兼顾高通过率与低成本。",
+      subnote: "本报告任务视图（Coding & Software Engineering）：Terminal-Bench 4.0 与 SciCode 的等权均值，不是通用软件工程通过率。Opus 5.5 max {{aa:claude-opus-5-5:max:coding:1}}%，Sonnet 5.5 max {{aa:claude-sonnet-5-5:max:coding:1}}%；Sol medium/high 分别为 {{aa:gpt-6-1-sol:medium:coding:1}}% / {{aa:gpt-6-1-sol:high:coding:1}}%。Vulcan 的题集、脚手架与成本另列。",
       getScore: v => v.taskScores?.coding
     },
     planning: {
@@ -692,7 +692,7 @@
       yTicks: [800, 1000, 1200, 1400, 1600, 1800],
       attractiveY: 1450,
       attractiveX: 1.10,
-      subnote: "行业主流分类（Architecture, Strategy & Multi-Source Planning）：基于 AA-Briefcase v1.1 真实多文档商业/技术方案规划与冲突消解 Elo。Anthropic 5.5 家族包揽上限（Opus 5.5 max 1785、Fable 5.1 xhigh 1775、Sonnet 5.5 max 1705）；Grok 4.7 在 high 档达 1633 Elo（升 xhigh 1632 无额外增益）；GPT 6.1 Sol high（1527 Elo / $0.32）位居高吸引象限榜首。",
+      subnote: "本报告任务视图（Architecture, Strategy & Multi-Source Planning）：直接展示 AA-Briefcase v1.1 原始 Elo。Sonnet 5.5 max {{aa:claude-sonnet-5-5:max:planning:0}}、Opus 5.5 max {{aa:claude-opus-5-5:max:planning:0}}；Grok high {{aa:grok-4-7:high:planning:0}} → xhigh {{aa:grok-4-7:xhigh:planning:0}}，成本 ${{aa:grok-4-7:high:costPerTask:2}} → ${{aa:grok-4-7:xhigh:costPerTask:2}}。Elo 只作同基准相对比较，不能换算为能力百分比。",
       getScore: v => v.taskScores?.planning
     },
     agentic: {
@@ -706,7 +706,7 @@
       yTicks: [1000, 1200, 1400, 1600, 1800],
       attractiveY: 1480,
       attractiveX: 1.10,
-      subnote: "行业主流分类（Long-Horizon Agentic Delivery）：基于 GDPval-AA v2.1（250 轮沙盒环境中的真实职业交付物盲评 Elo）。Opus 5.5 max（1866）、Sonnet 5.5 max（1838）、Fable 5.1 xhigh（1795）与 Grok 4.7 xhigh（1742）领先；GPT 6.1 Sol xhigh（1616 / $0.39）与 Gemini 3.8 Flash high（1504 / $1.04）进入左上优选象限。",
+      subnote: "本报告任务视图（Long-Horizon Agentic Delivery）：直接展示 GDPval-AA v2.1 原始 Elo。Opus 5.5 max {{aa:claude-opus-5-5:max:agentic:0}}、Sonnet 5.5 max {{aa:claude-sonnet-5-5:max:agentic:0}}；Sol xhigh {{aa:gpt-6-1-sol:xhigh:agentic:0}} / ${{aa:gpt-6-1-sol:xhigh:costPerTask:2}}。Flash high 为 {{aa:gemini-3-8-flash:high:agentic:0}} / ${{aa:gemini-3-8-flash:high:costPerTask:2}}，未达到本视图的优选象限条件。",
       getScore: v => v.taskScores?.agentic
     },
     automation: {
@@ -720,7 +720,7 @@
       yTicks: [0, 20, 40, 60, 80],
       attractiveY: 58,
       attractiveX: 1.10,
-      subnote: "行业主流分类（Multi-Tool Workflow Automation）：评估跨系统 API 编排与计算机操作工作流（AutomationBench-AA）。Gemini 4 Argon high（78%）、Claude Opus 5.5 max（75%）、Claude Fable 5.1 xhigh（74%）与 GPT 6.1 Sol high/xhigh（64%–66% / $0.32–$0.39）表现最强。",
+      subnote: "本报告任务视图（Multi-Tool Workflow Automation）：直接展示 AutomationBench-AA 完成率。Argon high {{aa:gemini-4-argon:high:automation:0}}%、Opus 5.5 max {{aa:claude-opus-5-5:max:automation:0}}%、Fable 5.1 max {{aa:claude-fable-5-1:max:automation:0}}%；Sol high/xhigh {{aa:gpt-6-1-sol:high:automation:0}}% / {{aa:gpt-6-1-sol:xhigh:automation:0}}%。同名档位不表示相同推理预算。",
       getScore: v => v.taskScores?.automation
     },
     knowledge: {
@@ -734,7 +734,7 @@
       yTicks: [20, 30, 40, 50, 60],
       attractiveY: 44,
       attractiveX: 1.10,
-      subnote: "行业主流分类（Long-Context Comprehension & Factual Grounding）：按 AA 权重融合长文推理（AA-LCR v1.1）、百页 PDF 信息提取（GDP.pdf）与抗幻觉知识指数（AA-Omniscience）。GPT 6.1 Sol 在 low 档即达 44.3 分（$0.13），high 档达 52.8 分（$0.32）；Opus 5.5 high/xhigh 达 51.2–52.3 分。注意 GPT 6 Luna 升档后因强行作答导致 Omniscience 下降。",
+      subnote: "本报告自定义合成分（Long-Context & Factual Grounding）：(AA-LCR v1.1 + 2 × GDP.pdf + 3 × AA-Omniscience) / 6；沿用各子项数值后加权，不是 AA 官方独立指数或成功率。Sol low {{aa:gpt-6-1-sol:low:knowledge:2}} 分、high {{aa:gpt-6-1-sol:high:knowledge:2}} 分（${{aa:gpt-6-1-sol:high:costPerTask:2}}）；Opus high/xhigh {{aa:claude-opus-5-5:high:knowledge:2}} / {{aa:claude-opus-5-5:xhigh:knowledge:2}} 分。Omniscience 的档位变化不证明幻觉变化的原因。",
       getScore: v => v.taskScores?.knowledge
     },
     intelligenceIndex: {
@@ -748,7 +748,7 @@
       yTicks: [20, 30, 40, 50, 60],
       attractiveY: 42.5,
       attractiveX: 1.10,
-      subnote: "Artificial Analysis v4.3.2 全量 10 项评测（四大支柱等权 25%）综合指数。勾选「显示其他市场参考模型」可同时叠加 Muse Spark、GLM-5.1、MiMo-V2-Pro、DeepSeek V3.2、Qwen3.5 等全部 30 个市场发布版本（94 个配置）。",
+      subnote: "直接使用快照中的 AA Intelligence Index v4.3.2（10 项评测）。留档方法的分类权重为 Agents 30%、Coding 20%、Scientific Reasoning 20%、General 30%；不由本报告的任务合成分重建。显示其他市场参考模型时，可叠加全部 30 个发布版本（94 个配置）；不同子评测保留自己的单位与口径。",
       getScore: v => v.intelligenceIndex
     }
   };
@@ -797,7 +797,7 @@
         title: "优选象限冠军（Most Attractive ≤ $1.10）",
         main: `${bestQuad.rel.shortName || bestQuad.rel.name} (${bestQuad.v.effort})`,
         stat: `${fmt(bestQuad.score, taskDef.digits)}${taskDef.unit} · ${money(bestQuad.v.costPerTask)}/任务`,
-        desc: `达到最高分的 ${fmt((bestQuad.score / bestOverall.score) * 100, 1)}%，单任务成本仅 ${fmt((bestQuad.v.costPerTask / Math.max(0.001, bestOverall.v.costPerTask)) * 100, 0)}%`
+        desc: `与最高分相差 ${fmt(bestOverall.score - bestQuad.score, taskDef.digits)}${taskDef.unit === "%" ? " 个百分点" : taskDef.unit}，成本为该配置的 ${fmt((bestQuad.v.costPerTask / Math.max(0.001, bestOverall.v.costPerTask)) * 100, 0)}%`
       },
       {
         title: "轻量低成本甜点（Ultra-Low Cost ≤ $0.16）",
@@ -808,7 +808,7 @@
       bestGain ? {
         title: "最大推理升档跃迁（Steepest Effort Gain）",
         main: `${bestGain.rel.shortName || bestGain.rel.name}（${bestGain.first.v.effort} → ${bestGain.last.v.effort}）`,
-        stat: `+${fmt(bestGain.gain, taskDef.digits)}${taskDef.unit}（${fmt(bestGain.first.score, taskDef.digits)} → ${fmt(bestGain.last.score, taskDef.digits)}）`,
+        stat: `+${fmt(bestGain.gain, taskDef.digits)}${taskDef.unit === "%" ? " 个百分点" : taskDef.unit}（${fmt(bestGain.first.score, taskDef.digits)} → ${fmt(bestGain.last.score, taskDef.digits)}）`,
         desc: `成本由 ${money(bestGain.first.v.costPerTask)} 升至 ${money(bestGain.last.v.costPerTask)}/任务`
       } : null
     ].filter(Boolean);
@@ -1133,7 +1133,7 @@
           const bg = `rgba(22, 163, 74, ${(0.08 + ratio * 0.24).toFixed(2)})`;
           return `<td class="metric-value heat-cell"><span class="heat-pill" style="background:${bg}">${fmt(sc, taskDef.digits)}${taskDef.unit}</span><span class="task-detail">${money(v.costPerTask)} · ${fmt(v.timePerTaskMinutes, 1)}m</span></td>`;
         }).join("");
-        return `<tr class="${rel.releaseSlug === scalingSelectedSlug ? "recommended-controller" : ""}"><th><span class="swatch" style="display:inline-block;background:${rel.color};margin-right:6px"></span>${esc(rel.name)}<span class="task-detail">${esc(rel.vendor)}</span></th>${cells}<td class="metric-value ${gain !== null && gain > 0 ? "delta-positive" : ""}"><strong>${gain !== null ? (gain > 0 ? "+" : "") + fmt(gain, taskDef.digits) + taskDef.unit : "单档"}</strong></td></tr>`;
+        return `<tr class="${rel.releaseSlug === scalingSelectedSlug ? "recommended-controller" : ""}"><th><span class="swatch" style="display:inline-block;background:${rel.color};margin-right:6px"></span>${esc(rel.name)}<span class="task-detail">${esc(rel.vendor)}</span></th>${cells}<td class="metric-value ${gain !== null && gain > 0 ? "delta-positive" : ""}"><strong>${gain !== null ? (gain > 0 ? "+" : "") + fmt(gain, taskDef.digits) + (taskDef.unit === "%" ? " 个百分点" : taskDef.unit) : "单档"}</strong></td></tr>`;
       }).join("");
       $("effortScalingTable").innerHTML = table(["活跃模型系列", ...EFFORT_ORDER.map(e => `<code>${esc(e)}</code>`), "全档最大跃升"], rowsHtml);
     }
