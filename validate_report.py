@@ -22,17 +22,26 @@ assert embedded == DATA
 assert len(original_rows) == 121
 for old, new in zip(original_rows, DATA["rows"]):
     assert {key: new[key] for key in old} == old
-assert Counter(r["benchmark"] for r in DATA["rows"]) == {"general": 59, "coding": 45, "writing": 50, "arena": 12}
-assert len(DATA["models"]) == 23 and sum(m["current"] for m in DATA["models"]) == 20
-assert len(DATA["aa_profiles"]) == 20
-assert len(list(csv.DictReader((ROOT / "report-data.csv").open(encoding="utf-8-sig")))) == 166
+assert Counter(r["benchmark"] for r in DATA["rows"]) == {"general": 62, "coding": 45, "writing": 50, "arena": 12}
+assert len(DATA["models"]) == 24 and sum(m["current"] for m in DATA["models"]) == 21
+assert len(DATA["aa_profiles"]) == 21
+assert len(DATA["aa_capability_indexes"]["domains"]) == 6 and len(DATA["aa_capability_indexes"]["entries"]) == 90
+assert len(DATA["aa_release_series"]["releases"]) == 30
+assert len(DATA["external_leaderboards"]["platforms"]) == 5 and len(DATA["external_leaderboards"]["four_family_matrix"]) == 11
+assert len(list(csv.DictReader((ROOT / "report-data.csv").open(encoding="utf-8-sig")))) == 169
 claude = [m for m in DATA["models"] if m["vendor"] == "Anthropic"]
 assert len(claude) == 14 and sum(m["screenshot_visible"] for m in claude) == 8
 assert {p["model"] for p in DATA["aa_profiles"] if p.get("score_estimated")} == {"Claude Opus 4.7", "Claude Opus 4.6", "Claude Opus 4.5"}
 assert next(p for p in DATA["aa_profiles"] if p["model"] == "Claude Haiku 4.5")["metrics"]["AA-Omniscience"] == -4
 assert all(r["variant"] == "mixed_fallback" for r in DATA["rows"] if r["model"] == "Claude Fable 5" and r["effort"] == "max")
 current = {m["name"] for m in DATA["models"] if m["current"]}
-checks = ["Original 121 records preserved", "166 JSON/CSV records agree", "23 models, including 14 Claude and 8 screenshot models", "Estimated scores, Unicode minus, and Fable 5 fallback preserved"]
+checks = [
+    "Original 121 records preserved",
+    "169 JSON/CSV records agree (including Grok 4.7 low/high/xhigh)",
+    "24 models, including 14 Claude, 8 screenshot models, and Grok 4.7",
+    "AA Capability Indexes (6 domains × 90 variants) and AA Release Series (30 releases) verified",
+    "Estimated scores, Unicode minus, and Fable 5 fallback preserved",
+]
 
 
 def cost(page, model, attribute="data-per"):
@@ -50,10 +59,18 @@ with sync_playwright() as p:
     errors, external = [], []
     page.on("pageerror", lambda error: errors.append(str(error)))
     page.on("request", lambda request: external.append(request.url) if not request.url.startswith(("http://127.0.0.1", "file:", "blob:")) else None)
-    page.goto("http://127.0.0.1:8766/model-capability-cost.html", wait_until="networkidle")
+    page.goto((ROOT / "model-capability-cost.html").as_uri(), wait_until="load")
     page.screenshot(path=str(OUT / "overview-desktop.png"), full_page=True)
     assert page.locator('[role="tab"]').count() == 6
     assert page.locator("#overview").is_visible()
+    assert not errors, errors
+    assert page.locator("#platformCards .platform-card").count() == 5
+    assert page.locator("#panoramaTable tbody tr").count() == 11
+    page.select_option("#panoramaFamily", "Grok (xAI / SpaceXAI)")
+    assert page.locator("#panoramaTable tbody tr").count() == 1
+    assert "Grok 4.7" in page.locator("#panoramaTable").inner_text()
+    page.select_option("#panoramaFamily", "all")
+    assert page.locator("#scaleHighlightsTable tbody tr").count() == 6
     assert page.locator("#claudeCatalog tbody tr").count() == 14
     page.select_option("#claudeScope", "screenshot")
     assert page.locator("#claudeCatalog tbody tr").count() == 8
@@ -70,9 +87,18 @@ with sync_playwright() as p:
     page.select_option("#deltaGroup", "writing")
     page.locator('[data-panel="overview"]').click()
     page.select_option("#claudeScope", "all")
-    checks.append("Claude availability table, screenshot scope, honest reasoning gaps, and CSV export")
+    checks.append("5-platform × 4-family panorama, Claude availability table, screenshot scope, and CSV export")
     page.locator('[data-panel="capabilities"]').click()
-    assert page.locator("#capabilityTable tbody tr").count() == 20
+    assert page.locator("#capBumpChart .bump-group").count() == 16
+    assert not re.search(r"\b(?:NaN|Infinity)\b", page.locator("#capBumpChart").inner_html())
+    page.select_option("#capIndexScope", "all_top")
+    assert page.locator("#capBumpChart .bump-group").count() == 30
+    page.locator('[data-cap-tab="engineering"]').click()
+    assert page.locator("#capBumpChart .bump-group").count() == 30
+    assert not re.search(r"\b(?:NaN|Infinity)\b", page.locator("#capBumpChart").inner_html())
+    page.locator('[data-cap-tab="all"]').click()
+    page.select_option("#capIndexScope", "four_family_top")
+    assert page.locator("#capabilityTable tbody tr").count() == 21
     page.select_option("#profileScope", "claude")
     assert page.locator("#capabilityTable tbody tr").count() == 14
     assert "41*" in page.locator("#capabilityTable tbody tr").filter(has_text="Claude Opus 4.7").inner_text()
@@ -88,11 +114,17 @@ with sync_playwright() as p:
     with page.expect_download() as download:
         page.locator("#exportProfiles").click()
     profile_rows = list(csv.DictReader(io.StringIO(Path(download.value.path()).read_text(encoding="utf-8-sig"))))
-    assert len(profile_rows) == 20
+    assert len(profile_rows) == 21
     assert next(r for r in profile_rows if r["model"] == "Gemini 3.5 Flash-Lite")["Output Speed"] == "438"
-    checks.append("Capability sorting, missing values, and CSV export")
+    checks.append("AA Capability Index rank bump chart, 6-domain bar charts, capability sorting, and CSV export")
 
     page.locator('[data-panel="explorer"]').click()
+    assert page.locator("#releaseChart .release-dot").count() > 20
+    for r_axis in ["costPerTask", "timePerTaskMinutes", "outputTokensPerTask"]:
+        page.select_option("#releaseXMetric", r_axis)
+        assert not re.search(r"\b(?:NaN|Infinity)\b", page.locator("#releaseChart").inner_html())
+    page.select_option("#releaseXMetric", "costPerTask")
+    assert page.locator("#releaseDetail .cost-stack span").count() >= 3
     for group in ["general", "coding", "writing", "arena"]:
         page.locator(f'[data-group="{group}"]').click()
         expected = [r for r in DATA["rows"] if r["benchmark"] == group and r["model"] in current]
@@ -128,7 +160,7 @@ with sync_playwright() as p:
     assert page.locator("#chart .dot").count() == 0
     assert "没有可绘数据" in page.locator("#chart").text_content()
     page.locator("#reset").click()
-    assert page.locator("#models input:checked").count() == 20
+    assert page.locator("#models input:checked").count() == 21
     page.locator("#claudeModels").click()
     assert page.locator("#models input:checked").count() == 14
     page.locator("#screenshotModels").click()
@@ -139,10 +171,10 @@ with sync_playwright() as p:
     page.locator("#verifiedOnly").check()
     assert "Fable 5" not in page.locator("#tbody").inner_text()
     page.locator("#reset").click()
-    checks.append("All four benchmarks, model filters, axes, null receipts, keyboard points, CSV export")
+    checks.append("All four benchmarks, AA By-Release trajectory chart, model filters, axes, null receipts, keyboard points, CSV export")
 
     page.locator('[data-panel="specs"]').click()
-    assert page.locator("#specTable tbody tr").count() == 20
+    assert page.locator("#specTable tbody tr").count() == 21
     page.select_option("#specScope", "screenshot")
     assert page.locator("#specTable tbody tr").count() == 8
     close(cost(page,"claude-haiku-4-5-20251001"), .06)
@@ -188,14 +220,15 @@ with sync_playwright() as p:
     assert page.locator("#costTable tr").count() == 0
     page.fill("#cachePercent", "0")
     page.select_option("#priceScenario", "current")
+    close(cost(page,"grok-4-7"), .08)
     page.select_option("#specScope", "all")
-    assert page.locator("#specTable tbody tr").count() == 23
+    assert page.locator("#specTable tbody tr").count() == 24
     with page.expect_download() as download:
         page.locator("#exportSpecs").click()
-    assert len(list(csv.DictReader(io.StringIO(Path(download.value.path()).read_text(encoding="utf-8-sig"))))) == 23
+    assert len(list(csv.DictReader(io.StringIO(Path(download.value.path()).read_text(encoding="utf-8-sig"))))) == 24
     page.evaluate("window.scrollTo({top:0,behavior:'instant'})")
     page.screenshot(path=str(OUT / "calculator-desktop.png"), full_page=True)
-    checks.append("Budget arithmetic, cache, exact tier boundaries, promotion scenario, context/output limits")
+    checks.append("Budget arithmetic (including Grok 4.7), cache, exact tier boundaries, promotion scenario, context/output limits")
 
     page.locator('[data-panel="reasoning"]').click()
     assert "2.57 倍" in page.locator("#deltaTable").inner_text()
@@ -226,11 +259,12 @@ with sync_playwright() as p:
     assert page.locator("#capabilities").is_visible()
     checks.append("Reasoning deltas, exclusion rules, source index, accessible tabs")
 
-    page.set_viewport_size({"width":390,"height":844})
-    for panel in ["overview","capabilities","explorer","specs","reasoning","evidence"]:
-        page.locator(f'[data-panel="{panel}"]').click()
-        page.wait_for_timeout(160)
-        assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), panel
+    for width in [320, 390]:
+        page.set_viewport_size({"width":width,"height":844})
+        for panel in ["overview","capabilities","explorer","specs","reasoning","evidence"]:
+            page.locator(f'[data-panel="{panel}"]').click()
+            page.wait_for_timeout(80)
+            assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), (width, panel)
     page.locator('[data-panel="explorer"]').click()
     page.locator('[data-group="writing"]').click()
     page.locator(".filters summary").click()
@@ -248,6 +282,6 @@ with sync_playwright() as p:
     checks.append("390px responsive layout; standalone file works offline; no page errors or remote requests")
     browser.close()
 
-result = {"status":"PASS","checks":checks,"rows":166,"screenshots":sorted(p.name for p in OUT.glob("*.png"))}
+result = {"status":"PASS","checks":checks,"rows":169,"screenshots":sorted(p.name for p in OUT.glob("*.png"))}
 (OUT / "validation.json").write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n")
 print(json.dumps(result,ensure_ascii=False,indent=2))

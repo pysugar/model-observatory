@@ -142,12 +142,20 @@ def build(output_dir=ROOT):
     rows.extend(claude["rows"])
     profiles.extend(claude["aa_profiles"])
 
+    multi = read_json(RESEARCH.parent / "2026-10-19" / "multi-benchmark-supplement.json")
+    assert multi["tonebench_sha256"] == tone_hash
+    rows.extend(multi["grok_rows"])
+    profiles.append(multi["grok_aa_profile"])
+
     for index, row in enumerate(rows):
         row["id"] = index
     data = {
         **catalog, "rows": rows, "aa_profiles": profiles, "raw_methods": methods,
         "opus_coding_evidence": read_json(RESEARCH.parent / "2026-10-16" / "opus55-coding-supplement.json"),
-        "meta": {"reviewed_at": "2026-10-16", "original_rows": 121,
+        "aa_capability_indexes": multi["aa_capability_indexes"],
+        "aa_release_series": multi["aa_release_series"],
+        "external_leaderboards": multi["external_leaderboards"],
+        "meta": {"reviewed_at": "2026-10-19", "original_rows": 121,
                  "tonebench_sha256": tone_hash, "tonebench_fingerprint": tone["provenance"],
                  "not_run": "未做新的模型调用或中文任务实验；使用原始附件与公开证据。"},
     }
