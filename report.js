@@ -70,6 +70,7 @@
       window.scrollTo({top:Math.min(window.scrollY, document.querySelector(".nav-shell").offsetTop), behavior:"instant"});
     }
     if (name === "explorer") renderExplorer();
+    if (name === "capabilities") renderCapIndexChart();
   }
   const tabs = [...document.querySelectorAll("[data-panel]")];
   tabs.forEach((tab, i) => {
@@ -193,6 +194,7 @@
     return `<circle cx="${x}" cy="${y}" r="5" ${attrs}/>`;
   }
   function renderExplorer() {
+    renderReleaseChart();
     const meta = GROUPS[state.group], rows = filteredRows(), key = $("xmetric").value;
     const plotted = rows.filter(r => finite(r[key]) && r[key] > 0 && finite(r.score));
     const candidates = plotted.filter(r => eligible(r,key));
@@ -262,7 +264,13 @@
     $("detail").querySelectorAll("[data-peer]").forEach(b => b.addEventListener("click",() => showDetail(DATA.rows[Number(b.dataset.peer)])));
   }
   let resizeTimer;
-  window.addEventListener("resize",() => {clearTimeout(resizeTimer);resizeTimer=setTimeout(() => {if(!$("explorer").hidden)renderExplorer();},120);});
+  window.addEventListener("resize",() => {
+    clearTimeout(resizeTimer);
+    resizeTimer=setTimeout(() => {
+      if(!$("explorer").hidden) renderExplorer();
+      if(!$("capabilities").hidden) renderCapIndexChart();
+    },120);
+  });
 
   // Price scenarios use a shared token assumption, never benchmark re-pricing.
   const shownModels = () => DATA.models.filter(m => inScope(m,$("specScope").value));
@@ -341,8 +349,385 @@
     $("deltaNote").textContent=($("deltaGroup").value === "general" ? "AA 公开分数取整；Fable 5.1 / Opus 5.5 / Sonnet 5.5 含来源 Default Fallback，比例未知。旧版估计值、Fable 5 混合回退和未注明预算不进入标准差分。" : $("deltaGroup").value === "coding" ? "每档每题一次；Opus 5.5 混合回退被排除，Luna6缺费档位仍可比较分数但不计算费用倍数。" : "使用同一ToneBench快照；稿件离散度不等于差分置信区间。")+" 表中比较的是相邻已测档，不保证覆盖所有支持档位；分差未做配对显著性检验。";
   }
   ["deltaModel","deltaGroup"].forEach(id => $(id).addEventListener("change",renderDeltas));
+
+  // 1. Five-Platform × Four-Family Panorama (#overview)
+  function shownPanoramaRows() {
+    const fam = $("panoramaFamily") ? $("panoramaFamily").value : "all";
+    return (DATA.external_leaderboards?.four_family_matrix || []).filter(r => fam === "all" || String(r.family).includes(fam));
+  }
+  function renderPanorama() {
+    const ext = DATA.external_leaderboards;
+    if (!ext || !$("platformCards")) return;
+    $("platformCards").innerHTML = ext.platforms.map(p => `<article class="platform-card"><h3>${link(p.url, p.name)}</h3><p><strong>核心指标：</strong>${esc(p.focus)}</p><p><strong>成本口径：</strong>${esc(p.cost_metric)}</p><span class="platform-stat">快照：${esc(p.snapshot)}</span></article>`).join("");
+    const rows = shownPanoramaRows();
+    if ($("panoramaCount")) $("panoramaCount").textContent = `${rows.length} 个在用系列 · 5 大主流评测站与生产调用横向对照`;
+    $("panoramaTable").innerHTML = `<table class="task-table"><caption>四大模型家族（Grok / ChatGPT / Gemini / Claude）跨平台能力与成本对照矩阵</caption><thead><tr>${["家族 / 型号与状态","Artificial Analysis (v4.3.2)","Arena.ai & LiveBench 2.0","Scale SEAL 专项表现","OpenRouter 生产用量与成本","跨榜选型与甜蜜点建议"].map(h => `<th scope="col">${h}</th>`).join("")}</tr></thead><tbody>${rows.map(r => `<tr><th scope="row">${esc(r.model)} <span class="badge">${esc(r.family)}</span><span class="task-detail">${esc(r.status)}</span></th><td data-label="Artificial Analysis (v4.3.2)"><strong>II：${esc(r.aa_ii)}</strong><span class="task-detail">单任务成本：${esc(r.aa_cost_task)}<br>能力强项：${esc(r.aa_cap_highlights)}</span></td><td data-label="Arena.ai & LiveBench 2.0"><strong>Arena：${esc(r.arena)}</strong><span class="task-detail">LiveBench 2.0：${esc(r.livebench_2)}</span></td><td data-label="Scale SEAL 专项表现">${esc(r.scale_seal)}</td><td data-label="OpenRouter 生产用量与成本">${esc(r.openrouter)}</td><td data-label="跨榜选型与甜蜜点建议">${esc(r.sweet_spot)}</td></tr>`).join("")}</tbody></table>`;
+    $("scaleHighlightsTable").innerHTML = table(["Scale SEAL 专项榜单","Top 1","Top 2","Top 3","Top 4"], ext.scale_highlights.map(s => `<tr><th>${link("https://labs.scale.com/leaderboard", s.benchmark)}</th><td><strong>#1</strong> ${esc(s.top1)}</td><td><strong>#2</strong> ${esc(s.top2)}</td><td><strong>#3</strong> ${esc(s.top3)}</td><td><strong>#4</strong> ${esc(s.top4)}</td></tr>`).join(""));
+  }
+  if ($("panoramaFamily")) {
+    $("panoramaFamily").addEventListener("change", renderPanorama);
+    $("exportPanorama").addEventListener("click", () => exportCSV(shownPanoramaRows(), "四大家族五站全景对比-2026-10-19.csv"));
+  }
+
+  // 2. AA Capability Index Rank Bump Chart & Domain Bar Chart (#capabilities -> #capIndexCard)
+  const capState = {tab:"all", selectedId:null};
+  const capScore = (e, key) => finite(e.capabilities?.[key]) ? e.capabilities[key] : e.intelligenceIndex;
+  function getCapEntries() {
+    const cap = DATA.aa_capability_indexes;
+    if (!cap) return [];
+    const scope = $("capIndexScope") ? $("capIndexScope").value : "four_family_top";
+    let list = cap.entries.filter(e => {
+      if (scope === "four_family_top") return e.isTopVariant && e.isFourFamily && e.isCurrent;
+      if (scope === "four_family_all") return e.isFourFamily && e.isCurrent;
+      if (scope === "all_top") return e.isTopVariant;
+      return true;
+    });
+    list = [...list].sort((a,b) => (b.intelligenceIndex - a.intelligenceIndex) || ((a.costPerTask ?? 999) - (b.costPerTask ?? 999)));
+    if (capState.tab === "all" && scope === "four_family_all" && list.length > 35) list = list.slice(0, 35);
+    return list;
+  }
+  function renderCapDetail(entry, entries, domains) {
+    if (!entry || !$("capIndexDetail")) return;
+    const rowsHtml = domains.map(d => {
+      const rawSc = entry.capabilities?.[d.key];
+      const sc = capScore(entry, d.key);
+      const gRank = entry.strengthsGlobalRank?.[d.slug];
+      const sorted = [...entries].sort((a,b) => capScore(b, d.key) - capScore(a, d.key));
+      const vRank = sorted.findIndex(x => x.slug === entry.slug) + 1;
+      const diff = finite(sc) && finite(entry.intelligenceIndex) ? sc - entry.intelligenceIndex : null;
+      const evals = (d.coreEvals || []).join(" · ");
+      return `<tr><th>${esc(d.label)}<span class="task-detail">${esc(evals)}</span></th><td class="metric-value"><strong>${fmt(sc,1)}${finite(rawSc) ? "" : "*"}</strong><div class="cost-bar" style="width:${Math.max(2,Math.round((sc||0)*1.3))}px;background:${entry.color}"></div></td><td class="metric-value">#${vRank} / ${entries.length}<span class="task-detail">${gRank ? `AA 全球版本排名 #${gRank}` : "同系子档位"}</span></td><td class="metric-value ${diff !== null && diff < 0 ? "delta-negative" : "delta-positive"}">${diff !== null ? (diff > 0 ? "+" : "") + fmt(diff,1) + " 分" : "—"}</td></tr>`;
+    }).join("");
+    const rankVals = Object.values(entry.strengthsGlobalRank || {}).filter(finite);
+    const bestGlobal = rankVals.length ? "#" + Math.min(...rankVals) : "见视图排名";
+    $("capIndexDetail").innerHTML = `<div class="topline"><h3><span class="swatch" style="display:inline-block;background:${entry.color};margin-right:7px"></span>${esc(entry.name)} · 六大专业域能力剖析</h3><span class="tag">${esc(entry.vendor)} · 档位 ${esc(entry.effort)}</span></div><div class="numbers"><div><b>${fmt(entry.intelligenceIndex,1)}</b><span>Intelligence Index</span></div><div><b>${money(entry.costPerTask)}</b><span>AA 加权单任务成本</span></div><div><b>${esc(bestGlobal)}</b><span>最佳单域全球发布排名</span></div></div><div class="table-scroll">${table(["能力指数域 / 构成评测","域得分 (0–100)","当前视图排名 / 全库排名","相对综合指数偏离"], rowsHtml)}</div>`;
+  }
+  function renderCapIndexChart() {
+    const cap = DATA.aa_capability_indexes;
+    const svg = $("capBumpChart");
+    if (!cap || !svg) return;
+    const entries = getCapEntries();
+    if (!entries.length) return;
+    if (!capState.selectedId || !entries.some(e => e.slug === capState.selectedId)) {
+      capState.selectedId = entries[0].slug;
+    }
+    const domains = cap.domains;
+    $("capModelPills").innerHTML = entries.map(e => `<button type="button" class="pill-btn ${e.slug === capState.selectedId ? "is-active" : ""}" data-cap-model="${esc(e.slug)}"><span class="swatch" style="background:${e.color}"></span>${esc(e.shortLabel)} <span class="small">(${fmt(e.intelligenceIndex,1)})</span></button>`).join("");
+    $("capModelPills").querySelectorAll("[data-cap-model]").forEach(btn => btn.addEventListener("click", () => {
+      capState.selectedId = btn.dataset.capModel;
+      renderCapIndexChart();
+    }));
+
+    const width = Math.max(880, Math.round(svg.getBoundingClientRect().width || 1120));
+    if (capState.tab === "all") {
+      const showII = $("capShowII") && $("capShowII").checked;
+      const shortEvalMap = {
+        financeAndAccounting: "GDP.pdf · Briefcase",
+        strategyAndOps: "Briefcase · AutoBench",
+        legal: "AA-LCR · Omniscience",
+        healthcareAndMedical: "Omniscience · HLE",
+        engineering: "Terminal · SciCode",
+        economics: "GDPval · HLE"
+      };
+      const cols = [
+        ...(showII ? [{key:"__ii__", shortLabel:"综合指数 (II)", evals:"10 项全量基准", getScore:e => e.intelligenceIndex}] : []),
+        ...domains.map(d => ({key:d.key, shortLabel:d.shortLabel, evals:shortEvalMap[d.key] || d.enLabel, getScore:e => capScore(e, d.key)}))
+      ];
+      if ($("capIndexCount")) $("capIndexCount").textContent = `全部 · 排名对比（${entries.length} 个模型在 ${cols.length} 个维度的相对位次轨迹；点击任意曲线或胶囊高亮并查看 6 域明细）`;
+      const rowH = 30, margin = {top:62, bottom:26, left:210, right:210};
+      const height = margin.top + entries.length * rowH + margin.bottom;
+      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+      svg.setAttribute("height", height);
+      const colX = i => margin.left + (cols.length === 1 ? 0 : i * (width - margin.left - margin.right) / (cols.length - 1));
+      const rankY = r => margin.top + (r - 0.5) * rowH;
+
+      const colRanks = new Map();
+      cols.forEach(c => {
+        const sorted = [...entries].sort((a,b) => (c.getScore(b) - c.getScore(a)) || (b.intelligenceIndex - a.intelligenceIndex) || ((a.costPerTask ?? 999) - (b.costPerTask ?? 999)));
+        const rMap = new Map();
+        sorted.forEach((e, idx) => rMap.set(e.slug, idx + 1));
+        colRanks.set(c.key, rMap);
+      });
+
+      const parts = [`<title>Artificial Analysis 能力指数排名对比（Bump Chart）</title>`];
+      for (let r = 1; r <= entries.length; r++) {
+        const y = rankY(r);
+        parts.push(`<line x1="${margin.left - 8}" x2="${width - margin.right + 8}" y1="${y}" y2="${y}" stroke="#e3e9e1" stroke-dasharray="3 3"/>`);
+        parts.push(`<text x="${margin.left - 194}" y="${y + 4}" class="tick" font-weight="600">#${r}</text>`);
+        parts.push(`<text x="${width - margin.right + 194}" y="${y + 4}" text-anchor="end" class="tick" font-weight="600">#${r}</text>`);
+      }
+      cols.forEach((c, idx) => {
+        const x = colX(idx);
+        parts.push(`<line x1="${x}" x2="${x}" y1="${margin.top - 12}" y2="${height - margin.bottom + 8}" stroke="#dce3db" stroke-width="1"/>`);
+        parts.push(`<text x="${x}" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#165e54">${esc(c.shortLabel)}</text>`);
+        parts.push(`<text x="${x}" y="41" text-anchor="middle" font-size="10.5" fill="#647571">${esc(c.evals)}</text>`);
+      });
+
+      const orderedEntries = [...entries].sort((a,b) => (a.slug === capState.selectedId ? 1 : b.slug === capState.selectedId ? -1 : 0));
+      orderedEntries.forEach(e => {
+        const isSel = e.slug === capState.selectedId;
+        const pts = cols.map((c, idx) => ({x:colX(idx), y:rankY(colRanks.get(c.key).get(e.slug)), rank:colRanks.get(c.key).get(e.slug), score:c.getScore(e), col:c}));
+        let dPath = `M ${pts[0].x},${pts[0].y}`;
+        for (let i = 0; i < pts.length - 1; i++) {
+          const p0 = pts[i], p1 = pts[i+1], dx = (p1.x - p0.x) * 0.46;
+          dPath += ` C ${p0.x + dx},${p0.y} ${p1.x - dx},${p1.y} ${p1.x},${p1.y}`;
+        }
+        const first = pts[0], last = pts[pts.length - 1];
+        const nodesHtml = pts.map(pt => {
+          const badge = pt.rank <= 3 || isSel;
+          return badge
+            ? `<circle cx="${pt.x}" cy="${pt.y}" r="${isSel ? 10.5 : 9}" fill="${e.color}" stroke="#fffef9" stroke-width="1.8"/><text x="${pt.x}" y="${pt.y + 3.8}" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">${pt.rank}</text>`
+            : `<circle cx="${pt.x}" cy="${pt.y}" r="5.2" fill="${e.color}" stroke="#fffef9" stroke-width="1.5"/>`;
+        }).join("");
+        const leftLabel = `<rect x="${margin.left - 166}" y="${first.y - 5}" width="8" height="10" rx="2" fill="${e.color}"/><text x="${margin.left - 153}" y="${first.y + 4}" font-size="11.5" font-weight="${isSel ? 700 : 500}" fill="${isSel ? "#165e54" : "#223c3a"}">${esc(e.shortLabel.slice(0,18))} (${fmt(first.score,1)})</text>`;
+        const rightLabel = `<text x="${width - margin.right + 14}" y="${last.y + 4}" font-size="11.5" font-weight="${isSel ? 700 : 500}" fill="${isSel ? "#165e54" : "#223c3a"}">${esc(e.shortLabel.slice(0,18))} (${fmt(last.score,1)})</text>`;
+        parts.push(`<g class="bump-group ${isSel ? "is-highlighted" : ""}" tabindex="0" role="button" data-cap-id="${esc(e.slug)}" aria-label="${esc(e.name + "，综合指数 " + fmt(e.intelligenceIndex,1))}"><title>${esc(e.name + " · 综合指数 " + fmt(e.intelligenceIndex,1) + " · 单任务 " + money(e.costPerTask))}</title><path class="bump-path" d="${dPath}" fill="none" stroke="${e.color}" stroke-width="${isSel ? 3.6 : 2.2}" opacity="${isSel ? 1 : 0.68}"/>${nodesHtml}${leftLabel}${rightLabel}</g>`);
+      });
+      svg.innerHTML = parts.join("");
+    } else {
+      const dom = domains.find(d => d.key === capState.tab) || domains[0];
+      const sorted = [...entries].sort((a,b) => (capScore(b, dom.key) - capScore(a, dom.key)) || (b.intelligenceIndex - a.intelligenceIndex));
+      if ($("capIndexCount")) $("capIndexCount").textContent = `${dom.label}（${dom.enLabel} · 构成评测：${(dom.coreEvals || []).join("、")} · 共 ${sorted.length} 个模型按该域得分降序排列）`;
+      const rowH = 30, margin = {top:44, bottom:28, left:225, right:215};
+      const height = margin.top + sorted.length * rowH + margin.bottom;
+      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+      svg.setAttribute("height", height);
+      const barW = v => Math.max(2, (Math.min(Math.max(v, 0), 100) / 100) * (width - margin.left - margin.right));
+      const parts = [`<title>${esc(dom.label)} 能力指数条形图</title>`];
+      for (let t = 0; t <= 100; t += 20) {
+        const x = margin.left + (t / 100) * (width - margin.left - margin.right);
+        parts.push(`<line x1="${x}" x2="${x}" y1="${margin.top - 8}" y2="${height - margin.bottom}" stroke="#e2e8e0" stroke-dasharray="${t === 0 ? "" : "3 3"}"/><text x="${x}" y="24" text-anchor="middle" class="tick">${t} 分</text>`);
+      }
+      sorted.forEach((e, idx) => {
+        const y = margin.top + idx * rowH;
+        const sc = capScore(e, dom.key);
+        const gRank = e.strengthsGlobalRank?.[dom.slug] ?? (idx + 1);
+        const isSel = e.slug === capState.selectedId;
+        const w = barW(sc);
+        parts.push(`<g class="bump-group ${isSel ? "is-highlighted" : ""}" tabindex="0" role="button" data-cap-id="${esc(e.slug)}" aria-label="${esc(e.name + " " + dom.label + " " + fmt(sc,1) + " 分")}"><rect x="4" y="${y + 2}" width="${width - 8}" height="${rowH - 4}" rx="5" fill="${isSel ? "#eaf2ec" : "transparent"}"/><text x="14" y="${y + 19}" class="tick" font-weight="600">#${idx + 1}</text><rect x="46" y="${y + 9}" width="9" height="10" rx="2" fill="${e.color}"/><text x="61" y="${y + 19}" font-size="12" font-weight="${isSel ? 700 : 500}" fill="#223c3a">${esc(e.shortLabel.slice(0,22))}</text><rect x="${margin.left}" y="${y + 6}" width="${w}" height="${rowH - 12}" rx="4" fill="${e.color}" opacity="${isSel ? 0.96 : 0.78}"/><text x="${margin.left + w + 8}" y="${y + 19}" font-size="11.5" font-weight="600" fill="#223c3a">${fmt(sc,1)} 分 <tspan fill="#647571" font-weight="400">· 排名 #${gRank} · 单任务 ${money(e.costPerTask)}</tspan></text></g>`);
+      });
+      svg.innerHTML = parts.join("");
+    }
+
+    svg.querySelectorAll("[data-cap-id]").forEach(node => {
+      const select = () => {
+        capState.selectedId = node.dataset.capId;
+        renderCapIndexChart();
+      };
+      node.addEventListener("click", select);
+      node.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(); } });
+    });
+    renderCapDetail(entries.find(e => e.slug === capState.selectedId) || entries[0], entries, domains);
+  }
+  if ($("capIndexTabs")) {
+    $("capIndexTabs").querySelectorAll("[data-cap-tab]").forEach(btn => btn.addEventListener("click", () => {
+      capState.tab = btn.dataset.capTab;
+      $("capIndexTabs").querySelectorAll("[data-cap-tab]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.capTab === capState.tab)));
+      renderCapIndexChart();
+    }));
+    $("capIndexScope").addEventListener("change", renderCapIndexChart);
+    $("capShowII").addEventListener("change", renderCapIndexChart);
+    $("exportCapIndexes").addEventListener("click", () => {
+      const domains = DATA.aa_capability_indexes.domains;
+      exportCSV(getCapEntries().map(e => {
+        const row = {model:e.name, release:e.releaseName, vendor:e.vendor, effort:e.effort, intelligence_index:e.intelligenceIndex, cost_per_task_usd:e.costPerTask};
+        domains.forEach(d => {
+          row[d.key + "_score"] = capScore(e, d.key);
+          row[d.key + "_global_rank"] = e.strengthsGlobalRank?.[d.slug] ?? null;
+        });
+        return row;
+      }), `AA能力指数-${capState.tab}-2026-10-19.csv`);
+    });
+  }
+
+  // 3. AA By-Release Intelligence Index vs Cost/Time/Output-Token Trajectory Chart (#explorer -> #releaseChartCard)
+  const RELEASE_AXES = {
+    costPerTask: {label:"单任务成本（USD）", unit:"USD"},
+    timePerTaskMinutes: {label:"每任务耗时（分钟）", unit:"分钟"},
+    outputTokensPerTask: {label:"每任务输出 Token 数（Reasoning + Answer）", unit:"tokens"}
+  };
+  const releaseState = {selectedReleaseId:"claude-opus-5-5", selectedVariantId:null};
+  function releaseInScope(rel, scope) {
+    if (scope === "four_family_current") return rel.isFourFamily && rel.isCurrent;
+    if (scope === "four_family_flagship") return rel.isFourFamily && rel.isCurrent && (rel.maxIntelligenceIndex >= 45 || rel.vendor === "xAI");
+    return true;
+  }
+  function renderReleaseDetail(rel, focusVar) {
+    if (!rel || !$("releaseDetail")) return;
+    const v = focusVar || rel.variants.find(x => x.isTopVariant) || rel.variants[rel.variants.length - 1];
+    const cb = v.costBreakdown || {};
+    const totalCost = cb.total || v.costPerTask || 0;
+    const segs = [
+      ["非缓存输入", cb.nonCacheInput || 0, "#3d7a68"],
+      ["缓存读取", cb.cacheRead || 0, "#7ab09a"],
+      ["缓存写入", cb.cacheWrite || 0, "#b8cfbe"],
+      ["思考输出 (Reasoning)", cb.reasoning || 0, "#c87d28"],
+      ["答案输出 (Answer)", cb.answer || 0, "#165e54"]
+    ];
+    const stackBar = totalCost > 0
+      ? `<div class="cost-stack">${segs.map(([label, val, col]) => val > 0 ? `<span style="width:${Math.max(1.5, (val/totalCost)*100).toFixed(1)}%;background:${col}" title="${esc(label + ": " + money(val))}"></span>` : "").join("")}</div><div class="cost-legend">${segs.map(([label, val, col]) => `<span><i style="background:${col}"></i>${esc(label)}：${money(val)}</span>`).join("")}</div>`
+      : "";
+    const tb = v.outputTokensBreakdown || {};
+    const rowsHtml = rel.variants.map(vr => {
+      const c = vr.costBreakdown || {};
+      const t = vr.outputTokensBreakdown || {};
+      return `<tr class="${vr.slug === v.slug ? "recommended-controller" : ""}"><th>${esc(vr.shortName)} ${vr.isTopVariant ? '<span class="badge">最高分代表点</span>' : ""}</th><td class="metric-value"><strong>${fmt(vr.intelligenceIndex,1)}</strong></td><td class="metric-value">${money(vr.costPerTask)}</td><td class="metric-value">${money(c.nonCacheInput)} / ${money(c.cacheRead)} / ${money(c.cacheWrite)}</td><td class="metric-value">${money(c.reasoning)} / ${money(c.answer)}</td><td class="metric-value">${fmt(vr.outputTokensPerTask,0)}<span class="task-detail">思考 ${fmt(t.reasoning,0)} · 答案 ${fmt(t.answer,0)}</span></td><td class="metric-value">${fmt(vr.timePerTaskMinutes,2)} 分<span class="task-detail">吞吐 ${fmt(vr.outputSpeed,0)} tok/s · TTFA ${fmt(vr.ttfaSeconds,1)}s</span></td></tr>`;
+    }).join("");
+    $("releaseDetail").innerHTML = `<div class="topline"><h3><span class="swatch" style="display:inline-block;background:${rel.color};margin-right:7px"></span>${esc(rel.name)}（当前选中档位：${esc(v.effort)}）</h3><span class="tag">${esc(rel.vendor)} · 共 ${rel.variants.length} 个档位点 · 发布 ${esc(rel.releaseDate || "2026")}</span></div><div class="numbers"><div><b>${fmt(v.intelligenceIndex,1)}</b><span>Intelligence Index</span></div><div><b>${money(v.costPerTask)}</b><span>单任务总成本</span></div><div><b>${fmt(v.timePerTaskMinutes,2)} 分钟</b><span>每任务平均耗时</span></div><div><b>${fmt(v.outputTokensPerTask,0)}</b><span>每任务输出 Token（思考 ${fmt(tb.reasoning,0)}）</span></div></div>${stackBar}<div class="table-scroll" style="margin-top:10px">${table(["同版本已测档位","Intelligence Index","单任务总成本","输入拆分：非缓存 / 缓存读 / 缓存写","输出拆分：思考 / 答案","每任务输出 Token","每任务耗时 / 吞吐"], rowsHtml)}</div>`;
+  }
+  function renderReleaseChart() {
+    const ser = DATA.aa_release_series;
+    const svg = $("releaseChart");
+    if (!ser || !svg) return;
+    const xKey = $("releaseXMetric") ? $("releaseXMetric").value : "costPerTask";
+    const scope = $("releaseScope") ? $("releaseScope").value : "four_family_current";
+    const showPareto = $("releasePareto") && $("releasePareto").checked;
+    const showBackdrop = $("releaseBackdrop") && $("releaseBackdrop").checked;
+    const xMeta = RELEASE_AXES[xKey] || RELEASE_AXES.costPerTask;
+
+    const activeReleases = ser.releases.filter(r => releaseInScope(r, scope));
+    const backdropReleases = showBackdrop ? ser.releases.filter(r => !releaseInScope(r, scope)) : [];
+    if (!activeReleases.some(r => r.releaseSlug === releaseState.selectedReleaseId)) {
+      releaseState.selectedReleaseId = activeReleases[0]?.releaseSlug || ser.releases[0]?.releaseSlug;
+      releaseState.selectedVariantId = null;
+    }
+
+    $("releasePills").innerHTML = activeReleases.map(r => `<button type="button" class="pill-btn ${r.releaseSlug === releaseState.selectedReleaseId ? "is-active" : ""}" data-rel-pill="${esc(r.releaseSlug)}"><span class="swatch" style="background:${r.color}"></span>${esc(r.shortName || r.name)} <span class="small">(${r.variants.length}档)</span></button>`).join("");
+    $("releasePills").querySelectorAll("[data-rel-pill]").forEach(btn => btn.addEventListener("click", () => {
+      releaseState.selectedReleaseId = btn.dataset.relPill;
+      releaseState.selectedVariantId = null;
+      renderReleaseChart();
+    }));
+
+    const activePoints = activeReleases.flatMap(r => r.variants.filter(v => finite(v[xKey]) && v[xKey] > 0 && finite(v.intelligenceIndex)).map(v => ({rel:r, v})));
+    const backdropPoints = backdropReleases.flatMap(r => r.variants.filter(v => finite(v[xKey]) && v[xKey] > 0 && finite(v.intelligenceIndex)).map(v => ({rel:r, v})));
+    const allPoints = [...activePoints, ...backdropPoints];
+    const frontier = activePoints
+      .filter(p => !activePoints.some(o => o.v[xKey] <= p.v[xKey] && o.v.intelligenceIndex >= p.v.intelligenceIndex && (o.v[xKey] < p.v[xKey] || o.v.intelligenceIndex > p.v.intelligenceIndex)))
+      .sort((a,b) => a.v[xKey] - b.v[xKey]);
+
+    if ($("releaseCount")) $("releaseCount").textContent = `${activeReleases.length} 个模型发布版本 · ${activePoints.length} 个推理档位点${backdropPoints.length ? `（另含 ${backdropPoints.length} 个浅灰背景参照点）` : ""} · 实线连接同一发布版本的不同推理投入档位，仅最高得分档位标注发布版本名`;
+
+    const width = Math.max(720, Math.round(svg.getBoundingClientRect().width || 1100));
+    const height = width < 640 ? 420 : 490, margin = {left:58, right:135, top:34, bottom:62};
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    svg.setAttribute("height", height);
+    if (!allPoints.length) return;
+
+    const xs = allPoints.map(p => p.v[xKey]);
+    let lo = Math.min(...xs) * 0.82, hi = Math.max(...xs) * 1.22;
+    const x = val => margin.left + (Math.log(val / lo) / Math.log(hi / lo)) * (width - margin.left - margin.right);
+    const ymin = 14, ymax = 64;
+    const y = val => height - margin.bottom - ((val - ymin) / (ymax - ymin)) * (height - margin.top - margin.bottom);
+
+    const parts = [`<title>按模型发布版本划分的 Intelligence Index 与 ${esc(xMeta.label)}</title>`];
+    for (let s = 20; s <= 60; s += 10) {
+      parts.push(`<line x1="${margin.left}" x2="${width - margin.right}" y1="${y(s)}" y2="${y(s)}" stroke="#e3e9e1"/><text x="${margin.left - 10}" y="${y(s) + 4}" text-anchor="end" class="tick">${s}</text>`);
+    }
+    const tickCandidates = xKey === "costPerTask" ? [0.02,0.05,0.1,0.25,0.5,1,2.5,5,10,20] : xKey === "timePerTaskMinutes" ? [0.2,0.5,1,2,5,10,20,40] : [500,1000,2500,5000,10000,25000,50000,100000];
+    tickCandidates.filter(t => t >= lo && t <= hi).forEach(t => {
+      const tx = x(t);
+      const label = xKey === "costPerTask" ? "$" + (t < 1 ? t.toFixed(2) : t.toFixed(t === 2.5 ? 2 : 0)) : xKey === "timePerTaskMinutes" ? t + "m" : (t >= 1000 ? (t/1000) + "k" : String(t));
+      parts.push(`<line x1="${tx}" x2="${tx}" y1="${margin.top}" y2="${height - margin.bottom}" stroke="#edf1eb" stroke-dasharray="3 3"/><text x="${tx}" y="${height - margin.bottom + 22}" text-anchor="middle" class="tick">${esc(label)}</text>`);
+    });
+    parts.push(`<text x="${margin.left}" y="18" class="axis-label">AA Intelligence Index（分）</text><text x="${(margin.left + width - margin.right)/2}" y="${height - 12}" text-anchor="middle" class="axis-label">${esc(xMeta.label)} · 对数刻度</text>`);
+
+    backdropReleases.forEach(rel => {
+      const pts = rel.variants.filter(v => finite(v[xKey]) && v[xKey] > 0 && finite(v.intelligenceIndex));
+      if (pts.length > 1) {
+        parts.push(`<polyline points="${pts.map(v => `${x(v[xKey])},${y(v.intelligenceIndex)}`).join(" ")}" fill="none" stroke="#d5ddd8" stroke-width="1.3"/>`);
+      }
+      pts.forEach(v => {
+        parts.push(`<circle cx="${x(v[xKey])}" cy="${y(v.intelligenceIndex)}" r="3.5" fill="#cbd4cf" opacity="0.75"><title>${esc(v.name + " · II " + fmt(v.intelligenceIndex,1) + " · " + fmt(v[xKey],3))}</title></circle>`);
+      });
+    });
+
+    if (showPareto && frontier.length > 1) {
+      parts.push(`<polyline points="${frontier.map(p => `${x(p.v[xKey])},${y(p.v.intelligenceIndex)}`).join(" ")}" fill="none" stroke="#56695f" stroke-width="1.8" stroke-dasharray="5 5"/>`);
+    }
+
+    const topLabels = [];
+    const orderedReleases = [...activeReleases].sort((a,b) => (a.releaseSlug === releaseState.selectedReleaseId ? 1 : b.releaseSlug === releaseState.selectedReleaseId ? -1 : 0));
+    orderedReleases.forEach(rel => {
+      const isSel = rel.releaseSlug === releaseState.selectedReleaseId;
+      const pts = rel.variants.filter(v => finite(v[xKey]) && v[xKey] > 0 && finite(v.intelligenceIndex));
+      if (!pts.length) return;
+      const poly = pts.length > 1 ? `<polyline class="release-line" points="${pts.map(v => `${x(v[xKey])},${y(v.intelligenceIndex)}`).join(" ")}" fill="none" stroke="${rel.color}" stroke-width="${isSel ? 3.2 : 2.1}" opacity="${isSel ? 1 : 0.78}"/>` : "";
+      const dots = pts.map(v => {
+        const cx = x(v[xKey]), cy = y(v.intelligenceIndex);
+        const r = v.isTopVariant ? (isSel ? 6.8 : 5.6) : (isSel ? 5.0 : 4.2);
+        return `<g class="release-dot" tabindex="0" role="button" data-rel-id="${esc(rel.releaseSlug)}" data-var-id="${esc(v.slug)}" aria-label="${esc(v.name + "，II " + fmt(v.intelligenceIndex,1))}"><title>${esc(v.name + " · II " + fmt(v.intelligenceIndex,1) + " · 单任务 " + money(v.costPerTask) + " · 耗时 " + fmt(v.timePerTaskMinutes,2) + "m")}</title><circle cx="${cx}" cy="${cy}" r="${r}" fill="${v.isTopVariant ? rel.color : "#fffef9"}" stroke="${rel.color}" stroke-width="${v.isTopVariant ? 2.2 : 1.8}"/></g>`;
+      }).join("");
+      parts.push(`<g class="release-series ${isSel ? "is-highlighted" : ""}">${poly}${dots}</g>`);
+      const topV = pts.find(v => v.isTopVariant) || pts[pts.length - 1];
+      topLabels.push({rel, v:topV, cx:x(topV[xKey]), cy:y(topV.intelligenceIndex), ly:y(topV.intelligenceIndex), isSel});
+    });
+
+    for (let pass = 0; pass < 3; pass++) {
+      topLabels.sort((a,b) => a.ly - b.ly || a.cx - b.cx);
+      for (let i = 0; i < topLabels.length; i++) {
+        for (let j = 0; j < i; j++) {
+          if (Math.abs(topLabels[i].cx - topLabels[j].cx) < 92 && topLabels[i].ly - topLabels[j].ly < 14) {
+            topLabels[i].ly = Math.min(height - margin.bottom - 4, topLabels[j].ly + 14);
+          }
+        }
+      }
+    }
+    topLabels.forEach(item => {
+      const lx = Math.min(width - margin.right + 6, item.cx + 8);
+      if (Math.abs(item.ly - item.cy) > 3) {
+        parts.push(`<line x1="${item.cx + 4}" y1="${item.cy}" x2="${lx - 2}" y2="${item.ly}" stroke="${item.rel.color}" stroke-width="0.9" opacity="0.65"/>`);
+      }
+      parts.push(`<text x="${lx}" y="${item.ly + 3.5}" font-size="${item.isSel ? 12 : 11}" font-weight="${item.isSel ? 700 : 600}" fill="${item.isSel ? "#165e54" : "#223c3a"}">${esc(item.rel.shortName || item.rel.name)}</text>`);
+    });
+
+    svg.innerHTML = parts.join("");
+    svg.querySelectorAll(".release-dot").forEach(dot => {
+      const select = () => {
+        releaseState.selectedReleaseId = dot.dataset.relId;
+        releaseState.selectedVariantId = dot.dataset.varId;
+        renderReleaseChart();
+      };
+      dot.addEventListener("click", select);
+      dot.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(); } });
+    });
+
+    const selRel = activeReleases.find(r => r.releaseSlug === releaseState.selectedReleaseId) || activeReleases[0];
+    const selVar = selRel?.variants.find(v => v.slug === releaseState.selectedVariantId) || selRel?.variants.find(v => v.isTopVariant) || selRel?.variants[0];
+    renderReleaseDetail(selRel, selVar);
+  }
+  if ($("releaseXMetric")) {
+    ["releaseXMetric","releaseScope","releasePareto","releaseBackdrop"].forEach(id => $(id).addEventListener("change", renderReleaseChart));
+    $("exportReleases").addEventListener("click", () => {
+      const scope = $("releaseScope").value;
+      const rows = DATA.aa_release_series.releases.filter(r => releaseInScope(r, scope)).flatMap(r => r.variants.map(v => ({
+        release_id:r.releaseSlug,
+        release_name:r.name,
+        vendor:r.vendor,
+        variant_id:v.slug,
+        variant_name:v.name,
+        effort:v.effort,
+        is_top_variant:v.isTopVariant,
+        intelligence_index:v.intelligenceIndex,
+        cost_per_task_usd:v.costPerTask,
+        cost_non_cache_input_usd:v.costBreakdown?.nonCacheInput,
+        cost_cache_read_usd:v.costBreakdown?.cacheRead,
+        cost_cache_write_usd:v.costBreakdown?.cacheWrite,
+        cost_reasoning_usd:v.costBreakdown?.reasoning,
+        cost_answer_usd:v.costBreakdown?.answer,
+        time_per_task_minutes:v.timePerTaskMinutes,
+        output_tokens_per_task:v.outputTokensPerTask,
+        reasoning_tokens_per_task:v.outputTokensBreakdown?.reasoning,
+        answer_tokens_per_task:v.outputTokensBreakdown?.answer,
+        output_speed_tok_s:v.outputSpeed,
+        ttfa_seconds:v.ttfaSeconds
+      })));
+      exportCSV(rows, `AA发布版本成本轨迹-${scope}-2026-10-19.csv`);
+    });
+  }
+
   const types=[...new Set(DATA.sources.map(s => s.type))];
   $("sourceList").innerHTML=types.map(type => `<div class="source-group"><h3>${esc(type)}</h3>${DATA.sources.filter(s => s.type === type).map(s => `<div class="source-item"><span class="source-id">${s.id}</span><div>${link(s.url,s.title)}<p>${esc(s.note)}</p><p>${esc(s.status)} · ${s.accessed}</p></div></div>`).join("")}</div>`).join("");
   $("integrityNote").textContent=`原记录 ${DATA.meta.original_rows} 条＋新增 ${DATA.rows.length-DATA.meta.original_rows} 条＝${DATA.rows.length} 条；AA分项 ${DATA.aa_profiles.length} 个配置。ToneBench SHA256：${DATA.meta.tonebench_sha256}`;
-  renderClaudeCatalog();renderProfiles();renderSpecs();renderDeltas();changeGroup("general");showPanel(location.hash.slice(1)||"overview",false);
+  renderPanorama();renderClaudeCatalog();renderProfiles();renderCapIndexChart();renderSpecs();renderDeltas();changeGroup("general");showPanel(location.hash.slice(1)||"overview",false);
 })();

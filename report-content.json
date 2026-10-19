@@ -681,6 +681,30 @@
       "price_note": "prompt >272k 触发长上下文价。",
       "source": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
       "price_source": "https://developers.openai.com/api/docs/models/gpt-5.6-luna"
+    },
+    {
+      "context": 500000,
+      "max_output": 128000,
+      "input_modalities": "文本、图像",
+      "output_modalities": "文本",
+      "efforts": "low / high / xhigh",
+      "price_checked": "2026-10-19",
+      "current": true,
+      "name": "Grok 4.7",
+      "short": "Grok 4.7",
+      "vendor": "xAI",
+      "id": "grok-4-7",
+      "color": "#6558c9",
+      "role": "xAI 当前唯一 Active 旗舰；推理与实时生态候选",
+      "context_kind": "shared",
+      "context_note": "500,000 上下文窗口；同步输出上限按 128,000 计。Grok 4.6 及更早版本在 AA 已标 Deprecated。",
+      "default_effort": "high",
+      "input": 2,
+      "cached": 0.5,
+      "output": 6,
+      "price_note": "Standard $2.00 / $0.50（缓存读取 75% 折扣）/ $6.00；AA 实测 high ($2.73/任务) 与 xhigh ($3.74/任务) 综合分几乎一致。",
+      "source": "https://artificialanalysis.ai/zh/models/releases/grok-4-7",
+      "price_source": "https://docs.x.ai/docs/models"
     }
   ],
   "sources": [
@@ -1079,6 +1103,60 @@
       "note": "读取上游实现确认 delegation.reasoning_effort 优先于父级；保存来源文本与哈希，未执行源码。",
       "accessed": "2026-10-16",
       "status": "直接核验；保留本地来源快照"
+    },
+    {
+      "id": "B16",
+      "type": "独立评测",
+      "title": "AA 能力指数对比（6 大领域排名与分项）",
+      "url": "https://artificialanalysis.ai/zh/indexes",
+      "note": "v4.3.2；财务与会计、战略与运营、法律、医疗与健康、工程、经济学 6 项领域能力指数及模型排名对比（Bump Chart 口径）。",
+      "accessed": "2026-10-19",
+      "status": "直接核验；保留本地结构化快照"
+    },
+    {
+      "id": "B17",
+      "type": "独立评测",
+      "title": "AA 按模型发布版本划分的 Intelligence Index 与单任务成本",
+      "url": "https://artificialanalysis.ai/zh/models/releases",
+      "note": "按发布版本（Release）聚合各推理档位轨迹，支持单任务成本（USD 对数刻度）、每任务耗时（分钟）与每任务输出 Token 数三维对照。",
+      "accessed": "2026-10-19",
+      "status": "直接核验；保留 30 个发布版本、94 个档位配置"
+    },
+    {
+      "id": "B18",
+      "type": "独立评测",
+      "title": "AA Grok 4.7 发布版本与三档实测",
+      "url": "https://artificialanalysis.ai/zh/models/releases/grok-4-7",
+      "note": "SpaceXAI / xAI Grok 4.7 的 low / high / xhigh 三档综合指数（42.22 / 46.33 / 46.45）、单任务成本（$1.25 / $2.73 / $3.74）与 6 项能力指数。",
+      "accessed": "2026-10-19",
+      "status": "直接核验；纳入主表与分项对照"
+    },
+    {
+      "id": "B19",
+      "type": "独立评测",
+      "title": "Scale Labs SEAL 专家盲测榜单",
+      "url": "https://labs.scale.com/leaderboard",
+      "note": "Humanity's Sixth Sense、HLE Diamond、SWE-Bench Pro V2 Full/Hard、Remote Labor Index (RLI) 与 MultiChallenge 的同协议专家盲测。",
+      "accessed": "2026-10-19",
+      "status": "直接核验；单独展示不与 AA 混算"
+    },
+    {
+      "id": "B20",
+      "type": "用户任务评测",
+      "title": "OpenRouter Rankings：周调用量与 Vals Index v2.1",
+      "url": "https://openrouter.ai/rankings",
+      "note": "2026-10-18 周榜 Token 份额、请求量，以及 Vals Index v2.1 企业基准分数、每请求实际花费（costPerRequest）与计入缓存后的有效输入单价。",
+      "accessed": "2026-10-19",
+      "status": "直接核验；真实路由统计与基准独立呈现"
+    },
+    {
+      "id": "B21",
+      "type": "独立评测",
+      "title": "LiveBench 2.0 抗污染长程执行与单成功任务成本",
+      "url": "https://livebench.ai",
+      "note": "动态更新的抗污染复杂任务执行得分与每成功完成任务（Cost per Successful Task）端到端费用。",
+      "accessed": "2026-10-19",
+      "status": "直接核验；保留独立成本口径"
     }
   ],
   "official_metrics": [

@@ -4,16 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <title>Gemini · Claude · GPT｜能力、成本与任务选型报告</title>
+  <title>Grok · ChatGPT · Gemini · Claude｜能力指数、发布版本成本与主流评测选型报告</title>
   <style>/* REPORT_CSS */</style>
 </head>
 <body>
 <a href="#report-main" class="skip">跳到报告正文</a>
 <header class="hero">
-  <div class="topline"><span class="eyebrow">MODEL OBSERVATORY / 2026.10.16</span><span class="badge">离线报告 · Claude 扩展核验于 10 月 16 日</span></div>
+  <div class="topline"><span class="eyebrow">MODEL OBSERVATORY / 2026.10.19</span><span class="badge">离线报告 · 整合 AA / Scale SEAL / OpenRouter / LiveBench / Arena 五大榜单</span></div>
   <h1>从任务出发，比较模型。</h1>
-  <p class="lead">Gemini、Claude、GPT 的能力、成本、速度与推理档位。把“擅长什么”和“完成一次任务要付出什么”放在一起看。</p>
-  <div class="hero-bottom"><span>20 个选型与兼容候选（含 14 款 Claude）<span class="muted">＋ 3 个 GPT 代际基线 · Mythos 受限入口另列</span></span><button id="printReport" class="text-button">打印报告（当前筛选）</button></div>
+  <p class="lead">Grok、ChatGPT (GPT)、Gemini、Claude 四大家族当前可用模型的能力指数、按发布版本划分的单任务成本、速度与推理档位。把“擅长什么”和“完成一次任务要付出什么”放在一起看。</p>
+  <div class="hero-bottom"><span>21 个选型与兼容候选（含 Grok 4.7、GPT 6.1/6、Gemini 4/3.8/3.5、14 款 Claude）<span class="muted">＋ 3 个 GPT 代际基线 · 30 个发布版本轨迹</span></span><button id="printReport" class="text-button">打印报告（当前筛选）</button></div>
 </header>
 <div class="nav-shell"><nav id="report-nav" role="tablist" aria-label="报告维度">
   <button role="tab" id="tab-overview" aria-controls="overview" aria-selected="true" data-panel="overview">选型概览</button>
@@ -26,13 +26,18 @@
 <main id="report-main">
 <section class="panel" id="overview" role="tabpanel" aria-labelledby="tab-overview">
   <div class="section-heading"><span class="eyebrow">01 / DECISION BRIEF</span><h2>先选任务，再看档位与预算。</h2></div>
-  <nav class="overview-shortcuts" aria-label="选型概览内快速跳转"><a href="#task-routing-heading">按任务快速选型 ↓</a><a href="#agent-default-heading">OpenClaw / Hermes 主控默认 ↓</a><a href="#agent-division-heading">子 agent 与辅助任务分工 ↓</a></nav>
+  <nav class="overview-shortcuts" aria-label="选型概览内快速跳转"><a href="#multi-benchmark-heading">五大评测网站×四大家族全景 ↓</a><a href="#task-routing-heading">按任务快速选型 ↓</a><a href="#agent-default-heading">OpenClaw / Hermes 主控默认 ↓</a><a href="#agent-division-heading">子 agent 与辅助任务分工 ↓</a></nav>
   <div class="summary-grid">
-    <article><span class="summary-number">01</span><h3>复杂编码可先试 Sol 6.1</h3><p>Vulcan 的 23 题中，<strong>high 通过 23/23，约 $0.33/次、10.2 分钟/题</strong>。Astra high 同样通过 23/23，用时约 4.9 分钟，费用约 $1.71。预算和等待时间会导向不同选择。</p><p class="citation"><a href="https://vulcanbench.com/benchmarks/swe-v4-gpt61-sol-v318.html" target="_blank" rel="noopener">Sol 原始实验</a> · <button data-jump="explorer" data-benchmark="coding" class="inline-button">查看完整数据 →</button></p></article>
-    <article><span class="summary-number">02</span><h3>写作不必默认最高档</h3><p>同一 ToneBench 快照中，Opus 5.5 high 为 <strong>84.61 分 / $0.328</strong>，Sonnet 5.5 max 为 84.60 分 / $1.383。Opus 5.5 xhigh → max 仅增 0.10 分、费用增至 2.57 倍；小分差没有显著性保证。</p><p class="citation"><a href="https://benchmark.towardsai.com/data/leaderboard.json" target="_blank" rel="noopener">ToneBench 同版数据</a> · 英文脚本，不等于中文写作。</p></article>
-    <article><span class="summary-number">03</span><h3>多模态与轻量任务单独选型</h3><p>Gemini 三个候选都原生接收音频、视频与 PDF。AA 中 Argon high 的自动化子项为 <strong>78%</strong>；Flash-Lite 约 <strong>438 token/s</strong>，但综合指数为 22。输入能力、速度和任务质量应分别验收。</p><p class="citation"><a href="https://ai.google.dev/gemini-api/docs/models" target="_blank" rel="noopener">Google 规格</a> · <button data-jump="capabilities" class="inline-button">比较分项能力 →</button></p></article>
+    <article><span class="summary-number">01</span><h3>复杂编码可先试 Sol 6.1</h3><p>Vulcan 的 23 题中，<strong>high 通过 23/23，约 $0.33/次、10.2 分钟/题</strong>；AA 单任务成本仅 <strong>$0.32</strong>，LiveBench 2.0 达 <strong>85.4 分 / $0.73</strong>，Arena Code 居 <strong>#2 (+16.13%)</strong>。Astra high 用时约 4.9 分钟、$1.71。</p><p class="citation"><a href="https://vulcanbench.com/benchmarks/swe-v4-gpt61-sol-v318.html" target="_blank" rel="noopener">Sol 原始实验</a> · <button data-jump="explorer" data-benchmark="coding" class="inline-button">查看按发布版本成本图 →</button></p></article>
+    <article><span class="summary-number">02</span><h3>专业能力看 6 大领域排名</h3><p>AA 能力指数对比显示：<strong>Opus 5.5</strong> 居 6 大领域榜首；<strong>Sonnet 5.5</strong> 在财务/医疗/工程居 #2 且 OpenRouter Vals 达 <strong>67.04 ($3.74/req)</strong>；<strong>Grok 4.7</strong> 在医疗居 #7、财务与法律居 #8，<strong>high ($2.73)</strong> 与 xhigh ($3.74) 几乎同分。</p><p class="citation"><a href="https://artificialanalysis.ai/zh/indexes" target="_blank" rel="noopener">AA 能力指数对比</a> · <button data-jump="capabilities" class="inline-button">查看能力指数排名图 →</button></p></article>
+    <article><span class="summary-number">03</span><h3>多模态与轻量任务单独选型</h3><p><strong>Gemini 4 Argon</strong> 夺得 OpenRouter Vals <strong>#1 (68.90)</strong> 与 Scale 第六感 <strong>#1 (55.4%)</strong>，法律能力指数居全球 #3；<strong>Flash-Lite</strong> 约 <strong>438 token/s</strong>；<strong>Luna 6</strong> 周调用量达 <strong>6.21T tokens</strong>（约 $0.005/任务）。</p><p class="citation"><a href="https://openrouter.ai/rankings" target="_blank" rel="noopener">OpenRouter 榜单</a> · <button data-jump="capabilities" class="inline-button">比较分项能力 →</button></p></article>
   </div>
-  <p class="callout">这些是候选选择与观测结果。没有把不同基准揉成总分，也没有把 API 费用换算为 ChatGPT、Claude 或 Gemini 的订阅额度。</p>
+  <p class="callout">这些是候选选择与观测结果。没有把不同基准揉成总分，也没有把 API 费用换算为 Grok、ChatGPT、Claude 或 Gemini 的订阅额度。</p>
+  <div class="section-heading" id="multi-benchmark-heading"><h2>五大主流评测网站 × 四大模型家族（Grok · ChatGPT · Gemini · Claude）全景对照</h2><p>2026-10-19 整合核验：联合 <a href="https://artificialanalysis.ai/zh" target="_blank" rel="noopener">Artificial Analysis</a>、<a href="https://labs.scale.com/leaderboard" target="_blank" rel="noopener">Scale Labs SEAL</a>、<a href="https://openrouter.ai/rankings" target="_blank" rel="noopener">OpenRouter Rankings</a>、<a href="https://livebench.ai" target="_blank" rel="noopener">LiveBench 2.0</a> 与 <a href="https://arena.ai/" target="_blank" rel="noopener">Arena.ai</a>。各平台保持原始分数与独立成本口径，不跨站混合折算。</p></div>
+  <div id="platformCards" class="platform-grid"></div>
+  <div class="toolbar"><label>模型家族筛选<select id="panoramaFamily"><option value="all">全部四大主力家族（11 款当前核心系列）</option><option value="Claude (Anthropic)">Claude (Anthropic)</option><option value="ChatGPT / OpenAI">ChatGPT / OpenAI</option><option value="Gemini (Google)">Gemini (Google)</option><option value="Grok (xAI / SpaceXAI)">Grok (xAI / SpaceXAI)</option></select></label><button id="exportPanorama">导出五站全景对照 CSV</button><span id="panoramaCount" class="small"></span><button data-jump="capabilities" class="inline-button">跳至「能力指数对比」图表 →</button><button data-jump="explorer" class="inline-button">跳至「按发布版本成本」图表 →</button></div>
+  <div id="panoramaTable" class="table-scroll"></div>
+  <details class="note-box"><summary>Scale Labs SEAL 六大专业盲测子榜前四名速览（2026-10-19 快照）</summary><div id="scaleHighlightsTable" class="table-scroll"></div><p class="small">数据来源：<a href="https://labs.scale.com/leaderboard" target="_blank" rel="noopener">Scale Labs SEAL Leaderboards</a>。SWE-Bench Pro V2 区分 Claude Code、Codex 与 mini-swe-agent 等代理脚手架；HLE Diamond 与 Humanity's Sixth Sense 包含 95% 置信区间上界。</p></details>
   <div class="section-heading"><h2>Claude 全型号：先核对入口，再选起步档位</h2><p>2026-10-16 核验：截图中的 8 款全部纳入，加上原报告的 4 款新版、官方仍可调用的 Opus 4.5 与 Sonnet 4.5，共 14 款通用型号。Active 不代表你的入口有权限；Deprecated 仍能调用，但需安排迁移。</p></div>
   <p class="task-guide-intro"><strong>如果目前只能使用截图里的型号：</strong>日常编码先试 <strong>Sonnet 5 high</strong>，范围明确时试 medium；复杂定位、重要 review 和设计比较 <strong>Opus 5 high</strong>。Fable 5 作为难题升级候选，截图提示另需 usage credits。这是结合官方起点的选型建议，旧型号缺少同版 Vulcan 档位曲线。</p>
   <div class="toolbar"><label>Claude 范围<select id="claudeScope"><option value="all">全部 14 款通用型号</option><option value="screenshot">仅截图可见 8 款</option></select></label><button id="exportClaude">导出 Claude 选型 CSV</button><span id="claudeCount" class="small"></span></div>
@@ -125,8 +130,44 @@
 </section>
 
 <section class="panel" id="capabilities" role="tabpanel" aria-labelledby="tab-capabilities" hidden>
-  <div class="section-heading"><span class="eyebrow">02 / CAPABILITY PROFILE</span><h2>同一个综合分，会掩盖不同的长处。</h2><p>AA v4.3.2：原 10 个代表配置于 10-15 读取，新增 10 个 Claude 配置于 10-16 读取。* 为来源估计值；缺测不是零。相同 high / max 不代表相同计算预算。</p></div>
-  <div class="toolbar"><label>关注维度<select id="dimension"><option value="all">全部分项</option><option value="work">知识工作与自动化</option><option value="coding">编码与科学推理</option><option value="reliability">文档、长上下文与事实</option><option value="speed">速度与响应时间</option></select></label><label>型号范围<select id="profileScope"><option value="all">全部 20 个配置</option><option value="claude">14 款 Claude</option><option value="screenshot">截图 8 款</option></select></label><button id="exportProfiles">导出分项数据</button><span class="small">点击列标题排序；各列保留原始单位。</span></div>
+  <div class="section-heading"><span class="eyebrow">02 / CAPABILITY PROFILE</span><h2>同一个综合分，会掩盖不同的长处。</h2><p>AA v4.3.2：原 10 个代表配置于 10-15 读取，新增 10 个 Claude 配置于 10-16 读取，Grok 4.7 与 6 大领域能力指数于 10-19 读取。* 为来源估计值；缺测不是零。相同 high / max 不代表相同计算预算。</p></div>
+
+  <div class="card chart-card" id="capIndexCard">
+    <div class="chart-header">
+      <div>
+        <span class="eyebrow">AA CAPABILITY INDEXES · 6 大专业领域能力指数对比</span>
+        <h3 id="capIndexTitle">能力指数对比：跨领域排名跃迁（Bump Chart）与单项得分</h3>
+      </div>
+      <div class="toolbar">
+        <label>展示范围
+          <select id="capIndexScope">
+            <option value="four_family_top">四大家族当前主力版本（Grok · GPT · Gemini · Claude 代表档）</option>
+            <option value="four_family_all">四大家族含代际基线与多档位（展开 high / xhigh / max）</option>
+            <option value="all_top">全市场代表版本（含 Muse · MiMo · DeepSeek · GLM · Qwen）</option>
+          </select>
+        </label>
+        <label class="check"><input type="checkbox" id="capShowII" checked>含综合指数参照列</label>
+        <button id="exportCapIndexes">导出能力指数 CSV</button>
+      </div>
+    </div>
+    <p class="small">参考 <a href="https://artificialanalysis.ai/zh/indexes" target="_blank" rel="noopener">Artificial Analysis 能力指数对比</a> 设计：<strong>全部（排名对比）</strong>以平行坐标折线（Bump Chart）展示各模型在 6 个专业领域中的名次变化，进入前 3 名的节点显示实心排名徽章；点击任一领域标签切换为该领域的<strong>得分条形对比图</strong>与核心驱动评测拆解。</p>
+    <div class="cap-index-tabs" id="capIndexTabs" role="group" aria-label="选择能力指数领域">
+      <button type="button" data-cap-tab="all" aria-pressed="true">全部 · 排名对比</button>
+      <button type="button" data-cap-tab="financeAndAccounting" aria-pressed="false">财务与会计</button>
+      <button type="button" data-cap-tab="strategyAndOps" aria-pressed="false">战略与运营</button>
+      <button type="button" data-cap-tab="legal" aria-pressed="false">法律</button>
+      <button type="button" data-cap-tab="healthcareAndMedical" aria-pressed="false">医疗与健康</button>
+      <button type="button" data-cap-tab="engineering" aria-pressed="false">工程</button>
+      <button type="button" data-cap-tab="economics" aria-pressed="false">经济学</button>
+    </div>
+    <div class="topline"><span id="capIndexCount" class="small" aria-live="polite"></span><span class="small">悬停、点击或按键盘方向键/回车高亮模型轨迹</span></div>
+    <div class="svg-scroll"><svg id="capBumpChart" role="group" aria-label="能力指数排名与得分对比图"></svg></div>
+    <div id="capModelPills" class="release-pills" aria-label="快速高亮模型"></div>
+    <div id="capIndexDetail" class="detail" aria-live="polite"></div>
+  </div>
+
+  <div class="section-heading"><h2>AA 10 项底层子评测与速度响应矩阵（21 个核心配置）</h2><p>保留每一项子评测的原始单位（Elo、百分比、指数、token/s、秒、美元），支持按任意分项列排序。</p></div>
+  <div class="toolbar"><label>关注维度<select id="dimension"><option value="all">全部分项</option><option value="work">知识工作与自动化</option><option value="coding">编码与科学推理</option><option value="reliability">文档、长上下文与事实</option><option value="speed">速度与响应时间</option></select></label><label>型号范围<select id="profileScope"><option value="all">全部 21 个配置</option><option value="claude">14 款 Claude</option><option value="screenshot">截图 8 款</option></select></label><button id="exportProfiles">导出分项数据</button><span class="small">点击列标题排序；各列保留原始单位。</span></div>
   <div class="table-scroll" id="capabilityTable"></div><div id="dimensionNotes" class="method-note"></div>
   <p class="callout">Fable 5.1、Opus 5.5、Sonnet 5.5 的 AA 配置含 Default Fallback；Fable 5 max 含 Opus 4.8 回退，比例未披露。Opus 4.7 / 4.6 / 4.5 综合分为估计值，部分子项和费用缺失。Haiku 5.5 的 >100k 阶梯价覆盖仍未确认。AA 的 Time per Task 是 token 与吞吐推算值；不等于评测过程中的墙钟耗时。<a href="https://artificialanalysis.ai/methodology" target="_blank" rel="noopener">AA 定义</a></p>
   <div class="section-heading"><h2>官方材料补充长上下文与多模态证据</h2><p>以下直接取自 Google 的 Argon model card，属于厂商发表的比较。不同项目的来源和实验设置各异，单独呈现。</p></div>
@@ -135,7 +176,42 @@
 </section>
 
 <section class="panel" id="explorer" role="tabpanel" aria-labelledby="tab-explorer" hidden>
-  <div class="section-heading"><span class="eyebrow">03 / MEASURED TRADE-OFFS</span><h2>一套基准，一种成本口径。</h2><p>共 166 条记录；原 121 条保持不变，另补入 Gemini、Claude 与 Agent Arena 数据。不同基准分别解释。</p></div>
+  <div class="section-heading"><span class="eyebrow">03 / MEASURED TRADE-OFFS</span><h2>一套基准，一种成本口径。</h2><p>共 169 条主表记录（原 121 条保持不变，补入 Gemini、Claude、Grok 4.7 与 Agent Arena 数据），并新增按模型发布版本（By Release）划分的 30 个发布版本、94 个推理档位全轨迹对照。</p></div>
+
+  <div class="card chart-card" id="releaseChartCard">
+    <div class="chart-header">
+      <div>
+        <span class="eyebrow">BY MODEL RELEASE · 按模型发布版本划分的能力与单任务投入</span>
+        <h3 id="releaseChartTitle">按模型发布版本划分的 Intelligence Index 与单任务成本</h3>
+      </div>
+      <div class="toolbar">
+        <label>横轴度量
+          <select id="releaseXMetric">
+            <option value="costPerTask">单任务成本（USD · 对数刻度）</option>
+            <option value="timePerTaskMinutes">每任务耗时（分钟 · 对数刻度）</option>
+            <option value="outputTokensPerTask">每任务输出 Token 数（Reasoning + Answer · 对数刻度）</option>
+          </select>
+        </label>
+        <label>发布版本范围
+          <select id="releaseScope">
+            <option value="four_family_current">四大家族当前可用主力（Grok · GPT · Gemini · Claude + 灰底全市场参照）</option>
+            <option value="four_family_flagship">仅四大家族核心旗舰（Grok 4.7 · Sol 6.1 · Astra · Argon · Opus/Sonnet/Fable 5.5）</option>
+            <option value="all_releases">全市场 30 个发布版本全彩对照（含 Muse · MiMo · DeepSeek · GLM · Qwen）</option>
+          </select>
+        </label>
+        <label class="check"><input id="releasePareto" type="checkbox" checked>全局帕累托前沿</label>
+        <label class="check"><input id="releaseBackdrop" type="checkbox" checked>显示背景参照点</label>
+        <button id="exportReleases">导出发布版本轨迹 CSV</button>
+      </div>
+    </div>
+    <p class="small">参考 <a href="https://artificialanalysis.ai/zh/models/releases" target="_blank" rel="noopener">Artificial Analysis 按模型发布版本划分图表</a> 设计：同一发布版本（Release）的不同推理档位（<code>non-reasoning / low / medium / high / xhigh / max</code>）以同色实线连接成升档轨迹；<strong>图面仅在各发布版本的最高分代表点标注一次版本名称</strong>以避免文字重叠，悬停或点击任一圆点可查看该发布版本全部档位的成本构成（输入/缓存读写/推理/可见输出）与 Token 拆解。</p>
+    <div class="topline"><span id="releaseCount" class="small" aria-live="polite"></span><span class="small">左上更优（高能力、低成本/低耗时） · 点击版本胶囊可单独开关</span></div>
+    <div id="releasePills" class="release-pills" aria-label="筛选模型发布版本"></div>
+    <div class="svg-scroll"><svg id="releaseChart" role="group" aria-label="按模型发布版本划分的 Intelligence Index 与单任务成本散点轨迹图"></svg></div>
+    <div id="releaseDetail" class="detail" aria-live="polite"></div>
+  </div>
+
+  <div class="section-heading"><h2>四基准逐配置探索器（综合 AA · 编码 Vulcan · 写作 ToneBench · 用户任务 Arena）</h2><p>保留全部 169 条逐配置记录、置信区间与收据完整性检验。</p></div>
   <div class="benchmark-tabs" role="group" aria-label="选择评测"><button data-group="general" aria-pressed="true">综合 · AA</button><button data-group="coding" aria-pressed="false">编码 · Vulcan</button><button data-group="writing" aria-pressed="false">写作 · ToneBench</button><button data-group="arena" aria-pressed="false">用户任务 · Arena</button></div>
   <details class="filters card" open><summary>模型与档位筛选 <span class="small">颜色表示模型，形状表示档位</span></summary><div id="models" class="model-filters"></div><div id="efforts" class="effort-filters"></div><div class="toolbar filter-footer"><button id="currentModels">选型与兼容候选</button><button id="claudeModels">只看 Claude</button><button id="screenshotModels">截图 8 款</button><button id="selectAll">全选含基线</button><button id="clearAll">清空模型</button><button id="reset">重置</button><label class="check"><input type="checkbox" id="verifiedOnly">仅前沿可参与配置</label></div></details>
   <div class="chart-card card"><div class="chart-header"><h3 id="charttitle"></h3><div class="toolbar"><label>横轴<select id="xmetric"></select></label><label>刻度<select id="scale"><option value="log">对数</option><option value="linear">线性</option></select></label><label class="check"><input id="pareto" type="checkbox" checked>条件前沿</label></div></div><p id="unit" class="small"></p><p class="chart-note" id="caveat"></p><div class="topline"><span id="count" class="small" aria-live="polite"></span><span class="small">左上更优 · 可悬停、点按或用键盘选取</span></div><svg id="chart" role="group" aria-label="能力、成本与耗时散点图"></svg><p id="frontnote" class="small"></p><div id="detail" class="detail" aria-live="polite"></div><div id="gaps"></div></div>
@@ -144,8 +220,8 @@
 </section>
 
 <section class="panel" id="specs" role="tabpanel" aria-labelledby="tab-specs" hidden>
-  <div class="section-heading"><span class="eyebrow">04 / SPECIFICATIONS & BUDGET</span><h2>单价只是起点，推理用量会改变账单。</h2><p>官方 API Standard、美元 / 百万 token；Claude 核验于 10-16，GPT / Gemini 于 10-15；每款保留核验日期。产品订阅、服务加速、Batch/Flex 与工具调用另算。</p></div>
-  <div class="toolbar"><label>显示型号<select id="specScope"><option value="current">20 个选型与兼容候选</option><option value="claude">14 款 Claude</option><option value="screenshot">截图中的 8 款 Claude</option><option value="all">全部 23 个含 GPT 基线</option></select></label><button id="exportSpecs">导出规格 CSV</button></div><div id="specTable" class="table-scroll"></div>
+  <div class="section-heading"><span class="eyebrow">04 / SPECIFICATIONS & BUDGET</span><h2>单价只是起点，推理用量会改变账单。</h2><p>官方 API Standard、美元 / 百万 token；Grok 4.7 核验于 10-19，Claude 核验于 10-16，GPT / Gemini 于 10-15；每款保留核验日期。产品订阅、服务加速、Batch/Flex 与工具调用另算。</p></div>
+  <div class="toolbar"><label>显示型号<select id="specScope"><option value="current">21 个选型与兼容候选</option><option value="claude">14 款 Claude</option><option value="screenshot">截图中的 8 款 Claude</option><option value="all">全部 24 个含 GPT 基线</option></select></label><button id="exportSpecs">导出规格 CSV</button></div><div id="specTable" class="table-scroll"></div>
   <details class="note-box"><summary>如何理解“1M 上下文”和多模态支持</summary><p>上下文上限代表可容纳量，不保证长文档推理或信息召回质量。Argon 的 1,048,576 是输入、思考、输出共享窗口；Flash / Flash-Lite 列的是输入上限，输出另有 65,536 上限。GPT 的窗口为 1,050,000；Claude 4.6 及以后为 1M / 128k；本次核验的 Opus 4.5、Sonnet 4.5、Haiku 4.5 为 200k / 64k。旧评测页面的窗口标注不覆盖当前官方规格。</p><p>表中只列这些通用 API 模型的原生输入和文本输出。GPT / Claude 的产品或工具可以处理其他媒体，但不应据此把通用模型标为原生音频、视频输入；Gemini 的音频/视频理解也不等于能生成音频/视频。图像生成、TTS、Live 与视频生成另有专用模型。</p></details>
   <div class="section-heading"><h2>用同一组用量假设比较 API 预算</h2><p>这是费用情景，不是实测成本。每次请求的 token 数相同，不能保证不同模型完成同一任务会使用同样的 token。</p></div>
   <div class="calculator card"><div class="calc-inputs">
