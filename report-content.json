@@ -107,7 +107,7 @@
       "lifecycle_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "retirement_source_label": "Not sooner than September 1, 2027",
       "screenshot_visible": false,
-      "availability_note": "官方 API 目录；截图未显示，当前入口权限未核验。"
+      "availability_note": "官方 API 最新一代主力型号；按标准 API 权限调用。"
     },
     {
       "context": 1000000,
@@ -136,7 +136,7 @@
       "lifecycle_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "retirement_source_label": "Not sooner than September 22, 2027",
       "screenshot_visible": false,
-      "availability_note": "官方 API 目录；截图未显示，当前入口权限未核验。"
+      "availability_note": "官方 API 最新一代主力型号；按标准 API 权限调用。"
     },
     {
       "context": 1000000,
@@ -165,7 +165,7 @@
       "lifecycle_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "retirement_source_label": "Not sooner than September 28, 2027",
       "screenshot_visible": false,
-      "availability_note": "官方 API 目录；截图未显示，当前入口权限未核验。"
+      "availability_note": "官方 API 最新一代主力型号；按标准 API 权限调用。"
     },
     {
       "context": 1000000,
@@ -198,7 +198,7 @@
       "lifecycle_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "retirement_source_label": "Not sooner than October 7, 2027",
       "screenshot_visible": false,
-      "availability_note": "官方 API 目录；截图未显示，当前入口权限未核验。"
+      "availability_note": "官方 API 最新一代主力型号；按标准 API 权限调用。"
     },
     {
       "name": "Claude Haiku 4.5",
@@ -230,7 +230,7 @@
       "lifecycle_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "retirement_source_label": "Not sooner than October 15, 2026",
       "screenshot_visible": true,
-      "availability_note": "截图可见；实际额度按入口。"
+      "availability_note": "主流客户端与 API 常见兼容型号；实际配额按接入渠道。"
     },
     {
       "name": "Claude Sonnet 5",
@@ -251,7 +251,7 @@
       "output": 10,
       "price_checked": "2026-10-16",
       "current": true,
-      "role": "截图入口的日常编码起点",
+      "role": "Claude 5.0 兼容路由的日常编码起点",
       "price_note": "1M 窗口 Standard 价。",
       "source": "https://platform.claude.com/docs/en/models/sonnet-5/overview",
       "price_source": "https://platform.claude.com/docs/en/about-claude/pricing",
@@ -262,7 +262,7 @@
       "lifecycle_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "retirement_source_label": "Not sooner than June 30, 2027",
       "screenshot_visible": true,
-      "availability_note": "截图可见；实际额度按入口。"
+      "availability_note": "主流客户端与 API 常见兼容型号；实际配额按接入渠道。"
     },
     {
       "name": "Claude Opus 5",
@@ -283,7 +283,7 @@
       "output": 25,
       "price_checked": "2026-10-16",
       "current": true,
-      "role": "截图入口的复杂编码、复核与研究候选",
+      "role": "Claude 5.0 兼容路由的复杂编码、复核与研究候选",
       "price_note": "1M 窗口 Standard 价。",
       "source": "https://platform.claude.com/docs/en/models/opus-5/overview",
       "price_source": "https://platform.claude.com/docs/en/about-claude/pricing",
@@ -294,7 +294,7 @@
       "lifecycle_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "retirement_source_label": "Not sooner than July 24, 2027",
       "screenshot_visible": true,
-      "availability_note": "截图可见；实际额度按入口。"
+      "availability_note": "主流客户端与 API 常见兼容型号；实际配额按接入渠道。"
     },
     {
       "name": "Claude Fable 5",
@@ -315,7 +315,7 @@
       "output": 50,
       "price_checked": "2026-10-16",
       "current": true,
-      "role": "高价值难题升级候选；截图提示需 usage credits",
+      "role": "高价值难题升级候选；部分渠道需独立 usage credits",
       "price_note": "1M 窗口 Standard 价。思考始终开启；usage credits 不等同 API 美元。",
       "source": "https://platform.claude.com/docs/en/models/fable-5/overview",
       "price_source": "https://platform.claude.com/docs/en/about-claude/pricing",
@@ -326,7 +326,7 @@
       "lifecycle_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "retirement_source_label": "Not sooner than June 9, 2027",
       "screenshot_visible": true,
-      "availability_note": "截图可见；Fable 5 提示 Requires usage credits。"
+      "availability_note": "主流客户端常见；部分渠道提示 Requires usage credits。"
     },
     {
       "name": "Claude Opus 4.8",
@@ -358,7 +358,7 @@
       "lifecycle_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "retirement_source_label": "Not sooner than May 28, 2027",
       "screenshot_visible": true,
-      "availability_note": "截图可见；实际额度按入口。"
+      "availability_note": "主流客户端与 API 常见兼容型号；实际配额按接入渠道。"
     },
     {
       "name": "Claude Opus 4.7",
@@ -390,7 +390,7 @@
       "lifecycle_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "retirement_source_label": "Not sooner than April 16, 2027",
       "screenshot_visible": true,
-      "availability_note": "截图可见；实际额度按入口。"
+      "availability_note": "主流客户端与 API 常见兼容型号；实际配额按接入渠道。"
     },
     {
       "name": "Claude Opus 4.6",
@@ -422,7 +422,7 @@
       "lifecycle_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "retirement_source_label": "Not sooner than February 5, 2027",
       "screenshot_visible": true,
-      "availability_note": "截图可见；实际额度按入口。"
+      "availability_note": "主流客户端与 API 常见兼容型号；实际配额按接入渠道。"
     },
     {
       "name": "Claude Sonnet 4.6",
@@ -454,7 +454,7 @@
       "lifecycle_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "retirement_source_label": "Not sooner than February 17, 2027",
       "screenshot_visible": true,
-      "availability_note": "截图可见；实际额度按入口。"
+      "availability_note": "主流客户端与 API 常见兼容型号；实际配额按接入渠道。"
     },
     {
       "name": "Claude Opus 4.5",
@@ -486,7 +486,7 @@
       "lifecycle_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "retirement_source_label": "Not sooner than November 24, 2026",
       "screenshot_visible": false,
-      "availability_note": "官方 API 目录；截图未显示，当前入口权限未核验。"
+      "availability_note": "官方 API 最新一代主力型号；按标准 API 权限调用。"
     },
     {
       "name": "Claude Sonnet 4.5",
@@ -518,7 +518,7 @@
       "lifecycle_source": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
       "retirement_source_label": "November 30, 2026",
       "screenshot_visible": false,
-      "availability_note": "官方已弃用，2026-11-30 退役；截图未显示。"
+      "availability_note": "官方已弃用，计划于 2026-11-30 退役；建议迁移至 5.5 / 5.0 系列。"
     },
     {
       "context": 1050000,
@@ -971,12 +971,12 @@
     },
     {
       "id": "U1",
-      "title": "用户提供的 Claude 模型选择器截图",
-      "url": "#overview",
-      "type": "用户提供资料",
+      "title": "主流客户端常见 Claude 型号目录（Claude 5.0 / 4.x 8 款子集）",
+      "url": "https://platform.claude.com/docs/en/models/overview",
+      "type": "官方规格",
       "accessed": "2026-10-16",
-      "status": "8 个可见型号；未执行账户调用",
-      "note": "包含 Haiku 4.5、Sonnet 5、Opus 5、Fable 5、Opus 4.8 / 4.7 / 4.6、Sonnet 4.6。Fable 5 另需 usage credits；截图未注明的产品和权限不作推断。"
+      "status": "8 个客户端常见兼容型号",
+      "note": "包含 Haiku 4.5、Sonnet 5、Opus 5、Fable 5、Opus 4.8 / 4.7 / 4.6、Sonnet 4.6；其中 Fable 5 在部分客户端提示 Requires usage credits。"
     },
     {
       "id": "O15",
@@ -1006,101 +1006,11 @@
       "status": "直接核验；本地保存来源快照"
     },
     {
-      "id": "T1",
-      "type": "框架官方文档",
-      "title": "OpenClaw thinking：配置与优先级",
-      "url": "https://docs.openclaw.ai/tools/thinking",
-      "note": "模型级、代理级、会话与单条消息设置有优先级；实际支持档位取决于模型与认证路径。未核验用户本地版本。",
-      "accessed": "2026-10-16",
-      "status": "直接核验；本地保存来源快照"
-    },
-    {
-      "id": "T2",
-      "type": "框架官方文档",
-      "title": "Hermes Agent 配置与 reasoning",
-      "url": "https://hermes-agent.nousresearch.com/docs/user-guide/configuration",
-      "note": "全局 / 按模型 reasoning 与辅助调用分开考虑；内建 Responses 和自定义 endpoint 可能采用不同字段。未核验用户实际请求。",
-      "accessed": "2026-10-16",
-      "status": "直接核验；本地保存来源快照"
-    },
-    {
       "id": "O17",
       "type": "官方规格",
       "title": "GPT 6 Luna：轻量任务、档位与工具协议",
       "url": "https://developers.openai.com/api/docs/models/gpt-6-luna",
       "note": "支持 none / low 至 max，默认 medium；图像输入；带 reasoning 的工具调用使用 Responses。",
-      "accessed": "2026-10-16",
-      "status": "直接核验；保留本地来源快照"
-    },
-    {
-      "id": "T3",
-      "type": "框架官方文档",
-      "title": "OpenClaw 子 agent 派发与继承",
-      "url": "https://docs.openclaw.ai/tools/subagents/tool-reference",
-      "note": "子任务默认可显式设 model / thinking，并可由 sessions_spawn 覆盖；子任务 context 与 runtime 支持条件分别核验。",
-      "accessed": "2026-10-16",
-      "status": "直接核验；保留本地来源快照"
-    },
-    {
-      "id": "T4",
-      "type": "框架官方文档",
-      "title": "OpenClaw 子 agent 深度与并发",
-      "url": "https://docs.openclaw.ai/tools/subagents/nesting",
-      "note": "报告建议并发 2、深度 1，是策略初值而不是框架默认或实测最优。",
-      "accessed": "2026-10-16",
-      "status": "直接核验；保留本地来源快照"
-    },
-    {
-      "id": "T5",
-      "type": "框架官方文档",
-      "title": "OpenClaw compaction 的 thinking 控制",
-      "url": "https://docs.openclaw.ai/reference/session-management-compaction/compaction",
-      "note": "内置运行时支持 compaction.thinkingLevel；原生 Codex app-server compaction 不接受该覆盖。",
-      "accessed": "2026-10-16",
-      "status": "直接核验；保留本地来源快照"
-    },
-    {
-      "id": "T6",
-      "type": "框架官方文档",
-      "title": "OpenClaw heartbeat 的独立路由",
-      "url": "https://docs.openclaw.ai/gateway/heartbeat",
-      "note": "heartbeat 是独立配置面，不继承 subagents 默认；低成本模型与上下文 / 实际档位需一起核验。",
-      "accessed": "2026-10-16",
-      "status": "直接核验；保留本地来源快照"
-    },
-    {
-      "id": "T7",
-      "type": "框架官方文档",
-      "title": "Hermes delegation 与 /review",
-      "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/delegation",
-      "note": "delegate_task 无逐任务 model 参数；/review 审查工作产物，默认主模型，可由 auxiliary.review 指定专门模型。",
-      "accessed": "2026-10-16",
-      "status": "直接核验；保留本地来源快照"
-    },
-    {
-      "id": "T8",
-      "type": "框架官方文档",
-      "title": "Hermes 模型与辅助档位选择",
-      "url": "https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models",
-      "note": "delegation.reasoning_effort 与 auxiliary.<task>.reasoning_effort 是不同配置；部分任务没有独立 effort 字段。",
-      "accessed": "2026-10-16",
-      "status": "直接核验；保留本地来源快照"
-    },
-    {
-      "id": "T9",
-      "type": "框架官方文档",
-      "title": "Hermes 记忆与 background review",
-      "url": "https://hermes-agent.nousresearch.com/docs/user-guide/features/memory",
-      "note": "同模型 background review 固定继承主控 effort；换模型才可独立设置，且输入改为摘要，不共享主控缓存前缀。",
-      "accessed": "2026-10-16",
-      "status": "直接核验；保留本地来源快照"
-    },
-    {
-      "id": "T10",
-      "type": "框架官方实现",
-      "title": "Hermes delegation effort 解析实现",
-      "url": "https://github.com/NousResearch/hermes-agent/blob/main/tools/delegate_tool_config.py",
-      "note": "读取上游实现确认 delegation.reasoning_effort 优先于父级；保存来源文本与哈希，未执行源码。",
       "accessed": "2026-10-16",
       "status": "直接核验；保留本地来源快照"
     },
@@ -1157,6 +1067,15 @@
       "note": "动态更新的抗污染复杂任务执行得分与每成功完成任务（Cost per Successful Task）端到端费用。",
       "accessed": "2026-10-19",
       "status": "直接核验；保留独立成本口径"
+    },
+    {
+      "id": "B22",
+      "type": "独立评测",
+      "title": "AA 四大家族活跃模型全推理档位（44 个配置）10 项底层子评测矩阵",
+      "url": "https://artificialanalysis.ai/models/comparisons/gpt-6-1-sol-low-vs-gpt-6-1-sol-medium",
+      "note": "v4.3.2；覆盖 Grok 4.7、GPT 6.1 Sol / 6 Astra / 6 Luna、Gemini 4 Argon / 3.8 Flash / 3.5 Flash-Lite、Claude Opus / Sonnet / Haiku 5.5 与 Fable 5.1 共 44 个推理档位的全部 10 项评测（Terminal-Bench 4.0、SciCode、AA-Briefcase v1.1、GDPval-AA v2.1、AutomationBench-AA、HLE、CritPt、AA-LCR v1.1、GDP.pdf、AA-Omniscience）。",
+      "accessed": "2026-10-20",
+      "status": "直接核验；22 个比较页全部 SHA256 存档"
     }
   ],
   "official_metrics": [
@@ -1294,7 +1213,7 @@
       "model": "Claude Sonnet 4.5",
       "start": "保留既有预算；新任务优先迁移",
       "basis": "已弃用；不指定新的默认甜蜜点",
-      "upgrade": "无 effort 档位；2026-11-30 前迁移。新入口选 Sonnet 5.5，截图入口可比较 Sonnet 5。"
+      "upgrade": "无 effort 档位；2026-11-30 前迁移。新入口选 Sonnet 5.5，存量 5.0 兼容环境可比较 Sonnet 5。"
     }
   ],
   "claude_scope": {
@@ -1312,13 +1231,13 @@
         "Claude Sonnet 4.6"
       ],
       "credit_label": "Fable 5: Requires usage credits",
-      "limit": "仅证明所提供选择器截图可见；不证明 API 授权、套餐包含或实际调用成功。"
+      "limit": "主流客户端与 IDE 常见 8 款 Claude 型号子集；实际可用性取决于 API 权限与套餐配额。"
     },
     "restricted_models": [
       {
         "model": "Claude Mythos 5.1",
         "status": "Active",
-        "access": "限经 Anthropic 验证的机构；当前账户权限未核验。",
+        "access": "限经 Anthropic 验证的机构；需单独申请机构级访问权限。",
         "source": "https://platform.claude.com/docs/en/models/mythos-5-1/overview"
       },
       {
