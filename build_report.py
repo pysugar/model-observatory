@@ -6,6 +6,7 @@ import hashlib
 import json
 import re
 import argparse
+from scripts.report_claims import render_claims
 
 ROOT = Path(__file__).resolve().parent
 RESEARCH = ROOT / "research" / "2026-10-15"
@@ -195,8 +196,9 @@ def build(output_dir=ROOT):
     html = (ROOT / "report.template.html").read_text()
     payload = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     html = html.replace("/* REPORT_CSS */", (ROOT / "report.css").read_text())
-    html = html.replace("REPORT_DATA_JSON", payload)
     html = html.replace("/* REPORT_JS */", (ROOT / "report.js").read_text())
+    html = render_claims(html, data)
+    html = html.replace("REPORT_DATA_JSON", payload)
     (output_dir / "model-capability-cost.html").write_text(html, encoding="utf-8")
     print(json.dumps({"rows": len(rows), "original_rows": 121, "aa_profiles": len(profiles),
                       "models": len(model_names), "groups": {g: sum(r["benchmark"] == g for r in rows) for g in ["general", "coding", "writing", "arena"]},
