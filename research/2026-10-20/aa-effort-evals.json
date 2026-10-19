@@ -1,0 +1,2881 @@
+{
+  "fetched_at": "2026-10-19T21:06:01+00:00",
+  "source": "Artificial Analysis public model comparison pages (Intelligence Index v4.3.2)",
+  "evals": [
+    "Intelligence Index",
+    "AA-Briefcase v1.1",
+    "GDPval-AA v2.1",
+    "AutomationBench-AA",
+    "Terminal-Bench 4.0",
+    "SciCode",
+    "Humanity's Last Exam",
+    "GDP.pdf",
+    "CritPt",
+    "AA-Omniscience",
+    "AA-LCR v1.1"
+  ],
+  "pages": [
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/grok-4-7-low-vs-grok-4-7-high",
+      "sha256": "7d20a91e069c33e11b57331b52dd46611477d542032ad54e40557e127bb65d99",
+      "header": [
+        "",
+        "SpaceXAI Grok 4.7 (Low)",
+        "SpaceXAI Grok 4.7 (High)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "42",
+          "46"
+        ],
+        "AA-Briefcase v1.1": [
+          "1499",
+          "1633"
+        ],
+        "GDPval-AA v2.1": [
+          "1588",
+          "1706"
+        ],
+        "AutomationBench-AA": [
+          "57%",
+          "64%"
+        ],
+        "Terminal-Bench 4.0": [
+          "16%",
+          "25%"
+        ],
+        "SciCode": [
+          "55%",
+          "58%"
+        ],
+        "Humanity's Last Exam": [
+          "39%",
+          "42%"
+        ],
+        "GDP.pdf": [
+          "21%",
+          "23%"
+        ],
+        "CritPt": [
+          "13%",
+          "18%"
+        ],
+        "AA-Omniscience": [
+          "30",
+          "31"
+        ],
+        "AA-LCR v1.1": [
+          "80%",
+          "77%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/grok-4-7-vs-gpt-6-1-sol-low",
+      "sha256": "ad0f98c24dfd63fa580f22fe1430df48caaad493cdf3be21da8ba2ed59c5da21",
+      "header": [
+        "",
+        "OpenAI GPT-6.1 Sol (Low)",
+        "SpaceXAI Grok 4.7 (Xhigh)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "42",
+          "46"
+        ],
+        "AA-Briefcase v1.1": [
+          "1117",
+          "1642"
+        ],
+        "GDPval-AA v2.1": [
+          "1315",
+          "1711"
+        ],
+        "AutomationBench-AA": [
+          "53%",
+          "66%"
+        ],
+        "Terminal-Bench 4.0": [
+          "31%",
+          "26%"
+        ],
+        "SciCode": [
+          "53%",
+          "57%"
+        ],
+        "Humanity's Last Exam": [
+          "47%",
+          "43%"
+        ],
+        "GDP.pdf": [
+          "27%",
+          "20%"
+        ],
+        "CritPt": [
+          "25%",
+          "18%"
+        ],
+        "AA-Omniscience": [
+          "38",
+          "32"
+        ],
+        "AA-LCR v1.1": [
+          "84%",
+          "77%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/gpt-6-1-sol-medium-vs-gpt-6-1-sol-high",
+      "sha256": "ce5f6753274e604e133f9bd9a9fa721caf20aee158e58777deaf1e33cc5c335d",
+      "header": [
+        "",
+        "OpenAI GPT-6.1 Sol (Medium)",
+        "OpenAI GPT-6.1 Sol (High)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "48",
+          "50"
+        ],
+        "AA-Briefcase v1.1": [
+          "1361",
+          "1465"
+        ],
+        "GDPval-AA v2.1": [
+          "1450",
+          "1511"
+        ],
+        "AutomationBench-AA": [
+          "63%",
+          "64%"
+        ],
+        "Terminal-Bench 4.0": [
+          "48%",
+          "52%"
+        ],
+        "SciCode": [
+          "53%",
+          "56%"
+        ],
+        "Humanity's Last Exam": [
+          "50%",
+          "51%"
+        ],
+        "GDP.pdf": [
+          "30%",
+          "32%"
+        ],
+        "CritPt": [
+          "28%",
+          "30%"
+        ],
+        "AA-Omniscience": [
+          "40",
+          "41"
+        ],
+        "AA-LCR v1.1": [
+          "83%",
+          "82%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/gpt-6-1-sol-xhigh-vs-gpt-6-1-sol",
+      "sha256": "f52a372dad7cd0b8e17b6f429fe6cf3dccb69d0718cc6d6dee52c71350ed37ba",
+      "header": [
+        "",
+        "OpenAI GPT-6.1 Sol (Xhigh)",
+        "OpenAI GPT-6.1 Sol (Max)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "51",
+          "52"
+        ],
+        "AA-Briefcase v1.1": [
+          "1504",
+          "1557"
+        ],
+        "GDPval-AA v2.1": [
+          "1538",
+          "1594"
+        ],
+        "AutomationBench-AA": [
+          "67%",
+          "65%"
+        ],
+        "Terminal-Bench 4.0": [
+          "54%",
+          "56%"
+        ],
+        "SciCode": [
+          "56%",
+          "54%"
+        ],
+        "Humanity's Last Exam": [
+          "53%",
+          "53%"
+        ],
+        "GDP.pdf": [
+          "32%",
+          "31%"
+        ],
+        "CritPt": [
+          "32%",
+          "32%"
+        ],
+        "AA-Omniscience": [
+          "41",
+          "42"
+        ],
+        "AA-LCR v1.1": [
+          "80%",
+          "83%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/gpt-6-astra-low-vs-gpt-6-astra-medium",
+      "sha256": "141b503f438de40702f641f7b14122d684407ba225e4d430852adefb1772c527",
+      "header": [
+        "",
+        "OpenAI GPT-6 Astra (Low)",
+        "OpenAI GPT-6 Astra (Medium)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "46",
+          "50"
+        ],
+        "AA-Briefcase v1.1": [
+          "1257",
+          "1461"
+        ],
+        "GDPval-AA v2.1": [
+          "1389",
+          "1486"
+        ],
+        "AutomationBench-AA": [
+          "59%",
+          "65%"
+        ],
+        "Terminal-Bench 4.0": [
+          "42%",
+          "49%"
+        ],
+        "SciCode": [
+          "54%",
+          "54%"
+        ],
+        "Humanity's Last Exam": [
+          "49%",
+          "53%"
+        ],
+        "GDP.pdf": [
+          "30%",
+          "30%"
+        ],
+        "CritPt": [
+          "26%",
+          "29%"
+        ],
+        "AA-Omniscience": [
+          "41",
+          "42"
+        ],
+        "AA-LCR v1.1": [
+          "80%",
+          "80%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/gpt-6-astra-high-vs-gpt-6-astra-xhigh",
+      "sha256": "d6d6d6274c3328a5cee802c266a13b1c04c429fdf36775cab7c7f0f701864505",
+      "header": [
+        "",
+        "OpenAI GPT-6 Astra (High)",
+        "OpenAI GPT-6 Astra (Xhigh)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "51",
+          "52"
+        ],
+        "AA-Briefcase v1.1": [
+          "1506",
+          "1547"
+        ],
+        "GDPval-AA v2.1": [
+          "1523",
+          "1556"
+        ],
+        "AutomationBench-AA": [
+          "67%",
+          "67%"
+        ],
+        "Terminal-Bench 4.0": [
+          "54%",
+          "60%"
+        ],
+        "SciCode": [
+          "55%",
+          "56%"
+        ],
+        "Humanity's Last Exam": [
+          "53%",
+          "55%"
+        ],
+        "GDP.pdf": [
+          "31%",
+          "32%"
+        ],
+        "CritPt": [
+          "29%",
+          "31%"
+        ],
+        "AA-Omniscience": [
+          "44",
+          "43"
+        ],
+        "AA-LCR v1.1": [
+          "80%",
+          "80%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/gpt-6-astra-vs-gpt-6-luna-non-reasoning",
+      "sha256": "1fd497cfa80201f649ffef1310008ec9f1539b1e4c5f78b27caa1ab3579401ea",
+      "header": [
+        "",
+        "OpenAI GPT-6 Luna (Non-reasoning)",
+        "OpenAI GPT-6 Astra (Max)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "18",
+          "53"
+        ],
+        "AA-Briefcase v1.1": [
+          "903",
+          "1569"
+        ],
+        "GDPval-AA v2.1": [
+          "1045",
+          "1573"
+        ],
+        "AutomationBench-AA": [
+          "9%",
+          "68%"
+        ],
+        "Terminal-Bench 4.0": [
+          "2%",
+          "59%"
+        ],
+        "SciCode": [
+          "43%",
+          "56%"
+        ],
+        "Humanity's Last Exam": [
+          "9%",
+          "55%"
+        ],
+        "GDP.pdf": [
+          "6%",
+          "31%"
+        ],
+        "CritPt": [
+          "1%",
+          "32%"
+        ],
+        "AA-Omniscience": [
+          "−22",
+          "43"
+        ],
+        "AA-LCR v1.1": [
+          "40%",
+          "81%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/gpt-6-luna-low-vs-gpt-6-luna-medium",
+      "sha256": "811bd1f7fd7d9adbee7cceaf927263abfff51d2bea073de51b33c7ad2556203a",
+      "header": [
+        "",
+        "OpenAI GPT-6 Luna (Low)",
+        "OpenAI GPT-6 Luna (Medium)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "22",
+          "30"
+        ],
+        "AA-Briefcase v1.1": [
+          "741",
+          "1099"
+        ],
+        "GDPval-AA v2.1": [
+          "1033",
+          "1262"
+        ],
+        "AutomationBench-AA": [
+          "12%",
+          "40%"
+        ],
+        "Terminal-Bench 4.0": [
+          "0%",
+          "3%"
+        ],
+        "SciCode": [
+          "47%",
+          "51%"
+        ],
+        "Humanity's Last Exam": [
+          "20%",
+          "28%"
+        ],
+        "GDP.pdf": [
+          "9%",
+          "14%"
+        ],
+        "CritPt": [
+          "3%",
+          "11%"
+        ],
+        "AA-Omniscience": [
+          "−9",
+          "−5"
+        ],
+        "AA-LCR v1.1": [
+          "74%",
+          "78%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/gpt-6-luna-high-vs-gpt-6-luna-xhigh",
+      "sha256": "d803f51dd0ff73511f96349d6c1aa09d897f6dabecc5c86b56cf986da18f004e",
+      "header": [
+        "",
+        "OpenAI GPT-6 Luna (High)",
+        "OpenAI GPT-6 Luna (Xhigh)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "33",
+          "35"
+        ],
+        "AA-Briefcase v1.1": [
+          "1186",
+          "1237"
+        ],
+        "GDPval-AA v2.1": [
+          "1340",
+          "1364"
+        ],
+        "AutomationBench-AA": [
+          "48%",
+          "48%"
+        ],
+        "Terminal-Bench 4.0": [
+          "5%",
+          "8%"
+        ],
+        "SciCode": [
+          "50%",
+          "52%"
+        ],
+        "Humanity's Last Exam": [
+          "33%",
+          "34%"
+        ],
+        "GDP.pdf": [
+          "18%",
+          "19%"
+        ],
+        "CritPt": [
+          "15%",
+          "17%"
+        ],
+        "AA-Omniscience": [
+          "−6",
+          "−2"
+        ],
+        "AA-LCR v1.1": [
+          "79%",
+          "80%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/gpt-6-luna-vs-gemini-4-argon",
+      "sha256": "3df9632024cf4a1791016d4a6c95f3f9603990e2d91d8b239b3815edd63e5f5a",
+      "header": [
+        "",
+        "Google Gemini 4 Argon (High)",
+        "OpenAI GPT-6 Luna (Max)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "53",
+          "38"
+        ],
+        "AA-Briefcase v1.1": [
+          "1486",
+          "1335"
+        ],
+        "GDPval-AA v2.1": [
+          "1624",
+          "1432"
+        ],
+        "AutomationBench-AA": [
+          "78%",
+          "53%"
+        ],
+        "Terminal-Bench 4.0": [
+          "57%",
+          "13%"
+        ],
+        "SciCode": [
+          "62%",
+          "55%"
+        ],
+        "Humanity's Last Exam": [
+          "57%",
+          "39%"
+        ],
+        "GDP.pdf": [
+          "22%",
+          "23%"
+        ],
+        "CritPt": [
+          "27%",
+          "19%"
+        ],
+        "AA-Omniscience": [
+          "42",
+          "1"
+        ],
+        "AA-LCR v1.1": [
+          "80%",
+          "83%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/gemini-3-8-flash-low-vs-gemini-3-8-flash-medium",
+      "sha256": "e6265e2e326558d7316fb6308ba4b85990e9b2022c4362833a0b1f3000410c64",
+      "header": [
+        "",
+        "Google Gemini 3.8 Flash (Low)",
+        "Google Gemini 3.8 Flash (Medium)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "33",
+          "40"
+        ],
+        "AA-Briefcase v1.1": [
+          "1062",
+          "1182"
+        ],
+        "GDPval-AA v2.1": [
+          "1307",
+          "1421"
+        ],
+        "AutomationBench-AA": [
+          "37%",
+          "61%"
+        ],
+        "Terminal-Bench 4.0": [
+          "10%",
+          "20%"
+        ],
+        "SciCode": [
+          "55%",
+          "55%"
+        ],
+        "Humanity's Last Exam": [
+          "37%",
+          "42%"
+        ],
+        "GDP.pdf": [
+          "19%",
+          "23%"
+        ],
+        "CritPt": [
+          "4%",
+          "12%"
+        ],
+        "AA-Omniscience": [
+          "21",
+          "29"
+        ],
+        "AA-LCR v1.1": [
+          "81%",
+          "84%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/gemini-3-8-flash-vs-gemini-3-5-flash-lite",
+      "sha256": "f6d78341cf199e1c5df42dc9612feda3a8b48d5695546d702c6e7a78b0872331",
+      "header": [
+        "",
+        "Google Gemini 3.8 Flash (High)",
+        "Google Gemini 3.5 Flash-Lite",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "41",
+          "22"
+        ],
+        "AA-Briefcase v1.1": [
+          "1203",
+          "650"
+        ],
+        "GDPval-AA v2.1": [
+          "1436",
+          "983"
+        ],
+        "AutomationBench-AA": [
+          "60%",
+          "25%"
+        ],
+        "Terminal-Bench 4.0": [
+          "20%",
+          "1%"
+        ],
+        "SciCode": [
+          "57%",
+          "41%"
+        ],
+        "Humanity's Last Exam": [
+          "48%",
+          "19%"
+        ],
+        "GDP.pdf": [
+          "21%",
+          "14%"
+        ],
+        "CritPt": [
+          "18%",
+          "0%"
+        ],
+        "AA-Omniscience": [
+          "30",
+          "5"
+        ],
+        "AA-LCR v1.1": [
+          "81%",
+          "76%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/claude-opus-5-5-low-vs-claude-opus-5-5-medium",
+      "sha256": "7f9d7399da8e3911d33a3269727915b770791f299a87e2aeee6b0feaf93608a9",
+      "header": [
+        "",
+        "Anthropic Claude Opus 5.5 (Low, Default Fallback)",
+        "Anthropic Claude Opus 5.5 (Medium, Default Fallback)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "42",
+          "51"
+        ],
+        "AA-Briefcase v1.1": [
+          "1280",
+          "1625"
+        ],
+        "GDPval-AA v2.1": [
+          "1235",
+          "1584"
+        ],
+        "AutomationBench-AA": [
+          "53%",
+          "61%"
+        ],
+        "Terminal-Bench 4.0": [
+          "31%",
+          "53%"
+        ],
+        "SciCode": [
+          "59%",
+          "59%"
+        ],
+        "Humanity's Last Exam": [
+          "48%",
+          "55%"
+        ],
+        "GDP.pdf": [
+          "26%",
+          "26%"
+        ],
+        "CritPt": [
+          "18%",
+          "28%"
+        ],
+        "AA-Omniscience": [
+          "39",
+          "40"
+        ],
+        "AA-LCR v1.1": [
+          "81%",
+          "84%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/claude-opus-5-5-high-vs-claude-opus-5-5-xhigh",
+      "sha256": "033d7e0cff862fc38b5028a99061f8371f3eba821d14c36a1413b6892b8cb74b",
+      "header": [
+        "",
+        "Anthropic Claude Opus 5.5 (High, Default Fallback)",
+        "Anthropic Claude Opus 5.5 (Xhigh, Default Fallback)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "54",
+          "56"
+        ],
+        "AA-Briefcase v1.1": [
+          "1686",
+          "1764"
+        ],
+        "GDPval-AA v2.1": [
+          "1704",
+          "1831"
+        ],
+        "AutomationBench-AA": [
+          "63%",
+          "65%"
+        ],
+        "Terminal-Bench 4.0": [
+          "57%",
+          "60%"
+        ],
+        "SciCode": [
+          "60%",
+          "65%"
+        ],
+        "Humanity's Last Exam": [
+          "56%",
+          "58%"
+        ],
+        "GDP.pdf": [
+          "29%",
+          "27%"
+        ],
+        "CritPt": [
+          "31%",
+          "32%"
+        ],
+        "AA-Omniscience": [
+          "41",
+          "43"
+        ],
+        "AA-LCR v1.1": [
+          "83%",
+          "85%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/claude-opus-5-5-vs-claude-sonnet-5-5-low",
+      "sha256": "e0c6948e39d199e940af955ca10e4b3e32d569285d1a6b676de1f3cef384e60b",
+      "header": [
+        "",
+        "Anthropic Claude Sonnet 5.5 (Low, Default Fallback)",
+        "Anthropic Claude Opus 5.5 (Max, Default Fallback)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "36",
+          "58"
+        ],
+        "AA-Briefcase v1.1": [
+          "1272",
+          "1803"
+        ],
+        "GDPval-AA v2.1": [
+          "1175",
+          "1866"
+        ],
+        "AutomationBench-AA": [
+          "49%",
+          "70%"
+        ],
+        "Terminal-Bench 4.0": [
+          "21%",
+          "60%"
+        ],
+        "SciCode": [
+          "49%",
+          "67%"
+        ],
+        "Humanity's Last Exam": [
+          "36%",
+          "61%"
+        ],
+        "GDP.pdf": [
+          "16%",
+          "26%"
+        ],
+        "CritPt": [
+          "11%",
+          "32%"
+        ],
+        "AA-Omniscience": [
+          "19",
+          "46"
+        ],
+        "AA-LCR v1.1": [
+          "76%",
+          "85%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/claude-sonnet-5-5-medium-vs-claude-sonnet-5-5-high",
+      "sha256": "92793158edab3b489d7fb74fe9b6cc5402306dd5594685002b2e8aaa503d9695",
+      "header": [
+        "",
+        "Anthropic Claude Sonnet 5.5 (Medium, Default Fallback)",
+        "Anthropic Claude Sonnet 5.5 (High, Default Fallback)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "41",
+          "47"
+        ],
+        "AA-Briefcase v1.1": [
+          "1441",
+          "1636"
+        ],
+        "GDPval-AA v2.1": [
+          "1323",
+          "1549"
+        ],
+        "AutomationBench-AA": [
+          "55%",
+          "59%"
+        ],
+        "Terminal-Bench 4.0": [
+          "30%",
+          "44%"
+        ],
+        "SciCode": [
+          "53%",
+          "54%"
+        ],
+        "Humanity's Last Exam": [
+          "40%",
+          "46%"
+        ],
+        "GDP.pdf": [
+          "20%",
+          "25%"
+        ],
+        "CritPt": [
+          "17%",
+          "25%"
+        ],
+        "AA-Omniscience": [
+          "20",
+          "21"
+        ],
+        "AA-LCR v1.1": [
+          "76%",
+          "78%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/claude-sonnet-5-5-xhigh-vs-claude-sonnet-5-5",
+      "sha256": "bb7764a7d77df1dc30f58d387a9efe979cdb242d8839513852d123b0a947ced7",
+      "header": [
+        "",
+        "Anthropic Claude Sonnet 5.5 (Xhigh, Default Fallback)",
+        "Anthropic Claude Sonnet 5.5 (Max, Default Fallback)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "52",
+          "56"
+        ],
+        "AA-Briefcase v1.1": [
+          "1751",
+          "1817"
+        ],
+        "GDPval-AA v2.1": [
+          "1728",
+          "1838"
+        ],
+        "AutomationBench-AA": [
+          "66%",
+          "72%"
+        ],
+        "Terminal-Bench 4.0": [
+          "57%",
+          "64%"
+        ],
+        "SciCode": [
+          "57%",
+          "61%"
+        ],
+        "Humanity's Last Exam": [
+          "50%",
+          "55%"
+        ],
+        "GDP.pdf": [
+          "25%",
+          "26%"
+        ],
+        "CritPt": [
+          "31%",
+          "31%"
+        ],
+        "AA-Omniscience": [
+          "24",
+          "32"
+        ],
+        "AA-LCR v1.1": [
+          "80%",
+          "83%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/claude-fable-5-1-low-vs-claude-fable-5-1-medium",
+      "sha256": "cef7279a66b36d3a71225bd523708dc9484178199dabd6055f6fa502dffb04ca",
+      "header": [
+        "",
+        "Anthropic Claude Fable 5.1 (Low, Default Fallback)",
+        "Anthropic Claude Fable 5.1 (Medium, Default Fallback)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "47",
+          "49"
+        ],
+        "AA-Briefcase v1.1": [
+          "1482",
+          "1528"
+        ],
+        "GDPval-AA v2.1": [
+          "1469",
+          "1545"
+        ],
+        "AutomationBench-AA": [
+          "52%",
+          "55%"
+        ],
+        "Terminal-Bench 4.0": [
+          "40%",
+          "45%"
+        ],
+        "SciCode": [
+          "57%",
+          "56%"
+        ],
+        "Humanity's Last Exam": [
+          "49%",
+          "54%"
+        ],
+        "GDP.pdf": [
+          "28%",
+          "27%"
+        ],
+        "CritPt": [
+          "28%",
+          "29%"
+        ],
+        "AA-Omniscience": [
+          "34",
+          "38"
+        ],
+        "AA-LCR v1.1": [
+          "82%",
+          "85%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/claude-fable-5-1-high-vs-claude-fable-5-1-xhigh",
+      "sha256": "2c8e282153553bbedf2cd373f4bffa5e573b7205e336b6b75b32097a7c9d1cdf",
+      "header": [
+        "",
+        "Anthropic Claude Fable 5.1 (High, Default Fallback)",
+        "Anthropic Claude Fable 5.1 (Xhigh, Default Fallback)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "51",
+          "53"
+        ],
+        "AA-Briefcase v1.1": [
+          "1580",
+          "1655"
+        ],
+        "GDPval-AA v2.1": [
+          "1635",
+          "1732"
+        ],
+        "AutomationBench-AA": [
+          "55%",
+          "58%"
+        ],
+        "Terminal-Bench 4.0": [
+          "52%",
+          "55%"
+        ],
+        "SciCode": [
+          "59%",
+          "61%"
+        ],
+        "Humanity's Last Exam": [
+          "56%",
+          "59%"
+        ],
+        "GDP.pdf": [
+          "27%",
+          "26%"
+        ],
+        "CritPt": [
+          "30%",
+          "31%"
+        ],
+        "AA-Omniscience": [
+          "41",
+          "42"
+        ],
+        "AA-LCR v1.1": [
+          "84%",
+          "83%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/claude-fable-5-1-vs-claude-haiku-5-5-low",
+      "sha256": "317f29851699d9e9031261e1514dde5d1ab9e3790e1da646d7cdd948200cb338",
+      "header": [
+        "",
+        "Anthropic Claude Haiku 5.5 (Low)",
+        "Anthropic Claude Fable 5.1 (Max, Default Fallback)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "29",
+          "53"
+        ],
+        "AA-Briefcase v1.1": [
+          "1112",
+          "1672"
+        ],
+        "GDPval-AA v2.1": [
+          "1123",
+          "1754"
+        ],
+        "AutomationBench-AA": [
+          "23%",
+          "59%"
+        ],
+        "Terminal-Bench 4.0": [
+          "13%",
+          "52%"
+        ],
+        "SciCode": [
+          "49%",
+          "63%"
+        ],
+        "Humanity's Last Exam": [
+          "27%",
+          "59%"
+        ],
+        "GDP.pdf": [
+          "11%",
+          "26%"
+        ],
+        "CritPt": [
+          "9%",
+          "30%"
+        ],
+        "AA-Omniscience": [
+          "3",
+          "43"
+        ],
+        "AA-LCR v1.1": [
+          "72%",
+          "85%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/claude-haiku-5-5-medium-vs-claude-haiku-5-5-high",
+      "sha256": "c743a1d878e28e83a597fcb668083d247c7ffe53f3525a00b2db2e733d66f5a5",
+      "header": [
+        "",
+        "Anthropic Claude Haiku 5.5 (Medium)",
+        "Anthropic Claude Haiku 5.5 (High)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "34",
+          "38"
+        ],
+        "AA-Briefcase v1.1": [
+          "1372",
+          "1443"
+        ],
+        "GDPval-AA v2.1": [
+          "1275",
+          "1418"
+        ],
+        "AutomationBench-AA": [
+          "29%",
+          "34%"
+        ],
+        "Terminal-Bench 4.0": [
+          "15%",
+          "22%"
+        ],
+        "SciCode": [
+          "49%",
+          "49%"
+        ],
+        "Humanity's Last Exam": [
+          "34%",
+          "37%"
+        ],
+        "GDP.pdf": [
+          "15%",
+          "17%"
+        ],
+        "CritPt": [
+          "13%",
+          "19%"
+        ],
+        "AA-Omniscience": [
+          "4",
+          "6"
+        ],
+        "AA-LCR v1.1": [
+          "77%",
+          "77%"
+        ]
+      }
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/claude-haiku-5-5-xhigh-vs-claude-haiku-5-5",
+      "sha256": "a3fa18efcfbff9e9d670d39b944bbb548d65a96045439b07c3d8dcd4b6e9816f",
+      "header": [
+        "",
+        "Anthropic Claude Haiku 5.5 (Xhigh)",
+        "Anthropic Claude Haiku 5.5 (Max)",
+        "Add model"
+      ],
+      "rows": {
+        "Intelligence Index": [
+          "41",
+          "43"
+        ],
+        "AA-Briefcase v1.1": [
+          "1532",
+          "1577"
+        ],
+        "GDPval-AA v2.1": [
+          "1513",
+          "1618"
+        ],
+        "AutomationBench-AA": [
+          "36%",
+          "35%"
+        ],
+        "Terminal-Bench 4.0": [
+          "29%",
+          "33%"
+        ],
+        "SciCode": [
+          "52%",
+          "55%"
+        ],
+        "Humanity's Last Exam": [
+          "43%",
+          "44%"
+        ],
+        "GDP.pdf": [
+          "18%",
+          "21%"
+        ],
+        "CritPt": [
+          "23%",
+          "19%"
+        ],
+        "AA-Omniscience": [
+          "6",
+          "11"
+        ],
+        "AA-LCR v1.1": [
+          "78%",
+          "83%"
+        ]
+      }
+    }
+  ],
+  "variants": {
+    "grok-4-7-low": {
+      "slug": "grok-4-7-low",
+      "releaseSlug": "grok-4-7",
+      "model": "Grok 4.7",
+      "vendor": "xAI",
+      "effort": "low",
+      "effortOrder": 2,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/grok-4-7-low-vs-grok-4-7-high",
+      "column_label": "SpaceXAI Grok 4.7 (Low)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "42",
+        "AA-Briefcase v1.1": "1499",
+        "GDPval-AA v2.1": "1588",
+        "AutomationBench-AA": "57%",
+        "Terminal-Bench 4.0": "16%",
+        "SciCode": "55%",
+        "Humanity's Last Exam": "39%",
+        "GDP.pdf": "21%",
+        "CritPt": "13%",
+        "AA-Omniscience": "30",
+        "AA-LCR v1.1": "80%"
+      },
+      "metrics": {
+        "Intelligence Index": 42.0,
+        "AA-Briefcase v1.1": 1499.0,
+        "GDPval-AA v2.1": 1588.0,
+        "AutomationBench-AA": 57.0,
+        "Terminal-Bench 4.0": 16.0,
+        "SciCode": 55.0,
+        "Humanity's Last Exam": 39.0,
+        "GDP.pdf": 21.0,
+        "CritPt": 13.0,
+        "AA-Omniscience": 30.0,
+        "AA-LCR v1.1": 80.0
+      }
+    },
+    "grok-4-7-high": {
+      "slug": "grok-4-7-high",
+      "releaseSlug": "grok-4-7",
+      "model": "Grok 4.7",
+      "vendor": "xAI",
+      "effort": "high",
+      "effortOrder": 4,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/grok-4-7-low-vs-grok-4-7-high",
+      "column_label": "SpaceXAI Grok 4.7 (High)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "46",
+        "AA-Briefcase v1.1": "1633",
+        "GDPval-AA v2.1": "1706",
+        "AutomationBench-AA": "64%",
+        "Terminal-Bench 4.0": "25%",
+        "SciCode": "58%",
+        "Humanity's Last Exam": "42%",
+        "GDP.pdf": "23%",
+        "CritPt": "18%",
+        "AA-Omniscience": "31",
+        "AA-LCR v1.1": "77%"
+      },
+      "metrics": {
+        "Intelligence Index": 46.0,
+        "AA-Briefcase v1.1": 1633.0,
+        "GDPval-AA v2.1": 1706.0,
+        "AutomationBench-AA": 64.0,
+        "Terminal-Bench 4.0": 25.0,
+        "SciCode": 58.0,
+        "Humanity's Last Exam": 42.0,
+        "GDP.pdf": 23.0,
+        "CritPt": 18.0,
+        "AA-Omniscience": 31.0,
+        "AA-LCR v1.1": 77.0
+      }
+    },
+    "gpt-6-1-sol-low": {
+      "slug": "gpt-6-1-sol-low",
+      "releaseSlug": "gpt-6-1-sol",
+      "model": "GPT 6.1 Sol",
+      "vendor": "OpenAI",
+      "effort": "low",
+      "effortOrder": 2,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/grok-4-7-vs-gpt-6-1-sol-low",
+      "column_label": "OpenAI GPT-6.1 Sol (Low)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "42",
+        "AA-Briefcase v1.1": "1117",
+        "GDPval-AA v2.1": "1315",
+        "AutomationBench-AA": "53%",
+        "Terminal-Bench 4.0": "31%",
+        "SciCode": "53%",
+        "Humanity's Last Exam": "47%",
+        "GDP.pdf": "27%",
+        "CritPt": "25%",
+        "AA-Omniscience": "38",
+        "AA-LCR v1.1": "84%"
+      },
+      "metrics": {
+        "Intelligence Index": 42.0,
+        "AA-Briefcase v1.1": 1117.0,
+        "GDPval-AA v2.1": 1315.0,
+        "AutomationBench-AA": 53.0,
+        "Terminal-Bench 4.0": 31.0,
+        "SciCode": 53.0,
+        "Humanity's Last Exam": 47.0,
+        "GDP.pdf": 27.0,
+        "CritPt": 25.0,
+        "AA-Omniscience": 38.0,
+        "AA-LCR v1.1": 84.0
+      }
+    },
+    "grok-4-7": {
+      "slug": "grok-4-7",
+      "releaseSlug": "grok-4-7",
+      "model": "Grok 4.7",
+      "vendor": "xAI",
+      "effort": "xhigh",
+      "effortOrder": 5,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/grok-4-7-vs-gpt-6-1-sol-low",
+      "column_label": "SpaceXAI Grok 4.7 (Xhigh)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "46",
+        "AA-Briefcase v1.1": "1642",
+        "GDPval-AA v2.1": "1711",
+        "AutomationBench-AA": "66%",
+        "Terminal-Bench 4.0": "26%",
+        "SciCode": "57%",
+        "Humanity's Last Exam": "43%",
+        "GDP.pdf": "20%",
+        "CritPt": "18%",
+        "AA-Omniscience": "32",
+        "AA-LCR v1.1": "77%"
+      },
+      "metrics": {
+        "Intelligence Index": 46.0,
+        "AA-Briefcase v1.1": 1642.0,
+        "GDPval-AA v2.1": 1711.0,
+        "AutomationBench-AA": 66.0,
+        "Terminal-Bench 4.0": 26.0,
+        "SciCode": 57.0,
+        "Humanity's Last Exam": 43.0,
+        "GDP.pdf": 20.0,
+        "CritPt": 18.0,
+        "AA-Omniscience": 32.0,
+        "AA-LCR v1.1": 77.0
+      }
+    },
+    "gpt-6-1-sol-medium": {
+      "slug": "gpt-6-1-sol-medium",
+      "releaseSlug": "gpt-6-1-sol",
+      "model": "GPT 6.1 Sol",
+      "vendor": "OpenAI",
+      "effort": "medium",
+      "effortOrder": 3,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gpt-6-1-sol-medium-vs-gpt-6-1-sol-high",
+      "column_label": "OpenAI GPT-6.1 Sol (Medium)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "48",
+        "AA-Briefcase v1.1": "1361",
+        "GDPval-AA v2.1": "1450",
+        "AutomationBench-AA": "63%",
+        "Terminal-Bench 4.0": "48%",
+        "SciCode": "53%",
+        "Humanity's Last Exam": "50%",
+        "GDP.pdf": "30%",
+        "CritPt": "28%",
+        "AA-Omniscience": "40",
+        "AA-LCR v1.1": "83%"
+      },
+      "metrics": {
+        "Intelligence Index": 48.0,
+        "AA-Briefcase v1.1": 1361.0,
+        "GDPval-AA v2.1": 1450.0,
+        "AutomationBench-AA": 63.0,
+        "Terminal-Bench 4.0": 48.0,
+        "SciCode": 53.0,
+        "Humanity's Last Exam": 50.0,
+        "GDP.pdf": 30.0,
+        "CritPt": 28.0,
+        "AA-Omniscience": 40.0,
+        "AA-LCR v1.1": 83.0
+      }
+    },
+    "gpt-6-1-sol-high": {
+      "slug": "gpt-6-1-sol-high",
+      "releaseSlug": "gpt-6-1-sol",
+      "model": "GPT 6.1 Sol",
+      "vendor": "OpenAI",
+      "effort": "high",
+      "effortOrder": 4,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gpt-6-1-sol-medium-vs-gpt-6-1-sol-high",
+      "column_label": "OpenAI GPT-6.1 Sol (High)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "50",
+        "AA-Briefcase v1.1": "1465",
+        "GDPval-AA v2.1": "1511",
+        "AutomationBench-AA": "64%",
+        "Terminal-Bench 4.0": "52%",
+        "SciCode": "56%",
+        "Humanity's Last Exam": "51%",
+        "GDP.pdf": "32%",
+        "CritPt": "30%",
+        "AA-Omniscience": "41",
+        "AA-LCR v1.1": "82%"
+      },
+      "metrics": {
+        "Intelligence Index": 50.0,
+        "AA-Briefcase v1.1": 1465.0,
+        "GDPval-AA v2.1": 1511.0,
+        "AutomationBench-AA": 64.0,
+        "Terminal-Bench 4.0": 52.0,
+        "SciCode": 56.0,
+        "Humanity's Last Exam": 51.0,
+        "GDP.pdf": 32.0,
+        "CritPt": 30.0,
+        "AA-Omniscience": 41.0,
+        "AA-LCR v1.1": 82.0
+      }
+    },
+    "gpt-6-1-sol-xhigh": {
+      "slug": "gpt-6-1-sol-xhigh",
+      "releaseSlug": "gpt-6-1-sol",
+      "model": "GPT 6.1 Sol",
+      "vendor": "OpenAI",
+      "effort": "xhigh",
+      "effortOrder": 5,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gpt-6-1-sol-xhigh-vs-gpt-6-1-sol",
+      "column_label": "OpenAI GPT-6.1 Sol (Xhigh)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "51",
+        "AA-Briefcase v1.1": "1504",
+        "GDPval-AA v2.1": "1538",
+        "AutomationBench-AA": "67%",
+        "Terminal-Bench 4.0": "54%",
+        "SciCode": "56%",
+        "Humanity's Last Exam": "53%",
+        "GDP.pdf": "32%",
+        "CritPt": "32%",
+        "AA-Omniscience": "41",
+        "AA-LCR v1.1": "80%"
+      },
+      "metrics": {
+        "Intelligence Index": 51.0,
+        "AA-Briefcase v1.1": 1504.0,
+        "GDPval-AA v2.1": 1538.0,
+        "AutomationBench-AA": 67.0,
+        "Terminal-Bench 4.0": 54.0,
+        "SciCode": 56.0,
+        "Humanity's Last Exam": 53.0,
+        "GDP.pdf": 32.0,
+        "CritPt": 32.0,
+        "AA-Omniscience": 41.0,
+        "AA-LCR v1.1": 80.0
+      }
+    },
+    "gpt-6-1-sol": {
+      "slug": "gpt-6-1-sol",
+      "releaseSlug": "gpt-6-1-sol",
+      "model": "GPT 6.1 Sol",
+      "vendor": "OpenAI",
+      "effort": "max",
+      "effortOrder": 6,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gpt-6-1-sol-xhigh-vs-gpt-6-1-sol",
+      "column_label": "OpenAI GPT-6.1 Sol (Max)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "52",
+        "AA-Briefcase v1.1": "1557",
+        "GDPval-AA v2.1": "1594",
+        "AutomationBench-AA": "65%",
+        "Terminal-Bench 4.0": "56%",
+        "SciCode": "54%",
+        "Humanity's Last Exam": "53%",
+        "GDP.pdf": "31%",
+        "CritPt": "32%",
+        "AA-Omniscience": "42",
+        "AA-LCR v1.1": "83%"
+      },
+      "metrics": {
+        "Intelligence Index": 52.0,
+        "AA-Briefcase v1.1": 1557.0,
+        "GDPval-AA v2.1": 1594.0,
+        "AutomationBench-AA": 65.0,
+        "Terminal-Bench 4.0": 56.0,
+        "SciCode": 54.0,
+        "Humanity's Last Exam": 53.0,
+        "GDP.pdf": 31.0,
+        "CritPt": 32.0,
+        "AA-Omniscience": 42.0,
+        "AA-LCR v1.1": 83.0
+      }
+    },
+    "gpt-6-astra-low": {
+      "slug": "gpt-6-astra-low",
+      "releaseSlug": "gpt-6-astra",
+      "model": "GPT 6 Astra",
+      "vendor": "OpenAI",
+      "effort": "low",
+      "effortOrder": 2,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gpt-6-astra-low-vs-gpt-6-astra-medium",
+      "column_label": "OpenAI GPT-6 Astra (Low)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "46",
+        "AA-Briefcase v1.1": "1257",
+        "GDPval-AA v2.1": "1389",
+        "AutomationBench-AA": "59%",
+        "Terminal-Bench 4.0": "42%",
+        "SciCode": "54%",
+        "Humanity's Last Exam": "49%",
+        "GDP.pdf": "30%",
+        "CritPt": "26%",
+        "AA-Omniscience": "41",
+        "AA-LCR v1.1": "80%"
+      },
+      "metrics": {
+        "Intelligence Index": 46.0,
+        "AA-Briefcase v1.1": 1257.0,
+        "GDPval-AA v2.1": 1389.0,
+        "AutomationBench-AA": 59.0,
+        "Terminal-Bench 4.0": 42.0,
+        "SciCode": 54.0,
+        "Humanity's Last Exam": 49.0,
+        "GDP.pdf": 30.0,
+        "CritPt": 26.0,
+        "AA-Omniscience": 41.0,
+        "AA-LCR v1.1": 80.0
+      }
+    },
+    "gpt-6-astra-medium": {
+      "slug": "gpt-6-astra-medium",
+      "releaseSlug": "gpt-6-astra",
+      "model": "GPT 6 Astra",
+      "vendor": "OpenAI",
+      "effort": "medium",
+      "effortOrder": 3,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gpt-6-astra-low-vs-gpt-6-astra-medium",
+      "column_label": "OpenAI GPT-6 Astra (Medium)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "50",
+        "AA-Briefcase v1.1": "1461",
+        "GDPval-AA v2.1": "1486",
+        "AutomationBench-AA": "65%",
+        "Terminal-Bench 4.0": "49%",
+        "SciCode": "54%",
+        "Humanity's Last Exam": "53%",
+        "GDP.pdf": "30%",
+        "CritPt": "29%",
+        "AA-Omniscience": "42",
+        "AA-LCR v1.1": "80%"
+      },
+      "metrics": {
+        "Intelligence Index": 50.0,
+        "AA-Briefcase v1.1": 1461.0,
+        "GDPval-AA v2.1": 1486.0,
+        "AutomationBench-AA": 65.0,
+        "Terminal-Bench 4.0": 49.0,
+        "SciCode": 54.0,
+        "Humanity's Last Exam": 53.0,
+        "GDP.pdf": 30.0,
+        "CritPt": 29.0,
+        "AA-Omniscience": 42.0,
+        "AA-LCR v1.1": 80.0
+      }
+    },
+    "gpt-6-astra-high": {
+      "slug": "gpt-6-astra-high",
+      "releaseSlug": "gpt-6-astra",
+      "model": "GPT 6 Astra",
+      "vendor": "OpenAI",
+      "effort": "high",
+      "effortOrder": 4,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gpt-6-astra-high-vs-gpt-6-astra-xhigh",
+      "column_label": "OpenAI GPT-6 Astra (High)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "51",
+        "AA-Briefcase v1.1": "1506",
+        "GDPval-AA v2.1": "1523",
+        "AutomationBench-AA": "67%",
+        "Terminal-Bench 4.0": "54%",
+        "SciCode": "55%",
+        "Humanity's Last Exam": "53%",
+        "GDP.pdf": "31%",
+        "CritPt": "29%",
+        "AA-Omniscience": "44",
+        "AA-LCR v1.1": "80%"
+      },
+      "metrics": {
+        "Intelligence Index": 51.0,
+        "AA-Briefcase v1.1": 1506.0,
+        "GDPval-AA v2.1": 1523.0,
+        "AutomationBench-AA": 67.0,
+        "Terminal-Bench 4.0": 54.0,
+        "SciCode": 55.0,
+        "Humanity's Last Exam": 53.0,
+        "GDP.pdf": 31.0,
+        "CritPt": 29.0,
+        "AA-Omniscience": 44.0,
+        "AA-LCR v1.1": 80.0
+      }
+    },
+    "gpt-6-astra-xhigh": {
+      "slug": "gpt-6-astra-xhigh",
+      "releaseSlug": "gpt-6-astra",
+      "model": "GPT 6 Astra",
+      "vendor": "OpenAI",
+      "effort": "xhigh",
+      "effortOrder": 5,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gpt-6-astra-high-vs-gpt-6-astra-xhigh",
+      "column_label": "OpenAI GPT-6 Astra (Xhigh)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "52",
+        "AA-Briefcase v1.1": "1547",
+        "GDPval-AA v2.1": "1556",
+        "AutomationBench-AA": "67%",
+        "Terminal-Bench 4.0": "60%",
+        "SciCode": "56%",
+        "Humanity's Last Exam": "55%",
+        "GDP.pdf": "32%",
+        "CritPt": "31%",
+        "AA-Omniscience": "43",
+        "AA-LCR v1.1": "80%"
+      },
+      "metrics": {
+        "Intelligence Index": 52.0,
+        "AA-Briefcase v1.1": 1547.0,
+        "GDPval-AA v2.1": 1556.0,
+        "AutomationBench-AA": 67.0,
+        "Terminal-Bench 4.0": 60.0,
+        "SciCode": 56.0,
+        "Humanity's Last Exam": 55.0,
+        "GDP.pdf": 32.0,
+        "CritPt": 31.0,
+        "AA-Omniscience": 43.0,
+        "AA-LCR v1.1": 80.0
+      }
+    },
+    "gpt-6-luna-non-reasoning": {
+      "slug": "gpt-6-luna-non-reasoning",
+      "releaseSlug": "gpt-6-luna",
+      "model": "GPT 6 Luna",
+      "vendor": "OpenAI",
+      "effort": "non-reasoning",
+      "effortOrder": 0,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gpt-6-astra-vs-gpt-6-luna-non-reasoning",
+      "column_label": "OpenAI GPT-6 Luna (Non-reasoning)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "18",
+        "AA-Briefcase v1.1": "903",
+        "GDPval-AA v2.1": "1045",
+        "AutomationBench-AA": "9%",
+        "Terminal-Bench 4.0": "2%",
+        "SciCode": "43%",
+        "Humanity's Last Exam": "9%",
+        "GDP.pdf": "6%",
+        "CritPt": "1%",
+        "AA-Omniscience": "−22",
+        "AA-LCR v1.1": "40%"
+      },
+      "metrics": {
+        "Intelligence Index": 18.0,
+        "AA-Briefcase v1.1": 903.0,
+        "GDPval-AA v2.1": 1045.0,
+        "AutomationBench-AA": 9.0,
+        "Terminal-Bench 4.0": 2.0,
+        "SciCode": 43.0,
+        "Humanity's Last Exam": 9.0,
+        "GDP.pdf": 6.0,
+        "CritPt": 1.0,
+        "AA-Omniscience": 22.0,
+        "AA-LCR v1.1": 40.0
+      }
+    },
+    "gpt-6-astra": {
+      "slug": "gpt-6-astra",
+      "releaseSlug": "gpt-6-astra",
+      "model": "GPT 6 Astra",
+      "vendor": "OpenAI",
+      "effort": "max",
+      "effortOrder": 6,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gpt-6-astra-vs-gpt-6-luna-non-reasoning",
+      "column_label": "OpenAI GPT-6 Astra (Max)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "53",
+        "AA-Briefcase v1.1": "1569",
+        "GDPval-AA v2.1": "1573",
+        "AutomationBench-AA": "68%",
+        "Terminal-Bench 4.0": "59%",
+        "SciCode": "56%",
+        "Humanity's Last Exam": "55%",
+        "GDP.pdf": "31%",
+        "CritPt": "32%",
+        "AA-Omniscience": "43",
+        "AA-LCR v1.1": "81%"
+      },
+      "metrics": {
+        "Intelligence Index": 53.0,
+        "AA-Briefcase v1.1": 1569.0,
+        "GDPval-AA v2.1": 1573.0,
+        "AutomationBench-AA": 68.0,
+        "Terminal-Bench 4.0": 59.0,
+        "SciCode": 56.0,
+        "Humanity's Last Exam": 55.0,
+        "GDP.pdf": 31.0,
+        "CritPt": 32.0,
+        "AA-Omniscience": 43.0,
+        "AA-LCR v1.1": 81.0
+      }
+    },
+    "gpt-6-luna-low": {
+      "slug": "gpt-6-luna-low",
+      "releaseSlug": "gpt-6-luna",
+      "model": "GPT 6 Luna",
+      "vendor": "OpenAI",
+      "effort": "low",
+      "effortOrder": 2,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gpt-6-luna-low-vs-gpt-6-luna-medium",
+      "column_label": "OpenAI GPT-6 Luna (Low)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "22",
+        "AA-Briefcase v1.1": "741",
+        "GDPval-AA v2.1": "1033",
+        "AutomationBench-AA": "12%",
+        "Terminal-Bench 4.0": "0%",
+        "SciCode": "47%",
+        "Humanity's Last Exam": "20%",
+        "GDP.pdf": "9%",
+        "CritPt": "3%",
+        "AA-Omniscience": "−9",
+        "AA-LCR v1.1": "74%"
+      },
+      "metrics": {
+        "Intelligence Index": 22.0,
+        "AA-Briefcase v1.1": 741.0,
+        "GDPval-AA v2.1": 1033.0,
+        "AutomationBench-AA": 12.0,
+        "Terminal-Bench 4.0": 0.0,
+        "SciCode": 47.0,
+        "Humanity's Last Exam": 20.0,
+        "GDP.pdf": 9.0,
+        "CritPt": 3.0,
+        "AA-Omniscience": 9.0,
+        "AA-LCR v1.1": 74.0
+      }
+    },
+    "gpt-6-luna-medium": {
+      "slug": "gpt-6-luna-medium",
+      "releaseSlug": "gpt-6-luna",
+      "model": "GPT 6 Luna",
+      "vendor": "OpenAI",
+      "effort": "medium",
+      "effortOrder": 3,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gpt-6-luna-low-vs-gpt-6-luna-medium",
+      "column_label": "OpenAI GPT-6 Luna (Medium)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "30",
+        "AA-Briefcase v1.1": "1099",
+        "GDPval-AA v2.1": "1262",
+        "AutomationBench-AA": "40%",
+        "Terminal-Bench 4.0": "3%",
+        "SciCode": "51%",
+        "Humanity's Last Exam": "28%",
+        "GDP.pdf": "14%",
+        "CritPt": "11%",
+        "AA-Omniscience": "−5",
+        "AA-LCR v1.1": "78%"
+      },
+      "metrics": {
+        "Intelligence Index": 30.0,
+        "AA-Briefcase v1.1": 1099.0,
+        "GDPval-AA v2.1": 1262.0,
+        "AutomationBench-AA": 40.0,
+        "Terminal-Bench 4.0": 3.0,
+        "SciCode": 51.0,
+        "Humanity's Last Exam": 28.0,
+        "GDP.pdf": 14.0,
+        "CritPt": 11.0,
+        "AA-Omniscience": 5.0,
+        "AA-LCR v1.1": 78.0
+      }
+    },
+    "gpt-6-luna-high": {
+      "slug": "gpt-6-luna-high",
+      "releaseSlug": "gpt-6-luna",
+      "model": "GPT 6 Luna",
+      "vendor": "OpenAI",
+      "effort": "high",
+      "effortOrder": 4,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gpt-6-luna-high-vs-gpt-6-luna-xhigh",
+      "column_label": "OpenAI GPT-6 Luna (High)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "33",
+        "AA-Briefcase v1.1": "1186",
+        "GDPval-AA v2.1": "1340",
+        "AutomationBench-AA": "48%",
+        "Terminal-Bench 4.0": "5%",
+        "SciCode": "50%",
+        "Humanity's Last Exam": "33%",
+        "GDP.pdf": "18%",
+        "CritPt": "15%",
+        "AA-Omniscience": "−6",
+        "AA-LCR v1.1": "79%"
+      },
+      "metrics": {
+        "Intelligence Index": 33.0,
+        "AA-Briefcase v1.1": 1186.0,
+        "GDPval-AA v2.1": 1340.0,
+        "AutomationBench-AA": 48.0,
+        "Terminal-Bench 4.0": 5.0,
+        "SciCode": 50.0,
+        "Humanity's Last Exam": 33.0,
+        "GDP.pdf": 18.0,
+        "CritPt": 15.0,
+        "AA-Omniscience": 6.0,
+        "AA-LCR v1.1": 79.0
+      }
+    },
+    "gpt-6-luna-xhigh": {
+      "slug": "gpt-6-luna-xhigh",
+      "releaseSlug": "gpt-6-luna",
+      "model": "GPT 6 Luna",
+      "vendor": "OpenAI",
+      "effort": "xhigh",
+      "effortOrder": 5,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gpt-6-luna-high-vs-gpt-6-luna-xhigh",
+      "column_label": "OpenAI GPT-6 Luna (Xhigh)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "35",
+        "AA-Briefcase v1.1": "1237",
+        "GDPval-AA v2.1": "1364",
+        "AutomationBench-AA": "48%",
+        "Terminal-Bench 4.0": "8%",
+        "SciCode": "52%",
+        "Humanity's Last Exam": "34%",
+        "GDP.pdf": "19%",
+        "CritPt": "17%",
+        "AA-Omniscience": "−2",
+        "AA-LCR v1.1": "80%"
+      },
+      "metrics": {
+        "Intelligence Index": 35.0,
+        "AA-Briefcase v1.1": 1237.0,
+        "GDPval-AA v2.1": 1364.0,
+        "AutomationBench-AA": 48.0,
+        "Terminal-Bench 4.0": 8.0,
+        "SciCode": 52.0,
+        "Humanity's Last Exam": 34.0,
+        "GDP.pdf": 19.0,
+        "CritPt": 17.0,
+        "AA-Omniscience": 2.0,
+        "AA-LCR v1.1": 80.0
+      }
+    },
+    "gemini-4-argon": {
+      "slug": "gemini-4-argon",
+      "releaseSlug": "gemini-4-argon",
+      "model": "Gemini 4 Argon",
+      "vendor": "Google",
+      "effort": "high",
+      "effortOrder": 4,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gpt-6-luna-vs-gemini-4-argon",
+      "column_label": "Google Gemini 4 Argon (High)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "53",
+        "AA-Briefcase v1.1": "1486",
+        "GDPval-AA v2.1": "1624",
+        "AutomationBench-AA": "78%",
+        "Terminal-Bench 4.0": "57%",
+        "SciCode": "62%",
+        "Humanity's Last Exam": "57%",
+        "GDP.pdf": "22%",
+        "CritPt": "27%",
+        "AA-Omniscience": "42",
+        "AA-LCR v1.1": "80%"
+      },
+      "metrics": {
+        "Intelligence Index": 53.0,
+        "AA-Briefcase v1.1": 1486.0,
+        "GDPval-AA v2.1": 1624.0,
+        "AutomationBench-AA": 78.0,
+        "Terminal-Bench 4.0": 57.0,
+        "SciCode": 62.0,
+        "Humanity's Last Exam": 57.0,
+        "GDP.pdf": 22.0,
+        "CritPt": 27.0,
+        "AA-Omniscience": 42.0,
+        "AA-LCR v1.1": 80.0
+      }
+    },
+    "gpt-6-luna": {
+      "slug": "gpt-6-luna",
+      "releaseSlug": "gpt-6-luna",
+      "model": "GPT 6 Luna",
+      "vendor": "OpenAI",
+      "effort": "max",
+      "effortOrder": 6,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gpt-6-luna-vs-gemini-4-argon",
+      "column_label": "OpenAI GPT-6 Luna (Max)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "38",
+        "AA-Briefcase v1.1": "1335",
+        "GDPval-AA v2.1": "1432",
+        "AutomationBench-AA": "53%",
+        "Terminal-Bench 4.0": "13%",
+        "SciCode": "55%",
+        "Humanity's Last Exam": "39%",
+        "GDP.pdf": "23%",
+        "CritPt": "19%",
+        "AA-Omniscience": "1",
+        "AA-LCR v1.1": "83%"
+      },
+      "metrics": {
+        "Intelligence Index": 38.0,
+        "AA-Briefcase v1.1": 1335.0,
+        "GDPval-AA v2.1": 1432.0,
+        "AutomationBench-AA": 53.0,
+        "Terminal-Bench 4.0": 13.0,
+        "SciCode": 55.0,
+        "Humanity's Last Exam": 39.0,
+        "GDP.pdf": 23.0,
+        "CritPt": 19.0,
+        "AA-Omniscience": 1.0,
+        "AA-LCR v1.1": 83.0
+      }
+    },
+    "gemini-3-8-flash-low": {
+      "slug": "gemini-3-8-flash-low",
+      "releaseSlug": "gemini-3-8-flash",
+      "model": "Gemini 3.8 Flash",
+      "vendor": "Google",
+      "effort": "low",
+      "effortOrder": 2,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gemini-3-8-flash-low-vs-gemini-3-8-flash-medium",
+      "column_label": "Google Gemini 3.8 Flash (Low)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "33",
+        "AA-Briefcase v1.1": "1062",
+        "GDPval-AA v2.1": "1307",
+        "AutomationBench-AA": "37%",
+        "Terminal-Bench 4.0": "10%",
+        "SciCode": "55%",
+        "Humanity's Last Exam": "37%",
+        "GDP.pdf": "19%",
+        "CritPt": "4%",
+        "AA-Omniscience": "21",
+        "AA-LCR v1.1": "81%"
+      },
+      "metrics": {
+        "Intelligence Index": 33.0,
+        "AA-Briefcase v1.1": 1062.0,
+        "GDPval-AA v2.1": 1307.0,
+        "AutomationBench-AA": 37.0,
+        "Terminal-Bench 4.0": 10.0,
+        "SciCode": 55.0,
+        "Humanity's Last Exam": 37.0,
+        "GDP.pdf": 19.0,
+        "CritPt": 4.0,
+        "AA-Omniscience": 21.0,
+        "AA-LCR v1.1": 81.0
+      }
+    },
+    "gemini-3-8-flash-medium": {
+      "slug": "gemini-3-8-flash-medium",
+      "releaseSlug": "gemini-3-8-flash",
+      "model": "Gemini 3.8 Flash",
+      "vendor": "Google",
+      "effort": "medium",
+      "effortOrder": 3,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gemini-3-8-flash-low-vs-gemini-3-8-flash-medium",
+      "column_label": "Google Gemini 3.8 Flash (Medium)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "40",
+        "AA-Briefcase v1.1": "1182",
+        "GDPval-AA v2.1": "1421",
+        "AutomationBench-AA": "61%",
+        "Terminal-Bench 4.0": "20%",
+        "SciCode": "55%",
+        "Humanity's Last Exam": "42%",
+        "GDP.pdf": "23%",
+        "CritPt": "12%",
+        "AA-Omniscience": "29",
+        "AA-LCR v1.1": "84%"
+      },
+      "metrics": {
+        "Intelligence Index": 40.0,
+        "AA-Briefcase v1.1": 1182.0,
+        "GDPval-AA v2.1": 1421.0,
+        "AutomationBench-AA": 61.0,
+        "Terminal-Bench 4.0": 20.0,
+        "SciCode": 55.0,
+        "Humanity's Last Exam": 42.0,
+        "GDP.pdf": 23.0,
+        "CritPt": 12.0,
+        "AA-Omniscience": 29.0,
+        "AA-LCR v1.1": 84.0
+      }
+    },
+    "gemini-3-8-flash": {
+      "slug": "gemini-3-8-flash",
+      "releaseSlug": "gemini-3-8-flash",
+      "model": "Gemini 3.8 Flash",
+      "vendor": "Google",
+      "effort": "high",
+      "effortOrder": 4,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gemini-3-8-flash-vs-gemini-3-5-flash-lite",
+      "column_label": "Google Gemini 3.8 Flash (High)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "41",
+        "AA-Briefcase v1.1": "1203",
+        "GDPval-AA v2.1": "1436",
+        "AutomationBench-AA": "60%",
+        "Terminal-Bench 4.0": "20%",
+        "SciCode": "57%",
+        "Humanity's Last Exam": "48%",
+        "GDP.pdf": "21%",
+        "CritPt": "18%",
+        "AA-Omniscience": "30",
+        "AA-LCR v1.1": "81%"
+      },
+      "metrics": {
+        "Intelligence Index": 41.0,
+        "AA-Briefcase v1.1": 1203.0,
+        "GDPval-AA v2.1": 1436.0,
+        "AutomationBench-AA": 60.0,
+        "Terminal-Bench 4.0": 20.0,
+        "SciCode": 57.0,
+        "Humanity's Last Exam": 48.0,
+        "GDP.pdf": 21.0,
+        "CritPt": 18.0,
+        "AA-Omniscience": 30.0,
+        "AA-LCR v1.1": 81.0
+      }
+    },
+    "gemini-3-5-flash-lite": {
+      "slug": "gemini-3-5-flash-lite",
+      "releaseSlug": "gemini-3-5-flash-lite",
+      "model": "Gemini 3.5 Flash-Lite",
+      "vendor": "Google",
+      "effort": "high",
+      "effortOrder": 4,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/gemini-3-8-flash-vs-gemini-3-5-flash-lite",
+      "column_label": "Google Gemini 3.5 Flash-Lite",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "22",
+        "AA-Briefcase v1.1": "650",
+        "GDPval-AA v2.1": "983",
+        "AutomationBench-AA": "25%",
+        "Terminal-Bench 4.0": "1%",
+        "SciCode": "41%",
+        "Humanity's Last Exam": "19%",
+        "GDP.pdf": "14%",
+        "CritPt": "0%",
+        "AA-Omniscience": "5",
+        "AA-LCR v1.1": "76%"
+      },
+      "metrics": {
+        "Intelligence Index": 22.0,
+        "AA-Briefcase v1.1": 650.0,
+        "GDPval-AA v2.1": 983.0,
+        "AutomationBench-AA": 25.0,
+        "Terminal-Bench 4.0": 1.0,
+        "SciCode": 41.0,
+        "Humanity's Last Exam": 19.0,
+        "GDP.pdf": 14.0,
+        "CritPt": 0.0,
+        "AA-Omniscience": 5.0,
+        "AA-LCR v1.1": 76.0
+      }
+    },
+    "claude-opus-5-5-low": {
+      "slug": "claude-opus-5-5-low",
+      "releaseSlug": "claude-opus-5-5",
+      "model": "Claude Opus 5.5",
+      "vendor": "Anthropic",
+      "effort": "low",
+      "effortOrder": 2,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-opus-5-5-low-vs-claude-opus-5-5-medium",
+      "column_label": "Anthropic Claude Opus 5.5 (Low, Default Fallback)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "42",
+        "AA-Briefcase v1.1": "1280",
+        "GDPval-AA v2.1": "1235",
+        "AutomationBench-AA": "53%",
+        "Terminal-Bench 4.0": "31%",
+        "SciCode": "59%",
+        "Humanity's Last Exam": "48%",
+        "GDP.pdf": "26%",
+        "CritPt": "18%",
+        "AA-Omniscience": "39",
+        "AA-LCR v1.1": "81%"
+      },
+      "metrics": {
+        "Intelligence Index": 42.0,
+        "AA-Briefcase v1.1": 1280.0,
+        "GDPval-AA v2.1": 1235.0,
+        "AutomationBench-AA": 53.0,
+        "Terminal-Bench 4.0": 31.0,
+        "SciCode": 59.0,
+        "Humanity's Last Exam": 48.0,
+        "GDP.pdf": 26.0,
+        "CritPt": 18.0,
+        "AA-Omniscience": 39.0,
+        "AA-LCR v1.1": 81.0
+      }
+    },
+    "claude-opus-5-5-medium": {
+      "slug": "claude-opus-5-5-medium",
+      "releaseSlug": "claude-opus-5-5",
+      "model": "Claude Opus 5.5",
+      "vendor": "Anthropic",
+      "effort": "medium",
+      "effortOrder": 3,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-opus-5-5-low-vs-claude-opus-5-5-medium",
+      "column_label": "Anthropic Claude Opus 5.5 (Medium, Default Fallback)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "51",
+        "AA-Briefcase v1.1": "1625",
+        "GDPval-AA v2.1": "1584",
+        "AutomationBench-AA": "61%",
+        "Terminal-Bench 4.0": "53%",
+        "SciCode": "59%",
+        "Humanity's Last Exam": "55%",
+        "GDP.pdf": "26%",
+        "CritPt": "28%",
+        "AA-Omniscience": "40",
+        "AA-LCR v1.1": "84%"
+      },
+      "metrics": {
+        "Intelligence Index": 51.0,
+        "AA-Briefcase v1.1": 1625.0,
+        "GDPval-AA v2.1": 1584.0,
+        "AutomationBench-AA": 61.0,
+        "Terminal-Bench 4.0": 53.0,
+        "SciCode": 59.0,
+        "Humanity's Last Exam": 55.0,
+        "GDP.pdf": 26.0,
+        "CritPt": 28.0,
+        "AA-Omniscience": 40.0,
+        "AA-LCR v1.1": 84.0
+      }
+    },
+    "claude-opus-5-5-high": {
+      "slug": "claude-opus-5-5-high",
+      "releaseSlug": "claude-opus-5-5",
+      "model": "Claude Opus 5.5",
+      "vendor": "Anthropic",
+      "effort": "high",
+      "effortOrder": 4,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-opus-5-5-high-vs-claude-opus-5-5-xhigh",
+      "column_label": "Anthropic Claude Opus 5.5 (High, Default Fallback)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "54",
+        "AA-Briefcase v1.1": "1686",
+        "GDPval-AA v2.1": "1704",
+        "AutomationBench-AA": "63%",
+        "Terminal-Bench 4.0": "57%",
+        "SciCode": "60%",
+        "Humanity's Last Exam": "56%",
+        "GDP.pdf": "29%",
+        "CritPt": "31%",
+        "AA-Omniscience": "41",
+        "AA-LCR v1.1": "83%"
+      },
+      "metrics": {
+        "Intelligence Index": 54.0,
+        "AA-Briefcase v1.1": 1686.0,
+        "GDPval-AA v2.1": 1704.0,
+        "AutomationBench-AA": 63.0,
+        "Terminal-Bench 4.0": 57.0,
+        "SciCode": 60.0,
+        "Humanity's Last Exam": 56.0,
+        "GDP.pdf": 29.0,
+        "CritPt": 31.0,
+        "AA-Omniscience": 41.0,
+        "AA-LCR v1.1": 83.0
+      }
+    },
+    "claude-opus-5-5-xhigh": {
+      "slug": "claude-opus-5-5-xhigh",
+      "releaseSlug": "claude-opus-5-5",
+      "model": "Claude Opus 5.5",
+      "vendor": "Anthropic",
+      "effort": "xhigh",
+      "effortOrder": 5,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-opus-5-5-high-vs-claude-opus-5-5-xhigh",
+      "column_label": "Anthropic Claude Opus 5.5 (Xhigh, Default Fallback)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "56",
+        "AA-Briefcase v1.1": "1764",
+        "GDPval-AA v2.1": "1831",
+        "AutomationBench-AA": "65%",
+        "Terminal-Bench 4.0": "60%",
+        "SciCode": "65%",
+        "Humanity's Last Exam": "58%",
+        "GDP.pdf": "27%",
+        "CritPt": "32%",
+        "AA-Omniscience": "43",
+        "AA-LCR v1.1": "85%"
+      },
+      "metrics": {
+        "Intelligence Index": 56.0,
+        "AA-Briefcase v1.1": 1764.0,
+        "GDPval-AA v2.1": 1831.0,
+        "AutomationBench-AA": 65.0,
+        "Terminal-Bench 4.0": 60.0,
+        "SciCode": 65.0,
+        "Humanity's Last Exam": 58.0,
+        "GDP.pdf": 27.0,
+        "CritPt": 32.0,
+        "AA-Omniscience": 43.0,
+        "AA-LCR v1.1": 85.0
+      }
+    },
+    "claude-sonnet-5-5-low": {
+      "slug": "claude-sonnet-5-5-low",
+      "releaseSlug": "claude-sonnet-5-5",
+      "model": "Claude Sonnet 5.5",
+      "vendor": "Anthropic",
+      "effort": "low",
+      "effortOrder": 2,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-opus-5-5-vs-claude-sonnet-5-5-low",
+      "column_label": "Anthropic Claude Sonnet 5.5 (Low, Default Fallback)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "36",
+        "AA-Briefcase v1.1": "1272",
+        "GDPval-AA v2.1": "1175",
+        "AutomationBench-AA": "49%",
+        "Terminal-Bench 4.0": "21%",
+        "SciCode": "49%",
+        "Humanity's Last Exam": "36%",
+        "GDP.pdf": "16%",
+        "CritPt": "11%",
+        "AA-Omniscience": "19",
+        "AA-LCR v1.1": "76%"
+      },
+      "metrics": {
+        "Intelligence Index": 36.0,
+        "AA-Briefcase v1.1": 1272.0,
+        "GDPval-AA v2.1": 1175.0,
+        "AutomationBench-AA": 49.0,
+        "Terminal-Bench 4.0": 21.0,
+        "SciCode": 49.0,
+        "Humanity's Last Exam": 36.0,
+        "GDP.pdf": 16.0,
+        "CritPt": 11.0,
+        "AA-Omniscience": 19.0,
+        "AA-LCR v1.1": 76.0
+      }
+    },
+    "claude-opus-5-5": {
+      "slug": "claude-opus-5-5",
+      "releaseSlug": "claude-opus-5-5",
+      "model": "Claude Opus 5.5",
+      "vendor": "Anthropic",
+      "effort": "max",
+      "effortOrder": 6,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-opus-5-5-vs-claude-sonnet-5-5-low",
+      "column_label": "Anthropic Claude Opus 5.5 (Max, Default Fallback)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "58",
+        "AA-Briefcase v1.1": "1803",
+        "GDPval-AA v2.1": "1866",
+        "AutomationBench-AA": "70%",
+        "Terminal-Bench 4.0": "60%",
+        "SciCode": "67%",
+        "Humanity's Last Exam": "61%",
+        "GDP.pdf": "26%",
+        "CritPt": "32%",
+        "AA-Omniscience": "46",
+        "AA-LCR v1.1": "85%"
+      },
+      "metrics": {
+        "Intelligence Index": 58.0,
+        "AA-Briefcase v1.1": 1803.0,
+        "GDPval-AA v2.1": 1866.0,
+        "AutomationBench-AA": 70.0,
+        "Terminal-Bench 4.0": 60.0,
+        "SciCode": 67.0,
+        "Humanity's Last Exam": 61.0,
+        "GDP.pdf": 26.0,
+        "CritPt": 32.0,
+        "AA-Omniscience": 46.0,
+        "AA-LCR v1.1": 85.0
+      }
+    },
+    "claude-sonnet-5-5-medium": {
+      "slug": "claude-sonnet-5-5-medium",
+      "releaseSlug": "claude-sonnet-5-5",
+      "model": "Claude Sonnet 5.5",
+      "vendor": "Anthropic",
+      "effort": "medium",
+      "effortOrder": 3,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-sonnet-5-5-medium-vs-claude-sonnet-5-5-high",
+      "column_label": "Anthropic Claude Sonnet 5.5 (Medium, Default Fallback)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "41",
+        "AA-Briefcase v1.1": "1441",
+        "GDPval-AA v2.1": "1323",
+        "AutomationBench-AA": "55%",
+        "Terminal-Bench 4.0": "30%",
+        "SciCode": "53%",
+        "Humanity's Last Exam": "40%",
+        "GDP.pdf": "20%",
+        "CritPt": "17%",
+        "AA-Omniscience": "20",
+        "AA-LCR v1.1": "76%"
+      },
+      "metrics": {
+        "Intelligence Index": 41.0,
+        "AA-Briefcase v1.1": 1441.0,
+        "GDPval-AA v2.1": 1323.0,
+        "AutomationBench-AA": 55.0,
+        "Terminal-Bench 4.0": 30.0,
+        "SciCode": 53.0,
+        "Humanity's Last Exam": 40.0,
+        "GDP.pdf": 20.0,
+        "CritPt": 17.0,
+        "AA-Omniscience": 20.0,
+        "AA-LCR v1.1": 76.0
+      }
+    },
+    "claude-sonnet-5-5-high": {
+      "slug": "claude-sonnet-5-5-high",
+      "releaseSlug": "claude-sonnet-5-5",
+      "model": "Claude Sonnet 5.5",
+      "vendor": "Anthropic",
+      "effort": "high",
+      "effortOrder": 4,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-sonnet-5-5-medium-vs-claude-sonnet-5-5-high",
+      "column_label": "Anthropic Claude Sonnet 5.5 (High, Default Fallback)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "47",
+        "AA-Briefcase v1.1": "1636",
+        "GDPval-AA v2.1": "1549",
+        "AutomationBench-AA": "59%",
+        "Terminal-Bench 4.0": "44%",
+        "SciCode": "54%",
+        "Humanity's Last Exam": "46%",
+        "GDP.pdf": "25%",
+        "CritPt": "25%",
+        "AA-Omniscience": "21",
+        "AA-LCR v1.1": "78%"
+      },
+      "metrics": {
+        "Intelligence Index": 47.0,
+        "AA-Briefcase v1.1": 1636.0,
+        "GDPval-AA v2.1": 1549.0,
+        "AutomationBench-AA": 59.0,
+        "Terminal-Bench 4.0": 44.0,
+        "SciCode": 54.0,
+        "Humanity's Last Exam": 46.0,
+        "GDP.pdf": 25.0,
+        "CritPt": 25.0,
+        "AA-Omniscience": 21.0,
+        "AA-LCR v1.1": 78.0
+      }
+    },
+    "claude-sonnet-5-5-xhigh": {
+      "slug": "claude-sonnet-5-5-xhigh",
+      "releaseSlug": "claude-sonnet-5-5",
+      "model": "Claude Sonnet 5.5",
+      "vendor": "Anthropic",
+      "effort": "xhigh",
+      "effortOrder": 5,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-sonnet-5-5-xhigh-vs-claude-sonnet-5-5",
+      "column_label": "Anthropic Claude Sonnet 5.5 (Xhigh, Default Fallback)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "52",
+        "AA-Briefcase v1.1": "1751",
+        "GDPval-AA v2.1": "1728",
+        "AutomationBench-AA": "66%",
+        "Terminal-Bench 4.0": "57%",
+        "SciCode": "57%",
+        "Humanity's Last Exam": "50%",
+        "GDP.pdf": "25%",
+        "CritPt": "31%",
+        "AA-Omniscience": "24",
+        "AA-LCR v1.1": "80%"
+      },
+      "metrics": {
+        "Intelligence Index": 52.0,
+        "AA-Briefcase v1.1": 1751.0,
+        "GDPval-AA v2.1": 1728.0,
+        "AutomationBench-AA": 66.0,
+        "Terminal-Bench 4.0": 57.0,
+        "SciCode": 57.0,
+        "Humanity's Last Exam": 50.0,
+        "GDP.pdf": 25.0,
+        "CritPt": 31.0,
+        "AA-Omniscience": 24.0,
+        "AA-LCR v1.1": 80.0
+      }
+    },
+    "claude-sonnet-5-5": {
+      "slug": "claude-sonnet-5-5",
+      "releaseSlug": "claude-sonnet-5-5",
+      "model": "Claude Sonnet 5.5",
+      "vendor": "Anthropic",
+      "effort": "max",
+      "effortOrder": 6,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-sonnet-5-5-xhigh-vs-claude-sonnet-5-5",
+      "column_label": "Anthropic Claude Sonnet 5.5 (Max, Default Fallback)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "56",
+        "AA-Briefcase v1.1": "1817",
+        "GDPval-AA v2.1": "1838",
+        "AutomationBench-AA": "72%",
+        "Terminal-Bench 4.0": "64%",
+        "SciCode": "61%",
+        "Humanity's Last Exam": "55%",
+        "GDP.pdf": "26%",
+        "CritPt": "31%",
+        "AA-Omniscience": "32",
+        "AA-LCR v1.1": "83%"
+      },
+      "metrics": {
+        "Intelligence Index": 56.0,
+        "AA-Briefcase v1.1": 1817.0,
+        "GDPval-AA v2.1": 1838.0,
+        "AutomationBench-AA": 72.0,
+        "Terminal-Bench 4.0": 64.0,
+        "SciCode": 61.0,
+        "Humanity's Last Exam": 55.0,
+        "GDP.pdf": 26.0,
+        "CritPt": 31.0,
+        "AA-Omniscience": 32.0,
+        "AA-LCR v1.1": 83.0
+      }
+    },
+    "claude-fable-5-1-low": {
+      "slug": "claude-fable-5-1-low",
+      "releaseSlug": "claude-fable-5-1",
+      "model": "Claude Fable 5.1",
+      "vendor": "Anthropic",
+      "effort": "low",
+      "effortOrder": 2,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-fable-5-1-low-vs-claude-fable-5-1-medium",
+      "column_label": "Anthropic Claude Fable 5.1 (Low, Default Fallback)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "47",
+        "AA-Briefcase v1.1": "1482",
+        "GDPval-AA v2.1": "1469",
+        "AutomationBench-AA": "52%",
+        "Terminal-Bench 4.0": "40%",
+        "SciCode": "57%",
+        "Humanity's Last Exam": "49%",
+        "GDP.pdf": "28%",
+        "CritPt": "28%",
+        "AA-Omniscience": "34",
+        "AA-LCR v1.1": "82%"
+      },
+      "metrics": {
+        "Intelligence Index": 47.0,
+        "AA-Briefcase v1.1": 1482.0,
+        "GDPval-AA v2.1": 1469.0,
+        "AutomationBench-AA": 52.0,
+        "Terminal-Bench 4.0": 40.0,
+        "SciCode": 57.0,
+        "Humanity's Last Exam": 49.0,
+        "GDP.pdf": 28.0,
+        "CritPt": 28.0,
+        "AA-Omniscience": 34.0,
+        "AA-LCR v1.1": 82.0
+      }
+    },
+    "claude-fable-5-1-medium": {
+      "slug": "claude-fable-5-1-medium",
+      "releaseSlug": "claude-fable-5-1",
+      "model": "Claude Fable 5.1",
+      "vendor": "Anthropic",
+      "effort": "medium",
+      "effortOrder": 3,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-fable-5-1-low-vs-claude-fable-5-1-medium",
+      "column_label": "Anthropic Claude Fable 5.1 (Medium, Default Fallback)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "49",
+        "AA-Briefcase v1.1": "1528",
+        "GDPval-AA v2.1": "1545",
+        "AutomationBench-AA": "55%",
+        "Terminal-Bench 4.0": "45%",
+        "SciCode": "56%",
+        "Humanity's Last Exam": "54%",
+        "GDP.pdf": "27%",
+        "CritPt": "29%",
+        "AA-Omniscience": "38",
+        "AA-LCR v1.1": "85%"
+      },
+      "metrics": {
+        "Intelligence Index": 49.0,
+        "AA-Briefcase v1.1": 1528.0,
+        "GDPval-AA v2.1": 1545.0,
+        "AutomationBench-AA": 55.0,
+        "Terminal-Bench 4.0": 45.0,
+        "SciCode": 56.0,
+        "Humanity's Last Exam": 54.0,
+        "GDP.pdf": 27.0,
+        "CritPt": 29.0,
+        "AA-Omniscience": 38.0,
+        "AA-LCR v1.1": 85.0
+      }
+    },
+    "claude-fable-5-1-high": {
+      "slug": "claude-fable-5-1-high",
+      "releaseSlug": "claude-fable-5-1",
+      "model": "Claude Fable 5.1",
+      "vendor": "Anthropic",
+      "effort": "high",
+      "effortOrder": 4,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-fable-5-1-high-vs-claude-fable-5-1-xhigh",
+      "column_label": "Anthropic Claude Fable 5.1 (High, Default Fallback)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "51",
+        "AA-Briefcase v1.1": "1580",
+        "GDPval-AA v2.1": "1635",
+        "AutomationBench-AA": "55%",
+        "Terminal-Bench 4.0": "52%",
+        "SciCode": "59%",
+        "Humanity's Last Exam": "56%",
+        "GDP.pdf": "27%",
+        "CritPt": "30%",
+        "AA-Omniscience": "41",
+        "AA-LCR v1.1": "84%"
+      },
+      "metrics": {
+        "Intelligence Index": 51.0,
+        "AA-Briefcase v1.1": 1580.0,
+        "GDPval-AA v2.1": 1635.0,
+        "AutomationBench-AA": 55.0,
+        "Terminal-Bench 4.0": 52.0,
+        "SciCode": 59.0,
+        "Humanity's Last Exam": 56.0,
+        "GDP.pdf": 27.0,
+        "CritPt": 30.0,
+        "AA-Omniscience": 41.0,
+        "AA-LCR v1.1": 84.0
+      }
+    },
+    "claude-fable-5-1-xhigh": {
+      "slug": "claude-fable-5-1-xhigh",
+      "releaseSlug": "claude-fable-5-1",
+      "model": "Claude Fable 5.1",
+      "vendor": "Anthropic",
+      "effort": "xhigh",
+      "effortOrder": 5,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-fable-5-1-high-vs-claude-fable-5-1-xhigh",
+      "column_label": "Anthropic Claude Fable 5.1 (Xhigh, Default Fallback)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "53",
+        "AA-Briefcase v1.1": "1655",
+        "GDPval-AA v2.1": "1732",
+        "AutomationBench-AA": "58%",
+        "Terminal-Bench 4.0": "55%",
+        "SciCode": "61%",
+        "Humanity's Last Exam": "59%",
+        "GDP.pdf": "26%",
+        "CritPt": "31%",
+        "AA-Omniscience": "42",
+        "AA-LCR v1.1": "83%"
+      },
+      "metrics": {
+        "Intelligence Index": 53.0,
+        "AA-Briefcase v1.1": 1655.0,
+        "GDPval-AA v2.1": 1732.0,
+        "AutomationBench-AA": 58.0,
+        "Terminal-Bench 4.0": 55.0,
+        "SciCode": 61.0,
+        "Humanity's Last Exam": 59.0,
+        "GDP.pdf": 26.0,
+        "CritPt": 31.0,
+        "AA-Omniscience": 42.0,
+        "AA-LCR v1.1": 83.0
+      }
+    },
+    "claude-haiku-5-5-low": {
+      "slug": "claude-haiku-5-5-low",
+      "releaseSlug": "claude-haiku-5-5",
+      "model": "Claude Haiku 5.5",
+      "vendor": "Anthropic",
+      "effort": "low",
+      "effortOrder": 2,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-fable-5-1-vs-claude-haiku-5-5-low",
+      "column_label": "Anthropic Claude Haiku 5.5 (Low)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "29",
+        "AA-Briefcase v1.1": "1112",
+        "GDPval-AA v2.1": "1123",
+        "AutomationBench-AA": "23%",
+        "Terminal-Bench 4.0": "13%",
+        "SciCode": "49%",
+        "Humanity's Last Exam": "27%",
+        "GDP.pdf": "11%",
+        "CritPt": "9%",
+        "AA-Omniscience": "3",
+        "AA-LCR v1.1": "72%"
+      },
+      "metrics": {
+        "Intelligence Index": 29.0,
+        "AA-Briefcase v1.1": 1112.0,
+        "GDPval-AA v2.1": 1123.0,
+        "AutomationBench-AA": 23.0,
+        "Terminal-Bench 4.0": 13.0,
+        "SciCode": 49.0,
+        "Humanity's Last Exam": 27.0,
+        "GDP.pdf": 11.0,
+        "CritPt": 9.0,
+        "AA-Omniscience": 3.0,
+        "AA-LCR v1.1": 72.0
+      }
+    },
+    "claude-fable-5-1": {
+      "slug": "claude-fable-5-1",
+      "releaseSlug": "claude-fable-5-1",
+      "model": "Claude Fable 5.1",
+      "vendor": "Anthropic",
+      "effort": "max",
+      "effortOrder": 6,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-fable-5-1-vs-claude-haiku-5-5-low",
+      "column_label": "Anthropic Claude Fable 5.1 (Max, Default Fallback)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "53",
+        "AA-Briefcase v1.1": "1672",
+        "GDPval-AA v2.1": "1754",
+        "AutomationBench-AA": "59%",
+        "Terminal-Bench 4.0": "52%",
+        "SciCode": "63%",
+        "Humanity's Last Exam": "59%",
+        "GDP.pdf": "26%",
+        "CritPt": "30%",
+        "AA-Omniscience": "43",
+        "AA-LCR v1.1": "85%"
+      },
+      "metrics": {
+        "Intelligence Index": 53.0,
+        "AA-Briefcase v1.1": 1672.0,
+        "GDPval-AA v2.1": 1754.0,
+        "AutomationBench-AA": 59.0,
+        "Terminal-Bench 4.0": 52.0,
+        "SciCode": 63.0,
+        "Humanity's Last Exam": 59.0,
+        "GDP.pdf": 26.0,
+        "CritPt": 30.0,
+        "AA-Omniscience": 43.0,
+        "AA-LCR v1.1": 85.0
+      }
+    },
+    "claude-haiku-5-5-medium": {
+      "slug": "claude-haiku-5-5-medium",
+      "releaseSlug": "claude-haiku-5-5",
+      "model": "Claude Haiku 5.5",
+      "vendor": "Anthropic",
+      "effort": "medium",
+      "effortOrder": 3,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-haiku-5-5-medium-vs-claude-haiku-5-5-high",
+      "column_label": "Anthropic Claude Haiku 5.5 (Medium)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "34",
+        "AA-Briefcase v1.1": "1372",
+        "GDPval-AA v2.1": "1275",
+        "AutomationBench-AA": "29%",
+        "Terminal-Bench 4.0": "15%",
+        "SciCode": "49%",
+        "Humanity's Last Exam": "34%",
+        "GDP.pdf": "15%",
+        "CritPt": "13%",
+        "AA-Omniscience": "4",
+        "AA-LCR v1.1": "77%"
+      },
+      "metrics": {
+        "Intelligence Index": 34.0,
+        "AA-Briefcase v1.1": 1372.0,
+        "GDPval-AA v2.1": 1275.0,
+        "AutomationBench-AA": 29.0,
+        "Terminal-Bench 4.0": 15.0,
+        "SciCode": 49.0,
+        "Humanity's Last Exam": 34.0,
+        "GDP.pdf": 15.0,
+        "CritPt": 13.0,
+        "AA-Omniscience": 4.0,
+        "AA-LCR v1.1": 77.0
+      }
+    },
+    "claude-haiku-5-5-high": {
+      "slug": "claude-haiku-5-5-high",
+      "releaseSlug": "claude-haiku-5-5",
+      "model": "Claude Haiku 5.5",
+      "vendor": "Anthropic",
+      "effort": "high",
+      "effortOrder": 4,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-haiku-5-5-medium-vs-claude-haiku-5-5-high",
+      "column_label": "Anthropic Claude Haiku 5.5 (High)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "38",
+        "AA-Briefcase v1.1": "1443",
+        "GDPval-AA v2.1": "1418",
+        "AutomationBench-AA": "34%",
+        "Terminal-Bench 4.0": "22%",
+        "SciCode": "49%",
+        "Humanity's Last Exam": "37%",
+        "GDP.pdf": "17%",
+        "CritPt": "19%",
+        "AA-Omniscience": "6",
+        "AA-LCR v1.1": "77%"
+      },
+      "metrics": {
+        "Intelligence Index": 38.0,
+        "AA-Briefcase v1.1": 1443.0,
+        "GDPval-AA v2.1": 1418.0,
+        "AutomationBench-AA": 34.0,
+        "Terminal-Bench 4.0": 22.0,
+        "SciCode": 49.0,
+        "Humanity's Last Exam": 37.0,
+        "GDP.pdf": 17.0,
+        "CritPt": 19.0,
+        "AA-Omniscience": 6.0,
+        "AA-LCR v1.1": 77.0
+      }
+    },
+    "claude-haiku-5-5-xhigh": {
+      "slug": "claude-haiku-5-5-xhigh",
+      "releaseSlug": "claude-haiku-5-5",
+      "model": "Claude Haiku 5.5",
+      "vendor": "Anthropic",
+      "effort": "xhigh",
+      "effortOrder": 5,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-haiku-5-5-xhigh-vs-claude-haiku-5-5",
+      "column_label": "Anthropic Claude Haiku 5.5 (Xhigh)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "41",
+        "AA-Briefcase v1.1": "1532",
+        "GDPval-AA v2.1": "1513",
+        "AutomationBench-AA": "36%",
+        "Terminal-Bench 4.0": "29%",
+        "SciCode": "52%",
+        "Humanity's Last Exam": "43%",
+        "GDP.pdf": "18%",
+        "CritPt": "23%",
+        "AA-Omniscience": "6",
+        "AA-LCR v1.1": "78%"
+      },
+      "metrics": {
+        "Intelligence Index": 41.0,
+        "AA-Briefcase v1.1": 1532.0,
+        "GDPval-AA v2.1": 1513.0,
+        "AutomationBench-AA": 36.0,
+        "Terminal-Bench 4.0": 29.0,
+        "SciCode": 52.0,
+        "Humanity's Last Exam": 43.0,
+        "GDP.pdf": 18.0,
+        "CritPt": 23.0,
+        "AA-Omniscience": 6.0,
+        "AA-LCR v1.1": 78.0
+      }
+    },
+    "claude-haiku-5-5": {
+      "slug": "claude-haiku-5-5",
+      "releaseSlug": "claude-haiku-5-5",
+      "model": "Claude Haiku 5.5",
+      "vendor": "Anthropic",
+      "effort": "max",
+      "effortOrder": 6,
+      "source_url": "https://artificialanalysis.ai/models/comparisons/claude-haiku-5-5-xhigh-vs-claude-haiku-5-5",
+      "column_label": "Anthropic Claude Haiku 5.5 (Max)",
+      "label_matches_effort": true,
+      "raw": {
+        "Intelligence Index": "43",
+        "AA-Briefcase v1.1": "1577",
+        "GDPval-AA v2.1": "1618",
+        "AutomationBench-AA": "35%",
+        "Terminal-Bench 4.0": "33%",
+        "SciCode": "55%",
+        "Humanity's Last Exam": "44%",
+        "GDP.pdf": "21%",
+        "CritPt": "19%",
+        "AA-Omniscience": "11",
+        "AA-LCR v1.1": "83%"
+      },
+      "metrics": {
+        "Intelligence Index": 43.0,
+        "AA-Briefcase v1.1": 1577.0,
+        "GDPval-AA v2.1": 1618.0,
+        "AutomationBench-AA": 35.0,
+        "Terminal-Bench 4.0": 33.0,
+        "SciCode": 55.0,
+        "Humanity's Last Exam": 44.0,
+        "GDP.pdf": 21.0,
+        "CritPt": 19.0,
+        "AA-Omniscience": 11.0,
+        "AA-LCR v1.1": 83.0
+      }
+    }
+  }
+}
