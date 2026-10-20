@@ -73,7 +73,7 @@ def check_capabilities(page, data, output):
     page.select_option('#capIndexScope','four_family_top')
     argon=page.locator('#capBumpChart [data-cap-id="gemini-4-argon"]')
     assert argon.locator('path').get_attribute('d').count('M')==2, 'Missing domain must break the path'
-    argon.focus(); page.keyboard.press('Enter')
+    argon.locator('.cap-node[data-domain="__ii__"]').focus(); page.keyboard.press('Enter')
     expect(page.locator('#capIndexDetail')).to_contain_text('无数据 · 不参排')
     expect(page.locator('#capIndexDetail')).to_contain_text('15 个有效配置')
     page.locator('#capModelPills [data-cap-model="claude-opus-5-5"]').click()
@@ -164,3 +164,69 @@ def check_capabilities(page, data, output):
         touch.locator('#practicalEvidence').screenshot(path=str(output/'practical-evidence-390.png'))
     finally:
         touch.close()
+    check_recovery(page, data, output)
+
+
+def check_recovery(page, data, output):
+    """Missing HLE evidence and non-nested point buttons on real report data."""
+    old_release = next(r for r in data['aa_release_series']['releases'] if r['releaseSlug']=='claude-opus-5')
+    assert old_release['variants'] and all(not v.get('evalMetrics') for v in old_release['variants'])
+    page.locator('[data-panel="reasoning"]').click()
+    page.select_option('#reasoningRelease', old_release['releaseSlug'])
+    page.select_option('#reasoningMetric', "eval:Humanity's Last Exam")
+    expect(page.locator('#reasoningCurve .reasoning-dot')).to_have_count(0)
+    expect(page.locator('#reasoningEvidenceTable tbody tr')).to_have_count(len(old_release['variants']))
+    expect(page.locator('#reasoningEvidenceTable a')).to_have_count(0)
+    expect(page.locator('#reasoningEvidenceTable a[href=""]')).to_have_count(0)
+    for row in page.locator('#reasoningEvidenceTable tbody tr').all():
+        expect(row).to_contain_text('无该指标来源 · 无测量')
+        expect(row).to_contain_text('无数据')
+    rows=csv_download(page, '#exportReasoningEvidence')
+    assert len(rows)==len(old_release['variants'])
+    assert all(r['score']==r['source_url']=='' and r['score_status']=='missing' for r in rows)
+    page.locator('#reasoningCharts').screenshot(path=str(output/'missing-hle-source.png'),style='.nav-shell{visibility:hidden!important}')
+    # Known measurements must retain their real benchmark URLs.
+    page.select_option('#reasoningRelease', 'claude-opus-5-5')
+    rows=csv_download(page, '#exportReasoningEvidence')
+    assert rows and all(r['score'] and r['source_url'].startswith('https://artificialanalysis.ai/models/comparisons/') for r in rows)
+    assert page.locator('#reasoningEvidenceTable a').count()==len(rows)
+    page.locator('[data-panel="capabilities"]').click()
+    page.locator('[data-cap-tab="all"]').click()
+    for scope in ('four_family_top','four_family_all','all_top'):
+        page.select_option('#capIndexScope', scope)
+        assert page.locator('#capBumpChart .cap-node').count()>0
+        assert page.locator('#capBumpChart .cap-node').evaluate_all(
+            "nodes => nodes.every(n => n.getAttribute('role') === 'button' && !n.parentElement.closest('button,[role=button]'))")
+        expect(page.locator('#capBumpChart .bump-group[role="group"][aria-pressed]')).to_have_count(0)
+    page.select_option('#capIndexScope','four_family_top')
+    for key,slug in (('Enter','claude-opus-5-5'),('Space','gemini-4-argon')):
+        point=page.locator(f'#capBumpChart [data-cap-id="{slug}"] .cap-node[data-domain="__ii__"]')
+        point.focus(); page.keyboard.press(key)
+        expect(point).to_be_focused()
+        expect(page.locator('#capPointTip')).to_be_visible()
+        expect(page.locator(f'#capModelPills [data-cap-model="{slug}"]')).to_have_attribute('aria-pressed','true')
+    # Model path clicks still select a model without exposing another button.
+    page.locator('#capBumpChart [data-cap-id="claude-opus-5-5"] .bump-path').dispatch_event('click')
+    expect(page.locator('#capModelPills [data-cap-model="claude-opus-5-5"]')).to_have_attribute('aria-pressed','true')
+    page.locator('[data-cap-tab="legal"]').click()
+    for key,slug in (('Enter','gemini-4-argon'),('Space','claude-opus-5-5')):
+        bar=page.locator(f'#capBumpChart .bump-group[data-cap-id="{slug}"]')
+        expect(bar).to_have_attribute('role','button')
+        bar.focus(); page.keyboard.press(key)
+        expect(page.locator(f'#capModelPills [data-cap-model="{slug}"]')).to_have_attribute('aria-pressed','true')
+    page.locator('[data-cap-tab="all"]').click()
+    for width in (390,320):
+        touch=page.context.browser.new_page(viewport={'width':width,'height':844},has_touch=True)
+        try:
+            touch.goto(page.url)
+            touch.locator('[data-panel="capabilities"]').tap()
+            point=touch.locator('#capBumpChart [data-cap-id="claude-opus-5-5"] .cap-node[data-domain="economics"]')
+            point.tap()
+            expect(point).to_be_focused()
+            expect(touch.locator('#capPointTip')).to_be_visible()
+            expect(touch.locator('#capPointTip')).to_contain_text('经济学')
+            expect(touch.locator('#capModelPills [data-cap-model="claude-opus-5-5"]')).to_have_attribute('aria-pressed','true')
+            assert touch.evaluate('document.documentElement.scrollWidth <= innerWidth')
+            touch.screenshot(path=str(output/f'non-nested-touch-{width}.png'))
+        finally:
+            touch.close()

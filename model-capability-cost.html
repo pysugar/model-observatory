@@ -924,7 +924,7 @@
         previous_measured_effort:previous?.effort ?? null, selected:e.slug === selectedSlug,
         representative_by_overall_ii:!!e.isTopVariant,
         best_for_metric:finite(score) && capPrecision(score) === capPrecision(best),
-        fallback:e.fallbackLabel || "", source_url:key.startsWith("eval:") ? e.evalSourceUrl : e.sourceUrl, evidence_type:key==="eval:Terminal-Bench 4.0" ? "model + agent; exact AA configuration; harness not archived" : "exact model + effort", version:"AA v4.3.2", evaluation_date:null, harness:null, budget:null, confidence_interval:null,
+        fallback:e.fallbackLabel || "", source_url:key.startsWith("eval:") ? (finite(score) ? e.evalSourceUrl || null : null) : e.sourceUrl || null, evidence_type:key==="eval:Terminal-Bench 4.0" ? "model + agent; exact AA configuration; harness not archived" : "exact model + effort", version:"AA v4.3.2", evaluation_date:null, harness:null, budget:null, confidence_interval:null,
         raw_unit:key.startsWith("eval:") ? "%" : "index points", collected_at:"2026-10-19", attempts:null, snapshot:"2026-10-19", cost_scope:"AA overall Intelligence Index weighted cost per task; not domain cost"};
     });
   }
@@ -989,7 +989,7 @@
           const labelY=endPositions.get(c.key+e.slug), pointX=anchor==="end"?margin.left:width-margin.right;
           return `${Math.abs(labelY-rankY(r))>2?`<line x1="${pointX}" y1="${rankY(r)}" x2="${x}" y2="${labelY}" stroke="${e.color}" stroke-width=".8"/>`:""}<text x="${x}" y="${labelY+4}" text-anchor="${anchor}" font-size="10.5" fill="${selected ? "#165e54" : "#223c3a"}">${esc(capLabel(e))}</text>`;
         };
-        parts.push(`<g class="bump-group ${selected ? "is-highlighted" : ""}" tabindex="0" role="button" aria-pressed="${selected}" data-cap-id="${esc(e.slug)}" aria-label="${esc(capLabel(e))}"><title>${esc(capLabel(e)+" · "+(e.fallbackLabel || "来源未标记回退"))}</title><path class="bump-path" d="${path}" fill="none" stroke="${e.color}" stroke-width="${selected?3.6:2}" opacity="${selected?1:.55}"/>${nodes}${endLabel(first,firstRank,margin.left-14,"end")}${endLabel(last,lastRank,width-margin.right+14,"start")}</g>`);
+        parts.push(`<g class="bump-group ${selected ? "is-highlighted" : ""}" role="group" data-cap-id="${esc(e.slug)}" aria-label="${esc(capLabel(e))}"><title>${esc(capLabel(e)+" · "+(e.fallbackLabel || "来源未标记回退"))}</title><path class="bump-path" d="${path}" fill="none" stroke="${e.color}" stroke-width="${selected?3.6:2}" opacity="${selected?1:.55}"/>${nodes}${endLabel(first,firstRank,margin.left-14,"end")}${endLabel(last,lastRank,width-margin.right+14,"start")}</g>`);
       });
     } else {
       const dom=cols[0], ranking=rankings.get(dom.key), x=v=>margin.left+v/100*(width-margin.left-margin.right);
@@ -1006,7 +1006,7 @@
     $("capModelPills").querySelectorAll("[data-cap-model]").forEach(b=>b.addEventListener("click",()=>select(b.dataset.capModel)));
     svg.querySelectorAll("[data-cap-id]").forEach(node=>{
       node.addEventListener("click",()=>select(node.dataset.capId));
-      node.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();select(node.dataset.capId);}});
+      node.addEventListener("keydown",event=>{if(node.getAttribute("role")==="button" && (event.key==="Enter"||event.key===" ")){event.preventDefault();select(node.dataset.capId);}});
     });
     svg.querySelectorAll(".cap-node").forEach(point=>{
       const show=()=>{
@@ -1086,7 +1086,7 @@
     if(!costs.length)cost.push(`<text x="${w/2}" y="${h/2}" text-anchor="middle">无同口径费用，不补估算散点</text>`);
     cost.push(`<text x="${w/2}" y="${h-10}" text-anchor="middle" font-size="12">AA 综合指数加权单任务成本（USD）</text>`);
     [["reasoningCurve",curve],["reasoningCost",cost]].forEach(([id,parts])=>{const svg=$(id);svg.setAttribute("viewBox",`0 0 ${w} ${h}`);svg.innerHTML=`<title>${esc(entries[0]?.releaseName+" · "+metric)}</title>`+parts.join("");});
-    $("reasoningEvidenceTable").innerHTML=table(["已测档位 / 来源配置","官方得分","相对上一已测档分差","AA 加权成本 / 增量","选档标记"],rows.map(r=>`<tr data-variant="${esc(r.variant)}"><th>${link(r.source_url,r.effort)}<span class="task-detail">${esc(r.fallback||"来源未标记回退")}</span></th><td>${finite(r.score)?fmt(r.score,2):"无数据"}</td><td>${finite(r.delta_score)?`${r.delta_score>0?"+":""}${fmt(r.delta_score,2)}（${esc(r.previous_measured_effort)} → ${esc(r.effort)}）`:"无可比相邻值"}</td><td>${money(r.cost_per_task_usd)}<span class="task-detail">增量 ${finite(r.delta_cost_usd)?(r.delta_cost_usd>0?"+":"")+money(r.delta_cost_usd):"未提供"}</span></td><td>${[r.selected?"当前选中":"",r.representative_by_overall_ii?"II 最高代表档":"",r.best_for_metric?"本维度最高（可并列）":""].filter(Boolean).join(" · ")||"—"}</td></tr>`).join(""));
+    $("reasoningEvidenceTable").innerHTML=table(["已测档位 / 来源配置","官方得分","相对上一已测档分差","AA 加权成本 / 增量","选档标记"],rows.map(r=>`<tr data-variant="${esc(r.variant)}"><th>${r.source_url ? link(r.source_url,r.effort) : esc(r.effort)+'<span class="task-detail">无该指标来源 · 无测量</span>'}<span class="task-detail">${esc(r.fallback||"来源未标记回退")}</span></th><td>${finite(r.score)?fmt(r.score,2):"无数据"}</td><td>${finite(r.delta_score)?`${r.delta_score>0?"+":""}${fmt(r.delta_score,2)}（${esc(r.previous_measured_effort)} → ${esc(r.effort)}）`:"无可比相邻值"}</td><td>${money(r.cost_per_task_usd)}<span class="task-detail">增量 ${finite(r.delta_cost_usd)?(r.delta_cost_usd>0?"+":"")+money(r.delta_cost_usd):"未提供"}</span></td><td>${[r.selected?"当前选中":"",r.representative_by_overall_ii?"II 最高代表档":"",r.best_for_metric?"本维度最高（可并列）":""].filter(Boolean).join(" · ")||"—"}</td></tr>`).join(""));
     $("reasoningEvidenceTable").dataset.selected=effortView.selectedSlug;
     document.querySelectorAll("#reasoningCharts .reasoning-dot").forEach(dot=>{
       const select=()=>{effortView.selectedSlug=dot.dataset.variant;renderReasoningCharts();};
