@@ -6,6 +6,7 @@ import hashlib
 import json
 import re
 import argparse
+from scripts.report_claims import render_claims
 
 ROOT = Path(__file__).resolve().parent
 RESEARCH = ROOT / "research" / "2026-10-15"
@@ -34,6 +35,8 @@ def build(output_dir=ROOT):
     original = ORIGINAL.read_text()
     base = json.loads(re.search(r'<script id="dataset" type="application/json">(.*?)</script>', original, re.S)[1])
     methods = json.loads(re.search(r'<script id="method-data" type="application/json">(.*?)</script>', original, re.S)[1])
+    if isinstance(methods.get("general"), str):
+        methods["general"] = methods["general"].replace(" or GEO outcomes", "")
     rows = base["rows"]
     catalog = read_json(ROOT / "report-content.json")
     model_names = [m["name"] for m in catalog["models"]]
@@ -147,6 +150,24 @@ def build(output_dir=ROOT):
     rows.extend(multi["grok_rows"])
     profiles.append(multi["grok_aa_profile"])
 
+    effort_evals = read_json(RESEARCH.parent / "2026-10-20" / "aa-effort-evals.json")
+    eval_variants = effort_evals["variants"]
+    for rel in multi["aa_release_series"]["releases"]:
+        for var in rel["variants"]:
+            ev = eval_variants.get(var["slug"])
+            if ev:
+                m = ev["metrics"]
+                var["evalMetrics"] = m
+                var["evalSourceUrl"] = ev["source_url"]
+                var["taskScores"] = {
+                    "complex": round(0.5 * m["Humanity's Last Exam"] + 0.5 * m["CritPt"], 2),
+                    "coding": round(0.5 * m["Terminal-Bench 4.0"] + 0.5 * m["SciCode"], 2),
+                    "planning": m["AA-Briefcase v1.1"],
+                    "agentic": m["GDPval-AA v2.1"],
+                    "automation": m["AutomationBench-AA"],
+                    "knowledge": round((m["AA-LCR v1.1"] + 2.0 * m["GDP.pdf"] + 3.0 * m["AA-Omniscience"]) / 6.0, 2),
+                }
+
     for index, row in enumerate(rows):
         row["id"] = index
     data = {
@@ -154,10 +175,16 @@ def build(output_dir=ROOT):
         "opus_coding_evidence": read_json(RESEARCH.parent / "2026-10-16" / "opus55-coding-supplement.json"),
         "aa_capability_indexes": multi["aa_capability_indexes"],
         "aa_release_series": multi["aa_release_series"],
+        "aa_effort_evals": {
+            "fetched_at": effort_evals["fetched_at"],
+            "source": effort_evals["source"],
+            "evals": effort_evals["evals"],
+            "variants": eval_variants,
+        },
         "external_leaderboards": multi["external_leaderboards"],
-        "meta": {"reviewed_at": "2026-10-19", "original_rows": 121,
+        "meta": {"reviewed_at": "2026-10-20", "original_rows": 121,
                  "tonebench_sha256": tone_hash, "tonebench_fingerprint": tone["provenance"],
-                 "not_run": "未做新的模型调用或中文任务实验；使用原始附件与公开证据。"},
+                 "not_run": "未做新的模型调用或中文任务实验；使用公开基准与官方证据。"},
     }
     (output_dir / "report-data.json").write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     fields = list(dict.fromkeys(key for row in rows for key in row))
@@ -169,8 +196,9 @@ def build(output_dir=ROOT):
     html = (ROOT / "report.template.html").read_text()
     payload = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     html = html.replace("/* REPORT_CSS */", (ROOT / "report.css").read_text())
-    html = html.replace("REPORT_DATA_JSON", payload)
     html = html.replace("/* REPORT_JS */", (ROOT / "report.js").read_text())
+    html = render_claims(html, data)
+    html = html.replace("REPORT_DATA_JSON", payload)
     (output_dir / "model-capability-cost.html").write_text(html, encoding="utf-8")
     print(json.dumps({"rows": len(rows), "original_rows": 121, "aa_profiles": len(profiles),
                       "models": len(model_names), "groups": {g: sum(r["benchmark"] == g for r in rows) for g in ["general", "coding", "writing", "arena"]},
