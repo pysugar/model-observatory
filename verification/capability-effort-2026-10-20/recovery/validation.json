@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "base_commit": "cd12d6a1be7c189a0279718d7110aa942f761add",
+  "host": "ubuntu-gk55",
+  "browser_version": "155.0.8059.39",
+  "sandbox": true,
+  "viewports": [
+    1440,
+    390,
+    320
+  ],
+  "checks": [
+    "real claude-opus-5 missing HLE: no measurement links, scores or CSV source URL",
+    "known Opus 5.5 HLE source links retained",
+    "all three overview scopes: metric buttons have no button ancestor",
+    "Enter and Space select metric points and single-domain bars",
+    "model path click still selects model",
+    "actual touchscreen taps retain focus, selection and tooltip at 390/320",
+    "no JS errors or page overflow"
+  ],
+  "scope": "local targeted regression; final remote CI/preview pending coordinator verification",
+  "unit_tests": 33,
+  "unit_tests_status": "PASS",
+  "generated_artifacts": "build_report.py regenerated HTML; publish build/check passed; report-data JSON/CSV unchanged",
+  "regression_entrypoint": "scripts.capability_smoke.check_recovery (also called by the normal capability smoke suite)",
+  "paid_calls": 0
+}

@@ -56,6 +56,15 @@ assert.equal(capScore(raw[1],'eval:SciCode'),null);
 const rawRows=effortRows(raw,'eval:SciCode','low');
 assert(rawRows.every(r=>r.cost_per_task_usd===null && r.delta_cost_usd===null));
 assert.equal(rawRows[1].score_status,'missing');
+assert.equal(rawRows[1].source_url,null);
+const report=JSON.parse(require('node:fs').readFileSync('report-data.json','utf8'));
+const old=report.aa_release_series.releases.find(r=>r.releaseSlug==='claude-opus-5');
+assert(old.variants.length>0 && old.variants.every(v=>!v.evalMetrics));
+const oldEntries=report.aa_capability_indexes.entries.filter(e=>e.releaseSlug===old.releaseSlug);
+assert.equal(oldEntries.length,old.variants.length);
+assert(effortRows(oldEntries,"eval:Humanity's Last Exam",oldEntries[0].slug).every(r=>r.source_url===null && r.score===null && r.score_status==='missing'));
+// A source for other metrics is not evidence that this missing metric was measured.
+assert.equal(effortRows([{...raw[1],evalSourceUrl:'https://example.test/other-metric'}],'eval:SciCode','high')[0].source_url,null);
 assert.equal(exported[0].__ii___score,99);
 assert.equal(exported[0].__ii___valid_n,5);
 '''
