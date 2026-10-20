@@ -21,6 +21,7 @@ from publish import ROOT, check, probe, require
 from capability_smoke import check_capabilities
 from selection_smoke import check_selection
 from scaling_smoke import check_scaling
+from sweet_spot import PRESETS, picks
 
 
 class QuietHandler(SimpleHTTPRequestHandler):
@@ -74,6 +75,33 @@ def wrangler_server(directory, output):
             except subprocess.TimeoutExpired:
                 process.kill()
                 process.wait()
+
+
+def check_overview_ui(page, data):
+    """Sweet-spot matrix matches the Python reference; data-driven quadrant; focus and page TOC."""
+    page.locator('[data-panel="overview"]').click()
+    expect(page.locator("#sweetMatrix tbody tr")).to_have_count(11)
+    for preset, share in PRESETS.items():
+        page.select_option("#sweetTolerance", preset)
+        expected = picks(data, share)
+        rendered = page.eval_on_selector_all("#sweetMatrix .ss-cell", "cells => cells.map(c => [c.dataset.ssModel, c.dataset.ssTask, c.querySelector('.ss-effort').textContent])")
+        require(len(rendered) == len(expected), f"Sweet-spot matrix size changed: {preset}")
+        for model, task, effort in rendered:
+            require(expected[(model, task)] == effort, f"Sweet spot drifted from reference: {preset}/{model}/{task}")
+    page.select_option("#sweetTolerance", "balanced")
+    page.locator('[data-ss-model="claude-sonnet-5-5"][data-ss-task="ii"]').click()
+    expect(page.locator("#sweetDetail tr.is-pick th")).to_have_text("high")
+    expect(page.locator("#sweetDetail .ss-refs-detail")).to_be_visible()
+    expect(page.locator("#taskQuadHint")).to_contain_text("中位数")
+    page.locator('[data-task-pill="claude-fable-5-1"]').click()
+    active = sum(any(v.get("taskScores") for v in r["variants"]) for r in data["aa_release_series"]["releases"])
+    expect(page.locator("#taskEffortChart .release-series.is-dimmed")).to_have_count(active - 1)
+    page.locator('[data-task-pill="claude-fable-5-1"]').click()
+    expect(page.locator("#taskEffortChart .release-series.is-dimmed")).to_have_count(0)
+    hash_before = page.evaluate("location.hash")
+    require(page.locator("#pageToc button").count() >= 8, "Overview page TOC is missing sections")
+    page.locator("#pageToc button").nth(3).click()
+    require(page.evaluate("location.hash") == hash_before, "Page TOC changed the panel hash")
 
 
 def smoke(site, origin, output, channel=None, cloudflare=False):
@@ -143,6 +171,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
             check_capabilities(page, data, output)
             check_scaling(page, data, output)
             check_selection(page, data, output)
+            check_overview_ui(page, data)
             page.locator('[data-panel="overview"]').click()
             page.screenshot(path=str(output / "desktop.png"), full_page=True)
             page.locator('[data-panel="explorer"]').click()
@@ -193,7 +222,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
               "checks": ["task-specific best variants in seven dimensions", "dataset-backed knowledge narrative and Elo differences", "effort filters and scaling charts", "pinned vs temporary highlight, missing gaps and singleton", "separate Computer Use protocols and scope-limited raw-precision alternatives", "three verified workflow cards, source boundaries and native disclosures on keyboard/touch",
                "capability missingness, tie ranks, per-domain denominators and CSV consistency",
                "reasoning charts, effort selection, nonmonotonic scores and keyboard access", "six panels", "Claude filter", "CSV missing values", "budget boundaries", "four Opus evidence views",
-                         "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across six panels and twelve CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
+                         "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across six panels and twelve CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "sweet-spot matrix equals the Python reference for three presets", "median quadrant, series focus and page TOC", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
               "cloudflare_headers_checked": cloudflare}
     (output / "smoke.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result, indent=2))

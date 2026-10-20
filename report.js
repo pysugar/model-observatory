@@ -6,6 +6,7 @@
   const finite = value => typeof value === "number" && Number.isFinite(value);
   const fmt = (value, digits = 2) => finite(value) ? value.toLocaleString("en-US", {maximumFractionDigits:digits}) : "未提供";
   const money = value => finite(value) ? "$" + fmt(value, value < 1 ? 4 : 2) : "未提供";
+  const medianOf = arr => { const a = arr.filter(finite).sort((p,q) => p-q), m = Math.floor(a.length/2); return a.length ? (a.length % 2 ? a[m] : (a[m-1]+a[m])/2) : NaN; };
   const link = (url, label) => `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(label)}</a>`;
   const modelMap = new Map(DATA.models.map(m => [m.name, m]));
   const claudeAdvice = new Map(DATA.claude_advice.map(row => [row.model, row]));
@@ -66,6 +67,24 @@
   $("restrictedClaude").innerHTML = table(["受限型号","官方状态","访问与证据限制"],DATA.claude_scope.restricted_models.map(m => `<tr><th>${link(m.source,m.model)}</th><td>${esc(m.status)}</td><td>${esc(m.access)}</td></tr>`).join(""));
 
   // Tabs retain independent filter state and expose keyboard navigation.
+  // Sticky in-page TOC for the visible panel. Buttons (not #anchors) keep the panel hash intact.
+  let tocObserver=null;
+  function buildPageToc(name){
+    const toc=$("pageToc"), panel=$(name); if(!toc||!panel) return;
+    const targets=[...panel.querySelectorAll("[data-toc], .section-heading")].filter(el=>el.matches("[data-toc]")||!el.querySelector(".eyebrow"));
+    if(tocObserver) tocObserver.disconnect();
+    toc.hidden=targets.length<2;
+    toc.innerHTML=targets.map((el,i)=>{
+      if(!el.id) el.id=`toc-${name}-${i}`;
+      const label=el.dataset.toc||el.querySelector("h2")?.textContent||"";
+      return `<button type="button" data-toc-target="${esc(el.id)}">${esc(label)}</button>`;
+    }).join("");
+    toc.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>$(b.dataset.tocTarget)?.scrollIntoView({behavior:"smooth",block:"start"})));
+    if(!("IntersectionObserver" in window)) return;
+    const mark=id=>toc.querySelectorAll("button").forEach(b=>{const on=b.dataset.tocTarget===id;b.classList.toggle("active",on);if(on)b.scrollIntoView({block:"nearest",inline:"nearest"});});
+    tocObserver=new IntersectionObserver(entries=>{const hit=entries.filter(e=>e.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top)[0];if(hit)mark(hit.target.id);},{rootMargin:"-110px 0px -65% 0px"});
+    targets.forEach(el=>tocObserver.observe(el));
+  }
   function showPanel(name, updateHash = true) {
     if (!document.querySelector(`[data-panel="${name}"]`)) name = "overview";
     document.querySelectorAll(".panel").forEach(panel => { panel.hidden = panel.id !== name; });
@@ -78,6 +97,7 @@
       window.scrollTo({top:Math.min(window.scrollY, document.querySelector(".nav-shell").offsetTop), behavior:"instant"});
     }
     if (name === "overview") renderTaskEffortChart();
+    buildPageToc(name);
     if (name === "explorer") renderExplorer();
     if (name === "capabilities") { renderEffortScalingChart(); renderCapIndexChart(); }
   }
@@ -585,12 +605,14 @@
     $("reasoningCostPanel").hidden=key!=="__ii__";
     const selected=rows.find(r=>r.selected), valid=rows.filter(r=>finite(r.score)), costs=valid.filter(r=>finite(r.cost_per_task_usd)&&r.cost_per_task_usd>=0);
     $("reasoningChartNote").textContent=`图表与表格可横向滚动。${entries[0]?.releaseName} · ${metric}：${valid.length}/${rows.length} 个配置有分数，${costs.length} 个同时有 AA 加权成本。选中 ${selected?.effort}；实心点为选中档，外圈为该维度最高分（可并列）。横轴档位等距只表顺序；不同厂商不等预算。${key!=="__ii__" ? "所选子评测/领域没有同口径专属费用，已隐藏成本图；不以综合成本代替。" : ""}`;
-    const maxScore=Math.max(10,...valid.map(r=>r.score)), ceiling=Math.ceil(maxScore/10)*10;
-    const w=620,h=340,m={left:65,right:35,top:35,bottom:65}, y=v=>h-m.bottom-v/ceiling*(h-m.top-m.bottom);
+    // Fit the y-axis to the measured range so small effort gains stay visible.
+    const scores=valid.map(r=>r.score), lo=scores.length ? Math.max(0,Math.floor((Math.min(...scores)-3)/5)*5) : 0;
+    const ceiling=scores.length ? Math.max(lo+10,Math.ceil((Math.max(...scores)+2)/5)*5) : 10, step=(ceiling-lo)/5;
+    const w=620,h=340,m={left:65,right:35,top:35,bottom:65}, y=v=>h-m.bottom-(v-lo)/(ceiling-lo)*(h-m.top-m.bottom);
     const axis=()=>{
       const parts=[];
-      for(let tick=0;tick<=ceiling;tick+=ceiling/5) parts.push(`<line x1="${m.left}" x2="${w-m.right}" y1="${y(tick)}" y2="${y(tick)}" stroke="#e3e9e1"/><text x="${m.left-10}" y="${y(tick)+4}" text-anchor="end" font-size="11">${fmt(tick,1)}</text>`);
-      parts.push(`<text x="${m.left}" y="18" font-size="12" fill="#165e54">${esc(metric)}（0–100）</text>`);return parts;
+      for(let tick=lo;tick<=ceiling+1e-9;tick+=step) parts.push(`<line x1="${m.left}" x2="${w-m.right}" y1="${y(tick)}" y2="${y(tick)}" stroke="#e3e9e1"/><text x="${m.left-10}" y="${y(tick)+4}" text-anchor="end" font-size="11">${fmt(tick,1)}</text>`);
+      parts.push(`<text x="${m.left}" y="18" font-size="12" fill="#165e54">${esc(metric)}${lo>0?`（纵轴从 ${lo} 起）`:""}</text>`);return parts;
     };
     const node=(r,x,cy,offset=-15,compact=false)=>`<g class="reasoning-dot" role="button" tabindex="0" aria-pressed="${r.selected}" data-variant="${esc(r.variant)}" data-score="${r.score}" aria-label="${esc(r.effort+"，"+metric+" "+fmt(r.score,2)+"，AA 加权成本 "+money(r.cost_per_task_usd))}"><title>${esc(r.effort+" · "+fmt(r.score,2)+" 分 · "+money(r.cost_per_task_usd)+" · "+(r.fallback||"来源未标记回退"))}</title>${r.best_for_metric?`<circle cx="${x}" cy="${cy}" r="11" fill="none" stroke="${color}" stroke-width="1.5"/>`:""}<circle cx="${x}" cy="${cy}" r="${r.selected?7:5}" fill="${r.selected?color:"#fffef9"}" stroke="${color}" stroke-width="2"/><text x="${x}" y="${cy+offset}" text-anchor="middle" font-size="11" fill="${color}">${esc(r.effort)}${compact ? "" : " · "+fmt(r.score,2)}</text></g>`;
     const measuredIndices=rows.map(r=>capabilityEfforts.indexOf(r.effort));
@@ -611,7 +633,8 @@
     if(!costs.length)cost.push(`<text x="${w/2}" y="${h/2}" text-anchor="middle">无同口径费用，不补估算散点</text>`);
     cost.push(`<text x="${w/2}" y="${h-10}" text-anchor="middle" font-size="12">AA 智能指数加权单任务成本（USD）</text>`);
     [["reasoningCurve",curve],["reasoningCost",cost]].forEach(([id,parts])=>{const svg=$(id);svg.setAttribute("viewBox",`0 0 ${w} ${h}`);svg.innerHTML=`<title>${esc(entries[0]?.releaseName+" · "+metric)}</title>`+parts.join("");});
-    $("reasoningEvidenceTable").innerHTML=table(["已测档位 / 来源配置","官方得分","相对上一已测档分差","AA 加权成本 / 增量","选档标记"],rows.map(r=>`<tr data-variant="${esc(r.variant)}"><th>${r.source_url ? link(r.source_url,r.effort) : esc(r.effort)+'<span class="task-detail">无该指标来源 · 无测量</span>'}<span class="task-detail">${esc(r.fallback||"来源未标记回退")}</span></th><td>${finite(r.score)?fmt(r.score,2):"无数据"}</td><td>${finite(r.delta_score)?`${r.delta_score>0?"+":""}${fmt(r.delta_score,2)}（${esc(r.previous_measured_effort)} → ${esc(r.effort)}）`:"无可比相邻值"}</td><td>${money(r.cost_per_task_usd)}<span class="task-detail">增量 ${finite(r.delta_cost_usd)?(r.delta_cost_usd>0?"+":"")+money(r.delta_cost_usd):"未提供"}</span></td><td>${[r.selected?"当前选中":"",r.representative_by_overall_ii?"AA 智能指数最高代表档":"",r.best_for_metric?"本维度最高（可并列）":""].filter(Boolean).join(" · ")||"—"}</td></tr>`).join(""));
+    const showCost=costs.length>0;
+    $("reasoningEvidenceTable").innerHTML=table(["已测档位 / 来源配置","官方得分","相对上一已测档分差",...(showCost?["AA 加权成本 / 增量"]:[]),"选档标记"],rows.map(r=>`<tr data-variant="${esc(r.variant)}"><th>${r.source_url ? link(r.source_url,r.effort) : esc(r.effort)+'<span class="task-detail">无该指标来源 · 无测量</span>'}<span class="task-detail">${esc(r.fallback||"来源未标记回退")}</span></th><td>${finite(r.score)?fmt(r.score,2):"无数据"}</td><td>${finite(r.delta_score)?`${r.delta_score>0?"+":""}${fmt(r.delta_score,2)}（${esc(r.previous_measured_effort)} → ${esc(r.effort)}）`:"无可比相邻值"}</td>${showCost?`<td>${money(r.cost_per_task_usd)}<span class="task-detail">增量 ${finite(r.delta_cost_usd)?(r.delta_cost_usd>0?"+":"")+money(r.delta_cost_usd):"未提供"}</span></td>`:""}<td>${[r.selected?"当前选中":"",r.representative_by_overall_ii?"AA 智能指数最高代表档":"",r.best_for_metric?"本维度最高（可并列）":""].filter(Boolean).join(" · ")||"—"}</td></tr>`).join(""));
     $("reasoningEvidenceTable").dataset.selected=effortView.selectedSlug;
     document.querySelectorAll("#reasoningCharts .reasoning-dot").forEach(dot=>{
       const select=()=>{effortView.selectedSlug=dot.dataset.variant;renderReasoningCharts();};
@@ -762,10 +785,12 @@
     }
     items.forEach(item => {
       if (item.scaleModel) parts.push(`<g data-scale-label="${esc(item.scaleModel)}">`);
+      if (item.dim) parts.push(`<g opacity="0.18">`);
       if (Math.abs(item.ly - item.cy) > 3 || item.lx - item.cx > 12) {
         parts.push(`<line x1="${item.cx + 4}" y1="${item.cy}" x2="${item.lx - 2}" y2="${item.ly}" stroke="${item.col}" stroke-width="0.95" opacity="0.65"/>`);
       }
       parts.push(`<text x="${item.lx}" y="${item.ly + 3.5}" font-size="${item.isSel ? 12 : 11}" font-weight="${item.isSel ? 700 : 600}" fill="${item.isSel ? "#111827" : "#1f2937"}" style="paint-order:stroke;stroke:#ffffff;stroke-width:3.5px;stroke-linejoin:round">${esc(item.text)}</text>`);
+      if (item.dim) parts.push("</g>");
       if (item.scaleModel) parts.push("</g>");
     });
   }
@@ -887,14 +912,23 @@
       .sort((a,b) => taskDef.getScore(b) - taskDef.getScore(a) || a.costPerTask - b.costPerTask)[0];
   }
 
-  function renderTaskCategoryCards(taskDef, activeReleases) {
+  // Quadrant bounds come from the data: median score of every measured effort for this task, and
+  // either the median cost or a personal budget. Hand-set constants used to favor the cheapest family.
+  function taskQuadrant(taskDef, activeReleases) {
+    const pts = activeReleases.flatMap(r => r.variants).filter(v => finite(v.costPerTask) && v.costPerTask > 0 && finite(taskDef.getScore(v)));
+    const mode = $("taskQuadMode")?.value || "median";
+    const medCost = medianOf(pts.map(v => v.costPerTask)), medScore = medianOf(pts.map(v => taskDef.getScore(v)));
+    const budget = mode === "median" ? medCost : Number(mode);
+    return {x: finite(budget) ? budget : taskDef.attractiveX, y: finite(medScore) ? medScore : taskDef.attractiveY, byBudget: mode !== "median", medCost};
+  }
+  function renderTaskCategoryCards(taskDef, activeReleases, quad = taskQuadrant(taskDef, activeReleases)) {
     const el = $("taskCategoryCards");
     if (!el) return;
     const allVars = activeReleases.flatMap(rel => rel.variants.map(v => ({rel, v, score:taskDef.getScore(v)}))).filter(x => finite(x.score) && finite(x.v.costPerTask));
     if (!allVars.length) { el.innerHTML = ""; return; }
     const bestOverall = [...allVars].sort((a,b) => (b.score - a.score) || (a.v.costPerTask - b.v.costPerTask))[0];
-    const inQuad = allVars.filter(x => x.v.costPerTask <= taskDef.attractiveX && x.score >= taskDef.attractiveY);
-    const bestQuad = (inQuad.length ? inQuad : allVars.filter(x => x.v.costPerTask <= taskDef.attractiveX)).sort((a,b) => (b.score - a.score) || (a.v.costPerTask - b.v.costPerTask))[0] || bestOverall;
+    const inQuad = allVars.filter(x => x.v.costPerTask <= quad.x && x.score >= quad.y);
+    const bestQuad = (inQuad.length ? inQuad : allVars.filter(x => x.v.costPerTask <= quad.x)).sort((a,b) => (b.score - a.score) || (a.v.costPerTask - b.v.costPerTask))[0] || bestOverall;
     const ultraLow = allVars.filter(x => x.v.costPerTask <= 0.16).sort((a,b) => (b.score - a.score) || (a.v.costPerTask - b.v.costPerTask))[0] || bestQuad;
     let bestGain = null;
     activeReleases.forEach(rel => {
@@ -913,7 +947,7 @@
         desc: `耗时 ${fmt(bestOverall.v.timePerTaskMinutes, 2)} 分钟 · AA 智能指数 ${fmt(bestOverall.v.intelligenceIndex, 1)}`
       },
       {
-        title: "优选象限冠军（Most Attractive ≤ $1.10）",
+        title: `优选象限冠军（Most Attractive ≤ ${money(quad.x)}）`,
         main: `${bestQuad.rel.shortName || bestQuad.rel.name} (${bestQuad.v.effort})`,
         stat: `${fmt(bestQuad.score, taskDef.digits)}${taskDef.unit} · ${money(bestQuad.v.costPerTask)}/任务`,
         desc: `与最高分相差 ${fmt(bestOverall.score - bestQuad.score, taskDef.digits)}${taskDef.unit === "%" ? " 个百分点" : taskDef.unit}，成本为该配置的 ${fmt((bestQuad.v.costPerTask / Math.max(0.001, bestOverall.v.costPerTask)) * 100, 0)}%`
@@ -977,19 +1011,24 @@
       colorMode,
       activeReleases
     });
-    renderTaskCategoryCards(taskDef, activeReleases);
+    const quad = taskQuadrant(taskDef, activeReleases);
+    renderTaskCategoryCards(taskDef, activeReleases, quad);
+    if ($("taskQuadHint")) $("taskQuadHint").textContent = `左上浅绿区域为 Most attractive quadrant：分数 ≥ 本任务全部档位的中位数 ${fmt(quad.y, taskDef.digits)}${taskDef.unit}，单任务成本 ≤ ${money(quad.x)}${quad.byBudget ? "（按你的预算）" : "（全部档位成本中位数）"} · 点击圆点或胶囊聚焦该模型`;
 
     $("taskEffortPills").innerHTML = activeReleases.map(r => {
       const col = getReleaseColor(r, colorMode);
       const topV = bestTaskVariant(r, taskDef) || r.variants[r.variants.length - 1];
       const sc = taskDef.getScore(topV);
       return `<button type="button" class="pill-btn ${r.releaseSlug === taskEffortState.selectedReleaseId ? "is-active" : ""}" data-task-pill="${esc(r.releaseSlug)}"><span class="swatch" style="background:${col}"></span>${esc(r.shortName || r.name)} <span class="small">(${fmt(sc, taskDef.digits)}${taskDef.unit})</span></button>`;
-    }).join("");
+    }).join("") + (taskEffortState.focus ? `<button type="button" class="pill-btn pill-reset" id="taskFocusReset">显示全部模型</button>` : "");
     $("taskEffortPills").querySelectorAll("[data-task-pill]").forEach(btn => btn.addEventListener("click", () => {
+      const same = taskEffortState.focus && taskEffortState.selectedReleaseId === btn.dataset.taskPill;
       taskEffortState.selectedReleaseId = btn.dataset.taskPill;
       taskEffortState.selectedVariantSlug = null;
+      taskEffortState.focus = !same;
       renderTaskEffortChart();
     }));
+    $("taskFocusReset")?.addEventListener("click", () => { taskEffortState.focus = false; renderTaskEffortChart(); });
 
     const variantMatchesFocus = (v, rel) => {
       if (focusEffort === "all") return mode === "top_variants" ? v === bestTaskVariant(rel, taskDef) : true;
@@ -1036,8 +1075,8 @@
       width,
       height,
       margin,
-      qx: x(taskDef.attractiveX),
-      qy: y(taskDef.attractiveY),
+      qx: x(Math.min(Math.max(quad.x, lo), hi)),
+      qy: y(Math.min(Math.max(quad.y, ymin), ymax)),
       showQuadrant: true
     });
 
@@ -1078,7 +1117,7 @@
     }
 
     if (frontier.length > 1) {
-      parts.push(`<polyline points="${frontier.map(p => `${x(p.v.costPerTask)},${y(p.score)}`).join(" ")}" fill="none" stroke="#111827" stroke-width="2.1" stroke-dasharray="2.5 3.5"/>`);
+      parts.push(`<polyline points="${frontier.map(p => `${x(p.v.costPerTask)},${y(p.score)}`).join(" ")}" fill="none" stroke="#111827" stroke-width="2.1" stroke-dasharray="2.5 3.5" opacity="${taskEffortState.focus ? 0.35 : 1}"/>`);
     }
 
     const topLabels = [];
@@ -1090,20 +1129,24 @@
         .filter(v => variantMatchesFocus(v, rel) && finite(v.costPerTask) && v.costPerTask > 0 && finite(taskDef.getScore(v)))
         .map(v => ({v, score:taskDef.getScore(v)}));
       if (!pts.length) return;
+      const focused = taskEffortState.focus && isSel, dimmed = taskEffortState.focus && !isSel;
+      const linePts = pts.map(p => `${x(p.v.costPerTask)},${y(p.score)}`).join(" ");
       const poly = pts.length > 1
-        ? `<polyline class="release-line" points="${pts.map(p => `${x(p.v.costPerTask)},${y(p.score)}`).join(" ")}" fill="none" stroke="${col}" stroke-width="${isSel ? 3.2 : 2.1}" opacity="${isSel ? 1 : 0.82}"/>`
+        ? (focused ? `<polyline class="release-halo" points="${linePts}" fill="none" stroke="#fffef9" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"/>` : "") +
+          `<polyline class="release-line" points="${linePts}" fill="none" stroke="${col}" stroke-width="${focused ? 4 : isSel ? 3.2 : 2.1}" stroke-linejoin="round" opacity="${isSel ? 1 : 0.82}"/>` +
+          `<polyline class="release-hit" points="${linePts}" fill="none" stroke="transparent" stroke-width="12" stroke-linejoin="round"/>`
         : "";
-      const dots = pts.map(p => {
+      const dots = pts.map((p, idx) => {
         const cx = x(p.v.costPerTask), cy = y(p.score);
         const isPrimary = p.v === bestTaskVariant(rel, taskDef) || pts.length === 1;
         const r = isPrimary ? (isSel ? 6.8 : 5.6) : (isSel ? 5.2 : 4.3);
-        const effTag = isSel && pts.length > 1 ? `<text x="${cx}" y="${cy - r - 4}" text-anchor="middle" font-size="9.5" font-weight="600" fill="${col}">${esc(EFFORT_SHORT[p.v.effort] || p.v.effort)}</text>` : "";
+        const effTag = isSel && pts.length > 1 ? `<text class="effort-tag" x="${cx}" y="${focused && idx % 2 ? cy + r + 13 : cy - r - 4}" text-anchor="middle" font-size="${focused ? 11 : 9.5}" font-weight="700" fill="${col}">${esc(EFFORT_SHORT[p.v.effort] || p.v.effort)}${focused ? " · " + fmt(p.score, taskDef.digits) : ""}</text>` : "";
         return `<g class="task-dot" tabindex="0" role="button" data-task-rel="${esc(rel.releaseSlug)}" data-task-var="${esc(p.v.slug)}" aria-label="${esc(p.v.name + "，" + taskDef.shortLabel + " " + fmt(p.score, taskDef.digits) + taskDef.unit + "，成本 " + money(p.v.costPerTask))}"><title>${esc(p.v.name + " · " + taskDef.shortLabel + " " + fmt(p.score, taskDef.digits) + taskDef.unit + " · 单任务 " + money(p.v.costPerTask) + " · 耗时 " + fmt(p.v.timePerTaskMinutes, 2) + "m")}</title><circle cx="${cx}" cy="${cy}" r="${r}" fill="${isPrimary ? col : "#ffffff"}" stroke="${col}" stroke-width="${isPrimary ? 2.2 : 1.9}"/>${effTag}</g>`;
       }).join("");
-      parts.push(`<g class="release-series ${isSel ? "is-highlighted" : ""}">${poly}${dots}</g>`);
+      parts.push(`<g class="release-series ${isSel ? "is-highlighted" : ""} ${focused ? "is-focused" : ""} ${dimmed ? "is-dimmed" : ""}" data-series="${esc(rel.releaseSlug)}">${poly}${dots}</g>`);
       const labelPt = [...pts].sort((a,b) => b.score - a.score || a.v.costPerTask - b.v.costPerTask)[0];
       const suffix = focusEffort !== "all" ? ` (${labelPt.v.effort})` : "";
-      topLabels.push({rel, col, v:labelPt.v, score:labelPt.score, text:(rel.shortName || rel.name) + suffix, cx:x(labelPt.v.costPerTask), cy:y(labelPt.score), ly:y(labelPt.score), isSel});
+      topLabels.push({rel, col, v:labelPt.v, score:labelPt.score, text:(rel.shortName || rel.name) + suffix, cx:x(labelPt.v.costPerTask), cy:y(labelPt.score), ly:y(labelPt.score), isSel, dim:dimmed});
     });
 
     renderSmartLabels(parts, topLabels, {width, height, margin, minGap:15, xSpan:135});
@@ -1113,6 +1156,7 @@
       const select = () => {
         taskEffortState.selectedReleaseId = dot.dataset.taskRel;
         taskEffortState.selectedVariantSlug = dot.dataset.taskVar;
+        taskEffortState.focus = true;
         renderTaskEffortChart();
       };
       dot.addEventListener("click", select);
@@ -1130,7 +1174,7 @@
       $("taskEffortTabs").querySelectorAll("[data-task-tab]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.taskTab === taskEffortState.tab)));
       renderTaskEffortChart();
     }));
-    ["taskEffortMode", "taskEffortFocus", "taskColorMode", "taskEffortBackdrop"].forEach(id => $(id)?.addEventListener("change", renderTaskEffortChart));
+    ["taskEffortMode", "taskEffortFocus", "taskColorMode", "taskEffortBackdrop", "taskQuadMode"].forEach(id => $(id)?.addEventListener("change", renderTaskEffortChart));
     $("exportTaskEffort")?.addEventListener("click", () => {
       const rows = DATA.aa_release_series.releases.filter(r => r.variants.some(v => v.taskScores)).flatMap(r => r.variants.map(v => ({
         release: r.name,
@@ -1435,8 +1479,9 @@
       width,
       height,
       margin,
-      qx: x(xMeta.attractiveX),
-      qy: y(42.5),
+      // Same rule as the overview chart: split at the medians of the plotted active points.
+      qx: x(Math.min(Math.max(medianOf(activePoints.map(p => p.v[xKey])) || xMeta.attractiveX, lo), hi)),
+      qy: y(Math.min(Math.max(medianOf(activePoints.map(p => p.v.intelligenceIndex)) || 42.5, ymin), ymax)),
       showQuadrant: showPareto
     });
 
@@ -1536,5 +1581,157 @@
   const types=[...new Set(DATA.sources.map(s => s.type))];
   $("sourceList").innerHTML=types.map(type => `<div class="source-group"><h3>${esc(type)}</h3>${DATA.sources.filter(s => s.type === type).map(s => `<div class="source-item"><span class="source-id">${s.id}</span><div>${link(s.url,s.title)}<p>${esc(s.note)}</p><p>${esc(s.status)} · ${s.accessed}</p></div></div>`).join("")}</div>`).join("");
   $("integrityNote").textContent=`原记录 ${DATA.meta.original_rows} 条＋新增 ${DATA.rows.length-DATA.meta.original_rows} 条＝${DATA.rows.length} 条；AA分项 ${DATA.aa_profiles.length} 个配置。ToneBench SHA256：${DATA.meta.tonebench_sha256}`;
-  renderReasoningCharts();renderTaskEffortChart();renderEffortScalingChart();renderPanorama();renderClaudeCatalog();renderProfiles();renderCapIndexChart();renderSpecs();renderDeltas();changeGroup("general");showPanel(location.hash.slice(1)||"overview",false);
+  // Personal effort sweet-spot matrix: lowest-cost measured effort within a tolerance of each model's best score.
+  const sweetTasks=[
+    {key:"ii",label:"综合",sub:"AA 智能指数",get:v=>v.intelligenceIndex,elo:false},
+    {key:"coding",label:"编程",sub:"Terminal-Bench + SciCode",get:v=>v.taskScores?.coding,elo:false},
+    {key:"complex",label:"复杂推理",sub:"HLE + CritPt",get:v=>v.taskScores?.complex,elo:false},
+    {key:"automation",label:"工具自动化",sub:"AutomationBench",get:v=>v.taskScores?.automation,elo:false},
+    {key:"agentic",label:"知识工作交付",sub:"GDPval Elo",get:v=>v.taskScores?.agentic,elo:true},
+    {key:"planning",label:"方案规划",sub:"Briefcase Elo",get:v=>v.taskScores?.planning,elo:true},
+    {key:"knowledge",label:"长文档 · 事实",sub:"LCR / PDF / Omniscience",get:v=>v.taskScores?.knowledge,elo:false}
+  ];
+  // Minimum gain per doubling of cost, as a share of the column's score spread across all measured configs.
+  const sweetTolerance={thrifty:{share:.20,label:"省钱"},balanced:{share:.12,label:"均衡"},performance:{share:.06,label:"性能优先"}};
+  const vendorOrder=["Anthropic","OpenAI","Google","xAI"];
+  const sweetView={model:null,task:null};
+  const sweetReleases=()=>(DATA.aa_release_series?.releases||[]).filter(r=>r.variants.some(v=>v.taskScores))
+    .sort((a,b)=>(vendorOrder.indexOf(a.vendor)-vendorOrder.indexOf(b.vendor))||((b.maxIntelligenceIndex||0)-(a.maxIntelligenceIndex||0)));
+  const sweetSpan=new Map();
+  function sweetThreshold(task,tol,releases){
+    if(!sweetSpan.has(task.key)){
+      const vals=releases.flatMap(r=>r.variants.map(task.get)).filter(finite);
+      sweetSpan.set(task.key,vals.length?Math.max(...vals)-Math.min(...vals):0);
+    }
+    return tol.share*sweetSpan.get(task.key);
+  }
+  // Shared knee search over [{score,cost}]: returns the chosen item or null when no costs exist.
+  function kneeOf(items,threshold){
+    const pts=items.filter(x=>finite(x.cost)&&x.cost>0&&finite(x.score)).map(x=>({x,lx:Math.log2(x.cost)})).sort((a,b)=>a.lx-b.lx||b.x.score-a.x.score);
+    if(!pts.length) return null;
+    const hull=[];
+    pts.forEach(p=>{
+      if(hull.length&&p.lx===hull[hull.length-1].lx) return;
+      while(hull.length>=2){const a=hull[hull.length-2],b=hull[hull.length-1];if((b.x.score-a.x.score)*(p.lx-a.lx)<=(p.x.score-a.x.score)*(b.lx-a.lx))hull.pop();else break;}
+      hull.push(p);
+    });
+    let cur=hull[0];
+    for(const next of hull.slice(1)){if((next.x.score-cur.x.score)/(next.lx-cur.lx)<threshold)break;cur=next;}
+    return cur.x;
+  }
+  // Knee rule: walk the upper hull of (log2 cost, score) from the cheapest effort and keep
+  // stepping up while each step still gains at least `threshold` points per doubling of cost.
+  function sweetPick(release,task,tol,releases){
+    const vs=release.variants.map(v=>({v,score:task.get(v),cost:v.costPerTask})).filter(x=>finite(x.score)).sort((a,b)=>a.v.effortOrder-b.v.effortOrder);
+    if(!vs.length) return null;
+    const best=Math.max(...vs.map(x=>x.score)), top=vs[vs.length-1], peak=vs.find(x=>x.score===best);
+    const threshold=sweetThreshold(task,tol,releases);
+    const pick=kneeOf(vs,threshold)||peak;
+    return {vs,best,pick,top,peak,threshold,topDrop:vs.length>1&&top.score<best-(task.elo?10:0.5),single:vs.length===1};
+  }
+  function sweetCheaper(task,pick,releases,selfSlug){
+    if(!finite(pick.cost)) return null;
+    let alt=null;
+    releases.forEach(r=>{if(r.releaseSlug===selfSlug) return;r.variants.forEach(v=>{const sc=task.get(v);if(finite(sc)&&finite(v.costPerTask)&&sc>=pick.score&&v.costPerTask<=pick.cost*0.6&&(!alt||v.costPerTask<alt.cost))alt={release:r,v,score:sc,cost:v.costPerTask};});});
+    return alt;
+  }
+  // A pick is dominated when another model's measured effort scores at least as high for no more money (and is strictly better on one).
+  function sweetDominated(task,pick,releases,selfSlug){
+    if(!finite(pick.cost)) return false;
+    return releases.some(r=>r.releaseSlug!==selfSlug&&r.variants.some(v=>{const sc=task.get(v);return finite(sc)&&finite(v.costPerTask)&&sc>=pick.score&&v.costPerTask<=pick.cost&&(sc>pick.score||v.costPerTask<pick.cost);}));
+  }
+  // Reference picks shown next to the benchmark knee: official/guide starting effort and community measurements.
+  const guideTask={complex:["complex"],coding:["daily_code","repository_bug"],planning:["design"]};
+  const guideTaskLabel={complex:"复杂问题",daily_code:"日常代码",repository_bug:"修 bug",design:"方案设计"};
+  function sweetRefs(release,task,tol){
+    const g=DATA.task_effort_guidance, model=(g?.models||[]).find(m=>m.modelId===release.releaseSlug);
+    const recs=(g?.recommendations||[]).filter(r=>r.modelId===release.releaseSlug);
+    const out={official:null,community:[]};
+    const official=(guideTask[task.key]||[]).map(id=>recs.find(r=>r.taskType===id&&r.evidenceType!=="社区实测")).filter(Boolean);
+    if(official.length){
+      const r=official[0];
+      out.official={effort:r.nativeEffort,kind:model?.officialDefault?"官方":"经验",url:r.support?.[0]?.sourceUrl||r.sourceUrl,
+        note:official.map(x=>`${guideTaskLabel[x.taskType]} ${x.nativeEffort}`).join(" · ")+"；"+(r.caveats?.[0]||""),taskSpecific:true};
+    } else if(model?.officialDefault){
+      out.official={effort:model.officialDefault,kind:"官方",url:model.sourceUrl,note:`官方默认档位 ${model.officialDefault}（不分任务）。`,taskSpecific:false};
+    }
+    (guideTask[task.key]||[]).forEach(id=>recs.filter(r=>r.taskType===id&&r.evidenceType==="社区实测").forEach(r=>out.community.push({effort:r.nativeEffort,label:`${guideTaskLabel[id]}${/[a-z]$/i.test(guideTaskLabel[id])?" ":""}实测`,url:r.sourceUrl,note:(r.support||[]).find(x=>x.evidenceType==="社区实测")?.statement||r.caveats?.[0]||"",n:r.sampleSize})));
+    if(task.key==="coding"){
+      const rows=DATA.rows.filter(x=>x.benchmark==="coding"&&x.model===release.name&&finite(x.score));
+      if(rows.length>1){
+        const spread=(()=>{const v=DATA.rows.filter(x=>x.benchmark==="coding"&&finite(x.score)).map(x=>x.score);return Math.max(...v)-Math.min(...v);})();
+        const k=kneeOf(rows.map(x=>({effort:x.effort,score:x.score,cost:x.cost_usd,row:x})),tol.share*spread);
+        if(k) out.community.push({effort:k.effort,label:"Vulcan",url:k.row.source_url,n:k.row.n,
+          note:`Vulcan 编码 ${k.row.n} 题，${k.effort} 通过 ${fmt(k.score,1)}%，每次尝试 ${money(k.cost)}；同一拐点规则。${rows.some(x=>x.variant==="mixed_fallback")?"部分档位含回退配置。":""}`,
+          rows});
+      }
+    }
+    return out;
+  }
+  function sweetAdvice(pick,refs){
+    const order=["non-reasoning","minimal","low","medium","high","xhigh","max"];
+    const o=refs.official, comm=refs.community;
+    if(!o&&!comm.length) return "";
+    const same=comm.filter(c=>c.effort===pick), diff=comm.filter(c=>c.effort!==pick);
+    const commText=(same.length?`社区实测（${same.map(c=>c.label).join("、")}）也指向 ${pick}。`:"")+(diff.length?`社区实测（${diff.map(c=>c.label+" "+c.effort).join("、")}）与拐点不同，值得用自己的任务对比。`:"");
+    if(!o) return `评测拐点是 ${pick}。${commText}`;
+    if(o.effort===pick) return `${o.kind}起点与评测拐点都是 ${pick}，直接用它。${commText}`;
+    const up=order.indexOf(pick)>order.indexOf(o.effort);
+    return (up ? `从${o.kind} ${o.effort} 起步；交付不达标时再升到评测拐点 ${pick}，不要直接跳到更高档。`
+               : `${o.kind}起点是 ${o.effort}，评测拐点在更低的 ${pick}；需求明确、测试稳定时可以降到 ${pick} 省钱。`)+commText;
+  }
+  const sweetFmt=(task,value)=>fmt(value,task.elo?0:1);
+  const sparkline=(res,task)=>{
+    const w=64,h=20,lo=Math.min(...res.vs.map(x=>x.score)),hi=Math.max(...res.vs.map(x=>x.score)),n=res.vs.length;
+    const px=i=>n===1?w/2:3+i*(w-6)/(n-1), py=sc=>hi===lo?h/2:h-3-(sc-lo)/(hi-lo)*(h-6);
+    const d=res.vs.map((x,i)=>`${i?"L":"M"}${px(i).toFixed(1)},${py(x.score).toFixed(1)}`).join("");
+    return `<svg class="ss-spark" viewBox="0 0 ${w} ${h}" aria-hidden="true"><path d="${d}"/>${res.vs.map((x,i)=>`<circle cx="${px(i).toFixed(1)}" cy="${py(x.score).toFixed(1)}" r="${x===res.pick?3.2:1.8}" class="${x===res.pick?"on":""}"/>`).join("")}</svg>`;
+  };
+  function renderSweetSpot(){
+    const host=$("sweetMatrix"); if(!host) return;
+    const tol=sweetTolerance[$("sweetTolerance")?.value]||sweetTolerance.balanced, releases=sweetReleases();
+    const defaults=new Map((DATA.task_effort_guidance?.models||[]).map(m=>[m.modelId,m.officialDefault]));
+    const colBest=new Map(sweetTasks.map(t=>[t.key,releases.map(r=>sweetPick(r,t,tol,releases)).filter(Boolean)]));
+    const heat=(task,score)=>{const all=colBest.get(task.key).map(x=>x.pick.score),lo=Math.min(...all),hi=Math.max(...all);return hi===lo?0.5:(score-lo)/(hi-lo);};
+    const head=`<tr><th scope="col">模型</th>${sweetTasks.map(t=>`<th scope="col">${esc(t.label)}<span class="task-detail">${esc(t.sub)}</span></th>`).join("")}</tr>`;
+    const body=releases.map(r=>`<tr><th scope="row"><span class="swatch" style="background:${esc(r.color)}"></span>${esc(r.shortName||r.name)}<span class="task-detail">${esc(r.vendor)}${defaults.get(r.releaseSlug)?` · 默认 ${esc(defaults.get(r.releaseSlug))}`:""}</span></th>${sweetTasks.map(t=>{
+      const res=sweetPick(r,t,tol,releases); if(!res) return `<td class="ss-empty">—</td>`;
+      const alt=sweetCheaper(t,res.pick,releases,r.releaseSlug), sel=sweetView.model===r.releaseSlug&&sweetView.task===t.key;
+      const frontier=!sweetDominated(t,res.pick,releases,r.releaseSlug);
+      const refs=sweetRefs(r,t,tol), refList=[refs.official?{tag:refs.official.kind,e:refs.official.effort}:null,...refs.community.map(c=>({tag:"社区",e:c.effort}))].filter(Boolean);
+      const agree=refList.length&&refList.every(x=>x.e===res.pick.v.effort);
+      const refLine=refList.length?`<span class="ss-refs">${refList.map(x=>`<span class="${x.e===res.pick.v.effort?"same":""}">${esc(x.tag)} ${esc(x.e)}${x.e===res.pick.v.effort?" ✓":""}</span>`).join("")}</span>`:"";
+      const flags=[agree&&refList.length>1?`<span class="ss-flag agree">共识</span>`:"",frontier?`<span class="ss-flag front">性价比前沿</span>`:"",res.topDrop?`<span class="ss-flag warn">顶档回落</span>`:"",res.single?`<span class="ss-flag info">仅测 ${esc(res.pick.v.effort)}</span>`:""].join("");
+      return `<td class="ss-cell${sel?" selected":""}${frontier?" frontier":alt?" dominated":""}" style="--heat:${heat(t,res.pick.score).toFixed(2)}" tabindex="0" role="button" aria-pressed="${sel}" data-ss-model="${esc(r.releaseSlug)}" data-ss-task="${t.key}" aria-label="${esc(`${r.shortName||r.name} ${t.label} 甜蜜点 ${res.pick.v.effort}，${sweetFmt(t,res.pick.score)}，${money(res.pick.cost)}`)}"><span class="ss-top"><b class="ss-effort e-${esc(res.pick.v.effort)}">${esc(res.pick.v.effort)}</b>${sparkline(res,t)}</span><span class="ss-meta">${sweetFmt(t,res.pick.score)} · ${finite(res.pick.cost)?money(res.pick.cost):"费用未测"}</span>${refLine}${flags}</td>`;}).join("")}</tr>`).join("");
+    host.innerHTML=`<table class="sweet-table"><thead>${head}</thead><tbody>${body}</tbody></table>`;
+    host.querySelectorAll(".ss-cell").forEach(cell=>{
+      const open=()=>{sweetView.model=cell.dataset.ssModel;sweetView.task=cell.dataset.ssTask;renderSweetSpot();renderSweetDetail();host.querySelector(`[data-ss-model="${sweetView.model}"][data-ss-task="${sweetView.task}"]`)?.focus();};
+      cell.addEventListener("click",open);cell.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}});
+    });
+    $("sweetRule").textContent=`规则（${tol.label}）：从最便宜的档位往上升，只要成本每翻一倍，分数还能提升本列全部配置分差的 ${Math.round(tol.share*100)}% 以上，就继续升档；第一次低于这个门槛就停下，停下的那一档就是甜蜜点。成本统一用 AA 综合单任务成本。`;
+    renderSweetDetail();
+  }
+  function renderSweetDetail(){
+    const box=$("sweetDetail"); if(!box) return;
+    const r=sweetReleases().find(x=>x.releaseSlug===sweetView.model), t=sweetTasks.find(x=>x.key===sweetView.task);
+    if(!r||!t){box.innerHTML=`<p class="muted">点矩阵中的格子，查看该模型在这项任务上每一档的分数、成本和边际收益。</p>`;return;}
+    const all=sweetReleases(), tol=sweetTolerance[$("sweetTolerance")?.value]||sweetTolerance.balanced, res=sweetPick(r,t,tol,all), alt=sweetCheaper(t,res.pick,all,r.releaseSlug);
+    const rows=res.vs.map((x,i)=>{const prev=res.vs[i-1];const ds=prev?x.score-prev.score:null,dc=prev&&finite(x.cost)&&finite(prev.cost)?x.cost-prev.cost:null;
+      const dbl=finite(ds)&&finite(dc)&&prev.cost>0&&x.cost>prev.cost?ds/Math.log2(x.cost/prev.cost):null;
+      const tag=[x===res.pick?"甜蜜点":"",x===res.peak?"最高分":"",x===res.top&&res.topDrop?"顶档回落":""].filter(Boolean).join(" · ");
+      return `<tr class="${x===res.pick?"is-pick":""}"><th>${esc(x.v.effort)}</th><td>${sweetFmt(t,x.score)}</td><td class="${ds>0?"delta-positive":ds<0?"delta-negative":""}">${finite(ds)?(ds>0?"+":"")+sweetFmt(t,ds):"—"}</td><td>${money(x.cost)}</td><td>${finite(dc)?(dc>0?"+":"")+money(dc):"—"}</td><td>${finite(ds)&&finite(dc)&&dc>0?sweetFmt(t,ds/dc)+" / $":"—"}</td><td class="${finite(dbl)?(dbl>=res.threshold?"delta-positive":"delta-negative"):""}">${finite(dbl)?(dbl>0?"+":"")+sweetFmt(t,dbl):"—"}</td><td>${tag||""}</td></tr>`;}).join("");
+    box.innerHTML=`<h3>${esc(r.shortName||r.name)} · ${esc(t.label)}</h3><p class="small muted">${esc(t.sub)}${t.elo?"（Elo，只用于同一基准内比较）":""}</p><div class="table-scroll"><table class="sweet-detail-table"><thead><tr><th>档位</th><th>分数</th><th>比上一档</th><th>单任务成本</th><th>多花</th><th>每多花 $1 得分</th><th>成本每翻倍得分</th><th>标记</th></tr></thead><tbody>${rows}</tbody></table></div><p class="small muted">升档门槛：成本每翻一倍至少 +${sweetFmt(t,res.threshold)}（本列分差的 ${Math.round(tol.share*100)}%）。绿色表示这一步达到门槛，红色表示没有达到。</p>${(()=>{const refs=sweetRefs(r,t,tol),advice=sweetAdvice(res.pick.v.effort,refs);
+      const items=[`<li><b>评测拐点 ${esc(res.pick.v.effort)}</b>：AA 逐档数据，规则见矩阵上方。</li>`,
+        refs.official?`<li><b>${esc(refs.official.kind)}${refs.official.taskSpecific?"起点":"默认"} ${esc(refs.official.effort)}</b>：${esc(refs.official.note)} ${refs.official.url?link(refs.official.url,"来源"):""}</li>`:`<li><b>官方</b>：未核验到官方默认档位。</li>`,
+        ...refs.community.map(c=>`<li><b>社区 · ${esc(c.label)} ${esc(c.effort)}</b>${c.n?`（n=${c.n}）`:""}：${esc(c.note)} ${c.url?link(c.url,"来源"):""}${c.rows?`<span class="task-detail">逐档通过率：${c.rows.slice().sort((a,b)=>capabilityEfforts.indexOf(a.effort)-capabilityEfforts.indexOf(b.effort)).map(x=>`${esc(x.effort)} ${fmt(x.score,1)}% / ${money(x.cost_usd)}`).join(" · ")}</span>`:""}</li>`)];
+      return `<div class="ss-refs-detail"><h4>参考依据</h4><ul>${items.join("")}</ul>${advice?`<p class="ss-advice"><b>建议做法：</b>${esc(advice)}</p>`:""}</div>`;})()}${alt?`<p class="ss-alt-note">有更省的替代：<strong>${esc(alt.release.shortName||alt.release.name)} ${esc(alt.v.effort)}</strong> 得分 ${sweetFmt(t,alt.score)}，不低于当前甜蜜点，成本 ${money(alt.cost)}（当前为 ${money(res.pick.cost)}）。</p>`:""}`;
+  }
+  if($("sweetTolerance")) $("sweetTolerance").addEventListener("change",renderSweetSpot);
+  if($("toggleNotes")) $("toggleNotes").addEventListener("click",event=>{
+    const full=document.body.classList.toggle("notes-full");
+    event.currentTarget.setAttribute("aria-pressed",String(full));
+    event.currentTarget.textContent=full?"收起口径说明":"展开全部口径说明";
+  });
+
+  renderSweetSpot();renderReasoningCharts();renderTaskEffortChart();renderEffortScalingChart();renderPanorama();renderClaudeCatalog();renderProfiles();renderCapIndexChart();renderSpecs();renderDeltas();changeGroup("general");showPanel(location.hash.slice(1)||"overview",false);
 })();
