@@ -1,5 +1,7 @@
 """Regress missingness, published precision, cohort and effort semantics offline."""
 import json
+import copy
+from build_report import bind_panorama_capabilities
 from pathlib import Path
 import subprocess
 import unittest
@@ -61,3 +63,32 @@ assert.equal(missingCost[1].delta_cost_usd,null);
         self.assertIn('MLCR-AA', domains['healthcareAndMedical']['coreEvals'])
         self.assertFalse(any('SciCode' in e for e in domains['engineering']['coreEvals']))
         self.assertTrue(all(d['weightNote'] and d['methodologyUrl'] for d in domains.values()))
+
+    def test_panorama_summary_follows_official_fields_and_rejects_ambiguous_join(self):
+        original = json.loads((ROOT / 'research/2026-10-19/multi-benchmark-supplement.json').read_text())
+        multi = copy.deepcopy(original)
+        bind_panorama_capabilities(multi)
+        rows = multi['external_leaderboards']['four_family_matrix']
+        official = multi['aa_capability_indexes']
+        for row in rows:
+            entry = next(e for e in official['entries'] if e['slug'] == row['aa_cap_variant_slug'])
+            self.assertEqual(row['aa_cap_source_url'], entry['sourceUrl'])
+            self.assertEqual(row['aa_cap_release_slug'], entry['releaseSlug'])
+            self.assertNotIn('#', row['aa_cap_highlights'])
+            for domain in official['domains']:
+                value = entry['capabilities'].get(domain['key'])
+                expected = f"{value:.2f}" if value is not None else '无数据（不参排）'
+                self.assertIn(domain['shortLabel'] + ' ' + expected, row['aa_cap_highlights'])
+        opus = next(e for e in official['entries'] if e['slug'] == 'claude-opus-5-5')
+        opus['capabilities']['economics'] = 42.25
+        bind_panorama_capabilities(multi)
+        opus_row = next(r for r in rows if r['aa_cap_variant_slug'] == opus['slug'])
+        self.assertIn('经济学 42.25', opus_row['aa_cap_highlights'])
+        self.assertNotIn('经济学 65.60', opus_row['aa_cap_highlights'])
+        official['entries'].append(copy.deepcopy(opus))
+        with self.assertRaisesRegex(ValueError, 'one official II representative'):
+            bind_panorama_capabilities(multi)
+        missing = copy.deepcopy(original)
+        missing['external_leaderboards']['four_family_matrix'][0]['aa_cap_release_slug'] = 'unknown-release'
+        with self.assertRaisesRegex(ValueError, 'one official II representative'):
+            bind_panorama_capabilities(missing)

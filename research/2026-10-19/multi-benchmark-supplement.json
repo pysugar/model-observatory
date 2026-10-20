@@ -7689,143 +7689,143 @@
         "model": "Claude Opus 5.5",
         "status": "Active · 旗舰主力",
         "aa_ii": "57.6 (max) / 53.6 (high)",
-        "aa_cap_highlights": "6 大领域全满贯 #1（工程 60.5 · 经济 63.3 · 法律 58.6 · 医疗 58.4）",
         "aa_cost_task": "$0.55 (low) – $1.82 (high) – $5.98 (max)",
         "scale_seal": "RLI 远程劳动 #1 (21.25%) · HLE Diamond #2 (55.0%) · 第六感 #4 (44.6%)",
         "openrouter": "Vals #3 (66.97) · $10.99/req · 有效输入 $0.64/1M · 周用量 #7 (6.18T tok, +23.2%)",
         "livebench_2": "#2 综合 86.5 · $4.19/成功任务",
         "arena": "Agent Code #1 (+18.38% ±1.44%, P50 $0.85) · Text Elo ~1518",
-        "sweet_spot": "复杂编码、架构设计与长文深度研究首选 high ($1.82/任务)；日常先用 medium ($1.34)，难点再升 xhigh ($3.46)。"
+        "sweet_spot": "复杂编码、架构设计与长文深度研究首选 high ($1.82/任务)；日常先用 medium ($1.34)，难点再升 xhigh ($3.46)。",
+        "aa_cap_release_slug": "claude-opus-5-5"
       },
       {
         "family": "Claude (Anthropic)",
         "model": "Claude Sonnet 5.5",
         "status": "Active · 均衡主力",
         "aa_ii": "56.0 (max) / 46.8 (high)",
-        "aa_cap_highlights": "财务 #2 (60.6) · 医疗 #2 (58.0) · 工程 #2 (58.6) · 战略 #3 (59.2)",
         "aa_cost_task": "$0.35 (low) – $0.88 (high) – $5.46 (max)",
         "scale_seal": "Agentic Coding 与多步工具调用主力梯队",
         "openrouter": "Vals #2 (67.04) · $3.74/req · 有效输入 $0.46/1M · 周用量 #16 (2.45T tok)",
         "livebench_2": "#7 综合 82.5 · $3.52/成功任务",
         "arena": "Agent Code #3 (+15.59% ±1.49%, P50 $0.46)",
-        "sweet_spot": "OpenRouter Vals 性价比极高（67.04 分仅 $3.74/req）；日常编码建议 medium ($0.48) / high ($0.88)，避免默认 max 耗尽输出。"
+        "sweet_spot": "OpenRouter Vals 性价比极高（67.04 分仅 $3.74/req）；日常编码建议 medium ($0.48) / high ($0.88)，避免默认 max 耗尽输出。",
+        "aa_cap_release_slug": "claude-sonnet-5-5"
       },
       {
         "family": "Claude (Anthropic)",
         "model": "Claude Fable 5.1",
         "status": "Active · 高难升级",
         "aa_ii": "53.4 (max) / 51.2 (high)",
-        "aa_cap_highlights": "战略 #2 (60.1) · 法律 #2 (58.5) · 经济 #2 (63.1) · 财务 #3 (58.3)",
         "aa_cost_task": "$2.37 (low) – $3.91 (high) – $7.63 (max)",
         "scale_seal": "SWE-Bench Pro V2 Full #3 (99.1%) · Hard #2 (92.2%) · RLI #3 (17.92%)",
         "openrouter": "Vals #4 (65.83) · $29.23/req · 有效输入 $1.61/1M",
         "livebench_2": "#1 综合 88.0 · $5.10/成功任务",
         "arena": "Agent Code #4 (+14.74% ±1.90%, P50 $2.45)",
-        "sweet_spot": "LiveBench 2.0 榜首 (88.0)，但单次请求成本高；仅在 Opus 5.5 / Sol 6.1 未达标的高价值长程难题中从 high 起试。"
+        "sweet_spot": "LiveBench 2.0 榜首 (88.0)，但单次请求成本高；仅在 Opus 5.5 / Sol 6.1 未达标的高价值长程难题中从 high 起试。",
+        "aa_cap_release_slug": "claude-fable-5-1"
       },
       {
         "family": "Claude (Anthropic)",
         "model": "Claude Haiku 5.5",
         "status": "Active · 高吞吐轻量",
         "aa_ii": "43.4 (max) / 37.8 (high)",
-        "aa_cap_highlights": "医疗 #11 (44.0) · 工程 #15 (44.6) · 财务 #18 (46.8)",
         "aa_cost_task": "$0.024 (low) – $0.079 (high) – $0.213 (max)",
         "scale_seal": "MultiChallenge #6 (67.67% ±5.34%)",
         "openrouter": "Vals #16 (54.44) · $0.19/req · 有效输入 $0.088/1M · 周用量暴涨 +89.4% (2.07T tok)",
         "livebench_2": "轻量层高吞吐代表（单任务成本 <$0.25）",
         "arena": "Agent Code #10 (+2.58% ±1.53%, P50 $0.08)",
-        "sweet_spot": "低成本高频代理与分类提取首选 low ($0.024) / medium ($0.047)；注意 >100k 上下文触发整单 5 倍阶梯价。"
+        "sweet_spot": "低成本高频代理与分类提取首选 low ($0.024) / medium ($0.047)；注意 >100k 上下文触发整单 5 倍阶梯价。",
+        "aa_cap_release_slug": "claude-haiku-5-5"
       },
       {
         "family": "ChatGPT / OpenAI",
         "model": "GPT 6.1 Sol",
         "status": "Active · 工程性价比核心",
         "aa_ii": "51.8 (max) / 50.2 (high)",
-        "aa_cap_highlights": "全部 6 大领域稳居全球 #5–#7（法律 #5 55.6 · 医疗 #5 51.0 · 财务 #6 53.7 · 工程 #7 52.8）",
         "aa_cost_task": "$0.13 (low) – $0.32 (high) – $0.72 (max)",
         "scale_seal": "MultiChallenge #1 (81.95% ±4.16%) · 第六感 #3 (46.6%)",
         "openrouter": "Vals #8 (61.15) · 仅 $1.96/req · 有效输入 $0.35/1M · 周用量 1.93T tok",
         "livebench_2": "#4 综合 85.4 · 仅 $0.73/成功任务（前五名中成本最低）",
         "arena": "Agent Code #2 (+16.13% ±1.44%, P50 $0.28)",
-        "sweet_spot": "跨全站帕累托核心：AA high 50.2 分仅 $0.32/任务，LiveBench 85.4 分仅 $0.73/任务，Arena #2 仅 $0.28；工程主控默认首选 high。"
+        "sweet_spot": "跨全站帕累托核心：AA high 50.2 分仅 $0.32/任务，LiveBench 85.4 分仅 $0.73/任务，Arena #2 仅 $0.28；工程主控默认首选 high。",
+        "aa_cap_release_slug": "gpt-6-1-sol"
       },
       {
         "family": "ChatGPT / OpenAI",
         "model": "GPT 6 Astra",
         "status": "Active · 深度科研与难题",
         "aa_ii": "52.7 (max) / 50.9 (high)",
-        "aa_cap_highlights": "财务 #4 (55.4) · 法律 #4 (56.8) · 医疗 #4 (52.9) · 战略 #5 (56.2) · 工程 #6 (53.2)",
         "aa_cost_task": "$0.82 (low) – $1.73 (high) – $3.26 (max)",
         "scale_seal": "HLE Diamond #1 (60.6%) · 第六感 #2 (53.6%) · RLI #2 (20.83%) · SWE-Bench Pro V2 #4/#5",
         "openrouter": "Vals #6 (63.13) · $23.72/req · 有效输入 $3.22/1M",
         "livebench_2": "#3 综合 86.1 · $3.81/成功任务",
         "arena": "Agent Code #5 (+13.66% ±1.61%, P50 $1.31)",
-        "sweet_spot": "Scale HLE Diamond 榜首 (60.6%)，输出 Token 极精炼（high 仅 11.8k tok/任务、耗时 3.4 分钟）；适合时间敏感的深度科学/架构攻坚。"
+        "sweet_spot": "Scale HLE Diamond 榜首 (60.6%)，输出 Token 极精炼（high 仅 11.8k tok/任务、耗时 3.4 分钟）；适合时间敏感的深度科学/架构攻坚。",
+        "aa_cap_release_slug": "gpt-6-astra"
       },
       {
         "family": "ChatGPT / OpenAI",
         "model": "GPT 6 Luna",
         "status": "Active · 极低成本批处理",
         "aa_ii": "38.1 (max) / 32.9 (high)",
-        "aa_cap_highlights": "医疗 #19 (36.8) · 战略 #21 (45.2) · 经济 #24 (47.5)",
         "aa_cost_task": "$0.005 (low) – $0.029 (high) – $0.068 (max)",
         "scale_seal": "轻量级高吞吐基线",
         "openrouter": "Vals 51.22 · 仅 $0.083/req · 有效输入 $0.042/1M · 全球周调用量 #6 (6.21T tok, 3.94 亿次请求)",
         "livebench_2": "轻量级最低单次成本 (<$0.08/任务)",
         "arena": "Agent Code #11 (-2.44% ±1.50%, P50 $0.02)",
-        "sweet_spot": "OpenRouter 闭源模型调用量冠军（周请求近 4 亿次）：none/low 仅 $0.005–$0.011/任务，专攻标题、分类、结构化提取与初筛。"
+        "sweet_spot": "OpenRouter 闭源模型调用量冠军（周请求近 4 亿次）：none/low 仅 $0.005–$0.011/任务，专攻标题、分类、结构化提取与初筛。",
+        "aa_cap_release_slug": "gpt-6-luna"
       },
       {
         "family": "Gemini (Google)",
         "model": "Gemini 4 Argon",
         "status": "Active · 多模态与知识旗舰",
         "aa_ii": "52.6 (high)",
-        "aa_cap_highlights": "法律 #3 (57.3) · 工程 #5 (53.4) · 经济 #5 (60.5) · 财务 #7 (53.6) · 战略 #7 (54.9)",
         "aa_cost_task": "$1.99 (high · 优惠期 $2/$10)",
         "scale_seal": "Humanity's Sixth Sense #1 (55.4%) · SWE-Bench Pro V2 Full #2 (99.22%) · Hard #3 (92.16%) · HLE Diamond #3 (53.2%)",
         "openrouter": "Vals Index v2.1 全球 #1 (68.90) · $5.94/req · 有效输入 $0.69/1M",
         "livebench_2": "#5 综合 84.1 · $1.80/成功任务",
         "arena": "Text Arena 综合 Elo #1 (~1526) · Agent Code #6 (+12.72% ±1.52%, P50 $0.60)",
-        "sweet_spot": "OpenRouter Vals #1 (68.90) + Scale 第六感 #1 (55.4%) + 原生音视频/PDF 1M 窗口；跨模态长文档分析、法律与工程推理首选。"
+        "sweet_spot": "OpenRouter Vals #1 (68.90) + Scale 第六感 #1 (55.4%) + 原生音视频/PDF 1M 窗口；跨模态长文档分析、法律与工程推理首选。",
+        "aa_cap_release_slug": "gemini-4-argon"
       },
       {
         "family": "Gemini (Google)",
         "model": "Gemini 3.8 Flash",
         "status": "Active · 多模态高吞吐主力",
         "aa_ii": "40.9 (high) / 39.8 (medium)",
-        "aa_cap_highlights": "法律 #10 (51.8) · 财务 #12 (49.1) · 战略 #13 (50.6) · 医疗 #13 (43.4)",
         "aa_cost_task": "$0.93 (medium) – $1.24 (high)",
         "scale_seal": "Humanity's Sixth Sense #5 (41.6%)",
         "openrouter": "Vals #15 (54.89) · $0.99/req · 有效输入 $0.38/1M · 周用量 #20 (1.75T tok)",
         "livebench_2": "多模态中端效率主力",
         "arena": "Agent Code #9 (+3.69% ±1.55%, P50 $0.16)",
-        "sweet_spot": "medium (39.8 分 / $0.93) 与 high (40.9 分 / $1.24) 分差仅 1.1 分但省 25% 成本；适合音视频/PDF 批量理解与中等复杂度代理。"
+        "sweet_spot": "medium (39.8 分 / $0.93) 与 high (40.9 分 / $1.24) 分差仅 1.1 分但省 25% 成本；适合音视频/PDF 批量理解与中等复杂度代理。",
+        "aa_cap_release_slug": "gemini-3-8-flash"
       },
       {
         "family": "Gemini (Google)",
         "model": "Gemini 3.5 Flash-Lite",
         "status": "Active · 极速多模态轻量",
         "aa_ii": "22.2 (unspecified)",
-        "aa_cap_highlights": "生成吞吐 438 token/s · 经济 31.4 · 法律 30.3 · 医疗 #27 (23.1)",
         "aa_cost_task": "$0.19 (整套指数 $366)",
         "scale_seal": "高速低延迟多模态基线",
         "openrouter": "$0.135/req · 有效输入 $0.24/1M",
         "livebench_2": "超低延迟轻量分类",
         "arena": "未进入 Agent Code 主榜",
-        "sweet_spot": "438 token/s 极速流式吞吐 + 原生音视频/PDF 输入；适合低延迟多模态初筛，不承担复杂推理。"
+        "sweet_spot": "438 token/s 极速流式吞吐 + 原生音视频/PDF 输入；适合低延迟多模态初筛，不承担复杂推理。",
+        "aa_cap_release_slug": "gemini-3-5-flash-lite"
       },
       {
         "family": "Grok (xAI / SpaceXAI)",
         "model": "Grok 4.7",
         "status": "Active · xAI 当前唯一主力",
         "aa_ii": "46.4 (xhigh) / 46.3 (high) / 42.2 (low)",
-        "aa_cap_highlights": "医疗 #7 (47.2) · 财务 #8 (51.9) · 法律 #8 (54.2) · 战略 #9 (54.4) · 工程 #10 (47.4) · 经济 #10 (55.7)",
         "aa_cost_task": "$1.25 (low) – $2.73 (high) – $3.74 (xhigh)",
         "scale_seal": "前十梯队推理与实时检索增强候选",
         "openrouter": "Vals #14 (54.95) · $3.37/req · 有效输入 $0.87/1M（较 Grok 4.6 提分 +2.86 且每请求降费 19%）",
         "livebench_2": "Coding & Reasoning ~76.8 · $1.24/任务",
         "arena": "Text Arena Elo ~1488（Grok 4.6 及更早版本在 AA 已标 Deprecated）",
-        "sweet_spot": "high (46.33 分 / $2.73) 与 xhigh (46.45 分 / $3.74) 几乎同分但省 27% 费用与 21% 耗时；选 Grok 4.7 必选 high 或 low ($1.25)，不选 xhigh。"
+        "sweet_spot": "high (46.33 分 / $2.73) 与 xhigh (46.45 分 / $3.74) 几乎同分但省 27% 费用与 21% 耗时；选 Grok 4.7 必选 high 或 low ($1.25)，不选 xhigh。",
+        "aa_cap_release_slug": "grok-4-7"
       }
     ],
     "scale_highlights": [
