@@ -66,6 +66,24 @@
   $("restrictedClaude").innerHTML = table(["受限型号","官方状态","访问与证据限制"],DATA.claude_scope.restricted_models.map(m => `<tr><th>${link(m.source,m.model)}</th><td>${esc(m.status)}</td><td>${esc(m.access)}</td></tr>`).join(""));
 
   // Tabs retain independent filter state and expose keyboard navigation.
+  // Sticky in-page TOC for the visible panel. Buttons (not #anchors) keep the panel hash intact.
+  let tocObserver=null;
+  function buildPageToc(name){
+    const toc=$("pageToc"), panel=$(name); if(!toc||!panel) return;
+    const targets=[...panel.querySelectorAll("[data-toc], .section-heading")].filter(el=>el.matches("[data-toc]")||!el.querySelector(".eyebrow"));
+    if(tocObserver) tocObserver.disconnect();
+    toc.hidden=targets.length<2;
+    toc.innerHTML=targets.map((el,i)=>{
+      if(!el.id) el.id=`toc-${name}-${i}`;
+      const label=el.dataset.toc||el.querySelector("h2")?.textContent||"";
+      return `<button type="button" data-toc-target="${esc(el.id)}">${esc(label)}</button>`;
+    }).join("");
+    toc.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>$(b.dataset.tocTarget)?.scrollIntoView({behavior:"smooth",block:"start"})));
+    if(!("IntersectionObserver" in window)) return;
+    const mark=id=>toc.querySelectorAll("button").forEach(b=>{const on=b.dataset.tocTarget===id;b.classList.toggle("active",on);if(on)b.scrollIntoView({block:"nearest",inline:"nearest"});});
+    tocObserver=new IntersectionObserver(entries=>{const hit=entries.filter(e=>e.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top)[0];if(hit)mark(hit.target.id);},{rootMargin:"-110px 0px -65% 0px"});
+    targets.forEach(el=>tocObserver.observe(el));
+  }
   function showPanel(name, updateHash = true) {
     if (!document.querySelector(`[data-panel="${name}"]`)) name = "overview";
     document.querySelectorAll(".panel").forEach(panel => { panel.hidden = panel.id !== name; });
@@ -78,6 +96,7 @@
       window.scrollTo({top:Math.min(window.scrollY, document.querySelector(".nav-shell").offsetTop), behavior:"instant"});
     }
     if (name === "overview") renderTaskEffortChart();
+    buildPageToc(name);
     if (name === "explorer") renderExplorer();
     if (name === "capabilities") { renderEffortScalingChart(); renderCapIndexChart(); }
   }
