@@ -44,6 +44,7 @@
 | 44 配置底层子评测 | [aa-effort-evals.json](research/2026-10-20/aa-effort-evals.json) → `aa_effort_evals` 及精确 variant 的 `evalMetrics` / `evalSourceUrl`；构建中另保留并标注派生 `taskScores`；`effortRows` / `renderReasoningCharts`、`renderEffortScalingChart` | `tests/test_report_claims.py`、`tests/test_capability_integrity.py`、`scripts/capability_smoke.py`、`scripts/scaling_smoke.py` |
 | 原生档位建议 | [task-effort-guidance.json](research/2026-10-20/task-effort-guidance.json) → `task_effort_guidance`；`renderTaskAdvice`（`#taskEffortAdvice`） | [test_selection_guidance.py](tests/test_selection_guidance.py)、[selection_smoke.py](scripts/selection_smoke.py) |
 | 第三方方法导航、实战证据卡 | [practical-evidence.json](research/2026-10-20/practical-evidence.json) → `practical_evidence`；`report.js` 中 `#practicalEvidence`，静态说明 `report.template.html:#benchmarkGuide` | `scripts/capability_smoke.py`、`scripts/selection_smoke.py` |
+| 选档速查矩阵、官方/社区参考、避坑清单、象限分界 | `aa_release_series` 逐档数据 + `task_effort_guidance` + 编码行（Vulcan）；`report.js:renderSweetSpot` / `sweetPick` / `kneeOf` / `sweetRefs`，`taskQuadrant`；避坑数字用 `{{aa:…}}` 构建时解析；Python 参考实现 [sweet_spot.py](scripts/sweet_spot.py) | [test_sweet_spot.py](tests/test_sweet_spot.py)、`scripts/smoke.py:check_overview_ui` |
 | Computer Use、限定协议替代组合、三张经验卡 | [computer-use-evidence.json](research/2026-10-20/computer-use-evidence.json) → `computer_use_evidence`；`renderComputerUseEvidence`、`renderPitfallGuide` / `renderObservedConfig`；同一 `renderEffortScalingChart` 切换 OpenAI 曲线；`scalingRows` / `scalingPath`、`osworldSweepPoints` / `observedAlternatives` 负责差分、缺档和限定范围计算 | [test_computer_use.py](tests/test_computer_use.py)、[scaling_smoke.py](scripts/scaling_smoke.py) |
 
 建议记录含 `modelId`、`nativeEffort`、`taskType`、`evidenceType`、`sourceUrl`、`checkedAt`、`caveats` 和已知时的 `sampleSize` / `harness`；`support` 将官方支持与任务经验映射分开。Computer Use 使用 `openaiSweep`、`anthropicMax`、`geminiReference`、`grokReference`、`pitfallExperience`、`pitfallReminders` 独立分组。来源 URL、版本、统计量、原生档位与未知协议字段应随记录保存；未知保持 null，不借用相邻来源补齐。
@@ -102,6 +103,9 @@ python3 validate_report.py
 - **Arena**：Text 是匿名成对回答偏好；Agent 是真实会话因果追踪的净改善，不是配对投票或绝对成功率；事实性调整后的 Text/Search 与纯偏好排名分开。原始百分比、净改善、事实核验和成本互补参考，不相加成总能力分。Agent 信号采用 2026-10-12 定义：Steerability 是用户纠偏负担，Bash Reliability 替代旧 Recovery；未回应完成确认不等于客观失败。
 - **Computer Use**：OpenAI `OSWorld 2.0 / offline / v2026.08.08 / partial reward` 是 3 模型×5 档的 15 点同评测费用曲线，协议未知字段保留 null；Sol high→xhigh 的实际下降保留。Anthropic 是 `2026-09-10` 全套、max 单点，partial reward 与 strict success rate 分列，保留 Opus 文档称 2.0、Sonnet 文档称 v2.1 的原始命名。Gemini 是独立的最高 thinking、原生 effort 未核验、3 次取最大单点，不叠加到均值/其他曲线。Grok 为“未发现公开可核实成绩”，不填零、不推断不支持；旧 OSWorld-Verified 和 WebArena/浏览器任务也不混入。
 - **避坑指南**：实测参考仅在上述 OpenAI 15 个完整分数/费用点中，按同协议、单位与成本定义的原始精度计算观测支配：替代分数不低、费用不高，且至少一项严格改善。每项最多两个去重替代：达到当前分数的最低费用配置、当前预算内最高分配置；同分同价用稳定键排序，显示时才舍入。区分同模型较低档替代与跨模型“切换配置”，不推断品牌档次。无置信区间不声称显著优势或退化，无延迟不声称更快；非支配点不认证为最优。
+- **选档速查（个人偏好）**：报告定位是个人选型参考。甜蜜点是“边际收益拐点”：在（log₂ 单任务成本，分数）上取上凸包，从最便宜的已测档往上走，只要成本每翻一倍仍提升本列全部配置分差的 20% / 12% / 6%（省钱 / 均衡 / 性能优先）就继续升档。不要退回“离最高分 N 分内取最便宜”，它对一路上升的曲线会选到 max。门槛是可切换的个人偏好预设，不是通用最优；成本统一用 AA 综合单任务成本，只比较档位间的相对费用。官方 / 经验起点与社区实测（任务档位建议、Vulcan 同规则拐点）并排展示，不加权合成一个“综合档位”。规则改动须同步 `scripts/sweet_spot.py`，smoke 会逐格比对。
+- **象限与聚焦**：Most attractive quadrant 的分界取当前任务全部已测档位的分数中位数 × 成本中位数（发布版本图同理），也可选个人预算；不再用手填常量（旧的 $1.10 恰好框住 Sol 6.1 整条曲线）。点击胶囊 / 圆点聚焦一个系列，其他系列与标签淡化，再点或“显示全部模型”恢复；悬停只临时预览。
+- **视觉与导航**：颜色走 `report.css` 顶部的语义变量，深色模式只重定义变量；`report.js` 里 SVG 的硬编码颜色靠 CSS 属性选择器映射到变量，新增图表颜色要么用变量，要么加进这组映射。本页目录用按钮而非 `#锚点`，因为 hash 表示页签。长口径说明默认折叠为两行（悬停 / 聚焦展开、打印全文）；概览大表不用 `<details>` 折叠，smoke 会直接操作其中的控件。
 - **多源经验也可参考**：不是每条提醒都要求完整测量；必须保留任务/版本、条件、行动与独立原始来源，转载不计第二来源。当前三张“多源经验参考”默认只显示坑点和动作，来源/边界折叠；不视为所有当前模型的既定缺陷，不套用用户节省比例。`pitfallReminders.cards` 为空是有意的有效状态，不能造填充内容。
 
 ## 已知限制与后续优化入口
@@ -109,7 +113,9 @@ python3 validate_report.py
 - 档位建议与社区证据不建立任务最优结论，中文任务、真实业务成功交付成本与订阅消耗仍需独立验证；现有资料不授权新付费调用。
 - Computer Use 尚缺跨厂商统一 harness、预算、重复次数和置信区间；OpenAI 协议未知项不能从 Anthropic/Gemini 继承。Anthropic 只有 max，Gemini 统计量不同，不能拼曲线或自动扩展 Pareto 范围。
 - 方案/架构设计仍“暂无直接可比公开成绩”；第三方导航不表示已抓取完整新榜单，不用通用指数代替架构质量。新增来源/分数需另有范围授权及可比协议证据。
-- 先沿既有组件改善可读性、筛选/空状态和可访问性，再补证据；不用重复图表、任意价值阈值或负面传闻替代现有数据路径。
+- 先沿既有组件改善可读性、筛选/空状态和可访问性，再补证据；不用重复图表、任意价值阈值或负面传闻替代现有数据路径。选档门槛是用户可切换、在页面写明的偏好预设，属于展示规则，不是证据结论。
+- 选档矩阵的社区参考目前只覆盖编程列（Vulcan 23 题、一条修 bug 社区甜点）；七个任务的官方起点多为不分任务的默认档位。补社区实践需按研究流程带来源与日期并入 `task-effort-guidance.json`，矩阵会自动显示。
+- 概览图在右上角模型密集时，聚焦系列的个别档位标签仍可能被模型名标签遮挡，明细以图下表格为准。
 - 自动调研、定时付费模型执行、自动合并及云端迁移均未启用。持久权限、执行器和网络变更须另行明确授权，见 [协作与环境边界](RESEARCH_WORKFLOW.md#当前手动协作与环境边界2026-10-20)。
 
 ## 后续 agent 交接
