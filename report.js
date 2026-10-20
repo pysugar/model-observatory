@@ -1582,6 +1582,20 @@
     }
     return tol.share*sweetSpan.get(task.key);
   }
+  // Shared knee search over [{score,cost}]: returns the chosen item or null when no costs exist.
+  function kneeOf(items,threshold){
+    const pts=items.filter(x=>finite(x.cost)&&x.cost>0&&finite(x.score)).map(x=>({x,lx:Math.log2(x.cost)})).sort((a,b)=>a.lx-b.lx||b.x.score-a.x.score);
+    if(!pts.length) return null;
+    const hull=[];
+    pts.forEach(p=>{
+      if(hull.length&&p.lx===hull[hull.length-1].lx) return;
+      while(hull.length>=2){const a=hull[hull.length-2],b=hull[hull.length-1];if((b.x.score-a.x.score)*(p.lx-a.lx)<=(p.x.score-a.x.score)*(b.lx-a.lx))hull.pop();else break;}
+      hull.push(p);
+    });
+    let cur=hull[0];
+    for(const next of hull.slice(1)){if((next.x.score-cur.x.score)/(next.lx-cur.lx)<threshold)break;cur=next;}
+    return cur.x;
+  }
   // Knee rule: walk the upper hull of (log2 cost, score) from the cheapest effort and keep
   // stepping up while each step still gains at least `threshold` points per doubling of cost.
   function sweetPick(release,task,tol,releases){
@@ -1589,19 +1603,7 @@
     if(!vs.length) return null;
     const best=Math.max(...vs.map(x=>x.score)), top=vs[vs.length-1], peak=vs.find(x=>x.score===best);
     const threshold=sweetThreshold(task,tol,releases);
-    const pts=vs.filter(x=>finite(x.cost)&&x.cost>0).map(x=>({x,lx:Math.log2(x.cost)})).sort((a,b)=>a.lx-b.lx||b.x.score-a.x.score);
-    let pick=peak;
-    if(pts.length){
-      const hull=[];
-      pts.forEach(p=>{
-        if(hull.length&&p.lx===hull[hull.length-1].lx) return;
-        while(hull.length>=2){const a=hull[hull.length-2],b=hull[hull.length-1];if((b.x.score-a.x.score)*(p.lx-a.lx)<=(p.x.score-a.x.score)*(b.lx-a.lx))hull.pop();else break;}
-        hull.push(p);
-      });
-      let cur=hull[0];
-      for(const next of hull.slice(1)){if((next.x.score-cur.x.score)/(next.lx-cur.lx)<threshold)break;cur=next;}
-      pick=cur.x;
-    }
+    const pick=kneeOf(vs,threshold)||peak;
     return {vs,best,pick,top,peak,threshold,topDrop:vs.length>1&&top.score<best-(task.elo?10:0.5),single:vs.length===1};
   }
   function sweetCheaper(task,pick,releases,selfSlug){
@@ -1614,6 +1616,46 @@
   function sweetDominated(task,pick,releases,selfSlug){
     if(!finite(pick.cost)) return false;
     return releases.some(r=>r.releaseSlug!==selfSlug&&r.variants.some(v=>{const sc=task.get(v);return finite(sc)&&finite(v.costPerTask)&&sc>=pick.score&&v.costPerTask<=pick.cost&&(sc>pick.score||v.costPerTask<pick.cost);}));
+  }
+  // Reference picks shown next to the benchmark knee: official/guide starting effort and community measurements.
+  const guideTask={complex:["complex"],coding:["daily_code","repository_bug"],planning:["design"]};
+  const guideTaskLabel={complex:"复杂问题",daily_code:"日常代码",repository_bug:"修 bug",design:"方案设计"};
+  function sweetRefs(release,task,tol){
+    const g=DATA.task_effort_guidance, model=(g?.models||[]).find(m=>m.modelId===release.releaseSlug);
+    const recs=(g?.recommendations||[]).filter(r=>r.modelId===release.releaseSlug);
+    const out={official:null,community:[]};
+    const official=(guideTask[task.key]||[]).map(id=>recs.find(r=>r.taskType===id&&r.evidenceType!=="社区实测")).filter(Boolean);
+    if(official.length){
+      const r=official[0];
+      out.official={effort:r.nativeEffort,kind:model?.officialDefault?"官方":"经验",url:r.support?.[0]?.sourceUrl||r.sourceUrl,
+        note:official.map(x=>`${guideTaskLabel[x.taskType]} ${x.nativeEffort}`).join(" · ")+"；"+(r.caveats?.[0]||""),taskSpecific:true};
+    } else if(model?.officialDefault){
+      out.official={effort:model.officialDefault,kind:"官方",url:model.sourceUrl,note:`官方默认档位 ${model.officialDefault}（不分任务）。`,taskSpecific:false};
+    }
+    (guideTask[task.key]||[]).forEach(id=>recs.filter(r=>r.taskType===id&&r.evidenceType==="社区实测").forEach(r=>out.community.push({effort:r.nativeEffort,label:`${guideTaskLabel[id]}${/[a-z]$/i.test(guideTaskLabel[id])?" ":""}实测`,url:r.sourceUrl,note:(r.support||[]).find(x=>x.evidenceType==="社区实测")?.statement||r.caveats?.[0]||"",n:r.sampleSize})));
+    if(task.key==="coding"){
+      const rows=DATA.rows.filter(x=>x.benchmark==="coding"&&x.model===release.name&&finite(x.score));
+      if(rows.length>1){
+        const spread=(()=>{const v=DATA.rows.filter(x=>x.benchmark==="coding"&&finite(x.score)).map(x=>x.score);return Math.max(...v)-Math.min(...v);})();
+        const k=kneeOf(rows.map(x=>({effort:x.effort,score:x.score,cost:x.cost_usd,row:x})),tol.share*spread);
+        if(k) out.community.push({effort:k.effort,label:"Vulcan",url:k.row.source_url,n:k.row.n,
+          note:`Vulcan 编码 ${k.row.n} 题，${k.effort} 通过 ${fmt(k.score,1)}%，每次尝试 ${money(k.cost)}；同一拐点规则。${rows.some(x=>x.variant==="mixed_fallback")?"部分档位含回退配置。":""}`,
+          rows});
+      }
+    }
+    return out;
+  }
+  function sweetAdvice(pick,refs){
+    const order=["non-reasoning","minimal","low","medium","high","xhigh","max"];
+    const o=refs.official, comm=refs.community;
+    if(!o&&!comm.length) return "";
+    const same=comm.filter(c=>c.effort===pick), diff=comm.filter(c=>c.effort!==pick);
+    const commText=(same.length?`社区实测（${same.map(c=>c.label).join("、")}）也指向 ${pick}。`:"")+(diff.length?`社区实测（${diff.map(c=>c.label+" "+c.effort).join("、")}）与拐点不同，值得用自己的任务对比。`:"");
+    if(!o) return `评测拐点是 ${pick}。${commText}`;
+    if(o.effort===pick) return `${o.kind}起点与评测拐点都是 ${pick}，直接用它。${commText}`;
+    const up=order.indexOf(pick)>order.indexOf(o.effort);
+    return (up ? `从${o.kind} ${o.effort} 起步；交付不达标时再升到评测拐点 ${pick}，不要直接跳到更高档。`
+               : `${o.kind}起点是 ${o.effort}，评测拐点在更低的 ${pick}；需求明确、测试稳定时可以降到 ${pick} 省钱。`)+commText;
   }
   const sweetFmt=(task,value)=>fmt(value,task.elo?0:1);
   const sparkline=(res,task)=>{
@@ -1633,8 +1675,11 @@
       const res=sweetPick(r,t,tol,releases); if(!res) return `<td class="ss-empty">—</td>`;
       const alt=sweetCheaper(t,res.pick,releases,r.releaseSlug), sel=sweetView.model===r.releaseSlug&&sweetView.task===t.key;
       const frontier=!sweetDominated(t,res.pick,releases,r.releaseSlug);
-      const flags=[frontier?`<span class="ss-flag front">性价比前沿</span>`:"",res.topDrop?`<span class="ss-flag warn">顶档回落</span>`:"",res.single?`<span class="ss-flag info">仅测 ${esc(res.pick.v.effort)}</span>`:""].join("");
-      return `<td class="ss-cell${sel?" selected":""}${frontier?" frontier":alt?" dominated":""}" style="--heat:${heat(t,res.pick.score).toFixed(2)}" tabindex="0" role="button" aria-pressed="${sel}" data-ss-model="${esc(r.releaseSlug)}" data-ss-task="${t.key}" aria-label="${esc(`${r.shortName||r.name} ${t.label} 甜蜜点 ${res.pick.v.effort}，${sweetFmt(t,res.pick.score)}，${money(res.pick.cost)}`)}"><span class="ss-top"><b class="ss-effort e-${esc(res.pick.v.effort)}">${esc(res.pick.v.effort)}</b>${sparkline(res,t)}</span><span class="ss-meta">${sweetFmt(t,res.pick.score)} · ${finite(res.pick.cost)?money(res.pick.cost):"费用未测"}</span>${flags}</td>`;}).join("")}</tr>`).join("");
+      const refs=sweetRefs(r,t,tol), refList=[refs.official?{tag:refs.official.kind,e:refs.official.effort}:null,...refs.community.map(c=>({tag:"社区",e:c.effort}))].filter(Boolean);
+      const agree=refList.length&&refList.every(x=>x.e===res.pick.v.effort);
+      const refLine=refList.length?`<span class="ss-refs">${refList.map(x=>`<span class="${x.e===res.pick.v.effort?"same":""}">${esc(x.tag)} ${esc(x.e)}${x.e===res.pick.v.effort?" ✓":""}</span>`).join("")}</span>`:"";
+      const flags=[agree&&refList.length>1?`<span class="ss-flag agree">共识</span>`:"",frontier?`<span class="ss-flag front">性价比前沿</span>`:"",res.topDrop?`<span class="ss-flag warn">顶档回落</span>`:"",res.single?`<span class="ss-flag info">仅测 ${esc(res.pick.v.effort)}</span>`:""].join("");
+      return `<td class="ss-cell${sel?" selected":""}${frontier?" frontier":alt?" dominated":""}" style="--heat:${heat(t,res.pick.score).toFixed(2)}" tabindex="0" role="button" aria-pressed="${sel}" data-ss-model="${esc(r.releaseSlug)}" data-ss-task="${t.key}" aria-label="${esc(`${r.shortName||r.name} ${t.label} 甜蜜点 ${res.pick.v.effort}，${sweetFmt(t,res.pick.score)}，${money(res.pick.cost)}`)}"><span class="ss-top"><b class="ss-effort e-${esc(res.pick.v.effort)}">${esc(res.pick.v.effort)}</b>${sparkline(res,t)}</span><span class="ss-meta">${sweetFmt(t,res.pick.score)} · ${finite(res.pick.cost)?money(res.pick.cost):"费用未测"}</span>${refLine}${flags}</td>`;}).join("")}</tr>`).join("");
     host.innerHTML=`<table class="sweet-table"><thead>${head}</thead><tbody>${body}</tbody></table>`;
     host.querySelectorAll(".ss-cell").forEach(cell=>{
       const open=()=>{sweetView.model=cell.dataset.ssModel;sweetView.task=cell.dataset.ssTask;renderSweetSpot();renderSweetDetail();host.querySelector(`[data-ss-model="${sweetView.model}"][data-ss-task="${sweetView.task}"]`)?.focus();};
@@ -1652,7 +1697,11 @@
       const dbl=finite(ds)&&finite(dc)&&prev.cost>0&&x.cost>prev.cost?ds/Math.log2(x.cost/prev.cost):null;
       const tag=[x===res.pick?"甜蜜点":"",x===res.peak?"最高分":"",x===res.top&&res.topDrop?"顶档回落":""].filter(Boolean).join(" · ");
       return `<tr class="${x===res.pick?"is-pick":""}"><th>${esc(x.v.effort)}</th><td>${sweetFmt(t,x.score)}</td><td class="${ds>0?"delta-positive":ds<0?"delta-negative":""}">${finite(ds)?(ds>0?"+":"")+sweetFmt(t,ds):"—"}</td><td>${money(x.cost)}</td><td>${finite(dc)?(dc>0?"+":"")+money(dc):"—"}</td><td>${finite(ds)&&finite(dc)&&dc>0?sweetFmt(t,ds/dc)+" / $":"—"}</td><td class="${finite(dbl)?(dbl>=res.threshold?"delta-positive":"delta-negative"):""}">${finite(dbl)?(dbl>0?"+":"")+sweetFmt(t,dbl):"—"}</td><td>${tag||""}</td></tr>`;}).join("");
-    box.innerHTML=`<h3>${esc(r.shortName||r.name)} · ${esc(t.label)}</h3><p class="small muted">${esc(t.sub)}${t.elo?"（Elo，只用于同一基准内比较）":""}</p><div class="table-scroll"><table class="sweet-detail-table"><thead><tr><th>档位</th><th>分数</th><th>比上一档</th><th>单任务成本</th><th>多花</th><th>每多花 $1 得分</th><th>成本每翻倍得分</th><th>标记</th></tr></thead><tbody>${rows}</tbody></table></div><p class="small muted">升档门槛：成本每翻一倍至少 +${sweetFmt(t,res.threshold)}（本列分差的 ${Math.round(tol.share*100)}%）。绿色表示这一步达到门槛，红色表示没有达到。</p>${alt?`<p class="ss-alt-note">有更省的替代：<strong>${esc(alt.release.shortName||alt.release.name)} ${esc(alt.v.effort)}</strong> 得分 ${sweetFmt(t,alt.score)}，不低于当前甜蜜点，成本 ${money(alt.cost)}（当前为 ${money(res.pick.cost)}）。</p>`:""}`;
+    box.innerHTML=`<h3>${esc(r.shortName||r.name)} · ${esc(t.label)}</h3><p class="small muted">${esc(t.sub)}${t.elo?"（Elo，只用于同一基准内比较）":""}</p><div class="table-scroll"><table class="sweet-detail-table"><thead><tr><th>档位</th><th>分数</th><th>比上一档</th><th>单任务成本</th><th>多花</th><th>每多花 $1 得分</th><th>成本每翻倍得分</th><th>标记</th></tr></thead><tbody>${rows}</tbody></table></div><p class="small muted">升档门槛：成本每翻一倍至少 +${sweetFmt(t,res.threshold)}（本列分差的 ${Math.round(tol.share*100)}%）。绿色表示这一步达到门槛，红色表示没有达到。</p>${(()=>{const refs=sweetRefs(r,t,tol),advice=sweetAdvice(res.pick.v.effort,refs);
+      const items=[`<li><b>评测拐点 ${esc(res.pick.v.effort)}</b>：AA 逐档数据，规则见矩阵上方。</li>`,
+        refs.official?`<li><b>${esc(refs.official.kind)}${refs.official.taskSpecific?"起点":"默认"} ${esc(refs.official.effort)}</b>：${esc(refs.official.note)} ${refs.official.url?link(refs.official.url,"来源"):""}</li>`:`<li><b>官方</b>：未核验到官方默认档位。</li>`,
+        ...refs.community.map(c=>`<li><b>社区 · ${esc(c.label)} ${esc(c.effort)}</b>${c.n?`（n=${c.n}）`:""}：${esc(c.note)} ${c.url?link(c.url,"来源"):""}${c.rows?`<span class="task-detail">逐档通过率：${c.rows.slice().sort((a,b)=>capabilityEfforts.indexOf(a.effort)-capabilityEfforts.indexOf(b.effort)).map(x=>`${esc(x.effort)} ${fmt(x.score,1)}% / ${money(x.cost_usd)}`).join(" · ")}</span>`:""}</li>`)];
+      return `<div class="ss-refs-detail"><h4>参考依据</h4><ul>${items.join("")}</ul>${advice?`<p class="ss-advice"><b>建议做法：</b>${esc(advice)}</p>`:""}</div>`;})()}${alt?`<p class="ss-alt-note">有更省的替代：<strong>${esc(alt.release.shortName||alt.release.name)} ${esc(alt.v.effort)}</strong> 得分 ${sweetFmt(t,alt.score)}，不低于当前甜蜜点，成本 ${money(alt.cost)}（当前为 ${money(res.pick.cost)}）。</p>`:""}`;
   }
   if($("sweetTolerance")) $("sweetTolerance").addEventListener("change",renderSweetSpot);
   if($("toggleNotes")) $("toggleNotes").addEventListener("click",event=>{

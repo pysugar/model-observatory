@@ -510,6 +510,14 @@ tbody tr:hover > .ss-cell { background:color-mix(in srgb, var(--teal) calc(var(-
 .ss-flag.front { color:var(--on-accent); background:var(--teal); border-color:var(--teal); }
 .ss-cell.dominated .ss-effort, .ss-cell.dominated .ss-meta { opacity:.62; }
 .ss-flag.info { color:var(--muted); }
+.ss-flag.agree { color:var(--e-medium); }
+.ss-refs { display:flex; flex-wrap:wrap; gap:2px 8px; margin-top:2px; font-size:11px; color:var(--muted); white-space:nowrap; }
+.ss-refs .same { color:var(--pos); font-weight:600; }
+.ss-refs-detail { margin-top:14px; font-size:var(--fs-sm); }
+.ss-refs-detail h4 { margin:0 0 4px; font-size:14px; }
+.ss-refs-detail ul { margin:0; padding-left:20px; }
+.ss-refs-detail li { margin:5px 0; }
+.ss-advice { margin:10px 0 0; padding:9px 12px; border-radius:var(--radius-sm); background:var(--paper); border:1px solid var(--line); }
 .sweet-legend { color:var(--muted); line-height:2.1; margin:12px 0 0; }
 .sweet-legend .ss-flag { margin:0 4px 0 0; }
 .sweet-detail { min-height:0; }
