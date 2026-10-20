@@ -198,6 +198,7 @@ def build(output_dir=ROOT):
     data = {
         **catalog, "rows": rows, "aa_profiles": profiles, "raw_methods": methods,
         "opus_coding_evidence": read_json(RESEARCH.parent / "2026-10-16" / "opus55-coding-supplement.json"),
+        "computer_use_evidence": read_json(ROOT / "research/2026-10-20/computer-use-evidence.json"),
         "task_effort_guidance": read_json(ROOT / "research/2026-10-20/task-effort-guidance.json"),
         "practical_evidence": read_json(ROOT / "research/2026-10-20/practical-evidence.json"),
         "aa_capability_indexes": multi["aa_capability_indexes"],

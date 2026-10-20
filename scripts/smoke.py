@@ -20,6 +20,7 @@ from playwright.sync_api import sync_playwright, expect
 from publish import ROOT, check, probe, require
 from capability_smoke import check_capabilities
 from selection_smoke import check_selection
+from scaling_smoke import check_scaling
 
 
 class QuietHandler(SimpleHTTPRequestHandler):
@@ -140,6 +141,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
                 require("NaN" not in page.locator("#effortScalingChart").inner_html(), "Invalid scaling chart coordinate")
             page.select_option("#effortScalingTask", "complex")
             check_capabilities(page, data, output)
+            check_scaling(page, data, output)
             check_selection(page, data, output)
             page.locator('[data-panel="overview"]').click()
             page.screenshot(path=str(output / "desktop.png"), full_page=True)
@@ -188,7 +190,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
     probe(origin, site, attempts=1, require_headers=cloudflare)
     result = {"status": "PASS", "browser_version": browser_version, "browser_channel": channel or "bundled-chromium",
               "viewports": [1440, 390, 320], "rows": len(data["rows"]),
-              "checks": ["task-specific best variants in seven dimensions", "dataset-backed knowledge narrative and Elo differences", "effort filters and scaling charts",
+              "checks": ["task-specific best variants in seven dimensions", "dataset-backed knowledge narrative and Elo differences", "effort filters and scaling charts", "pinned vs temporary highlight, missing gaps and singleton", "separate Computer Use protocols and scope-limited raw-precision alternatives",
                "capability missingness, tie ranks, per-domain denominators and CSV consistency",
                "reasoning charts, effort selection, nonmonotonic scores and keyboard access", "six panels", "Claude filter", "CSV missing values", "budget boundaries", "four Opus evidence views",
                          "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across six panels and twelve CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
