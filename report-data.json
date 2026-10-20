@@ -8831,6 +8831,193 @@
     ],
     "not_run": "仅复算公开数据，没有新的模型调用或付费实验。"
   },
+  "computer_use_evidence": {
+    "openaiSweep": {
+      "protocolId": "osworld-2.0-offline-v2026.08.08-partial",
+      "benchmark": "OSWorld 2.0",
+      "release": "v2026.08.08",
+      "subset": "offline",
+      "metric": "partial reward",
+      "scoreUnit": "percent",
+      "costDefinition": "USD/task in the same publisher evaluation",
+      "source": "https://openai.com/index/introducing-gpt-6-1-sol/",
+      "provenance": "provider-reported",
+      "retrievedAt": "2026-10-20",
+      "checkedAt": "2026-10-20",
+      "extraction": "Publisher page embedded Vega-Lite data.values; exact 15 points supplied and verified by coordinator",
+      "efforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "missingEfforts": [
+        "non-reasoning"
+      ],
+      "maxSteps": null,
+      "harness": null,
+      "runs": null,
+      "ci": null,
+      "series": [
+        {
+          "modelId": "gpt-6-astra",
+          "model": "GPT-6 Astra",
+          "scores": [
+            62.17,
+            69.25,
+            70.02,
+            71.27,
+            73.49
+          ],
+          "costUsdPerTask": [
+            2.7159,
+            5.3594,
+            6.9064,
+            7.4944,
+            9.4353
+          ]
+        },
+        {
+          "modelId": "gpt-6-1-sol",
+          "model": "GPT-6.1 Sol",
+          "scores": [
+            58.96,
+            66.84,
+            69.56,
+            69.38,
+            71.42
+          ],
+          "costUsdPerTask": [
+            0.4248,
+            0.7675,
+            0.9613,
+            1.0466,
+            1.2689
+          ]
+        },
+        {
+          "modelId": "gpt-6-sol",
+          "model": "GPT-6 Sol",
+          "scores": [
+            43.9,
+            54,
+            58.29,
+            60.54,
+            64.43
+          ],
+          "costUsdPerTask": [
+            1.0117,
+            1.3789,
+            1.7096,
+            2.3002,
+            3.3695
+          ]
+        }
+      ]
+    },
+    "anthropicMax": {
+      "displayLabel": "OSWorld · 2026-09-10 全套（Sonnet文档称 v2.1）",
+      "protocolId": "osworld-2026-09-10-fullsuite-max",
+      "release": "2026-09-10",
+      "subset": "full suite",
+      "tasks": 108,
+      "resolution": "1080p",
+      "maxSteps": 500,
+      "runs": 5,
+      "statistic": "mean of 5 independent runs",
+      "nativeEffort": "max",
+      "grader": "Claude Opus 4.8",
+      "screenshotRetention": "all screenshots retained",
+      "compaction": "100k-token server-side compaction",
+      "provenance": "provider-reported",
+      "checkedAt": "2026-10-20",
+      "ci": null,
+      "costUsdPerTask": null,
+      "sourceRefs": [
+        {
+          "sourceUrl": "https://anthropic.com/claude-opus-5-5-system-card",
+          "pages": [
+            205,
+            206,
+            207
+          ],
+          "originalBenchmarkName": "OSWorld 2.0"
+        },
+        {
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5-system-card",
+          "pages": [
+            129,
+            130,
+            131
+          ],
+          "originalBenchmarkName": "OSWorld 2.1"
+        }
+      ],
+      "rows": [
+        {
+          "modelId": "claude-opus-5-5",
+          "model": "Opus 5.5",
+          "partialRewardPct": 81.8,
+          "strictSuccessRatePct": 48.7
+        },
+        {
+          "modelId": "claude-fable-5-1",
+          "model": "Fable 5.1",
+          "partialRewardPct": 80.7,
+          "strictSuccessRatePct": 42.8
+        },
+        {
+          "modelId": "claude-sonnet-5-5",
+          "model": "Sonnet 5.5",
+          "partialRewardPct": 80.1,
+          "strictSuccessRatePct": 43.5
+        }
+      ]
+    },
+    "geminiReference": {
+      "modelId": "gemini-4-argon",
+      "model": "Gemini 4 Argon",
+      "benchmark": "OSWorld 2.0",
+      "subset": "offline",
+      "release": "08.08 patch",
+      "partialRewardPct": 69.2,
+      "maxSteps": 500,
+      "resolution": "1080p",
+      "interaction": "screenshot + pyautogui",
+      "harness": "Gemini CUA harness",
+      "tooling": "batch tools / compaction",
+      "thinkingDescription": "highest thinking settings",
+      "nativeEffort": null,
+      "statistic": "max over 3 runs",
+      "runs": 3,
+      "ci": null,
+      "costUsdPerTask": null,
+      "provenance": "provider-reported",
+      "checkedAt": "2026-10-20",
+      "sources": [
+        "https://deepmind.google/models/gemini/",
+        "https://deepmind.google/models/evals-methodology/gemini-4-argon"
+      ],
+      "tasks": null
+    },
+    "grokReference": {
+      "modelId": "grok-4-7",
+      "sourceUrl": "https://x.ai/news/grok-4-7",
+      "score": null,
+      "checkedAt": "2026-10-20",
+      "status": "未发现公开可核实成绩"
+    },
+    "pitfallExperience": {
+      "status": "待协调线程提供核验文案",
+      "cards": [],
+      "minimumIndependentOriginalSources": 2
+    },
+    "pitfallReminders": {
+      "status": "待验证提醒；暂无已提交卡片",
+      "cards": []
+    }
+  },
   "task_effort_guidance": {
     "checkedAt": "2026-10-20",
     "tasks": [

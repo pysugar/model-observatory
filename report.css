@@ -142,3 +142,13 @@
   #adviceMatrix td { display:block; padding:2px; border:0; }
   #adviceMatrix td::before { content:attr(data-label); display:block; font-size:12px; margin-bottom:5px; color:#426158; }
 }
+
+#effortScalingLegend button { cursor:pointer; background:#fffef9; border:1px solid #c6d5cb; border-radius:7px; padding:9px 11px; min-height:42px; }
+#effortScalingLegend button[aria-pressed="true"] { outline:2px solid #165e54; }
+#effortScalingLegend button:focus-visible, .scaling-dot:focus-visible { outline:3px solid #704d09; outline-offset:3px; }
+#effortScalingCard select, #pitfallGuide select { max-width:100%; }
+#effortScalingDetail, #computerUseEvidence, #pitfallGuide { overflow-wrap:anywhere; }
+.computer-use-panel { margin-top:18px; border-left:4px solid #6a7d8d; }
+#pitfallGuide section { padding:16px 0; border-top:1px solid #d6ded2; }
+#pitfallGuide li { margin:12px 0; }
+@media(max-width:640px) { #effortScalingCard .toolbar, #effortScalingCard .toolbar label { width:100%; min-width:0; } #effortScalingCard select, #pitfallGuide select { width:100%; } }

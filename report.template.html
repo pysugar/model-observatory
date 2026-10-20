@@ -157,13 +157,14 @@
   <div class="card chart-card aa-style-card" id="effortScalingCard">
     <div class="chart-header">
       <div>
-        <span class="eyebrow">REASONING EFFORT SCALING BY TASK · 四大家族活跃模型升档弹性对比</span>
-        <h3 id="effortScalingTitle">不同推理档位（non-reasoning → max）在主流任务类型上的得分跃升曲线</h3>
+        <span class="eyebrow">REASONING EFFORT · 已测配置与独立评测口径</span>
+        <h3 id="effortScalingTitle">各模型在已测推理档位下的成绩</h3>
       </div>
       <div class="toolbar">
         <label>评估任务维度
           <select id="effortScalingTask">
-            <option value="complex">复杂问题解决（HLE 50% + CritPt 50% · 百分点）</option>
+            <option value="osworld2">OSWorld 2.0 · offline · v2026.08.08 · 部分得分（partial reward）</option>
+            <option value="complex" selected>复杂问题解决（HLE 50% + CritPt 50% · 百分点）</option>
             <option value="coding">编程与软件工程（Terminal-Bench 4.0 + SciCode · 百分点）</option>
             <option value="planning">知识工作（AA-Briefcase v1.1 · 原始 Elo）</option>
             <option value="agentic">长程代理交付（GDPval-AA v2.1 · 原始 Elo）</option>
@@ -174,21 +175,25 @@
         </label>
         <label>模型家族范围
           <select id="effortScalingFamily">
-            <option value="all">全部四大家族活跃模型（11 款）</option>
+            <option value="all">全部家族 · 当前评测口径</option>
             <option value="Anthropic">Claude (Opus 5.5 · Sonnet 5.5 · Fable 5.1 · Haiku 5.5)</option>
             <option value="OpenAI">ChatGPT / OpenAI (GPT 6.1 Sol · GPT 6 Astra · GPT 6 Luna)</option>
             <option value="Google">Gemini (Gemini 4 Argon · 3.8 Flash · 3.5 Flash-Lite)</option>
             <option value="xAI">Grok (Grok 4.7)</option>
           </select>
         </label>
-        <button id="exportEffortScaling">导出全档位×全任务 CSV</button>
+        <label>固定高亮模型<select id="effortScalingModel"></select></label><button id="resetScalingHighlight">重置高亮</button><button id="exportEffortScaling">导出当前口径 CSV</button>
       </div>
     </div>
-    <p class="small">横轴按推理档位（<code>non-reasoning → low → medium → high → xhigh → max</code>）等距展开，纵轴为所选任务维度的实测得分，直观呈现各模型在哪一档迎来最大能力跃升、哪一档进入边际收益平台期。下方附 11 款活跃模型在当前任务视图上的全档位热力对照矩阵。</p>
+    <p id="effortScalingScope" class="small"></p>
     <div id="effortScalingLegend" class="aa-legend-bar"></div>
-    <div class="svg-scroll aa-svg-wrap"><svg id="effortScalingChart" role="group" aria-label="四大家族活跃模型在不同推理档位下的任务得分升档曲线图"></svg></div>
+    <div class="svg-scroll aa-svg-wrap"><svg id="effortScalingChart" role="group" aria-label="各模型在已测推理档位下的成绩"></svg></div>
+    <div id="effortScalingDetail" class="detail" aria-live="polite"></div>
     <div id="effortScalingTable" class="table-scroll" style="margin-top:12px"></div>
   </div>
+
+  <div id="computerUseEvidence"></div>
+  <div id="pitfallGuide" class="card"></div>
 
   <div class="card chart-card" id="capIndexCard">
     <div class="chart-header">
