@@ -76,10 +76,10 @@
       <button type="button" data-task-tab="agentic" aria-pressed="false">长程代理交付（GDPval-AA Elo）</button>
       <button type="button" data-task-tab="automation" aria-pressed="false">多工具自动化（AutomationBench）</button>
       <button type="button" data-task-tab="knowledge" aria-pressed="false">长文档与知识抗幻觉（LCR + PDF + Omni）</button>
-      <button type="button" data-task-tab="intelligenceIndex" aria-pressed="false">AA 综合智力指数（10 项全量）</button>
+      <button type="button" data-task-tab="intelligenceIndex" aria-pressed="false">AA 智能指数（10 项全量）</button>
     </div>
     <p id="taskEffortSubnote" class="small"></p>
-    <p class="method-note">复杂问题与编程采用本报告的等权均值；知识视图使用明确列出的自定义公式。它们不是 AA 官方独立任务指数。规划与代理保留原始 Elo，自动化保留完成率；AA 综合指数直接取来源值。横轴始终是整套 AA 指数加权单任务成本，不是当前任务专属费用。浅绿阈值由本报告设定，不构成官方推荐或显著性结论。</p>
+    <p class="method-note">复杂问题与编程采用本报告的等权均值；知识视图使用明确列出的自定义公式。它们不是 AA 官方独立任务指数。规划与代理保留原始 Elo，自动化保留完成率；AA 智能指数直接取来源值。横轴始终是整套 AA 指数加权单任务成本，不是当前任务专属费用。浅绿阈值由本报告设定，不构成官方推荐或显著性结论。</p>
     <div id="taskEffortLegend" class="aa-legend-bar" aria-label="象限、帕累托线与厂商图例"></div>
     <div class="topline"><span id="taskEffortCount" class="small" aria-live="polite"></span><span class="small">左上浅绿区域为 Most attractive quadrant（高能力 · 单任务成本 ≤ $1.10） · 点击圆点或胶囊查看该模型全档位明细</span></div>
     <div id="taskEffortPills" class="release-pills" aria-label="快速选中活跃模型系列"></div>
@@ -89,7 +89,7 @@
   </div>
 
   <div class="section-heading" id="multi-benchmark-heading"><h2>五大主流评测网站 × 四大模型家族（Grok · ChatGPT · Gemini · Claude）全景对照</h2><p>2026-10-20 整合核验：联合 <a href="https://artificialanalysis.ai/zh" target="_blank" rel="noopener">Artificial Analysis</a>、<a href="https://labs.scale.com/leaderboard" target="_blank" rel="noopener">Scale Labs SEAL</a>、<a href="https://openrouter.ai/rankings" target="_blank" rel="noopener">OpenRouter Rankings</a>、<a href="https://livebench.ai" target="_blank" rel="noopener">LiveBench 2.0</a> 与 <a href="https://arena.ai/" target="_blank" rel="noopener">Arena.ai</a>。各平台保持原始分数与独立成本口径，不跨站混合折算。</p></div>
-  <div id="platformCards" class="platform-grid"></div>
+  <p><button data-jump="evidence" class="inline-button">如何参考评测：偏好、agent、正确性与成本 →</button></p><div id="platformCards" class="platform-grid"></div>
   <div class="toolbar"><label>模型家族筛选<select id="panoramaFamily"><option value="all">全部四大主力家族（11 款当前核心系列）</option><option value="Claude (Anthropic)">Claude (Anthropic)</option><option value="ChatGPT / OpenAI">ChatGPT / OpenAI</option><option value="Gemini (Google)">Gemini (Google)</option><option value="Grok (xAI / SpaceXAI)">Grok (xAI / SpaceXAI)</option></select></label><button id="exportPanorama">导出五站全景对照 CSV</button><span id="panoramaCount" class="small"></span><button data-jump="capabilities" class="inline-button">跳至「分项能力与升档斜率」 →</button><button data-jump="explorer" class="inline-button">跳至「按发布版本成本图」 →</button></div>
   <div id="panoramaTable" class="table-scroll"></div>
   <details class="note-box"><summary>Scale Labs SEAL 六大专业盲测子榜前四名速览（2026-10-19 快照）</summary><div id="scaleHighlightsTable" class="table-scroll"></div><p class="small">数据来源：<a href="https://labs.scale.com/leaderboard" target="_blank" rel="noopener">Scale Labs SEAL Leaderboards</a>。SWE-Bench Pro V2 区分 Claude Code、Codex 与 mini-swe-agent 等代理脚手架；HLE Diamond 与 Humanity's Sixth Sense 包含 95% 置信区间上界。</p></details>
@@ -122,7 +122,7 @@
   <p class="task-guide-intro"><strong>高性价比黄金组合：</strong>主控规划与验收采用 <strong>GPT 6.1 Sol <code>high</code></strong>（或高算力场景下的 <strong>Claude Opus 5.5 <code>high</code></strong>）；通用并行实现与检索子代理采用 <strong>Sol 6.1 <code>medium</code></strong> 或 <strong>Sonnet 5.5 <code>medium</code></strong>；独立高难复核与复杂方案推演按需调用 <strong>Opus 5.5 <code>high / xhigh</code></strong> 或 <strong>Grok 4.7 <code>high</code></strong>；高频提取、分类与路由采用 <strong>GPT 6 Luna <code>low</code></strong>、<strong>Haiku 5.5 <code>low</code></strong> 或 <strong>Gemini 3.5 Flash-Lite</strong>。</p>
 
   <div class="table-scroll task-table-wrap"><table class="task-table agent-role-table" id="subagent-guide"><caption>多 Agent 核心角色分工 · 主控、执行子代理与独立专家路由</caption><thead><tr><th scope="col">代理层级与职责</th><th scope="col">推荐主力配置</th><th scope="col">跨家族替代方案</th><th scope="col">升档触发条件与验收边界</th></tr></thead><tbody>
-    <tr class="recommended-controller"><th scope="row">主控编排与最终验收（Orchestrator）<span class="task-detail">任务拆解、上下文路由、子结果整合与质量把关</span><span class="evidence-badge basis-measured">帕累托前沿主力</span></th><td data-label="推荐主力配置"><strong>GPT 6.1 Sol <code>high</code></strong><span class="task-detail">II {{aa:gpt-6-1-sol:high:intelligenceIndex:1}} · 编程 {{aa:gpt-6-1-sol:high:coding:1}}% · ${{aa:gpt-6-1-sol:high:costPerTask:2}}/任务</span></td><td data-label="跨家族替代方案"><strong>Claude Opus 5.5 <code>high</code></strong>（II {{aa:claude-opus-5-5:high:intelligenceIndex:1}} · ${{aa:claude-opus-5-5:high:costPerTask:2}}）<br><strong>Gemini 4 Argon <code>high</code></strong>（AutomationBench {{aa:gemini-4-argon:high:automation:0}}% · ${{aa:gemini-4-argon:high:costPerTask:2}}）</td><td data-label="升档触发条件与验收边界">日常短链路问答可用 <code>medium</code>（$0.21）；涉及跨模块架构设计、多源冲突消解或长程工具编排时固定 <code>high</code>。把极限 <code>xhigh / max</code> 留给独立专家子任务。</td></tr>
+    <tr class="recommended-controller"><th scope="row">主控编排与最终验收（Orchestrator）<span class="task-detail">任务拆解、上下文路由、子结果整合与质量把关</span><span class="evidence-badge basis-measured">帕累托前沿主力</span></th><td data-label="推荐主力配置"><strong>GPT 6.1 Sol <code>high</code></strong><span class="task-detail">AA 智能指数 {{aa:gpt-6-1-sol:high:intelligenceIndex:1}} · 编程 {{aa:gpt-6-1-sol:high:coding:1}}% · ${{aa:gpt-6-1-sol:high:costPerTask:2}}/任务</span></td><td data-label="跨家族替代方案"><strong>Claude Opus 5.5 <code>high</code></strong>（AA 智能指数 {{aa:claude-opus-5-5:high:intelligenceIndex:1}} · ${{aa:claude-opus-5-5:high:costPerTask:2}}）<br><strong>Gemini 4 Argon <code>high</code></strong>（AutomationBench {{aa:gemini-4-argon:high:automation:0}}% · ${{aa:gemini-4-argon:high:costPerTask:2}}）</td><td data-label="升档触发条件与验收边界">日常短链路问答可用 <code>medium</code>（$0.21）；涉及跨模块架构设计、多源冲突消解或长程工具编排时固定 <code>high</code>。把极限 <code>xhigh / max</code> 留给独立专家子任务。</td></tr>
     <tr><th scope="row">代码探索与多源资料检索（Researcher）<span class="task-detail">只读定位、调用链追踪、结构化事实整理</span><span class="evidence-badge basis-measured">长上下文实测</span></th><td data-label="推荐主力配置"><strong>GPT 6.1 Sol <code>low / medium</code></strong><span class="task-detail">AA-LCR {{aa:gpt-6-1-sol:medium:eval/AA-LCR v1.1:0}}%–{{aa:gpt-6-1-sol:low:eval/AA-LCR v1.1:0}}% · ${{aa:gpt-6-1-sol:low:costPerTask:2}}–${{aa:gpt-6-1-sol:medium:costPerTask:2}}</span></td><td data-label="跨家族替代方案"><strong>Gemini 3.8 Flash <code>medium</code></strong>（AA-LCR {{aa:gemini-3-8-flash:medium:eval/AA-LCR v1.1:0}}% · ${{aa:gemini-3-8-flash:medium:costPerTask:2}}）<br><strong>Claude Sonnet 5.5 <code>medium</code></strong>（$0.48）</td><td data-label="升档触发条件与验收边界">已知路径查找用 <code>low</code>；跨文件因果梳理用 <code>medium</code>。要求子代理返回精确文件路径、行号或原始出处链接，禁止无出处摘要。</td></tr>
     <tr><th scope="row">模块化编码实现与测试生成（Builder）<span class="task-detail">边界清晰的功能实现、局部修复与单元测试</span><span class="evidence-badge basis-measured">编码甜蜜点</span></th><td data-label="推荐主力配置"><strong>GPT 6.1 Sol <code>medium</code></strong><span class="task-detail">Terminal-Bench {{aa:gpt-6-1-sol:medium:eval/Terminal-Bench 4.0:0}}% · Vulcan {{row:coding:GPT 6.1 Sol:medium:passes:0}}/23</span></td><td data-label="跨家族替代方案"><strong>Claude Sonnet 5.5 <code>medium / high</code></strong><br><strong>GPT 6 Astra <code>medium</code></strong>（低延迟）</td><td data-label="升档触发条件与验收边界">接口与验收条件明确时用 <code>medium</code>；若需自主探索多文件修改或首次实现未通过测试，升级至 Sol <code>high</code> 或 Sonnet 5.5 <code>high</code>。</td></tr>
     <tr><th scope="row">架构方案推演与疑难反证（Architect &amp; Critic）<span class="task-detail">复杂系统设计、多约束权衡、疑难根因假设</span><span class="evidence-badge basis-measured">Briefcase + HLE 实测</span></th><td data-label="推荐主力配置"><strong>Claude Opus 5.5 <code>high / xhigh</code></strong><span class="task-detail">Briefcase {{aa:claude-opus-5-5:high:planning:0}}–{{aa:claude-opus-5-5:xhigh:planning:0}} · HLE {{aa:claude-opus-5-5:high:eval/Humanity's Last Exam:0}}%–{{aa:claude-opus-5-5:xhigh:eval/Humanity's Last Exam:0}}%</span></td><td data-label="跨家族替代方案"><strong>Grok 4.7 <code>high</code></strong>（Briefcase {{aa:grok-4-7:high:planning:0}} · GDPval {{aa:grok-4-7:high:agentic:0}}）<br><strong>Claude Fable 5.1 <code>high / xhigh</code></strong> · <strong>GPT 6 Astra <code>xhigh</code></strong></td><td data-label="升档触发条件与验收边界">当主控方案遇到隐含约束冲突或连续两次修复失败时，单开独立上下文调用异构专家模型，输出反例、风险矩阵与最小验证实验。</td></tr>
@@ -137,7 +137,7 @@
   <p id="auxiliary-guide-note" class="method-note"><strong>中文未实测：</strong>中文标题、摘要、OCR 及复杂中文语境下的指令遵循均未在本次公开基准中单独实测；表内配置为通用工程起点，实际生产落地需用真实业务样本核验完成率与总账单。</p>
 
   <div class="section-heading"><h2>研究、综合分析与专业写作：事实抗幻觉与表达质量分开验收</h2></div>
-  <p class="callout" id="chinese-guide-note"><strong>中文未实测：</strong>下表中的中文写作与研究建议为待验证起点，依据英文 ToneBench 写作测试与 AA 综合分析能力推断。中文成稿的术语准确性、行文风格与人工修改量，需使用真实业务材料通过盲评另行验证。</p>
+  <p class="callout" id="chinese-guide-note"><strong>中文未实测：</strong>下表中的中文写作与研究建议为待验证起点，依据英文 ToneBench 写作测试与 AA 智能指数推断。中文成稿的术语准确性、行文风格与人工修改量，需使用真实业务材料通过盲评另行验证。</p>
   <div class="table-scroll task-table-wrap"><table class="task-table" id="writing-research-guide" aria-describedby="chinese-guide-note"><caption>研究分析、长文写作与多模态信息处理 · 7 类公共任务</caption><thead><tr><th scope="col">任务类型 / 证据状态</th><th scope="col">默认主力模型</th><th scope="col">reasoning 甜蜜点</th><th scope="col">升档或换模型条件</th></tr></thead><tbody>
     <tr class="unvalidated-chinese"><th scope="row">中文日常摘要、改写、润色与商务沟通<span class="evidence-badge">中文未实测</span></th><td data-label="默认主力模型"><strong>GPT 6.1 Sol</strong></td><td data-label="reasoning 甜蜜点"><code>low</code></td><td data-label="升档或换模型条件">结构重组或多约束改写用 <code>medium</code>；若对行文语气与修辞要求高，对比 <strong>Claude Opus 5.5 <code>medium</code></strong> 或 <strong>Sonnet 5.5 <code>medium</code></strong>，无需默认 <code>max</code>。</td></tr>
     <tr class="unvalidated-chinese"><th scope="row">中文研究报告、行业分析与长文论述<span class="evidence-badge">中文未实测</span></th><td data-label="默认主力模型"><strong>Claude Opus 5.5</strong><span class="task-detail">高性价比替代：Sol 6.1 high。</span></td><td data-label="reasoning 甜蜜点"><code>medium</code> 起步<br><code>high</code>：复杂多源立论</td><td data-label="升档或换模型条件">协调多份冲突材料、构建严密论证链时用 <code>high</code>；重要定稿可对比 <code>xhigh</code>，以盲评通过率与人工改稿工作量判断边际收益。</td></tr>
@@ -152,7 +152,7 @@
 </section>
 
 <section class="panel" id="capabilities" role="tabpanel" aria-labelledby="tab-capabilities" hidden>
-  <div class="section-heading"><span class="eyebrow">02 / CAPABILITY PROFILE</span><h2>同一个综合分，会掩盖不同的任务长处与升档弹性。</h2><p>AA v4.3.2：涵盖 6 大行业能力指数（90 个配置）、四大家族 11 款活跃模型的全推理档位 10 项底层子评测（44 个配置）及 21 个核心代表配置的速度响应矩阵。* 为来源估计值；缺测不是零。</p></div>
+  <div class="section-heading"><span class="eyebrow">02 / CAPABILITY PROFILE</span><h2>同一个 AA 智能指数，会掩盖不同的任务长处与升档弹性。</h2><p>AA v4.3.2：涵盖 6 大行业能力指数（90 个配置）、四大家族 11 款活跃模型的全推理档位 10 项底层子评测（44 个配置）及 21 个核心代表配置的速度响应矩阵。* 为来源估计值；缺测不是零。</p></div>
 
   <div class="card chart-card aa-style-card" id="effortScalingCard">
     <div class="chart-header">
@@ -169,7 +169,7 @@
             <option value="agentic">长程代理交付（GDPval-AA v2.1 · 原始 Elo）</option>
             <option value="automation">多工具流程自动化（AutomationBench-AA · 完成率 %）</option>
             <option value="knowledge">长文档与知识抗幻觉（AA-LCR + GDP.pdf + Omniscience）</option>
-            <option value="intelligenceIndex">AA 综合智力指数（Intelligence Index v4.3.2）</option>
+            <option value="intelligenceIndex">AA 智能指数（v4.3.2）</option>
           </select>
         </label>
         <label>模型家族范围
@@ -199,7 +199,7 @@
       <div class="toolbar">
         <label>展示范围
           <select id="capIndexScope">
-            <option value="four_family_top">四大家族活跃与兼容版本 · 每版 II 最高档</option>
+            <option value="four_family_top">四大家族活跃与兼容版本 · 每版 AA 智能指数 最高档</option>
             <option value="four_family_all">四大家族活跃与兼容版本 · 全部已测档（不截断）</option>
             <option value="all_top">全市场代表版本（含 Muse · MiMo · DeepSeek · GLM · Qwen）</option>
           </select>
@@ -208,7 +208,7 @@
         <button id="exportCapIndexes">导出能力指数 CSV</button>
       </div>
     </div>
-    <p class="small">图表与明细可横向滚动查看。分数直接保留 <a href="https://artificialanalysis.ai/zh/indexes" target="_blank" rel="noopener">AA 官方领域指数</a>，不是本报告任务合成分。代表档按每个发布版本的综合 II 最高分选择，不保证该域最佳。活跃与兼容版本包含旧代；切换领域保持同一候选集合。纵轴为当前集合排名，不是分差；两位小数同分并列，缺测不参排、连线断开。II 是 Intelligence Index 的英文缩写，不是罗马数字第二版。两侧只显示模型与具体档位；各点支持悬停、Tab 聚焦与触屏点选，下方固定展示选中配置的完整 7 项分数。</p>
+    <p class="small">图表与明细可横向滚动查看。分数直接保留 <a href="https://artificialanalysis.ai/zh/indexes" target="_blank" rel="noopener">AA 官方领域指数</a>，不是本报告任务合成分。代表档按每个发布版本的AA 智能指数 最高分选择，不保证该域最佳。活跃与兼容版本包含旧代；切换领域保持同一候选集合。纵轴为当前集合排名，不是分差；两位小数同分并列，缺测不参排、连线断开。两侧只显示模型与具体档位；各点支持悬停、Tab 聚焦与触屏点选，下方固定展示选中配置的完整 7 项分数。</p>
     <div class="cap-index-tabs" id="capIndexTabs" role="group" aria-label="选择能力指数领域">
       <button type="button" data-cap-tab="all" aria-pressed="true">全部 · 排名对比</button>
       <button type="button" data-cap-tab="financeAndAccounting" aria-pressed="false">财务与会计</button>
@@ -229,7 +229,7 @@
   <div class="section-heading"><h2>AA 10 项底层子评测与速度响应矩阵（21 个核心代表配置）</h2><p>保留每一项子评测的原始单位（Elo、百分比、指数、token/s、秒、美元），支持按任意分项列排序。</p></div>
   <div class="toolbar"><label>关注维度<select id="dimension"><option value="all">全部分项</option><option value="work">知识工作与自动化</option><option value="coding">编码与科学推理</option><option value="reliability">文档、长上下文与事实</option><option value="speed">速度与响应时间</option></select></label><label>型号范围<select id="profileScope"><option value="all">全部 21 个配置</option><option value="claude">14 款 Claude</option><option value="screenshot">客户端常见 8 款 Claude</option></select></label><button id="exportProfiles">导出分项数据</button><span class="small">点击列标题排序；各列保留原始单位。</span></div>
   <div class="table-scroll" id="capabilityTable"></div><div id="dimensionNotes" class="method-note"></div>
-  <p class="callout">Fable 5.1、Opus 5.5、Sonnet 5.5 的 AA 配置含 Default Fallback；Fable 5 max 含 Opus 4.8 回退，比例未披露。Opus 4.7 / 4.6 / 4.5 综合分为估计值，部分子项和费用缺失。Haiku 5.5 的 >100k 阶梯价覆盖仍未确认。AA 的 Time per Task 是 token 与吞吐推算值；不等于评测过程中的墙钟耗时。<a href="https://artificialanalysis.ai/methodology" target="_blank" rel="noopener">AA 定义</a></p>
+  <p class="callout">Fable 5.1、Opus 5.5、Sonnet 5.5 的 AA 配置含 Default Fallback；Fable 5 max 含 Opus 4.8 回退，比例未披露。Opus 4.7 / 4.6 / 4.5 的 AA 智能指数为估计值，部分子项和费用缺失。Haiku 5.5 的 >100k 阶梯价覆盖仍未确认。AA 的 Time per Task 是 token 与吞吐推算值；不等于评测过程中的墙钟耗时。<a href="https://artificialanalysis.ai/methodology" target="_blank" rel="noopener">AA 定义</a></p>
   <div class="section-heading"><h2>官方材料补充长上下文与多模态证据</h2><p>以下直接取自 Google 的 Argon model card，属于厂商发表的比较。不同项目的来源和实验设置各异，单独呈现。</p></div>
   <div class="table-scroll" id="officialTable"></div>
   <p class="small">各模型原则上采用最高或最佳可用推理档；该表不是相同成本预算的测试。<a href="https://deepmind.google/models/model-cards/gemini-4-argon/" target="_blank" rel="noopener">原始 model card</a> · <a href="https://deepmind.google/models/evals-methodology/gemini-4-argon" target="_blank" rel="noopener">逐项方法</a></p>
@@ -241,8 +241,8 @@
   <div class="card chart-card aa-style-card" id="releaseChartCard">
     <div class="chart-header">
       <div>
-        <span class="eyebrow">BY MODEL RELEASE · 按模型发布版本划分的 Intelligence Index 与单任务投入</span>
-        <h3 id="releaseChartTitle">Artificial Analysis Intelligence Index vs. Cost per Task（按模型发布版本与推理档位）</h3>
+        <span class="eyebrow">BY MODEL RELEASE · 按模型发布版本划分的 AA 智能指数 与单任务投入</span>
+        <h3 id="releaseChartTitle">AA 智能指数与加权单任务成本（按模型发布版本与推理档位）</h3>
       </div>
       <div class="toolbar">
         <label>横轴度量
@@ -280,7 +280,7 @@
     <div id="releaseLegendBar" class="aa-legend-bar" aria-label="象限、帕累托线与厂商图例"></div>
     <div class="topline"><span id="releaseCount" class="small" aria-live="polite"></span><span class="small">左上更优（高能力、低成本/低耗时） · 点击版本胶囊可快速定位并查看成本堆叠明细</span></div>
     <div id="releasePills" class="release-pills" aria-label="筛选模型发布版本"></div>
-    <div class="svg-scroll aa-svg-wrap"><svg id="releaseChart" role="group" aria-label="按模型发布版本划分的 Intelligence Index 与单任务成本散点轨迹图"></svg></div>
+    <div class="svg-scroll aa-svg-wrap"><svg id="releaseChart" role="group" aria-label="按模型发布版本划分的 AA 智能指数 与单任务成本散点轨迹图"></svg></div>
     <div id="releaseDetail" class="detail" aria-live="polite"></div>
   </div>
 
@@ -311,19 +311,27 @@
 
 <section class="panel" id="reasoning" role="tabpanel" aria-labelledby="tab-reasoning" hidden>
   <div class="section-heading"><span class="eyebrow">05 / REASONING EFFORT</span><h2>区分收益变小、观测下降和未能交付。</h2><p>更高档位是更多推理机会，不是每类任务都能稳定获益。四大厂商的档位名称不能视为统一计算预算。</p></div>
+  <section class="card effort-advice" id="taskEffortAdvice" aria-labelledby="taskEffortAdviceTitle">
+    <span class="eyebrow">建议起点 · 与下方实测曲线分开</span><h3 id="taskEffortAdviceTitle">按任务选择档位</h3>
+    <p>原生档位只在同一模型内有顺序意义，不同厂商的 high 不等预算。下表是建议起点 / 甜点候选，<strong>未建立任务最优结论</strong>。四任务映射含经验先验，官方默认与社区小样本在展开证据中分别标记。</p>
+    <div class="toolbar"><label>建议模型<select id="adviceModel"></select></label><label>任务<select id="adviceTask"></select></label><button id="exportAdvice">导出建议与证据 CSV</button></div>
+    <div id="adviceMatrix" class="table-scroll" tabindex="0" aria-label="七模型四任务原生档位建议，可横向滚动"></div>
+    <div id="adviceDetail" class="detail" aria-live="polite"></div>
+    <details class="note-box"><summary>统一调整规则 · 经验先验</summary><ul id="adviceRules"></ul><p>费用比较验收后的完整成功交付，包含失败重试与返工；延迟比较任务完成时间，不用 tokens/s 代替。未知模型不沿用厂商先验，不制造置信百分比。</p></details>
+  </section>
   <div class="card" id="reasoningCharts">
     <h3>第一层：同模型 · 推理档位</h3>
     <div class="toolbar"><label>发布版本<select id="reasoningRelease"></select></label><label>官方指标<select id="reasoningMetric"></select></label><label>选中档位<select id="reasoningSelected"></select></label><button id="exportReasoningEvidence">导出当前模型档位 CSV</button></div>
     <p id="reasoningChartNote" class="method-note" aria-live="polite"></p>
     <div class="reasoning-chart-grid"><div><h3>能力随档位的变化</h3><div class="svg-scroll"><svg id="reasoningCurve" role="group" aria-label="同一模型各已测推理档位官方能力曲线"></svg></div></div><div id="reasoningCostPanel"><h3>能力—成本散点</h3><div class="svg-scroll"><svg id="reasoningCost" role="group" aria-label="同一模型官方能力与AA加权单任务成本散点图"></svg></div></div></div>
-    <p class="small">2026-10-19 / AA v4.3.2 冻结记录。费用为来源提供的<strong>综合 II 加权单任务成本</strong>；仅 AA 智能指数显示此成本散点；子评测与领域没有同口径费用时隐藏成本图和费用值，不估算。HLE / CritPt 为具名复杂问题评测，Terminal-Bench / SciCode 为具名编程评测，不合成通用任务分。Terminal-Bench 是模型+agent 成绩，harness 未存档，不视为裸模型能力。曲线只连接相邻且有实测分数的档位，未测档不补点并断线；缺少分数断线，缺少成本不画散点。分差是点估计，不代表显著性；未提供置信区间。Default Fallback 按来源标记，回退比例未知。<a href="https://artificialanalysis.ai/methodology/capability-indices" target="_blank" rel="noopener">领域方法</a> · <a href="https://artificialanalysis.ai/methodology/intelligence-benchmarking" target="_blank" rel="noopener">II 与加权成本口径</a>。可点击图中点，或使用选中档位菜单与键盘查看。</p>
+    <p class="small">2026-10-19 / AA v4.3.2 冻结记录。费用为来源提供的<strong>AA 智能指数 加权单任务成本</strong>；仅 AA 智能指数显示此成本散点；子评测与领域没有同口径费用时隐藏成本图和费用值，不估算。HLE / CritPt 为具名复杂问题评测，Terminal-Bench / SciCode 为具名编程评测，不合成通用任务分。Terminal-Bench 是模型+agent 成绩，harness 未存档，不视为裸模型能力。曲线只连接相邻且有实测分数的档位，未测档不补点并断线；缺少分数断线，缺少成本不画散点。分差是点估计，不代表显著性；未提供置信区间。Default Fallback 按来源标记，回退比例未知。<a href="https://artificialanalysis.ai/methodology/capability-indices" target="_blank" rel="noopener">领域方法</a> · <a href="https://artificialanalysis.ai/methodology/intelligence-benchmarking" target="_blank" rel="noopener">AA 智能指数与加权成本口径</a>。可点击图中点，或使用选中档位菜单与键盘查看。</p>
     <div id="reasoningEvidenceTable" class="table-scroll" aria-live="polite"></div>
   </div>
   <div id="practicalEvidence"></div>
-  <div class="three-col"><article class="card"><h3>收益变小</h3><p>Opus 5.5 写作 xhigh→max，分数 {{row:writing:Claude Opus 5.5:xhigh:score:2}}→{{row:writing:Claude Opus 5.5:max:score:2}}，成本 ${{row:writing:Claude Opus 5.5:xhigh:cost_usd:3}}→${{row:writing:Claude Opus 5.5:max:cost_usd:3}}；Grok 4.7 综合 high→xhigh，分数 {{aa:grok-4-7:high:intelligenceIndex:2}}→{{aa:grok-4-7:xhigh:intelligenceIndex:2}}，成本 ${{aa:grok-4-7:high:costPerTask:2}}→${{aa:grok-4-7:xhigh:costPerTask:2}}。观测上继续改善，但边际增益极小。</p><span class="tag">边际收益，不是倒挂</span></article><article class="card"><h3>点估计下降或幻觉放大</h3><p>Sol 6.1 写作 low→medium，{{row:writing:GPT 6.1 Sol:low:score:2}}→{{row:writing:GPT 6.1 Sol:medium:score:2}}（缺配对显著性证据）；GPT 6 Luna 的 AA-Omniscience 净分 low 为 {{aa:gpt-6-luna:low:eval/AA-Omniscience:0}}、max 为 {{aa:gpt-6-luna:max:eval/AA-Omniscience:0}}；档位曲线并非单调，不能据此断定原因。</p><span class="tag">需分任务核验</span></article><article class="card"><h3>预算耗尽而失败</h3><p>Forcebench 在固定 32,768 总输出预算下，Sonnet 5.5 high→max 降 35 个百分点；48% 的 max 请求没有产生答案。</p><span class="tag">明确限定预算与题集</span></article></div>
+  <div class="three-col"><article class="card"><h3>收益变小</h3><p>Opus 5.5 写作 xhigh→max，分数 {{row:writing:Claude Opus 5.5:xhigh:score:2}}→{{row:writing:Claude Opus 5.5:max:score:2}}，成本 ${{row:writing:Claude Opus 5.5:xhigh:cost_usd:3}}→${{row:writing:Claude Opus 5.5:max:cost_usd:3}}；Grok 4.7 AA 智能指数 high→xhigh，分数 {{aa:grok-4-7:high:intelligenceIndex:2}}→{{aa:grok-4-7:xhigh:intelligenceIndex:2}}，成本 ${{aa:grok-4-7:high:costPerTask:2}}→${{aa:grok-4-7:xhigh:costPerTask:2}}。观测上继续改善，但边际增益极小。</p><span class="tag">边际收益，不是倒挂</span></article><article class="card"><h3>点估计下降或幻觉放大</h3><p>Sol 6.1 写作 low→medium，{{row:writing:GPT 6.1 Sol:low:score:2}}→{{row:writing:GPT 6.1 Sol:medium:score:2}}（缺配对显著性证据）；GPT 6 Luna 的 AA-Omniscience 净分 low 为 {{aa:gpt-6-luna:low:eval/AA-Omniscience:0}}、max 为 {{aa:gpt-6-luna:max:eval/AA-Omniscience:0}}；档位曲线并非单调，不能据此断定原因。</p><span class="tag">需分任务核验</span></article><article class="card"><h3>预算耗尽而失败</h3><p>Forcebench 在固定 32,768 总输出预算下，Sonnet 5.5 high→max 降 35 个百分点；48% 的 max 请求没有产生答案。</p><span class="tag">明确限定预算与题集</span></article></div>
   <p class="small"><a href="https://benchmark.towardsai.com/data/leaderboard.json" target="_blank" rel="noopener">ToneBench 数据</a> · <a href="https://forcebench.ai/studies/max-effort/" target="_blank" rel="noopener">Forcebench 配对实验</a></p>
   <div class="section-heading"><h2>同模型升档，实际换来了什么？</h2><p>标准差分仅比较同一快照、同一模型的显式标准档。Opus 的 Vulcan 结果另提供分口径证据，分别查看实际配置、共同无回退子集和独立实验。</p></div>
-  <div class="toolbar"><label>模型<select id="deltaModel"></select></label><label>基准<select id="deltaGroup"><option value="general">AA 综合</option><option value="coding">Vulcan 编码</option><option value="writing">ToneBench 写作</option></select></label></div><div id="deltaModelInfo" class="card" hidden></div><div id="deltaTable" class="table-scroll"></div><p id="deltaNote" class="method-note"></p>
+  <div class="toolbar"><label>模型<select id="deltaModel"></select></label><label>基准<select id="deltaGroup"><option value="general">AA 智能指数</option><option value="coding">Vulcan 编码</option><option value="writing">ToneBench 写作</option></select></label></div><div id="deltaModelInfo" class="card" hidden></div><div id="deltaTable" class="table-scroll"></div><p id="deltaNote" class="method-note"></p>
   <div id="opusCodingEvidence" class="card" hidden>
     <h3>Opus 5.5 编码：四种证据分别看</h3>
     <p class="small">2026-10-16 补充核验 · Frontier 原始五档都存在；medium 以上混入 Opus 4.8，不能作为纯模型升档曲线。以下补充表不进入原图的前沿或标准差分。</p>
@@ -346,6 +354,24 @@
 </section>
 
 <section class="panel" id="evidence" role="tabpanel" aria-labelledby="tab-evidence" hidden>
+  <section class="card" id="benchmarkGuide" aria-labelledby="benchmarkGuideTitle">
+    <h3 id="benchmarkGuideTitle">如何参考评测</h3>
+    <p class="small" id="aaGlossary">术语：AA 智能指数的英文原名为 Intelligence Index；旧缩写 II 不是罗马数字第二版。以下四个问题互补，分数不相加、不混成总体能力；未知元数据保留未知，不从排名推断 effort。</p>
+    <div class="benchmark-questions">
+      <article><h4>回答是否合意</h4><p><strong>Text Arena</strong> 让用户匿名比较成对回答，反映表达与人类接受度；不等于事实或代码正确率。类别、票数和置信区间仅在来源提供时参考，本轮不填新数字。</p><p><a href="https://arena.ai/faq" target="_blank" rel="noopener">FAQ</a> · <a href="https://arena.ai/blog/ranking-method" target="_blank" rel="noopener">配对偏好方法</a></p></article>
+      <article><h4>任务是否省心</h4><p><strong>Agent Arena</strong> 从真实 agent 会话作因果追踪，估计组件选择相对基线的净改善（Net Improvement）；不是配对投票，也不是绝对任务成功率。原始百分比与净改善是不同量，不互换。</p><p><a href="https://arena.ai/blog/agent-arena-methodology" target="_blank" rel="noopener">因果评估方法</a> · <a href="https://arena.ai/resources/agent-arena-signals" target="_blank" rel="noopener">2026-10-12 信号定义</a></p></article>
+      <article><h4>结果是否正确</h4><p><strong>Factuality-adjusted Text / Search</strong> 引入事实核验，应与纯偏好排名分开，并核对事实性权重。代码另看具名编程评测和真实任务测试；架构设计暂无直接可比公开成绩。</p><p><a href="https://arena.ai/blog/factuality-in-arena" target="_blank" rel="noopener">事实性方法</a> · <button data-jump="reasoning" class="inline-button">具名评测与第三方证据 →</button></p></article>
+      <article><h4>成本是否值得</h4><p>比较验收后的完整成功交付成本，包括失败、重试与返工；比较完成时间，不把生成吞吐当延迟。AA 加权成本、社区每次尝试和平台会话成本各守口径。</p><p><button data-jump="explorer" class="inline-button">成本与耗时 →</button> · <button data-jump="specs" class="inline-button">用量预算 →</button></p></article>
+    </div>
+    <details class="note-box" open><summary>Agent Arena 的五类信号 · 采用 2026-10-12 定义</summary><ul>
+      <li><strong>Confirmed Success：</strong>看用户对完成确认提示的明确回答；口头致谢不代替确认；未回应不算确认，也不代表客观失败。</li>
+      <li><strong>Praise vs Complaint：</strong>比较明确正负反馈，无反馈不等于差评。</li>
+      <li><strong>Steerability：</strong>用户纠偏负担；反复纠正表示负担更高，不沿用旧的“纠正后成功率”解释。</li>
+      <li><strong>Bash Reliability：</strong>替代旧 Bash Recovery；关注由 agent 引起的命令错误，环境故障排除，正确执行但发现缺陷的测试不算 agent 命令错误。</li>
+      <li><strong>Tool Hallucinations：</strong>调用不存在的工具或不成立的签名。净改善受会话、harness 与基线影响，不等于裸模型能力。</li>
+    </ul><p class="small">目录核对日 2026-10-20；未采集新的排名、原始百分比、票数或置信区间，评测日期与 effort 未知。信号定义优先于旧文章中的 Recovery 和旧 Steerability 说明。</p></details>
+  </section>
+
   <div class="section-heading"><span class="eyebrow">06 / EVIDENCE & LIMITS</span><h2>知道每个数字能回答什么。</h2><p>本报告重整公开基准与官方文档证据，没有新增付费模型调用。官方规格、独立基准评测与真实路由统计分别标注。</p></div>
   <div class="table-scroll"><table class="decision-table"><thead><tr><th>数据层</th><th>时间与覆盖</th><th>可回答</th><th>不能推出</th></tr></thead><tbody>
     <tr><th>官方规格 / Standard 价格</th><td>24 型号；Grok 4.7 核验于 10-19，Claude 10-16，GPT / Gemini 10-15</td><td>模型身份、输入能力、上下文、支持档位、已公布的单价和优惠期</td><td>特定渠道配额、订阅扣额、同任务总 token、真实生产延迟</td></tr>

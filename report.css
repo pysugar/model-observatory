@@ -117,3 +117,28 @@
 #capPointTip { position:fixed; z-index:100; max-width:min(360px,calc(100vw - 16px)); margin:0; padding:10px 12px; border:1px solid #165e54; border-radius:8px; background:#fffef9; color:#163b35; box-shadow:0 4px 20px #163b3526; visibility:hidden; pointer-events:none; }
 #capPointTip.is-visible { visibility:visible; }
 .cap-node:focus-visible { outline:3px solid #163b35; outline-offset:3px; }
+
+/* Prior advice has a distinct container and neutral native-effort chips, no heatmap. */
+.effort-advice { border:2px dashed #89784e; background:#fcf8ed; margin-bottom:28px; }
+.effort-advice h4 { margin:14px 0 8px; }
+#adviceMatrix table { min-width:660px; }
+#adviceMatrix th { white-space:nowrap; }
+.effort-chip { display:grid; gap:4px; min-height:48px; width:100%; background:#fffef9; color:#213e38; border:1px solid #abb8ac; }
+.effort-chip span { font-size:11px; white-space:nowrap; }
+.effort-chip[aria-pressed="true"] { outline:2px solid #165e54; background:#e9f0e6; }
+.effort-chip:focus-visible { outline:3px solid #704d09; outline-offset:2px; }
+.benchmark-questions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.benchmark-questions article { padding:12px; border:1px solid #d6ded2; border-radius:8px; }
+.benchmark-questions h4 { margin:0 0 10px; }
+#adviceDetail a, #benchmarkGuide a { overflow-wrap:anywhere; }
+@media(max-width:640px) { .benchmark-questions { grid-template-columns:1fr; } .effort-advice .toolbar label { width:100%; } .effort-advice select { max-width:100%; } }
+
+@media(max-width:640px) {
+  #adviceMatrix table { min-width:0; }
+  #adviceMatrix table, #adviceMatrix tbody { display:block; }
+  #adviceMatrix thead { display:none; }
+  #adviceMatrix tr { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; padding:12px 0; border-bottom:1px solid #d6ded2; }
+  #adviceMatrix th { grid-column:1 / -1; padding:8px 2px; }
+  #adviceMatrix td { display:block; padding:2px; border:0; }
+  #adviceMatrix td::before { content:attr(data-label); display:block; font-size:12px; margin-bottom:5px; color:#426158; }
+}

@@ -87,8 +87,8 @@ def check_capabilities(page, data, output):
     expect(page.locator('#capIndexDetail')).to_contain_text('完整 7 项指标')
     rows=csv_download(page,'#exportCapIndexes')
     opus=next(r for r in rows if r['model']=='Claude Opus 5.5 (max)')
-    assert opus['__ii___score']==opus['intelligence_index']
-    assert opus['__ii___valid_n']=='16'
+    assert opus['AA 智能指数_分数']==opus['AA 智能指数']
+    assert opus['AA 智能指数_有效配置数']=='16'
 
     page.locator('#capBumpChart').screenshot(path=str(output/'capability-desktop.png'),style='.nav-shell{visibility:hidden!important}')
     page.locator('[data-panel="reasoning"]').click()
