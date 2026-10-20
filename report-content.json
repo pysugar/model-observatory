@@ -702,7 +702,7 @@
       "input": 2,
       "cached": 0.5,
       "output": 6,
-      "price_note": "Standard $2.00 / $0.50（缓存读取 75% 折扣）/ $6.00；AA 实测 high ($2.73/任务) 与 xhigh ($3.74/任务) 综合分几乎一致。",
+      "price_note": "Standard $2.00 / $0.50（缓存读取 75% 折扣）/ $6.00；AA 实测 high ($2.73/任务) 与 xhigh ($3.74/任务) AA 智能指数几乎一致。",
       "source": "https://artificialanalysis.ai/zh/models/releases/grok-4-7",
       "price_source": "https://docs.x.ai/docs/models"
     }
@@ -810,7 +810,7 @@
     {
       "id": "B1",
       "type": "独立评测",
-      "title": "AA Intelligence 方法",
+      "title": "AA 智能指数方法",
       "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
       "status": "本次已读",
       "note": "10 项加权指数；保留各子项单位与方法，不再合成自定义总分。",
@@ -967,7 +967,7 @@
       "type": "独立评测",
       "accessed": "2026-10-16",
       "status": "5 个比较页、10 个配置；每行保留原始链接",
-      "note": "v4.3.2；Opus 4.7 / 4.6 / 4.5 综合分为估计；Fable 5 max 含 Opus 4.8 回退。缺失子项和费用保留为空，规格以官方为准。"
+      "note": "v4.3.2；Opus 4.7 / 4.6 / 4.5 的 AA 智能指数为估计；Fable 5 max 含 Opus 4.8 回退。缺失子项和费用保留为空，规格以官方为准。"
     },
     {
       "id": "U1",
@@ -1026,7 +1026,7 @@
     {
       "id": "B17",
       "type": "独立评测",
-      "title": "AA 按模型发布版本划分的 Intelligence Index 与单任务成本",
+      "title": "AA 智能指数：按模型发布版本与单任务成本",
       "url": "https://artificialanalysis.ai/zh/models/releases",
       "note": "按发布版本（Release）聚合各推理档位轨迹，支持单任务成本（USD 对数刻度）、每任务耗时（分钟）与每任务输出 Token 数三维对照。",
       "accessed": "2026-10-19",
@@ -1037,7 +1037,7 @@
       "type": "独立评测",
       "title": "AA Grok 4.7 发布版本与三档实测",
       "url": "https://artificialanalysis.ai/zh/models/releases/grok-4-7",
-      "note": "SpaceXAI / xAI Grok 4.7 的 low / high / xhigh 三档综合指数（42.22 / 46.33 / 46.45）、单任务成本（$1.25 / $2.73 / $3.74）与 6 项能力指数。",
+      "note": "SpaceXAI / xAI Grok 4.7 的 low / high / xhigh 三档 AA 智能指数（42.22 / 46.33 / 46.45）、单任务成本（$1.25 / $2.73 / $3.74）与 6 项能力指数。",
       "accessed": "2026-10-19",
       "status": "直接核验；纳入主表与分项对照"
     },
@@ -1189,7 +1189,7 @@
       "model": "Claude Opus 4.7",
       "start": "xhigh 编码 / 代理；high 复杂分析",
       "basis": "官方建议；本报告未实测甜蜜点",
-      "upgrade": "max 只在 xhigh 仍有可测提升空间时试；AA 综合分为估计值。"
+      "upgrade": "max 只在 xhigh 仍有可测提升空间时试；AA 智能指数为估计值。"
     },
     {
       "model": "Claude Opus 4.6",

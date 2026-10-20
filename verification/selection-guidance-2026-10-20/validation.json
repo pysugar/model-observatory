@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "base_commit": "5e0e05ac6cba58801736008513a781e08a1f60c4",
+  "tested_local_changes": true,
+  "host": "ubuntu-gk55",
+  "checkedAt": "2026-10-20",
+  "unit_tests": 35,
+  "sandbox": true,
+  "browser": "system Chrome 155.0.8059.39",
+  "viewports": [
+    1440,
+    390,
+    320
+  ],
+  "checks": [
+    "7 exact model versions x 4 task mappings; native effort support; source and unknown metadata invariants",
+    "official support distinct from experience priors and 23-task community repair candidate",
+    "28 desktop clicks, keyboard Enter/Space, 28 true touchscreen taps at each mobile width",
+    "unknown same-vendor release has no inherited recommendation; Grok has no max",
+    "six rendered panels including axes, tooltips, selectors, empty states: AA 智能指数; only glossary and original raw methods retain English/II",
+    "all 12 CSV downloads have unambiguous AA index column labels",
+    "Arena Text preference / Agent causal net improvement / factuality-adjusted views / complete-delivery cost kept separate",
+    "2026-10-12 Agent signal definitions; no invented rankings, confidence percentages or optimum scores",
+    "tracked HTML/JSON regenerated; original 169 benchmark rows and original report-data.csv preserved"
+  ],
+  "source_sha256": {
+    "report.js": "d75c42470e3fec5d8daed173e27a27362f76db6930c8833371699df5ddd9e1b6",
+    "report.css": "96004d4ed8b8a3fb40606a2e7c1e3a68f85243aa8ea301db6f24e18591c555a0",
+    "report.template.html": "085e4f66fd8598af6ba31a4cc3f0aa9cb34fe38e2608536b02a12282a5c669e9",
+    "report-content.json": "468ee6826c137a79400afb6d5bf995a16faf7b953550c9111a63e020153e2b67",
+    "research/2026-10-20/task-effort-guidance.json": "669112092c42b7f7aa8531674ffb9520f7935eb22c142b33bf2e8c85a82844e3",
+    "scripts/selection_smoke.py": "a6f588396b4e5ba41122a15853d1e5e953ef366e4864768e1d6d0bebcc4bc77d",
+    "tests/test_selection_guidance.py": "88c8fedd20774ffeed9e3a63d175ee2d8d2210500a553638439a381ae53c5d41"
+  },
+  "scope": "Precommit local regression. Exact clean commit build/check and complete smoke will run after commit. Final remote CI/preview remains coordinator responsibility."
+}

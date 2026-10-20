@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "browser_version": "155.0.8059.39",
+  "browser_channel": "chrome",
+  "viewports": [
+    1440,
+    390,
+    320
+  ],
+  "rows": 169,
+  "checks": [
+    "task-specific best variants in seven dimensions",
+    "dataset-backed knowledge narrative and Elo differences",
+    "effort filters and scaling charts",
+    "capability missingness, tie ranks, per-domain denominators and CSV consistency",
+    "reasoning charts, effort selection, nonmonotonic scores and keyboard access",
+    "six panels",
+    "Claude filter",
+    "CSV missing values",
+    "budget boundaries",
+    "four Opus evidence views",
+    "source index",
+    "no page overflow",
+    "no JS errors or external requests",
+    "source paths return 404",
+    "version and asset hashes"
+  ],
+  "cloudflare_headers_checked": false,
+  "host": "ubuntu-gk55",
+  "branch": "fix/capability-integrity-effort-charts",
+  "base_commit": "636cac45ef60d5a8af0c2c07cf536a390b46bb6c",
+  "tested_local_changes": true,
+  "unit_tests": 33,
+  "unit_tests_status": "PASS",
+  "sandbox": true,
+  "touch_context": "has_touch=True; 390x844; actual tap; tooltip visible",
+  "scope": "local artifacts only; final remote CI/preview pending coordinator verification",
+  "post_browser_checks": "AA intelligence methodology link and Terminal-Bench evidence type clarified; rebuilt and audited",
+  "data_policy": "Frozen AA v4.3.2 measurements retained; no paid benchmarks; no new leaderboard scores; unknown source metadata is null"
+}

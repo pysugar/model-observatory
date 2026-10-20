@@ -702,7 +702,7 @@
       "input": 2,
       "cached": 0.5,
       "output": 6,
-      "price_note": "Standard $2.00 / $0.50（缓存读取 75% 折扣）/ $6.00；AA 实测 high ($2.73/任务) 与 xhigh ($3.74/任务) 综合分几乎一致。",
+      "price_note": "Standard $2.00 / $0.50（缓存读取 75% 折扣）/ $6.00；AA 实测 high ($2.73/任务) 与 xhigh ($3.74/任务) AA 智能指数几乎一致。",
       "source": "https://artificialanalysis.ai/zh/models/releases/grok-4-7",
       "price_source": "https://docs.x.ai/docs/models"
     }
@@ -810,7 +810,7 @@
     {
       "id": "B1",
       "type": "独立评测",
-      "title": "AA Intelligence 方法",
+      "title": "AA 智能指数方法",
       "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
       "status": "本次已读",
       "note": "10 项加权指数；保留各子项单位与方法，不再合成自定义总分。",
@@ -967,7 +967,7 @@
       "type": "独立评测",
       "accessed": "2026-10-16",
       "status": "5 个比较页、10 个配置；每行保留原始链接",
-      "note": "v4.3.2；Opus 4.7 / 4.6 / 4.5 综合分为估计；Fable 5 max 含 Opus 4.8 回退。缺失子项和费用保留为空，规格以官方为准。"
+      "note": "v4.3.2；Opus 4.7 / 4.6 / 4.5 的 AA 智能指数为估计；Fable 5 max 含 Opus 4.8 回退。缺失子项和费用保留为空，规格以官方为准。"
     },
     {
       "id": "U1",
@@ -1026,7 +1026,7 @@
     {
       "id": "B17",
       "type": "独立评测",
-      "title": "AA 按模型发布版本划分的 Intelligence Index 与单任务成本",
+      "title": "AA 智能指数：按模型发布版本与单任务成本",
       "url": "https://artificialanalysis.ai/zh/models/releases",
       "note": "按发布版本（Release）聚合各推理档位轨迹，支持单任务成本（USD 对数刻度）、每任务耗时（分钟）与每任务输出 Token 数三维对照。",
       "accessed": "2026-10-19",
@@ -1037,7 +1037,7 @@
       "type": "独立评测",
       "title": "AA Grok 4.7 发布版本与三档实测",
       "url": "https://artificialanalysis.ai/zh/models/releases/grok-4-7",
-      "note": "SpaceXAI / xAI Grok 4.7 的 low / high / xhigh 三档综合指数（42.22 / 46.33 / 46.45）、单任务成本（$1.25 / $2.73 / $3.74）与 6 项能力指数。",
+      "note": "SpaceXAI / xAI Grok 4.7 的 low / high / xhigh 三档 AA 智能指数（42.22 / 46.33 / 46.45）、单任务成本（$1.25 / $2.73 / $3.74）与 6 项能力指数。",
       "accessed": "2026-10-19",
       "status": "直接核验；纳入主表与分项对照"
     },
@@ -1189,7 +1189,7 @@
       "model": "Claude Opus 4.7",
       "start": "xhigh 编码 / 代理；high 复杂分析",
       "basis": "官方建议；本报告未实测甜蜜点",
-      "upgrade": "max 只在 xhigh 仍有可测提升空间时试；AA 综合分为估计值。"
+      "upgrade": "max 只在 xhigh 仍有可测提升空间时试；AA 智能指数为估计值。"
     },
     {
       "model": "Claude Opus 4.6",
@@ -8831,6 +8831,1455 @@
     ],
     "not_run": "仅复算公开数据，没有新的模型调用或付费实验。"
   },
+  "computer_use_evidence": {
+    "openaiSweep": {
+      "protocolId": "osworld-2.0-offline-v2026.08.08-partial",
+      "benchmark": "OSWorld 2.0",
+      "release": "v2026.08.08",
+      "subset": "offline",
+      "metric": "partial reward",
+      "scoreUnit": "percent",
+      "costDefinition": "USD/task in the same publisher evaluation",
+      "source": "https://openai.com/index/introducing-gpt-6-1-sol/",
+      "provenance": "provider-reported",
+      "retrievedAt": "2026-10-20",
+      "checkedAt": "2026-10-20",
+      "extraction": "Publisher page embedded Vega-Lite data.values; exact 15 points supplied and verified by coordinator",
+      "efforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "missingEfforts": [
+        "non-reasoning"
+      ],
+      "maxSteps": null,
+      "harness": null,
+      "runs": null,
+      "ci": null,
+      "series": [
+        {
+          "modelId": "gpt-6-astra",
+          "model": "GPT-6 Astra",
+          "scores": [
+            62.17,
+            69.25,
+            70.02,
+            71.27,
+            73.49
+          ],
+          "costUsdPerTask": [
+            2.7159,
+            5.3594,
+            6.9064,
+            7.4944,
+            9.4353
+          ]
+        },
+        {
+          "modelId": "gpt-6-1-sol",
+          "model": "GPT-6.1 Sol",
+          "scores": [
+            58.96,
+            66.84,
+            69.56,
+            69.38,
+            71.42
+          ],
+          "costUsdPerTask": [
+            0.4248,
+            0.7675,
+            0.9613,
+            1.0466,
+            1.2689
+          ]
+        },
+        {
+          "modelId": "gpt-6-sol",
+          "model": "GPT-6 Sol",
+          "scores": [
+            43.9,
+            54,
+            58.29,
+            60.54,
+            64.43
+          ],
+          "costUsdPerTask": [
+            1.0117,
+            1.3789,
+            1.7096,
+            2.3002,
+            3.3695
+          ]
+        }
+      ]
+    },
+    "anthropicMax": {
+      "displayLabel": "OSWorld · 2026-09-10 全套（Sonnet文档称 v2.1）",
+      "protocolId": "osworld-2026-09-10-fullsuite-max",
+      "release": "2026-09-10",
+      "subset": "full suite",
+      "tasks": 108,
+      "resolution": "1080p",
+      "maxSteps": 500,
+      "runs": 5,
+      "statistic": "mean of 5 independent runs",
+      "nativeEffort": "max",
+      "grader": "Claude Opus 4.8",
+      "screenshotRetention": "all screenshots retained",
+      "compaction": "100k-token server-side compaction",
+      "provenance": "provider-reported",
+      "checkedAt": "2026-10-20",
+      "ci": null,
+      "costUsdPerTask": null,
+      "sourceRefs": [
+        {
+          "sourceUrl": "https://anthropic.com/claude-opus-5-5-system-card",
+          "pages": [
+            205,
+            206,
+            207
+          ],
+          "originalBenchmarkName": "OSWorld 2.0"
+        },
+        {
+          "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5-system-card",
+          "pages": [
+            129,
+            130,
+            131
+          ],
+          "originalBenchmarkName": "OSWorld 2.1"
+        }
+      ],
+      "rows": [
+        {
+          "modelId": "claude-opus-5-5",
+          "model": "Opus 5.5",
+          "partialRewardPct": 81.8,
+          "strictSuccessRatePct": 48.7
+        },
+        {
+          "modelId": "claude-fable-5-1",
+          "model": "Fable 5.1",
+          "partialRewardPct": 80.7,
+          "strictSuccessRatePct": 42.8
+        },
+        {
+          "modelId": "claude-sonnet-5-5",
+          "model": "Sonnet 5.5",
+          "partialRewardPct": 80.1,
+          "strictSuccessRatePct": 43.5
+        }
+      ]
+    },
+    "geminiReference": {
+      "modelId": "gemini-4-argon",
+      "model": "Gemini 4 Argon",
+      "benchmark": "OSWorld 2.0",
+      "subset": "offline",
+      "release": "08.08 patch",
+      "partialRewardPct": 69.2,
+      "maxSteps": 500,
+      "resolution": "1080p",
+      "interaction": "screenshot + pyautogui",
+      "harness": "Gemini CUA harness",
+      "tooling": "batch tools / compaction",
+      "thinkingDescription": "highest thinking settings",
+      "nativeEffort": null,
+      "statistic": "max over 3 runs",
+      "runs": 3,
+      "ci": null,
+      "costUsdPerTask": null,
+      "provenance": "provider-reported",
+      "checkedAt": "2026-10-20",
+      "sources": [
+        "https://deepmind.google/models/gemini/",
+        "https://deepmind.google/models/evals-methodology/gemini-4-argon"
+      ],
+      "tasks": null
+    },
+    "grokReference": {
+      "modelId": "grok-4-7",
+      "sourceUrl": "https://x.ai/news/grok-4-7",
+      "score": null,
+      "checkedAt": "2026-10-20",
+      "status": "未发现公开可核实成绩"
+    },
+    "pitfallExperience": {
+      "status": "已接入协调线程核验的三张工作流经验卡",
+      "cards": [
+        {
+          "id": "delivery-cost",
+          "title": "高档不一定靠少重试省钱",
+          "pitfall": "更多思考可能减少部分错误，却增加工具调用、验证与上下文成本。",
+          "alternativeAction": "比较完成并验收一个任务的总费用和耗时，含失败尝试；不凭单轮 token 或订阅百分比选档。",
+          "modelScope": "Astra 小样本；PointFive 涉及 Opus 5 / Sonnet 5",
+          "taskScope": "任务交付、费用与耗时评估流程",
+          "versionScope": "PointFive 为 Opus 5 / Sonnet 5，不是 5.5",
+          "caveats": [
+            "两项来源支持评估方法，不建立普遍的低档优越结论，也不是所有当前模型的既定缺陷。",
+            "任务、harness 与质量验收方式影响结果，需在实际工作流验证。"
+          ],
+          "sources": [
+            {
+              "sourceUrl": "https://trilogyai.substack.com/p/astra-reasoning-effort-token-usage",
+              "label": "Trilogy AI · Astra effort 观察",
+              "originalSourceId": "trilogy-astra-effort",
+              "sourceType": "独立原始来源",
+              "caveats": "Astra：2 个任务、24 次运行；没有盲测质量评估。",
+              "sampleSize": 2,
+              "runs": 24
+            },
+            {
+              "sourceUrl": "https://arxiv.org/html/2608.01347v6#A14",
+              "label": "PointFive 预印本 · 附录 N",
+              "originalSourceId": "pointfive-2608.01347-v6",
+              "sourceType": "独立原始来源",
+              "caveats": "Opus 5 / Sonnet 5，不是 5.5；预印本，未经同行评审。",
+              "sampleSize": null,
+              "runs": null
+            }
+          ],
+          "evidenceType": "多源经验参考",
+          "checkedAt": "2026-10-20",
+          "appliesToAllCurrentModels": false
+        },
+        {
+          "id": "context-and-acceptance",
+          "title": "设计跑偏，先补上下文与验收标准",
+          "pitfall": "缺目标、约束和关键决策时，升档可能只把错误方向做得更细。",
+          "alternativeAction": "补参考样例、必须保留的交互和明确验收标准；长任务保留可回查需求与决策，再升档。",
+          "modelScope": "跨产品的任务工作流经验，不针对所有当前模型",
+          "taskScope": "设计与长任务中的需求、上下文和验收管理",
+          "versionScope": "来源所述 harness / 动态上下文实践",
+          "caveats": [
+            "这是跨产品经验综合，不是 max 与补上下文的受控对照实验。",
+            "来源不证明任何当前模型存在普遍的设计缺陷。"
+          ],
+          "sources": [
+            {
+              "sourceUrl": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+              "label": "Anthropic · 长任务 harness 设计",
+              "originalSourceId": "anthropic-harness-design",
+              "sourceType": "独立原始来源",
+              "caveats": "设计评分标准的实践经验。",
+              "sampleSize": null,
+              "runs": null
+            },
+            {
+              "sourceUrl": "https://cursor.com/blog/dynamic-context-discovery",
+              "label": "Cursor · 动态上下文发现",
+              "originalSourceId": "cursor-dynamic-context-discovery",
+              "sourceType": "独立原始来源",
+              "caveats": "摘要可能丢失细节；保留可检索历史。",
+              "sampleSize": null,
+              "runs": null
+            }
+          ],
+          "evidenceType": "多源经验参考",
+          "checkedAt": "2026-10-20",
+          "appliesToAllCurrentModels": false
+        },
+        {
+          "id": "harness-cost",
+          "title": "账单变大，别只怪模型和档位",
+          "pitfall": "工具描述、历史注入和 harness 也影响 token 消耗。",
+          "alternativeAction": "对比时固定 harness 版本、工具集及上下文策略，查无用工具描述与重复注入，记录全程费用。",
+          "modelScope": "使用工具和上下文管理的任务工作流",
+          "taskScope": "harness、工具集与上下文费用归因",
+          "versionScope": "Cursor 动态上下文实践与 Deep Agents v0.7",
+          "caveats": [
+            "两项均为独立原始评估，不是同一文章的转载。",
+            "不把来源中的节省比例套用给用户；某些模型或任务的费用可能反而增加。"
+          ],
+          "sources": [
+            {
+              "sourceUrl": "https://cursor.com/blog/dynamic-context-discovery",
+              "label": "Cursor · 动态上下文发现",
+              "originalSourceId": "cursor-dynamic-context-discovery",
+              "sourceType": "独立原始来源",
+              "caveats": "工具与上下文管理的原始实践。",
+              "sampleSize": null,
+              "runs": null
+            },
+            {
+              "sourceUrl": "https://www.langchain.com/blog/deep-agents-v0-7",
+              "label": "LangChain · Deep Agents v0.7",
+              "originalSourceId": "langchain-deep-agents-v0.7",
+              "sourceType": "独立原始来源",
+              "caveats": "版本内的原始评估；任务与模型不同，成本变化方向可能不同。",
+              "sampleSize": null,
+              "runs": null
+            }
+          ],
+          "evidenceType": "多源经验参考",
+          "checkedAt": "2026-10-20",
+          "appliesToAllCurrentModels": false
+        }
+      ],
+      "minimumIndependentOriginalSources": 2
+    },
+    "pitfallReminders": {
+      "status": "待验证提醒；暂无已提交卡片",
+      "cards": []
+    }
+  },
+  "task_effort_guidance": {
+    "checkedAt": "2026-10-20",
+    "tasks": [
+      {
+        "id": "complex",
+        "label": "复杂问题"
+      },
+      {
+        "id": "daily_code",
+        "label": "日常代码"
+      },
+      {
+        "id": "repository_bug",
+        "label": "仓库 BUG 修复"
+      },
+      {
+        "id": "design",
+        "label": "方案设计"
+      }
+    ],
+    "models": [
+      {
+        "modelId": "claude-opus-5-5",
+        "name": "Opus 5.5",
+        "supportedEfforts": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "officialDefault": "medium",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "checkedAt": "2026-10-20"
+      },
+      {
+        "modelId": "claude-fable-5-1",
+        "name": "Fable 5.1",
+        "supportedEfforts": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "officialDefault": "high",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "checkedAt": "2026-10-20"
+      },
+      {
+        "modelId": "claude-sonnet-5-5",
+        "name": "Sonnet 5.5",
+        "supportedEfforts": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "officialDefault": "high",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "checkedAt": "2026-10-20"
+      },
+      {
+        "modelId": "gpt-6-1-sol",
+        "name": "GPT-6.1 Sol",
+        "supportedEfforts": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "officialDefault": "medium",
+        "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+        "checkedAt": "2026-10-20"
+      },
+      {
+        "modelId": "gpt-6-astra",
+        "name": "GPT-6 Astra",
+        "supportedEfforts": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "officialDefault": null,
+        "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+        "checkedAt": "2026-10-20"
+      },
+      {
+        "modelId": "gemini-4-argon",
+        "name": "Gemini 4 Argon",
+        "supportedEfforts": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "officialDefault": "medium",
+        "sourceUrl": "https://ai.google.dev/gemini-api/docs/latest-model?hl=en",
+        "checkedAt": "2026-10-20"
+      },
+      {
+        "modelId": "grok-4-7",
+        "name": "Grok 4.7",
+        "supportedEfforts": [
+          "low",
+          "medium",
+          "high",
+          "xhigh"
+        ],
+        "officialDefault": "high",
+        "sourceUrl": "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+        "checkedAt": "2026-10-20"
+      }
+    ],
+    "recommendations": [
+      {
+        "modelId": "claude-opus-5-5",
+        "nativeEffort": "medium",
+        "taskType": "complex",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方默认 medium；四任务沿用默认是本报告经验起点，不是四项任务最优结论。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+            "statement": "官方默认 medium；建议在自己的验收集测试多个档位。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          },
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5",
+            "statement": "版本专属 prompting 指南；需按自己的验收集验证。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "版本行为与使用边界"
+          }
+        ]
+      },
+      {
+        "modelId": "claude-opus-5-5",
+        "nativeEffort": "medium",
+        "taskType": "daily_code",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方默认 medium；四任务沿用默认是本报告经验起点，不是四项任务最优结论。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+            "statement": "官方默认 medium；建议在自己的验收集测试多个档位。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          },
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5",
+            "statement": "版本专属 prompting 指南；需按自己的验收集验证。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "版本行为与使用边界"
+          }
+        ]
+      },
+      {
+        "modelId": "claude-opus-5-5",
+        "nativeEffort": "medium",
+        "taskType": "repository_bug",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方默认 medium；四任务沿用默认是本报告经验起点，不是四项任务最优结论。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+            "statement": "官方默认 medium；建议在自己的验收集测试多个档位。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          },
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5",
+            "statement": "版本专属 prompting 指南；需按自己的验收集验证。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "版本行为与使用边界"
+          }
+        ]
+      },
+      {
+        "modelId": "claude-opus-5-5",
+        "nativeEffort": "medium",
+        "taskType": "design",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方默认 medium；四任务沿用默认是本报告经验起点，不是四项任务最优结论。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。",
+          "暂无直接可比公开架构设计成绩。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+            "statement": "官方默认 medium；建议在自己的验收集测试多个档位。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          },
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5",
+            "statement": "版本专属 prompting 指南；需按自己的验收集验证。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "版本行为与使用边界"
+          }
+        ]
+      },
+      {
+        "modelId": "claude-fable-5-1",
+        "nativeEffort": "high",
+        "taskType": "complex",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方默认 high；low 可能减少检索并依赖记忆。日常代码 medium 仅为自行验证后的降档候选。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+            "statement": "官方默认 high；其他档位须在自己的任务集验证。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          },
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1",
+            "statement": "版本专属指南提示 low 可能减少检索、更多依赖记忆；降低档位须验证质量。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "版本行为与使用边界"
+          }
+        ]
+      },
+      {
+        "modelId": "claude-fable-5-1",
+        "nativeEffort": "high",
+        "taskType": "daily_code",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方默认 high；low 可能减少检索并依赖记忆。日常代码 medium 仅为自行验证后的降档候选。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+            "statement": "官方默认 high；其他档位须在自己的任务集验证。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          },
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1",
+            "statement": "版本专属指南提示 low 可能减少检索、更多依赖记忆；降低档位须验证质量。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "版本行为与使用边界"
+          }
+        ]
+      },
+      {
+        "modelId": "claude-fable-5-1",
+        "nativeEffort": "high",
+        "taskType": "repository_bug",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方默认 high；low 可能减少检索并依赖记忆。日常代码 medium 仅为自行验证后的降档候选。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+            "statement": "官方默认 high；其他档位须在自己的任务集验证。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          },
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1",
+            "statement": "版本专属指南提示 low 可能减少检索、更多依赖记忆；降低档位须验证质量。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "版本行为与使用边界"
+          }
+        ]
+      },
+      {
+        "modelId": "claude-fable-5-1",
+        "nativeEffort": "high",
+        "taskType": "design",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方默认 high；low 可能减少检索并依赖记忆。日常代码 medium 仅为自行验证后的降档候选。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。",
+          "暂无直接可比公开架构设计成绩。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+            "statement": "官方默认 high；其他档位须在自己的任务集验证。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          },
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1",
+            "statement": "版本专属指南提示 low 可能减少检索、更多依赖记忆；降低档位须验证质量。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "版本行为与使用边界"
+          }
+        ]
+      },
+      {
+        "modelId": "claude-sonnet-5-5",
+        "nativeEffort": "high",
+        "taskType": "complex",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方明确编码/多步工具任务从 medium 起步，困难或长任务用 high；四任务边界尤其方案设计仍是经验映射。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+            "statement": "官方默认 high；明确的 agent 编码与多步工具任务从 medium 起步，困难或长任务试 high。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          }
+        ]
+      },
+      {
+        "modelId": "claude-sonnet-5-5",
+        "nativeEffort": "medium",
+        "taskType": "daily_code",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方明确编码/多步工具任务从 medium 起步，困难或长任务用 high；四任务边界尤其方案设计仍是经验映射。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+            "statement": "官方默认 high；明确的 agent 编码与多步工具任务从 medium 起步，困难或长任务试 high。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          }
+        ]
+      },
+      {
+        "modelId": "claude-sonnet-5-5",
+        "nativeEffort": "medium",
+        "taskType": "repository_bug",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方明确编码/多步工具任务从 medium 起步，困难或长任务用 high；四任务边界尤其方案设计仍是经验映射。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+            "statement": "官方默认 high；明确的 agent 编码与多步工具任务从 medium 起步，困难或长任务试 high。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          }
+        ]
+      },
+      {
+        "modelId": "claude-sonnet-5-5",
+        "nativeEffort": "high",
+        "taskType": "design",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方明确编码/多步工具任务从 medium 起步，困难或长任务用 high；四任务边界尤其方案设计仍是经验映射。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。",
+          "暂无直接可比公开架构设计成绩。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+            "statement": "官方默认 high；明确的 agent 编码与多步工具任务从 medium 起步，困难或长任务试 high。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          }
+        ]
+      },
+      {
+        "modelId": "gpt-6-1-sol",
+        "nativeEffort": "medium",
+        "taskType": "complex",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方默认 medium；仓库修复 high 另参考小样本社区候选，其余四任务划分是经验映射。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+            "statement": "官方默认 medium；支持 low / medium / high / xhigh / max。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          }
+        ]
+      },
+      {
+        "modelId": "gpt-6-1-sol",
+        "nativeEffort": "medium",
+        "taskType": "daily_code",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方默认 medium；仓库修复 high 另参考小样本社区候选，其余四任务划分是经验映射。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+            "statement": "官方默认 medium；支持 low / medium / high / xhigh / max。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          }
+        ]
+      },
+      {
+        "modelId": "gpt-6-1-sol",
+        "nativeEffort": "high",
+        "taskType": "repository_bug",
+        "evidenceType": "社区实测",
+        "sourceUrl": "https://vulcanbench.com/benchmarks/swe-v4-gpt61-sol-v318.html",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方默认 medium；仓库修复 high 另参考小样本社区候选，其余四任务划分是经验映射。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": 23,
+        "harness": "Codex CLI",
+        "label": "甜点候选",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+            "statement": "官方默认 medium；支持 low / medium / high / xhigh / max。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          },
+          {
+            "evidenceType": "社区实测",
+            "sourceUrl": "https://vulcanbench.com/benchmarks/swe-v4-gpt61-sol-v318.html",
+            "statement": "23 个旧程序重建/修复任务，每题每档一次；high 是该小样本的甜点候选。不是代表性真实仓库样本，不能推断所有仓库修复最优。",
+            "sampleSize": 23,
+            "harness": "Codex CLI",
+            "scope": "旧程序重建/修复；一次/题/档"
+          }
+        ]
+      },
+      {
+        "modelId": "gpt-6-1-sol",
+        "nativeEffort": "medium",
+        "taskType": "design",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方默认 medium；仓库修复 high 另参考小样本社区候选，其余四任务划分是经验映射。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。",
+          "暂无直接可比公开架构设计成绩。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+            "statement": "官方默认 medium；支持 low / medium / high / xhigh / max。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          }
+        ]
+      },
+      {
+        "modelId": "gpt-6-astra",
+        "nativeEffort": "medium",
+        "taskType": "complex",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "四项 medium 均为保守经验起点；未核验到官方默认或任务最佳，官方链接仅证明支持档位。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+            "statement": "官方列出支持 low / medium / high / xhigh / max；未核验官方默认或任务最佳。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          }
+        ]
+      },
+      {
+        "modelId": "gpt-6-astra",
+        "nativeEffort": "medium",
+        "taskType": "daily_code",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "四项 medium 均为保守经验起点；未核验到官方默认或任务最佳，官方链接仅证明支持档位。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+            "statement": "官方列出支持 low / medium / high / xhigh / max；未核验官方默认或任务最佳。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          }
+        ]
+      },
+      {
+        "modelId": "gpt-6-astra",
+        "nativeEffort": "medium",
+        "taskType": "repository_bug",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "四项 medium 均为保守经验起点；未核验到官方默认或任务最佳，官方链接仅证明支持档位。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+            "statement": "官方列出支持 low / medium / high / xhigh / max；未核验官方默认或任务最佳。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          }
+        ]
+      },
+      {
+        "modelId": "gpt-6-astra",
+        "nativeEffort": "medium",
+        "taskType": "design",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "四项 medium 均为保守经验起点；未核验到官方默认或任务最佳，官方链接仅证明支持档位。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。",
+          "暂无直接可比公开架构设计成绩。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+            "statement": "官方列出支持 low / medium / high / xhigh / max；未核验官方默认或任务最佳。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          }
+        ]
+      },
+      {
+        "modelId": "gemini-4-argon",
+        "nativeEffort": "high",
+        "taskType": "complex",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://ai.google.dev/gemini-api/docs/latest-model?hl=en",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方 medium 为多数任务（含代码与 agent）的默认建议；困难推理可用 high。四任务映射尤其方案设计是经验起点。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://ai.google.dev/gemini-api/docs/latest-model?hl=en",
+            "statement": "官方默认 medium，建议用于多数任务（含代码与 agent）；困难推理可试 high。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          }
+        ]
+      },
+      {
+        "modelId": "gemini-4-argon",
+        "nativeEffort": "medium",
+        "taskType": "daily_code",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://ai.google.dev/gemini-api/docs/latest-model?hl=en",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方 medium 为多数任务（含代码与 agent）的默认建议；困难推理可用 high。四任务映射尤其方案设计是经验起点。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://ai.google.dev/gemini-api/docs/latest-model?hl=en",
+            "statement": "官方默认 medium，建议用于多数任务（含代码与 agent）；困难推理可试 high。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          }
+        ]
+      },
+      {
+        "modelId": "gemini-4-argon",
+        "nativeEffort": "medium",
+        "taskType": "repository_bug",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://ai.google.dev/gemini-api/docs/latest-model?hl=en",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方 medium 为多数任务（含代码与 agent）的默认建议；困难推理可用 high。四任务映射尤其方案设计是经验起点。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://ai.google.dev/gemini-api/docs/latest-model?hl=en",
+            "statement": "官方默认 medium，建议用于多数任务（含代码与 agent）；困难推理可试 high。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          }
+        ]
+      },
+      {
+        "modelId": "gemini-4-argon",
+        "nativeEffort": "medium",
+        "taskType": "design",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://ai.google.dev/gemini-api/docs/latest-model?hl=en",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方 medium 为多数任务（含代码与 agent）的默认建议；困难推理可用 high。四任务映射尤其方案设计是经验起点。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。",
+          "暂无直接可比公开架构设计成绩。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://ai.google.dev/gemini-api/docs/latest-model?hl=en",
+            "statement": "官方默认 medium，建议用于多数任务（含代码与 agent）；困难推理可试 high。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          }
+        ]
+      },
+      {
+        "modelId": "grok-4-7",
+        "nativeEffort": "high",
+        "taskType": "complex",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方默认 high；四任务沿用默认为经验起点。社区 high 用 token 较少，不等于美元费用最低。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+            "statement": "官方默认 high；支持 low / medium / high / xhigh。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          },
+          {
+            "evidenceType": "社区实测",
+            "sourceUrl": "https://vulcanbench.com/benchmarks/swe-v4-grok47-cursor-v320.html",
+            "statement": "23 个任务/档，Cursor CLI。high 的 token 用量较低不代表美元成本最低；不建立通用任务最优。",
+            "sampleSize": 23,
+            "harness": "Cursor CLI",
+            "scope": "小题集；不同 harness 不混比"
+          }
+        ]
+      },
+      {
+        "modelId": "grok-4-7",
+        "nativeEffort": "high",
+        "taskType": "daily_code",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方默认 high；四任务沿用默认为经验起点。社区 high 用 token 较少，不等于美元费用最低。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+            "statement": "官方默认 high；支持 low / medium / high / xhigh。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          },
+          {
+            "evidenceType": "社区实测",
+            "sourceUrl": "https://vulcanbench.com/benchmarks/swe-v4-grok47-cursor-v320.html",
+            "statement": "23 个任务/档，Cursor CLI。high 的 token 用量较低不代表美元成本最低；不建立通用任务最优。",
+            "sampleSize": 23,
+            "harness": "Cursor CLI",
+            "scope": "小题集；不同 harness 不混比"
+          }
+        ]
+      },
+      {
+        "modelId": "grok-4-7",
+        "nativeEffort": "high",
+        "taskType": "repository_bug",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方默认 high；四任务沿用默认为经验起点。社区 high 用 token 较少，不等于美元费用最低。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+            "statement": "官方默认 high；支持 low / medium / high / xhigh。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          },
+          {
+            "evidenceType": "社区实测",
+            "sourceUrl": "https://vulcanbench.com/benchmarks/swe-v4-grok47-cursor-v320.html",
+            "statement": "23 个任务/档，Cursor CLI。high 的 token 用量较低不代表美元成本最低；不建立通用任务最优。",
+            "sampleSize": 23,
+            "harness": "Cursor CLI",
+            "scope": "小题集；不同 harness 不混比"
+          }
+        ]
+      },
+      {
+        "modelId": "grok-4-7",
+        "nativeEffort": "high",
+        "taskType": "design",
+        "evidenceType": "经验先验",
+        "sourceUrl": "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+        "checkedAt": "2026-10-20",
+        "caveats": [
+          "官方默认 high；四任务沿用默认为经验起点。社区 high 用 token 较少，不等于美元费用最低。",
+          "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。",
+          "暂无直接可比公开架构设计成绩。"
+        ],
+        "sampleSize": null,
+        "harness": null,
+        "label": "建议起点",
+        "support": [
+          {
+            "evidenceType": "官方建议",
+            "sourceUrl": "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+            "statement": "官方默认 high；支持 low / medium / high / xhigh。",
+            "sampleSize": null,
+            "harness": null,
+            "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+          },
+          {
+            "evidenceType": "社区实测",
+            "sourceUrl": "https://vulcanbench.com/benchmarks/swe-v4-grok47-cursor-v320.html",
+            "statement": "23 个任务/档，Cursor CLI。high 的 token 用量较低不代表美元成本最低；不建立通用任务最优。",
+            "sampleSize": 23,
+            "harness": "Cursor CLI",
+            "scope": "小题集；不同 harness 不混比"
+          }
+        ]
+      }
+    ],
+    "rules": [
+      {
+        "evidenceType": "经验先验",
+        "text": "缺日志、复现、版本或验收标准：先补信息，再考虑升档。"
+      },
+      {
+        "evidenceType": "经验先验",
+        "text": "跨模块根因、竞态、约束冲突或测试缺少边界：增加一个受支持档位并比较交付。"
+      },
+      {
+        "evidenceType": "经验先验",
+        "text": "单文件或模板任务，需求明确且测试稳定：可降低一个档位验证。"
+      },
+      {
+        "evidenceType": "经验先验",
+        "text": "high 未满足验收且能指出具体缺口：仅在支持时试 xhigh / max，并设预算与停止条件。"
+      },
+      {
+        "evidenceType": "经验先验",
+        "text": "反复分析却没有增益：拆分任务或换模型，不无限使用最高档。"
+      }
+    ]
+  },
+  "practical_evidence": {
+    "reviewed_at": "2026-10-20",
+    "evidence_types": [
+      "精确模型+effort",
+      "仅模型",
+      "模型+agent",
+      "厂商自报",
+      "未测"
+    ],
+    "sources": [
+      {
+        "id": "aa",
+        "name": "Artificial Analysis",
+        "source_url": "https://artificialanalysis.ai/models",
+        "methodology_url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+        "directory_reviewed_at": "2026-10-20",
+        "collected_at": null,
+        "evaluated_at": null,
+        "version": "AA v4.3.2 冻结数据",
+        "raw_unit": "指数分 / 各具名子评测原始单位",
+        "model": null,
+        "effort": null,
+        "harness": null,
+        "budget": null,
+        "attempts": null,
+        "confidence_interval": null,
+        "evidence_type": "精确模型+effort",
+        "status": "已有冻结数据；新榜单数字未导入",
+        "boundary": "已有冻结数据按具体配置展示；总指数不等于复杂问题能力。API 需要 key，本轮不用。评测脚手架、预算和日期以存档为准，目录不补猜测。",
+        "additional_urls": []
+      },
+      {
+        "id": "swe",
+        "name": "SWE-bench",
+        "source_url": "https://www.swebench.com/",
+        "methodology_url": "https://github.com/SWE-bench/experiments",
+        "directory_reviewed_at": "2026-10-20",
+        "collected_at": null,
+        "evaluated_at": null,
+        "version": "Verified / Lite / Full 分开",
+        "raw_unit": "% Resolved",
+        "model": null,
+        "effort": null,
+        "harness": null,
+        "budget": null,
+        "attempts": null,
+        "confidence_interval": null,
+        "evidence_type": "模型+agent",
+        "status": "方法导航；数字待逐条补充",
+        "boundary": "真实仓库问题修复。优先统一 mini-SWE-agent / Bash Only；比较前记录 agent 版本、split、预算和运行记录，不能当裸模型分数。",
+        "additional_urls": []
+      },
+      {
+        "id": "rebench",
+        "name": "SWE-rebench",
+        "source_url": "https://swe-rebench.com/",
+        "methodology_url": "https://swe-rebench.com/about",
+        "directory_reviewed_at": "2026-10-20",
+        "collected_at": null,
+        "evaluated_at": null,
+        "version": "新任务窗 / 版本需逐条核验",
+        "raw_unit": "解决率 %；SEM / pass@5 分列",
+        "model": null,
+        "effort": null,
+        "harness": null,
+        "budget": null,
+        "attempts": null,
+        "confidence_interval": null,
+        "evidence_type": "模型+agent",
+        "status": "方法导航；数字待逐条补充",
+        "boundary": "新任务窗补充。固定 scaffold 仍是系统成绩；不同 agent、任务窗、SEM 与 pass@5 不混用。",
+        "additional_urls": []
+      },
+      {
+        "id": "terminal",
+        "name": "Terminal-Bench",
+        "source_url": "https://www.tbench.ai/leaderboard/terminal-bench/2.0",
+        "methodology_url": "https://www.tbench.ai/news/terminal-bench-4-0",
+        "directory_reviewed_at": "2026-10-20",
+        "collected_at": null,
+        "evaluated_at": null,
+        "version": "导航 2.0；已有 AA 存档 4.0 独立保留",
+        "raw_unit": "任务完成率 %",
+        "model": null,
+        "effort": null,
+        "harness": null,
+        "budget": null,
+        "attempts": null,
+        "confidence_interval": null,
+        "evidence_type": "模型+agent",
+        "status": "方法导航；数字待逐条补充",
+        "boundary": "多步骤工具任务。2.0 链接不代表 4.0；已有 4.0 原始分追溯 AA 配置来源。比较需 agent/harness 与 effort 证据，不跨版本排名。",
+        "additional_urls": []
+      },
+      {
+        "id": "lcb",
+        "name": "LiveCodeBench",
+        "source_url": "https://livecodebench.github.io/leaderboard.html",
+        "methodology_url": "https://livecodebench.github.io/",
+        "directory_reviewed_at": "2026-10-20",
+        "collected_at": null,
+        "evaluated_at": null,
+        "version": "任务窗 / release 待逐条核验",
+        "raw_unit": "pass@k",
+        "model": null,
+        "effort": null,
+        "harness": null,
+        "budget": null,
+        "attempts": null,
+        "confidence_interval": null,
+        "evidence_type": "仅模型",
+        "status": "方法导航；数字待逐条补充",
+        "boundary": "算法编程；任务窗、版本与 pass@k 必须一致。self-repair 不等于真实仓库 BUG 修复。仅链接，无已核实名次数字。",
+        "additional_urls": [
+          "https://github.com/LiveCodeBench/LiveCodeBench"
+        ]
+      },
+      {
+        "id": "arena",
+        "name": "Arena",
+        "source_url": "https://arena.ai/leaderboard",
+        "methodology_url": "https://arena.ai/blog/ranking-method",
+        "directory_reviewed_at": "2026-10-20",
+        "collected_at": null,
+        "evaluated_at": null,
+        "version": "榜单类别 / 日期待逐条核验",
+        "raw_unit": "人类偏好排名 / 来源分数",
+        "model": null,
+        "effort": null,
+        "harness": null,
+        "budget": null,
+        "attempts": null,
+        "confidence_interval": null,
+        "evidence_type": "仅模型",
+        "status": "方法导航；数字待逐条补充",
+        "boundary": "人类偏好辅助体验，不代表正确率或架构质量；未知 effort 不画档位曲线，不抓未公开端点。",
+        "additional_urls": []
+      },
+      {
+        "id": "aider",
+        "name": "Aider",
+        "source_url": "https://aider.chat/docs/leaderboards/",
+        "methodology_url": "https://aider.chat/docs/leaderboards/",
+        "directory_reviewed_at": "2026-10-20",
+        "collected_at": null,
+        "evaluated_at": null,
+        "version": "榜单版本 / 日期待逐条核验",
+        "raw_unit": "代码编辑通过率 %",
+        "model": null,
+        "effort": null,
+        "harness": null,
+        "budget": null,
+        "attempts": null,
+        "confidence_interval": null,
+        "evidence_type": "模型+agent",
+        "status": "方法导航；数字待逐条补充",
+        "boundary": "代码编辑补充，覆盖可能较旧。需保留格式、editor 模型、版本、次数和日期；architect 是执行模式，不是架构设计能力。",
+        "additional_urls": []
+      }
+    ],
+    "cards": [
+      {
+        "title": "复杂问题解决",
+        "sources": [
+          "aa"
+        ],
+        "metric": "Humanity's Last Exam / CritPt（各自原始 %）",
+        "boundary": "同模型与精确 effort 的已有 AA 子评测；分别展示，不冒充综合复杂问题分。"
+      },
+      {
+        "title": "编程",
+        "sources": [
+          "aa",
+          "terminal",
+          "lcb",
+          "aider"
+        ],
+        "metric": "SciCode / Terminal-Bench / LiveCodeBench / Aider 各自原始指标",
+        "boundary": "算法、科学代码、终端工具与代码编辑覆盖不同；模型与 agent 成绩分开，不平均异质单位。"
+      },
+      {
+        "title": "仓库 BUG 修复",
+        "sources": [
+          "swe",
+          "rebench"
+        ],
+        "metric": "% Resolved / 原始解决率；待补充配置级成绩",
+        "boundary": "比较前核对相同 split、任务窗、agent 版本、预算和次数；目前只提供方法与运行记录，不填数字。"
+      },
+      {
+        "title": "方案 / 架构设计",
+        "sources": [
+          "arena",
+          "aider"
+        ],
+        "metric": "暂无直接可比公开成绩",
+        "boundary": "未测，不打分。通用指数、偏好排名与 architect 执行模式均不能替代架构质量。未来可评需求覆盖、取舍、失败模式、安全、可扩展、可测试；本轮不跑新基准。"
+      }
+    ]
+  },
   "aa_capability_indexes": {
     "snapshot": "2026-10-19",
     "version": "v4.3.2",
@@ -8844,11 +10293,16 @@
         "enLabel": "Finance & Accounting",
         "description": "财务报表勾稽、税务审计、估值建模与长 PDF 财报精确提取。",
         "coreEvals": [
-          "GDP.pdf",
-          "AA-Briefcase v1.1",
+          "AA-Omniscience（商业知识 / 非幻觉）",
           "GDPval-AA v2.1",
-          "AA-LCR v1.1"
-        ]
+          "AA-Briefcase v1.1",
+          "Humanity’s Last Exam",
+          "AutomationBench-AA（财务）",
+          "AA-LCR v1.1",
+          "GDP.pdf"
+        ],
+        "weightNote": "知识30% · 代理知识工作30% · 推理20% · 工具10% · 长上下文5% · 非幻觉5%",
+        "methodologyUrl": "https://artificialanalysis.ai/methodology/capability-indices"
       },
       {
         "key": "strategyAndOps",
@@ -8858,10 +10312,15 @@
         "enLabel": "Strategy & Operations",
         "description": "商业战略推演、跨系统企业工作流编排与代理式运营执行。",
         "coreEvals": [
+          "AA-Omniscience（商业知识）",
+          "GDPval-AA v2.1",
           "AA-Briefcase v1.1",
-          "AutomationBench-AA",
-          "GDPval-AA v2.1"
-        ]
+          "AutomationBench-AA（运营 / HR / 营销 / 销售 / 支持）",
+          "AA-LCR v1.1",
+          "GDP.pdf"
+        ],
+        "weightNote": "代理知识工作35% · 知识30% · 工具30% · 长上下文5%",
+        "methodologyUrl": "https://artificialanalysis.ai/methodology/capability-indices"
       },
       {
         "key": "legal",
@@ -8871,11 +10330,16 @@
         "enLabel": "Legal",
         "description": "超长合同审查、法条判例检索援引、合规风险识别与低幻觉事实陈述。",
         "coreEvals": [
+          "AA-Omniscience（法律知识 / 非幻觉）",
+          "GDPval-AA v2.1",
+          "AA-Briefcase v1.1",
+          "Humanity’s Last Exam",
           "AA-LCR v1.1",
-          "AA-Omniscience",
           "GDP.pdf",
-          "AA-Briefcase v1.1"
-        ]
+          "AutomationBench-AA（支持 / 运营）"
+        ],
+        "weightNote": "知识35% · 代理知识工作25% · 推理15% · 长上下文10% · 非幻觉10% · 工具5%",
+        "methodologyUrl": "https://artificialanalysis.ai/methodology/capability-indices"
       },
       {
         "key": "healthcareAndMedical",
@@ -8885,10 +10349,15 @@
         "enLabel": "Healthcare & Medical",
         "description": "临床指南遵循、医学文献综合推理与抗幻觉诊断安全边界（部分配置缺此子项）。",
         "coreEvals": [
-          "AA-Omniscience",
-          "Humanity's Last Exam",
-          "GDPval-AA v2.1"
-        ]
+          "AA-Omniscience（医疗知识 / 非幻觉）",
+          "GDPval-AA v2.1",
+          "AA-Briefcase v1.1",
+          "MLCR-AA",
+          "Humanity’s Last Exam",
+          "AutomationBench-AA（支持 / 运营）"
+        ],
+        "weightNote": "知识30% · 代理知识工作25% · 长上下文15% · 非幻觉10% · 推理10% · 工具10%",
+        "methodologyUrl": "https://artificialanalysis.ai/methodology/capability-indices"
       },
       {
         "key": "engineering",
@@ -8896,13 +10365,17 @@
         "label": "工程",
         "shortLabel": "工程",
         "enLabel": "Engineering",
-        "description": "终端代理编码（Terminal-Bench 4.0）、科学计算实现（SciCode）与复杂物理工程建模。",
+        "description": "科学、工程与数学知识、复杂推理、代理知识工作与终端代理的官方加权指数。",
         "coreEvals": [
-          "Terminal-Bench 4.0",
-          "SciCode",
-          "AutomationBench-AA",
-          "CritPt"
-        ]
+          "AA-Omniscience（科学 / 工程 / 数学知识）",
+          "Humanity’s Last Exam",
+          "CritPt",
+          "GDPval-AA v2.1",
+          "AA-Briefcase v1.1",
+          "Terminal-Bench 4.0"
+        ],
+        "weightNote": "知识35% · 推理30% · 代理知识工作20% · 终端代理15%",
+        "methodologyUrl": "https://artificialanalysis.ai/methodology/capability-indices"
       },
       {
         "key": "economics",
@@ -8912,10 +10385,14 @@
         "enLabel": "Economics",
         "description": "宏观与微观计量分析、市场机制博弈推演与政策研究交付。",
         "coreEvals": [
+          "AA-Omniscience（经济学知识）",
+          "Humanity’s Last Exam",
           "GDPval-AA v2.1",
-          "Humanity's Last Exam",
-          "AA-Briefcase v1.1"
-        ]
+          "AA-Briefcase v1.1",
+          "AA-LCR v1.1"
+        ],
+        "weightNote": "知识35% · 推理35% · 代理知识工作25% · 长上下文5%",
+        "methodologyUrl": "https://artificialanalysis.ai/methodology/capability-indices"
       }
     ],
     "entries": [
@@ -18991,143 +20468,176 @@
         "model": "Claude Opus 5.5",
         "status": "Active · 旗舰主力",
         "aa_ii": "57.6 (max) / 53.6 (high)",
-        "aa_cap_highlights": "6 大领域全满贯 #1（工程 60.5 · 经济 63.3 · 法律 58.6 · 医疗 58.4）",
         "aa_cost_task": "$0.55 (low) – $1.82 (high) – $5.98 (max)",
         "scale_seal": "RLI 远程劳动 #1 (21.25%) · HLE Diamond #2 (55.0%) · 第六感 #4 (44.6%)",
         "openrouter": "Vals #3 (66.97) · $10.99/req · 有效输入 $0.64/1M · 周用量 #7 (6.18T tok, +23.2%)",
         "livebench_2": "#2 综合 86.5 · $4.19/成功任务",
         "arena": "Agent Code #1 (+18.38% ±1.44%, P50 $0.85) · Text Elo ~1518",
-        "sweet_spot": "复杂编码、架构设计与长文深度研究首选 high ($1.82/任务)；日常先用 medium ($1.34)，难点再升 xhigh ($3.46)。"
+        "sweet_spot": "复杂编码、架构设计与长文深度研究首选 high ($1.82/任务)；日常先用 medium ($1.34)，难点再升 xhigh ($3.46)。",
+        "aa_cap_release_slug": "claude-opus-5-5",
+        "aa_cap_highlights": "max · Default Fallback · 财务与会计 60.73 · 战略与运营 63.68 · 法律 63.26 · 医疗与健康 60.54 · 工程 60.35 · 经济学 65.60",
+        "aa_cap_variant_slug": "claude-opus-5-5",
+        "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/releases/claude-opus-5-5"
       },
       {
         "family": "Claude (Anthropic)",
         "model": "Claude Sonnet 5.5",
         "status": "Active · 均衡主力",
         "aa_ii": "56.0 (max) / 46.8 (high)",
-        "aa_cap_highlights": "财务 #2 (60.6) · 医疗 #2 (58.0) · 工程 #2 (58.6) · 战略 #3 (59.2)",
         "aa_cost_task": "$0.35 (low) – $0.88 (high) – $5.46 (max)",
         "scale_seal": "Agentic Coding 与多步工具调用主力梯队",
         "openrouter": "Vals #2 (67.04) · $3.74/req · 有效输入 $0.46/1M · 周用量 #16 (2.45T tok)",
         "livebench_2": "#7 综合 82.5 · $3.52/成功任务",
         "arena": "Agent Code #3 (+15.59% ±1.49%, P50 $0.46)",
-        "sweet_spot": "OpenRouter Vals 性价比极高（67.04 分仅 $3.74/req）；日常编码建议 medium ($0.48) / high ($0.88)，避免默认 max 耗尽输出。"
+        "sweet_spot": "OpenRouter Vals 性价比极高（67.04 分仅 $3.74/req）；日常编码建议 medium ($0.48) / high ($0.88)，避免默认 max 耗尽输出。",
+        "aa_cap_release_slug": "claude-sonnet-5-5",
+        "aa_cap_highlights": "max · Default Fallback · 财务与会计 57.23 · 战略与运营 59.62 · 法律 56.44 · 医疗与健康 58.06 · 工程 58.37 · 经济学 60.84",
+        "aa_cap_variant_slug": "claude-sonnet-5-5",
+        "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/releases/claude-sonnet-5-5"
       },
       {
         "family": "Claude (Anthropic)",
         "model": "Claude Fable 5.1",
         "status": "Active · 高难升级",
         "aa_ii": "53.4 (max) / 51.2 (high)",
-        "aa_cap_highlights": "战略 #2 (60.1) · 法律 #2 (58.5) · 经济 #2 (63.1) · 财务 #3 (58.3)",
         "aa_cost_task": "$2.37 (low) – $3.91 (high) – $7.63 (max)",
         "scale_seal": "SWE-Bench Pro V2 Full #3 (99.1%) · Hard #2 (92.2%) · RLI #3 (17.92%)",
         "openrouter": "Vals #4 (65.83) · $29.23/req · 有效输入 $1.61/1M",
         "livebench_2": "#1 综合 88.0 · $5.10/成功任务",
         "arena": "Agent Code #4 (+14.74% ±1.90%, P50 $2.45)",
-        "sweet_spot": "LiveBench 2.0 榜首 (88.0)，但单次请求成本高；仅在 Opus 5.5 / Sol 6.1 未达标的高价值长程难题中从 high 起试。"
+        "sweet_spot": "LiveBench 2.0 榜首 (88.0)，但单次请求成本高；仅在 Opus 5.5 / Sol 6.1 未达标的高价值长程难题中从 high 起试。",
+        "aa_cap_release_slug": "claude-fable-5-1",
+        "aa_cap_highlights": "max · Default Fallback · 财务与会计 56.42 · 战略与运营 59.67 · 法律 60.49 · 医疗与健康 58.00 · 工程 56.47 · 经济学 62.67",
+        "aa_cap_variant_slug": "claude-fable-5-1",
+        "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/releases/claude-fable-5-1"
       },
       {
         "family": "Claude (Anthropic)",
         "model": "Claude Haiku 5.5",
         "status": "Active · 高吞吐轻量",
         "aa_ii": "43.4 (max) / 37.8 (high)",
-        "aa_cap_highlights": "医疗 #11 (44.0) · 工程 #15 (44.6) · 财务 #18 (46.8)",
         "aa_cost_task": "$0.024 (low) – $0.079 (high) – $0.213 (max)",
         "scale_seal": "MultiChallenge #6 (67.67% ±5.34%)",
         "openrouter": "Vals #16 (54.44) · $0.19/req · 有效输入 $0.088/1M · 周用量暴涨 +89.4% (2.07T tok)",
         "livebench_2": "轻量层高吞吐代表（单任务成本 <$0.25）",
         "arena": "Agent Code #10 (+2.58% ±1.53%, P50 $0.08)",
-        "sweet_spot": "低成本高频代理与分类提取首选 low ($0.024) / medium ($0.047)；注意 >100k 上下文触发整单 5 倍阶梯价。"
+        "sweet_spot": "低成本高频代理与分类提取首选 low ($0.024) / medium ($0.047)；注意 >100k 上下文触发整单 5 倍阶梯价。",
+        "aa_cap_release_slug": "claude-haiku-5-5",
+        "aa_cap_highlights": "max · 财务与会计 43.90 · 战略与运营 40.38 · 法律 42.28 · 医疗与健康 44.13 · 工程 44.88 · 经济学 51.23",
+        "aa_cap_variant_slug": "claude-haiku-5-5",
+        "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/releases/claude-haiku-5-5"
       },
       {
         "family": "ChatGPT / OpenAI",
         "model": "GPT 6.1 Sol",
         "status": "Active · 工程性价比核心",
         "aa_ii": "51.8 (max) / 50.2 (high)",
-        "aa_cap_highlights": "全部 6 大领域稳居全球 #5–#7（法律 #5 55.6 · 医疗 #5 51.0 · 财务 #6 53.7 · 工程 #7 52.8）",
         "aa_cost_task": "$0.13 (low) – $0.32 (high) – $0.72 (max)",
         "scale_seal": "MultiChallenge #1 (81.95% ±4.16%) · 第六感 #3 (46.6%)",
         "openrouter": "Vals #8 (61.15) · 仅 $1.96/req · 有效输入 $0.35/1M · 周用量 1.93T tok",
         "livebench_2": "#4 综合 85.4 · 仅 $0.73/成功任务（前五名中成本最低）",
         "arena": "Agent Code #2 (+16.13% ±1.44%, P50 $0.28)",
-        "sweet_spot": "跨全站帕累托核心：AA high 50.2 分仅 $0.32/任务，LiveBench 85.4 分仅 $0.73/任务，Arena #2 仅 $0.28；工程主控默认首选 high。"
+        "sweet_spot": "跨全站帕累托核心：AA high 50.2 分仅 $0.32/任务，LiveBench 85.4 分仅 $0.73/任务，Arena #2 仅 $0.28；工程主控默认首选 high。",
+        "aa_cap_release_slug": "gpt-6-1-sol",
+        "aa_cap_highlights": "max · 财务与会计 53.98 · 战略与运营 56.98 · 法律 57.69 · 医疗与健康 51.18 · 工程 53.90 · 经济学 59.28",
+        "aa_cap_variant_slug": "gpt-6-1-sol",
+        "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/releases/gpt-6-1-sol"
       },
       {
         "family": "ChatGPT / OpenAI",
         "model": "GPT 6 Astra",
         "status": "Active · 深度科研与难题",
         "aa_ii": "52.7 (max) / 50.9 (high)",
-        "aa_cap_highlights": "财务 #4 (55.4) · 法律 #4 (56.8) · 医疗 #4 (52.9) · 战略 #5 (56.2) · 工程 #6 (53.2)",
         "aa_cost_task": "$0.82 (low) – $1.73 (high) – $3.26 (max)",
         "scale_seal": "HLE Diamond #1 (60.6%) · 第六感 #2 (53.6%) · RLI #2 (20.83%) · SWE-Bench Pro V2 #4/#5",
         "openrouter": "Vals #6 (63.13) · $23.72/req · 有效输入 $3.22/1M",
         "livebench_2": "#3 综合 86.1 · $3.81/成功任务",
         "arena": "Agent Code #5 (+13.66% ±1.61%, P50 $1.31)",
-        "sweet_spot": "Scale HLE Diamond 榜首 (60.6%)，输出 Token 极精炼（high 仅 11.8k tok/任务、耗时 3.4 分钟）；适合时间敏感的深度科学/架构攻坚。"
+        "sweet_spot": "Scale HLE Diamond 榜首 (60.6%)，输出 Token 极精炼（high 仅 11.8k tok/任务、耗时 3.4 分钟）；适合时间敏感的深度科学/架构攻坚。",
+        "aa_cap_release_slug": "gpt-6-astra",
+        "aa_cap_highlights": "max · 财务与会计 55.24 · 战略与运营 57.34 · 法律 58.53 · 医疗与健康 51.67 · 工程 54.71 · 经济学 59.83",
+        "aa_cap_variant_slug": "gpt-6-astra",
+        "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/releases/gpt-6-astra"
       },
       {
         "family": "ChatGPT / OpenAI",
         "model": "GPT 6 Luna",
         "status": "Active · 极低成本批处理",
         "aa_ii": "38.1 (max) / 32.9 (high)",
-        "aa_cap_highlights": "医疗 #19 (36.8) · 战略 #21 (45.2) · 经济 #24 (47.5)",
         "aa_cost_task": "$0.005 (low) – $0.029 (high) – $0.068 (max)",
         "scale_seal": "轻量级高吞吐基线",
         "openrouter": "Vals 51.22 · 仅 $0.083/req · 有效输入 $0.042/1M · 全球周调用量 #6 (6.21T tok, 3.94 亿次请求)",
         "livebench_2": "轻量级最低单次成本 (<$0.08/任务)",
         "arena": "Agent Code #11 (-2.44% ±1.50%, P50 $0.02)",
-        "sweet_spot": "OpenRouter 闭源模型调用量冠军（周请求近 4 亿次）：none/low 仅 $0.005–$0.011/任务，专攻标题、分类、结构化提取与初筛。"
+        "sweet_spot": "OpenRouter 闭源模型调用量冠军（周请求近 4 亿次）：none/low 仅 $0.005–$0.011/任务，专攻标题、分类、结构化提取与初筛。",
+        "aa_cap_release_slug": "gpt-6-luna",
+        "aa_cap_highlights": "max · 财务与会计 40.30 · 战略与运营 45.74 · 法律 40.28 · 医疗与健康 37.40 · 工程 37.09 · 经济学 45.22",
+        "aa_cap_variant_slug": "gpt-6-luna",
+        "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/releases/gpt-6-luna"
       },
       {
         "family": "Gemini (Google)",
         "model": "Gemini 4 Argon",
         "status": "Active · 多模态与知识旗舰",
         "aa_ii": "52.6 (high)",
-        "aa_cap_highlights": "法律 #3 (57.3) · 工程 #5 (53.4) · 经济 #5 (60.5) · 财务 #7 (53.6) · 战略 #7 (54.9)",
         "aa_cost_task": "$1.99 (high · 优惠期 $2/$10)",
         "scale_seal": "Humanity's Sixth Sense #1 (55.4%) · SWE-Bench Pro V2 Full #2 (99.22%) · Hard #3 (92.16%) · HLE Diamond #3 (53.2%)",
         "openrouter": "Vals Index v2.1 全球 #1 (68.90) · $5.94/req · 有效输入 $0.69/1M",
         "livebench_2": "#5 综合 84.1 · $1.80/成功任务",
         "arena": "Text Arena 综合 Elo #1 (~1526) · Agent Code #6 (+12.72% ±1.52%, P50 $0.60)",
-        "sweet_spot": "OpenRouter Vals #1 (68.90) + Scale 第六感 #1 (55.4%) + 原生音视频/PDF 1M 窗口；跨模态长文档分析、法律与工程推理首选。"
+        "sweet_spot": "OpenRouter Vals #1 (68.90) + Scale 第六感 #1 (55.4%) + 原生音视频/PDF 1M 窗口；跨模态长文档分析、法律与工程推理首选。",
+        "aa_cap_release_slug": "gemini-4-argon",
+        "aa_cap_highlights": "high · 财务与会计 53.79 · 战略与运营 56.24 · 法律 60.02 · 医疗与健康 无数据（不参排） · 工程 55.22 · 经济学 60.42",
+        "aa_cap_variant_slug": "gemini-4-argon",
+        "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/gemini-4-argon"
       },
       {
         "family": "Gemini (Google)",
         "model": "Gemini 3.8 Flash",
         "status": "Active · 多模态高吞吐主力",
         "aa_ii": "40.9 (high) / 39.8 (medium)",
-        "aa_cap_highlights": "法律 #10 (51.8) · 财务 #12 (49.1) · 战略 #13 (50.6) · 医疗 #13 (43.4)",
         "aa_cost_task": "$0.93 (medium) – $1.24 (high)",
         "scale_seal": "Humanity's Sixth Sense #5 (41.6%)",
         "openrouter": "Vals #15 (54.89) · $0.99/req · 有效输入 $0.38/1M · 周用量 #20 (1.75T tok)",
         "livebench_2": "多模态中端效率主力",
         "arena": "Agent Code #9 (+3.69% ±1.55%, P50 $0.16)",
-        "sweet_spot": "medium (39.8 分 / $0.93) 与 high (40.9 分 / $1.24) 分差仅 1.1 分但省 25% 成本；适合音视频/PDF 批量理解与中等复杂度代理。"
+        "sweet_spot": "medium (39.8 分 / $0.93) 与 high (40.9 分 / $1.24) 分差仅 1.1 分但省 25% 成本；适合音视频/PDF 批量理解与中等复杂度代理。",
+        "aa_cap_release_slug": "gemini-3-8-flash",
+        "aa_cap_highlights": "high · 财务与会计 46.76 · 战略与运营 48.40 · 法律 51.63 · 医疗与健康 41.78 · 工程 42.81 · 经济学 52.36",
+        "aa_cap_variant_slug": "gemini-3-8-flash",
+        "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/releases/gemini-3-8-flash"
       },
       {
         "family": "Gemini (Google)",
         "model": "Gemini 3.5 Flash-Lite",
         "status": "Active · 极速多模态轻量",
         "aa_ii": "22.2 (unspecified)",
-        "aa_cap_highlights": "生成吞吐 438 token/s · 经济 31.4 · 法律 30.3 · 医疗 #27 (23.1)",
         "aa_cost_task": "$0.19 (整套指数 $366)",
         "scale_seal": "高速低延迟多模态基线",
         "openrouter": "$0.135/req · 有效输入 $0.24/1M",
         "livebench_2": "超低延迟轻量分类",
         "arena": "未进入 Agent Code 主榜",
-        "sweet_spot": "438 token/s 极速流式吞吐 + 原生音视频/PDF 输入；适合低延迟多模态初筛，不承担复杂推理。"
+        "sweet_spot": "438 token/s 极速流式吞吐 + 原生音视频/PDF 输入；适合低延迟多模态初筛，不承担复杂推理。",
+        "aa_cap_release_slug": "gemini-3-5-flash-lite",
+        "aa_cap_highlights": "high · 财务与会计 23.54 · 战略与运营 22.39 · 法律 30.32 · 医疗与健康 23.07 · 工程 24.41 · 经济学 31.45",
+        "aa_cap_variant_slug": "gemini-3-5-flash-lite",
+        "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/gemini-3-5-flash-lite"
       },
       {
         "family": "Grok (xAI / SpaceXAI)",
         "model": "Grok 4.7",
         "status": "Active · xAI 当前唯一主力",
         "aa_ii": "46.4 (xhigh) / 46.3 (high) / 42.2 (low)",
-        "aa_cap_highlights": "医疗 #7 (47.2) · 财务 #8 (51.9) · 法律 #8 (54.2) · 战略 #9 (54.4) · 工程 #10 (47.4) · 经济 #10 (55.7)",
         "aa_cost_task": "$1.25 (low) – $2.73 (high) – $3.74 (xhigh)",
         "scale_seal": "前十梯队推理与实时检索增强候选",
         "openrouter": "Vals #14 (54.95) · $3.37/req · 有效输入 $0.87/1M（较 Grok 4.6 提分 +2.86 且每请求降费 19%）",
         "livebench_2": "Coding & Reasoning ~76.8 · $1.24/任务",
         "arena": "Text Arena Elo ~1488（Grok 4.6 及更早版本在 AA 已标 Deprecated）",
-        "sweet_spot": "high (46.33 分 / $2.73) 与 xhigh (46.45 分 / $3.74) 几乎同分但省 27% 费用与 21% 耗时；选 Grok 4.7 必选 high 或 low ($1.25)，不选 xhigh。"
+        "sweet_spot": "high (46.33 分 / $2.73) 与 xhigh (46.45 分 / $3.74) 几乎同分但省 27% 费用与 21% 耗时；选 Grok 4.7 必选 high 或 low ($1.25)，不选 xhigh。",
+        "aa_cap_release_slug": "grok-4-7",
+        "aa_cap_highlights": "xhigh · 财务与会计 51.93 · 战略与运营 54.43 · 法律 54.13 · 医疗与健康 47.19 · 工程 47.43 · 经济学 55.65",
+        "aa_cap_variant_slug": "grok-4-7",
+        "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/releases/grok-4-7"
       }
     ],
     "scale_highlights": [
