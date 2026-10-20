@@ -199,8 +199,8 @@
       <div class="toolbar">
         <label>展示范围
           <select id="capIndexScope">
-            <option value="four_family_top">四大家族当前主力版本（Grok · GPT · Gemini · Claude 代表档）</option>
-            <option value="four_family_all">四大家族含代际基线与多档位（展开 high / xhigh / max）</option>
+            <option value="four_family_top">四大家族活跃与兼容版本 · 每版 II 最高档</option>
+            <option value="four_family_all">四大家族活跃与兼容版本 · 全部已测档（不截断）</option>
             <option value="all_top">全市场代表版本（含 Muse · MiMo · DeepSeek · GLM · Qwen）</option>
           </select>
         </label>
@@ -208,7 +208,7 @@
         <button id="exportCapIndexes">导出能力指数 CSV</button>
       </div>
     </div>
-    <p class="small">参考 <a href="https://artificialanalysis.ai/zh/indexes" target="_blank" rel="noopener">Artificial Analysis 能力指数对比</a> 设计：<strong>全部（排名对比）</strong>以平行坐标折线（Bump Chart）展示各模型在 6 个专业领域中的名次变化，进入前 3 名的节点显示实心排名徽章；点击任一领域标签切换为该领域的<strong>得分条形对比图</strong>与核心驱动评测拆解。</p>
+    <p class="small">图表与明细可横向滚动查看。分数直接保留 <a href="https://artificialanalysis.ai/zh/indexes" target="_blank" rel="noopener">AA 官方领域指数</a>，不是本报告任务合成分。代表档按每个发布版本的综合 II 最高分选择，不保证该域最佳。活跃与兼容版本包含旧代；切换领域保持同一候选集合。纵轴为当前集合排名，不是分差；两位小数同分并列，缺测不参排、连线断开。左右数字分别标明首列指标（默认 II）与末列经济学，不能解读为升档增益。</p>
     <div class="cap-index-tabs" id="capIndexTabs" role="group" aria-label="选择能力指数领域">
       <button type="button" data-cap-tab="all" aria-pressed="true">全部 · 排名对比</button>
       <button type="button" data-cap-tab="financeAndAccounting" aria-pressed="false">财务与会计</button>
@@ -218,8 +218,9 @@
       <button type="button" data-cap-tab="engineering" aria-pressed="false">工程</button>
       <button type="button" data-cap-tab="economics" aria-pressed="false">经济学</button>
     </div>
-    <div class="topline"><span id="capIndexCount" class="small" aria-live="polite"></span><span class="small">悬停、点击或按键盘方向键/回车高亮模型轨迹</span></div>
+    <div class="topline"><span id="capIndexCount" class="small" aria-live="polite"></span><span class="small">点击或 Tab 聚焦后按回车 / 空格高亮配置</span></div>
     <div class="svg-scroll"><svg id="capBumpChart" role="group" aria-label="能力指数排名与得分对比图"></svg></div>
+    <p id="capMissingNote" class="method-note" aria-live="polite"></p>
     <div id="capModelPills" class="release-pills" aria-label="快速高亮模型"></div>
     <div id="capIndexDetail" class="detail" aria-live="polite"></div>
   </div>
@@ -309,6 +310,14 @@
 
 <section class="panel" id="reasoning" role="tabpanel" aria-labelledby="tab-reasoning" hidden>
   <div class="section-heading"><span class="eyebrow">05 / REASONING EFFORT</span><h2>区分收益变小、观测下降和未能交付。</h2><p>更高档位是更多推理机会，不是每类任务都能稳定获益。四大厂商的档位名称不能视为统一计算预算。</p></div>
+  <div class="card" id="reasoningCharts">
+    <h3>同一发布版本：档位收益与真实成本</h3>
+    <div class="toolbar"><label>发布版本<select id="reasoningRelease"></select></label><label>官方指标<select id="reasoningMetric"></select></label><label>选中档位<select id="reasoningSelected"></select></label><button id="exportReasoningEvidence">导出当前模型档位 CSV</button></div>
+    <p id="reasoningChartNote" class="method-note" aria-live="polite"></p>
+    <div class="reasoning-chart-grid"><div><h3>能力随档位的变化</h3><div class="svg-scroll"><svg id="reasoningCurve" role="group" aria-label="同一模型各已测推理档位官方能力曲线"></svg></div></div><div><h3>能力—成本散点</h3><div class="svg-scroll"><svg id="reasoningCost" role="group" aria-label="同一模型官方能力与AA加权单任务成本散点图"></svg></div></div></div>
+    <p class="small">2026-10-19 / AA v4.3.2 冻结记录。费用为来源提供的<strong>综合 II 加权单任务成本</strong>；选择领域时仍使用此成本参照，不能视为该领域任务账单。曲线只连接相邻已测配置，未测档不补点；缺少分数断线，缺少成本不画散点。分差是点估计，不代表显著性；未提供置信区间。Default Fallback 按来源标记，回退比例未知。<a href="https://artificialanalysis.ai/methodology/capability-indices" target="_blank" rel="noopener">领域方法</a> · <a href="https://artificialanalysis.ai/methodology/intelligence-benchmarking" target="_blank" rel="noopener">II 与加权成本口径</a>。可点击图中点，或使用选中档位菜单与键盘查看。</p>
+    <div id="reasoningEvidenceTable" class="table-scroll" aria-live="polite"></div>
+  </div>
   <div class="three-col"><article class="card"><h3>收益变小</h3><p>Opus 5.5 写作 xhigh→max，分数 {{row:writing:Claude Opus 5.5:xhigh:score:2}}→{{row:writing:Claude Opus 5.5:max:score:2}}，成本 ${{row:writing:Claude Opus 5.5:xhigh:cost_usd:3}}→${{row:writing:Claude Opus 5.5:max:cost_usd:3}}；Grok 4.7 综合 high→xhigh，分数 {{aa:grok-4-7:high:intelligenceIndex:2}}→{{aa:grok-4-7:xhigh:intelligenceIndex:2}}，成本 ${{aa:grok-4-7:high:costPerTask:2}}→${{aa:grok-4-7:xhigh:costPerTask:2}}。观测上继续改善，但边际增益极小。</p><span class="tag">边际收益，不是倒挂</span></article><article class="card"><h3>点估计下降或幻觉放大</h3><p>Sol 6.1 写作 low→medium，{{row:writing:GPT 6.1 Sol:low:score:2}}→{{row:writing:GPT 6.1 Sol:medium:score:2}}（缺配对显著性证据）；GPT 6 Luna 的 AA-Omniscience 净分 low 为 {{aa:gpt-6-luna:low:eval/AA-Omniscience:0}}、max 为 {{aa:gpt-6-luna:max:eval/AA-Omniscience:0}}；档位曲线并非单调，不能据此断定原因。</p><span class="tag">需分任务核验</span></article><article class="card"><h3>预算耗尽而失败</h3><p>Forcebench 在固定 32,768 总输出预算下，Sonnet 5.5 high→max 降 35 个百分点；48% 的 max 请求没有产生答案。</p><span class="tag">明确限定预算与题集</span></article></div>
   <p class="small"><a href="https://benchmark.towardsai.com/data/leaderboard.json" target="_blank" rel="noopener">ToneBench 数据</a> · <a href="https://forcebench.ai/studies/max-effort/" target="_blank" rel="noopener">Forcebench 配对实验</a></p>
   <div class="section-heading"><h2>同模型升档，实际换来了什么？</h2><p>标准差分仅比较同一快照、同一模型的显式标准档。Opus 的 Vulcan 结果另提供分口径证据，分别查看实际配置、共同无回退子集和独立实验。</p></div>
