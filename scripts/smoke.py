@@ -190,7 +190,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
     probe(origin, site, attempts=1, require_headers=cloudflare)
     result = {"status": "PASS", "browser_version": browser_version, "browser_channel": channel or "bundled-chromium",
               "viewports": [1440, 390, 320], "rows": len(data["rows"]),
-              "checks": ["task-specific best variants in seven dimensions", "dataset-backed knowledge narrative and Elo differences", "effort filters and scaling charts", "pinned vs temporary highlight, missing gaps and singleton", "separate Computer Use protocols and scope-limited raw-precision alternatives",
+              "checks": ["task-specific best variants in seven dimensions", "dataset-backed knowledge narrative and Elo differences", "effort filters and scaling charts", "pinned vs temporary highlight, missing gaps and singleton", "separate Computer Use protocols and scope-limited raw-precision alternatives", "three verified workflow cards, source boundaries and native disclosures on keyboard/touch",
                "capability missingness, tie ranks, per-domain denominators and CSV consistency",
                "reasoning charts, effort selection, nonmonotonic scores and keyboard access", "six panels", "Claude filter", "CSV missing values", "budget boundaries", "four Opus evidence views",
                          "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across six panels and twelve CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],

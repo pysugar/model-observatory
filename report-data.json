@@ -9009,8 +9009,117 @@
       "status": "未发现公开可核实成绩"
     },
     "pitfallExperience": {
-      "status": "待协调线程提供核验文案",
-      "cards": [],
+      "status": "已接入协调线程核验的三张工作流经验卡",
+      "cards": [
+        {
+          "id": "delivery-cost",
+          "title": "高档不一定靠少重试省钱",
+          "pitfall": "更多思考可能减少部分错误，却增加工具调用、验证与上下文成本。",
+          "alternativeAction": "比较完成并验收一个任务的总费用和耗时，含失败尝试；不凭单轮 token 或订阅百分比选档。",
+          "modelScope": "Astra 小样本；PointFive 涉及 Opus 5 / Sonnet 5",
+          "taskScope": "任务交付、费用与耗时评估流程",
+          "versionScope": "PointFive 为 Opus 5 / Sonnet 5，不是 5.5",
+          "caveats": [
+            "两项来源支持评估方法，不建立普遍的低档优越结论，也不是所有当前模型的既定缺陷。",
+            "任务、harness 与质量验收方式影响结果，需在实际工作流验证。"
+          ],
+          "sources": [
+            {
+              "sourceUrl": "https://trilogyai.substack.com/p/astra-reasoning-effort-token-usage",
+              "label": "Trilogy AI · Astra effort 观察",
+              "originalSourceId": "trilogy-astra-effort",
+              "sourceType": "独立原始来源",
+              "caveats": "Astra：2 个任务、24 次运行；没有盲测质量评估。",
+              "sampleSize": 2,
+              "runs": 24
+            },
+            {
+              "sourceUrl": "https://arxiv.org/html/2608.01347v6#A14",
+              "label": "PointFive 预印本 · 附录 N",
+              "originalSourceId": "pointfive-2608.01347-v6",
+              "sourceType": "独立原始来源",
+              "caveats": "Opus 5 / Sonnet 5，不是 5.5；预印本，未经同行评审。",
+              "sampleSize": null,
+              "runs": null
+            }
+          ],
+          "evidenceType": "多源经验参考",
+          "checkedAt": "2026-10-20",
+          "appliesToAllCurrentModels": false
+        },
+        {
+          "id": "context-and-acceptance",
+          "title": "设计跑偏，先补上下文与验收标准",
+          "pitfall": "缺目标、约束和关键决策时，升档可能只把错误方向做得更细。",
+          "alternativeAction": "补参考样例、必须保留的交互和明确验收标准；长任务保留可回查需求与决策，再升档。",
+          "modelScope": "跨产品的任务工作流经验，不针对所有当前模型",
+          "taskScope": "设计与长任务中的需求、上下文和验收管理",
+          "versionScope": "来源所述 harness / 动态上下文实践",
+          "caveats": [
+            "这是跨产品经验综合，不是 max 与补上下文的受控对照实验。",
+            "来源不证明任何当前模型存在普遍的设计缺陷。"
+          ],
+          "sources": [
+            {
+              "sourceUrl": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+              "label": "Anthropic · 长任务 harness 设计",
+              "originalSourceId": "anthropic-harness-design",
+              "sourceType": "独立原始来源",
+              "caveats": "设计评分标准的实践经验。",
+              "sampleSize": null,
+              "runs": null
+            },
+            {
+              "sourceUrl": "https://cursor.com/blog/dynamic-context-discovery",
+              "label": "Cursor · 动态上下文发现",
+              "originalSourceId": "cursor-dynamic-context-discovery",
+              "sourceType": "独立原始来源",
+              "caveats": "摘要可能丢失细节；保留可检索历史。",
+              "sampleSize": null,
+              "runs": null
+            }
+          ],
+          "evidenceType": "多源经验参考",
+          "checkedAt": "2026-10-20",
+          "appliesToAllCurrentModels": false
+        },
+        {
+          "id": "harness-cost",
+          "title": "账单变大，别只怪模型和档位",
+          "pitfall": "工具描述、历史注入和 harness 也影响 token 消耗。",
+          "alternativeAction": "对比时固定 harness 版本、工具集及上下文策略，查无用工具描述与重复注入，记录全程费用。",
+          "modelScope": "使用工具和上下文管理的任务工作流",
+          "taskScope": "harness、工具集与上下文费用归因",
+          "versionScope": "Cursor 动态上下文实践与 Deep Agents v0.7",
+          "caveats": [
+            "两项均为独立原始评估，不是同一文章的转载。",
+            "不把来源中的节省比例套用给用户；某些模型或任务的费用可能反而增加。"
+          ],
+          "sources": [
+            {
+              "sourceUrl": "https://cursor.com/blog/dynamic-context-discovery",
+              "label": "Cursor · 动态上下文发现",
+              "originalSourceId": "cursor-dynamic-context-discovery",
+              "sourceType": "独立原始来源",
+              "caveats": "工具与上下文管理的原始实践。",
+              "sampleSize": null,
+              "runs": null
+            },
+            {
+              "sourceUrl": "https://www.langchain.com/blog/deep-agents-v0-7",
+              "label": "LangChain · Deep Agents v0.7",
+              "originalSourceId": "langchain-deep-agents-v0.7",
+              "sourceType": "独立原始来源",
+              "caveats": "版本内的原始评估；任务与模型不同，成本变化方向可能不同。",
+              "sampleSize": null,
+              "runs": null
+            }
+          ],
+          "evidenceType": "多源经验参考",
+          "checkedAt": "2026-10-20",
+          "appliesToAllCurrentModels": false
+        }
+      ],
       "minimumIndependentOriginalSources": 2
     },
     "pitfallReminders": {

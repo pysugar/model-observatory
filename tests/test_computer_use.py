@@ -42,10 +42,39 @@ class ComputerUseTests(unittest.TestCase):
         self.assertIsNone(g['nativeEffort']);self.assertIsNone(g['costUsdPerTask'])
         self.assertIsNone(self.data['grokReference']['score'])
         self.assertEqual(self.data['grokReference']['status'],'未发现公开可核实成绩')
-        # No empirical claim is filled into the pending experience layers.
+        # Experience sources are separate from comparable benchmark measurements.
         self.assertEqual(self.data['pitfallExperience']['minimumIndependentOriginalSources'],2)
         for c in self.data['pitfallExperience']['cards']:
             self.assertGreaterEqual(len({s['sourceUrl'] for s in c['sources']}),2)
+
+    def test_verified_workflow_cards_and_boundaries(self):
+        cards=self.data['pitfallExperience']['cards']
+        self.assertEqual([c['title'] for c in cards],['高档不一定靠少重试省钱','设计跑偏，先补上下文与验收标准','账单变大，别只怪模型和档位'])
+        expected=[
+            ['https://trilogyai.substack.com/p/astra-reasoning-effort-token-usage','https://arxiv.org/html/2608.01347v6#A14'],
+            ['https://www.anthropic.com/engineering/harness-design-long-running-apps','https://cursor.com/blog/dynamic-context-discovery'],
+            ['https://cursor.com/blog/dynamic-context-discovery','https://www.langchain.com/blog/deep-agents-v0-7'],
+        ]
+        for c,urls in zip(cards,expected):
+            self.assertEqual(c['evidenceType'],'多源经验参考')
+            self.assertEqual(c['checkedAt'],'2026-10-20')
+            self.assertFalse(c['appliesToAllCurrentModels'])
+            self.assertTrue(c['pitfall'] and c['alternativeAction'])
+            self.assertTrue(c['modelScope'] and c['taskScope'] and c['versionScope'])
+            self.assertTrue(c['caveats'])
+            self.assertEqual([s['sourceUrl'] for s in c['sources']],urls)
+            self.assertEqual(len({s['originalSourceId'] for s in c['sources']}),2)
+            self.assertTrue(all(s['sourceType']=='独立原始来源' for s in c['sources']))
+            self.assertNotIn('score',c)
+            self.assertNotIn('savingsPct',c)
+            self.assertNotRegex(json.dumps(c,ensure_ascii=False),r'\d+(?:\.\d+)?%')
+        self.assertEqual((cards[0]['sources'][0]['sampleSize'],cards[0]['sources'][0]['runs']),(2,24))
+        self.assertIn('没有盲测质量评估',cards[0]['sources'][0]['caveats'])
+        self.assertIn('不是 5.5',cards[0]['sources'][1]['caveats'])
+        self.assertIn('未经同行评审',cards[0]['sources'][1]['caveats'])
+        self.assertIn('不是 max 与补上下文的受控对照实验',''.join(cards[1]['caveats']))
+        self.assertIn('费用可能反而增加',''.join(cards[2]['caveats']))
+        self.assertEqual(self.data['pitfallReminders']['cards'],[])
 
     def test_shared_paths_differences_raw_precision_and_alternatives(self):
         source=(ROOT/'report.js').read_text()

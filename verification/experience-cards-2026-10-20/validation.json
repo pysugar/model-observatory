@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "base_commit": "b8a15013bf2b7cd7b4bdeb85b976f9772aab1070",
+  "tested_local_changes": true,
+  "host": "ubuntu-gk55",
+  "checkedAt": "2026-10-20",
+  "unit_tests": 39,
+  "browser": "system Chrome 155.0.8059.39",
+  "sandbox": true,
+  "viewports": [
+    1440,
+    390,
+    320
+  ],
+  "checks": [
+    "Exactly three supplied workflow cards; type 多源经验参考; no all-current-model defect claim",
+    "Two distinct independent original sources per card, exact supplied URLs and checkedAt",
+    "Astra 2 tasks/24 runs/no blinded quality evaluation; PointFive v6 appendix N preprint, Opus 5/Sonnet 5 not 5.5",
+    "Cross-product design/context synthesis is not max-vs-context controlled comparison",
+    "Harness/context cost sources do not supply user savings percentages; direction can reverse by model/task",
+    "Default cards only expose pitfall and action; sources/caveats in native details closed by default",
+    "Native Enter/Space and true touch open/close all three source disclosures at 390/320; no overflow",
+    "Pending-reminder state supported with zero fabricated reminder cards",
+    "Frozen Computer Use measurements, task priors, raw-precision alternatives and existing benchmark records unchanged"
+  ],
+  "source_provenance": "Verified card copy supplied by coordinator; no new research or paid evaluations.",
+  "pending": [],
+  "source_sha256": {
+    "report.js": "681bfeebfaa6591f90337778c83a9c30f317a462a72d2fd93928937f39d66f61",
+    "report.css": "1743342deb84b3d669994a0babb4cf7c589826f338f202e1e9f56ef0e9d08d4d",
+    "research/2026-10-20/computer-use-evidence.json": "bd6d8f4c5315f7e74514d29dcf41a77dff76d865ab84796929b45c6decbb1c17",
+    "scripts/scaling_smoke.py": "112b438d6a15d983bd1cb2e0e2c0d7dabf85f58aeeb74bf908d9a9efa83aa753",
+    "tests/test_computer_use.py": "fc708b69680c4b6d5cd24557ba39290c28fe046fa4b86c22de34994c3a7bcabb"
+  },
+  "scope": "Local precommit tests and screenshots. Exact clean commit build/check and full smoke run after commit; final CI/preview verification belongs to coordinator."
+}
