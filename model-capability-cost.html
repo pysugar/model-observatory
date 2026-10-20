@@ -592,7 +592,7 @@ svg text:not([fill]) { fill:var(--muted); }
   <section class="card sweet-spot" aria-labelledby="sweet-spot-heading" data-toc="选档速查">
     <div class="sweet-head">
       <div><h3 id="sweet-spot-heading">我的选档速查：每个模型 × 每类任务开哪一档</h3><p class="small muted" id="sweetRule"></p></div>
-      <label class="sweet-control">取舍偏好<select id="sweetTolerance"><option value="strict">严格（差 ≤1 分）</option><option value="balanced" selected>均衡（差 ≤3 分）</option><option value="thrifty">省钱（差 ≤6 分）</option></select></label>
+      <label class="sweet-control">取舍偏好<select id="sweetTolerance"><option value="thrifty">省钱（门槛 20%）</option><option value="balanced" selected>均衡（门槛 12%）</option><option value="performance">性能优先（门槛 6%）</option></select></label>
     </div>
     <div class="table-scroll sweet-scroll" id="sweetMatrix"></div>
     <p class="sweet-legend small"><span class="ss-flag warn">顶档回落</span> 最高档反而比更低档差　<span class="ss-flag front">性价比前沿</span> 同列没有别的模型能更便宜地拿到同等分数　<span class="ss-flag info">仅测一档</span> 来源只测了这一档　底色越深表示同列得分越高</p>
@@ -2545,18 +2545,41 @@ svg text:not([fill]) { fill:var(--muted); }
     {key:"planning",label:"方案规划",sub:"Briefcase Elo",get:v=>v.taskScores?.planning,elo:true},
     {key:"knowledge",label:"长文档 · 事实",sub:"LCR / PDF / Omniscience",get:v=>v.taskScores?.knowledge,elo:false}
   ];
-  const sweetTolerance={strict:{pct:1,elo:15,label:"严格"},balanced:{pct:3,elo:40,label:"均衡"},thrifty:{pct:6,elo:80,label:"省钱"}};
+  // Minimum gain per doubling of cost, as a share of the column's score spread across all measured configs.
+  const sweetTolerance={thrifty:{share:.20,label:"省钱"},balanced:{share:.12,label:"均衡"},performance:{share:.06,label:"性能优先"}};
   const vendorOrder=["Anthropic","OpenAI","Google","xAI"];
   const sweetView={model:null,task:null};
   const sweetReleases=()=>(DATA.aa_release_series?.releases||[]).filter(r=>r.variants.some(v=>v.taskScores))
     .sort((a,b)=>(vendorOrder.indexOf(a.vendor)-vendorOrder.indexOf(b.vendor))||((b.maxIntelligenceIndex||0)-(a.maxIntelligenceIndex||0)));
-  function sweetPick(release,task,tol){
+  const sweetSpan=new Map();
+  function sweetThreshold(task,tol,releases){
+    if(!sweetSpan.has(task.key)){
+      const vals=releases.flatMap(r=>r.variants.map(task.get)).filter(finite);
+      sweetSpan.set(task.key,vals.length?Math.max(...vals)-Math.min(...vals):0);
+    }
+    return tol.share*sweetSpan.get(task.key);
+  }
+  // Knee rule: walk the upper hull of (log2 cost, score) from the cheapest effort and keep
+  // stepping up while each step still gains at least `threshold` points per doubling of cost.
+  function sweetPick(release,task,tol,releases){
     const vs=release.variants.map(v=>({v,score:task.get(v),cost:v.costPerTask})).filter(x=>finite(x.score)).sort((a,b)=>a.v.effortOrder-b.v.effortOrder);
     if(!vs.length) return null;
-    const allowance=task.elo?tol.elo:tol.pct, best=Math.max(...vs.map(x=>x.score));
-    const pick=vs.filter(x=>x.score>=best-allowance).sort((a,b)=>(finite(a.cost)?a.cost:Infinity)-(finite(b.cost)?b.cost:Infinity)||a.v.effortOrder-b.v.effortOrder)[0];
-    const top=vs[vs.length-1], peak=vs.find(x=>x.score===best);
-    return {vs,best,pick,top,peak,topDrop:vs.length>1&&top.score<best-(task.elo?10:0.5),single:vs.length===1};
+    const best=Math.max(...vs.map(x=>x.score)), top=vs[vs.length-1], peak=vs.find(x=>x.score===best);
+    const threshold=sweetThreshold(task,tol,releases);
+    const pts=vs.filter(x=>finite(x.cost)&&x.cost>0).map(x=>({x,lx:Math.log2(x.cost)})).sort((a,b)=>a.lx-b.lx||b.x.score-a.x.score);
+    let pick=peak;
+    if(pts.length){
+      const hull=[];
+      pts.forEach(p=>{
+        if(hull.length&&p.lx===hull[hull.length-1].lx) return;
+        while(hull.length>=2){const a=hull[hull.length-2],b=hull[hull.length-1];if((b.x.score-a.x.score)*(p.lx-a.lx)<=(p.x.score-a.x.score)*(b.lx-a.lx))hull.pop();else break;}
+        hull.push(p);
+      });
+      let cur=hull[0];
+      for(const next of hull.slice(1)){if((next.x.score-cur.x.score)/(next.lx-cur.lx)<threshold)break;cur=next;}
+      pick=cur.x;
+    }
+    return {vs,best,pick,top,peak,threshold,topDrop:vs.length>1&&top.score<best-(task.elo?10:0.5),single:vs.length===1};
   }
   function sweetCheaper(task,pick,releases,selfSlug){
     if(!finite(pick.cost)) return null;
@@ -2580,11 +2603,11 @@ svg text:not([fill]) { fill:var(--muted); }
     const host=$("sweetMatrix"); if(!host) return;
     const tol=sweetTolerance[$("sweetTolerance")?.value]||sweetTolerance.balanced, releases=sweetReleases();
     const defaults=new Map((DATA.task_effort_guidance?.models||[]).map(m=>[m.modelId,m.officialDefault]));
-    const colBest=new Map(sweetTasks.map(t=>[t.key,releases.map(r=>sweetPick(r,t,tol)).filter(Boolean)]));
+    const colBest=new Map(sweetTasks.map(t=>[t.key,releases.map(r=>sweetPick(r,t,tol,releases)).filter(Boolean)]));
     const heat=(task,score)=>{const all=colBest.get(task.key).map(x=>x.pick.score),lo=Math.min(...all),hi=Math.max(...all);return hi===lo?0.5:(score-lo)/(hi-lo);};
     const head=`<tr><th scope="col">模型</th>${sweetTasks.map(t=>`<th scope="col">${esc(t.label)}<span class="task-detail">${esc(t.sub)}</span></th>`).join("")}</tr>`;
     const body=releases.map(r=>`<tr><th scope="row"><span class="swatch" style="background:${esc(r.color)}"></span>${esc(r.shortName||r.name)}<span class="task-detail">${esc(r.vendor)}${defaults.get(r.releaseSlug)?` · 默认 ${esc(defaults.get(r.releaseSlug))}`:""}</span></th>${sweetTasks.map(t=>{
-      const res=sweetPick(r,t,tol); if(!res) return `<td class="ss-empty">—</td>`;
+      const res=sweetPick(r,t,tol,releases); if(!res) return `<td class="ss-empty">—</td>`;
       const alt=sweetCheaper(t,res.pick,releases,r.releaseSlug), sel=sweetView.model===r.releaseSlug&&sweetView.task===t.key;
       const frontier=!sweetDominated(t,res.pick,releases,r.releaseSlug);
       const flags=[frontier?`<span class="ss-flag front">性价比前沿</span>`:"",res.topDrop?`<span class="ss-flag warn">顶档回落</span>`:"",res.single?`<span class="ss-flag info">仅测 ${esc(res.pick.v.effort)}</span>`:""].join("");
@@ -2594,18 +2617,19 @@ svg text:not([fill]) { fill:var(--muted); }
       const open=()=>{sweetView.model=cell.dataset.ssModel;sweetView.task=cell.dataset.ssTask;renderSweetSpot();renderSweetDetail();host.querySelector(`[data-ss-model="${sweetView.model}"][data-ss-task="${sweetView.task}"]`)?.focus();};
       cell.addEventListener("click",open);cell.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}});
     });
-    $("sweetRule").textContent=`规则（${tol.label}）：在同一模型已测档位里，取与该模型最高分相差不超过 ${tol.pct} 分（Elo 列 ${tol.elo}）的最便宜档位。成本统一用 AA 综合单任务成本，只用来比较档位之间的相对费用。`;
+    $("sweetRule").textContent=`规则（${tol.label}）：从最便宜的档位往上升，只要成本每翻一倍，分数还能提升本列全部配置分差的 ${Math.round(tol.share*100)}% 以上，就继续升档；第一次低于这个门槛就停下，停下的那一档就是甜蜜点。成本统一用 AA 综合单任务成本。`;
     renderSweetDetail();
   }
   function renderSweetDetail(){
     const box=$("sweetDetail"); if(!box) return;
     const r=sweetReleases().find(x=>x.releaseSlug===sweetView.model), t=sweetTasks.find(x=>x.key===sweetView.task);
     if(!r||!t){box.innerHTML=`<p class="muted">点矩阵中的格子，查看该模型在这项任务上每一档的分数、成本和边际收益。</p>`;return;}
-    const tol=sweetTolerance[$("sweetTolerance")?.value]||sweetTolerance.balanced, res=sweetPick(r,t,tol), alt=sweetCheaper(t,res.pick,sweetReleases(),r.releaseSlug);
+    const all=sweetReleases(), tol=sweetTolerance[$("sweetTolerance")?.value]||sweetTolerance.balanced, res=sweetPick(r,t,tol,all), alt=sweetCheaper(t,res.pick,all,r.releaseSlug);
     const rows=res.vs.map((x,i)=>{const prev=res.vs[i-1];const ds=prev?x.score-prev.score:null,dc=prev&&finite(x.cost)&&finite(prev.cost)?x.cost-prev.cost:null;
+      const dbl=finite(ds)&&finite(dc)&&prev.cost>0&&x.cost>prev.cost?ds/Math.log2(x.cost/prev.cost):null;
       const tag=[x===res.pick?"甜蜜点":"",x===res.peak?"最高分":"",x===res.top&&res.topDrop?"顶档回落":""].filter(Boolean).join(" · ");
-      return `<tr class="${x===res.pick?"is-pick":""}"><th>${esc(x.v.effort)}</th><td>${sweetFmt(t,x.score)}</td><td class="${ds>0?"delta-positive":ds<0?"delta-negative":""}">${finite(ds)?(ds>0?"+":"")+sweetFmt(t,ds):"—"}</td><td>${money(x.cost)}</td><td>${finite(dc)?(dc>0?"+":"")+money(dc):"—"}</td><td>${finite(ds)&&finite(dc)&&dc>0?sweetFmt(t,ds/dc)+" / $":"—"}</td><td>${tag||""}</td></tr>`;}).join("");
-    box.innerHTML=`<h3>${esc(r.shortName||r.name)} · ${esc(t.label)}</h3><p class="small muted">${esc(t.sub)}${t.elo?"（Elo，只用于同一基准内比较）":""}</p><div class="table-scroll"><table class="sweet-detail-table"><thead><tr><th>档位</th><th>分数</th><th>比上一档</th><th>单任务成本</th><th>多花</th><th>每多花 $1 得分</th><th>标记</th></tr></thead><tbody>${rows}</tbody></table></div>${alt?`<p class="ss-alt-note">有更省的替代：<strong>${esc(alt.release.shortName||alt.release.name)} ${esc(alt.v.effort)}</strong> 得分 ${sweetFmt(t,alt.score)}，不低于当前甜蜜点，成本 ${money(alt.cost)}（当前为 ${money(res.pick.cost)}）。</p>`:""}`;
+      return `<tr class="${x===res.pick?"is-pick":""}"><th>${esc(x.v.effort)}</th><td>${sweetFmt(t,x.score)}</td><td class="${ds>0?"delta-positive":ds<0?"delta-negative":""}">${finite(ds)?(ds>0?"+":"")+sweetFmt(t,ds):"—"}</td><td>${money(x.cost)}</td><td>${finite(dc)?(dc>0?"+":"")+money(dc):"—"}</td><td>${finite(ds)&&finite(dc)&&dc>0?sweetFmt(t,ds/dc)+" / $":"—"}</td><td class="${finite(dbl)?(dbl>=res.threshold?"delta-positive":"delta-negative"):""}">${finite(dbl)?(dbl>0?"+":"")+sweetFmt(t,dbl):"—"}</td><td>${tag||""}</td></tr>`;}).join("");
+    box.innerHTML=`<h3>${esc(r.shortName||r.name)} · ${esc(t.label)}</h3><p class="small muted">${esc(t.sub)}${t.elo?"（Elo，只用于同一基准内比较）":""}</p><div class="table-scroll"><table class="sweet-detail-table"><thead><tr><th>档位</th><th>分数</th><th>比上一档</th><th>单任务成本</th><th>多花</th><th>每多花 $1 得分</th><th>成本每翻倍得分</th><th>标记</th></tr></thead><tbody>${rows}</tbody></table></div><p class="small muted">升档门槛：成本每翻一倍至少 +${sweetFmt(t,res.threshold)}（本列分差的 ${Math.round(tol.share*100)}%）。绿色表示这一步达到门槛，红色表示没有达到。</p>${alt?`<p class="ss-alt-note">有更省的替代：<strong>${esc(alt.release.shortName||alt.release.name)} ${esc(alt.v.effort)}</strong> 得分 ${sweetFmt(t,alt.score)}，不低于当前甜蜜点，成本 ${money(alt.cost)}（当前为 ${money(res.pick.cost)}）。</p>`:""}`;
   }
   if($("sweetTolerance")) $("sweetTolerance").addEventListener("change",renderSweetSpot);
   if($("toggleNotes")) $("toggleNotes").addEventListener("click",event=>{

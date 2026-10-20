@@ -29,7 +29,7 @@
   <section class="card sweet-spot" aria-labelledby="sweet-spot-heading" data-toc="选档速查">
     <div class="sweet-head">
       <div><h3 id="sweet-spot-heading">我的选档速查：每个模型 × 每类任务开哪一档</h3><p class="small muted" id="sweetRule"></p></div>
-      <label class="sweet-control">取舍偏好<select id="sweetTolerance"><option value="strict">严格（差 ≤1 分）</option><option value="balanced" selected>均衡（差 ≤3 分）</option><option value="thrifty">省钱（差 ≤6 分）</option></select></label>
+      <label class="sweet-control">取舍偏好<select id="sweetTolerance"><option value="thrifty">省钱（门槛 20%）</option><option value="balanced" selected>均衡（门槛 12%）</option><option value="performance">性能优先（门槛 6%）</option></select></label>
     </div>
     <div class="table-scroll sweet-scroll" id="sweetMatrix"></div>
     <p class="sweet-legend small"><span class="ss-flag warn">顶档回落</span> 最高档反而比更低档差　<span class="ss-flag front">性价比前沿</span> 同列没有别的模型能更便宜地拿到同等分数　<span class="ss-flag info">仅测一档</span> 来源只测了这一档　底色越深表示同列得分越高</p>
