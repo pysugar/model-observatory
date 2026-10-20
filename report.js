@@ -585,12 +585,14 @@
     $("reasoningCostPanel").hidden=key!=="__ii__";
     const selected=rows.find(r=>r.selected), valid=rows.filter(r=>finite(r.score)), costs=valid.filter(r=>finite(r.cost_per_task_usd)&&r.cost_per_task_usd>=0);
     $("reasoningChartNote").textContent=`图表与表格可横向滚动。${entries[0]?.releaseName} · ${metric}：${valid.length}/${rows.length} 个配置有分数，${costs.length} 个同时有 AA 加权成本。选中 ${selected?.effort}；实心点为选中档，外圈为该维度最高分（可并列）。横轴档位等距只表顺序；不同厂商不等预算。${key!=="__ii__" ? "所选子评测/领域没有同口径专属费用，已隐藏成本图；不以综合成本代替。" : ""}`;
-    const maxScore=Math.max(10,...valid.map(r=>r.score)), ceiling=Math.ceil(maxScore/10)*10;
-    const w=620,h=340,m={left:65,right:35,top:35,bottom:65}, y=v=>h-m.bottom-v/ceiling*(h-m.top-m.bottom);
+    // Fit the y-axis to the measured range so small effort gains stay visible.
+    const scores=valid.map(r=>r.score), lo=scores.length ? Math.max(0,Math.floor((Math.min(...scores)-3)/5)*5) : 0;
+    const ceiling=scores.length ? Math.max(lo+10,Math.ceil((Math.max(...scores)+2)/5)*5) : 10, step=(ceiling-lo)/5;
+    const w=620,h=340,m={left:65,right:35,top:35,bottom:65}, y=v=>h-m.bottom-(v-lo)/(ceiling-lo)*(h-m.top-m.bottom);
     const axis=()=>{
       const parts=[];
-      for(let tick=0;tick<=ceiling;tick+=ceiling/5) parts.push(`<line x1="${m.left}" x2="${w-m.right}" y1="${y(tick)}" y2="${y(tick)}" stroke="#e3e9e1"/><text x="${m.left-10}" y="${y(tick)+4}" text-anchor="end" font-size="11">${fmt(tick,1)}</text>`);
-      parts.push(`<text x="${m.left}" y="18" font-size="12" fill="#165e54">${esc(metric)}（0–100）</text>`);return parts;
+      for(let tick=lo;tick<=ceiling+1e-9;tick+=step) parts.push(`<line x1="${m.left}" x2="${w-m.right}" y1="${y(tick)}" y2="${y(tick)}" stroke="#e3e9e1"/><text x="${m.left-10}" y="${y(tick)+4}" text-anchor="end" font-size="11">${fmt(tick,1)}</text>`);
+      parts.push(`<text x="${m.left}" y="18" font-size="12" fill="#165e54">${esc(metric)}${lo>0?`（纵轴从 ${lo} 起）`:""}</text>`);return parts;
     };
     const node=(r,x,cy,offset=-15,compact=false)=>`<g class="reasoning-dot" role="button" tabindex="0" aria-pressed="${r.selected}" data-variant="${esc(r.variant)}" data-score="${r.score}" aria-label="${esc(r.effort+"，"+metric+" "+fmt(r.score,2)+"，AA 加权成本 "+money(r.cost_per_task_usd))}"><title>${esc(r.effort+" · "+fmt(r.score,2)+" 分 · "+money(r.cost_per_task_usd)+" · "+(r.fallback||"来源未标记回退"))}</title>${r.best_for_metric?`<circle cx="${x}" cy="${cy}" r="11" fill="none" stroke="${color}" stroke-width="1.5"/>`:""}<circle cx="${x}" cy="${cy}" r="${r.selected?7:5}" fill="${r.selected?color:"#fffef9"}" stroke="${color}" stroke-width="2"/><text x="${x}" y="${cy+offset}" text-anchor="middle" font-size="11" fill="${color}">${esc(r.effort)}${compact ? "" : " · "+fmt(r.score,2)}</text></g>`;
     const measuredIndices=rows.map(r=>capabilityEfforts.indexOf(r.effort));
@@ -611,7 +613,8 @@
     if(!costs.length)cost.push(`<text x="${w/2}" y="${h/2}" text-anchor="middle">无同口径费用，不补估算散点</text>`);
     cost.push(`<text x="${w/2}" y="${h-10}" text-anchor="middle" font-size="12">AA 智能指数加权单任务成本（USD）</text>`);
     [["reasoningCurve",curve],["reasoningCost",cost]].forEach(([id,parts])=>{const svg=$(id);svg.setAttribute("viewBox",`0 0 ${w} ${h}`);svg.innerHTML=`<title>${esc(entries[0]?.releaseName+" · "+metric)}</title>`+parts.join("");});
-    $("reasoningEvidenceTable").innerHTML=table(["已测档位 / 来源配置","官方得分","相对上一已测档分差","AA 加权成本 / 增量","选档标记"],rows.map(r=>`<tr data-variant="${esc(r.variant)}"><th>${r.source_url ? link(r.source_url,r.effort) : esc(r.effort)+'<span class="task-detail">无该指标来源 · 无测量</span>'}<span class="task-detail">${esc(r.fallback||"来源未标记回退")}</span></th><td>${finite(r.score)?fmt(r.score,2):"无数据"}</td><td>${finite(r.delta_score)?`${r.delta_score>0?"+":""}${fmt(r.delta_score,2)}（${esc(r.previous_measured_effort)} → ${esc(r.effort)}）`:"无可比相邻值"}</td><td>${money(r.cost_per_task_usd)}<span class="task-detail">增量 ${finite(r.delta_cost_usd)?(r.delta_cost_usd>0?"+":"")+money(r.delta_cost_usd):"未提供"}</span></td><td>${[r.selected?"当前选中":"",r.representative_by_overall_ii?"AA 智能指数最高代表档":"",r.best_for_metric?"本维度最高（可并列）":""].filter(Boolean).join(" · ")||"—"}</td></tr>`).join(""));
+    const showCost=costs.length>0;
+    $("reasoningEvidenceTable").innerHTML=table(["已测档位 / 来源配置","官方得分","相对上一已测档分差",...(showCost?["AA 加权成本 / 增量"]:[]),"选档标记"],rows.map(r=>`<tr data-variant="${esc(r.variant)}"><th>${r.source_url ? link(r.source_url,r.effort) : esc(r.effort)+'<span class="task-detail">无该指标来源 · 无测量</span>'}<span class="task-detail">${esc(r.fallback||"来源未标记回退")}</span></th><td>${finite(r.score)?fmt(r.score,2):"无数据"}</td><td>${finite(r.delta_score)?`${r.delta_score>0?"+":""}${fmt(r.delta_score,2)}（${esc(r.previous_measured_effort)} → ${esc(r.effort)}）`:"无可比相邻值"}</td>${showCost?`<td>${money(r.cost_per_task_usd)}<span class="task-detail">增量 ${finite(r.delta_cost_usd)?(r.delta_cost_usd>0?"+":"")+money(r.delta_cost_usd):"未提供"}</span></td>`:""}<td>${[r.selected?"当前选中":"",r.representative_by_overall_ii?"AA 智能指数最高代表档":"",r.best_for_metric?"本维度最高（可并列）":""].filter(Boolean).join(" · ")||"—"}</td></tr>`).join(""));
     $("reasoningEvidenceTable").dataset.selected=effortView.selectedSlug;
     document.querySelectorAll("#reasoningCharts .reasoning-dot").forEach(dot=>{
       const select=()=>{effortView.selectedSlug=dot.dataset.variant;renderReasoningCharts();};
@@ -1536,5 +1539,84 @@
   const types=[...new Set(DATA.sources.map(s => s.type))];
   $("sourceList").innerHTML=types.map(type => `<div class="source-group"><h3>${esc(type)}</h3>${DATA.sources.filter(s => s.type === type).map(s => `<div class="source-item"><span class="source-id">${s.id}</span><div>${link(s.url,s.title)}<p>${esc(s.note)}</p><p>${esc(s.status)} · ${s.accessed}</p></div></div>`).join("")}</div>`).join("");
   $("integrityNote").textContent=`原记录 ${DATA.meta.original_rows} 条＋新增 ${DATA.rows.length-DATA.meta.original_rows} 条＝${DATA.rows.length} 条；AA分项 ${DATA.aa_profiles.length} 个配置。ToneBench SHA256：${DATA.meta.tonebench_sha256}`;
-  renderReasoningCharts();renderTaskEffortChart();renderEffortScalingChart();renderPanorama();renderClaudeCatalog();renderProfiles();renderCapIndexChart();renderSpecs();renderDeltas();changeGroup("general");showPanel(location.hash.slice(1)||"overview",false);
+  // Personal effort sweet-spot matrix: lowest-cost measured effort within a tolerance of each model's best score.
+  const sweetTasks=[
+    {key:"ii",label:"综合",sub:"AA 智能指数",get:v=>v.intelligenceIndex,elo:false},
+    {key:"coding",label:"编程",sub:"Terminal-Bench + SciCode",get:v=>v.taskScores?.coding,elo:false},
+    {key:"complex",label:"复杂推理",sub:"HLE + CritPt",get:v=>v.taskScores?.complex,elo:false},
+    {key:"automation",label:"工具自动化",sub:"AutomationBench",get:v=>v.taskScores?.automation,elo:false},
+    {key:"agentic",label:"知识工作交付",sub:"GDPval Elo",get:v=>v.taskScores?.agentic,elo:true},
+    {key:"planning",label:"方案规划",sub:"Briefcase Elo",get:v=>v.taskScores?.planning,elo:true},
+    {key:"knowledge",label:"长文档 · 事实",sub:"LCR / PDF / Omniscience",get:v=>v.taskScores?.knowledge,elo:false}
+  ];
+  const sweetTolerance={strict:{pct:1,elo:15,label:"严格"},balanced:{pct:3,elo:40,label:"均衡"},thrifty:{pct:6,elo:80,label:"省钱"}};
+  const vendorOrder=["Anthropic","OpenAI","Google","xAI"];
+  const sweetView={model:null,task:null};
+  const sweetReleases=()=>(DATA.aa_release_series?.releases||[]).filter(r=>r.variants.some(v=>v.taskScores))
+    .sort((a,b)=>(vendorOrder.indexOf(a.vendor)-vendorOrder.indexOf(b.vendor))||((b.maxIntelligenceIndex||0)-(a.maxIntelligenceIndex||0)));
+  function sweetPick(release,task,tol){
+    const vs=release.variants.map(v=>({v,score:task.get(v),cost:v.costPerTask})).filter(x=>finite(x.score)).sort((a,b)=>a.v.effortOrder-b.v.effortOrder);
+    if(!vs.length) return null;
+    const allowance=task.elo?tol.elo:tol.pct, best=Math.max(...vs.map(x=>x.score));
+    const pick=vs.filter(x=>x.score>=best-allowance).sort((a,b)=>(finite(a.cost)?a.cost:Infinity)-(finite(b.cost)?b.cost:Infinity)||a.v.effortOrder-b.v.effortOrder)[0];
+    const top=vs[vs.length-1], peak=vs.find(x=>x.score===best);
+    return {vs,best,pick,top,peak,topDrop:vs.length>1&&top.score<best-(task.elo?10:0.5),single:vs.length===1};
+  }
+  function sweetCheaper(task,pick,releases,selfSlug){
+    if(!finite(pick.cost)) return null;
+    let alt=null;
+    releases.forEach(r=>{if(r.releaseSlug===selfSlug) return;r.variants.forEach(v=>{const sc=task.get(v);if(finite(sc)&&finite(v.costPerTask)&&sc>=pick.score&&v.costPerTask<=pick.cost*0.6&&(!alt||v.costPerTask<alt.cost))alt={release:r,v,score:sc,cost:v.costPerTask};});});
+    return alt;
+  }
+  // A pick is dominated when another model's measured effort scores at least as high for no more money (and is strictly better on one).
+  function sweetDominated(task,pick,releases,selfSlug){
+    if(!finite(pick.cost)) return false;
+    return releases.some(r=>r.releaseSlug!==selfSlug&&r.variants.some(v=>{const sc=task.get(v);return finite(sc)&&finite(v.costPerTask)&&sc>=pick.score&&v.costPerTask<=pick.cost&&(sc>pick.score||v.costPerTask<pick.cost);}));
+  }
+  const sweetFmt=(task,value)=>fmt(value,task.elo?0:1);
+  const sparkline=(res,task)=>{
+    const w=64,h=20,lo=Math.min(...res.vs.map(x=>x.score)),hi=Math.max(...res.vs.map(x=>x.score)),n=res.vs.length;
+    const px=i=>n===1?w/2:3+i*(w-6)/(n-1), py=sc=>hi===lo?h/2:h-3-(sc-lo)/(hi-lo)*(h-6);
+    const d=res.vs.map((x,i)=>`${i?"L":"M"}${px(i).toFixed(1)},${py(x.score).toFixed(1)}`).join("");
+    return `<svg class="ss-spark" viewBox="0 0 ${w} ${h}" aria-hidden="true"><path d="${d}"/>${res.vs.map((x,i)=>`<circle cx="${px(i).toFixed(1)}" cy="${py(x.score).toFixed(1)}" r="${x===res.pick?3.2:1.8}" class="${x===res.pick?"on":""}"/>`).join("")}</svg>`;
+  };
+  function renderSweetSpot(){
+    const host=$("sweetMatrix"); if(!host) return;
+    const tol=sweetTolerance[$("sweetTolerance")?.value]||sweetTolerance.balanced, releases=sweetReleases();
+    const defaults=new Map((DATA.task_effort_guidance?.models||[]).map(m=>[m.modelId,m.officialDefault]));
+    const colBest=new Map(sweetTasks.map(t=>[t.key,releases.map(r=>sweetPick(r,t,tol)).filter(Boolean)]));
+    const heat=(task,score)=>{const all=colBest.get(task.key).map(x=>x.pick.score),lo=Math.min(...all),hi=Math.max(...all);return hi===lo?0.5:(score-lo)/(hi-lo);};
+    const head=`<tr><th scope="col">模型</th>${sweetTasks.map(t=>`<th scope="col">${esc(t.label)}<span class="task-detail">${esc(t.sub)}</span></th>`).join("")}</tr>`;
+    const body=releases.map(r=>`<tr><th scope="row"><span class="swatch" style="background:${esc(r.color)}"></span>${esc(r.shortName||r.name)}<span class="task-detail">${esc(r.vendor)}${defaults.get(r.releaseSlug)?` · 默认 ${esc(defaults.get(r.releaseSlug))}`:""}</span></th>${sweetTasks.map(t=>{
+      const res=sweetPick(r,t,tol); if(!res) return `<td class="ss-empty">—</td>`;
+      const alt=sweetCheaper(t,res.pick,releases,r.releaseSlug), sel=sweetView.model===r.releaseSlug&&sweetView.task===t.key;
+      const frontier=!sweetDominated(t,res.pick,releases,r.releaseSlug);
+      const flags=[frontier?`<span class="ss-flag front">性价比前沿</span>`:"",res.topDrop?`<span class="ss-flag warn">顶档回落</span>`:"",res.single?`<span class="ss-flag info">仅测 ${esc(res.pick.v.effort)}</span>`:""].join("");
+      return `<td class="ss-cell${sel?" selected":""}${frontier?" frontier":alt?" dominated":""}" style="--heat:${heat(t,res.pick.score).toFixed(2)}" tabindex="0" role="button" aria-pressed="${sel}" data-ss-model="${esc(r.releaseSlug)}" data-ss-task="${t.key}" aria-label="${esc(`${r.shortName||r.name} ${t.label} 甜蜜点 ${res.pick.v.effort}，${sweetFmt(t,res.pick.score)}，${money(res.pick.cost)}`)}"><span class="ss-top"><b class="ss-effort e-${esc(res.pick.v.effort)}">${esc(res.pick.v.effort)}</b>${sparkline(res,t)}</span><span class="ss-meta">${sweetFmt(t,res.pick.score)} · ${finite(res.pick.cost)?money(res.pick.cost):"费用未测"}</span>${flags}</td>`;}).join("")}</tr>`).join("");
+    host.innerHTML=`<table class="sweet-table"><thead>${head}</thead><tbody>${body}</tbody></table>`;
+    host.querySelectorAll(".ss-cell").forEach(cell=>{
+      const open=()=>{sweetView.model=cell.dataset.ssModel;sweetView.task=cell.dataset.ssTask;renderSweetSpot();renderSweetDetail();host.querySelector(`[data-ss-model="${sweetView.model}"][data-ss-task="${sweetView.task}"]`)?.focus();};
+      cell.addEventListener("click",open);cell.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}});
+    });
+    $("sweetRule").textContent=`规则（${tol.label}）：在同一模型已测档位里，取与该模型最高分相差不超过 ${tol.pct} 分（Elo 列 ${tol.elo}）的最便宜档位。成本统一用 AA 综合单任务成本，只用来比较档位之间的相对费用。`;
+    renderSweetDetail();
+  }
+  function renderSweetDetail(){
+    const box=$("sweetDetail"); if(!box) return;
+    const r=sweetReleases().find(x=>x.releaseSlug===sweetView.model), t=sweetTasks.find(x=>x.key===sweetView.task);
+    if(!r||!t){box.innerHTML=`<p class="muted">点矩阵中的格子，查看该模型在这项任务上每一档的分数、成本和边际收益。</p>`;return;}
+    const tol=sweetTolerance[$("sweetTolerance")?.value]||sweetTolerance.balanced, res=sweetPick(r,t,tol), alt=sweetCheaper(t,res.pick,sweetReleases(),r.releaseSlug);
+    const rows=res.vs.map((x,i)=>{const prev=res.vs[i-1];const ds=prev?x.score-prev.score:null,dc=prev&&finite(x.cost)&&finite(prev.cost)?x.cost-prev.cost:null;
+      const tag=[x===res.pick?"甜蜜点":"",x===res.peak?"最高分":"",x===res.top&&res.topDrop?"顶档回落":""].filter(Boolean).join(" · ");
+      return `<tr class="${x===res.pick?"is-pick":""}"><th>${esc(x.v.effort)}</th><td>${sweetFmt(t,x.score)}</td><td class="${ds>0?"delta-positive":ds<0?"delta-negative":""}">${finite(ds)?(ds>0?"+":"")+sweetFmt(t,ds):"—"}</td><td>${money(x.cost)}</td><td>${finite(dc)?(dc>0?"+":"")+money(dc):"—"}</td><td>${finite(ds)&&finite(dc)&&dc>0?sweetFmt(t,ds/dc)+" / $":"—"}</td><td>${tag||""}</td></tr>`;}).join("");
+    box.innerHTML=`<h3>${esc(r.shortName||r.name)} · ${esc(t.label)}</h3><p class="small muted">${esc(t.sub)}${t.elo?"（Elo，只用于同一基准内比较）":""}</p><div class="table-scroll"><table class="sweet-detail-table"><thead><tr><th>档位</th><th>分数</th><th>比上一档</th><th>单任务成本</th><th>多花</th><th>每多花 $1 得分</th><th>标记</th></tr></thead><tbody>${rows}</tbody></table></div>${alt?`<p class="ss-alt-note">有更省的替代：<strong>${esc(alt.release.shortName||alt.release.name)} ${esc(alt.v.effort)}</strong> 得分 ${sweetFmt(t,alt.score)}，不低于当前甜蜜点，成本 ${money(alt.cost)}（当前为 ${money(res.pick.cost)}）。</p>`:""}`;
+  }
+  if($("sweetTolerance")) $("sweetTolerance").addEventListener("change",renderSweetSpot);
+  if($("toggleNotes")) $("toggleNotes").addEventListener("click",event=>{
+    const full=document.body.classList.toggle("notes-full");
+    event.currentTarget.setAttribute("aria-pressed",String(full));
+    event.currentTarget.textContent=full?"收起口径说明":"展开全部口径说明";
+  });
+
+  renderSweetSpot();renderReasoningCharts();renderTaskEffortChart();renderEffortScalingChart();renderPanorama();renderClaudeCatalog();renderProfiles();renderCapIndexChart();renderSpecs();renderDeltas();changeGroup("general");showPanel(location.hash.slice(1)||"overview",false);
 })();

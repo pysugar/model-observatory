@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light">
+  <meta name="color-scheme" content="light dark">
   <title>Grok · ChatGPT · Gemini · Claude｜四大家族推理档位、主流任务表现与成本评测报告</title>
   <style>/* REPORT_CSS */</style>
 </head>
@@ -13,7 +13,7 @@
   <div class="topline"><span class="eyebrow">MODEL OBSERVATORY / 2026.10.20</span><span class="badge">公共基准观测 · 整合 AA / Scale SEAL / OpenRouter / LiveBench / Arena 五大榜单</span></div>
   <h1>从任务与推理档位出发，比较模型。</h1>
   <p class="lead">聚焦 Grok、ChatGPT (GPT)、Gemini、Claude 四大家族当前活跃模型在不同推理档位（<code>low / medium / high / xhigh / max</code>）与主流任务类型（复杂问题解决、软件工程、方案设计与规划、长文档抗幻觉）下的实测表现与单任务成本。</p>
-  <div class="hero-bottom"><span>21 个当前活跃与兼容候选（覆盖 11 个核心多档位系列、44 个推理档位配置）<span class="muted">＋ 3 个 GPT 代际基线 · 30 个发布版本轨迹</span></span><button id="printReport" class="text-button">打印报告（当前筛选）</button></div>
+  <div class="hero-bottom"><span>21 个当前活跃与兼容候选（覆盖 11 个核心多档位系列、44 个推理档位配置）<span class="muted">＋ 3 个 GPT 代际基线 · 30 个发布版本轨迹</span></span><span class="hero-actions"><button id="toggleNotes" class="text-button" aria-pressed="false">展开全部口径说明</button><button id="printReport" class="text-button">打印报告（当前筛选）</button></span></div>
 </header>
 <div class="nav-shell"><nav id="report-nav" role="tablist" aria-label="报告维度">
   <button role="tab" id="tab-overview" aria-controls="overview" aria-selected="true" data-panel="overview">选型概览</button>
@@ -26,6 +26,26 @@
 <main id="report-main">
 <section class="panel" id="overview" role="tabpanel" aria-labelledby="tab-overview">
   <div class="section-heading"><span class="eyebrow">01 / DECISION BRIEF</span><h2>先看任务类型，再定模型与推理档位。</h2></div>
+  <section class="card sweet-spot" aria-labelledby="sweet-spot-heading">
+    <div class="sweet-head">
+      <div><h3 id="sweet-spot-heading">我的选档速查：每个模型 × 每类任务开哪一档</h3><p class="small muted" id="sweetRule"></p></div>
+      <label class="sweet-control">取舍偏好<select id="sweetTolerance"><option value="strict">严格（差 ≤1 分）</option><option value="balanced" selected>均衡（差 ≤3 分）</option><option value="thrifty">省钱（差 ≤6 分）</option></select></label>
+    </div>
+    <div class="table-scroll sweet-scroll" id="sweetMatrix"></div>
+    <p class="sweet-legend small"><span class="ss-flag warn">顶档回落</span> 最高档反而比更低档差　<span class="ss-flag front">性价比前沿</span> 同列没有别的模型能更便宜地拿到同等分数　<span class="ss-flag info">仅测一档</span> 来源只测了这一档　底色越深表示同列得分越高</p>
+    <div class="detail sweet-detail" id="sweetDetail" aria-live="polite"></div>
+  </section>
+  <section class="card pitfalls" aria-labelledby="pitfalls-heading">
+    <h3 id="pitfalls-heading">各档位避坑</h3>
+    <ol class="pitfall-list">
+      <li><strong>low 不要用于 agent 和终端任务。</strong>Opus 5.5 的 Terminal-Bench 从 medium 的 {{aa:claude-opus-5-5:medium:eval/Terminal-Bench 4.0:0}}% 跌到 low 的 {{aa:claude-opus-5-5:low:eval/Terminal-Bench 4.0:0}}%，Sol 6.1 从 {{aa:gpt-6-1-sol:medium:eval/Terminal-Bench 4.0:0}}% 跌到 {{aa:gpt-6-1-sol:low:eval/Terminal-Bench 4.0:0}}%。low 只适合分类、抽取、改写这类单步任务。</li>
+      <li><strong>max 常常白花钱。</strong>Opus 5.5 从 xhigh 升到 max，单任务成本从 ${{aa:claude-opus-5-5:xhigh:costPerTask:2}} 涨到 ${{aa:claude-opus-5-5:max:costPerTask:2}}，智能指数只从 {{aa:claude-opus-5-5:xhigh:intelligenceIndexRounded:0}} 升到 {{aa:claude-opus-5-5:max:intelligenceIndexRounded:0}}。Fable 5.1 的 Terminal-Bench 在 max 档还从 {{aa:claude-fable-5-1:xhigh:eval/Terminal-Bench 4.0:0}}% 降到 {{aa:claude-fable-5-1:max:eval/Terminal-Bench 4.0:0}}%。先确认 xhigh 没通过验收、并且说得出缺什么，再开 max。</li>
+      <li><strong>小模型开高档不如大模型开低档。</strong>Sonnet 5.5 xhigh（{{aa:claude-sonnet-5-5:xhigh:intelligenceIndexRounded:0}} 分 / ${{aa:claude-sonnet-5-5:xhigh:costPerTask:2}}）不如 Opus 5.5 medium（{{aa:claude-opus-5-5:medium:intelligenceIndexRounded:0}} 分 / ${{aa:claude-opus-5-5:medium:costPerTask:2}}）划算；Grok 4.7 high（{{aa:grok-4-7:high:intelligenceIndexRounded:0}} 分 / ${{aa:grok-4-7:high:costPerTask:2}}）不如 Sol 6.1 medium（{{aa:gpt-6-1-sol:medium:intelligenceIndexRounded:0}} 分 / ${{aa:gpt-6-1-sol:medium:costPerTask:2}}）。矩阵里没有“性价比前沿”标记、颜色偏淡的格子，多半就是这种情况，点开可以看到更省的替代。</li>
+      <li><strong>长文档检索不用升档。</strong>Sol 6.1 的 AA-LCR 在 low 档是 {{aa:gpt-6-1-sol:low:eval/AA-LCR v1.1:0}}%，max 档是 {{aa:gpt-6-1-sol:max:eval/AA-LCR v1.1:0}}%；Grok 4.7 从 low 升到 high，反而从 {{aa:grok-4-7:low:eval/AA-LCR v1.1:0}}% 降到 {{aa:grok-4-7:high:eval/AA-LCR v1.1:0}}%。</li>
+      <li><strong>事实问答要换大模型，别靠升档。</strong>Luna 的 AA-Omniscience 从 low 的 {{aa:gpt-6-luna:low:eval/AA-Omniscience:0}} 降到 max 的 {{aa:gpt-6-luna:max:eval/AA-Omniscience:0}}，Haiku 5.5 最高也只有 {{aa:claude-haiku-5-5:max:eval/AA-Omniscience:0}}。</li>
+      <li><strong>不同厂商的同名档位不等价。</strong>要比完成一个任务并通过验收的总费用，包括失败的重试；缺日志、复现步骤或验收标准时，先补上下文，再考虑升档。</li>
+    </ol>
+  </section>
   <nav class="overview-shortcuts" aria-label="选型概览内快速跳转"><a href="#task-effort-heading">四大家族×推理档位×任务象限图 ↓</a><a href="#multi-benchmark-heading">五大评测网站全景对照 ↓</a><a href="#task-routing-heading">主流任务选型矩阵 ↓</a><a href="#agent-division-heading">多 Agent 架构通用分工 ↓</a></nav>
   <div class="summary-grid">
     <article><span class="summary-number">01</span><h3>编程与软件工程：高性价比看 Sol 6.1 high，上限看 Opus 5.5 / Sonnet 5.5</h3><p>AA 编程（Terminal-Bench 4.0 + SciCode）与 Vulcan 23 题中：<strong>Sol 6.1 high（{{aa:gpt-6-1-sol:high:coding:1}}% / ${{aa:gpt-6-1-sol:high:costPerTask:2}}）</strong>稳居高吸引象限帕累托前沿，Vulcan 达 {{row:coding:GPT 6.1 Sol:high:passes:0}}/23；<strong>Opus 5.5 xhigh/max（{{aa:claude-opus-5-5:xhigh:coding:1}}%–{{aa:claude-opus-5-5:max:coding:1}}%）</strong>与 <strong>Sonnet 5.5 max（Terminal-Bench {{aa:claude-sonnet-5-5:max:eval/Terminal-Bench 4.0:0}}%）</strong>领跑绝对上限，<strong>Argon high（{{aa:gemini-4-argon:high:coding:1}}% / ${{aa:gemini-4-argon:high:costPerTask:2}}）</strong>居单档位前列。</p><p class="citation"><a href="https://artificialanalysis.ai/zh/models/releases" target="_blank" rel="noopener">AA 发布版本数据</a> · <button data-jump="explorer" data-benchmark="coding" class="inline-button">查看编码成本曲线 →</button></p></article>
