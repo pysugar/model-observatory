@@ -84,6 +84,15 @@
             <option value="model">按型号独立配色（区分同厂多系列）</option>
           </select>
         </label>
+        <label>象限分界
+          <select id="taskQuadMode">
+            <option value="median" selected>数据中位数（成本 × 分数）</option>
+            <option value="0.5">我的预算 ≤ $0.50 / 任务</option>
+            <option value="1">我的预算 ≤ $1 / 任务</option>
+            <option value="2">我的预算 ≤ $2 / 任务</option>
+            <option value="5">我的预算 ≤ $5 / 任务</option>
+          </select>
+        </label>
         <label class="check"><input type="checkbox" id="taskEffortBackdrop" checked>显示其他市场参考模型</label>
         <button id="exportTaskEffort">导出当前任务×档位 CSV</button>
       </div>
@@ -100,7 +109,7 @@
     <p id="taskEffortSubnote" class="small"></p>
     <p class="method-note">复杂问题与编程采用本报告的等权均值；知识视图使用明确列出的自定义公式。它们不是 AA 官方独立任务指数。规划与代理保留原始 Elo，自动化保留完成率；AA 智能指数直接取来源值。横轴始终是整套 AA 指数加权单任务成本，不是当前任务专属费用。浅绿阈值由本报告设定，不构成官方推荐或显著性结论。</p>
     <div id="taskEffortLegend" class="aa-legend-bar" aria-label="象限、帕累托线与厂商图例"></div>
-    <div class="topline"><span id="taskEffortCount" class="small" aria-live="polite"></span><span class="small">左上浅绿区域为 Most attractive quadrant（高能力 · 单任务成本 ≤ $1.10） · 点击圆点或胶囊查看该模型全档位明细</span></div>
+    <div class="topline"><span id="taskEffortCount" class="small" aria-live="polite"></span><span class="small" id="taskQuadHint">左上浅绿区域为 Most attractive quadrant · 点击圆点或胶囊聚焦该模型</span></div>
     <div id="taskEffortPills" class="release-pills" aria-label="快速选中活跃模型系列"></div>
     <div class="svg-scroll aa-svg-wrap"><svg id="taskEffortChart" role="group" aria-label="四大家族活跃模型在不同推理档位与主流任务类型下的能力与单任务成本轨迹图"></svg></div>
     <div id="taskCategoryCards" class="platform-grid task-summary-cards"></div>
@@ -300,7 +309,7 @@
         <button id="exportReleases">导出发布版本轨迹 CSV</button>
       </div>
     </div>
-    <p class="small">参考 <a href="https://artificialanalysis.ai/zh/models/releases" target="_blank" rel="noopener">Artificial Analysis 按模型发布版本划分图表</a> 设计：左上浅绿矩形标示 <strong>Most attractive quadrant（高能力 · 低成本优选象限）</strong>，黑色虚线连接全局 <strong>Pareto line（帕累托前沿）</strong>，同色实线连接同一发布版本（Release）的不同推理档位（<code>non-reasoning / low / medium / high / xhigh / max</code>）。点击任意圆点或胶囊查看该发布版本 5 段成本构成与各档位明细。</p>
+    <p class="small">参考 <a href="https://artificialanalysis.ai/zh/models/releases" target="_blank" rel="noopener">Artificial Analysis 按模型发布版本划分图表</a> 设计：左上浅绿矩形标示 <strong>Most attractive quadrant（高能力 · 低成本优选象限）</strong>，分界取当前所画档位的中位数（横轴指标 × 智能指数），黑色虚线连接全局 <strong>Pareto line（帕累托前沿）</strong>，同色实线连接同一发布版本（Release）的不同推理档位（<code>non-reasoning / low / medium / high / xhigh / max</code>）。点击任意圆点或胶囊查看该发布版本 5 段成本构成与各档位明细。</p>
     <div id="releaseLegendBar" class="aa-legend-bar" aria-label="象限、帕累托线与厂商图例"></div>
     <div class="topline"><span id="releaseCount" class="small" aria-live="polite"></span><span class="small">左上更优（高能力、低成本/低耗时） · 点击版本胶囊可快速定位并查看成本堆叠明细</span></div>
     <div id="releasePills" class="release-pills" aria-label="筛选模型发布版本"></div>

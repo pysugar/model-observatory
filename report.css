@@ -569,3 +569,13 @@ svg text:not([fill]) { fill:var(--muted); }
 .panel [data-toc], .panel .section-heading { scroll-margin-top:118px; }
 @media (max-width:700px) { .page-toc { padding:6px 8px 7px; } .panel [data-toc], .panel .section-heading { scroll-margin-top:108px; } }
 @media print { .page-toc { display:none !important; } }
+
+/* Task × effort chart: focus one release, dim the rest; hover previews a series. */
+#taskEffortChart .release-series { transition:opacity .15s; }
+#taskEffortChart .release-series.is-dimmed { opacity:.16; }
+#taskEffortChart:has(.release-series:hover) .release-series:not(:hover):not(.is-focused) { opacity:.22; }
+#taskEffortChart .release-series:hover { opacity:1; }
+#taskEffortChart .effort-tag { paint-order:stroke; stroke:var(--paper); stroke-width:3.5px; stroke-linejoin:round; }
+#taskEffortChart .release-halo { stroke:var(--paper); }
+.pill-reset { border-style:dashed; color:var(--teal); font-weight:600; }
+#taskEffortChart .release-hit { pointer-events:stroke; }
