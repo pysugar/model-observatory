@@ -1,0 +1,953 @@
+{
+  "checkedAt": "2026-10-20",
+  "tasks": [
+    {
+      "id": "complex",
+      "label": "复杂问题"
+    },
+    {
+      "id": "daily_code",
+      "label": "日常代码"
+    },
+    {
+      "id": "repository_bug",
+      "label": "仓库 BUG 修复"
+    },
+    {
+      "id": "design",
+      "label": "方案设计"
+    }
+  ],
+  "models": [
+    {
+      "modelId": "claude-opus-5-5",
+      "name": "Opus 5.5",
+      "supportedEfforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "officialDefault": "medium",
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+      "checkedAt": "2026-10-20"
+    },
+    {
+      "modelId": "claude-fable-5-1",
+      "name": "Fable 5.1",
+      "supportedEfforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "officialDefault": "high",
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+      "checkedAt": "2026-10-20"
+    },
+    {
+      "modelId": "claude-sonnet-5-5",
+      "name": "Sonnet 5.5",
+      "supportedEfforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "officialDefault": "high",
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+      "checkedAt": "2026-10-20"
+    },
+    {
+      "modelId": "gpt-6-1-sol",
+      "name": "GPT-6.1 Sol",
+      "supportedEfforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "officialDefault": "medium",
+      "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+      "checkedAt": "2026-10-20"
+    },
+    {
+      "modelId": "gpt-6-astra",
+      "name": "GPT-6 Astra",
+      "supportedEfforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "officialDefault": null,
+      "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+      "checkedAt": "2026-10-20"
+    },
+    {
+      "modelId": "gemini-4-argon",
+      "name": "Gemini 4 Argon",
+      "supportedEfforts": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "officialDefault": "medium",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/latest-model?hl=en",
+      "checkedAt": "2026-10-20"
+    },
+    {
+      "modelId": "grok-4-7",
+      "name": "Grok 4.7",
+      "supportedEfforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh"
+      ],
+      "officialDefault": "high",
+      "sourceUrl": "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+      "checkedAt": "2026-10-20"
+    }
+  ],
+  "recommendations": [
+    {
+      "modelId": "claude-opus-5-5",
+      "nativeEffort": "medium",
+      "taskType": "complex",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方默认 medium；四任务沿用默认是本报告经验起点，不是四项任务最优结论。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+          "statement": "官方默认 medium；建议在自己的验收集测试多个档位。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        },
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5",
+          "statement": "版本专属 prompting 指南；需按自己的验收集验证。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "版本行为与使用边界"
+        }
+      ]
+    },
+    {
+      "modelId": "claude-opus-5-5",
+      "nativeEffort": "medium",
+      "taskType": "daily_code",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方默认 medium；四任务沿用默认是本报告经验起点，不是四项任务最优结论。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+          "statement": "官方默认 medium；建议在自己的验收集测试多个档位。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        },
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5",
+          "statement": "版本专属 prompting 指南；需按自己的验收集验证。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "版本行为与使用边界"
+        }
+      ]
+    },
+    {
+      "modelId": "claude-opus-5-5",
+      "nativeEffort": "medium",
+      "taskType": "repository_bug",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方默认 medium；四任务沿用默认是本报告经验起点，不是四项任务最优结论。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+          "statement": "官方默认 medium；建议在自己的验收集测试多个档位。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        },
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5",
+          "statement": "版本专属 prompting 指南；需按自己的验收集验证。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "版本行为与使用边界"
+        }
+      ]
+    },
+    {
+      "modelId": "claude-opus-5-5",
+      "nativeEffort": "medium",
+      "taskType": "design",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方默认 medium；四任务沿用默认是本报告经验起点，不是四项任务最优结论。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。",
+        "暂无直接可比公开架构设计成绩。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+          "statement": "官方默认 medium；建议在自己的验收集测试多个档位。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        },
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5",
+          "statement": "版本专属 prompting 指南；需按自己的验收集验证。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "版本行为与使用边界"
+        }
+      ]
+    },
+    {
+      "modelId": "claude-fable-5-1",
+      "nativeEffort": "high",
+      "taskType": "complex",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方默认 high；low 可能减少检索并依赖记忆。日常代码 medium 仅为自行验证后的降档候选。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+          "statement": "官方默认 high；其他档位须在自己的任务集验证。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        },
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1",
+          "statement": "版本专属指南提示 low 可能减少检索、更多依赖记忆；降低档位须验证质量。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "版本行为与使用边界"
+        }
+      ]
+    },
+    {
+      "modelId": "claude-fable-5-1",
+      "nativeEffort": "high",
+      "taskType": "daily_code",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方默认 high；low 可能减少检索并依赖记忆。日常代码 medium 仅为自行验证后的降档候选。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+          "statement": "官方默认 high；其他档位须在自己的任务集验证。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        },
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1",
+          "statement": "版本专属指南提示 low 可能减少检索、更多依赖记忆；降低档位须验证质量。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "版本行为与使用边界"
+        }
+      ]
+    },
+    {
+      "modelId": "claude-fable-5-1",
+      "nativeEffort": "high",
+      "taskType": "repository_bug",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方默认 high；low 可能减少检索并依赖记忆。日常代码 medium 仅为自行验证后的降档候选。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+          "statement": "官方默认 high；其他档位须在自己的任务集验证。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        },
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1",
+          "statement": "版本专属指南提示 low 可能减少检索、更多依赖记忆；降低档位须验证质量。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "版本行为与使用边界"
+        }
+      ]
+    },
+    {
+      "modelId": "claude-fable-5-1",
+      "nativeEffort": "high",
+      "taskType": "design",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方默认 high；low 可能减少检索并依赖记忆。日常代码 medium 仅为自行验证后的降档候选。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。",
+        "暂无直接可比公开架构设计成绩。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+          "statement": "官方默认 high；其他档位须在自己的任务集验证。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        },
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1",
+          "statement": "版本专属指南提示 low 可能减少检索、更多依赖记忆；降低档位须验证质量。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "版本行为与使用边界"
+        }
+      ]
+    },
+    {
+      "modelId": "claude-sonnet-5-5",
+      "nativeEffort": "high",
+      "taskType": "complex",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方明确编码/多步工具任务从 medium 起步，困难或长任务用 high；四任务边界尤其方案设计仍是经验映射。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+          "statement": "官方默认 high；明确的 agent 编码与多步工具任务从 medium 起步，困难或长任务试 high。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        }
+      ]
+    },
+    {
+      "modelId": "claude-sonnet-5-5",
+      "nativeEffort": "medium",
+      "taskType": "daily_code",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方明确编码/多步工具任务从 medium 起步，困难或长任务用 high；四任务边界尤其方案设计仍是经验映射。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+          "statement": "官方默认 high；明确的 agent 编码与多步工具任务从 medium 起步，困难或长任务试 high。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        }
+      ]
+    },
+    {
+      "modelId": "claude-sonnet-5-5",
+      "nativeEffort": "medium",
+      "taskType": "repository_bug",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方明确编码/多步工具任务从 medium 起步，困难或长任务用 high；四任务边界尤其方案设计仍是经验映射。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+          "statement": "官方默认 high；明确的 agent 编码与多步工具任务从 medium 起步，困难或长任务试 high。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        }
+      ]
+    },
+    {
+      "modelId": "claude-sonnet-5-5",
+      "nativeEffort": "high",
+      "taskType": "design",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方明确编码/多步工具任务从 medium 起步，困难或长任务用 high；四任务边界尤其方案设计仍是经验映射。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。",
+        "暂无直接可比公开架构设计成绩。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/effort",
+          "statement": "官方默认 high；明确的 agent 编码与多步工具任务从 medium 起步，困难或长任务试 high。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        }
+      ]
+    },
+    {
+      "modelId": "gpt-6-1-sol",
+      "nativeEffort": "medium",
+      "taskType": "complex",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方默认 medium；仓库修复 high 另参考小样本社区候选，其余四任务划分是经验映射。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+          "statement": "官方默认 medium；支持 low / medium / high / xhigh / max。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        }
+      ]
+    },
+    {
+      "modelId": "gpt-6-1-sol",
+      "nativeEffort": "medium",
+      "taskType": "daily_code",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方默认 medium；仓库修复 high 另参考小样本社区候选，其余四任务划分是经验映射。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+          "statement": "官方默认 medium；支持 low / medium / high / xhigh / max。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        }
+      ]
+    },
+    {
+      "modelId": "gpt-6-1-sol",
+      "nativeEffort": "high",
+      "taskType": "repository_bug",
+      "evidenceType": "社区实测",
+      "sourceUrl": "https://vulcanbench.com/benchmarks/swe-v4-gpt61-sol-v318.html",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方默认 medium；仓库修复 high 另参考小样本社区候选，其余四任务划分是经验映射。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": 23,
+      "harness": "Codex CLI",
+      "label": "甜点候选",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+          "statement": "官方默认 medium；支持 low / medium / high / xhigh / max。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        },
+        {
+          "evidenceType": "社区实测",
+          "sourceUrl": "https://vulcanbench.com/benchmarks/swe-v4-gpt61-sol-v318.html",
+          "statement": "23 个旧程序重建/修复任务，每题每档一次；high 是该小样本的甜点候选。不是代表性真实仓库样本，不能推断所有仓库修复最优。",
+          "sampleSize": 23,
+          "harness": "Codex CLI",
+          "scope": "旧程序重建/修复；一次/题/档"
+        }
+      ]
+    },
+    {
+      "modelId": "gpt-6-1-sol",
+      "nativeEffort": "medium",
+      "taskType": "design",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方默认 medium；仓库修复 high 另参考小样本社区候选，其余四任务划分是经验映射。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。",
+        "暂无直接可比公开架构设计成绩。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+          "statement": "官方默认 medium；支持 low / medium / high / xhigh / max。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        }
+      ]
+    },
+    {
+      "modelId": "gpt-6-astra",
+      "nativeEffort": "medium",
+      "taskType": "complex",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "四项 medium 均为保守经验起点；未核验到官方默认或任务最佳，官方链接仅证明支持档位。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+          "statement": "官方列出支持 low / medium / high / xhigh / max；未核验官方默认或任务最佳。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        }
+      ]
+    },
+    {
+      "modelId": "gpt-6-astra",
+      "nativeEffort": "medium",
+      "taskType": "daily_code",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "四项 medium 均为保守经验起点；未核验到官方默认或任务最佳，官方链接仅证明支持档位。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+          "statement": "官方列出支持 low / medium / high / xhigh / max；未核验官方默认或任务最佳。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        }
+      ]
+    },
+    {
+      "modelId": "gpt-6-astra",
+      "nativeEffort": "medium",
+      "taskType": "repository_bug",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "四项 medium 均为保守经验起点；未核验到官方默认或任务最佳，官方链接仅证明支持档位。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+          "statement": "官方列出支持 low / medium / high / xhigh / max；未核验官方默认或任务最佳。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        }
+      ]
+    },
+    {
+      "modelId": "gpt-6-astra",
+      "nativeEffort": "medium",
+      "taskType": "design",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "四项 medium 均为保守经验起点；未核验到官方默认或任务最佳，官方链接仅证明支持档位。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。",
+        "暂无直接可比公开架构设计成绩。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+          "statement": "官方列出支持 low / medium / high / xhigh / max；未核验官方默认或任务最佳。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        }
+      ]
+    },
+    {
+      "modelId": "gemini-4-argon",
+      "nativeEffort": "high",
+      "taskType": "complex",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/latest-model?hl=en",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方 medium 为多数任务（含代码与 agent）的默认建议；困难推理可用 high。四任务映射尤其方案设计是经验起点。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://ai.google.dev/gemini-api/docs/latest-model?hl=en",
+          "statement": "官方默认 medium，建议用于多数任务（含代码与 agent）；困难推理可试 high。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        }
+      ]
+    },
+    {
+      "modelId": "gemini-4-argon",
+      "nativeEffort": "medium",
+      "taskType": "daily_code",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/latest-model?hl=en",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方 medium 为多数任务（含代码与 agent）的默认建议；困难推理可用 high。四任务映射尤其方案设计是经验起点。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://ai.google.dev/gemini-api/docs/latest-model?hl=en",
+          "statement": "官方默认 medium，建议用于多数任务（含代码与 agent）；困难推理可试 high。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        }
+      ]
+    },
+    {
+      "modelId": "gemini-4-argon",
+      "nativeEffort": "medium",
+      "taskType": "repository_bug",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/latest-model?hl=en",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方 medium 为多数任务（含代码与 agent）的默认建议；困难推理可用 high。四任务映射尤其方案设计是经验起点。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://ai.google.dev/gemini-api/docs/latest-model?hl=en",
+          "statement": "官方默认 medium，建议用于多数任务（含代码与 agent）；困难推理可试 high。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        }
+      ]
+    },
+    {
+      "modelId": "gemini-4-argon",
+      "nativeEffort": "medium",
+      "taskType": "design",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/latest-model?hl=en",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方 medium 为多数任务（含代码与 agent）的默认建议；困难推理可用 high。四任务映射尤其方案设计是经验起点。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。",
+        "暂无直接可比公开架构设计成绩。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://ai.google.dev/gemini-api/docs/latest-model?hl=en",
+          "statement": "官方默认 medium，建议用于多数任务（含代码与 agent）；困难推理可试 high。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        }
+      ]
+    },
+    {
+      "modelId": "grok-4-7",
+      "nativeEffort": "high",
+      "taskType": "complex",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方默认 high；四任务沿用默认为经验起点。社区 high 用 token 较少，不等于美元费用最低。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+          "statement": "官方默认 high；支持 low / medium / high / xhigh。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        },
+        {
+          "evidenceType": "社区实测",
+          "sourceUrl": "https://vulcanbench.com/benchmarks/swe-v4-grok47-cursor-v320.html",
+          "statement": "23 个任务/档，Cursor CLI。high 的 token 用量较低不代表美元成本最低；不建立通用任务最优。",
+          "sampleSize": 23,
+          "harness": "Cursor CLI",
+          "scope": "小题集；不同 harness 不混比"
+        }
+      ]
+    },
+    {
+      "modelId": "grok-4-7",
+      "nativeEffort": "high",
+      "taskType": "daily_code",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方默认 high；四任务沿用默认为经验起点。社区 high 用 token 较少，不等于美元费用最低。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+          "statement": "官方默认 high；支持 low / medium / high / xhigh。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        },
+        {
+          "evidenceType": "社区实测",
+          "sourceUrl": "https://vulcanbench.com/benchmarks/swe-v4-grok47-cursor-v320.html",
+          "statement": "23 个任务/档，Cursor CLI。high 的 token 用量较低不代表美元成本最低；不建立通用任务最优。",
+          "sampleSize": 23,
+          "harness": "Cursor CLI",
+          "scope": "小题集；不同 harness 不混比"
+        }
+      ]
+    },
+    {
+      "modelId": "grok-4-7",
+      "nativeEffort": "high",
+      "taskType": "repository_bug",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方默认 high；四任务沿用默认为经验起点。社区 high 用 token 较少，不等于美元费用最低。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+          "statement": "官方默认 high；支持 low / medium / high / xhigh。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        },
+        {
+          "evidenceType": "社区实测",
+          "sourceUrl": "https://vulcanbench.com/benchmarks/swe-v4-grok47-cursor-v320.html",
+          "statement": "23 个任务/档，Cursor CLI。high 的 token 用量较低不代表美元成本最低；不建立通用任务最优。",
+          "sampleSize": 23,
+          "harness": "Cursor CLI",
+          "scope": "小题集；不同 harness 不混比"
+        }
+      ]
+    },
+    {
+      "modelId": "grok-4-7",
+      "nativeEffort": "high",
+      "taskType": "design",
+      "evidenceType": "经验先验",
+      "sourceUrl": "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+      "checkedAt": "2026-10-20",
+      "caveats": [
+        "官方默认 high；四任务沿用默认为经验起点。社区 high 用 token 较少，不等于美元费用最低。",
+        "未建立任务最优结论。建议须用真实工作样本与完整交付验收验证。",
+        "暂无直接可比公开架构设计成绩。"
+      ],
+      "sampleSize": null,
+      "harness": null,
+      "label": "建议起点",
+      "support": [
+        {
+          "evidenceType": "官方建议",
+          "sourceUrl": "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+          "statement": "官方默认 high；支持 low / medium / high / xhigh。",
+          "sampleSize": null,
+          "harness": null,
+          "scope": "原生档位与默认/建议；不证明本报告四任务最优"
+        },
+        {
+          "evidenceType": "社区实测",
+          "sourceUrl": "https://vulcanbench.com/benchmarks/swe-v4-grok47-cursor-v320.html",
+          "statement": "23 个任务/档，Cursor CLI。high 的 token 用量较低不代表美元成本最低；不建立通用任务最优。",
+          "sampleSize": 23,
+          "harness": "Cursor CLI",
+          "scope": "小题集；不同 harness 不混比"
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "evidenceType": "经验先验",
+      "text": "缺日志、复现、版本或验收标准：先补信息，再考虑升档。"
+    },
+    {
+      "evidenceType": "经验先验",
+      "text": "跨模块根因、竞态、约束冲突或测试缺少边界：增加一个受支持档位并比较交付。"
+    },
+    {
+      "evidenceType": "经验先验",
+      "text": "单文件或模板任务，需求明确且测试稳定：可降低一个档位验证。"
+    },
+    {
+      "evidenceType": "经验先验",
+      "text": "high 未满足验收且能指出具体缺口：仅在支持时试 xhigh / max，并设预算与停止条件。"
+    },
+    {
+      "evidenceType": "经验先验",
+      "text": "反复分析却没有增益：拆分任务或换模型，不无限使用最高档。"
+    }
+  ]
+}

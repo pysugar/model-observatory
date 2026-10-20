@@ -19,6 +19,7 @@ from urllib.request import urlopen
 from playwright.sync_api import sync_playwright, expect
 from publish import ROOT, check, probe, require
 from capability_smoke import check_capabilities
+from selection_smoke import check_selection
 
 
 class QuietHandler(SimpleHTTPRequestHandler):
@@ -139,6 +140,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
                 require("NaN" not in page.locator("#effortScalingChart").inner_html(), "Invalid scaling chart coordinate")
             page.select_option("#effortScalingTask", "complex")
             check_capabilities(page, data, output)
+            check_selection(page, data, output)
             page.locator('[data-panel="overview"]').click()
             page.screenshot(path=str(output / "desktop.png"), full_page=True)
             page.locator('[data-panel="explorer"]').click()
@@ -189,7 +191,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
               "checks": ["task-specific best variants in seven dimensions", "dataset-backed knowledge narrative and Elo differences", "effort filters and scaling charts",
                "capability missingness, tie ranks, per-domain denominators and CSV consistency",
                "reasoning charts, effort selection, nonmonotonic scores and keyboard access", "six panels", "Claude filter", "CSV missing values", "budget boundaries", "four Opus evidence views",
-                         "source index", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
+                         "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across six panels and twelve CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
               "cloudflare_headers_checked": cloudflare}
     (output / "smoke.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result, indent=2))
