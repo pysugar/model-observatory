@@ -112,3 +112,8 @@
 @media(max-width:700px){#reasoningCurve,#reasoningCost{min-width:620px}}
 
 #capModelPills .pill-btn[aria-pressed=false]{opacity:1;text-decoration:none;background:var(--paper)}
+
+/* Point evidence remains visible on keyboard focus and touch selection. */
+#capPointTip { position:fixed; z-index:100; max-width:min(360px,calc(100vw - 16px)); margin:0; padding:10px 12px; border:1px solid #165e54; border-radius:8px; background:#fffef9; color:#163b35; box-shadow:0 4px 20px #163b3526; visibility:hidden; pointer-events:none; }
+#capPointTip.is-visible { visibility:visible; }
+.cap-node:focus-visible { outline:3px solid #163b35; outline-offset:3px; }

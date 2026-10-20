@@ -8831,6 +8831,206 @@
     ],
     "not_run": "仅复算公开数据，没有新的模型调用或付费实验。"
   },
+  "practical_evidence": {
+    "reviewed_at": "2026-10-20",
+    "evidence_types": [
+      "精确模型+effort",
+      "仅模型",
+      "模型+agent",
+      "厂商自报",
+      "未测"
+    ],
+    "sources": [
+      {
+        "id": "aa",
+        "name": "Artificial Analysis",
+        "source_url": "https://artificialanalysis.ai/models",
+        "methodology_url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+        "directory_reviewed_at": "2026-10-20",
+        "collected_at": null,
+        "evaluated_at": null,
+        "version": "AA v4.3.2 冻结数据",
+        "raw_unit": "指数分 / 各具名子评测原始单位",
+        "model": null,
+        "effort": null,
+        "harness": null,
+        "budget": null,
+        "attempts": null,
+        "confidence_interval": null,
+        "evidence_type": "精确模型+effort",
+        "status": "已有冻结数据；新榜单数字未导入",
+        "boundary": "已有冻结数据按具体配置展示；总指数不等于复杂问题能力。API 需要 key，本轮不用。评测脚手架、预算和日期以存档为准，目录不补猜测。",
+        "additional_urls": []
+      },
+      {
+        "id": "swe",
+        "name": "SWE-bench",
+        "source_url": "https://www.swebench.com/",
+        "methodology_url": "https://github.com/SWE-bench/experiments",
+        "directory_reviewed_at": "2026-10-20",
+        "collected_at": null,
+        "evaluated_at": null,
+        "version": "Verified / Lite / Full 分开",
+        "raw_unit": "% Resolved",
+        "model": null,
+        "effort": null,
+        "harness": null,
+        "budget": null,
+        "attempts": null,
+        "confidence_interval": null,
+        "evidence_type": "模型+agent",
+        "status": "方法导航；数字待逐条补充",
+        "boundary": "真实仓库问题修复。优先统一 mini-SWE-agent / Bash Only；比较前记录 agent 版本、split、预算和运行记录，不能当裸模型分数。",
+        "additional_urls": []
+      },
+      {
+        "id": "rebench",
+        "name": "SWE-rebench",
+        "source_url": "https://swe-rebench.com/",
+        "methodology_url": "https://swe-rebench.com/about",
+        "directory_reviewed_at": "2026-10-20",
+        "collected_at": null,
+        "evaluated_at": null,
+        "version": "新任务窗 / 版本需逐条核验",
+        "raw_unit": "解决率 %；SEM / pass@5 分列",
+        "model": null,
+        "effort": null,
+        "harness": null,
+        "budget": null,
+        "attempts": null,
+        "confidence_interval": null,
+        "evidence_type": "模型+agent",
+        "status": "方法导航；数字待逐条补充",
+        "boundary": "新任务窗补充。固定 scaffold 仍是系统成绩；不同 agent、任务窗、SEM 与 pass@5 不混用。",
+        "additional_urls": []
+      },
+      {
+        "id": "terminal",
+        "name": "Terminal-Bench",
+        "source_url": "https://www.tbench.ai/leaderboard/terminal-bench/2.0",
+        "methodology_url": "https://www.tbench.ai/news/terminal-bench-4-0",
+        "directory_reviewed_at": "2026-10-20",
+        "collected_at": null,
+        "evaluated_at": null,
+        "version": "导航 2.0；已有 AA 存档 4.0 独立保留",
+        "raw_unit": "任务完成率 %",
+        "model": null,
+        "effort": null,
+        "harness": null,
+        "budget": null,
+        "attempts": null,
+        "confidence_interval": null,
+        "evidence_type": "模型+agent",
+        "status": "方法导航；数字待逐条补充",
+        "boundary": "多步骤工具任务。2.0 链接不代表 4.0；已有 4.0 原始分追溯 AA 配置来源。比较需 agent/harness 与 effort 证据，不跨版本排名。",
+        "additional_urls": []
+      },
+      {
+        "id": "lcb",
+        "name": "LiveCodeBench",
+        "source_url": "https://livecodebench.github.io/leaderboard.html",
+        "methodology_url": "https://livecodebench.github.io/",
+        "directory_reviewed_at": "2026-10-20",
+        "collected_at": null,
+        "evaluated_at": null,
+        "version": "任务窗 / release 待逐条核验",
+        "raw_unit": "pass@k",
+        "model": null,
+        "effort": null,
+        "harness": null,
+        "budget": null,
+        "attempts": null,
+        "confidence_interval": null,
+        "evidence_type": "仅模型",
+        "status": "方法导航；数字待逐条补充",
+        "boundary": "算法编程；任务窗、版本与 pass@k 必须一致。self-repair 不等于真实仓库 BUG 修复。仅链接，无已核实名次数字。",
+        "additional_urls": [
+          "https://github.com/LiveCodeBench/LiveCodeBench"
+        ]
+      },
+      {
+        "id": "arena",
+        "name": "Arena",
+        "source_url": "https://arena.ai/leaderboard",
+        "methodology_url": "https://arena.ai/blog/ranking-method",
+        "directory_reviewed_at": "2026-10-20",
+        "collected_at": null,
+        "evaluated_at": null,
+        "version": "榜单类别 / 日期待逐条核验",
+        "raw_unit": "人类偏好排名 / 来源分数",
+        "model": null,
+        "effort": null,
+        "harness": null,
+        "budget": null,
+        "attempts": null,
+        "confidence_interval": null,
+        "evidence_type": "仅模型",
+        "status": "方法导航；数字待逐条补充",
+        "boundary": "人类偏好辅助体验，不代表正确率或架构质量；未知 effort 不画档位曲线，不抓未公开端点。",
+        "additional_urls": []
+      },
+      {
+        "id": "aider",
+        "name": "Aider",
+        "source_url": "https://aider.chat/docs/leaderboards/",
+        "methodology_url": "https://aider.chat/docs/leaderboards/",
+        "directory_reviewed_at": "2026-10-20",
+        "collected_at": null,
+        "evaluated_at": null,
+        "version": "榜单版本 / 日期待逐条核验",
+        "raw_unit": "代码编辑通过率 %",
+        "model": null,
+        "effort": null,
+        "harness": null,
+        "budget": null,
+        "attempts": null,
+        "confidence_interval": null,
+        "evidence_type": "模型+agent",
+        "status": "方法导航；数字待逐条补充",
+        "boundary": "代码编辑补充，覆盖可能较旧。需保留格式、editor 模型、版本、次数和日期；architect 是执行模式，不是架构设计能力。",
+        "additional_urls": []
+      }
+    ],
+    "cards": [
+      {
+        "title": "复杂问题解决",
+        "sources": [
+          "aa"
+        ],
+        "metric": "Humanity's Last Exam / CritPt（各自原始 %）",
+        "boundary": "同模型与精确 effort 的已有 AA 子评测；分别展示，不冒充综合复杂问题分。"
+      },
+      {
+        "title": "编程",
+        "sources": [
+          "aa",
+          "terminal",
+          "lcb",
+          "aider"
+        ],
+        "metric": "SciCode / Terminal-Bench / LiveCodeBench / Aider 各自原始指标",
+        "boundary": "算法、科学代码、终端工具与代码编辑覆盖不同；模型与 agent 成绩分开，不平均异质单位。"
+      },
+      {
+        "title": "仓库 BUG 修复",
+        "sources": [
+          "swe",
+          "rebench"
+        ],
+        "metric": "% Resolved / 原始解决率；待补充配置级成绩",
+        "boundary": "比较前核对相同 split、任务窗、agent 版本、预算和次数；目前只提供方法与运行记录，不填数字。"
+      },
+      {
+        "title": "方案 / 架构设计",
+        "sources": [
+          "arena",
+          "aider"
+        ],
+        "metric": "暂无直接可比公开成绩",
+        "boundary": "未测，不打分。通用指数、偏好排名与 architect 执行模式均不能替代架构质量。未来可评需求覆盖、取舍、失败模式、安全、可扩展、可测试；本轮不跑新基准。"
+      }
+    ]
+  },
   "aa_capability_indexes": {
     "snapshot": "2026-10-19",
     "version": "v4.3.2",
