@@ -6,6 +6,7 @@
   const finite = value => typeof value === "number" && Number.isFinite(value);
   const fmt = (value, digits = 2) => finite(value) ? value.toLocaleString("en-US", {maximumFractionDigits:digits}) : "未提供";
   const money = value => finite(value) ? "$" + fmt(value, value < 1 ? 4 : 2) : "未提供";
+  const medianOf = arr => { const a = arr.filter(finite).sort((p,q) => p-q), m = Math.floor(a.length/2); return a.length ? (a.length % 2 ? a[m] : (a[m-1]+a[m])/2) : NaN; };
   const link = (url, label) => `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(label)}</a>`;
   const modelMap = new Map(DATA.models.map(m => [m.name, m]));
   const claudeAdvice = new Map(DATA.claude_advice.map(row => [row.model, row]));
@@ -784,10 +785,12 @@
     }
     items.forEach(item => {
       if (item.scaleModel) parts.push(`<g data-scale-label="${esc(item.scaleModel)}">`);
+      if (item.dim) parts.push(`<g opacity="0.18">`);
       if (Math.abs(item.ly - item.cy) > 3 || item.lx - item.cx > 12) {
         parts.push(`<line x1="${item.cx + 4}" y1="${item.cy}" x2="${item.lx - 2}" y2="${item.ly}" stroke="${item.col}" stroke-width="0.95" opacity="0.65"/>`);
       }
       parts.push(`<text x="${item.lx}" y="${item.ly + 3.5}" font-size="${item.isSel ? 12 : 11}" font-weight="${item.isSel ? 700 : 600}" fill="${item.isSel ? "#111827" : "#1f2937"}" style="paint-order:stroke;stroke:#ffffff;stroke-width:3.5px;stroke-linejoin:round">${esc(item.text)}</text>`);
+      if (item.dim) parts.push("</g>");
       if (item.scaleModel) parts.push("</g>");
     });
   }
@@ -909,14 +912,23 @@
       .sort((a,b) => taskDef.getScore(b) - taskDef.getScore(a) || a.costPerTask - b.costPerTask)[0];
   }
 
-  function renderTaskCategoryCards(taskDef, activeReleases) {
+  // Quadrant bounds come from the data: median score of every measured effort for this task, and
+  // either the median cost or a personal budget. Hand-set constants used to favor the cheapest family.
+  function taskQuadrant(taskDef, activeReleases) {
+    const pts = activeReleases.flatMap(r => r.variants).filter(v => finite(v.costPerTask) && v.costPerTask > 0 && finite(taskDef.getScore(v)));
+    const mode = $("taskQuadMode")?.value || "median";
+    const medCost = medianOf(pts.map(v => v.costPerTask)), medScore = medianOf(pts.map(v => taskDef.getScore(v)));
+    const budget = mode === "median" ? medCost : Number(mode);
+    return {x: finite(budget) ? budget : taskDef.attractiveX, y: finite(medScore) ? medScore : taskDef.attractiveY, byBudget: mode !== "median", medCost};
+  }
+  function renderTaskCategoryCards(taskDef, activeReleases, quad = taskQuadrant(taskDef, activeReleases)) {
     const el = $("taskCategoryCards");
     if (!el) return;
     const allVars = activeReleases.flatMap(rel => rel.variants.map(v => ({rel, v, score:taskDef.getScore(v)}))).filter(x => finite(x.score) && finite(x.v.costPerTask));
     if (!allVars.length) { el.innerHTML = ""; return; }
     const bestOverall = [...allVars].sort((a,b) => (b.score - a.score) || (a.v.costPerTask - b.v.costPerTask))[0];
-    const inQuad = allVars.filter(x => x.v.costPerTask <= taskDef.attractiveX && x.score >= taskDef.attractiveY);
-    const bestQuad = (inQuad.length ? inQuad : allVars.filter(x => x.v.costPerTask <= taskDef.attractiveX)).sort((a,b) => (b.score - a.score) || (a.v.costPerTask - b.v.costPerTask))[0] || bestOverall;
+    const inQuad = allVars.filter(x => x.v.costPerTask <= quad.x && x.score >= quad.y);
+    const bestQuad = (inQuad.length ? inQuad : allVars.filter(x => x.v.costPerTask <= quad.x)).sort((a,b) => (b.score - a.score) || (a.v.costPerTask - b.v.costPerTask))[0] || bestOverall;
     const ultraLow = allVars.filter(x => x.v.costPerTask <= 0.16).sort((a,b) => (b.score - a.score) || (a.v.costPerTask - b.v.costPerTask))[0] || bestQuad;
     let bestGain = null;
     activeReleases.forEach(rel => {
@@ -935,7 +947,7 @@
         desc: `耗时 ${fmt(bestOverall.v.timePerTaskMinutes, 2)} 分钟 · AA 智能指数 ${fmt(bestOverall.v.intelligenceIndex, 1)}`
       },
       {
-        title: "优选象限冠军（Most Attractive ≤ $1.10）",
+        title: `优选象限冠军（Most Attractive ≤ ${money(quad.x)}）`,
         main: `${bestQuad.rel.shortName || bestQuad.rel.name} (${bestQuad.v.effort})`,
         stat: `${fmt(bestQuad.score, taskDef.digits)}${taskDef.unit} · ${money(bestQuad.v.costPerTask)}/任务`,
         desc: `与最高分相差 ${fmt(bestOverall.score - bestQuad.score, taskDef.digits)}${taskDef.unit === "%" ? " 个百分点" : taskDef.unit}，成本为该配置的 ${fmt((bestQuad.v.costPerTask / Math.max(0.001, bestOverall.v.costPerTask)) * 100, 0)}%`
@@ -999,19 +1011,24 @@
       colorMode,
       activeReleases
     });
-    renderTaskCategoryCards(taskDef, activeReleases);
+    const quad = taskQuadrant(taskDef, activeReleases);
+    renderTaskCategoryCards(taskDef, activeReleases, quad);
+    if ($("taskQuadHint")) $("taskQuadHint").textContent = `左上浅绿区域为 Most attractive quadrant：分数 ≥ 本任务全部档位的中位数 ${fmt(quad.y, taskDef.digits)}${taskDef.unit}，单任务成本 ≤ ${money(quad.x)}${quad.byBudget ? "（按你的预算）" : "（全部档位成本中位数）"} · 点击圆点或胶囊聚焦该模型`;
 
     $("taskEffortPills").innerHTML = activeReleases.map(r => {
       const col = getReleaseColor(r, colorMode);
       const topV = bestTaskVariant(r, taskDef) || r.variants[r.variants.length - 1];
       const sc = taskDef.getScore(topV);
       return `<button type="button" class="pill-btn ${r.releaseSlug === taskEffortState.selectedReleaseId ? "is-active" : ""}" data-task-pill="${esc(r.releaseSlug)}"><span class="swatch" style="background:${col}"></span>${esc(r.shortName || r.name)} <span class="small">(${fmt(sc, taskDef.digits)}${taskDef.unit})</span></button>`;
-    }).join("");
+    }).join("") + (taskEffortState.focus ? `<button type="button" class="pill-btn pill-reset" id="taskFocusReset">显示全部模型</button>` : "");
     $("taskEffortPills").querySelectorAll("[data-task-pill]").forEach(btn => btn.addEventListener("click", () => {
+      const same = taskEffortState.focus && taskEffortState.selectedReleaseId === btn.dataset.taskPill;
       taskEffortState.selectedReleaseId = btn.dataset.taskPill;
       taskEffortState.selectedVariantSlug = null;
+      taskEffortState.focus = !same;
       renderTaskEffortChart();
     }));
+    $("taskFocusReset")?.addEventListener("click", () => { taskEffortState.focus = false; renderTaskEffortChart(); });
 
     const variantMatchesFocus = (v, rel) => {
       if (focusEffort === "all") return mode === "top_variants" ? v === bestTaskVariant(rel, taskDef) : true;
@@ -1058,8 +1075,8 @@
       width,
       height,
       margin,
-      qx: x(taskDef.attractiveX),
-      qy: y(taskDef.attractiveY),
+      qx: x(Math.min(Math.max(quad.x, lo), hi)),
+      qy: y(Math.min(Math.max(quad.y, ymin), ymax)),
       showQuadrant: true
     });
 
@@ -1100,7 +1117,7 @@
     }
 
     if (frontier.length > 1) {
-      parts.push(`<polyline points="${frontier.map(p => `${x(p.v.costPerTask)},${y(p.score)}`).join(" ")}" fill="none" stroke="#111827" stroke-width="2.1" stroke-dasharray="2.5 3.5"/>`);
+      parts.push(`<polyline points="${frontier.map(p => `${x(p.v.costPerTask)},${y(p.score)}`).join(" ")}" fill="none" stroke="#111827" stroke-width="2.1" stroke-dasharray="2.5 3.5" opacity="${taskEffortState.focus ? 0.35 : 1}"/>`);
     }
 
     const topLabels = [];
@@ -1112,20 +1129,24 @@
         .filter(v => variantMatchesFocus(v, rel) && finite(v.costPerTask) && v.costPerTask > 0 && finite(taskDef.getScore(v)))
         .map(v => ({v, score:taskDef.getScore(v)}));
       if (!pts.length) return;
+      const focused = taskEffortState.focus && isSel, dimmed = taskEffortState.focus && !isSel;
+      const linePts = pts.map(p => `${x(p.v.costPerTask)},${y(p.score)}`).join(" ");
       const poly = pts.length > 1
-        ? `<polyline class="release-line" points="${pts.map(p => `${x(p.v.costPerTask)},${y(p.score)}`).join(" ")}" fill="none" stroke="${col}" stroke-width="${isSel ? 3.2 : 2.1}" opacity="${isSel ? 1 : 0.82}"/>`
+        ? (focused ? `<polyline class="release-halo" points="${linePts}" fill="none" stroke="#fffef9" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"/>` : "") +
+          `<polyline class="release-line" points="${linePts}" fill="none" stroke="${col}" stroke-width="${focused ? 4 : isSel ? 3.2 : 2.1}" stroke-linejoin="round" opacity="${isSel ? 1 : 0.82}"/>` +
+          `<polyline class="release-hit" points="${linePts}" fill="none" stroke="transparent" stroke-width="12" stroke-linejoin="round"/>`
         : "";
-      const dots = pts.map(p => {
+      const dots = pts.map((p, idx) => {
         const cx = x(p.v.costPerTask), cy = y(p.score);
         const isPrimary = p.v === bestTaskVariant(rel, taskDef) || pts.length === 1;
         const r = isPrimary ? (isSel ? 6.8 : 5.6) : (isSel ? 5.2 : 4.3);
-        const effTag = isSel && pts.length > 1 ? `<text x="${cx}" y="${cy - r - 4}" text-anchor="middle" font-size="9.5" font-weight="600" fill="${col}">${esc(EFFORT_SHORT[p.v.effort] || p.v.effort)}</text>` : "";
+        const effTag = isSel && pts.length > 1 ? `<text class="effort-tag" x="${cx}" y="${focused && idx % 2 ? cy + r + 13 : cy - r - 4}" text-anchor="middle" font-size="${focused ? 11 : 9.5}" font-weight="700" fill="${col}">${esc(EFFORT_SHORT[p.v.effort] || p.v.effort)}${focused ? " · " + fmt(p.score, taskDef.digits) : ""}</text>` : "";
         return `<g class="task-dot" tabindex="0" role="button" data-task-rel="${esc(rel.releaseSlug)}" data-task-var="${esc(p.v.slug)}" aria-label="${esc(p.v.name + "，" + taskDef.shortLabel + " " + fmt(p.score, taskDef.digits) + taskDef.unit + "，成本 " + money(p.v.costPerTask))}"><title>${esc(p.v.name + " · " + taskDef.shortLabel + " " + fmt(p.score, taskDef.digits) + taskDef.unit + " · 单任务 " + money(p.v.costPerTask) + " · 耗时 " + fmt(p.v.timePerTaskMinutes, 2) + "m")}</title><circle cx="${cx}" cy="${cy}" r="${r}" fill="${isPrimary ? col : "#ffffff"}" stroke="${col}" stroke-width="${isPrimary ? 2.2 : 1.9}"/>${effTag}</g>`;
       }).join("");
-      parts.push(`<g class="release-series ${isSel ? "is-highlighted" : ""}">${poly}${dots}</g>`);
+      parts.push(`<g class="release-series ${isSel ? "is-highlighted" : ""} ${focused ? "is-focused" : ""} ${dimmed ? "is-dimmed" : ""}" data-series="${esc(rel.releaseSlug)}">${poly}${dots}</g>`);
       const labelPt = [...pts].sort((a,b) => b.score - a.score || a.v.costPerTask - b.v.costPerTask)[0];
       const suffix = focusEffort !== "all" ? ` (${labelPt.v.effort})` : "";
-      topLabels.push({rel, col, v:labelPt.v, score:labelPt.score, text:(rel.shortName || rel.name) + suffix, cx:x(labelPt.v.costPerTask), cy:y(labelPt.score), ly:y(labelPt.score), isSel});
+      topLabels.push({rel, col, v:labelPt.v, score:labelPt.score, text:(rel.shortName || rel.name) + suffix, cx:x(labelPt.v.costPerTask), cy:y(labelPt.score), ly:y(labelPt.score), isSel, dim:dimmed});
     });
 
     renderSmartLabels(parts, topLabels, {width, height, margin, minGap:15, xSpan:135});
@@ -1135,6 +1156,7 @@
       const select = () => {
         taskEffortState.selectedReleaseId = dot.dataset.taskRel;
         taskEffortState.selectedVariantSlug = dot.dataset.taskVar;
+        taskEffortState.focus = true;
         renderTaskEffortChart();
       };
       dot.addEventListener("click", select);
@@ -1152,7 +1174,7 @@
       $("taskEffortTabs").querySelectorAll("[data-task-tab]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.taskTab === taskEffortState.tab)));
       renderTaskEffortChart();
     }));
-    ["taskEffortMode", "taskEffortFocus", "taskColorMode", "taskEffortBackdrop"].forEach(id => $(id)?.addEventListener("change", renderTaskEffortChart));
+    ["taskEffortMode", "taskEffortFocus", "taskColorMode", "taskEffortBackdrop", "taskQuadMode"].forEach(id => $(id)?.addEventListener("change", renderTaskEffortChart));
     $("exportTaskEffort")?.addEventListener("click", () => {
       const rows = DATA.aa_release_series.releases.filter(r => r.variants.some(v => v.taskScores)).flatMap(r => r.variants.map(v => ({
         release: r.name,
@@ -1457,8 +1479,9 @@
       width,
       height,
       margin,
-      qx: x(xMeta.attractiveX),
-      qy: y(42.5),
+      // Same rule as the overview chart: split at the medians of the plotted active points.
+      qx: x(Math.min(Math.max(medianOf(activePoints.map(p => p.v[xKey])) || xMeta.attractiveX, lo), hi)),
+      qy: y(Math.min(Math.max(medianOf(activePoints.map(p => p.v.intelligenceIndex)) || 42.5, ymin), ymax)),
       showQuadrant: showPareto
     });
 
