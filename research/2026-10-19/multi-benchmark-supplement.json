@@ -129,11 +129,16 @@
         "enLabel": "Finance & Accounting",
         "description": "财务报表勾稽、税务审计、估值建模与长 PDF 财报精确提取。",
         "coreEvals": [
-          "GDP.pdf",
-          "AA-Briefcase v1.1",
+          "AA-Omniscience（商业知识 / 非幻觉）",
           "GDPval-AA v2.1",
-          "AA-LCR v1.1"
-        ]
+          "AA-Briefcase v1.1",
+          "Humanity’s Last Exam",
+          "AutomationBench-AA（财务）",
+          "AA-LCR v1.1",
+          "GDP.pdf"
+        ],
+        "weightNote": "知识30% · 代理知识工作30% · 推理20% · 工具10% · 长上下文5% · 非幻觉5%",
+        "methodologyUrl": "https://artificialanalysis.ai/methodology/capability-indices"
       },
       {
         "key": "strategyAndOps",
@@ -143,10 +148,15 @@
         "enLabel": "Strategy & Operations",
         "description": "商业战略推演、跨系统企业工作流编排与代理式运营执行。",
         "coreEvals": [
+          "AA-Omniscience（商业知识）",
+          "GDPval-AA v2.1",
           "AA-Briefcase v1.1",
-          "AutomationBench-AA",
-          "GDPval-AA v2.1"
-        ]
+          "AutomationBench-AA（运营 / HR / 营销 / 销售 / 支持）",
+          "AA-LCR v1.1",
+          "GDP.pdf"
+        ],
+        "weightNote": "代理知识工作35% · 知识30% · 工具30% · 长上下文5%",
+        "methodologyUrl": "https://artificialanalysis.ai/methodology/capability-indices"
       },
       {
         "key": "legal",
@@ -156,11 +166,16 @@
         "enLabel": "Legal",
         "description": "超长合同审查、法条判例检索援引、合规风险识别与低幻觉事实陈述。",
         "coreEvals": [
+          "AA-Omniscience（法律知识 / 非幻觉）",
+          "GDPval-AA v2.1",
+          "AA-Briefcase v1.1",
+          "Humanity’s Last Exam",
           "AA-LCR v1.1",
-          "AA-Omniscience",
           "GDP.pdf",
-          "AA-Briefcase v1.1"
-        ]
+          "AutomationBench-AA（支持 / 运营）"
+        ],
+        "weightNote": "知识35% · 代理知识工作25% · 推理15% · 长上下文10% · 非幻觉10% · 工具5%",
+        "methodologyUrl": "https://artificialanalysis.ai/methodology/capability-indices"
       },
       {
         "key": "healthcareAndMedical",
@@ -170,10 +185,15 @@
         "enLabel": "Healthcare & Medical",
         "description": "临床指南遵循、医学文献综合推理与抗幻觉诊断安全边界（部分配置缺此子项）。",
         "coreEvals": [
-          "AA-Omniscience",
-          "Humanity's Last Exam",
-          "GDPval-AA v2.1"
-        ]
+          "AA-Omniscience（医疗知识 / 非幻觉）",
+          "GDPval-AA v2.1",
+          "AA-Briefcase v1.1",
+          "MLCR-AA",
+          "Humanity’s Last Exam",
+          "AutomationBench-AA（支持 / 运营）"
+        ],
+        "weightNote": "知识30% · 代理知识工作25% · 长上下文15% · 非幻觉10% · 推理10% · 工具10%",
+        "methodologyUrl": "https://artificialanalysis.ai/methodology/capability-indices"
       },
       {
         "key": "engineering",
@@ -181,13 +201,17 @@
         "label": "工程",
         "shortLabel": "工程",
         "enLabel": "Engineering",
-        "description": "终端代理编码（Terminal-Bench 4.0）、科学计算实现（SciCode）与复杂物理工程建模。",
+        "description": "科学、工程与数学知识、复杂推理、代理知识工作与终端代理的官方加权指数。",
         "coreEvals": [
-          "Terminal-Bench 4.0",
-          "SciCode",
-          "AutomationBench-AA",
-          "CritPt"
-        ]
+          "AA-Omniscience（科学 / 工程 / 数学知识）",
+          "Humanity’s Last Exam",
+          "CritPt",
+          "GDPval-AA v2.1",
+          "AA-Briefcase v1.1",
+          "Terminal-Bench 4.0"
+        ],
+        "weightNote": "知识35% · 推理30% · 代理知识工作20% · 终端代理15%",
+        "methodologyUrl": "https://artificialanalysis.ai/methodology/capability-indices"
       },
       {
         "key": "economics",
@@ -197,10 +221,14 @@
         "enLabel": "Economics",
         "description": "宏观与微观计量分析、市场机制博弈推演与政策研究交付。",
         "coreEvals": [
+          "AA-Omniscience（经济学知识）",
+          "Humanity’s Last Exam",
           "GDPval-AA v2.1",
-          "Humanity's Last Exam",
-          "AA-Briefcase v1.1"
-        ]
+          "AA-Briefcase v1.1",
+          "AA-LCR v1.1"
+        ],
+        "weightNote": "知识35% · 推理35% · 代理知识工作25% · 长上下文5%",
+        "methodologyUrl": "https://artificialanalysis.ai/methodology/capability-indices"
       }
     ],
     "entries": [

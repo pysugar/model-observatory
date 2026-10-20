@@ -104,3 +104,11 @@
 @media(max-width:1100px){.platform-grid,.task-summary-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.platform-grid,.task-summary-cards{grid-template-columns:1fr}.cap-index-tabs button{min-width:96px;font-size:12px;padding:6px 9px}.toolbar select{max-width:180px}#capBumpChart{min-width:760px}#releaseChart,#taskEffortChart,#effortScalingChart{min-width:580px}}
 
+
+.reasoning-chart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.reasoning-chart-grid>div{min-width:0}.reasoning-chart-grid h3{font-size:14px}#reasoningCurve,#reasoningCost{display:block;width:100%;min-width:550px}.reasoning-dot{cursor:pointer}.reasoning-dot:focus-visible,.bump-group:focus-visible{outline:3px solid #228a7b;outline-offset:3px}
+@media(max-width:1000px){.reasoning-chart-grid{grid-template-columns:1fr}}
+
+#capBumpChart{min-width:1180px}#reasoningCurve,#reasoningCost{min-width:550px}
+@media(max-width:700px){#reasoningCurve,#reasoningCost{min-width:620px}}
+
+#capModelPills .pill-btn[aria-pressed=false]{opacity:1;text-decoration:none;background:var(--paper)}

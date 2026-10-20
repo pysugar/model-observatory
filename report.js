@@ -384,177 +384,206 @@
     $("exportPanorama").addEventListener("click", () => exportCSV(shownPanoramaRows(), "四大家族五站全景对比-2026-10-19.csv"));
   }
 
-  // 2. AA Capability Index Rank Bump Chart & Domain Bar Chart (#capabilities -> #capIndexCard)
-  const capState = {tab:"all", selectedId:null};
-  const capScore = (e, key) => finite(e.capabilities?.[key]) ? e.capabilities[key] : e.intelligenceIndex;
-  function getCapEntries() {
-    const cap = DATA.aa_capability_indexes;
-    if (!cap) return [];
-    const scope = $("capIndexScope") ? $("capIndexScope").value : "four_family_top";
-    let list = cap.entries.filter(e => {
-      if (scope === "four_family_top") return e.isTopVariant && e.isFourFamily && e.isCurrent;
-      if (scope === "four_family_all") return e.isFourFamily && e.isCurrent;
-      if (scope === "all_top") return e.isTopVariant;
-      return true;
+  // Capability values stay official; missing domains never borrow Intelligence Index.
+  // BEGIN CAPABILITY_MATH (also exercised by the offline regression tests)
+  const capabilityEfforts = ["non-reasoning", "minimal", "low", "medium", "high", "xhigh", "max", "unspecified"];
+  const capScore = (e, key) => {
+    const value = key === "__ii__" ? e.intelligenceIndex : e.capabilities?.[key];
+    return finite(value) ? value : null;
+  };
+  const capPrecision = value => Number(value.toFixed(2));
+  function capRanking(entries, key) {
+    const valid = entries.filter(e => finite(capScore(e, key))).sort((a,b) =>
+      capPrecision(capScore(b,key)) - capPrecision(capScore(a,key)) || a.slug.localeCompare(b.slug));
+    const ranks = new Map();
+    let previous = null, rank = 0;
+    valid.forEach((e,i) => {
+      const score = capPrecision(capScore(e,key));
+      if (score !== previous) rank = i + 1;
+      ranks.set(e.slug, rank); previous = score;
     });
-    list = [...list].sort((a,b) => (b.intelligenceIndex - a.intelligenceIndex) || ((a.costPerTask ?? 999) - (b.costPerTask ?? 999)));
-    if (capState.tab === "all" && scope === "four_family_all" && list.length > 35) list = list.slice(0, 35);
-    return list;
+    return {valid, ranks, n:valid.length};
   }
+  function capScopeEntries(entries, scope) {
+    return entries.filter(e => scope === "four_family_top" ? e.isTopVariant && e.isFourFamily && e.isCurrent :
+      scope === "four_family_all" ? e.isFourFamily && e.isCurrent : scope === "all_top" ? e.isTopVariant : true)
+      .sort((a,b) => b.intelligenceIndex - a.intelligenceIndex || a.slug.localeCompare(b.slug));
+  }
+  function capExportRows(entries, domains) {
+    const rankings = new Map(domains.map(d => [d.key,capRanking(entries,d.key)]));
+    return entries.map(e => {
+      const row = {model:e.name, release:e.releaseName, vendor:e.vendor, effort:e.effort,
+        fallback:e.fallbackLabel || "", intelligence_index:e.intelligenceIndex, cost_per_task_usd:e.costPerTask,
+        representative_by_overall_ii:!!e.isTopVariant, comparison_n:entries.length,
+        rank_rule:"competition ranks at published 2-decimal precision", source_url:e.sourceUrl};
+      domains.forEach(d => {
+        const ranking = rankings.get(d.key), score = capScore(e,d.key);
+        row[d.key+"_score"] = score;
+        row[d.key+"_status"] = finite(score) ? "observed" : "missing";
+        row[d.key+"_view_rank"] = ranking.ranks.get(e.slug) ?? null;
+        row[d.key+"_valid_n"] = ranking.n;
+        row[d.key+"_aa_global_rank"] = e.strengthsGlobalRank?.[d.slug] ?? null;
+      });
+      return row;
+    });
+  }
+  function effortRows(entries, key, selectedSlug) {
+    const sorted = [...entries].sort((a,b) => capabilityEfforts.indexOf(a.effort)-capabilityEfforts.indexOf(b.effort));
+    const best = Math.max(...sorted.map(e => capScore(e,key)).filter(finite));
+    return sorted.map((e,i) => {
+      const previous = sorted[i-1], score = capScore(e,key), previousScore = previous ? capScore(previous,key) : null;
+      const cost = finite(e.costPerTask) ? e.costPerTask : null;
+      return {variant:e.slug, model:e.releaseName, effort:e.effort, metric:key, score,
+        score_status:finite(score) ? "observed" : "missing", cost_per_task_usd:cost,
+        delta_score:finite(score) && finite(previousScore) ? score-previousScore : null,
+        delta_cost_usd:previous && finite(cost) && finite(previous.costPerTask) ? cost-previous.costPerTask : null,
+        previous_measured_effort:previous?.effort ?? null, selected:e.slug === selectedSlug,
+        representative_by_overall_ii:!!e.isTopVariant,
+        best_for_metric:finite(score) && capPrecision(score) === capPrecision(best),
+        fallback:e.fallbackLabel || "", source_url:e.sourceUrl,
+        snapshot:"2026-10-19", cost_scope:"AA overall Intelligence Index weighted cost per task; not domain cost"};
+    });
+  }
+  // END CAPABILITY_MATH
+  const capState = {tab:"all", selectedId:null};
+  const getCapEntries = () => capScopeEntries(DATA.aa_capability_indexes?.entries || [], $("capIndexScope")?.value || "four_family_top");
+  const capLabel = e => `${e.releaseShort || e.releaseName} · ${e.effort}`;
   function renderCapDetail(entry, entries, domains) {
     if (!entry || !$("capIndexDetail")) return;
-    const rowsHtml = domains.map(d => {
-      const rawSc = entry.capabilities?.[d.key];
-      const sc = capScore(entry, d.key);
-      const gRank = entry.strengthsGlobalRank?.[d.slug];
-      const sorted = [...entries].sort((a,b) => capScore(b, d.key) - capScore(a, d.key));
-      const vRank = sorted.findIndex(x => x.slug === entry.slug) + 1;
-      const diff = finite(sc) && finite(entry.intelligenceIndex) ? sc - entry.intelligenceIndex : null;
-      const evals = (d.coreEvals || []).join(" · ");
-      return `<tr><th>${esc(d.label)}<span class="task-detail">${esc(evals)}</span></th><td class="metric-value"><strong>${fmt(sc,1)}${finite(rawSc) ? "" : "*"}</strong><div class="cost-bar" style="width:${Math.max(2,Math.round((sc||0)*1.3))}px;background:${entry.color}"></div></td><td class="metric-value">#${vRank} / ${entries.length}<span class="task-detail">${gRank ? `AA 全球版本排名 #${gRank}` : "同系子档位"}</span></td><td class="metric-value ${diff !== null && diff < 0 ? "delta-negative" : "delta-positive"}">${diff !== null ? (diff > 0 ? "+" : "") + fmt(diff,1) + " 分" : "—"}</td></tr>`;
+    const rows = domains.map(d => {
+      const score = capScore(entry,d.key), ranking = capRanking(entries,d.key), rank = ranking.ranks.get(entry.slug);
+      return `<tr><th>${link("https://artificialanalysis.ai/zh/indexes/"+d.slug,d.label)}<span class="task-detail">${esc(d.coreEvals.join(" · "))}<br>${esc(d.weightNote)}</span></th><td>${finite(score) ? fmt(score,2) : "无数据 · 不参排"}</td><td>${rank ? `#${rank} / ${ranking.n} 个有效配置` : `不参排 / ${ranking.n} 个有效配置`}<span class="task-detail">候选 ${entries.length} 个；缺测 ${entries.length-ranking.n} 个</span></td><td>${entry.strengthsGlobalRank?.[d.slug] ? `AA 来源全球发布排名 #${entry.strengthsGlobalRank[d.slug]}` : "未提供"}<span class="task-detail">AA 全库分母未存档；与当前筛选排名不同</span></td></tr>`;
     }).join("");
-    const rankVals = Object.values(entry.strengthsGlobalRank || {}).filter(finite);
-    const bestGlobal = rankVals.length ? "#" + Math.min(...rankVals) : "见视图排名";
-    $("capIndexDetail").innerHTML = `<div class="topline"><h3><span class="swatch" style="display:inline-block;background:${entry.color};margin-right:7px"></span>${esc(entry.name)} · 六大专业域能力剖析</h3><span class="tag">${esc(entry.vendor)} · 档位 ${esc(entry.effort)}</span></div><div class="numbers"><div><b>${fmt(entry.intelligenceIndex,1)}</b><span>Intelligence Index</span></div><div><b>${money(entry.costPerTask)}</b><span>AA 加权单任务成本</span></div><div><b>${esc(bestGlobal)}</b><span>最佳单域全球发布排名</span></div></div><div class="table-scroll">${table(["能力指数域 / 构成评测","域得分 (0–100)","当前视图排名 / 全库排名","相对综合指数偏离"], rowsHtml)}</div>`;
+    $("capIndexDetail").innerHTML = `<h3>${esc(capLabel(entry))} · 官方领域得分</h3><p class="small">${esc(entry.fallbackLabel || "来源未标记回退")} · ${link(entry.sourceUrl,"模型来源")} · ${link("https://artificialanalysis.ai/methodology/capability-indices","官方权重与方法")}。分项共享部分底层评测，六域领先不是六组独立实验。</p><div class="table-scroll">${table(["领域 / 构成与权重","官方分数","当前筛选排名 / 有效分母","来源全球排名（独立口径）"],rows)}</div>`;
   }
   function renderCapIndexChart() {
-    const cap = DATA.aa_capability_indexes;
-    const svg = $("capBumpChart");
+    const cap = DATA.aa_capability_indexes, svg = $("capBumpChart");
     if (!cap || !svg) return;
     const entries = getCapEntries();
-    if (!entries.length) return;
-    if (!capState.selectedId || !entries.some(e => e.slug === capState.selectedId)) {
-      capState.selectedId = entries[0].slug;
-    }
-    const domains = cap.domains;
-    $("capModelPills").innerHTML = entries.map(e => `<button type="button" class="pill-btn ${e.slug === capState.selectedId ? "is-active" : ""}" data-cap-model="${esc(e.slug)}"><span class="swatch" style="background:${e.color}"></span>${esc(e.shortLabel)} <span class="small">(${fmt(e.intelligenceIndex,1)})</span></button>`).join("");
-    $("capModelPills").querySelectorAll("[data-cap-model]").forEach(btn => btn.addEventListener("click", () => {
-      capState.selectedId = btn.dataset.capModel;
-      renderCapIndexChart();
-    }));
-
-    const width = Math.max(880, Math.round(svg.getBoundingClientRect().width || 1120));
-    if (capState.tab === "all") {
-      const showII = $("capShowII") && $("capShowII").checked;
-      const shortEvalMap = {
-        financeAndAccounting: "GDP.pdf · Briefcase",
-        strategyAndOps: "Briefcase · AutoBench",
-        legal: "AA-LCR · Omniscience",
-        healthcareAndMedical: "Omniscience · HLE",
-        engineering: "Terminal · SciCode",
-        economics: "GDPval · HLE"
-      };
-      const cols = [
-        ...(showII ? [{key:"__ii__", shortLabel:"综合指数 (II)", evals:"10 项全量基准", getScore:e => e.intelligenceIndex}] : []),
-        ...domains.map(d => ({key:d.key, shortLabel:d.shortLabel, evals:shortEvalMap[d.key] || d.enLabel, getScore:e => capScore(e, d.key)}))
-      ];
-      if ($("capIndexCount")) $("capIndexCount").textContent = `全部 · 排名对比（${entries.length} 个模型在 ${cols.length} 个维度的相对位次轨迹；点击任意曲线或胶囊高亮并查看 6 域明细）`;
-      const rowH = 30, margin = {top:62, bottom:26, left:210, right:210};
-      const height = margin.top + entries.length * rowH + margin.bottom;
-      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
-      svg.setAttribute("height", height);
-      const colX = i => margin.left + (cols.length === 1 ? 0 : i * (width - margin.left - margin.right) / (cols.length - 1));
-      const rankY = r => margin.top + (r - 0.5) * rowH;
-
-      const colRanks = new Map();
-      cols.forEach(c => {
-        const sorted = [...entries].sort((a,b) => (c.getScore(b) - c.getScore(a)) || (b.intelligenceIndex - a.intelligenceIndex) || ((a.costPerTask ?? 999) - (b.costPerTask ?? 999)));
-        const rMap = new Map();
-        sorted.forEach((e, idx) => rMap.set(e.slug, idx + 1));
-        colRanks.set(c.key, rMap);
+    if (!entries.some(e => e.slug === capState.selectedId)) capState.selectedId = entries[0]?.slug;
+    $("capModelPills").innerHTML = entries.map(e => `<button type="button" class="pill-btn ${e.slug === capState.selectedId ? "is-active" : ""}" aria-pressed="${e.slug === capState.selectedId}" data-cap-model="${esc(e.slug)}"><span class="swatch" style="background:${e.color}"></span>${esc(capLabel(e))}</button>`).join("");
+    const width = Math.max(1180,Math.round(svg.getBoundingClientRect().width || 1180));
+    const showII = $("capShowII").checked, domains = cap.domains;
+    const allCols = [...(showII ? [{key:"__ii__",shortLabel:"综合指数 II"}] : []),...domains];
+    const cols = capState.tab === "all" ? allCols : domains.filter(d => d.key === capState.tab);
+    const rankings = new Map(cols.map(d => [d.key,capRanking(entries,d.key)]));
+    const all = capState.tab === "all", margin = {left:all ? 255 : 265,right:all ? 255 : 140,top:90,bottom:40}, rowH=34;
+    const maxN = Math.max(1,...cols.map(c => rankings.get(c.key).n));
+    const height = margin.top+maxN*rowH+margin.bottom;
+    const rankY = r => margin.top+(r-.5)*rowH;
+    svg.setAttribute("viewBox",`0 0 ${width} ${height}`); svg.setAttribute("height",height);
+    const parts = [`<title>官方能力指数；按发布的两位小数并列排名；缺失值不参排</title>`];
+    const summary = cols.map(c => `${c.shortLabel} ${rankings.get(c.key).n}/${entries.length}`).join("；");
+    $("capIndexCount").textContent = `候选 ${entries.length} 个配置，完整展示。有效数/候选数：${summary}。同分并列（1、1、3），按来源两位小数；无数据不参排。`;
+    if (all) {
+      const colX = i => margin.left+i*(width-margin.left-margin.right)/Math.max(1,cols.length-1);
+      for(let r=1;r<=maxN;r++) parts.push(`<line x1="${margin.left}" x2="${width-margin.right}" y1="${rankY(r)}" y2="${rankY(r)}" stroke="#e3e9e1" stroke-dasharray="3 3"/><text x="12" y="${rankY(r)+4}" class="tick">#${r}</text>`);
+      cols.forEach((c,i) => {
+        const x=colX(i), n=rankings.get(c.key).n;
+        parts.push(`<text x="${x}" y="28" text-anchor="middle" font-size="12" font-weight="700" fill="#165e54">${esc(c.shortLabel)}</text><text class="cap-denominator" data-domain="${c.key}" data-valid-n="${n}" x="${x}" y="49" text-anchor="middle" font-size="11" fill="#647571">有效 ${n}/${entries.length}</text><line x1="${x}" x2="${x}" y1="65" y2="${height-margin.bottom}" stroke="#dce3db"/>`);
       });
-
-      const parts = [`<title>Artificial Analysis 能力指数排名对比（Bump Chart）</title>`];
-      for (let r = 1; r <= entries.length; r++) {
-        const y = rankY(r);
-        parts.push(`<line x1="${margin.left - 8}" x2="${width - margin.right + 8}" y1="${y}" y2="${y}" stroke="#e3e9e1" stroke-dasharray="3 3"/>`);
-        parts.push(`<text x="${margin.left - 194}" y="${y + 4}" class="tick" font-weight="600">#${r}</text>`);
-        parts.push(`<text x="${width - margin.right + 194}" y="${y + 4}" text-anchor="end" class="tick" font-weight="600">#${r}</text>`);
-      }
-      cols.forEach((c, idx) => {
-        const x = colX(idx);
-        parts.push(`<line x1="${x}" x2="${x}" y1="${margin.top - 12}" y2="${height - margin.bottom + 8}" stroke="#dce3db" stroke-width="1"/>`);
-        parts.push(`<text x="${x}" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#165e54">${esc(c.shortLabel)}</text>`);
-        parts.push(`<text x="${x}" y="41" text-anchor="middle" font-size="10.5" fill="#647571">${esc(c.evals)}</text>`);
+      const endPositions = new Map();
+      [cols[0],cols[cols.length-1]].forEach(c=>{
+        const groups=new Map();
+        rankings.get(c.key).valid.forEach(e=>{const rank=rankings.get(c.key).ranks.get(e.slug);if(!groups.has(rank))groups.set(rank,[]);groups.get(rank).push(e);});
+        groups.forEach((group,rank)=>group.forEach((e,i)=>endPositions.set(c.key+e.slug,rankY(rank)+(i-(group.length-1)/2)*14)));
       });
-
-      const orderedEntries = [...entries].sort((a,b) => (a.slug === capState.selectedId ? 1 : b.slug === capState.selectedId ? -1 : 0));
-      orderedEntries.forEach(e => {
-        const isSel = e.slug === capState.selectedId;
-        const pts = cols.map((c, idx) => ({x:colX(idx), y:rankY(colRanks.get(c.key).get(e.slug)), rank:colRanks.get(c.key).get(e.slug), score:c.getScore(e), col:c}));
-        let dPath = `M ${pts[0].x},${pts[0].y}`;
-        for (let i = 0; i < pts.length - 1; i++) {
-          const p0 = pts[i], p1 = pts[i+1], dx = (p1.x - p0.x) * 0.46;
-          dPath += ` C ${p0.x + dx},${p0.y} ${p1.x - dx},${p1.y} ${p1.x},${p1.y}`;
-        }
-        const first = pts[0], last = pts[pts.length - 1];
-        const nodesHtml = pts.map(pt => {
-          const badge = pt.rank <= 3 || isSel;
-          return badge
-            ? `<circle cx="${pt.x}" cy="${pt.y}" r="${isSel ? 10.5 : 9}" fill="${e.color}" stroke="#fffef9" stroke-width="1.8"/><text x="${pt.x}" y="${pt.y + 3.8}" text-anchor="middle" font-size="10.5" font-weight="700" fill="#ffffff">${pt.rank}</text>`
-            : `<circle cx="${pt.x}" cy="${pt.y}" r="5.2" fill="${e.color}" stroke="#fffef9" stroke-width="1.5"/>`;
+      [...entries].sort((a,b) => Number(a.slug===capState.selectedId)-Number(b.slug===capState.selectedId)).forEach(e => {
+        const selected=e.slug===capState.selectedId;
+        let path="", previous=false;
+        const nodes=cols.map((c,i) => {
+          const rank=rankings.get(c.key).ranks.get(e.slug), score=capScore(e,c.key);
+          if (!rank) {previous=false;return "";}
+          const x=colX(i), y=rankY(rank);
+          path+=`${previous ? "L" : "M"}${x},${y} `;previous=true;
+          return `<circle class="cap-node" data-domain="${c.key}" data-score="${score}" data-rank="${rank}" data-valid-n="${rankings.get(c.key).n}" cx="${x}" cy="${y}" r="${selected ? 9 : 5}" fill="${e.color}" stroke="#fffef9" stroke-width="1.5"><title>${esc(capLabel(e)+" · "+c.shortLabel+" "+fmt(score,2)+" · #"+rank+"/"+rankings.get(c.key).n)}</title></circle>${selected ? `<text x="${x}" y="${y+3}" font-size="9" text-anchor="middle" fill="white">${rank}</text>` : ""}`;
         }).join("");
-        const leftLabel = `<rect x="${margin.left - 166}" y="${first.y - 5}" width="8" height="10" rx="2" fill="${e.color}"/><text x="${margin.left - 153}" y="${first.y + 4}" font-size="11.5" font-weight="${isSel ? 700 : 500}" fill="${isSel ? "#165e54" : "#223c3a"}">${esc(e.shortLabel.slice(0,18))} (${fmt(first.score,1)})</text>`;
-        const rightLabel = `<text x="${width - margin.right + 14}" y="${last.y + 4}" font-size="11.5" font-weight="${isSel ? 700 : 500}" fill="${isSel ? "#165e54" : "#223c3a"}">${esc(e.shortLabel.slice(0,18))} (${fmt(last.score,1)})</text>`;
-        parts.push(`<g class="bump-group ${isSel ? "is-highlighted" : ""}" tabindex="0" role="button" data-cap-id="${esc(e.slug)}" aria-label="${esc(e.name + "，综合指数 " + fmt(e.intelligenceIndex,1))}"><title>${esc(e.name + " · 综合指数 " + fmt(e.intelligenceIndex,1) + " · 单任务 " + money(e.costPerTask))}</title><path class="bump-path" d="${dPath}" fill="none" stroke="${e.color}" stroke-width="${isSel ? 3.6 : 2.2}" opacity="${isSel ? 1 : 0.68}"/>${nodesHtml}${leftLabel}${rightLabel}</g>`);
+        const first=cols[0], last=cols[cols.length-1], firstRank=rankings.get(first.key).ranks.get(e.slug),lastRank=rankings.get(last.key).ranks.get(e.slug);
+        const endLabel=(c,r,x,anchor) => {
+          if(!r)return "";
+          const labelY=endPositions.get(c.key+e.slug), pointX=anchor==="end"?margin.left:width-margin.right;
+          return `${Math.abs(labelY-rankY(r))>2?`<line x1="${pointX}" y1="${rankY(r)}" x2="${x}" y2="${labelY}" stroke="${e.color}" stroke-width=".8"/>`:""}<text x="${x}" y="${labelY+4}" text-anchor="${anchor}" font-size="10.5" fill="${selected ? "#165e54" : "#223c3a"}">${esc(capLabel(e))} · ${esc(c.key==="__ii__" ? "II" : c.shortLabel)} ${fmt(capScore(e,c.key),2)}</text>`;
+        };
+        parts.push(`<g class="bump-group ${selected ? "is-highlighted" : ""}" tabindex="0" role="button" aria-pressed="${selected}" data-cap-id="${esc(e.slug)}" aria-label="${esc(capLabel(e))}"><title>${esc(capLabel(e)+" · "+(e.fallbackLabel || "来源未标记回退"))}</title><path class="bump-path" d="${path}" fill="none" stroke="${e.color}" stroke-width="${selected?3.6:2}" opacity="${selected?1:.55}"/>${nodes}${endLabel(first,firstRank,margin.left-14,"end")}${endLabel(last,lastRank,width-margin.right+14,"start")}</g>`);
       });
-      svg.innerHTML = parts.join("");
     } else {
-      const dom = domains.find(d => d.key === capState.tab) || domains[0];
-      const sorted = [...entries].sort((a,b) => (capScore(b, dom.key) - capScore(a, dom.key)) || (b.intelligenceIndex - a.intelligenceIndex));
-      if ($("capIndexCount")) $("capIndexCount").textContent = `${dom.label}（${dom.enLabel} · 构成评测：${(dom.coreEvals || []).join("、")} · 共 ${sorted.length} 个模型按该域得分降序排列）`;
-      const rowH = 30, margin = {top:44, bottom:28, left:225, right:215};
-      const height = margin.top + sorted.length * rowH + margin.bottom;
-      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
-      svg.setAttribute("height", height);
-      const barW = v => Math.max(2, (Math.min(Math.max(v, 0), 100) / 100) * (width - margin.left - margin.right));
-      const parts = [`<title>${esc(dom.label)} 能力指数条形图</title>`];
-      for (let t = 0; t <= 100; t += 20) {
-        const x = margin.left + (t / 100) * (width - margin.left - margin.right);
-        parts.push(`<line x1="${x}" x2="${x}" y1="${margin.top - 8}" y2="${height - margin.bottom}" stroke="#e2e8e0" stroke-dasharray="${t === 0 ? "" : "3 3"}"/><text x="${x}" y="24" text-anchor="middle" class="tick">${t} 分</text>`);
-      }
-      sorted.forEach((e, idx) => {
-        const y = margin.top + idx * rowH;
-        const sc = capScore(e, dom.key);
-        const gRank = e.strengthsGlobalRank?.[dom.slug] ?? (idx + 1);
-        const isSel = e.slug === capState.selectedId;
-        const w = barW(sc);
-        parts.push(`<g class="bump-group ${isSel ? "is-highlighted" : ""}" tabindex="0" role="button" data-cap-id="${esc(e.slug)}" aria-label="${esc(e.name + " " + dom.label + " " + fmt(sc,1) + " 分")}"><rect x="4" y="${y + 2}" width="${width - 8}" height="${rowH - 4}" rx="5" fill="${isSel ? "#eaf2ec" : "transparent"}"/><text x="14" y="${y + 19}" class="tick" font-weight="600">#${idx + 1}</text><rect x="46" y="${y + 9}" width="9" height="10" rx="2" fill="${e.color}"/><text x="61" y="${y + 19}" font-size="12" font-weight="${isSel ? 700 : 500}" fill="#223c3a">${esc(e.shortLabel.slice(0,22))}</text><rect x="${margin.left}" y="${y + 6}" width="${w}" height="${rowH - 12}" rx="4" fill="${e.color}" opacity="${isSel ? 0.96 : 0.78}"/><text x="${margin.left + w + 8}" y="${y + 19}" font-size="11.5" font-weight="600" fill="#223c3a">${fmt(sc,1)} 分 <tspan fill="#647571" font-weight="400">· 排名 #${gRank} · 单任务 ${money(e.costPerTask)}</tspan></text></g>`);
+      const dom=cols[0], ranking=rankings.get(dom.key), x=v=>margin.left+v/100*(width-margin.left-margin.right);
+      for(let t=0;t<=100;t+=20) parts.push(`<text x="${x(t)}" y="46" class="tick" text-anchor="middle">${t} 分</text><line x1="${x(t)}" x2="${x(t)}" y1="65" y2="${height-margin.bottom}" stroke="#e3e9e1"/>`);
+      ranking.valid.forEach((e,i) => {
+        const y=rankY(i+1), sc=capScore(e,dom.key), rank=ranking.ranks.get(e.slug);
+        parts.push(`<g class="bump-group" tabindex="0" role="button" data-cap-id="${esc(e.slug)}" aria-label="${esc(capLabel(e)+"，"+fmt(sc,2)+"分，排名"+rank+"，有效"+ranking.n)}"><text x="8" y="${y+4}" font-size="11">#${rank} ${esc(capLabel(e))}</text><rect class="cap-bar" data-score="${sc}" data-rank="${rank}" data-valid-n="${ranking.n}" x="${margin.left}" y="${y-9}" width="${x(sc)-margin.left}" height="18" rx="3" fill="${e.color}"/><text x="${x(sc)+8}" y="${y+4}" font-size="12">${fmt(sc,2)} 分</text></g>`);
       });
-      svg.innerHTML = parts.join("");
     }
-
-    svg.querySelectorAll("[data-cap-id]").forEach(node => {
-      const select = () => {
-        capState.selectedId = node.dataset.capId;
-        renderCapIndexChart();
-      };
-      node.addEventListener("click", select);
-      node.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(); } });
+    svg.innerHTML=parts.join("");
+    const missing=domains.map(d=>({d,entries:entries.filter(e=>!finite(capScore(e,d.key)))})).filter(x=>x.entries.length);
+    $("capMissingNote").textContent=missing.length ? missing.map(x=>`${x.d.label}缺测 ${x.entries.length} 个：${x.entries.map(capLabel).join("、")}`).join("；")+"。无节点、断开连线、不补值，CSV 分数与排名留空。" : "当前集合六域数据完整。";
+    const select=id=>{capState.selectedId=id;renderCapIndexChart();[...$("capModelPills").querySelectorAll("button")].find(b=>b.dataset.capModel===id)?.focus();};
+    $("capModelPills").querySelectorAll("[data-cap-model]").forEach(b=>b.addEventListener("click",()=>select(b.dataset.capModel)));
+    svg.querySelectorAll("[data-cap-id]").forEach(node=>{
+      node.addEventListener("click",()=>select(node.dataset.capId));
+      node.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();select(node.dataset.capId);}});
     });
-    renderCapDetail(entries.find(e => e.slug === capState.selectedId) || entries[0], entries, domains);
+    renderCapDetail(entries.find(e=>e.slug===capState.selectedId),entries,domains);
   }
   if ($("capIndexTabs")) {
-    $("capIndexTabs").querySelectorAll("[data-cap-tab]").forEach(btn => btn.addEventListener("click", () => {
-      capState.tab = btn.dataset.capTab;
-      $("capIndexTabs").querySelectorAll("[data-cap-tab]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.capTab === capState.tab)));
+    $("capIndexTabs").querySelectorAll("[data-cap-tab]").forEach(btn=>btn.addEventListener("click",()=>{
+      capState.tab=btn.dataset.capTab;
+      $("capIndexTabs").querySelectorAll("[data-cap-tab]").forEach(b=>b.setAttribute("aria-pressed",String(b===btn)));
       renderCapIndexChart();
     }));
-    $("capIndexScope").addEventListener("change", renderCapIndexChart);
-    $("capShowII").addEventListener("change", renderCapIndexChart);
-    $("exportCapIndexes").addEventListener("click", () => {
-      const domains = DATA.aa_capability_indexes.domains;
-      exportCSV(getCapEntries().map(e => {
-        const row = {model:e.name, release:e.releaseName, vendor:e.vendor, effort:e.effort, intelligence_index:e.intelligenceIndex, cost_per_task_usd:e.costPerTask};
-        domains.forEach(d => {
-          row[d.key + "_score"] = capScore(e, d.key);
-          row[d.key + "_global_rank"] = e.strengthsGlobalRank?.[d.slug] ?? null;
-        });
-        return row;
-      }), `AA能力指数-${capState.tab}-2026-10-19.csv`);
-    });
+    ["capIndexScope","capShowII"].forEach(id=>$(id).addEventListener("change",renderCapIndexChart));
+    $("exportCapIndexes").addEventListener("click",()=>exportCSV(capExportRows(getCapEntries(),DATA.aa_capability_indexes.domains),"AA官方能力指数-2026-10-19.csv"));
   }
 
+  // Same-release, same-snapshot official effort evidence in the reasoning tab.
+  const effortView = {selectedSlug:null};
+  function renderReasoningCharts() {
+    const cap=DATA.aa_capability_indexes;
+    if (!cap || !$("reasoningCurve")) return;
+    const entries=cap.entries.filter(e=>e.releaseSlug===$("reasoningRelease").value);
+    if (!entries.some(e=>e.slug===effortView.selectedSlug)) effortView.selectedSlug=entries.find(e=>e.isTopVariant)?.slug || entries[0]?.slug;
+    const key=$("reasoningMetric").value, metric=key==="__ii__" ? "综合指数 II" : cap.domains.find(d=>d.key===key).label;
+    const rows=effortRows(entries,key,effortView.selectedSlug), color=entries[0]?.color || "#165e54";
+    $("reasoningSelected").innerHTML=rows.map(r=>`<option value="${esc(r.variant)}">${esc(r.effort)}${r.representative_by_overall_ii?" · II 代表档":""}</option>`).join("");
+    $("reasoningSelected").value=effortView.selectedSlug;
+    const selected=rows.find(r=>r.selected), valid=rows.filter(r=>finite(r.score)), costs=valid.filter(r=>finite(r.cost_per_task_usd)&&r.cost_per_task_usd>=0);
+    $("reasoningChartNote").textContent=`图表与表格可横向滚动。${entries[0]?.releaseName} · ${metric}：${valid.length}/${rows.length} 个配置有分数，${costs.length} 个同时有 AA 加权成本。选中 ${selected?.effort}；实心点为选中档，外圈为该维度最高分（可并列）。横轴档位等距只表顺序；不同厂商不等预算。`;
+    const maxScore=Math.max(10,...valid.map(r=>r.score)), ceiling=Math.ceil(maxScore/10)*10;
+    const w=620,h=340,m={left:65,right:35,top:35,bottom:65}, y=v=>h-m.bottom-v/ceiling*(h-m.top-m.bottom);
+    const axis=()=>{
+      const parts=[];
+      for(let tick=0;tick<=ceiling;tick+=ceiling/5) parts.push(`<line x1="${m.left}" x2="${w-m.right}" y1="${y(tick)}" y2="${y(tick)}" stroke="#e3e9e1"/><text x="${m.left-10}" y="${y(tick)+4}" text-anchor="end" font-size="11">${fmt(tick,1)}</text>`);
+      parts.push(`<text x="${m.left}" y="18" font-size="12" fill="#165e54">${esc(metric)}（0–100）</text>`);return parts;
+    };
+    const node=(r,x,cy,offset=-15,compact=false)=>`<g class="reasoning-dot" role="button" tabindex="0" aria-pressed="${r.selected}" data-variant="${esc(r.variant)}" data-score="${r.score}" aria-label="${esc(r.effort+"，"+metric+" "+fmt(r.score,2)+"，AA 加权成本 "+money(r.cost_per_task_usd))}"><title>${esc(r.effort+" · "+fmt(r.score,2)+" 分 · "+money(r.cost_per_task_usd)+" · "+(r.fallback||"来源未标记回退"))}</title>${r.best_for_metric?`<circle cx="${x}" cy="${cy}" r="11" fill="none" stroke="${color}" stroke-width="1.5"/>`:""}<circle cx="${x}" cy="${cy}" r="${r.selected?7:5}" fill="${r.selected?color:"#fffef9"}" stroke="${color}" stroke-width="2"/><text x="${x}" y="${cy+offset}" text-anchor="middle" font-size="11" fill="${color}">${esc(r.effort)}${compact ? "" : " · "+fmt(r.score,2)}</text></g>`;
+    const x=i=>rows.length===1 ? (m.left+w-m.right)/2 : m.left+i*(w-m.left-m.right)/(rows.length-1);
+    const curve=axis();let path="",previous=false;
+    rows.forEach((r,i)=>{if(!finite(r.score)){previous=false;return;}path+=`${previous?"L":"M"}${x(i)},${y(r.score)} `;previous=true;});
+    curve.push(`<path d="${path}" fill="none" stroke="${color}" stroke-width="2"/>`);
+    rows.forEach((r,i)=>{curve.push(`<text x="${x(i)}" y="${h-40}" text-anchor="middle" font-size="11">${esc(r.effort)}</text>`);if(finite(r.score))curve.push(node(r,x(i),y(r.score)));else curve.push(`<text x="${x(i)}" y="${h-75}" text-anchor="middle" font-size="11">无数据</text>`);});
+    curve.push(`<text x="${w/2}" y="${h-10}" text-anchor="middle" font-size="12">同一模型的已测档位（等距，不代表投入倍数）</text>`);
+    const cost=axis(), maxCost=Math.max(.01,...costs.map(r=>r.cost_per_task_usd))*1.12, cx=v=>m.left+v/maxCost*(w-m.left-m.right);
+    for(let i=0;i<=4;i++){const v=i*maxCost/4;cost.push(`<text x="${cx(v)}" y="${h-40}" text-anchor="middle" font-size="11">${money(v)}</text>`);}
+    costs.forEach((r,i)=>cost.push(node(r,cx(r.cost_per_task_usd),y(r.score),i%2 ? 24 : -18,true)));
+    if(!costs.length)cost.push(`<text x="${w/2}" y="${h/2}" text-anchor="middle">无同口径费用，不补估算散点</text>`);
+    cost.push(`<text x="${w/2}" y="${h-10}" text-anchor="middle" font-size="12">AA 综合指数加权单任务成本（USD）</text>`);
+    [["reasoningCurve",curve],["reasoningCost",cost]].forEach(([id,parts])=>{const svg=$(id);svg.setAttribute("viewBox",`0 0 ${w} ${h}`);svg.innerHTML=`<title>${esc(entries[0]?.releaseName+" · "+metric)}</title>`+parts.join("");});
+    $("reasoningEvidenceTable").innerHTML=table(["已测档位 / 来源配置","官方得分","相对上一已测档分差","AA 加权成本 / 增量","选档标记"],rows.map(r=>`<tr data-variant="${esc(r.variant)}"><th>${link(r.source_url,r.effort)}<span class="task-detail">${esc(r.fallback||"来源未标记回退")}</span></th><td>${finite(r.score)?fmt(r.score,2):"无数据"}</td><td>${finite(r.delta_score)?`${r.delta_score>0?"+":""}${fmt(r.delta_score,2)}（${esc(r.previous_measured_effort)} → ${esc(r.effort)}）`:"无可比相邻值"}</td><td>${money(r.cost_per_task_usd)}<span class="task-detail">增量 ${finite(r.delta_cost_usd)?(r.delta_cost_usd>0?"+":"")+money(r.delta_cost_usd):"未提供"}</span></td><td>${[r.selected?"当前选中":"",r.representative_by_overall_ii?"II 最高代表档":"",r.best_for_metric?"本维度最高（可并列）":""].filter(Boolean).join(" · ")||"—"}</td></tr>`).join(""));
+    $("reasoningEvidenceTable").dataset.selected=effortView.selectedSlug;
+    document.querySelectorAll("#reasoningCharts .reasoning-dot").forEach(dot=>{
+      const select=()=>{effortView.selectedSlug=dot.dataset.variant;renderReasoningCharts();};
+      dot.addEventListener("click",select);dot.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();select();$("reasoningSelected").focus();}});
+    });
+  }
+  if ($("reasoningRelease")) {
+    const releases=[...new Map(DATA.aa_capability_indexes.entries.map(e=>[e.releaseSlug,e.releaseName])).entries()];
+    $("reasoningRelease").innerHTML=releases.map(([id,name])=>`<option value="${esc(id)}">${esc(name)}</option>`).join("");
+    $("reasoningRelease").value="claude-opus-5-5";
+    $("reasoningMetric").innerHTML=`<option value="__ii__">综合指数 II</option>`+DATA.aa_capability_indexes.domains.map(d=>`<option value="${d.key}">${esc(d.label)}</option>`).join("");
+    ["reasoningRelease","reasoningMetric"].forEach(id=>$(id).addEventListener("change",renderReasoningCharts));
+    $("reasoningSelected").addEventListener("change",()=>{effortView.selectedSlug=$("reasoningSelected").value;renderReasoningCharts();});
+    $("exportReasoningEvidence").addEventListener("click",()=>exportCSV(effortRows(DATA.aa_capability_indexes.entries.filter(e=>e.releaseSlug===$("reasoningRelease").value),$("reasoningMetric").value,effortView.selectedSlug),"同模型推理档位-官方能力与AA加权成本-2026-10-19.csv"));
+  }
   // Shared AA-style chart helpers (Most attractive quadrant, Pareto line, Vendor legend, Watermark)
   const AA_VENDOR_COLORS = {
     Anthropic: "#c86d51",
@@ -1357,5 +1386,5 @@
   const types=[...new Set(DATA.sources.map(s => s.type))];
   $("sourceList").innerHTML=types.map(type => `<div class="source-group"><h3>${esc(type)}</h3>${DATA.sources.filter(s => s.type === type).map(s => `<div class="source-item"><span class="source-id">${s.id}</span><div>${link(s.url,s.title)}<p>${esc(s.note)}</p><p>${esc(s.status)} · ${s.accessed}</p></div></div>`).join("")}</div>`).join("");
   $("integrityNote").textContent=`原记录 ${DATA.meta.original_rows} 条＋新增 ${DATA.rows.length-DATA.meta.original_rows} 条＝${DATA.rows.length} 条；AA分项 ${DATA.aa_profiles.length} 个配置。ToneBench SHA256：${DATA.meta.tonebench_sha256}`;
-  renderTaskEffortChart();renderEffortScalingChart();renderPanorama();renderClaudeCatalog();renderProfiles();renderCapIndexChart();renderSpecs();renderDeltas();changeGroup("general");showPanel(location.hash.slice(1)||"overview",false);
+  renderReasoningCharts();renderTaskEffortChart();renderEffortScalingChart();renderPanorama();renderClaudeCatalog();renderProfiles();renderCapIndexChart();renderSpecs();renderDeltas();changeGroup("general");showPanel(location.hash.slice(1)||"overview",false);
 })();
