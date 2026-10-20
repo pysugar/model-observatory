@@ -136,3 +136,51 @@ def check_scaling(page,data,output):
         finally: touch.close()
     page.select_option('#effortScalingTask','complex')
     page.locator('#resetScalingHighlight').click()
+    check_experience(page,data,output)
+
+
+def check_experience(page, data, output):
+    """Verified workflow cards stay compact; native disclosure works on all inputs."""
+    page.locator('[data-panel="capabilities"]').click()
+    section=page.locator('#pitfallExperience')
+    expect(section.locator('article')).to_have_count(3)
+    expect(section.locator('h4').first).to_have_text('多源经验参考')
+    for i,c in enumerate(data['computer_use_evidence']['pitfallExperience']['cards']):
+        card=section.locator(f'[data-experience-card="{c["id"]}"]')
+        detail=card.locator('details');summary=detail.locator('summary')
+        assert not detail.evaluate('d=>d.open')
+        expect(card.locator('p').nth(0)).to_contain_text(c['pitfall'])
+        expect(card.locator('p').nth(1)).to_contain_text(c['alternativeAction'])
+        expect(detail.locator('p').first).not_to_be_visible()
+        summary.focus();page.keyboard.press('Enter')
+        assert detail.evaluate('d=>d.open')
+        expect(detail).to_contain_text('多源经验参考')
+        expect(detail).to_contain_text('2026-10-20')
+        assert [a.get_attribute('href') for a in detail.locator('a').all()]==[s['sourceUrl'] for s in c['sources']]
+        for source in c['sources']:expect(detail).to_contain_text(source['caveats'])
+        page.keyboard.press('Space')
+        assert not detail.evaluate('d=>d.open')
+    expect(page.locator('#pitfallReminders article')).to_have_count(0)
+    section.screenshot(path=str(output/'experience-cards-desktop.png'),style='.nav-shell{visibility:hidden!important}')
+    section.locator('summary').first.click()
+    section.screenshot(path=str(output/'experience-sources-desktop.png'),style='.nav-shell{visibility:hidden!important}')
+    section.locator('summary').first.click()
+    for width in (390,320):
+        touch=page.context.browser.new_page(viewport={'width':width,'height':844},has_touch=True)
+        try:
+            touch.goto(page.url)
+            touch.locator('[data-panel="capabilities"]').tap()
+            cards=touch.locator('#pitfallExperience article')
+            for card in cards.all():
+                detail=card.locator('details')
+                assert not detail.evaluate('d=>d.open')
+                card.locator('summary').tap()
+                assert detail.evaluate('d=>d.open')
+                expect(detail.locator('a').first).to_be_visible()
+                card.locator('summary').tap()
+                assert not detail.evaluate('d=>d.open')
+            touch.locator('#pitfallExperience').screenshot(path=str(output/f'experience-cards-touch-{width}.png'),style='.nav-shell{visibility:hidden!important}')
+            cards.first.locator('summary').tap()
+            touch.locator('#pitfallExperience').screenshot(path=str(output/f'experience-sources-touch-{width}.png'),style='.nav-shell{visibility:hidden!important}')
+            assert touch.evaluate('document.documentElement.scrollWidth <= innerWidth'), 'Experience card overflow'
+        finally:touch.close()

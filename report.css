@@ -152,3 +152,9 @@
 #pitfallGuide section { padding:16px 0; border-top:1px solid #d6ded2; }
 #pitfallGuide li { margin:12px 0; }
 @media(max-width:640px) { #effortScalingCard .toolbar, #effortScalingCard .toolbar label { width:100%; min-width:0; } #effortScalingCard select, #pitfallGuide select { width:100%; } }
+
+#pitfallExperience .experience-card { padding:14px 0; border-top:1px solid #d6ded2; }
+#pitfallExperience .experience-card h4 { margin:0 0 10px; }
+#pitfallExperience details { margin-top:10px; }
+#pitfallExperience summary { cursor:pointer; min-height:36px; padding:5px 0; }
+#pitfallExperience a { overflow-wrap:anywhere; }
