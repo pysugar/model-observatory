@@ -13,6 +13,7 @@
 | `7129c59f816b060ef0df846da667a769cc120050` | PR #8：独立预览 Worker 地址初始化入口 | [run 39157322608](https://github.com/pysugar/model-observatory/actions/runs/39157322608) |
 | `e36e8f9e01e8b2362849a2009c62769e2138fa95` | PR #10：页脚构建身份、生产切换至受保护的 release | [run 39160593783](https://github.com/pysugar/model-observatory/actions/runs/39160593783) |
 | `5eab3d03a4abf61cdaa500669cd5d712e48d8428` | PR #14：能力完整性、档位交互与建议、Computer Use、避坑经验卡 | [run 39397926762](https://github.com/pysugar/model-observatory/actions/runs/39397926762) |
+| `1ed2900a756c1833611e5fb89d6f242399827f8d` | PR #16：选档速查矩阵、官方/社区参考、本页目录、数据中位数象限、系列聚焦、深色模式 | [run 39423917650](https://github.com/pysugar/model-observatory/actions/runs/39423917650) |
 
 以上版本均有成功发布 run；2026-10-18 的工作流修复与初始化没有改动研究数据内容。Cloudflare 版本 ID 以各 run 的上传日志与 Worker 控制台为准，不猜测 ID。
 
@@ -67,3 +68,19 @@
 仅在用户明确授权具体 Worker 和目标 Cloudflare 版本后执行平台版本回滚。先记录当前 Git SHA、线上版本和平台版本；在 Cloudflare 恢复选定的已知版本后，立即核验两条正式入口及内容哈希，再通过 revert/修复 PR 使 Git main 与线上内容对齐。工作流损坏时先修复可信发布链路；不要把平台回滚视为永久绕开 Git。
 
 如果恢复发生在正常 main 发布仍可能运行时，先由用户批准暂停相关发布开关，避免旧的排队任务覆盖恢复结果；修复对齐后再恢复。此次没有执行回滚、修改正式开关或改变 DNS。
+
+## 2026-10-20 PR16 界面与选档功能正式发布收束
+
+[PR #16](https://github.com/pysugar/model-observatory/pull/16) 已于 **2026-10-20T12:39:09Z** 合并。本轮只改展示与交互，研究数据不变（169 条记录、24 款模型、41 条来源，预览评论中的行数与来源数均未变化）。
+
+| 阶段 | 已完成事实 |
+| --- | --- |
+| 最终源码与合并 | PR 最终 head `a5cf105da2820aa9092beecfff9c0cc376e4edc6`；main merge `1ed2900a756c1833611e5fb89d6f242399827f8d` |
+| PR 验证与预览（历史） | 最终 head 的 [CI 39423649779](https://github.com/pysugar/model-observatory/actions/runs/39423649779) 成功；各提交均有原生预览；它们是 PR 预览证据，不是生产发布 |
+| main CI 与正式发布 | [run 39423917650](https://github.com/pysugar/model-observatory/actions/runs/39423917650) 成功：43 项单元测试、干净构建、生产/预览 Wrangler dry-run、完整浏览器 smoke（系统 Chrome、sandbox 开启，含选档矩阵与 Python 参考逐格一致、中位数象限、系列聚焦与本页目录） |
+| 正式版本 | 部署后 `publish.py probe` 对 [models.localgpt.net](https://models.localgpt.net) 与 [独立正式验收入口](https://model-observatory.openai-proxy-local.workers.dev) 均为 PASS，commit `1ed2900a756c1833611e5fb89d6f242399827f8d` |
+| Cloudflare 版本 | `6fa1312f-5d04-44db-89be-48dc1ee6ae21`（本次上传 `index.html`、`version.json` 两个变化资产） |
+
+上线功能：选档速查矩阵（边际收益拐点规则，省钱 / 均衡 / 性能优先三档门槛）、官方 / 经验起点与社区实测并排参考、各档位避坑清单、吸顶本页目录、按数据中位数或个人预算划分的 Most attractive quadrant、点击聚焦 / 悬停预览、档位曲线自适应纵轴、语义颜色变量与深色模式、长口径说明折叠。功能决策与不可回归边界见 [README](README.md#当前功能决策与不可回归边界)，本地验收记录见 [ui-refresh 记录](verification/ui-refresh-2026-10-20/validation.json)。
+
+本轮在云端容器内开发：该环境以 root 运行，本地浏览器检查未开 Chromium sandbox，仅用于迭代；sandbox 开启的验收以上述 CI 为准。容器网络策略不允许直接访问正式域名，线上核验采用发布工作流内的 probe 结果。
