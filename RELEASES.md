@@ -12,6 +12,7 @@
 | `06b59e39a9ec8085928788e6fb1914ce414bff52` | PR #7：版本化 Wrangler JSONL 输出 | [run 39156779873](https://github.com/pysugar/model-observatory/actions/runs/39156779873) |
 | `7129c59f816b060ef0df846da667a769cc120050` | PR #8：独立预览 Worker 地址初始化入口 | [run 39157322608](https://github.com/pysugar/model-observatory/actions/runs/39157322608) |
 | `e36e8f9e01e8b2362849a2009c62769e2138fa95` | PR #10：页脚构建身份、生产切换至受保护的 release | [run 39160593783](https://github.com/pysugar/model-observatory/actions/runs/39160593783) |
+| `5eab3d03a4abf61cdaa500669cd5d712e48d8428` | PR #14：能力完整性、档位交互与建议、Computer Use、避坑经验卡 | [run 39397926762](https://github.com/pysugar/model-observatory/actions/runs/39397926762) |
 
 以上版本均有成功发布 run；2026-10-18 的工作流修复与初始化没有改动研究数据内容。Cloudflare 版本 ID 以各 run 的上传日志与 Worker 控制台为准，不猜测 ID。
 
@@ -32,6 +33,30 @@
 | 页面验收 | 27 项测试通过；预览和正式站的桌面、390/320px 无横向溢出，页脚 commit 链接正确，无 JS 错误；禁用 JS 仍能查看版本。CI 的 `checks-<build>-1` artifact 保存页脚截图 |
 
 本节记录已完成的验收，不自动追随每次文档发布。最新线上版本以 [生产 version.json](https://models.localgpt.net/version.json) 和对应 [正式发布 run](https://github.com/pysugar/model-observatory/actions/workflows/deploy.yml)为准。GitHub site/checks artifact 保留 14 天，preview-record 保留 90 天；过期后应结合 Git 提交、PR 评论与 run 日志核对，不能把临时预览 URL 当永久归档。
+
+## 2026-10-20 PR14 功能与正式发布收束
+
+[PR #14](https://github.com/pysugar/model-observatory/pull/14) 已于 **2026-10-20T09:03:44Z** 合并。以下是协调线程已完成并提供的验收记录；本次文档收束未重新执行部署，也不授予后续 PR 合并或生产变更权限。
+
+| 阶段 | 已完成事实 |
+| --- | --- |
+| 最终源码与合并 | PR 最终 head `121a4edf314441c44aa8790dfb1af5be413c764f`；main merge `5eab3d03a4abf61cdaa500669cd5d712e48d8428` |
+| 最后预览（历史） | [CI 39393905185](https://github.com/pysugar/model-observatory/actions/runs/39393905185) 与 [preview deploy 39394160732](https://github.com/pysugar/model-observatory/actions/runs/39394160732) 成功；它们是 PR 预览证据，不是正式生产发布 |
+| main CI 与正式发布 | [run 39397926762](https://github.com/pysugar/model-observatory/actions/runs/39397926762) 成功：39 项单元测试、干净构建、生产/预览 Wrangler dry-run、完整浏览器 smoke（1440/390/320、键盘及真实触屏） |
+| 正式版本 | [models.localgpt.net](https://models.localgpt.net) 与 [独立正式验收入口](https://model-observatory.openai-proxy-local.workers.dev) 的 source/build 均为 `5eab3d03a4abf61cdaa500669cd5d712e48d8428`，Environment=`release`、branch=`main`、clean；两个入口的资产哈希分别核验通过 |
+| Cloudflare 版本 | `123f7a8e-c2c1-4f7a-9a4f-dd9d6e934ca8` |
+| 线上交互验收 | OSWorld 模型固定高亮、真实分数下降、七模型任务建议矩阵、三张可展开来源/边界的经验卡均已浏览器核验 |
+
+上线功能包括 AA 智能指数七项面板与排名/缺测一致性、固定与临时强调分离的已测档位曲线、官方/社区/经验分层建议、Arena 方法说明、分协议 Computer Use 与限定范围的观测替代组合。三张多源经验卡已补齐；待验证提醒没有卡片是有意的空状态。当前功能和后续入口集中在 [README](README.md#当前功能决策与不可回归边界)，不从旧 PR 中“待合并”或旧验收记录中的 pending 推断当前状态。
+
+本轮分阶段本地证据保留于：
+
+- [能力完整性与恢复](verification/capability-effort-2026-10-20/validation.json)、[空来源/嵌套按钮恢复](verification/capability-effort-2026-10-20/recovery/validation.json)。
+- [术语、评测说明与任务矩阵](verification/selection-guidance-2026-10-20/validation.json)。
+- [曲线、Computer Use 与观测替代](verification/computer-use-scaling-2026-10-20/validation.json)。
+- [三张经验卡](verification/experience-cards-2026-10-20/validation.json)。
+
+这些文件与相邻截图对应各自的源码阶段；其中较早的“待卡片文案”等状态保留为历史，不代表最终 PR head 的缺项。最新线上版本仍须将 `version.json` 的 source/build、分支、clean 和资产哈希与具体成功 run 对齐，不能仅凭页面打开或短 SHA。
 
 ## 常规回滚
 

@@ -1,6 +1,6 @@
 # 静态验证与发布
 
-本阶段只增加静态发布能力，沿用冻结证据与 Python 构建，不改变研究结论。所有命令从仓库根目录执行；路径不依赖 `/opt`、机器名称或个人虚拟环境。后续可将仓库放在 Hermes 机器的同一路径，此阶段不迁移机器、不启用自动调研。
+本阶段只增加静态发布能力，沿用冻结证据与 Python 构建，不改变研究结论。所有命令从仓库根目录执行；路径不依赖 `/opt`、机器名称或个人虚拟环境。这是最初静态发布阶段的范围记录。2026-10-20 已完成的手动 Hermes 实现与环境边界见 [RESEARCH_WORKFLOW.md](RESEARCH_WORKFLOW.md#当前手动协作与环境边界2026-10-20)；自动调研和云端迁移未启用。
 
 当前正式入口是 <https://models.localgpt.net>，独立验收入口是 <https://model-observatory.openai-proxy-local.workers.dev>。生产 Environment 已于 2026-10-19（Asia/Taipei）切换为 `release`，旧 `cloudflare-preview` 保留备用；下文早期准备记录中的旧环境名属于历史状态，当前配置与成功运行见 [环境迁移记录](RELEASE_ENVIRONMENT.md)和 [版本记录](RELEASES.md)。
 
@@ -24,7 +24,7 @@ python scripts/smoke.py --wrangler
 
 macOS 若使用已安装的 Chrome，可用 `python scripts/smoke.py --browser-channel chrome`。由 Codex 启动浏览器时须遵循主机审批限制，不能用 `--no-sandbox` 绕过。Linux 首次安装浏览器系统依赖可运行 `python -m playwright install --with-deps chromium`。Ubuntu 23.10+ 若限制下载版 Chromium 的 user namespace，使用系统 Chrome：`python -m playwright install --with-deps chrome`，再给 smoke 命令加 `--browser-channel chrome`。CI 采用此通道并保持 sandbox 开启；不修改 AppArmor/sysctl。[Chromium 说明](https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md)。实际浏览器版本记入 `test-results/smoke.json`，随 runner 系统 Chrome 更新。
 
-`smoke.py` 自动创建临时本地 HTTP 服务并关闭；`--wrangler` 自动启停实际 Wrangler 本地服务，并检查响应头。验证 6 个报告面板、筛选、CSV 缺值、预算边界、4 种 Opus 证据、桌面与 390/320px 布局，以及无外部请求。输出在被 Git 忽略的 `test-results/`。它也可检查已经启动的 Wrangler 本地服务：
+`smoke.py` 自动创建临时本地 HTTP 服务并关闭；`--wrangler` 自动启停实际 Wrangler 本地服务，并检查响应头。验证 6 个面板、12 类 CSV 下载、缺值/排名/预算边界、4 种 Opus 证据、固定与临时曲线高亮、分协议 Computer Use / 原始精度替代组合、28 个任务建议入口、三卡来源折叠，以及 1440/390/320、键盘和真实触屏；检查无页面溢出、JS 错误或外部加载请求。它调用 `scripts/capability_smoke.py`、`scripts/scaling_smoke.py`、`scripts/selection_smoke.py`，不要另建重复的浏览器检查路径。输出在被 Git 忽略的 `test-results/`。它也可检查已经启动的 Wrangler 本地服务：
 
 ```sh
 npm run preview
@@ -32,7 +32,22 @@ npm run preview
 python scripts/smoke.py --base-url http://127.0.0.1:8787 --cloudflare
 ```
 
-原 `validate_report.py` 是保留的更完整历史验收脚本；需提供 README 中的本地 HTTP 服务与 Chrome。新流水线使用不依赖固定端口、Chrome 安装位置或个人配置的 `scripts/smoke.py`。
+原 `validate_report.py` 是保留的历史验收脚本；需提供 README 中的本地 HTTP 服务与 Chrome。新流水线使用不依赖固定端口、Chrome 安装位置或个人配置的 `scripts/smoke.py`。
+
+### 按改动影响验证
+
+产品改动按对应数据/计算单元测试和既有 smoke 路径验收，提交后核对准确 SHA。已有 `.venv` 与系统 Chrome 可直接复用，无需为每次任务重装依赖；在该环境从仓库根目录运行：
+
+```sh
+.venv/bin/python -m unittest discover -s tests -v
+.venv/bin/python scripts/publish.py build --require-clean
+.venv/bin/python scripts/publish.py check --expected-commit "$(git rev-parse HEAD)"
+.venv/bin/python scripts/smoke.py --browser-channel chrome
+```
+
+`--require-clean` 用于已提交且工作区干净的验收，不靠重置工作区达成。Linux Chrome 保持 sandbox 开启；不以 `--no-sandbox` 或修改 AppArmor/sysctl 掩盖环境问题。测试数量以对应提交的结果为准；PR14 正式发布快照为 39 项，见 RELEASES。
+
+纯文档改动本地检查相对链接、引用路径、命令与实际入口、事实状态和 `git diff --check`，无需重跑未变的产品测试或生成报告。仓库没有额外 Markdown 校验器配置；现有 `.github/workflows/verify.yml` 对文档 PR 仍会运行正常 CI，不因这个本地分工削弱检查。Draft PR 可以验证，但原生预览明确跳过 Draft；本次文档任务不授权合并/生产部署。新文档 Draft PR 的标题和正文可准备在被忽略的 `test-results/hermes-cli/` 供协调线程使用，不包含凭据。
 
 ## 公开产物边界
 
