@@ -19,6 +19,7 @@ from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlsplit
 from urllib.request import Request, urlopen
+from report_claims import render_claims
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = {"index.html", "report-data.json", "report-data.csv", "_headers"}
@@ -93,8 +94,9 @@ def validate_sources(data, html):
     payload = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     expected = (ROOT / "report.template.html").read_text(encoding="utf-8")
     expected = expected.replace("/* REPORT_CSS */", (ROOT / "report.css").read_text(encoding="utf-8"))
-    expected = expected.replace("REPORT_DATA_JSON", payload)
     expected = expected.replace("/* REPORT_JS */", (ROOT / "report.js").read_text(encoding="utf-8"))
+    expected = render_claims(expected, data)
+    expected = expected.replace("REPORT_DATA_JSON", payload)
     require(html == expected, "Published HTML differs from current sources")
 
 

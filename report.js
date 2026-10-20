@@ -44,7 +44,7 @@
     $("claudeCount").textContent = `${models.length} 款 · 起步建议不等于已测甜蜜点`;
     $("claudeCatalog").innerHTML = `<table class="task-table"><caption>Claude 型号、推理起点与证据覆盖</caption><thead><tr>${["型号 / 入口","推理控制 / API 默认","编码起步 / 依据","保留、升档或换模型条件","本报告证据"].map(title => `<th scope="col">${title}</th>`).join("")}</tr></thead><tbody>${models.map(m => {
       const advice = claudeAdvice.get(m.name), coverage = claudeCoverage(m.name);
-      return `<tr><th scope="row">${link(m.source,m.short)}<span class="task-detail">${esc(m.lifecycle)}${m.screenshot_visible ? " · 截图可见" : " · 截图未显示"}</span>${m.lifecycle === "Deprecated" ? '<span class="evidence-badge">11-30 退役</span>' : ""}${m.short === "Fable 5" ? '<span class="evidence-badge">需 usage credits</span>' : ""}</th><td data-label="推理控制 / API 默认">${esc(m.efforts)}<span class="task-detail">默认：${esc(m.default_effort)}</span></td><td data-label="编码起步 / 依据"><strong>${esc(advice.start)}</strong><span class="task-detail">${esc(advice.basis)}</span></td><td data-label="保留、升档或换模型条件">${esc(advice.upgrade)}</td><td data-label="本报告证据">AA：${coverage.aa_url ? link(coverage.aa_url,coverage.aa) : coverage.aa}<span class="task-detail">英文写作：${coverage.writing ? coverage.writing+" 个配置" : "缺测"}<br>Vulcan v4：${coverage.coding ? coverage.coding+" 个配置" : "缺同版数据"}</span><button class="inline-button" data-claude-reasoning="${esc(m.name)}">查看档位证据 →</button></td></tr>`;
+      return `<tr><th scope="row">${link(m.source,m.short)}<span class="task-detail">${esc(m.lifecycle)}${m.screenshot_visible ? " · 客户端常见" : " · 扩展目录"}</span>${m.lifecycle === "Deprecated" ? '<span class="evidence-badge">11-30 退役</span>' : ""}${m.short === "Fable 5" ? '<span class="evidence-badge">需 usage credits</span>' : ""}</th><td data-label="推理控制 / API 默认">${esc(m.efforts)}<span class="task-detail">默认：${esc(m.default_effort)}</span></td><td data-label="编码起步 / 依据"><strong>${esc(advice.start)}</strong><span class="task-detail">${esc(advice.basis)}</span></td><td data-label="保留、升档或换模型条件">${esc(advice.upgrade)}</td><td data-label="本报告证据">AA：${coverage.aa_url ? link(coverage.aa_url,coverage.aa) : coverage.aa}<span class="task-detail">英文写作：${coverage.writing ? coverage.writing+" 个配置" : "缺测"}<br>Vulcan v4：${coverage.coding ? coverage.coding+" 个配置" : "缺同版数据"}</span><button class="inline-button" data-claude-reasoning="${esc(m.name)}">查看档位证据 →</button></td></tr>`;
     }).join("")}</tbody></table>`;
     $("claudeCatalog").querySelectorAll("[data-claude-reasoning]").forEach(button => button.addEventListener("click", () => {
       $("deltaModel").value = button.dataset.claudeReasoning;
@@ -69,8 +69,9 @@
       history.replaceState(null, "", "#" + name);
       window.scrollTo({top:Math.min(window.scrollY, document.querySelector(".nav-shell").offsetTop), behavior:"instant"});
     }
+    if (name === "overview") renderTaskEffortChart();
     if (name === "explorer") renderExplorer();
-    if (name === "capabilities") renderCapIndexChart();
+    if (name === "capabilities") { renderEffortScalingChart(); renderCapIndexChart(); }
   }
   const tabs = [...document.querySelectorAll("[data-panel]")];
   tabs.forEach((tab, i) => {
@@ -225,15 +226,28 @@
     const x = v => margin.left + (log ? Math.log(v/lo)/Math.log(hi/lo) : (v-lo)/(hi-lo))*(width-margin.left-margin.right);
     const [ymin,ymax] = meta.yrange, y = v => height-margin.bottom-(v-ymin)/(ymax-ymin)*(height-margin.top-margin.bottom);
     let parts = [`<title>${esc(meta.title)}</title>`];
-    for (let i=0;i<=5;i++) {const v = ymin+(ymax-ymin)*i/5; parts.push(`<line x1="${margin.left}" x2="${width-margin.right}" y1="${y(v)}" y2="${y(v)}" stroke="#e1e7de"/><text x="${margin.left-10}" y="${y(v)+4}" text-anchor="end" class="tick">${fmt(v,1)}</text>`);}
+    parts.push(`<rect x="${margin.left}" y="${margin.top}" width="${width-margin.left-margin.right}" height="${height-margin.top-margin.bottom}" fill="#ffffff"/>`);
+    if ($("pareto").checked && plotted.length > 2) {
+      const sortedX = [...values].sort((a,b) => a-b);
+      const qxVal = sortedX[Math.floor(sortedX.length * 0.52)];
+      const qyVal = ymin + (ymax - ymin) * 0.56;
+      const qx = Math.max(margin.left + 40, Math.min(width - margin.right - 40, x(qxVal)));
+      const qy = Math.max(margin.top + 30, Math.min(height - margin.bottom - 30, y(qyVal)));
+      parts.push(`<rect x="${margin.left}" y="${margin.top}" width="${qx - margin.left}" height="${qy - margin.top}" fill="#dcfce7" fill-opacity="0.68"/>`);
+      parts.push(`<rect x="${qx}" y="${qy}" width="${width - margin.right - qx}" height="${height - margin.bottom - qy}" fill="#f3f4f6" fill-opacity="0.65"/>`);
+      parts.push(`<line x1="${qx}" x2="${qx}" y1="${margin.top}" y2="${height - margin.bottom}" stroke="#86efac" stroke-dasharray="3 3"/>`);
+      parts.push(`<line x1="${margin.left}" x2="${width - margin.right}" y1="${qy}" y2="${qy}" stroke="#86efac" stroke-dasharray="3 3"/>`);
+      parts.push(`<text x="${margin.left + 8}" y="${margin.top + 16}" font-size="10.5" font-weight="600" fill="#15803d" opacity="0.88">Most attractive quadrant</text>`);
+    }
+    for (let i=0;i<=5;i++) {const v = ymin+(ymax-ymin)*i/5; parts.push(`<line x1="${margin.left}" x2="${width-margin.right}" y1="${y(v)}" y2="${y(v)}" stroke="#e5ebe3"/><text x="${margin.left-10}" y="${y(v)+4}" text-anchor="end" class="tick">${fmt(v,1)}</text>`);}
     const ticks = width < 600 ? 4 : 6;
-    for (let i=0;i<ticks;i++) {const v = log ? lo*(hi/lo)**(i/(ticks-1)) : lo+(hi-lo)*i/(ticks-1); parts.push(`<text x="${x(v)}" y="${height-margin.bottom+23}" text-anchor="middle" class="tick">${fmt(v,v < 1 ? 3 : v < 10 ? 2 : 0)}</text>`);}
+    for (let i=0;i<ticks;i++) {const v = log ? lo*(hi/lo)**(i/(ticks-1)) : lo+(hi-lo)*i/(ticks-1); parts.push(`<line x1="${x(v)}" x2="${x(v)}" y1="${margin.top}" y2="${height-margin.bottom}" stroke="#eef2ec" stroke-dasharray="3 3"/><text x="${x(v)}" y="${height-margin.bottom+23}" text-anchor="middle" class="tick">${fmt(v,v < 1 ? 3 : v < 10 ? 2 : 0)}</text>`);}
     parts.push(`<text x="${margin.left}" y="16" class="axis-label">${esc(meta.y)}</text><text x="${width/2}" y="${height-13}" text-anchor="middle" class="axis-label">${esc(meta.axes.find(a => a[0] === key)[1])}${log ? " · 对数刻度" : ""}</text>`);
     for (const name of state.models) {
       const line = plotted.filter(r => r.model === name && r.connect && pureVariant(r)).sort((a,b) => order.indexOf(a.effort)-order.indexOf(b.effort));
-      if (line.length > 1) parts.push(`<polyline points="${line.map(r => `${x(r[key])},${y(r.score)}`).join(" ")}" fill="none" stroke="${modelMap.get(name).color}" stroke-width="1.1" opacity=".23"/>`);
+      if (line.length > 1) parts.push(`<polyline points="${line.map(r => `${x(r[key])},${y(r.score)}`).join(" ")}" fill="none" stroke="${modelMap.get(name).color}" stroke-width="1.6" opacity=".45"/>`);
     }
-    if ($("pareto").checked && frontier.length > 1) parts.push(`<polyline points="${frontier.map(r => `${x(r[key])},${y(r.score)}`).join(" ")}" fill="none" stroke="#56695f" stroke-width="1.8" stroke-dasharray="5 5"/>`);
+    if ($("pareto").checked && frontier.length > 1) parts.push(`<polyline points="${frontier.map(r => `${x(r[key])},${y(r.score)}`).join(" ")}" fill="none" stroke="#111827" stroke-width="2" stroke-dasharray="2.5 3.5"/>`);
     for (const r of plotted) {
       const cx=x(r[key]), cy=y(r.score), color=modelMap.get(r.model).color;
       if (finite(r.ci95_halfwidth)) parts.push(`<path d="M${cx},${y(r.score-r.ci95_halfwidth)} V${y(r.score+r.ci95_halfwidth)} M${cx-4},${y(r.score-r.ci95_halfwidth)} H${cx+4} M${cx-4},${y(r.score+r.ci95_halfwidth)} H${cx+4}" stroke="${color}" opacity=".55"/>`);
@@ -267,8 +281,9 @@
   window.addEventListener("resize",() => {
     clearTimeout(resizeTimer);
     resizeTimer=setTimeout(() => {
+      if(!$("overview").hidden) renderTaskEffortChart();
       if(!$("explorer").hidden) renderExplorer();
-      if(!$("capabilities").hidden) renderCapIndexChart();
+      if(!$("capabilities").hidden) { renderEffortScalingChart(); renderCapIndexChart(); }
     },120);
   });
 
@@ -540,11 +555,613 @@
     });
   }
 
-  // 3. AA By-Release Intelligence Index vs Cost/Time/Output-Token Trajectory Chart (#explorer -> #releaseChartCard)
+  // Shared AA-style chart helpers (Most attractive quadrant, Pareto line, Vendor legend, Watermark)
+  const AA_VENDOR_COLORS = {
+    Anthropic: "#c86d51",
+    OpenAI: "#111827",
+    Google: "#1ca350",
+    xAI: "#6e56cf",
+    SpaceXAI: "#6e56cf",
+    Meta: "#0284c7",
+    Xiaomi: "#ea580c",
+    DeepSeek: "#2563eb",
+    Zhipu: "#0d9488",
+    Alibaba: "#7c3aed",
+    Moonshot: "#4f46e5",
+    MiniMax: "#db2777",
+    Other: "#6b7280"
+  };
+  const getReleaseColor = (rel, colorMode = "vendor") => {
+    if (colorMode === "model") return rel.color || AA_VENDOR_COLORS[rel.vendor] || AA_VENDOR_COLORS.Other;
+    return AA_VENDOR_COLORS[rel.vendor] || rel.color || AA_VENDOR_COLORS.Other;
+  };
+  function renderAALegendBar(containerId, {showQuadrant = true, showPareto = true, includeBackdropVendors = false, colorMode = "vendor", activeReleases = []} = {}) {
+    const el = $(containerId);
+    if (!el) return;
+    const items = [];
+    if (showQuadrant) {
+      items.push(`<span class="aa-legend-item"><span class="aa-quad-swatch"></span>Most attractive quadrant</span>`);
+    }
+    if (showPareto) {
+      items.push(`<span class="aa-legend-item"><span class="aa-pareto-swatch"></span>Pareto line</span>`);
+    }
+    if (colorMode === "model" && activeReleases.length) {
+      activeReleases.forEach(r => {
+        items.push(`<span class="aa-legend-item"><span class="aa-vendor-dot" style="background:${r.color}"></span>${esc(r.shortName || r.name)}</span>`);
+      });
+    } else {
+      const vendors = [
+        ["Anthropic", AA_VENDOR_COLORS.Anthropic],
+        ["OpenAI", AA_VENDOR_COLORS.OpenAI],
+        ["Google", AA_VENDOR_COLORS.Google],
+        ["SpaceXAI (xAI)", AA_VENDOR_COLORS.xAI],
+        ...(includeBackdropVendors ? [
+          ["Meta", AA_VENDOR_COLORS.Meta],
+          ["Xiaomi", AA_VENDOR_COLORS.Xiaomi],
+          ["DeepSeek", AA_VENDOR_COLORS.DeepSeek],
+          ["Other Models", AA_VENDOR_COLORS.Other]
+        ] : [])
+      ];
+      vendors.forEach(([label, col]) => {
+        items.push(`<span class="aa-legend-item"><span class="aa-vendor-dot" style="background:${col}"></span>${esc(label)}</span>`);
+      });
+    }
+    el.innerHTML = items.join("");
+  }
+  function drawAAPlotChrome(parts, {width, height, margin, qx, qy, showQuadrant = true}) {
+    const plotW = width - margin.left - margin.right;
+    const plotH = height - margin.top - margin.bottom;
+    parts.push(`<rect x="${margin.left}" y="${margin.top}" width="${plotW}" height="${plotH}" fill="#ffffff"/>`);
+    if (showQuadrant && finite(qx) && finite(qy)) {
+      const cx = Math.max(margin.left + 36, Math.min(width - margin.right - 36, qx));
+      const cy = Math.max(margin.top + 28, Math.min(height - margin.bottom - 28, qy));
+      parts.push(`<rect x="${margin.left}" y="${margin.top}" width="${cx - margin.left}" height="${cy - margin.top}" fill="#dcfce7" fill-opacity="0.72"/>`);
+      parts.push(`<rect x="${cx}" y="${cy}" width="${width - margin.right - cx}" height="${height - margin.bottom - cy}" fill="#f3f4f6" fill-opacity="0.65"/>`);
+      parts.push(`<line x1="${cx}" x2="${cx}" y1="${margin.top}" y2="${height - margin.bottom}" stroke="#86efac" stroke-width="1.1" stroke-dasharray="3 3"/>`);
+      parts.push(`<line x1="${margin.left}" x2="${width - margin.right}" y1="${cy}" y2="${cy}" stroke="#86efac" stroke-width="1.1" stroke-dasharray="3 3"/>`);
+      parts.push(`<text x="${margin.left + 10}" y="${margin.top + 17}" font-size="11" font-weight="600" fill="#15803d" opacity="0.9">Most attractive quadrant</text>`);
+    }
+    parts.push(`<rect x="${margin.left}" y="${margin.top}" width="${plotW}" height="${plotH}" fill="none" stroke="#d5dfd9" stroke-width="1"/>`);
+    // Artificial Analysis watermark badge in bottom-right inside plot area
+    const wmW = 118, wmH = 22, wmX = width - margin.right - wmW - 10, wmY = height - margin.bottom - wmH - 8;
+    parts.push(`<g opacity="0.86"><rect x="${wmX}" y="${wmY}" width="${wmW}" height="${wmH}" rx="4" fill="#ffffff" stroke="#d1d5db" stroke-width="0.9"/><text x="${wmX + wmW / 2}" y="${wmY + 14.5}" text-anchor="middle" font-size="11" font-weight="700" fill="#111827">Artificial Analysis</text></g>`);
+  }
+  function renderSmartLabels(parts, items, {width, height, margin, minGap = 15, xSpan = 135}) {
+    items.forEach(it => {
+      it.lx = Math.min(width - margin.right + 6, it.cx + 9);
+      it.ly = Math.max(margin.top + 10, Math.min(height - margin.bottom - 8, it.cy));
+    });
+    for (let pass = 0; pass < 6; pass++) {
+      items.sort((a,b) => a.ly - b.ly || a.lx - b.lx);
+      for (let i = 0; i < items.length; i++) {
+        for (let j = 0; j < i; j++) {
+          if (Math.abs(items[i].lx - items[j].lx) < xSpan && items[i].ly - items[j].ly < minGap) {
+            const mid = (items[i].ly + items[j].ly) / 2;
+            items[j].ly = Math.max(margin.top + 10, mid - minGap / 2);
+            items[i].ly = Math.min(height - margin.bottom - 8, items[j].ly + minGap);
+          }
+        }
+      }
+    }
+    items.forEach(item => {
+      if (Math.abs(item.ly - item.cy) > 3 || item.lx - item.cx > 12) {
+        parts.push(`<line x1="${item.cx + 4}" y1="${item.cy}" x2="${item.lx - 2}" y2="${item.ly}" stroke="${item.col}" stroke-width="0.95" opacity="0.65"/>`);
+      }
+      parts.push(`<text x="${item.lx}" y="${item.ly + 3.5}" font-size="${item.isSel ? 12 : 11}" font-weight="${item.isSel ? 700 : 600}" fill="${item.isSel ? "#111827" : "#1f2937"}" style="paint-order:stroke;stroke:#ffffff;stroke-width:3.5px;stroke-linejoin:round">${esc(item.text)}</text>`);
+    });
+  }
+
+  // 3. Flagship Task × Reasoning Effort Quadrant & Trajectory Chart (#overview -> #taskEffortCard)
+  const TASK_DEFINITIONS = {
+    complex: {
+      key: "complex",
+      shortLabel: "复杂问题解决",
+      title: "复杂问题解决能力（HLE 50% + CritPt 50%）vs. 单任务成本（对数刻度）",
+      yLabel: "复杂问题解决得分（HLE + CritPt 均值 · %）",
+      unit: "%",
+      digits: 1,
+      yrange: [0, 54],
+      yTicks: [0, 10, 20, 30, 40, 50],
+      attractiveY: 35,
+      attractiveX: 1.10,
+      subnote: "本报告任务视图（Complex Reasoning & Frontier Science）：Humanity's Last Exam 与 CritPt 的等权均值，不是 AA 单独发布的任务指数。Opus 5.5 low {{aa:claude-opus-5-5:low:complex:1}}% → high {{aa:claude-opus-5-5:high:complex:1}}% → max {{aa:claude-opus-5-5:max:complex:1}}%；Sol high {{aa:gpt-6-1-sol:high:complex:1}}%，成本 ${{aa:gpt-6-1-sol:high:costPerTask:2}}。点估计差异不证明统计显著性。",
+      getScore: v => v.taskScores?.complex
+    },
+    coding: {
+      key: "coding",
+      shortLabel: "编程与软件工程",
+      title: "编程与软件工程能力（Terminal-Bench 4.0 + SciCode）vs. 单任务成本（对数刻度）",
+      yLabel: "编程与软件工程得分（Terminal-Bench + SciCode 均值 · %）",
+      unit: "%",
+      digits: 1,
+      yrange: [12, 68],
+      yTicks: [20, 30, 40, 50, 60],
+      attractiveY: 47,
+      attractiveX: 1.10,
+      subnote: "本报告任务视图（Coding & Software Engineering）：Terminal-Bench 4.0 与 SciCode 的等权均值，不是通用软件工程通过率。Opus 5.5 max {{aa:claude-opus-5-5:max:coding:1}}%，Sonnet 5.5 max {{aa:claude-sonnet-5-5:max:coding:1}}%；Sol medium/high 分别为 {{aa:gpt-6-1-sol:medium:coding:1}}% / {{aa:gpt-6-1-sol:high:coding:1}}%。Vulcan 的题集、脚手架与成本另列。",
+      getScore: v => v.taskScores?.coding
+    },
+    planning: {
+      key: "planning",
+      shortLabel: "方案设计与规划",
+      title: "方案设计、多源综合与战略规划能力（AA-Briefcase v1.1 Elo）vs. 单任务成本",
+      yLabel: "方案设计与多源规划（AA-Briefcase v1.1 · 原始 Elo）",
+      unit: " Elo",
+      digits: 0,
+      yrange: [650, 1880],
+      yTicks: [800, 1000, 1200, 1400, 1600, 1800],
+      attractiveY: 1450,
+      attractiveX: 1.10,
+      subnote: "本报告任务视图（Architecture, Strategy & Multi-Source Planning）：直接展示 AA-Briefcase v1.1 原始 Elo。Sonnet 5.5 max {{aa:claude-sonnet-5-5:max:planning:0}}、Opus 5.5 max {{aa:claude-opus-5-5:max:planning:0}}；Grok high {{aa:grok-4-7:high:planning:0}} → xhigh {{aa:grok-4-7:xhigh:planning:0}}，成本 ${{aa:grok-4-7:high:costPerTask:2}} → ${{aa:grok-4-7:xhigh:costPerTask:2}}。Elo 只作同基准相对比较，不能换算为能力百分比。",
+      getScore: v => v.taskScores?.planning
+    },
+    agentic: {
+      key: "agentic",
+      shortLabel: "长程代理交付",
+      title: "长程代理工作流交付能力（GDPval-AA v2.1 Elo）vs. 单任务成本",
+      yLabel: "长程代理工作流交付（GDPval-AA v2.1 · 原始 Elo）",
+      unit: " Elo",
+      digits: 0,
+      yrange: [950, 1950],
+      yTicks: [1000, 1200, 1400, 1600, 1800],
+      attractiveY: 1480,
+      attractiveX: 1.10,
+      subnote: "本报告任务视图（Long-Horizon Agentic Delivery）：直接展示 GDPval-AA v2.1 原始 Elo。Opus 5.5 max {{aa:claude-opus-5-5:max:agentic:0}}、Sonnet 5.5 max {{aa:claude-sonnet-5-5:max:agentic:0}}；Sol xhigh {{aa:gpt-6-1-sol:xhigh:agentic:0}} / ${{aa:gpt-6-1-sol:xhigh:costPerTask:2}}。Flash high 为 {{aa:gemini-3-8-flash:high:agentic:0}} / ${{aa:gemini-3-8-flash:high:costPerTask:2}}，未达到本视图的优选象限条件。",
+      getScore: v => v.taskScores?.agentic
+    },
+    automation: {
+      key: "automation",
+      shortLabel: "多工具自动化",
+      title: "多工具业务流程自动化（AutomationBench-AA 完成率）vs. 单任务成本",
+      yLabel: "多工具流程自动化（AutomationBench-AA · %）",
+      unit: "%",
+      digits: 0,
+      yrange: [0, 86],
+      yTicks: [0, 20, 40, 60, 80],
+      attractiveY: 58,
+      attractiveX: 1.10,
+      subnote: "本报告任务视图（Multi-Tool Workflow Automation）：直接展示 AutomationBench-AA 完成率。Argon high {{aa:gemini-4-argon:high:automation:0}}%、Opus 5.5 max {{aa:claude-opus-5-5:max:automation:0}}%、Fable 5.1 max {{aa:claude-fable-5-1:max:automation:0}}%；Sol high/xhigh {{aa:gpt-6-1-sol:high:automation:0}}% / {{aa:gpt-6-1-sol:xhigh:automation:0}}%。同名档位不表示相同推理预算。",
+      getScore: v => v.taskScores?.automation
+    },
+    knowledge: {
+      key: "knowledge",
+      shortLabel: "长文档与抗幻觉",
+      title: "长文档分析与知识抗幻觉（AA-LCR + GDP.pdf + Omniscience）vs. 单任务成本",
+      yLabel: "长文档与知识抗幻觉合成得分（分）",
+      unit: " 分",
+      digits: 1,
+      yrange: [15, 60],
+      yTicks: [20, 30, 40, 50, 60],
+      attractiveY: 44,
+      attractiveX: 1.10,
+      subnote: "本报告自定义合成分（Long-Context & Factual Grounding）：(AA-LCR v1.1 + 2 × GDP.pdf + 3 × AA-Omniscience) / 6；沿用各子项数值后加权，不是 AA 官方独立指数或成功率。Sol low {{aa:gpt-6-1-sol:low:knowledge:2}} 分、high {{aa:gpt-6-1-sol:high:knowledge:2}} 分（${{aa:gpt-6-1-sol:high:costPerTask:2}}）；Opus high/xhigh {{aa:claude-opus-5-5:high:knowledge:2}} / {{aa:claude-opus-5-5:xhigh:knowledge:2}} 分。Omniscience 的档位变化不证明幻觉变化的原因。",
+      getScore: v => v.taskScores?.knowledge
+    },
+    intelligenceIndex: {
+      key: "intelligenceIndex",
+      shortLabel: "AA 综合智力指数",
+      title: "Artificial Analysis 综合智力指数（10 项全量 v4.3.2）vs. 单任务成本",
+      yLabel: "AA Intelligence Index v4.3.2（分）",
+      unit: " 分",
+      digits: 1,
+      yrange: [14, 64],
+      yTicks: [20, 30, 40, 50, 60],
+      attractiveY: 42.5,
+      attractiveX: 1.10,
+      subnote: "直接使用快照中的 AA Intelligence Index v4.3.2（10 项评测）。留档方法的分类权重为 Agents 30%、Coding 20%、Scientific Reasoning 20%、General 30%；不由本报告的任务合成分重建。显示其他市场参考模型时，可叠加全部 30 个发布版本（94 个配置）；不同子评测保留自己的单位与口径。",
+      getScore: v => v.intelligenceIndex
+    }
+  };
+
+  const taskEffortState = {
+    tab: "complex",
+    selectedReleaseId: "claude-opus-5-5",
+    selectedVariantSlug: null
+  };
+  const EFFORT_ORDER = ["non-reasoning", "low", "medium", "high", "xhigh", "max"];
+  const EFFORT_SHORT = {"non-reasoning":"non-reas.", low:"low", medium:"med", high:"high", xhigh:"xhigh", max:"max"};
+
+  // Select by the displayed task, breaking equal scores by the lower known cost.
+  function bestTaskVariant(rel, taskDef) {
+    return rel.variants
+      .filter(v => finite(taskDef.getScore(v)) && finite(v.costPerTask) && v.costPerTask > 0)
+      .sort((a,b) => taskDef.getScore(b) - taskDef.getScore(a) || a.costPerTask - b.costPerTask)[0];
+  }
+
+  function renderTaskCategoryCards(taskDef, activeReleases) {
+    const el = $("taskCategoryCards");
+    if (!el) return;
+    const allVars = activeReleases.flatMap(rel => rel.variants.map(v => ({rel, v, score:taskDef.getScore(v)}))).filter(x => finite(x.score) && finite(x.v.costPerTask));
+    if (!allVars.length) { el.innerHTML = ""; return; }
+    const bestOverall = [...allVars].sort((a,b) => (b.score - a.score) || (a.v.costPerTask - b.v.costPerTask))[0];
+    const inQuad = allVars.filter(x => x.v.costPerTask <= taskDef.attractiveX && x.score >= taskDef.attractiveY);
+    const bestQuad = (inQuad.length ? inQuad : allVars.filter(x => x.v.costPerTask <= taskDef.attractiveX)).sort((a,b) => (b.score - a.score) || (a.v.costPerTask - b.v.costPerTask))[0] || bestOverall;
+    const ultraLow = allVars.filter(x => x.v.costPerTask <= 0.16).sort((a,b) => (b.score - a.score) || (a.v.costPerTask - b.v.costPerTask))[0] || bestQuad;
+    let bestGain = null;
+    activeReleases.forEach(rel => {
+      const pts = rel.variants.map(v => ({v, score:taskDef.getScore(v)})).filter(x => finite(x.score));
+      if (pts.length >= 2) {
+        const first = pts[0], last = pts.reduce((a,b) => b.score >= a.score ? b : a, pts[0]);
+        const gain = last.score - first.score;
+        if (!bestGain || gain > bestGain.gain) bestGain = {rel, first, last, gain};
+      }
+    });
+    const cards = [
+      {
+        title: "能力上限冠军（Peak Capability）",
+        main: `${bestOverall.rel.shortName || bestOverall.rel.name} (${bestOverall.v.effort})`,
+        stat: `${fmt(bestOverall.score, taskDef.digits)}${taskDef.unit} · ${money(bestOverall.v.costPerTask)}/任务`,
+        desc: `耗时 ${fmt(bestOverall.v.timePerTaskMinutes, 2)} 分钟 · 综合指数 ${fmt(bestOverall.v.intelligenceIndex, 1)}`
+      },
+      {
+        title: "优选象限冠军（Most Attractive ≤ $1.10）",
+        main: `${bestQuad.rel.shortName || bestQuad.rel.name} (${bestQuad.v.effort})`,
+        stat: `${fmt(bestQuad.score, taskDef.digits)}${taskDef.unit} · ${money(bestQuad.v.costPerTask)}/任务`,
+        desc: `与最高分相差 ${fmt(bestOverall.score - bestQuad.score, taskDef.digits)}${taskDef.unit === "%" ? " 个百分点" : taskDef.unit}，成本为该配置的 ${fmt((bestQuad.v.costPerTask / Math.max(0.001, bestOverall.v.costPerTask)) * 100, 0)}%`
+      },
+      {
+        title: "轻量低成本甜点（Ultra-Low Cost ≤ $0.16）",
+        main: `${ultraLow.rel.shortName || ultraLow.rel.name} (${ultraLow.v.effort})`,
+        stat: `${fmt(ultraLow.score, taskDef.digits)}${taskDef.unit} · ${money(ultraLow.v.costPerTask)}/任务`,
+        desc: `适合高并发子代理、初筛与快速路由基线`
+      },
+      bestGain ? {
+        title: "最大推理升档跃迁（Steepest Effort Gain）",
+        main: `${bestGain.rel.shortName || bestGain.rel.name}（${bestGain.first.v.effort} → ${bestGain.last.v.effort}）`,
+        stat: `+${fmt(bestGain.gain, taskDef.digits)}${taskDef.unit === "%" ? " 个百分点" : taskDef.unit}（${fmt(bestGain.first.score, taskDef.digits)} → ${fmt(bestGain.last.score, taskDef.digits)}）`,
+        desc: `成本由 ${money(bestGain.first.v.costPerTask)} 升至 ${money(bestGain.last.v.costPerTask)}/任务`
+      } : null
+    ].filter(Boolean);
+    el.innerHTML = cards.map(c => `<article class="platform-card"><h3>${esc(c.title)}</h3><p><strong>${esc(c.main)}</strong></p><span class="platform-stat">${esc(c.stat)}</span><p>${esc(c.desc)}</p></article>`).join("");
+  }
+
+  function renderTaskEffortDetail(rel, focusVar, taskDef) {
+    const el = $("taskEffortDetail");
+    if (!el || !rel) return;
+    const best = bestTaskVariant(rel, taskDef);
+    const v = focusVar || best || rel.variants[rel.variants.length - 1];
+    const score = taskDef.getScore(v);
+    const rowsHtml = rel.variants.map((vr, idx) => {
+      const sc = taskDef.getScore(vr);
+      const prevSc = idx > 0 ? taskDef.getScore(rel.variants[idx - 1]) : null;
+      const delta = finite(sc) && finite(prevSc) ? sc - prevSc : null;
+      const em = vr.evalMetrics || {};
+      return `<tr class="${vr.slug === v.slug ? "recommended-controller" : ""}"><th>${esc(vr.effort)} ${vr === best ? '<span class="badge">当前任务最佳档</span>' : ""}</th><td class="metric-value"><strong>${fmt(sc, taskDef.digits)}${taskDef.unit}</strong>${delta !== null ? `<span class="spec-detail ${delta < 0 ? "delta-negative" : "delta-positive"}">${delta > 0 ? "+" : ""}${fmt(delta, taskDef.digits)}</span>` : ""}</td><td class="metric-value">${fmt(vr.intelligenceIndex, 1)}</td><td class="metric-value">${fmt(em["Humanity's Last Exam"], 0)}% / ${fmt(em["CritPt"], 0)}%</td><td class="metric-value">${fmt(em["Terminal-Bench 4.0"], 0)}% / ${fmt(em["SciCode"], 0)}%</td><td class="metric-value">${fmt(em["AA-Briefcase v1.1"], 0)} / ${fmt(em["GDPval-AA v2.1"], 0)} / ${fmt(em["AutomationBench-AA"], 0)}%</td><td class="metric-value">${fmt(em["AA-LCR v1.1"], 0)}% / ${fmt(em["GDP.pdf"], 0)}% / ${fmt(em["AA-Omniscience"], 0)}</td><td class="metric-value">${money(vr.costPerTask)}<span class="task-detail">${fmt(vr.timePerTaskMinutes, 2)}m · ${fmt(vr.outputTokensPerTask, 0)} tok</span></td></tr>`;
+    }).join("");
+    el.innerHTML = `<div class="topline"><h3><span class="swatch" style="display:inline-block;background:${rel.color};margin-right:7px"></span>${esc(rel.name)} · 全推理档位 × 主流任务实测明细（当前档位：${esc(v.effort)}）</h3><span class="tag">${esc(rel.vendor)} · ${rel.variants.length} 个已测档位 · ${v.evalSourceUrl ? link(v.evalSourceUrl, "AA 比较页来源") : "AA v4.3.2"}</span></div><div class="numbers"><div><b>${fmt(score, taskDef.digits)}${taskDef.unit}</b><span>当前维度：${esc(taskDef.shortLabel)}</span></div><div><b>${fmt(v.intelligenceIndex, 1)}</b><span>AA 综合智力指数</span></div><div><b>${money(v.costPerTask)}</b><span>单任务加权成本</span></div><div><b>${fmt(v.timePerTaskMinutes, 2)} 分钟</b><span>每任务推算耗时（${fmt(v.outputTokensPerTask, 0)} tok）</span></div></div><div class="table-scroll" style="margin-top:10px">${table(["推理档位","当前维度得分 / 升档差分","综合指数 (II)","复杂问题：HLE / CritPt","编程工程：Terminal / SciCode","规划与代理：Briefcase / GDPval / AutoBench","知识与文档：LCR / PDF / Omniscience","单任务成本 / 耗时 / 输出 Token"], rowsHtml)}</div>`;
+  }
+
+  function renderTaskEffortChart() {
+    const ser = DATA.aa_release_series;
+    const svg = $("taskEffortChart");
+    if (!ser || !svg) return;
+    const taskDef = TASK_DEFINITIONS[taskEffortState.tab] || TASK_DEFINITIONS.complex;
+    const mode = $("taskEffortMode") ? $("taskEffortMode").value : "release_trajectories";
+    const focusEffort = $("taskEffortFocus") ? $("taskEffortFocus").value : "all";
+    const colorMode = $("taskColorMode") ? $("taskColorMode").value : "vendor";
+    const showBackdrop = $("taskEffortBackdrop") && $("taskEffortBackdrop").checked;
+
+    if ($("taskEffortTitle")) $("taskEffortTitle").textContent = taskDef.title;
+    if ($("taskEffortSubnote")) $("taskEffortSubnote").textContent = taskDef.subnote;
+
+    const activeReleases = ser.releases.filter(r => r.variants.some(v => v.taskScores));
+    const otherReleases = showBackdrop ? ser.releases.filter(r => !r.variants.some(v => v.taskScores)) : [];
+    if (!activeReleases.some(r => r.releaseSlug === taskEffortState.selectedReleaseId)) {
+      taskEffortState.selectedReleaseId = activeReleases[0]?.releaseSlug || "claude-opus-5-5";
+      taskEffortState.selectedVariantSlug = null;
+    }
+
+    renderAALegendBar("taskEffortLegend", {
+      showQuadrant: true,
+      showPareto: true,
+      includeBackdropVendors: showBackdrop && taskDef.key === "intelligenceIndex",
+      colorMode,
+      activeReleases
+    });
+    renderTaskCategoryCards(taskDef, activeReleases);
+
+    $("taskEffortPills").innerHTML = activeReleases.map(r => {
+      const col = getReleaseColor(r, colorMode);
+      const topV = bestTaskVariant(r, taskDef) || r.variants[r.variants.length - 1];
+      const sc = taskDef.getScore(topV);
+      return `<button type="button" class="pill-btn ${r.releaseSlug === taskEffortState.selectedReleaseId ? "is-active" : ""}" data-task-pill="${esc(r.releaseSlug)}"><span class="swatch" style="background:${col}"></span>${esc(r.shortName || r.name)} <span class="small">(${fmt(sc, taskDef.digits)}${taskDef.unit})</span></button>`;
+    }).join("");
+    $("taskEffortPills").querySelectorAll("[data-task-pill]").forEach(btn => btn.addEventListener("click", () => {
+      taskEffortState.selectedReleaseId = btn.dataset.taskPill;
+      taskEffortState.selectedVariantSlug = null;
+      renderTaskEffortChart();
+    }));
+
+    const variantMatchesFocus = (v, rel) => {
+      if (focusEffort === "all") return mode === "top_variants" ? v === bestTaskVariant(rel, taskDef) : true;
+      return v.effort === focusEffort;
+    };
+
+    const plottedActive = activeReleases.flatMap(rel =>
+      rel.variants
+        .filter(v => variantMatchesFocus(v, rel) && finite(v.costPerTask) && v.costPerTask > 0 && finite(taskDef.getScore(v)))
+        .map(v => ({rel, v, score:taskDef.getScore(v)}))
+    );
+    const backdropMarket = (showBackdrop && taskDef.key === "intelligenceIndex")
+      ? otherReleases.flatMap(rel =>
+          rel.variants
+            .filter(v => (mode === "top_variants" ? v.isTopVariant : true) && finite(v.costPerTask) && v.costPerTask > 0 && finite(taskDef.getScore(v)))
+            .map(v => ({rel, v, score:taskDef.getScore(v)}))
+        )
+      : [];
+
+    const frontierPool = [...plottedActive, ...backdropMarket];
+    const frontier = frontierPool
+      .filter(p => !frontierPool.some(o => o.v.costPerTask <= p.v.costPerTask && o.score >= p.score && (o.v.costPerTask < p.v.costPerTask || o.score > p.score)))
+      .sort((a,b) => a.v.costPerTask - b.v.costPerTask);
+
+    if ($("taskEffortCount")) {
+      $("taskEffortCount").textContent = `${activeReleases.length} 款四大家族活跃模型 · 当前显示 ${plottedActive.length} 个档位点${backdropMarket.length ? ` + ${backdropMarket.length} 个市场参照点` : ""} · 帕累托前沿 ${frontier.length} 个节点`;
+    }
+
+    const width = Math.max(720, Math.round(svg.getBoundingClientRect().width || 1100));
+    const height = width < 640 ? 430 : 500, margin = {left:64, right:148, top:36, bottom:62};
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    svg.setAttribute("height", height);
+
+    const allForScale = activeReleases.flatMap(r => r.variants.filter(v => finite(v.costPerTask) && v.costPerTask > 0));
+    const xs = [...allForScale, ...backdropMarket.map(p => p.v)].map(v => v.costPerTask);
+    const lo = Math.min(0.0035, Math.min(...xs) * 0.8);
+    const hi = Math.max(12, Math.max(...xs) * 1.25);
+    const x = val => margin.left + (Math.log(val / lo) / Math.log(hi / lo)) * (width - margin.left - margin.right);
+    const [ymin, ymax] = taskDef.yrange;
+    const y = val => height - margin.bottom - ((val - ymin) / (ymax - ymin)) * (height - margin.top - margin.bottom);
+
+    const parts = [`<title>${esc(taskDef.title)}</title>`];
+    drawAAPlotChrome(parts, {
+      width,
+      height,
+      margin,
+      qx: x(taskDef.attractiveX),
+      qy: y(taskDef.attractiveY),
+      showQuadrant: true
+    });
+
+    taskDef.yTicks.forEach(t => {
+      if (t >= ymin && t <= ymax) {
+        parts.push(`<line x1="${margin.left}" x2="${width - margin.right}" y1="${y(t)}" y2="${y(t)}" stroke="#e5ebe3"/><text x="${margin.left - 10}" y="${y(t) + 4}" text-anchor="end" class="tick">${t}${taskDef.unit === "%" ? "%" : ""}</text>`);
+      }
+    });
+    const xTicks = [0.005, 0.01, 0.02, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10];
+    xTicks.filter(t => t >= lo && t <= hi).forEach(t => {
+      const tx = x(t);
+      const label = "$" + (t < 0.01 ? t.toFixed(3) : t < 1 ? t.toFixed(2) : t === 2.5 ? "2.5" : t.toFixed(0));
+      parts.push(`<line x1="${tx}" x2="${tx}" y1="${margin.top}" y2="${height - margin.bottom}" stroke="#eef2ec" stroke-dasharray="3 3"/><text x="${tx}" y="${height - margin.bottom + 22}" text-anchor="middle" class="tick">${esc(label)}</text>`);
+    });
+    parts.push(`<text x="${margin.left}" y="20" class="axis-label">${esc(taskDef.yLabel)}</text>`);
+    parts.push(`<text x="${(margin.left + width - margin.right) / 2}" y="${height - 12}" text-anchor="middle" class="axis-label">Cost per Task (USD, log scale · AA v4.3.2 单任务加权成本)</text>`);
+
+    // Backdrop market models (when intelligenceIndex is active) or faint full trajectories (when a single effort is focused)
+    if (showBackdrop && taskDef.key === "intelligenceIndex") {
+      otherReleases.forEach(rel => {
+        const col = getReleaseColor(rel, colorMode);
+        const pts = rel.variants.filter(v => (mode === "top_variants" ? v.isTopVariant : true) && finite(v.costPerTask) && v.costPerTask > 0 && finite(v.intelligenceIndex));
+        if (mode === "release_trajectories" && pts.length > 1) {
+          parts.push(`<polyline points="${pts.map(v => `${x(v.costPerTask)},${y(v.intelligenceIndex)}`).join(" ")}" fill="none" stroke="${col}" stroke-width="1.2" opacity="0.28"/>`);
+        }
+        pts.forEach(v => {
+          parts.push(`<circle cx="${x(v.costPerTask)}" cy="${y(v.intelligenceIndex)}" r="3.6" fill="${col}" opacity="0.42"><title>${esc(v.name + " · " + fmt(v.intelligenceIndex, 1) + " · " + money(v.costPerTask))}</title></circle>`);
+        });
+      });
+    } else if (showBackdrop && focusEffort !== "all") {
+      activeReleases.forEach(rel => {
+        const col = getReleaseColor(rel, colorMode);
+        const pts = rel.variants.filter(v => finite(v.costPerTask) && v.costPerTask > 0 && finite(taskDef.getScore(v)));
+        if (pts.length > 1) {
+          parts.push(`<polyline points="${pts.map(v => `${x(v.costPerTask)},${y(taskDef.getScore(v))}`).join(" ")}" fill="none" stroke="${col}" stroke-width="1.2" stroke-dasharray="2 2" opacity="0.25"/>`);
+        }
+      });
+    }
+
+    if (frontier.length > 1) {
+      parts.push(`<polyline points="${frontier.map(p => `${x(p.v.costPerTask)},${y(p.score)}`).join(" ")}" fill="none" stroke="#111827" stroke-width="2.1" stroke-dasharray="2.5 3.5"/>`);
+    }
+
+    const topLabels = [];
+    const orderedReleases = [...activeReleases].sort((a,b) => (a.releaseSlug === taskEffortState.selectedReleaseId ? 1 : b.releaseSlug === taskEffortState.selectedReleaseId ? -1 : 0));
+    orderedReleases.forEach(rel => {
+      const isSel = rel.releaseSlug === taskEffortState.selectedReleaseId;
+      const col = getReleaseColor(rel, colorMode);
+      const pts = rel.variants
+        .filter(v => variantMatchesFocus(v, rel) && finite(v.costPerTask) && v.costPerTask > 0 && finite(taskDef.getScore(v)))
+        .map(v => ({v, score:taskDef.getScore(v)}));
+      if (!pts.length) return;
+      const poly = pts.length > 1
+        ? `<polyline class="release-line" points="${pts.map(p => `${x(p.v.costPerTask)},${y(p.score)}`).join(" ")}" fill="none" stroke="${col}" stroke-width="${isSel ? 3.2 : 2.1}" opacity="${isSel ? 1 : 0.82}"/>`
+        : "";
+      const dots = pts.map(p => {
+        const cx = x(p.v.costPerTask), cy = y(p.score);
+        const isPrimary = p.v === bestTaskVariant(rel, taskDef) || pts.length === 1;
+        const r = isPrimary ? (isSel ? 6.8 : 5.6) : (isSel ? 5.2 : 4.3);
+        const effTag = isSel && pts.length > 1 ? `<text x="${cx}" y="${cy - r - 4}" text-anchor="middle" font-size="9.5" font-weight="600" fill="${col}">${esc(EFFORT_SHORT[p.v.effort] || p.v.effort)}</text>` : "";
+        return `<g class="task-dot" tabindex="0" role="button" data-task-rel="${esc(rel.releaseSlug)}" data-task-var="${esc(p.v.slug)}" aria-label="${esc(p.v.name + "，" + taskDef.shortLabel + " " + fmt(p.score, taskDef.digits) + taskDef.unit + "，成本 " + money(p.v.costPerTask))}"><title>${esc(p.v.name + " · " + taskDef.shortLabel + " " + fmt(p.score, taskDef.digits) + taskDef.unit + " · 单任务 " + money(p.v.costPerTask) + " · 耗时 " + fmt(p.v.timePerTaskMinutes, 2) + "m")}</title><circle cx="${cx}" cy="${cy}" r="${r}" fill="${isPrimary ? col : "#ffffff"}" stroke="${col}" stroke-width="${isPrimary ? 2.2 : 1.9}"/>${effTag}</g>`;
+      }).join("");
+      parts.push(`<g class="release-series ${isSel ? "is-highlighted" : ""}">${poly}${dots}</g>`);
+      const labelPt = [...pts].sort((a,b) => b.score - a.score || a.v.costPerTask - b.v.costPerTask)[0];
+      const suffix = focusEffort !== "all" ? ` (${labelPt.v.effort})` : "";
+      topLabels.push({rel, col, v:labelPt.v, score:labelPt.score, text:(rel.shortName || rel.name) + suffix, cx:x(labelPt.v.costPerTask), cy:y(labelPt.score), ly:y(labelPt.score), isSel});
+    });
+
+    renderSmartLabels(parts, topLabels, {width, height, margin, minGap:15, xSpan:135});
+
+    svg.innerHTML = parts.join("");
+    svg.querySelectorAll(".task-dot").forEach(dot => {
+      const select = () => {
+        taskEffortState.selectedReleaseId = dot.dataset.taskRel;
+        taskEffortState.selectedVariantSlug = dot.dataset.taskVar;
+        renderTaskEffortChart();
+      };
+      dot.addEventListener("click", select);
+      dot.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(); } });
+    });
+
+    const selRel = activeReleases.find(r => r.releaseSlug === taskEffortState.selectedReleaseId) || activeReleases[0];
+    const selVar = selRel?.variants.find(v => v.slug === taskEffortState.selectedVariantSlug) || (selRel && bestTaskVariant(selRel, taskDef)) || selRel?.variants[selRel.variants.length - 1];
+    renderTaskEffortDetail(selRel, selVar, taskDef);
+  }
+
+  if ($("taskEffortTabs")) {
+    $("taskEffortTabs").querySelectorAll("[data-task-tab]").forEach(btn => btn.addEventListener("click", () => {
+      taskEffortState.tab = btn.dataset.taskTab;
+      $("taskEffortTabs").querySelectorAll("[data-task-tab]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.taskTab === taskEffortState.tab)));
+      renderTaskEffortChart();
+    }));
+    ["taskEffortMode", "taskEffortFocus", "taskColorMode", "taskEffortBackdrop"].forEach(id => $(id)?.addEventListener("change", renderTaskEffortChart));
+    $("exportTaskEffort")?.addEventListener("click", () => {
+      const rows = DATA.aa_release_series.releases.filter(r => r.variants.some(v => v.taskScores)).flatMap(r => r.variants.map(v => ({
+        release: r.name,
+        vendor: r.vendor,
+        variant: v.name,
+        effort: v.effort,
+        is_top_variant: v.isTopVariant,
+        intelligence_index: v.intelligenceIndex,
+        complex_problem_solving: v.taskScores?.complex,
+        coding_software_eng: v.taskScores?.coding,
+        planning_briefcase_elo: v.taskScores?.planning,
+        agentic_gdpval_elo: v.taskScores?.agentic,
+        automation_bench_pct: v.taskScores?.automation,
+        knowledge_doc_score: v.taskScores?.knowledge,
+        hle_pct: v.evalMetrics?.["Humanity's Last Exam"],
+        critpt_pct: v.evalMetrics?.["CritPt"],
+        terminal_bench_pct: v.evalMetrics?.["Terminal-Bench 4.0"],
+        scicode_pct: v.evalMetrics?.["SciCode"],
+        aa_lcr_pct: v.evalMetrics?.["AA-LCR v1.1"],
+        gdp_pdf_pct: v.evalMetrics?.["GDP.pdf"],
+        aa_omniscience: v.evalMetrics?.["AA-Omniscience"],
+        cost_per_task_usd: v.costPerTask,
+        time_per_task_minutes: v.timePerTaskMinutes,
+        output_tokens_per_task: v.outputTokensPerTask,
+        source_url: v.evalSourceUrl
+      })));
+      exportCSV(rows, `四大家族任务与推理档位全量评测-${taskEffortState.tab}-2026-10-20.csv`);
+    });
+  }
+
+  // 4. Reasoning Effort Scaling Slopes & Heatmap Matrix (#capabilities -> #effortScalingCard)
+  let scalingSelectedSlug = "claude-opus-5-5";
+  function renderEffortScalingChart() {
+    const ser = DATA.aa_release_series;
+    const svg = $("effortScalingChart");
+    if (!ser || !svg) return;
+    const taskKey = $("effortScalingTask") ? $("effortScalingTask").value : "complex";
+    const fam = $("effortScalingFamily") ? $("effortScalingFamily").value : "all";
+    const taskDef = TASK_DEFINITIONS[taskKey] || TASK_DEFINITIONS.complex;
+
+    const allActive = ser.releases.filter(r => r.variants.some(v => v.taskScores));
+    const shown = allActive.filter(r => fam === "all" || r.vendor === fam);
+    if (!shown.some(r => r.releaseSlug === scalingSelectedSlug)) {
+      scalingSelectedSlug = shown[0]?.releaseSlug || "claude-opus-5-5";
+    }
+
+    renderAALegendBar("effortScalingLegend", {
+      showQuadrant: false,
+      showPareto: false,
+      includeBackdropVendors: false,
+      colorMode: "model",
+      activeReleases: shown
+    });
+
+    const width = Math.max(720, Math.round(svg.getBoundingClientRect().width || 1100));
+    const height = width < 640 ? 390 : 440, margin = {left:64, right:150, top:34, bottom:56};
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    svg.setAttribute("height", height);
+
+    const x = idx => margin.left + (idx / (EFFORT_ORDER.length - 1)) * (width - margin.left - margin.right);
+    const [ymin, ymax] = taskDef.yrange;
+    const y = val => height - margin.bottom - ((val - ymin) / (ymax - ymin)) * (height - margin.top - margin.bottom);
+
+    const parts = [`<title>${esc(taskDef.shortLabel)} 推理档位升档曲线</title>`];
+    parts.push(`<rect x="${margin.left}" y="${margin.top}" width="${width - margin.left - margin.right}" height="${height - margin.top - margin.bottom}" fill="#ffffff" stroke="#d5dfd9"/>`);
+    taskDef.yTicks.forEach(t => {
+      if (t >= ymin && t <= ymax) {
+        parts.push(`<line x1="${margin.left}" x2="${width - margin.right}" y1="${y(t)}" y2="${y(t)}" stroke="#e5ebe3"/><text x="${margin.left - 10}" y="${y(t) + 4}" text-anchor="end" class="tick">${t}${taskDef.unit === "%" ? "%" : ""}</text>`);
+      }
+    });
+    EFFORT_ORDER.forEach((eff, idx) => {
+      const tx = x(idx);
+      parts.push(`<line x1="${tx}" x2="${tx}" y1="${margin.top}" y2="${height - margin.bottom}" stroke="#edf1eb" stroke-dasharray="3 3"/><text x="${tx}" y="${height - margin.bottom + 22}" text-anchor="middle" class="tick" font-weight="600">${esc(eff)}</text>`);
+    });
+    parts.push(`<text x="${margin.left}" y="19" class="axis-label">${esc(taskDef.yLabel)}</text>`);
+    parts.push(`<text x="${(margin.left + width - margin.right) / 2}" y="${height - 10}" text-anchor="middle" class="axis-label">推理档位（Reasoning Effort Level：non-reasoning → max）</text>`);
+
+    const endLabels = [];
+    const ordered = [...shown].sort((a,b) => (a.releaseSlug === scalingSelectedSlug ? 1 : b.releaseSlug === scalingSelectedSlug ? -1 : 0));
+    ordered.forEach(rel => {
+      const isSel = rel.releaseSlug === scalingSelectedSlug;
+      const pts = rel.variants
+        .map(v => ({v, idx:EFFORT_ORDER.indexOf(v.effort), score:taskDef.getScore(v)}))
+        .filter(p => p.idx >= 0 && finite(p.score))
+        .sort((a,b) => a.idx - b.idx);
+      if (!pts.length) return;
+      const poly = pts.length > 1
+        ? `<polyline points="${pts.map(p => `${x(p.idx)},${y(p.score)}`).join(" ")}" fill="none" stroke="${rel.color}" stroke-width="${isSel ? 3.4 : 2.1}" opacity="${isSel ? 1 : 0.78}"/>`
+        : "";
+      const dots = pts.map(p => {
+        const cx = x(p.idx), cy = y(p.score);
+        return `<g class="scaling-dot" tabindex="0" role="button" data-scale-rel="${esc(rel.releaseSlug)}" aria-label="${esc(rel.name + " " + p.v.effort + " " + fmt(p.score, taskDef.digits) + taskDef.unit)}"><title>${esc(rel.name + " (" + p.v.effort + ") · " + fmt(p.score, taskDef.digits) + taskDef.unit + " · " + money(p.v.costPerTask))}</title><circle cx="${cx}" cy="${cy}" r="${isSel ? 6 : 4.8}" fill="${p.v.isTopVariant ? rel.color : "#ffffff"}" stroke="${rel.color}" stroke-width="2"/><text x="${cx}" y="${cy - 8}" text-anchor="middle" font-size="10" font-weight="600" fill="${rel.color}" opacity="${isSel ? 1 : 0}" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">${fmt(p.score, taskDef.digits)}</text></g>`;
+      }).join("");
+      parts.push(`<g>${poly}${dots}</g>`);
+      const last = pts[pts.length - 1];
+      endLabels.push({rel, col:rel.color, text:`${rel.shortName || rel.name} (${fmt(last.score, taskDef.digits)})`, cx:x(last.idx), cy:y(last.score), ly:y(last.score), isSel, score:last.score});
+    });
+
+    renderSmartLabels(parts, endLabels, {width, height, margin, minGap:15, xSpan:135});
+    svg.innerHTML = parts.join("");
+    svg.querySelectorAll(".scaling-dot").forEach(dot => {
+      const select = () => { scalingSelectedSlug = dot.dataset.scaleRel; renderEffortScalingChart(); };
+      dot.addEventListener("click", select);
+      dot.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(); } });
+    });
+
+    // Render 11-model × 6-effort matrix table in #effortScalingTable
+    if ($("effortScalingTable")) {
+      const rowsHtml = shown.map(rel => {
+        const byEff = new Map(rel.variants.map(v => [v.effort, v]));
+        const validScores = rel.variants.map(v => taskDef.getScore(v)).filter(finite);
+        const firstSc = validScores[0], maxSc = validScores.length ? Math.max(...validScores) : null;
+        const gain = finite(firstSc) && finite(maxSc) && validScores.length > 1 ? maxSc - firstSc : null;
+        const cells = EFFORT_ORDER.map(eff => {
+          const v = byEff.get(eff);
+          if (!v || !finite(taskDef.getScore(v))) return `<td class="metric-value small" style="color:#9ca3af">未设该档</td>`;
+          const sc = taskDef.getScore(v);
+          const ratio = Math.max(0, Math.min(1, (sc - ymin) / (ymax - ymin)));
+          const bg = `rgba(22, 163, 74, ${(0.08 + ratio * 0.24).toFixed(2)})`;
+          return `<td class="metric-value heat-cell"><span class="heat-pill" style="background:${bg}">${fmt(sc, taskDef.digits)}${taskDef.unit}</span><span class="task-detail">${money(v.costPerTask)} · ${fmt(v.timePerTaskMinutes, 1)}m</span></td>`;
+        }).join("");
+        return `<tr class="${rel.releaseSlug === scalingSelectedSlug ? "recommended-controller" : ""}"><th><span class="swatch" style="display:inline-block;background:${rel.color};margin-right:6px"></span>${esc(rel.name)}<span class="task-detail">${esc(rel.vendor)}</span></th>${cells}<td class="metric-value ${gain !== null && gain > 0 ? "delta-positive" : ""}"><strong>${gain !== null ? (gain > 0 ? "+" : "") + fmt(gain, taskDef.digits) + (taskDef.unit === "%" ? " 个百分点" : taskDef.unit) : "单档"}</strong></td></tr>`;
+      }).join("");
+      $("effortScalingTable").innerHTML = table(["活跃模型系列", ...EFFORT_ORDER.map(e => `<code>${esc(e)}</code>`), "全档最大跃升"], rowsHtml);
+    }
+  }
+  if ($("effortScalingTask")) {
+    ["effortScalingTask", "effortScalingFamily"].forEach(id => $(id)?.addEventListener("change", renderEffortScalingChart));
+    $("exportEffortScaling")?.addEventListener("click", () => {
+      const taskKey = $("effortScalingTask").value;
+      const taskDef = TASK_DEFINITIONS[taskKey] || TASK_DEFINITIONS.complex;
+      const rows = DATA.aa_release_series.releases.filter(r => r.variants.some(v => v.taskScores)).map(rel => {
+        const byEff = new Map(rel.variants.map(v => [v.effort, v]));
+        const out = {model:rel.name, vendor:rel.vendor, task_dimension:taskDef.shortLabel};
+        EFFORT_ORDER.forEach(e => {
+          const v = byEff.get(e);
+          out[e + "_score"] = v ? taskDef.getScore(v) : null;
+          out[e + "_cost_usd"] = v ? v.costPerTask : null;
+        });
+        return out;
+      });
+      exportCSV(rows, `四大家族推理升档矩阵-${taskKey}-2026-10-20.csv`);
+    });
+  }
+
+  // 5. AA By-Release Intelligence Index vs Cost/Time/Output-Token Trajectory Chart (#explorer -> #releaseChartCard)
   const RELEASE_AXES = {
-    costPerTask: {label:"单任务成本（USD）", unit:"USD"},
-    timePerTaskMinutes: {label:"每任务耗时（分钟）", unit:"分钟"},
-    outputTokensPerTask: {label:"每任务输出 Token 数（Reasoning + Answer）", unit:"tokens"}
+    costPerTask: {label:"单任务成本（Cost per Task · USD）", unit:"USD", attractiveX:1.10},
+    timePerTaskMinutes: {label:"每任务耗时（Time per Task · 分钟）", unit:"分钟", attractiveX:5.5},
+    outputTokensPerTask: {label:"每任务输出 Token 数（Reasoning + Answer）", unit:"tokens", attractiveX:14000}
   };
   const releaseState = {selectedReleaseId:"claude-opus-5-5", selectedVariantId:null};
   function releaseInScope(rel, scope) {
@@ -581,6 +1198,8 @@
     if (!ser || !svg) return;
     const xKey = $("releaseXMetric") ? $("releaseXMetric").value : "costPerTask";
     const scope = $("releaseScope") ? $("releaseScope").value : "four_family_current";
+    const viewMode = $("releaseViewMode") ? $("releaseViewMode").value : "trajectories";
+    const colorMode = $("releaseColorMode") ? $("releaseColorMode").value : "vendor";
     const showPareto = $("releasePareto") && $("releasePareto").checked;
     const showBackdrop = $("releaseBackdrop") && $("releaseBackdrop").checked;
     const xMeta = RELEASE_AXES[xKey] || RELEASE_AXES.costPerTask;
@@ -592,24 +1211,36 @@
       releaseState.selectedVariantId = null;
     }
 
-    $("releasePills").innerHTML = activeReleases.map(r => `<button type="button" class="pill-btn ${r.releaseSlug === releaseState.selectedReleaseId ? "is-active" : ""}" data-rel-pill="${esc(r.releaseSlug)}"><span class="swatch" style="background:${r.color}"></span>${esc(r.shortName || r.name)} <span class="small">(${r.variants.length}档)</span></button>`).join("");
+    renderAALegendBar("releaseLegendBar", {
+      showQuadrant: showPareto,
+      showPareto: showPareto,
+      includeBackdropVendors: showBackdrop || scope === "all_releases",
+      colorMode,
+      activeReleases
+    });
+
+    $("releasePills").innerHTML = activeReleases.map(r => {
+      const col = getReleaseColor(r, colorMode);
+      return `<button type="button" class="pill-btn ${r.releaseSlug === releaseState.selectedReleaseId ? "is-active" : ""}" data-rel-pill="${esc(r.releaseSlug)}"><span class="swatch" style="background:${col}"></span>${esc(r.shortName || r.name)} <span class="small">(${r.variants.length}档)</span></button>`;
+    }).join("");
     $("releasePills").querySelectorAll("[data-rel-pill]").forEach(btn => btn.addEventListener("click", () => {
       releaseState.selectedReleaseId = btn.dataset.relPill;
       releaseState.selectedVariantId = null;
       renderReleaseChart();
     }));
 
-    const activePoints = activeReleases.flatMap(r => r.variants.filter(v => finite(v[xKey]) && v[xKey] > 0 && finite(v.intelligenceIndex)).map(v => ({rel:r, v})));
-    const backdropPoints = backdropReleases.flatMap(r => r.variants.filter(v => finite(v[xKey]) && v[xKey] > 0 && finite(v.intelligenceIndex)).map(v => ({rel:r, v})));
+    const filterVars = rel => rel.variants.filter(v => (viewMode === "top_only" ? v.isTopVariant : true) && finite(v[xKey]) && v[xKey] > 0 && finite(v.intelligenceIndex));
+    const activePoints = activeReleases.flatMap(r => filterVars(r).map(v => ({rel:r, v})));
+    const backdropPoints = backdropReleases.flatMap(r => filterVars(r).map(v => ({rel:r, v})));
     const allPoints = [...activePoints, ...backdropPoints];
     const frontier = activePoints
       .filter(p => !activePoints.some(o => o.v[xKey] <= p.v[xKey] && o.v.intelligenceIndex >= p.v.intelligenceIndex && (o.v[xKey] < p.v[xKey] || o.v.intelligenceIndex > p.v.intelligenceIndex)))
       .sort((a,b) => a.v[xKey] - b.v[xKey]);
 
-    if ($("releaseCount")) $("releaseCount").textContent = `${activeReleases.length} 个模型发布版本 · ${activePoints.length} 个推理档位点${backdropPoints.length ? `（另含 ${backdropPoints.length} 个浅灰背景参照点）` : ""} · 实线连接同一发布版本的不同推理投入档位，仅最高得分档位标注发布版本名`;
+    if ($("releaseCount")) $("releaseCount").textContent = `${activeReleases.length} 个模型发布版本 · ${activePoints.length} 个推理档位点${backdropPoints.length ? `（另含 ${backdropPoints.length} 个市场参照点）` : ""} · ${viewMode === "top_only" ? "仅展示各发布版本最高分代表档" : "同色实线连接同一发布版本的不同推理投入档位"}`;
 
     const width = Math.max(720, Math.round(svg.getBoundingClientRect().width || 1100));
-    const height = width < 640 ? 420 : 490, margin = {left:58, right:135, top:34, bottom:62};
+    const height = width < 640 ? 420 : 490, margin = {left:58, right:142, top:34, bottom:62};
     svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
     svg.setAttribute("height", height);
     if (!allPoints.length) return;
@@ -621,65 +1252,62 @@
     const y = val => height - margin.bottom - ((val - ymin) / (ymax - ymin)) * (height - margin.top - margin.bottom);
 
     const parts = [`<title>按模型发布版本划分的 Intelligence Index 与 ${esc(xMeta.label)}</title>`];
+    drawAAPlotChrome(parts, {
+      width,
+      height,
+      margin,
+      qx: x(xMeta.attractiveX),
+      qy: y(42.5),
+      showQuadrant: showPareto
+    });
+
     for (let s = 20; s <= 60; s += 10) {
       parts.push(`<line x1="${margin.left}" x2="${width - margin.right}" y1="${y(s)}" y2="${y(s)}" stroke="#e3e9e1"/><text x="${margin.left - 10}" y="${y(s) + 4}" text-anchor="end" class="tick">${s}</text>`);
     }
-    const tickCandidates = xKey === "costPerTask" ? [0.02,0.05,0.1,0.25,0.5,1,2.5,5,10,20] : xKey === "timePerTaskMinutes" ? [0.2,0.5,1,2,5,10,20,40] : [500,1000,2500,5000,10000,25000,50000,100000];
+    const tickCandidates = xKey === "costPerTask" ? [0.005,0.01,0.02,0.05,0.1,0.25,0.5,1,2.5,5,10,20] : xKey === "timePerTaskMinutes" ? [0.2,0.5,1,2,5,10,20,40] : [500,1000,2500,5000,10000,25000,50000,100000];
     tickCandidates.filter(t => t >= lo && t <= hi).forEach(t => {
       const tx = x(t);
-      const label = xKey === "costPerTask" ? "$" + (t < 1 ? t.toFixed(2) : t.toFixed(t === 2.5 ? 2 : 0)) : xKey === "timePerTaskMinutes" ? t + "m" : (t >= 1000 ? (t/1000) + "k" : String(t));
+      const label = xKey === "costPerTask" ? "$" + (t < 0.01 ? t.toFixed(3) : t < 1 ? t.toFixed(2) : t.toFixed(t === 2.5 ? 2 : 0)) : xKey === "timePerTaskMinutes" ? t + "m" : (t >= 1000 ? (t/1000) + "k" : String(t));
       parts.push(`<line x1="${tx}" x2="${tx}" y1="${margin.top}" y2="${height - margin.bottom}" stroke="#edf1eb" stroke-dasharray="3 3"/><text x="${tx}" y="${height - margin.bottom + 22}" text-anchor="middle" class="tick">${esc(label)}</text>`);
     });
     parts.push(`<text x="${margin.left}" y="18" class="axis-label">AA Intelligence Index（分）</text><text x="${(margin.left + width - margin.right)/2}" y="${height - 12}" text-anchor="middle" class="axis-label">${esc(xMeta.label)} · 对数刻度</text>`);
 
     backdropReleases.forEach(rel => {
-      const pts = rel.variants.filter(v => finite(v[xKey]) && v[xKey] > 0 && finite(v.intelligenceIndex));
-      if (pts.length > 1) {
-        parts.push(`<polyline points="${pts.map(v => `${x(v[xKey])},${y(v.intelligenceIndex)}`).join(" ")}" fill="none" stroke="#d5ddd8" stroke-width="1.3"/>`);
+      const col = getReleaseColor(rel, colorMode);
+      const pts = filterVars(rel);
+      if (viewMode === "trajectories" && pts.length > 1) {
+        parts.push(`<polyline points="${pts.map(v => `${x(v[xKey])},${y(v.intelligenceIndex)}`).join(" ")}" fill="none" stroke="${col}" stroke-width="1.3" opacity="0.28"/>`);
       }
       pts.forEach(v => {
-        parts.push(`<circle cx="${x(v[xKey])}" cy="${y(v.intelligenceIndex)}" r="3.5" fill="#cbd4cf" opacity="0.75"><title>${esc(v.name + " · II " + fmt(v.intelligenceIndex,1) + " · " + fmt(v[xKey],3))}</title></circle>`);
+        parts.push(`<circle cx="${x(v[xKey])}" cy="${y(v.intelligenceIndex)}" r="3.6" fill="${col}" opacity="0.42"><title>${esc(v.name + " · II " + fmt(v.intelligenceIndex,1) + " · " + fmt(v[xKey],3))}</title></circle>`);
       });
     });
 
     if (showPareto && frontier.length > 1) {
-      parts.push(`<polyline points="${frontier.map(p => `${x(p.v[xKey])},${y(p.v.intelligenceIndex)}`).join(" ")}" fill="none" stroke="#56695f" stroke-width="1.8" stroke-dasharray="5 5"/>`);
+      parts.push(`<polyline points="${frontier.map(p => `${x(p.v[xKey])},${y(p.v.intelligenceIndex)}`).join(" ")}" fill="none" stroke="#111827" stroke-width="2.1" stroke-dasharray="2.5 3.5"/>`);
     }
 
     const topLabels = [];
     const orderedReleases = [...activeReleases].sort((a,b) => (a.releaseSlug === releaseState.selectedReleaseId ? 1 : b.releaseSlug === releaseState.selectedReleaseId ? -1 : 0));
     orderedReleases.forEach(rel => {
       const isSel = rel.releaseSlug === releaseState.selectedReleaseId;
-      const pts = rel.variants.filter(v => finite(v[xKey]) && v[xKey] > 0 && finite(v.intelligenceIndex));
+      const col = getReleaseColor(rel, colorMode);
+      const pts = filterVars(rel);
       if (!pts.length) return;
-      const poly = pts.length > 1 ? `<polyline class="release-line" points="${pts.map(v => `${x(v[xKey])},${y(v.intelligenceIndex)}`).join(" ")}" fill="none" stroke="${rel.color}" stroke-width="${isSel ? 3.2 : 2.1}" opacity="${isSel ? 1 : 0.78}"/>` : "";
+      const poly = (viewMode === "trajectories" && pts.length > 1)
+        ? `<polyline class="release-line" points="${pts.map(v => `${x(v[xKey])},${y(v.intelligenceIndex)}`).join(" ")}" fill="none" stroke="${col}" stroke-width="${isSel ? 3.2 : 2.1}" opacity="${isSel ? 1 : 0.8}"/>`
+        : "";
       const dots = pts.map(v => {
         const cx = x(v[xKey]), cy = y(v.intelligenceIndex);
         const r = v.isTopVariant ? (isSel ? 6.8 : 5.6) : (isSel ? 5.0 : 4.2);
-        return `<g class="release-dot" tabindex="0" role="button" data-rel-id="${esc(rel.releaseSlug)}" data-var-id="${esc(v.slug)}" aria-label="${esc(v.name + "，II " + fmt(v.intelligenceIndex,1))}"><title>${esc(v.name + " · II " + fmt(v.intelligenceIndex,1) + " · 单任务 " + money(v.costPerTask) + " · 耗时 " + fmt(v.timePerTaskMinutes,2) + "m")}</title><circle cx="${cx}" cy="${cy}" r="${r}" fill="${v.isTopVariant ? rel.color : "#fffef9"}" stroke="${rel.color}" stroke-width="${v.isTopVariant ? 2.2 : 1.8}"/></g>`;
+        return `<g class="release-dot" tabindex="0" role="button" data-rel-id="${esc(rel.releaseSlug)}" data-var-id="${esc(v.slug)}" aria-label="${esc(v.name + "，II " + fmt(v.intelligenceIndex,1))}"><title>${esc(v.name + " · II " + fmt(v.intelligenceIndex,1) + " · 单任务 " + money(v.costPerTask) + " · 耗时 " + fmt(v.timePerTaskMinutes,2) + "m")}</title><circle cx="${cx}" cy="${cy}" r="${r}" fill="${v.isTopVariant ? col : "#ffffff"}" stroke="${col}" stroke-width="${v.isTopVariant ? 2.2 : 1.8}"/></g>`;
       }).join("");
       parts.push(`<g class="release-series ${isSel ? "is-highlighted" : ""}">${poly}${dots}</g>`);
       const topV = pts.find(v => v.isTopVariant) || pts[pts.length - 1];
-      topLabels.push({rel, v:topV, cx:x(topV[xKey]), cy:y(topV.intelligenceIndex), ly:y(topV.intelligenceIndex), isSel});
+      topLabels.push({rel, col, v:topV, text:rel.shortName || rel.name, cx:x(topV[xKey]), cy:y(topV.intelligenceIndex), ly:y(topV.intelligenceIndex), isSel});
     });
 
-    for (let pass = 0; pass < 3; pass++) {
-      topLabels.sort((a,b) => a.ly - b.ly || a.cx - b.cx);
-      for (let i = 0; i < topLabels.length; i++) {
-        for (let j = 0; j < i; j++) {
-          if (Math.abs(topLabels[i].cx - topLabels[j].cx) < 92 && topLabels[i].ly - topLabels[j].ly < 14) {
-            topLabels[i].ly = Math.min(height - margin.bottom - 4, topLabels[j].ly + 14);
-          }
-        }
-      }
-    }
-    topLabels.forEach(item => {
-      const lx = Math.min(width - margin.right + 6, item.cx + 8);
-      if (Math.abs(item.ly - item.cy) > 3) {
-        parts.push(`<line x1="${item.cx + 4}" y1="${item.cy}" x2="${lx - 2}" y2="${item.ly}" stroke="${item.rel.color}" stroke-width="0.9" opacity="0.65"/>`);
-      }
-      parts.push(`<text x="${lx}" y="${item.ly + 3.5}" font-size="${item.isSel ? 12 : 11}" font-weight="${item.isSel ? 700 : 600}" fill="${item.isSel ? "#165e54" : "#223c3a"}">${esc(item.rel.shortName || item.rel.name)}</text>`);
-    });
+    renderSmartLabels(parts, topLabels, {width, height, margin, minGap:15, xSpan:135});
 
     svg.innerHTML = parts.join("");
     svg.querySelectorAll(".release-dot").forEach(dot => {
@@ -697,7 +1325,7 @@
     renderReleaseDetail(selRel, selVar);
   }
   if ($("releaseXMetric")) {
-    ["releaseXMetric","releaseScope","releasePareto","releaseBackdrop"].forEach(id => $(id).addEventListener("change", renderReleaseChart));
+    ["releaseXMetric","releaseScope","releaseViewMode","releaseColorMode","releasePareto","releaseBackdrop"].forEach(id => $(id)?.addEventListener("change", renderReleaseChart));
     $("exportReleases").addEventListener("click", () => {
       const scope = $("releaseScope").value;
       const rows = DATA.aa_release_series.releases.filter(r => releaseInScope(r, scope)).flatMap(r => r.variants.map(v => ({
@@ -722,12 +1350,12 @@
         output_speed_tok_s:v.outputSpeed,
         ttfa_seconds:v.ttfaSeconds
       })));
-      exportCSV(rows, `AA发布版本成本轨迹-${scope}-2026-10-19.csv`);
+      exportCSV(rows, `AA发布版本成本轨迹-${scope}-2026-10-20.csv`);
     });
   }
 
   const types=[...new Set(DATA.sources.map(s => s.type))];
   $("sourceList").innerHTML=types.map(type => `<div class="source-group"><h3>${esc(type)}</h3>${DATA.sources.filter(s => s.type === type).map(s => `<div class="source-item"><span class="source-id">${s.id}</span><div>${link(s.url,s.title)}<p>${esc(s.note)}</p><p>${esc(s.status)} · ${s.accessed}</p></div></div>`).join("")}</div>`).join("");
   $("integrityNote").textContent=`原记录 ${DATA.meta.original_rows} 条＋新增 ${DATA.rows.length-DATA.meta.original_rows} 条＝${DATA.rows.length} 条；AA分项 ${DATA.aa_profiles.length} 个配置。ToneBench SHA256：${DATA.meta.tonebench_sha256}`;
-  renderPanorama();renderClaudeCatalog();renderProfiles();renderCapIndexChart();renderSpecs();renderDeltas();changeGroup("general");showPanel(location.hash.slice(1)||"overview",false);
+  renderTaskEffortChart();renderEffortScalingChart();renderPanorama();renderClaudeCatalog();renderProfiles();renderCapIndexChart();renderSpecs();renderDeltas();changeGroup("general");showPanel(location.hash.slice(1)||"overview",false);
 })();

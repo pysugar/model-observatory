@@ -1,13 +1,13 @@
 {
   "status": "PASS",
   "checks": [
-    "Original 121 records preserved",
+    "Original 121 records preserved; zero personal/GEO/OpenClaw/Hermes references",
     "169 JSON/CSV records agree (including Grok 4.7 low/high/xhigh)",
-    "24 models, including 14 Claude, 8 screenshot models, and Grok 4.7",
-    "AA Capability Indexes (6 domains × 90 variants) and AA Release Series (30 releases) verified",
+    "24 models, including 14 Claude, 8 common client models, and Grok 4.7",
+    "AA Capability Indexes (6 domains × 90 variants), AA Release Series (30 releases), and 44 active per-effort task evaluations verified",
     "Estimated scores, Unicode minus, and Fable 5 fallback preserved",
-    "5-platform × 4-family panorama, Claude availability table, screenshot scope, and CSV export",
-    "AA Capability Index rank bump chart, 6-domain bar charts, capability sorting, and CSV export",
+    "AA Task×Effort quadrant & trajectory chart, 5-platform × 4-family panorama, Claude availability table, and CSV export",
+    "Reasoning Effort Scaling slopes + 11×6 heatmap, AA Capability Index rank bump chart, 6-domain bar charts, capability sorting, and CSV export",
     "All four benchmarks, AA By-Release trajectory chart, model filters, axes, null receipts, keyboard points, CSV export",
     "Budget arithmetic (including Grok 4.7), cache, exact tier boundaries, promotion scenario, context/output limits",
     "Reasoning deltas, exclusion rules, source index, accessible tabs",

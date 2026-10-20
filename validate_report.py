@@ -27,8 +27,11 @@ assert len(DATA["models"]) == 24 and sum(m["current"] for m in DATA["models"]) =
 assert len(DATA["aa_profiles"]) == 21
 assert len(DATA["aa_capability_indexes"]["domains"]) == 6 and len(DATA["aa_capability_indexes"]["entries"]) == 90
 assert len(DATA["aa_release_series"]["releases"]) == 30
+assert len(DATA["aa_effort_evals"]["variants"]) == 44
 assert len(DATA["external_leaderboards"]["platforms"]) == 5 and len(DATA["external_leaderboards"]["four_family_matrix"]) == 11
 assert len(list(csv.DictReader((ROOT / "report-data.csv").open(encoding="utf-8-sig")))) == 169
+for forbidden in ["GEO", "OpenClaw", "Hermes", "未修改本机配置", "用户提供的 Claude 模型选择器截图"]:
+    assert forbidden not in html, f"Personal/private keyword still present: {forbidden}"
 claude = [m for m in DATA["models"] if m["vendor"] == "Anthropic"]
 assert len(claude) == 14 and sum(m["screenshot_visible"] for m in claude) == 8
 assert {p["model"] for p in DATA["aa_profiles"] if p.get("score_estimated")} == {"Claude Opus 4.7", "Claude Opus 4.6", "Claude Opus 4.5"}
@@ -36,10 +39,10 @@ assert next(p for p in DATA["aa_profiles"] if p["model"] == "Claude Haiku 4.5")[
 assert all(r["variant"] == "mixed_fallback" for r in DATA["rows"] if r["model"] == "Claude Fable 5" and r["effort"] == "max")
 current = {m["name"] for m in DATA["models"] if m["current"]}
 checks = [
-    "Original 121 records preserved",
+    "Original 121 records preserved; zero personal/GEO/OpenClaw/Hermes references",
     "169 JSON/CSV records agree (including Grok 4.7 low/high/xhigh)",
-    "24 models, including 14 Claude, 8 screenshot models, and Grok 4.7",
-    "AA Capability Indexes (6 domains × 90 variants) and AA Release Series (30 releases) verified",
+    "24 models, including 14 Claude, 8 common client models, and Grok 4.7",
+    "AA Capability Indexes (6 domains × 90 variants), AA Release Series (30 releases), and 44 active per-effort task evaluations verified",
     "Estimated scores, Unicode minus, and Fable 5 fallback preserved",
 ]
 
@@ -64,6 +67,17 @@ with sync_playwright() as p:
     assert page.locator('[role="tab"]').count() == 6
     assert page.locator("#overview").is_visible()
     assert not errors, errors
+    assert page.locator("#taskEffortChart .task-dot").count() == 43
+    assert "Most attractive quadrant" in page.locator("#taskEffortLegend").inner_text()
+    assert "Most attractive quadrant" in page.locator("#taskEffortChart").inner_html()
+    assert page.locator("#taskCategoryCards .platform-card").count() == 4
+    for t_tab in ["complex", "coding", "planning", "agentic", "automation", "knowledge", "intelligenceIndex"]:
+        page.locator(f'[data-task-tab="{t_tab}"]').click()
+        assert not re.search(r"\b(?:NaN|Infinity)\b", page.locator("#taskEffortChart").inner_html())
+    page.select_option("#taskEffortMode", "top_variants")
+    assert page.locator("#taskEffortChart .task-dot").count() == 11
+    page.select_option("#taskEffortMode", "release_trajectories")
+    page.locator('[data-task-tab="complex"]').click()
     assert page.locator("#platformCards .platform-card").count() == 5
     assert page.locator("#panoramaTable tbody tr").count() == 11
     page.select_option("#panoramaFamily", "Grok (xAI / SpaceXAI)")
@@ -87,8 +101,14 @@ with sync_playwright() as p:
     page.select_option("#deltaGroup", "writing")
     page.locator('[data-panel="overview"]').click()
     page.select_option("#claudeScope", "all")
-    checks.append("5-platform × 4-family panorama, Claude availability table, screenshot scope, and CSV export")
+    checks.append("AA Task×Effort quadrant & trajectory chart, 5-platform × 4-family panorama, Claude availability table, and CSV export")
     page.locator('[data-panel="capabilities"]').click()
+    assert page.locator("#effortScalingChart .scaling-dot").count() == 44
+    assert page.locator("#effortScalingTable tbody tr").count() == 11
+    for s_task in ["complex", "coding", "planning", "agentic", "automation", "knowledge", "intelligenceIndex"]:
+        page.select_option("#effortScalingTask", s_task)
+        assert not re.search(r"\b(?:NaN|Infinity)\b", page.locator("#effortScalingChart").inner_html())
+    page.select_option("#effortScalingTask", "complex")
     assert page.locator("#capBumpChart .bump-group").count() == 16
     assert not re.search(r"\b(?:NaN|Infinity)\b", page.locator("#capBumpChart").inner_html())
     page.select_option("#capIndexScope", "all_top")
@@ -116,10 +136,11 @@ with sync_playwright() as p:
     profile_rows = list(csv.DictReader(io.StringIO(Path(download.value.path()).read_text(encoding="utf-8-sig"))))
     assert len(profile_rows) == 21
     assert next(r for r in profile_rows if r["model"] == "Gemini 3.5 Flash-Lite")["Output Speed"] == "438"
-    checks.append("AA Capability Index rank bump chart, 6-domain bar charts, capability sorting, and CSV export")
+    checks.append("Reasoning Effort Scaling slopes + 11×6 heatmap, AA Capability Index rank bump chart, 6-domain bar charts, capability sorting, and CSV export")
 
     page.locator('[data-panel="explorer"]').click()
     assert page.locator("#releaseChart .release-dot").count() > 20
+    assert "Most attractive quadrant" in page.locator("#releaseChart").inner_html()
     for r_axis in ["costPerTask", "timePerTaskMinutes", "outputTokensPerTask"]:
         page.select_option("#releaseXMetric", r_axis)
         assert not re.search(r"\b(?:NaN|Infinity)\b", page.locator("#releaseChart").inner_html())
