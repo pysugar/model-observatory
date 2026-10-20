@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "scope": "PR #16 UI refresh: effort sweet-spot matrix, official/community references, pitfalls, page TOC, data-driven quadrant, series focus, tokenized CSS and dark mode",
+  "base_commit": "6f8c9d3063d1bf9764a9ae1a9e432f127ef36c23",
+  "last_feature_commit": "73ad093beabd1582e80d135b109808da3737be53",
+  "tested_local_changes": true,
+  "checkedAt": "2026-10-20",
+  "unit_tests": 43,
+  "local_browser": "bundled Chromium 141.0.7390.37 (Playwright 1.56)",
+  "local_sandbox": false,
+  "local_sandbox_note": "The cloud container runs as root, where the Chromium sandbox cannot start. Local smoke ran with the sandbox off only to iterate; it is not the acceptance run. The sandboxed acceptance is the PR CI verify job (system Chrome, sandbox on).",
+  "ci_verify_runs": {
+    "e4d78b96b7712dea851bd45d3b5c301245d2d6a9": "39418639179",
+    "73ad093beabd1582e80d135b109808da3737be53": "39422409136"
+  },
+  "viewports": [1440, 390, 320],
+  "checks": [
+    "Sweet-spot matrix: 11 active releases x 7 tasks; every cell equals the scripts/sweet_spot.py reference for thrifty/balanced/performance presets",
+    "Knee rule stops before poor-value steps: Sonnet 5.5 overall = high (xhigh->max +4 points for 2.7x cost), Sol 6.1 overall = medium, coding = high",
+    "Presets are monotonic: thrifty <= balanced <= performance effort for every cell",
+    "Official/guide start and community references (task guidance, Vulcan knee) shown beside the knee; detail lists sources and a start-then-adjust step",
+    "Pitfall numbers resolve from report data at build time; no hand-typed scores",
+    "Quadrant bounds are the medians of all measured efforts for the task (or a chosen budget); no hand-set $1.10 line",
+    "Clicking a pill focuses one release (others dimmed, labels faded); clicking again or reset restores; hover previews via a wide hit line",
+    "Sticky page TOC lists panel sections, highlights the section in view and never changes the panel hash",
+    "Effort curve y-axis fits the measured range; empty cost column hidden",
+    "Formatted report.css is canonically equal to the minified original before token changes; dark palette checked on all six panels",
+    "No page overflow at 390/320; no JS errors; existing smoke, capability, selection and scaling checks unchanged"
+  ],
+  "screenshots": [
+    "sweet-matrix-desktop.png",
+    "sweet-matrix-390.png",
+    "sweet-detail-sol-coding.png",
+    "sweet-detail-dark.png",
+    "pitfalls-desktop.png",
+    "quadrant-median-desktop.png",
+    "series-focus-fable.png",
+    "page-toc-desktop.png",
+    "page-toc-390.png",
+    "reasoning-auto-axis.png"
+  ]
+}
