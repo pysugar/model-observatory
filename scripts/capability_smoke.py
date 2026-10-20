@@ -77,6 +77,19 @@ def check_capabilities(page, data, output):
     expect(page.locator('#capIndexDetail')).to_contain_text('无数据 · 不参排')
     expect(page.locator('#capIndexDetail')).to_contain_text('15 个有效配置')
     page.locator('#capModelPills [data-cap-model="claude-opus-5-5"]').click()
+    expect(page.locator('#capIndexDetail tbody tr')).to_have_count(7)
+    point=page.locator('#capBumpChart [data-cap-id="claude-opus-5-5"] .cap-node[data-domain="__ii__"]')
+    point.focus()
+    expect(page.locator('#capPointTip')).to_contain_text('AA 智能指数')
+    expect(page.locator('#capPointTip')).to_contain_text('候选 16')
+    page.keyboard.press('Enter')
+    expect(page.locator('#capBumpChart [data-cap-id="claude-opus-5-5"] .cap-node[data-domain="__ii__"]')).to_be_focused()
+    expect(page.locator('#capIndexDetail')).to_contain_text('完整 7 项指标')
+    rows=csv_download(page,'#exportCapIndexes')
+    opus=next(r for r in rows if r['model']=='Claude Opus 5.5 (max)')
+    assert opus['__ii___score']==opus['intelligence_index']
+    assert opus['__ii___valid_n']=='16'
+
     page.locator('#capBumpChart').screenshot(path=str(output/'capability-desktop.png'),style='.nav-shell{visibility:hidden!important}')
     page.locator('[data-panel="reasoning"]').click()
     page.select_option('#reasoningRelease','claude-fable-5-1')
@@ -95,10 +108,23 @@ def check_capabilities(page, data, output):
     for row in rows:
         table_row=page.locator(f'#reasoningEvidenceTable tr[data-variant="{row["variant"]}"]')
         expect(table_row).to_have_count(1)
-        for selector in ('#reasoningCurve','#reasoningCost'):
+        for selector in ('#reasoningCurve',):
             point=page.locator(f'{selector} [data-variant="{row["variant"]}"]')
             expect(point).to_have_count(1)
             assert float(point.get_attribute('data-score'))==float(row['score'])
+    expect(page.locator('#reasoningCostPanel')).to_be_hidden()
+    assert all(r['cost_per_task_usd']=='' for r in rows)
+    for metric in ("Humanity's Last Exam",'CritPt','Terminal-Bench 4.0','SciCode'):
+        page.select_option('#reasoningRelease','claude-opus-5-5')
+        page.select_option('#reasoningMetric','eval:'+metric)
+        rows=csv_download(page,'#exportReasoningEvidence')
+        variants={v['slug']:v for r in data['aa_release_series']['releases'] for v in r['variants']}
+        for row in rows:
+            value=variants[row['variant']].get('evalMetrics',{}).get(metric)
+            assert (float(row['score']) if row['score'] else None)==value
+            assert row['cost_per_task_usd']==''
+        expect(page.locator('#reasoningCostPanel')).to_be_hidden()
+    expect(page.locator('#practicalEvidence')).to_contain_text('暂无直接可比公开成绩')
     page.select_option('#reasoningRelease','gemini-4-argon')
     page.select_option('#reasoningMetric','healthcareAndMedical')
     expect(page.locator('#reasoningCurve .reasoning-dot')).to_have_count(0)
@@ -119,5 +145,22 @@ def check_capabilities(page, data, output):
         page.locator('[data-panel="capabilities"]').click()
         page.locator('#capIndexCard').screenshot(path=str(output/f'capability-mobile-{width}.png'),style='.nav-shell{visibility:hidden!important}')
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), 'Capability page overflow'
+        point=page.locator('#capBumpChart [data-cap-id="claude-opus-5-5"] .cap-node[data-domain="economics"]')
+        point.dispatch_event('click')
+        expect(page.locator('#capPointTip')).to_contain_text('经济学')
         page.locator('[data-panel="reasoning"]').click()
     page.set_viewport_size({'width':1440,'height':1000})
+
+    touch=page.context.browser.new_page(viewport={'width':390,'height':844},has_touch=True)
+    try:
+        touch.goto(page.url)
+        touch.locator('[data-panel="capabilities"]').tap()
+        point=touch.locator('#capBumpChart [data-cap-id="claude-opus-5-5"] .cap-node[data-domain="economics"]')
+        point.tap()
+        expect(touch.locator('#capPointTip')).to_be_visible()
+        expect(touch.locator('#capPointTip')).to_contain_text('经济学')
+        touch.screenshot(path=str(output/'capability-touch-390.png'))
+        touch.locator('[data-panel="reasoning"]').tap()
+        touch.locator('#practicalEvidence').screenshot(path=str(output/'practical-evidence-390.png'))
+    finally:
+        touch.close()

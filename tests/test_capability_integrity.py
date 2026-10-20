@@ -49,6 +49,15 @@ assert(fableRows.find(e=>e.effort==='max').representative_by_overall_ii);
 const missingCost=effortRows([{slug:'low',effort:'low',intelligenceIndex:30,costPerTask:null},{slug:'high',effort:'high',intelligenceIndex:31,costPerTask:2}],'__ii__','high');
 assert.equal(missingCost[0].cost_per_task_usd,null);
 assert.equal(missingCost[1].delta_cost_usd,null);
+const raw=[{slug:'low',effort:'low',intelligenceIndex:99,costPerTask:1,evalMetrics:{SciCode:0}},
+ {slug:'high',effort:'high',intelligenceIndex:100,costPerTask:2,evalMetrics:{}}];
+assert.equal(capScore(raw[0],'eval:SciCode'),0);
+assert.equal(capScore(raw[1],'eval:SciCode'),null);
+const rawRows=effortRows(raw,'eval:SciCode','low');
+assert(rawRows.every(r=>r.cost_per_task_usd===null && r.delta_cost_usd===null));
+assert.equal(rawRows[1].score_status,'missing');
+assert.equal(exported[0].__ii___score,99);
+assert.equal(exported[0].__ii___valid_n,5);
 '''
         result = subprocess.run(['node', '-e', script], cwd=ROOT, capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)
