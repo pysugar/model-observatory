@@ -104,3 +104,57 @@
 @media(max-width:1100px){.platform-grid,.task-summary-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.platform-grid,.task-summary-cards{grid-template-columns:1fr}.cap-index-tabs button{min-width:96px;font-size:12px;padding:6px 9px}.toolbar select{max-width:180px}#capBumpChart{min-width:760px}#releaseChart,#taskEffortChart,#effortScalingChart{min-width:580px}}
 
+
+.reasoning-chart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.reasoning-chart-grid>div{min-width:0}.reasoning-chart-grid h3{font-size:14px}#reasoningCurve,#reasoningCost{display:block;width:100%;min-width:550px}.reasoning-dot{cursor:pointer}.reasoning-dot:focus-visible,.bump-group:focus-visible{outline:3px solid #228a7b;outline-offset:3px}
+@media(max-width:1000px){.reasoning-chart-grid{grid-template-columns:1fr}}
+
+#capBumpChart{min-width:1180px}#reasoningCurve,#reasoningCost{min-width:550px}
+@media(max-width:700px){#reasoningCurve,#reasoningCost{min-width:620px}}
+
+#capModelPills .pill-btn[aria-pressed=false]{opacity:1;text-decoration:none;background:var(--paper)}
+
+/* Point evidence remains visible on keyboard focus and touch selection. */
+#capPointTip { position:fixed; z-index:100; max-width:min(360px,calc(100vw - 16px)); margin:0; padding:10px 12px; border:1px solid #165e54; border-radius:8px; background:#fffef9; color:#163b35; box-shadow:0 4px 20px #163b3526; visibility:hidden; pointer-events:none; }
+#capPointTip.is-visible { visibility:visible; }
+.cap-node:focus-visible { outline:3px solid #163b35; outline-offset:3px; }
+
+/* Prior advice has a distinct container and neutral native-effort chips, no heatmap. */
+.effort-advice { border:2px dashed #89784e; background:#fcf8ed; margin-bottom:28px; }
+.effort-advice h4 { margin:14px 0 8px; }
+#adviceMatrix table { min-width:660px; }
+#adviceMatrix th { white-space:nowrap; }
+.effort-chip { display:grid; gap:4px; min-height:48px; width:100%; background:#fffef9; color:#213e38; border:1px solid #abb8ac; }
+.effort-chip span { font-size:11px; white-space:nowrap; }
+.effort-chip[aria-pressed="true"] { outline:2px solid #165e54; background:#e9f0e6; }
+.effort-chip:focus-visible { outline:3px solid #704d09; outline-offset:2px; }
+.benchmark-questions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.benchmark-questions article { padding:12px; border:1px solid #d6ded2; border-radius:8px; }
+.benchmark-questions h4 { margin:0 0 10px; }
+#adviceDetail a, #benchmarkGuide a { overflow-wrap:anywhere; }
+@media(max-width:640px) { .benchmark-questions { grid-template-columns:1fr; } .effort-advice .toolbar label { width:100%; } .effort-advice select { max-width:100%; } }
+
+@media(max-width:640px) {
+  #adviceMatrix table { min-width:0; }
+  #adviceMatrix table, #adviceMatrix tbody { display:block; }
+  #adviceMatrix thead { display:none; }
+  #adviceMatrix tr { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; padding:12px 0; border-bottom:1px solid #d6ded2; }
+  #adviceMatrix th { grid-column:1 / -1; padding:8px 2px; }
+  #adviceMatrix td { display:block; padding:2px; border:0; }
+  #adviceMatrix td::before { content:attr(data-label); display:block; font-size:12px; margin-bottom:5px; color:#426158; }
+}
+
+#effortScalingLegend button { cursor:pointer; background:#fffef9; border:1px solid #c6d5cb; border-radius:7px; padding:9px 11px; min-height:42px; }
+#effortScalingLegend button[aria-pressed="true"] { outline:2px solid #165e54; }
+#effortScalingLegend button:focus-visible, .scaling-dot:focus-visible { outline:3px solid #704d09; outline-offset:3px; }
+#effortScalingCard select, #pitfallGuide select { max-width:100%; }
+#effortScalingDetail, #computerUseEvidence, #pitfallGuide { overflow-wrap:anywhere; }
+.computer-use-panel { margin-top:18px; border-left:4px solid #6a7d8d; }
+#pitfallGuide section { padding:16px 0; border-top:1px solid #d6ded2; }
+#pitfallGuide li { margin:12px 0; }
+@media(max-width:640px) { #effortScalingCard .toolbar, #effortScalingCard .toolbar label { width:100%; min-width:0; } #effortScalingCard select, #pitfallGuide select { width:100%; } }
+
+#pitfallExperience .experience-card { padding:14px 0; border-top:1px solid #d6ded2; }
+#pitfallExperience .experience-card h4 { margin:0 0 10px; }
+#pitfallExperience details { margin-top:10px; }
+#pitfallExperience summary { cursor:pointer; min-height:36px; padding:5px 0; }
+#pitfallExperience a { overflow-wrap:anywhere; }

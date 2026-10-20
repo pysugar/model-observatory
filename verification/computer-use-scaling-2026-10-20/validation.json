@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "base_commit": "d4dab098c31f6d5f05e57eec1fcb0623340e7038",
+  "tested_local_changes": true,
+  "host": "ubuntu-gk55",
+  "checkedAt": "2026-10-20",
+  "unit_tests": 38,
+  "browser": "system Chrome 155.0.8059.39",
+  "sandbox": true,
+  "viewports": [
+    1440,
+    390,
+    320
+  ],
+  "source_provenance": "Exact publisher data and PDF page references supplied and verified by coordinator; no new benchmark calls.",
+  "checks": [
+    "Existing scaling chart enhanced: pin toggle/reset, model selector, hover/focus preserves pin and selected raw-score detail",
+    "Native legend Enter/Space and SVG point Enter/Space; true touch on 390/320; no nested point buttons",
+    "Missing Grok medium breaks path and delta; real singleton Gemini AA point has no invented rise",
+    "OSWorld 2.0 offline v2026.08.08: exactly 15 points and five efforts, no non-reasoning interpolation, Sol high-to-xhigh decline retained",
+    "Anthropic 2026-09-10 full-suite max points preserve partial and strict metrics and per-document original benchmark names",
+    "Gemini max-over-three, unknown native effort, separate CUA harness reference; Grok unknown score not zero",
+    "Only same OSWorld 2.0 source/protocol/unit/cost scope enters Pareto; raw-precision strict inequalities, missing costs and stable ties covered",
+    "At most two deduplicated alternatives; cross-model configuration terminology; no significance or universal optimum claims",
+    "Cost denominator examples: +8.87%, reverse saving 8.15%, legacy Sol max swap +2.41pp/77.22%, Astra low swap +4.67pp/71.74%",
+    "Generated HTML/JSON audited; existing 169 benchmark rows and report-data.csv unchanged"
+  ],
+  "pending": [
+    "Verified multi-source experience and caution-card copy has not been supplied; only clearly marked empty structure is present."
+  ],
+  "source_sha256": {
+    "report.js": "32d7c26c961fc90fe4723dff3d92b258ee3c47298972eac76adf964b36a234b1",
+    "report.css": "7e1dec7c40127657b28aa291938d26d131d28160688d28a472125c09551b7457",
+    "report.template.html": "188f85cb29b2e309318169aa3f345c571edd54749da8c43abf2d5f1fc0aa2234",
+    "research/2026-10-20/computer-use-evidence.json": "4920ceacbebd487ad80358c2f4cf985f34a8544f6526ee9951497d69dc5541ec",
+    "scripts/scaling_smoke.py": "df9a21e8dd0d0ae8b9a6502e38e0cddff2213068e72fd345879e70a013bd8cc7",
+    "tests/test_computer_use.py": "a655805a61869172686417346f308b3da34e457513aa4e46fb225278fc68ff08"
+  },
+  "scope": "Local targeted regression and source artifacts. Exact clean commit build/check and full smoke run after commit; final remote CI/preview must be checked by coordinator."
+}
