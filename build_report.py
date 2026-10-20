@@ -4,6 +4,7 @@ from pathlib import Path
 import csv
 import hashlib
 import json
+import math
 import re
 import argparse
 from scripts.report_claims import render_claims
@@ -27,6 +28,29 @@ def read_json(path):
 def number(value):
     match = re.search(r"-?\d[\d,]*(?:\.\d+)?", value)
     return float(match[0].replace(",", "")) if match else None
+
+
+
+def bind_panorama_capabilities(multi):
+    """Derive panorama prose/CSV from the same official representative as the chart."""
+    cap = multi["aa_capability_indexes"]
+    for row in multi["external_leaderboards"]["four_family_matrix"]:
+        variants = [e for e in cap["entries"] if e["releaseSlug"] == row["aa_cap_release_slug"]]
+        representatives = [e for e in variants if e["isTopVariant"]]
+        if len(representatives) != 1:
+            raise ValueError("Panorama requires one official II representative per release")
+        entry = representatives[0]
+        if entry["intelligenceIndex"] != max(v["intelligenceIndex"] for v in variants):
+            raise ValueError("Panorama representative must have the highest overall II")
+        scores = []
+        for domain in cap["domains"]:
+            value = entry["capabilities"].get(domain["key"])
+            observed = isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
+            scores.append(domain["shortLabel"] + " " + (f"{value:.2f}" if observed else "无数据（不参排）"))
+        configuration = entry["effort"] + (" · " + entry["fallbackLabel"] if entry.get("fallbackLabel") else "")
+        row["aa_cap_highlights"] = configuration + " · " + " · ".join(scores)
+        row["aa_cap_variant_slug"] = entry["slug"]
+        row["aa_cap_source_url"] = entry["sourceUrl"]
 
 
 def build(output_dir=ROOT):
@@ -147,6 +171,7 @@ def build(output_dir=ROOT):
 
     multi = read_json(RESEARCH.parent / "2026-10-19" / "multi-benchmark-supplement.json")
     assert multi["tonebench_sha256"] == tone_hash
+    bind_panorama_capabilities(multi)
     rows.extend(multi["grok_rows"])
     profiles.append(multi["grok_aa_profile"])
 

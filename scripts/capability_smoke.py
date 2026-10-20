@@ -11,8 +11,26 @@ def csv_download(page, selector):
     return list(csv.DictReader(io.StringIO(Path(download.value.path()).read_text(encoding='utf-8-sig'))))
 
 
+def check_panorama(page, data):
+    cap = data['aa_capability_indexes']
+    # Panorama and its CSV must agree with the official representative, not stale prose.
+    page.locator('[data-panel="overview"]').click()
+    panorama_csv = {r['model']:r for r in csv_download(page, '#exportPanorama')}
+    for row in data['external_leaderboards']['four_family_matrix']:
+        entry = next(e for e in cap['entries'] if e['slug']==row['aa_cap_variant_slug'])
+        summary = row['aa_cap_highlights']
+        for domain in cap['domains']:
+            score = entry['capabilities'].get(domain['key'])
+            value = f'{score:.2f}' if score is not None else '无数据（不参排）'
+            assert domain['shortLabel']+' '+value in summary
+        expect(page.locator('#panoramaTable tbody tr').filter(has_text=row['model'])).to_contain_text(summary)
+        assert panorama_csv[row['model']]['aa_cap_highlights']==summary
+        assert panorama_csv[row['model']]['aa_cap_source_url']==entry['sourceUrl']
+
+
 def check_capabilities(page, data, output):
     cap = data['aa_capability_indexes']
+    check_panorama(page, data)
     page.locator('[data-panel="capabilities"]').click()
     for scope, entries in (
         ('four_family_top', [e for e in cap['entries'] if e['isTopVariant'] and e['isFourFamily'] and e['isCurrent']]),
