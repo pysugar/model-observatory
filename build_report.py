@@ -8,6 +8,7 @@ import math
 import re
 import argparse
 from scripts.report_claims import render_claims
+from scripts.market_snapshot import refresh_panorama
 
 ROOT = Path(__file__).resolve().parent
 RESEARCH = ROOT / "research" / "2026-10-15"
@@ -193,6 +194,8 @@ def build(output_dir=ROOT):
                     "knowledge": round((m["AA-LCR v1.1"] + 2.0 * m["GDP.pdf"] + 3.0 * m["AA-Omniscience"]) / 6.0, 2),
                 }
 
+    market = read_json(ROOT / "research/2026-10-23/market-snapshot.json")
+    refresh_panorama(multi["external_leaderboards"], market)
     for index, row in enumerate(rows):
         row["id"] = index
     data = {
@@ -210,7 +213,8 @@ def build(output_dir=ROOT):
             "variants": eval_variants,
         },
         "external_leaderboards": multi["external_leaderboards"],
-        "meta": {"reviewed_at": "2026-10-20", "original_rows": 121,
+        "market_snapshot": market,
+        "meta": {"reviewed_at": market["reviewed_at"], "original_rows": 121,
                  "tonebench_sha256": tone_hash, "tonebench_fingerprint": tone["provenance"],
                  "not_run": "未做新的模型调用或中文任务实验；使用公开基准与官方证据。"},
     }

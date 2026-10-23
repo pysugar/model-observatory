@@ -104,6 +104,76 @@ def check_overview_ui(page, data):
     require(page.evaluate("location.hash") == hash_before, "Page TOC changed the panel hash")
 
 
+def check_market_ui(page, data, output):
+    """Exercise fresh evidence, missing values, price boundaries, themes and touch."""
+    expect(page.locator("#marketTable tbody tr")).to_have_count(8)
+    page.screenshot(path=str(output / "refresh-desktop.png"))
+    page.locator('[data-board="livebench"]').click()
+    page.fill("#marketSearch", "Grok")
+    expect(page.locator("#marketTable")).to_contain_text("74.1")
+    expect(page.locator("#marketTable")).to_contain_text("$2.69")
+    with page.expect_download() as download:
+        page.locator("#exportMarket").click()
+    rows = list(csv.DictReader(io.StringIO(Path(download.value.path()).read_text(encoding="utf-8-sig"))))
+    require(len(rows) == 1 and rows[0]["cost_usd"] == "2.687", "Market export lost source precision")
+    require(rows[0]["source_updated_at"] == "2026-10-18" and rows[0]["checked_at"] == "2026-10-23", "Source and verification dates conflated")
+    page.fill("#marketSearch", "no-such-model")
+    expect(page.locator("#marketTable")).to_contain_text("没有匹配的模型")
+    expect(page.locator("#exportMarket")).to_be_disabled()
+    page.locator("#marketReset").click()
+    page.locator('[data-board="scale"]').click()
+    with page.expect_download() as download:
+        page.locator("#exportMarket").click()
+    rows = list(csv.DictReader(io.StringIO(Path(download.value.path()).read_text(encoding="utf-8-sig"))))
+    require(all(r["cost_usd"] == "" and r["source_updated_at"] == "" for r in rows), "Unknown source values fabricated")
+    page.locator('[data-board="openrouter"]').click()
+    expect(page.locator("#boardNote")).to_contain_text("不能作为能力分")
+    page.locator("#marketMore").click()
+    expect(page.locator("#marketTable tbody tr")).to_have_count(10)
+    page.locator('[data-board="aa"]').click()
+    page.select_option("#marketVendor", "OpenAI")
+    expect(page.locator("#marketTable tbody tr")).to_have_count(4)
+    page.locator("#marketReset").click()
+    page.select_option("#marketSort", "cost")
+    page.locator("#marketMore").click()
+    expect(page.locator("#marketTable tbody tr").last).to_contain_text("Muse Wonder Full")
+    page.locator("#marketReset").click()
+    page.locator("#latestBenchmarks").scroll_into_view_if_needed()
+    page.locator("#latestBenchmarks").screenshot(path=str(output / "refresh-leaderboards.png"))
+    page.select_option("#themeSelect", "dark")
+    page.evaluate("window.scrollTo(0,0)")
+    page.screenshot(path=str(output / "refresh-dark.png"))
+    page.reload(wait_until="networkidle")
+    expect(page.locator("html")).to_have_attribute("data-theme", "dark")
+    page.select_option("#themeSelect", "light")
+    page.locator('[data-panel="specs"]').click()
+    for control in ("answerTokens", "reasonTokens"):
+        page.fill("#" + control, "0")
+    page.fill("#cachePercent", "0")
+    for tokens, expected in ((199999,.399998),(200000,.8),(200001,.800004)):
+        page.fill("#inputTokens", str(tokens))
+        actual = float(page.locator('[data-cost-model="grok-4-7"]').get_attribute("data-per"))
+        require(abs(actual-expected) < 1e-9, f"Grok long-context boundary: {tokens}")
+    # Reload restores the existing smoke suite's default calculator values.
+    page.goto(page.url.split("#")[0], wait_until="networkidle")
+    for width in (390, 320):
+        context = page.context.browser.new_context(viewport={"width":width,"height":844}, has_touch=True, is_mobile=True)
+        try:
+            touch = context.new_page()
+            touch.goto(page.url.split("#")[0], wait_until="networkidle")
+            touch.locator('[data-scroll="latestBenchmarks"]').tap()
+            touch.locator('[data-board="livebench"]').tap()
+            touch.fill("#marketSearch", "Grok")
+            expect(touch.locator("#marketTable")).to_contain_text("74.1")
+            require(touch.evaluate("document.documentElement.scrollWidth <= innerWidth"), f"Market overflow: {width}")
+            touch.locator("#marketReset").tap()
+            touch.screenshot(path=str(output / f"refresh-market-{width}.png"))
+            touch.evaluate("window.scrollTo(0,0)")
+            touch.screenshot(path=str(output / f"refresh-hero-{width}.png"))
+        finally:
+            context.close()
+
+
 def smoke(site, origin, output, channel=None, cloudflare=False):
     check(site)
     data = json.loads((site / "report-data.json").read_text())
@@ -127,6 +197,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
                     request_route.continue_()
             page.route("**/*", route)
             page.goto(origin + "/", wait_until="networkidle")
+            check_market_ui(page, data, output)
             expect(page.locator('[role="tab"]')).to_have_count(6)
             expect(page.locator("#claudeCatalog tbody tr")).to_have_count(14)
             page.select_option("#claudeScope", "screenshot")
@@ -205,7 +276,21 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
                 page.set_viewport_size({"width": width, "height": 844})
                 for panel in ("overview", "capabilities", "explorer", "specs", "reasoning", "evidence"):
                     page.locator(f'[data-panel="{panel}"]').click()
-                    require(page.evaluate("document.documentElement.scrollWidth <= innerWidth"), f"Page overflow: {width}px/{panel}")
+                    fits = page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+                    if not fits:
+                        page.screenshot(path=str(output / f"overflow-{width}-{panel}.png"))
+                        print(page.evaluate("""({viewport:innerWidth,scrollWidth:document.documentElement.scrollWidth,
+                          elements:Array.from(document.querySelectorAll('body *')).filter(e => {
+                            const r=e.getBoundingClientRect();
+                            if (!r.width || r.right<=innerWidth) return false;
+                            for(let p=e.parentElement;p;p=p.parentElement) {
+                              if (/hidden|clip|auto|scroll/.test(getComputedStyle(p).overflowX)) return false;
+                            }
+                            return true;
+                          }).slice(0,25).map(e=>({tag:e.tagName,id:e.id,
+                            width:e.getBoundingClientRect().width,right:e.getBoundingClientRect().right,
+                            text:e.textContent.slice(0,70)}))})"""))
+                    require(fits, f"Page overflow: {width}px/{panel}")
                 page.locator('[data-panel="overview"]').click()
                 page.screenshot(path=str(output / f"mobile-{width}.png"), full_page=True)
                 footer.scroll_into_view_if_needed()
@@ -219,7 +304,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
     probe(origin, site, attempts=1, require_headers=cloudflare)
     result = {"status": "PASS", "browser_version": browser_version, "browser_channel": channel or "bundled-chromium",
               "viewports": [1440, 390, 320], "rows": len(data["rows"]),
-              "checks": ["task-specific best variants in seven dimensions", "dataset-backed knowledge narrative and Elo differences", "effort filters and scaling charts", "pinned vs temporary highlight, missing gaps and singleton", "separate Computer Use protocols and scope-limited raw-precision alternatives", "three verified workflow cards, source boundaries and native disclosures on keyboard/touch",
+              "checks": ["fresh five-source search, filters, missing-cost export, dates, theme persistence and touch", "Grok 200k inclusive price boundary", "task-specific best variants in seven dimensions", "dataset-backed knowledge narrative and Elo differences", "effort filters and scaling charts", "pinned vs temporary highlight, missing gaps and singleton", "separate Computer Use protocols and scope-limited raw-precision alternatives", "three verified workflow cards, source boundaries and native disclosures on keyboard/touch",
                "capability missingness, tie ranks, per-domain denominators and CSV consistency",
                "reasoning charts, effort selection, nonmonotonic scores and keyboard access", "six panels", "Claude filter", "CSV missing values", "budget boundaries", "four Opus evidence views",
                          "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across six panels and twelve CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "sweet-spot matrix equals the Python reference for three presets", "median quadrant, series focus and page TOC", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
