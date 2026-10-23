@@ -1,0 +1,22 @@
+{
+  "verified_at_utc": "2026-10-23T16:14:01.491552+00:00",
+  "base_commit": "f34421104d89d517a44be685a1338ec8845365cb",
+  "branch": "feat/observatory-refresh-2026-10-23",
+  "state": "local uncommitted changes; no push or deployment",
+  "browser_smoke": "smoke.json",
+  "research_checked_at": "2026-10-23",
+  "source_sha256": {
+    "build_report.py": "4241e8afab12e20e3b384a52a7ca4ab449dac6c0c45e86997bcc903f447722af",
+    "report-content.json": "a21e96760f75d29bfb355b155246d1641bef275067c95216655588bb7235ebcb",
+    "report.css": "eb80873563a1edd5c2e50b8319c64e58756ca62e1827f510e3141f18d948ba5a",
+    "report.js": "32b4fc881c4d6c15e2adc0b5b8fd395da17c86db4f05521690595534dd05a88b",
+    "report.template.html": "7a9661ce829eed66f21c66daaab7ba5e129987eccf8b1e7d188d65c217695057",
+    "scripts/market_snapshot.py": "ec82b8fe92f87314090ea0d865d9469675844ad971abf9960ddcc9457cba160b",
+    "scripts/smoke.py": "717b2e2f60451ecb1c6d47a49d6619321f5a2de40039d658699f4acb4a7b1660",
+    "tests/test_market_snapshot.py": "7c85047b8b4f4864d37a082bb3ca568a732a1b8fde4de3bd117fb76c8407d5dc",
+    "research/2026-10-23/market-snapshot.json": "475371ceb6b87b51e110eda0d15f035578ae58166af4515ad0dc9b8a8a2a407d",
+    "model-capability-cost.html": "caf1c96bdb84118acbd7b9579326e02c188d7cf51519f2daec559845c2536b88",
+    "report-data.json": "14bc6bcd355e772dc5d63bb350001a7e7fd701b3e4e3f6ff3144207e1137ab91",
+    "report-data.csv": "95426d2bdfd4dab5fea4083c339215981291b84e8c7aa93f2a78e1ec24edd61a"
+  }
+}
