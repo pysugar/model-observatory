@@ -86,7 +86,7 @@
     targets.forEach(el=>tocObserver.observe(el));
   }
   function showPanel(name, updateHash = true) {
-    if (!document.querySelector(`[data-panel="${name}"]`)) name = "overview";
+    if (![...document.querySelectorAll("[data-panel]")].some(tab => tab.dataset.panel === name)) name = "overview";
     document.querySelectorAll(".panel").forEach(panel => { panel.hidden = panel.id !== name; });
     document.querySelectorAll("[data-panel]").forEach(tab => {
       tab.setAttribute("aria-selected", String(tab.dataset.panel === name));
@@ -332,7 +332,7 @@
     const costs=shownModels().map(m => {
       let prices={input:m.input,cached:m.cached,output:m.output},note="核验日 Standard";
       if(future && finite(m.future_input)){prices={input:m.future_input,cached:m.future_cached,output:m.future_output};note=`优惠 ${m.promo_end} 结束后`;}
-      if(m.tier_threshold && input > m.tier_threshold){prices={input:m.tier_input,cached:m.tier_cached,output:m.tier_output};note=`prompt >${fmt(m.tier_threshold,0)}；整次升档`;}
+      if(usesLongContextPrice(m,input)){prices={input:m.tier_input,cached:m.tier_cached,output:m.tier_output};note=`prompt ${m.tier_inclusive ? "≥" : ">"}${fmt(m.tier_threshold,0)}；整次升档`;}
       const over=answer+reason > m.max_output ? "超出同步输出上限" : input > m.context || m.context_kind === "shared" && input+answer+reason > m.context ? "超出上下文窗口" : null;
       const per=over ? null : (input*(1-cache/100)*prices.input+input*cache/100*prices.cached+(answer+reason)*prices.output)/1e6;
       return {m,prices,note,over,per,total:per === null ? null : per*count};
@@ -342,7 +342,7 @@
     $("costTable").innerHTML=table(["模型","每次费用","全部请求费用","实际采用单价：输入 / 缓存 / 输出","适用条件"],costs.map(c => `<tr data-cost-model="${esc(c.m.id)}" data-per="${c.per ?? ""}" data-total="${c.total ?? ""}"><th>${esc(c.m.name)}</th><td>${money(c.per)}</td><td>${money(c.total)}${c.total !== null ? `<div class="cost-bar" style="width:${150*c.total/max}px"></div>` : ""}</td><td>${money(c.prices.input)} / ${money(c.prices.cached)} / ${money(c.prices.output)}</td><td>${esc(c.over || c.note)}</td></tr>`).join(""));
   }
   $("specScope").addEventListener("change",renderSpecs);
-  $("exportSpecs").addEventListener("click",() => exportCSV(shownModels(),"官方规格-2026-10-16.csv"));
+  $("exportSpecs").addEventListener("click",() => exportCSV(shownModels(),`官方规格-${DATA.meta.reviewed_at}.csv`));
   ["inputTokens","cachePercent","answerTokens","reasonTokens","requestCount"].forEach(id => $(id).addEventListener("input",renderCalculator));
   $("priceScenario").addEventListener("change",renderCalculator);
 
@@ -404,12 +404,12 @@
     $("platformCards").innerHTML = ext.platforms.map(p => `<article class="platform-card"><h3>${link(p.url, p.name)}</h3><p><strong>核心指标：</strong>${esc(p.focus.replace("10 项综合 Intelligence Index","AA 智能指数（10 项评测）"))}</p><p><strong>成本口径：</strong>${esc(p.cost_metric)}</p><span class="platform-stat">快照：${esc(p.snapshot)}</span></article>`).join("");
     const rows = shownPanoramaRows();
     if ($("panoramaCount")) $("panoramaCount").textContent = `${rows.length} 个在用系列 · 5 大主流评测站与生产调用横向对照`;
-    $("panoramaTable").innerHTML = `<table class="task-table"><caption>四大模型家族（Grok / ChatGPT / Gemini / Claude）跨平台能力与成本对照矩阵</caption><thead><tr>${["家族 / 型号与状态","Artificial Analysis (v4.3.2)","Arena.ai & LiveBench 2.0","Scale SEAL 专项表现","OpenRouter 生产用量与成本","跨榜选型与甜蜜点建议"].map(h => `<th scope="col">${h}</th>`).join("")}</tr></thead><tbody>${rows.map(r => `<tr><th scope="row">${esc(r.model)} <span class="badge">${esc(r.family)}</span><span class="task-detail">${esc(r.status)}</span></th><td data-label="Artificial Analysis (v4.3.2)"><strong>AA 智能指数：${esc(r.aa_ii)}</strong><span class="task-detail">单任务成本：${esc(r.aa_cost_task)}<br>官方六域（整体 AA 智能指数最高代表档）：${esc(r.aa_cap_highlights)}<br>${link(r.aa_cap_source_url,"AA 领域来源")}</span></td><td data-label="Arena.ai & LiveBench 2.0"><strong>Arena：${esc(r.arena)}</strong><span class="task-detail">LiveBench 2.0：${esc(r.livebench_2)}</span></td><td data-label="Scale SEAL 专项表现">${esc(r.scale_seal)}</td><td data-label="OpenRouter 生产用量与成本">${esc(r.openrouter)}</td><td data-label="跨榜选型与甜蜜点建议">${esc(r.sweet_spot)}</td></tr>`).join("")}</tbody></table>`;
-    $("scaleHighlightsTable").innerHTML = table(["Scale SEAL 专项榜单","Top 1","Top 2","Top 3","Top 4"], ext.scale_highlights.map(s => `<tr><th>${link("https://labs.scale.com/leaderboard", s.benchmark)}</th><td><strong>#1</strong> ${esc(s.top1)}</td><td><strong>#2</strong> ${esc(s.top2)}</td><td><strong>#3</strong> ${esc(s.top3)}</td><td><strong>#4</strong> ${esc(s.top4)}</td></tr>`).join(""));
+    $("panoramaTable").innerHTML = `<table class="task-table"><caption>四大模型家族（Grok / ChatGPT / Gemini / Claude）跨平台能力与成本对照矩阵</caption><thead><tr>${["家族 / 型号与状态","Artificial Analysis (v4.3.2)","Arena.ai & LiveBench 2.0","Scale SEAL 专项表现","OpenRouter 生产用量与成本","跨榜选型与甜蜜点建议"].map(h => `<th scope="col">${h}</th>`).join("")}</tr></thead><tbody>${rows.map(r => `<tr><th scope="row">${esc(r.model)} <span class="badge">${esc(r.family)}</span><span class="task-detail">${esc(r.status)}</span></th><td data-label="Artificial Analysis (v4.3.2)"><strong>AA 智能指数：${esc(r.aa_ii)}</strong><span class="task-detail">单任务成本：${esc(r.aa_cost_task)}<br>官方六域（整体 AA 智能指数最高代表档）：${esc(r.aa_cap_highlights)}<br>${link(r.aa_cap_source_url,"AA 领域来源")}</span></td><td data-label="Arena.ai & LiveBench 2.0"><strong>Arena：${esc(r.arena)}</strong><span class="task-detail">LiveBench ${esc(r.livebench_snapshot)}：${esc(r.livebench_2)}</span></td><td data-label="Scale SEAL 专项表现">${esc(r.scale_seal)}<span class="task-detail">${esc(r.scale_snapshot)}</span></td><td data-label="OpenRouter 生产用量与成本">${esc(r.openrouter)}<span class="task-detail">截至 ${esc(r.openrouter_snapshot)} · 用量不是能力</span></td><td data-label="跨榜选型与甜蜜点建议">${esc(r.sweet_spot)}</td></tr>`).join("")}</tbody></table>`;
+    $("scaleHighlightsTable").innerHTML = table(["Scale SEAL 专项榜单","Top 1","Top 2","Top 3","Top 4"], ext.scale_highlights.map(s => `<tr><th>${link(s.source_url || "https://labs.scale.com/leaderboard", s.benchmark)}<span class="task-detail">${esc(s.checked_at || "2026-10-19")} 核验</span></th><td><strong>#1</strong> ${esc(s.top1)}</td><td><strong>#2</strong> ${esc(s.top2)}</td><td><strong>#3</strong> ${esc(s.top3)}</td><td><strong>#4</strong> ${esc(s.top4)}</td></tr>`).join(""));
   }
   if ($("panoramaFamily")) {
     $("panoramaFamily").addEventListener("change", renderPanorama);
-    $("exportPanorama").addEventListener("click", () => exportCSV(shownPanoramaRows(), "四大家族五站全景对比-2026-10-19.csv"));
+    $("exportPanorama").addEventListener("click", () => exportCSV(shownPanoramaRows(), `四大家族五站全景对比-${DATA.meta.reviewed_at}.csv`));
   }
 
   // Capability values stay official; missing domains never borrow Intelligence Index.
@@ -1733,5 +1733,110 @@
     event.currentTarget.textContent=full?"收起口径说明":"展开全部口径说明";
   });
 
+  // BEGIN MARKET_MATH
+  function usesLongContextPrice(model, input) {
+    return finite(model.tier_threshold) && (model.tier_inclusive ? input >= model.tier_threshold : input > model.tier_threshold);
+  }
+  function marketRows(board, query, vendor, sort) {
+    const needle = query.trim().toLocaleLowerCase();
+    return board.rows.filter(row => (vendor === "all" || row.vendor === vendor) &&
+      `${row.model} ${row.vendor} ${row.configuration}`.toLocaleLowerCase().includes(needle))
+      .slice().sort((a,b) => {
+        if (sort === "cost") {
+          if (finite(a.cost_usd) !== finite(b.cost_usd)) return finite(a.cost_usd) ? -1 : 1;
+          if (finite(a.cost_usd) && a.cost_usd !== b.cost_usd) return a.cost_usd - b.cost_usd;
+        }
+        if (finite(a.score) !== finite(b.score)) return finite(a.score) ? -1 : 1;
+        return (b.score ?? 0) - (a.score ?? 0);
+      });
+  }
+  function marketExportRows(board, rows) {
+    return rows.map(row => ({...row, source:board.name, metric:board.metric, unit:board.unit,
+      version:board.version, cost_basis:board.cost_basis, source_updated_at:board.source_updated_at,
+      checked_at:board.checked_at, source_url:board.source_url}));
+  }
+  // END MARKET_MATH
+
+  // Store only a display preference; the report stays entirely offline.
+  const themeMedia = window.matchMedia("(prefers-color-scheme: dark)");
+  function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme === "auto" ? (themeMedia.matches ? "dark" : "light") : theme;
+    $("themeSelect").value = theme;
+  }
+  let savedTheme = "auto";
+  try { savedTheme = localStorage.getItem("observatory-theme") || "auto"; } catch (_) { /* Storage is optional. */ }
+  applyTheme(["auto","light","dark"].includes(savedTheme) ? savedTheme : "auto");
+  $("themeSelect").addEventListener("change", event => {
+    applyTheme(event.target.value);
+    try { localStorage.setItem("observatory-theme", event.target.value); } catch (_) { /* Storage is optional. */ }
+  });
+  themeMedia.addEventListener("change", () => { if ($("themeSelect").value === "auto") applyTheme("auto"); });
+
+  const market = DATA.market_snapshot;
+  const marketState = {board:"aa", expanded:false};
+  const currentMarketBoard = () => market.boards.find(board => board.id === marketState.board);
+  const currentMarketRows = () => marketRows(currentMarketBoard(), $("marketSearch").value, $("marketVendor").value, $("marketSort").value);
+  const marketScore = (board, row) => `${fmt(row.score,board.precision)}${finite(row.interval) ? ` <small>±${fmt(row.interval,2)}</small>` : ""}<span class="score-unit">${esc(board.unit)}</span>`;
+  function renderMarket() {
+    const board = currentMarketBoard(), rows = currentMarketRows();
+    const visible = marketState.expanded ? rows : rows.slice(0,8);
+    const maxScore = Math.max(...board.rows.map(row => row.score).filter(finite),1);
+    $("boardButtons").querySelectorAll("button").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.board === board.id)));
+    $("boardTitle").textContent = board.metric;
+    $("boardMeta").textContent = `${board.version} · 来源更新 ${board.source_updated_at || "未披露"} · 核验 ${board.checked_at}`;
+    $("boardSource").href = board.source_url;
+    $("boardNote").textContent = board.note;
+    $("boardSelection").textContent = board.selection;
+    $("boardCostBasis").textContent = board.cost_basis;
+    $("marketSort").options[0].textContent = board.id === "openrouter" ? "用量从高到低" : "分数从高到低";
+    $("marketSort").options[1].disabled = !board.cost_label;
+    const costHeader = board.cost_label ? `${esc(board.cost_label)}<small>USD / ${board.id === "livebench" ? "成功任务" : "任务"}</small>` : "费用<small>本视图未提供</small>";
+    $("marketTable").innerHTML = rows.length ? `<table class="market-table"><caption class="sr">${esc(board.name)} · ${esc(board.metric)} · 当前选录，非跨站总榜</caption><thead><tr><th scope="col">序号</th><th scope="col">模型 / 测试配置</th><th scope="col">${esc(board.id === "openrouter" ? "用量" : "得分")}</th><th scope="col">${costHeader}</th><th scope="col">${esc(board.extra_label)}</th></tr></thead><tbody>${visible.map((row,i) => {
+      const extra = row[board.extra_key];
+      return `<tr><td class="row-number">${String(i+1).padStart(2,"0")}</td><th scope="row"><span class="market-model">${esc(row.model)}</span><span class="market-config">${esc(row.vendor)} <span aria-hidden="true">/</span> ${esc(row.configuration)}${row.source_rank ? ` · 来源 #${row.source_rank}` : ""}</span></th><td class="market-score" data-label="${esc(board.id === "openrouter" ? "用量" : "得分")}"><b>${marketScore(board,row)}</b><span class="score-track" aria-hidden="true"><span style="width:${Math.max(0,Math.min(100,100*row.score/maxScore))}%"></span></span></td><td class="market-cost" data-label="${esc(board.cost_label || "费用")}">${finite(row.cost_usd) ? money(row.cost_usd) : '<span class="missing-value">—<span class="sr">未提供</span></span>'}</td><td class="market-extra" data-label="${esc(board.extra_label)}">${typeof extra === "string" ? esc(extra) : finite(extra) ? fmt(extra,2) : "—"}${extra != null && board.extra_unit ? `<small>${esc(board.extra_unit)}</small>` : ""}</td></tr>`;
+    }).join("")}</tbody></table>` : '<div class="market-empty"><b>没有匹配的模型</b><p>试试模型简称，或重置筛选查看本次选录。</p></div>';
+    $("marketCount").textContent = `显示 ${visible.length} / ${rows.length} 项 · 本榜选录 ${board.rows.length} 项`;
+    $("marketMore").hidden = rows.length <= 8;
+    $("marketMore").textContent = marketState.expanded ? "收起列表 ↑" : `显示全部 ${rows.length} 项 ↓`;
+    $("marketMore").setAttribute("aria-expanded", String(marketState.expanded));
+    $("exportMarket").disabled = !rows.length;
+  }
+  function selectMarketBoard(id) {
+    if (!market.boards.some(board => board.id === id)) return;
+    marketState.board = id;
+    marketState.expanded = false;
+    const board = currentMarketBoard(), previous = $("marketVendor").value;
+    const vendors = [...new Set(board.rows.map(row => row.vendor))].sort();
+    $("marketVendor").innerHTML = '<option value="all">全部厂商</option>' + vendors.map(vendor => `<option value="${esc(vendor)}">${esc(vendor)}</option>`).join("");
+    $("marketVendor").value = vendors.includes(previous) ? previous : "all";
+    if (!board.cost_label) $("marketSort").value = "score";
+    renderMarket();
+  }
+  function renderMarketIntro() {
+    $("snapshotDate").textContent = market.reviewed_at;
+    $("reviewDate").textContent = `${market.reviewed_at} 核验`;
+    document.querySelector(".edition b").textContent = market.reviewed_at.slice(5).replace("-", " / ");
+    $("heroStats").innerHTML = [[market.boards.length,"主流榜单"],[DATA.models.length,"规格型号"],[Object.keys(DATA.aa_effort_evals.variants).length,"已测档位"],[market.boards.reduce((n,b)=>n+b.rows.length,0),"榜单选录"]].map(([value,label]) => `<span><b>${value}</b>${label}</span>`).join("");
+    $("heroSignals").innerHTML = market.highlights.map(item => {
+      const board = market.boards.find(b => b.id === item.board_id), row = board.rows.find(r => r.id === item.row_id);
+      return `<button class="signal-row" data-market-board="${esc(board.id)}"><span class="signal-kind">${esc(item.label)}</span><span class="signal-model"><b>${esc(row.model)}</b><small>${esc(item.caption)}</small></span><strong>${fmt(row.score,board.precision)}<span>${esc(board.unit)}</span></strong><span class="signal-arrow" aria-hidden="true">↗</span></button>`;
+    }).join("");
+    $("heroSignals").querySelectorAll("button").forEach(button => button.addEventListener("click", () => {
+      showPanel("overview"); $("marketSearch").value=""; $("marketVendor").value="all"; $("marketSort").value="score";
+      selectMarketBoard(button.dataset.marketBoard); $("latestBenchmarks").scrollIntoView({block:"start"});
+    }));
+    $("boardButtons").innerHTML = market.boards.map(board => `<button data-board="${esc(board.id)}" aria-pressed="false">${esc(board.short)}</button>`).join("");
+    $("boardButtons").querySelectorAll("button").forEach(button => button.addEventListener("click", () => selectMarketBoard(button.dataset.board)));
+    $("marketUpdates").innerHTML = market.changes.map((change,i) => `<div class="research-update"><span class="update-index">0${i+1}</span><div><h4>${esc(change.title)}</h4><p>${esc(change.body)}</p></div></div>`).join("");
+    $("priceCalendar").innerHTML = DATA.models.filter(model => model.promo_end && finite(model.future_input)).map(model => `<div class="price-event"><time datetime="${esc(model.promo_end)}">${esc(model.promo_end)}</time><b>${esc(model.name)}</b><p>输入 / 输出：${money(model.input)} / ${money(model.output)}<br>结束后 ${money(model.future_input)} / ${money(model.future_output)}<small>USD / 百万 token · ${link(model.price_source,"官方价格")}</small></p></div>`).join("");
+    $("officialChecks").innerHTML = '<span class="small">官方价格 · 本期已核验</span>' + market.official_sources.map(source => `<a href="${esc(source.url)}" target="_blank" rel="noopener" title="${esc(source.note)}"><span aria-hidden="true">✓</span> ${esc(source.vendor)} <span class="check-date">${esc(source.checked_at)}</span><span aria-hidden="true">↗</span></a>`).join("");
+  }
+  $("marketSearch").addEventListener("input", () => {marketState.expanded=false;renderMarket();});
+  ["marketVendor","marketSort"].forEach(id => $(id).addEventListener("change", () => {marketState.expanded=false;renderMarket();}));
+  $("marketMore").addEventListener("click", () => {marketState.expanded=!marketState.expanded;renderMarket();});
+  $("marketReset").addEventListener("click", () => {$("marketSearch").value="";$("marketVendor").value="all";$("marketSort").value="score";marketState.expanded=false;renderMarket();});
+  $("exportMarket").addEventListener("click", () => exportCSV(marketExportRows(currentMarketBoard(),currentMarketRows()),`模型观测-${marketState.board}-${market.reviewed_at}.csv`));
+  document.querySelectorAll("[data-scroll]").forEach(button => button.addEventListener("click", () => {showPanel("overview");$(button.dataset.scroll)?.scrollIntoView({block:"start"});}));
+  renderMarketIntro();selectMarketBoard("aa");
   renderSweetSpot();renderReasoningCharts();renderTaskEffortChart();renderEffortScalingChart();renderPanorama();renderClaudeCatalog();renderProfiles();renderCapIndexChart();renderSpecs();renderDeltas();changeGroup("general");showPanel(location.hash.slice(1)||"overview",false);
 })();

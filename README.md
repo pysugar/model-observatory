@@ -1,4 +1,4 @@
-# 模型能力、成本与任务选型报告
+# 模型观测站 · Model Observatory
 
 打开 [model-capability-cost.html](model-capability-cost.html)。这是包含数据、样式和脚本的单文件报告，可直接离线打开，无需安装依赖或联网加载。
 
@@ -8,15 +8,23 @@
 
 原生 PR 预览及 `preview` Environment 配置见 [PREVIEWS.md](PREVIEWS.md)；按需研究与独立轻量复核见 [RESEARCH_WORKFLOW.md](RESEARCH_WORKFLOW.md)；已验证版本与回滚见 [RELEASES.md](RELEASES.md)。原生 PR 预览已启用，创建/更新/清理权限 smoke 已通过；定时 LLM 调用和自动合并仍未开启。正式环境已切换为 `release`；旧 `cloudflare-preview` 保留备用，记录见 [环境迁移](RELEASE_ENVIRONMENT.md)。
 
-## 当前项目状态（2026-10-20）
+## 当前项目状态（2026-10-23 研究更新）
+
+本轮改版基于 `main` 的 `f34421104d89d517a44be685a1338ec8845365cb`（PR17）；开始工作时只读核对远端 `main`，与本地一致。工作分支 `feat/observatory-refresh-2026-10-23`；提交后的 CI 与独立预览状态以该分支 PR 的检查及机器人评论为准，合并与正式发布仍由用户另行决定。本次用户明确要求在当前目录更新网站，因此在 Mac 本地完成实现；此前的 Hermes 分工记录不代表本次执行环境。
+
+新增“最新榜单”：Artificial Analysis 23 条、Arena Text 17 条、LiveBench 22 条、Scale HLE Diamond 15 条、OpenRouter 周用量 10 条，共 **87 条选录**。支持来源切换、搜索、厂商筛选、排序、展开与保留来源元数据的 CSV。补入 DeepSeek、Muse、MiMo、MiniMax 等观测型号，未取得同协议逐档数据的型号不补造曲线。24 款规格型号的基础 Standard 价格复核至 10 月 23 日，修正 Grok 4.7 在完整 prompt **≥200,000 tokens** 时的整次阶梯计费。研究来源、变更和未核验项见 [本期研究记录](research/2026-10-23/README.md)。
+
+界面采用深蓝页首、浅色研究工作区与蓝紫强调色；新增本期观察、价格日期提醒及浅色 / 深色 / 跟随系统选项，保留原有六个维度和逐档交互。截图及验证入口见 [本地验收记录](verification/observatory-refresh-2026-10-23/README.md)。
+
+以下是此前已记录的发布事实，本轮没有更新线上状态：
 
 [PR #16](https://github.com/pysugar/model-observatory/pull/16) 已合并并完成正式发布：main merge 为 `1ed2900a756c1833611e5fb89d6f242399827f8d`，两个正式入口的部署后 probe 均通过，记录见 [PR16 发布收束](RELEASES.md#2026-10-20-pr16-界面与选档功能正式发布收束)。本轮把报告定位为个人选型参考：首屏是选档速查矩阵与避坑清单，象限改由数据决定，新增本页目录、系列聚焦和深色模式；研究数据未变。上一轮 [PR #14](https://github.com/pysugar/model-observatory/pull/14) 的记录见 [PR14 发布收束](RELEASES.md#2026-10-20-pr14-功能与正式发布收束)。后续线上状态仍以 `version.json` 与对应发布 run 为准。
 
-报告内容核对日为 **2026-10-20**，各来源保留自己的快照/评测日期，不能把目录复核日当成评测日。当前有 169 条基准记录、24 款目录模型（21 个选型与兼容候选）、21 个 AA 代表配置、41 条全局来源；组件内另有具名来源链接。AA 六域覆盖 90 个配置，发布系列为 30 版 / 94 个配置，其中 11 款活跃模型的 44 个配置有本轮冻结子评测。范围仍是 API 规格、公开评测及明确标注的任务建议；专用生成模型、订阅配额换算、新付费评测和中文实测均未纳入。
+报告内容核对日为 **2026-10-23**，各来源保留自己的快照/评测日期，不能把目录复核日当成评测日。当前有 169 条历史基准记录、87 条独立榜单选录、24 款目录模型（21 个选型与兼容候选）、21 个 AA 代表配置、50 条全局来源；组件内另有具名来源链接。AA 六域覆盖 90 个配置，发布系列为 30 版 / 94 个配置，其中 11 款模型的 44 个配置沿用 10 月 19–20 日的冻结子评测。范围仍是 API 规格、公开评测及明确标注的任务建议；专用生成模型、订阅配额换算、新付费评测和中文实测均未纳入。
 
 ## 阅读顺序
 
-1. **选型概览**（`#overview`）：顶部是个人选档速查矩阵（每个模型 × 七类任务的甜蜜点档位，按“成本每翻倍的边际收益”找拐点，可切换省钱 / 均衡 / 性能优先门槛；每格附官方 / 经验起点与社区实测（任务档位建议、Vulcan 逐档通过率）对照，详情给出起步与升降档做法，点格子看逐档边际收益）和各档位避坑清单；其后为四大家族五站全景、任务与主控/辅助分工建议、Claude 14 款速查、来源配置及 CSV。任务视图保留既有自定义公式与原始单位，不能重命名成官方通用任务指数。
+1. **选型概览**（`#overview`）：顶部是五站最新榜单、更新说明与价格日期提醒，其后是个人选档速查矩阵（每个模型 × 七类任务的甜蜜点档位，按“成本每翻倍的边际收益”找拐点，可切换省钱 / 均衡 / 性能优先门槛；每格附官方 / 经验起点与社区实测对照，点格子看逐档边际收益）和各档位避坑清单；再往下为四大家族五站全景、任务与主控/辅助分工建议、Claude 14 款速查、来源配置及 CSV。任务视图保留既有自定义公式与原始单位，不能重命名成官方通用任务指数。
 2. **分项能力**（`#capabilities`）：AA 智能指数与六域排名、固定选中配置的完整七项面板；各模型已测档位曲线支持固定高亮、临时 hover/focus、重置及原始分数/差分表。另列分协议 Computer Use 证据和“避坑指南”的实测参考、多源经验、待验证提醒。
 3. **成本与耗时**（`#explorer`）：AA、Vulcan、ToneBench、Agent Arena 各守分数与成本口径；可切换发布版本轨迹、来源、缺测、样本和点估计前沿。
 4. **规格与预算**（`#specs`）：官方 Standard 单价、输入能力、上下文、原生档位、缓存、推理用量、阶梯价及来源已公布的价格情景；假设同 token 用量不等于同任务成本。
@@ -39,6 +47,7 @@
 
 | 功能 / 数据结构 | 冻结输入与渲染入口 | 回归入口 |
 | --- | --- | --- |
+| 最新榜单、官方价格日期提醒、主题选择 | [market-snapshot.json](research/2026-10-23/market-snapshot.json) → `market_snapshot`；`scripts/market_snapshot.py:refresh_panorama` 同步全景；`report.js:renderMarket` / `marketRows` / `marketExportRows` / `renderMarketIntro`；价格日历来自目录 `promo_end` / `future_*` | [test_market_snapshot.py](tests/test_market_snapshot.py)、`scripts/smoke.py:check_market_ui` |
 | 既有记录、AA 代表配置、Opus 独立证据 | `research/2026-10-15/aa-pair-*.json`、[tonebench-leaderboard.json](research/2026-10-15/tonebench-leaderboard.json)、[arena-web-extract.json](research/2026-10-15/arena-web-extract.json)；`research/2026-10-16/claude-catalog/claude-supplement.json`、`research/2026-10-16/opus55-coding-supplement.json`；后者进入 `opus_coding_evidence` | `tests/test_publish.py`、`scripts/smoke.py`；历史复算入口见下文 |
 | AA 六域、发布系列与五站全景 | [multi-benchmark-supplement.json](research/2026-10-19/multi-benchmark-supplement.json) → `aa_capability_indexes`、`aa_release_series`、`external_leaderboards`；`build_report.py:bind_panorama_capabilities`，`report.js:renderCapIndexChart` / `renderCapDetail`，计算/CSV 共用 `capScore` / `capRanking` / `capExportRows` | [test_capability_integrity.py](tests/test_capability_integrity.py)、[capability_smoke.py](scripts/capability_smoke.py) |
 | 44 配置底层子评测 | [aa-effort-evals.json](research/2026-10-20/aa-effort-evals.json) → `aa_effort_evals` 及精确 variant 的 `evalMetrics` / `evalSourceUrl`；构建中另保留并标注派生 `taskScores`；`effortRows` / `renderReasoningCharts`、`renderEffortScalingChart` | `tests/test_report_claims.py`、`tests/test_capability_integrity.py`、`scripts/capability_smoke.py`、`scripts/scaling_smoke.py` |
@@ -59,6 +68,7 @@
 - `archive/model-capability-cost-2026-10-14.html`：修改前的原报告。
 - `report-data.json` / `report-data.csv`：当前 169 条基准记录；原 121 条原有字段和值保持不变，另加行 ID。166 条及 144 条是先前补充阶段的历史基线，不再代表当前总数。Computer Use 与经验卡是 JSON 独立结构，不混入这 169 条记录。
 - `report-content.json`：官方规格、价格、补充指标和来源目录。报告中的“当前候选”是本报告的筛选范围，不表示官方停止供应其他型号。
+- `research/2026-10-23/market-snapshot.json`：87 条独立榜单选录、来源日期与本期核验日期。它不进入原 169 条记录、旧 AA 逐档曲线或跨源前沿；JSON 和单独的榜单 CSV 都保留缺失值。
 - `research/2026-10-15/`：公开来源提取与复核说明；AA 比较页按实际表头映射；ToneBench 原始榜单与附件的 SHA256 一致。
 - `research/2026-10-16/`：Opus 编码补充证据、来源快照与 SHA256；`recompute_opus55.py` 从 115 条公开运行记录、Routine 聚合 CSV 和官方档位表离线复算。共同无回退子集为事后选择，仅供探索，不能替代完整重跑；Routine 未披露 solver 回退明细。补充数据嵌入 JSON 的 `opus_coding_evidence`，不混入原 144 条记录与前沿。
 - `research/2026-10-16/claude-catalog/`：官方生命周期、旧型号规格、effort / thinking、定价快照，以及 5 个 AA 比较页的同版提取。`recompute_claude.py` 离线追加 10 个 AA 配置与 12 个同快照 ToneBench 配置，输出 `claude-supplement.json`；3 个旧 Opus 的 AA 智能指数标为估计、缺费保留空值；Fable 5 max 的 AA / Tone 数据保留 4.8 回退标记。完整 14 款均纳入筛选、规格和预算，不以旧版 Vulcan 代填缺测。
@@ -96,6 +106,8 @@ python3 validate_report.py
 
 ## 当前功能决策与不可回归边界
 
+- **最新榜单**：序号仅表示当前筛选的排列位置，来源排名另列；AA 保留公开榜单舍入精度，含回退配置显式标记。LiveBench 的每成功任务成本与 AA 的加权单任务成本不同；Arena、Scale 与 OpenRouter 本视图不提供费用。来源更新日期未知保留 null。OpenRouter 是周 token 用量热度，free 版本独立，不是能力或用户数；保留 CC BY 4.0 归属。
+- **价格边界**：`tier_inclusive=true` 用于 Grok 4.7 的 ≥200k 整次计费；其余已有 `tier_threshold` 默认严格大于，不能统一改成含边界。本轮价格复核不自动改变未复核的模型生命周期、原生档位或评测协议。
 - **术语与排名**：用户可见文字和 CSV 表头统一“AA 智能指数”，不用裸缩写 II。内部字段和原始引用不盲目重命名。代表配置按该版整体最高分选取，不等于每个子领域最佳；按来源精度并列（1、1、3），分母为有效样本，当前筛选排名与来源全球排名分开。
 - **缺失与来源**：缺失领域/子评测不借总体分填充、不填零、不参排，不跨缺测档连线；已测档位图的相邻档位差分遇缺档留空，显式跨档比较须标明两端实测配置。没有该指标成绩来源就显示普通空状态，不能生成空 href 或伪造评测来源。不同版本、harness、单位和成本定义不混算。
 - **图表交互**：点击模型图例/选择器固定高亮，hover/focus 只临时强调并保留固定选择；再次点击或重置回到总览。原始分数与差分明细同步固定模型，逐点键盘和真实触屏可用，不能重新引入嵌套按钮。少于两点仅显示单点与解释；保留真实下降，不强制单调。标题为“各模型在已测推理档位下的成绩”；原生 effort 是离散类别，各厂商的 high 不等预算，也不假定各模型都有 non-reasoning 起点。
