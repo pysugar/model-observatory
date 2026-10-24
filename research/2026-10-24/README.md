@@ -20,6 +20,8 @@
 | `evidence` | 按模型和任务归属的补充证据：类型（官方建议 / 厂商自报 / 第三方评测 / 社区经验 / 检索结论）、陈述、可执行动作、可选的 `efforts.start / ceiling / avoid`、来源与核验日。 |
 | `marketWatch` | 本期检索到但未纳入页面的市场动态。 |
 
+后续的避坑指南更新为 `models` 补了 `line`（产品线，如 opus、sol）与 `lineNote`，只用于避坑指南判断“新一代更省”；证据条目未改。
+
 `build_report.py:check_model_profiles` 在构建时校验所有 id 能对上目录、AA 发布系列与档位建议，证据必须带 https 来源与核验日。
 
 ## 计算规则

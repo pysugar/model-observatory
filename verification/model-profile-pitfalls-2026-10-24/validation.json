@@ -1,0 +1,21 @@
+{
+  "verified_on": "2026-10-24",
+  "base_commit": "a037858ec6362d7424bee6ea5e856a8994ef0a05",
+  "branch": "claude/nice-euler-cj5s04",
+  "state": "local working tree before commit; no deployment",
+  "unit_tests": "56 passed",
+  "browser_smoke": "smoke.json",
+  "screenshots": "screenshots.json",
+  "source_sha256": {
+    "build_report.py": "0512d3c71e583d83e1a0bbd8dddeae9f197ae3d8f45e60f74857b40bba239f99",
+    "report.css": "32d8ea19cbcab7394ade262d91d54152637ba037dea5faa7de895d3da9b36e55",
+    "report.js": "08e5dbc4122b37b34dcc38d231573696270ab2c9bd482707625923e9619ace95",
+    "report.template.html": "8dbc53cb308366319fa56dcafe7886ee738d94221d43016187e998f0b9623a45",
+    "research/2026-10-24/model-effort-profiles.json": "e977394e9f59126ab712d8fdd4dc45c95e54236d842cf6986dd42021b533935f",
+    "scripts/sweet_spot.py": "4e103d4c162270b542517dbe412088ad03aa0fa3278b317b2db5185d6decfbda",
+    "scripts/smoke.py": "fea73995163ade0dc73db7e2032f1f91fed040c94039a78d93b394f017e09e64",
+    "tests/test_model_profiles.py": "fb0186bf2aac66d4cc3896b1fa824c594ec00d65edf4438e8794b8a4c31ee81f",
+    "model-capability-cost.html": "465e4f3f43df5e4e0bf46fd294f43b0aa83f85e57f668cbea578b0f27abadbda",
+    "report-data.json": "c87d1bd8757550f815db45a238d658a47a9046679b8d003c71b71b2c4ab23869"
+  }
+}
