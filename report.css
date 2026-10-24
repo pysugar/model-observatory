@@ -847,6 +847,8 @@ main { padding-top:35px; }
 .mp-tag.pend { color:var(--warn-ink); border-color:var(--warn-line); background:var(--warn-bg); }
 .mp-table tbody th { position:sticky; left:0; z-index:1; background:var(--paper); font-weight:500; min-width:190px; }
 .mp-table tbody th .mp-task { display:block; font-weight:700; }
+.mp-table tbody th .mp-bench { display:block; font-size:var(--fs-xs); font-weight:600; color:var(--ink); }
+.mp-row.empty .mp-bench { color:var(--muted); font-weight:500; }
 .mp-table tbody th.mp-sub { border-top:1px dashed var(--line); }
 .mp-row { cursor:pointer; }
 .mp-row.selected th { box-shadow:inset 3px 0 0 var(--teal); }
