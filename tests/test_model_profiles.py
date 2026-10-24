@@ -6,7 +6,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from sweet_spot import PRESETS, picks, profile_pitfalls, profile_series  # noqa: E402
+from sweet_spot import PRESETS, picks, profile_alternatives, profile_pitfalls, profile_series  # noqa: E402
 
 
 class ModelProfileTests(unittest.TestCase):
@@ -65,6 +65,20 @@ class ModelProfileTests(unittest.TestCase):
         # Models without curves get no invented pitfalls.
         for model_id in ("claude-opus-4-7", "gemini-4-argon", "gemini-3.5-flash-lite"):
             self.assertEqual(pits[model_id], set(), model_id)
+
+    def test_better_alternatives_for_a_specific_effort(self):
+        grok = profile_alternatives(self.data, "grok-4-7", "high", "all")
+        self.assertEqual(grok["aa-ii"], (("gpt-6.1-sol", "medium"), ("claude-opus-5-5", "high")))
+        # xAI has no other active model, so the same-vendor scope finds nothing better than Grok's own efforts.
+        self.assertEqual(profile_alternatives(self.data, "grok-4-7", "high", "vendor")["aa-ii"], (None, None))
+        sonnet = profile_alternatives(self.data, "claude-sonnet-5-5", "max", "vendor")
+        self.assertEqual(sonnet["vulcan"][0], ("claude-opus-5-5", "medium"))
+        for model in self.doc["models"]:
+            for scope in ("vendor", "all"):
+                for effort in ("low", "medium", "high", "xhigh", "max"):
+                    for key, (cheaper, stronger) in profile_alternatives(self.data, model["id"], effort, scope).items():
+                        self.assertNotEqual(cheaper, (model["id"], effort), key)
+                        self.assertNotEqual(stronger, (model["id"], effort), key)
 
     def test_every_profile_model_has_a_product_line(self):
         for m in self.doc["models"]:
