@@ -10433,6 +10433,7 @@
         "guideTasks": []
       }
     ],
+    "lineNote": "line 表示同一产品线（如 Opus、Sol）。避坑指南里，同一产品线、AA 发布日期更新的型号覆盖旧型号时记为“新一代更省”，其它同家型号记为“同家其它型号更省”。",
     "tiers": [
       {
         "id": "main",
@@ -10451,6 +10452,7 @@
       {
         "id": "claude-opus-5-5",
         "tier": "main",
+        "line": "opus",
         "aaRelease": "claude-opus-5-5",
         "guidanceId": "claude-opus-5-5",
         "cuIds": [
@@ -10460,6 +10462,7 @@
       {
         "id": "claude-fable-5-1",
         "tier": "main",
+        "line": "fable",
         "aaRelease": "claude-fable-5-1",
         "guidanceId": "claude-fable-5-1",
         "cuIds": [
@@ -10469,6 +10472,7 @@
       {
         "id": "claude-sonnet-5-5",
         "tier": "main",
+        "line": "sonnet",
         "aaRelease": "claude-sonnet-5-5",
         "guidanceId": "claude-sonnet-5-5",
         "cuIds": [
@@ -10478,6 +10482,7 @@
       {
         "id": "claude-haiku-5-5",
         "tier": "main",
+        "line": "haiku",
         "aaRelease": "claude-haiku-5-5",
         "guidanceId": null,
         "cuIds": []
@@ -10485,6 +10490,7 @@
       {
         "id": "claude-opus-5",
         "tier": "previous",
+        "line": "opus",
         "aaRelease": "claude-opus-5",
         "guidanceId": null,
         "cuIds": []
@@ -10492,6 +10498,7 @@
       {
         "id": "claude-fable-5",
         "tier": "previous",
+        "line": "fable",
         "aaRelease": "claude-fable-5",
         "guidanceId": null,
         "cuIds": []
@@ -10499,6 +10506,7 @@
       {
         "id": "claude-sonnet-5",
         "tier": "previous",
+        "line": "sonnet",
         "aaRelease": "claude-sonnet-5",
         "guidanceId": null,
         "cuIds": []
@@ -10506,6 +10514,7 @@
       {
         "id": "claude-opus-4-8",
         "tier": "legacy",
+        "line": "opus",
         "aaRelease": "claude-opus-4-8",
         "guidanceId": null,
         "cuIds": []
@@ -10513,6 +10522,7 @@
       {
         "id": "claude-opus-4-7",
         "tier": "legacy",
+        "line": "opus",
         "aaRelease": null,
         "guidanceId": null,
         "cuIds": []
@@ -10520,6 +10530,7 @@
       {
         "id": "claude-opus-4-6",
         "tier": "legacy",
+        "line": "opus",
         "aaRelease": null,
         "guidanceId": null,
         "cuIds": []
@@ -10527,6 +10538,7 @@
       {
         "id": "claude-sonnet-4-6",
         "tier": "legacy",
+        "line": "sonnet",
         "aaRelease": "claude-sonnet-4-6",
         "guidanceId": null,
         "cuIds": []
@@ -10534,6 +10546,7 @@
       {
         "id": "claude-opus-4-5-20251101",
         "tier": "legacy",
+        "line": "opus",
         "aaRelease": null,
         "guidanceId": null,
         "cuIds": []
@@ -10541,6 +10554,7 @@
       {
         "id": "claude-haiku-4-5-20251001",
         "tier": "legacy",
+        "line": "haiku",
         "aaRelease": null,
         "guidanceId": null,
         "cuIds": []
@@ -10548,6 +10562,7 @@
       {
         "id": "claude-sonnet-4-5-20250929",
         "tier": "legacy",
+        "line": "sonnet",
         "aaRelease": null,
         "guidanceId": null,
         "cuIds": []
@@ -10555,6 +10570,7 @@
       {
         "id": "gpt-6-astra",
         "tier": "main",
+        "line": "astra",
         "aaRelease": "gpt-6-astra",
         "guidanceId": "gpt-6-astra",
         "cuIds": [
@@ -10564,6 +10580,7 @@
       {
         "id": "gpt-6.1-sol",
         "tier": "main",
+        "line": "sol",
         "aaRelease": "gpt-6-1-sol",
         "guidanceId": "gpt-6-1-sol",
         "cuIds": [
@@ -10573,6 +10590,7 @@
       {
         "id": "gpt-6-luna",
         "tier": "main",
+        "line": "luna",
         "aaRelease": "gpt-6-luna",
         "guidanceId": null,
         "cuIds": []
@@ -10580,6 +10598,7 @@
       {
         "id": "gpt-6-sol",
         "tier": "previous",
+        "line": "sol",
         "aaRelease": "gpt-6-sol",
         "guidanceId": null,
         "cuIds": [
@@ -10589,6 +10608,7 @@
       {
         "id": "gpt-5.6-sol",
         "tier": "previous",
+        "line": "sol",
         "aaRelease": "gpt-5-6-sol",
         "guidanceId": null,
         "cuIds": []
@@ -10596,6 +10616,7 @@
       {
         "id": "gpt-5.6-luna",
         "tier": "previous",
+        "line": "luna",
         "aaRelease": "gpt-5-6-luna",
         "guidanceId": null,
         "cuIds": []
@@ -10603,6 +10624,7 @@
       {
         "id": "gemini-4-argon",
         "tier": "main",
+        "line": "argon",
         "aaRelease": "gemini-4-argon",
         "guidanceId": "gemini-4-argon",
         "cuIds": [
@@ -10612,6 +10634,7 @@
       {
         "id": "gemini-3.8-flash",
         "tier": "main",
+        "line": "flash",
         "aaRelease": "gemini-3-8-flash",
         "guidanceId": null,
         "cuIds": []
@@ -10619,6 +10642,7 @@
       {
         "id": "gemini-3.5-flash-lite",
         "tier": "main",
+        "line": "flash-lite",
         "aaRelease": "gemini-3-5-flash-lite",
         "guidanceId": null,
         "cuIds": []
@@ -10626,6 +10650,7 @@
       {
         "id": "grok-4-7",
         "tier": "main",
+        "line": "grok",
         "aaRelease": "grok-4-7",
         "guidanceId": "grok-4-7",
         "cuIds": [],

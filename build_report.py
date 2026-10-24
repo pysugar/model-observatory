@@ -66,6 +66,8 @@ def check_model_profiles(doc, catalog, multi):
     for m in doc["models"]:
         if m["aaRelease"] and m["aaRelease"] not in releases:
             raise ValueError(f"Unknown AA release {m['aaRelease']}")
+        if not m.get("line"):
+            raise ValueError(f"Profile model {m['id']} needs a product line")
         if m["guidanceId"] and m["guidanceId"] not in guidance:
             raise ValueError(f"Unknown guidance id {m['guidanceId']}")
     for ev in doc["evidence"]:
