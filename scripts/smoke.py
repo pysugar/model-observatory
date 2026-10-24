@@ -21,7 +21,7 @@ from publish import ROOT, check, probe, require
 from capability_smoke import check_capabilities
 from selection_smoke import check_selection
 from scaling_smoke import check_scaling
-from sweet_spot import PRESETS, picks, profile_series
+from sweet_spot import PRESETS, picks, profile_series, profile_pitfalls
 
 
 class QuietHandler(SimpleHTTPRequestHandler):
@@ -119,6 +119,23 @@ def check_profile_ui(page, data, output):
             require(page.locator("#profileCards .mp-card").count() == len(data["model_effort_profiles"]["taskAxis"]), "Profile task cards missing")
             require(page.locator('#profiles a[href=""]').count() == 0, "Empty source link in profile")
     page.select_option("#profileTolerance", "balanced")
+    for m in models:
+        page.select_option("#profileModel", m["id"])
+        rendered = page.eval_on_selector_all("#profilePitfallList li[data-mp-pit-kind]:not([data-mp-pit-kind=evidence])",
+            "items => items.map(li => [li.dataset.mpPitKind, li.dataset.key, li.dataset.effort, li.dataset.alt || null, li.dataset.altEffort || null])")
+        got = {tuple(x for x in item if x is not None) for item in rendered}
+        require(got == profile_pitfalls(data, m["id"]), f"Pitfalls drifted from reference: {m['id']}")
+        require(len(rendered) == len(got), f"Duplicate pitfall rows: {m['id']}")
+    page.select_option("#profileModel", "claude-sonnet-5-5")
+    expect(page.locator('#profileGrid tr[data-mp-series="aa-ii"] td[data-mp-effort="max"] .mp-pit.k-cost')).to_have_count(1)
+    expect(page.locator("#profileRule")).to_contain_text("边际收益拐点")
+    expect(page.locator("#profileRule")).to_contain_text("省钱 20%、均衡 12%、性能优先 6%")
+    page.locator("#profilePitfalls").uncheck()
+    expect(page.locator("#profilePitfallsCard")).to_be_hidden()
+    expect(page.locator("#profileGrid .mp-pit:visible")).to_have_count(0)
+    page.locator("#profilePitfalls").check()
+    page.select_option("#profileModel", "gpt-5.6-sol")
+    expect(page.locator('#profilePitfallList li[data-mp-pit-kind="upgrade"][data-effort="max"]')).to_have_attribute("data-alt", "gpt-6.1-sol")
     page.select_option("#profileModel", "grok-4-7")
     expect(page.locator("#profileHeader")).to_contain_text("档位待核验")
     expect(page.locator("#profileGrid thead")).to_contain_text("待核验")
@@ -346,7 +363,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
               "checks": ["fresh five-source search, filters, missing-cost export, dates, theme persistence and touch", "Grok 200k inclusive price boundary", "task-specific best variants in seven dimensions", "dataset-backed knowledge narrative and Elo differences", "effort filters and scaling charts", "pinned vs temporary highlight, missing gaps and singleton", "separate Computer Use protocols and scope-limited raw-precision alternatives", "three verified workflow cards, source boundaries and native disclosures on keyboard/touch",
                "capability missingness, tie ranks, per-domain denominators and CSV consistency",
                "reasoning charts, effort selection, nonmonotonic scores and keyboard access", "seven panels", "Claude filter", "CSV missing values", "budget boundaries", "four Opus evidence views",
-                         "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across seven panels and thirteen CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "sweet-spot matrix equals the Python reference for three presets", "median quadrant, series focus and page TOC", "model profile knees equal the Python reference for every model and preset, deep link and cross-links", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
+                         "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across seven panels and thirteen CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "sweet-spot matrix equals the Python reference for three presets", "median quadrant, series focus and page TOC", "model profile sweet spots and pitfalls equal the Python reference for every model and preset, deep link and cross-links", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
               "cloudflare_headers_checked": cloudflare}
     (output / "smoke.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result, indent=2))

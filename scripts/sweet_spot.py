@@ -125,3 +125,96 @@ def profile_series(data, model_id, share):
     if row:
         out["cu-anthropic"] = cu["anthropicMax"]["nativeEffort"]
     return out
+
+
+# ---------- Model profile pitfalls (mirrors report.js mpPitfalls) ----------
+COST_ASSASSIN_RATIO = 2.0      # a step that at least doubles the cost ...
+COST_ASSASSIN_SHARE = PRESETS["balanced"]  # ... yet gains less than 12% of the benchmark's score spread
+
+
+def _profile_points(data, model_id):
+    """{series_key: (points, elo, spread)}; points are dicts with effort/score/cost in effort order."""
+    profiles = data["model_effort_profiles"]
+    entry = next(m for m in profiles["models"] if m["id"] == model_id)
+    name = next(m["name"] for m in data["models"] if m["id"] == model_id)
+    out = {}
+    active = active_releases(data)
+    release = next((r for r in data["aa_release_series"]["releases"] if r["releaseSlug"] == entry["aaRelease"]), None)
+    order = lambda pts: sorted(pts, key=lambda p: EFFORT_ORDER.index(p["effort"]))
+    if release:
+        for key, get in TASKS.items():
+            values = [get(v) for r in active for v in r["variants"] if _finite(get(v))]
+            pts = [{"effort": _norm(v["effort"]), "score": get(v), "cost": v.get("costPerTask")} for v in release["variants"] if _finite(get(v))]
+            if pts:
+                out["aa-" + key] = (order(pts), key in ("agentic", "planning"), _spread(values))
+    for bench, key in (("coding", "vulcan"), ("writing", "tonebench")):
+        pool = [r for r in data["rows"] if r["benchmark"] == bench and _finite(r["score"])]
+        mine = [r for r in pool if r["model"] == name and _norm(r["effort"]) in EFFORT_ORDER
+                and r.get("variant") not in ("unverified", "ultra_harness")]
+        if mine:
+            out[key] = (order([{"effort": _norm(r["effort"]), "score": r["score"], "cost": r.get("cost_usd")} for r in mine]), False, _spread([r["score"] for r in pool]))
+    sweep = data["computer_use_evidence"]["openaiSweep"]
+    series = next((s for s in sweep["series"] if s["modelId"] in entry["cuIds"]), None)
+    if series:
+        pts = [{"effort": e, "score": sc, "cost": c} for e, sc, c in zip(sweep["efforts"], series["scores"], series["costUsdPerTask"])]
+        out["cu-openai"] = (pts, False, _spread([x for s in sweep["series"] for x in s["scores"]]))
+    return out
+
+
+def _release_date(data, model_id):
+    entry = next(m for m in data["model_effort_profiles"]["models"] if m["id"] == model_id)
+    rel = next((r for r in data["aa_release_series"]["releases"] if r["releaseSlug"] == entry["aaRelease"]), None)
+    return rel.get("releaseDate") if rel else None
+
+
+def profile_pitfalls(data, model_id):
+    """Set of (kind, series_key, effort[, alt_model_id, alt_effort]) flagged for one model."""
+    vendor = {m["id"]: m["vendor"] for m in data["models"]}
+    mine = _profile_points(data, model_id)
+    flags = set()
+    for key, (pts, elo, spread) in mine.items():
+        tol = 10 if elo else 0.5
+        for i, p in enumerate(pts):
+            lower = pts[:i]
+            if lower and p["score"] < max(x["score"] for x in lower) - tol:
+                flags.add(("regress", key, p["effort"]))
+            prev = pts[i - 1] if i else None
+            if prev and _finite(p["cost"]) and _finite(prev["cost"]) and prev["cost"] > 0 \
+                    and p["cost"] / prev["cost"] >= COST_ASSASSIN_RATIO and p["score"] - prev["score"] < COST_ASSASSIN_SHARE * spread:
+                flags.add(("cost", key, p["effort"]))
+    # Same-vendor comprehensive dominance: another active model's effort is at least as good and no more
+    # expensive on every benchmark series both have measured with costs (strictly better on at least one).
+    others = [m["id"] for m in data["model_effort_profiles"]["models"] if m["id"] != model_id and vendor[m["id"]] == vendor[model_id]]
+    other_points = {o: _profile_points(data, o) for o in others}
+    mine_date = _release_date(data, model_id)
+    line = {m["id"]: m["line"] for m in data["model_effort_profiles"]["models"]}
+    efforts = [e for e in EFFORT_ORDER if any(p["effort"] == e for pts, _e, _s in mine.values() for p in pts)]
+    for effort in efforts:
+        mine_at = {k: next(p for p in pts if p["effort"] == effort) for k, (pts, _e, _s) in mine.items()
+                   if any(p["effort"] == effort and _finite(p["cost"]) for p in pts)}
+        best = None
+        for o, series in other_points.items():
+            alt_efforts = {p["effort"] for pts, _e, _s in series.values() for p in pts}
+            for f in [e for e in EFFORT_ORDER if e in alt_efforts]:
+                shared = [k for k in mine_at if any(q["effort"] == f and _finite(q["cost"]) for q in series.get(k, ([], 0, 0))[0])]
+                if not shared:
+                    continue
+                ok, strict = True, False
+                for k in shared:
+                    p = mine_at[k]
+                    q = next(q for q in series[k][0] if q["effort"] == f)
+                    if q["score"] < p["score"] or q["cost"] > p["cost"]:
+                        ok = False
+                        break
+                    strict = strict or q["score"] > p["score"] or q["cost"] < p["cost"]
+                if ok and strict:
+                    first = shared[0]
+                    q_first = next(q for q in series[first][0] if q["effort"] == f)
+                    cand = (-len(shared), q_first["cost"], o, EFFORT_ORDER.index(f), f)
+                    best = min(best, cand) if best else cand
+        if best:
+            alt = best[2]
+            alt_date = _release_date(data, alt)
+            newer_same_line = line[alt] == line[model_id] and mine_date and alt_date and alt_date > mine_date
+            flags.add(("upgrade" if newer_same_line else "dominated", "config", effort, alt, best[4]))
+    return flags
