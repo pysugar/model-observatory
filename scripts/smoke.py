@@ -137,6 +137,13 @@ def check_profile_ui(page, data, output):
                 pair = lambda v: tuple(v.split("|")) if v else None
                 got = {k: (pair(c), pair(st)) for k, c, st in rows}
                 require(got == profile_alternatives(data, m["id"], effort, scope), f"Alternatives drifted: {scope}/{m['id']}/{effort}")
+    # Every model shows the same benchmark rows, so coding always lists the AA row before Vulcan.
+    page.select_option("#profileModel", "gpt-5.6-luna")
+    coding = page.locator('#profileGrid tr[data-mp-task="coding"] .mp-bench')
+    expect(coding).to_have_count(2)
+    expect(coding.nth(0)).to_contain_text("Terminal-Bench")
+    expect(coding.nth(1)).to_contain_text("通过率 %")
+    expect(page.locator('#profileGrid tr[data-mp-task="coding"]').nth(0)).to_contain_text("未测")
     page.select_option("#profileAltScope", "vendor")
     page.select_option("#profileModel", "grok-4-7")
     expect(page.locator("#profileAltEffort")).to_have_value("high")

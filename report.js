@@ -1940,6 +1940,19 @@
     return parts.join("");
   }
   function mpFmt(s,v){return finite(v)?fmt(v,s.digits):"—";}
+  // Every model shows the same benchmark rows per task (missing ones read "未测"), so a number in one
+  // row is never compared with a different benchmark in the same position for another model.
+  function mpRowsFor(task,series){
+    const aa=sweetTasks.find(t=>t.key===task);
+    const fixed=[...(aa?[{key:"aa-"+task,bench:task==="ii"?"AA 智能指数":`AA · ${aa.sub}`,unit:aa.elo?"Elo":"分"}]:[]),
+      ...(task==="coding"?[{key:"vulcan",bench:"Vulcan 编码 23 题",unit:"% 通过"}]:[]),
+      ...(task==="writing"?[{key:"tonebench",bench:"ToneBench 英文写作",unit:"分"}]:[])];
+    const rows=fixed.map(f=>series.find(s=>s.key===f.key)||{...f,placeholder:true,points:[]});
+    series.filter(s=>!fixed.some(f=>f.key===s.key)).forEach(s=>rows.push(s));
+    if(task==="computer_use"&&!rows.length) rows.push({key:"cu",bench:"OSWorld（各厂商协议不同）",unit:"%",placeholder:true,points:[]});
+    return rows;
+  }
+  const mpUnitText=s=>s.unit==="% 通过"?"通过率 %":s.unit==="%"?"%":s.unit;
   const mpPitMeta={cost:{label:"费用刺客",short:"刺客",rule:"相邻两档成本至少翻倍，分数提升却不到该评测分差的 12%（均衡门槛）。"},
     regress:{label:"档位倒退",short:"倒退",rule:"更高档的分数比同模型某个更低档还低（超过 0.5 分 / 10 Elo）。点估计，未做显著性检验。"},
     upgrade:{label:"新一代更省",short:"换新更省",rule:"同一产品线、发布更晚的型号的某一档，在双方都测过的所有评测上分数都不低、费用都不高（至少一项更好）。常见情形：升级型号、降低档位反而更便宜。"},
@@ -2002,10 +2015,11 @@
     // Grid: task rows × effort columns.
     const head=`<tr><th scope="col">任务 · 评测</th>${a.cols.map(e=>`<th scope="col" class="mp-col"><b class="ss-effort e-${esc(e)}">${esc(mpEffortLabel(e))}</b>${e===cat.default_effort?'<span class="mp-tag def">默认</span>':""}${a.efforts.pending.includes(e)?'<span class="mp-tag pend">待核验</span>':""}${!a.efforts.listed.includes(e)&&!a.efforts.pending.includes(e)?'<span class="mp-tag">目录未列</span>':""}${(()=>{const c=configPit(e);return c?`<span class="mp-pit k-${c.kind}" data-mp-config-pit="${c.kind}" title="${esc(`${mpPitMeta[c.kind].label}：可换 ${mpCat(c.alt.id).name} ${c.f}`)}"${showPits?"":" hidden"}>${esc(mpPitMeta[c.kind].short)}</span>`:"";})()}</th>`).join("")}</tr>`;
     const body=(MP.taskAxis||[]).map(t=>{
-      const ss=a.series.filter(s=>s.task===t.id), start=mpStart(a,t.id);
-      const label=(s,i)=>`<th scope="row"${i===0?"":' class="mp-sub"'}>${i===0?`<span class="mp-task">${esc(t.label)}</span>`:""}<span class="task-detail">${esc(s?s.bench:t.sub)}${s?.others?` · 另有 ${s.others} 个未注明/编排配置`:""}</span></th>`;
+      const ss=mpRowsFor(t.id,a.series.filter(s=>s.task===t.id)), start=mpStart(a,t.id);
+      const label=(s,i)=>`<th scope="row"${i===0?"":' class="mp-sub"'}>${i===0?`<span class="mp-task">${esc(t.label)}</span>`:""}<span class="mp-bench">${esc(s?s.bench:t.sub)}${s?`（${esc(mpUnitText(s))}）`:""}</span>${s?.others?`<span class="task-detail">另有 ${s.others} 个未注明/编排配置</span>`:""}</th>`;
       if(!ss.length) return `<tr class="mp-row empty${mpView.task===t.id?" selected":""}" data-mp-task="${t.id}">${label(null,0)}${a.cols.map(e=>`<td class="mp-cell ${start?.effort===e?"is-start":""}">${start?.effort===e?'<span class="mp-mark start" title="起步档">起步</span>':'<span class="muted">未测</span>'}</td>`).join("")}</tr>`;
       return ss.map((s,i)=>{
+        if(s.placeholder) return `<tr class="mp-row empty${mpView.task===t.id?" selected":""}" data-mp-task="${t.id}">${label(s,i)}${a.cols.map(e=>{const isStart=i===0&&start?.effort===e;return `<td class="mp-cell${isStart?" is-start":""}">${isStart?'<span class="mp-mark start" title="起步档">起步</span>':""}<span class="muted">未测</span></td>`;}).join("")}</tr>`;
         const r=s.res[key], lo=Math.min(...s.points.map(p=>p.score)), hi=Math.max(...s.points.map(p=>p.score));
         const cells=a.cols.map(e=>{
           const p=s.points.find(x=>x.effort===e), idx=s.points.indexOf(p), prev=idx>0?s.points[idx-1]:null;
