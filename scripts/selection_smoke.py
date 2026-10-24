@@ -71,6 +71,7 @@ def check_selection(page, data, output):
         'explorer':['exportReleases','export'],
         'specs':['exportSpecs'],
         'reasoning':['exportAdvice','exportReasoningEvidence','exportOpusEvidence'],
+        'profiles':['exportProfile'],
         'evidence':[],
     }
     downloaded={}

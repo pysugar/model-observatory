@@ -54,6 +54,27 @@ def bind_panorama_capabilities(multi):
         row["aa_cap_source_url"] = entry["sourceUrl"]
 
 
+def check_model_profiles(doc, catalog, multi):
+    """The profile tab joins catalog, AA releases and guidance by id; every link must resolve."""
+    catalog_ids = {m["id"] for m in catalog["models"]}
+    releases = {r["releaseSlug"] for r in multi["aa_release_series"]["releases"]}
+    guidance = {m["modelId"] for m in read_json(ROOT / "research/2026-10-20/task-effort-guidance.json")["models"]}
+    profile_ids = [m["id"] for m in doc["models"]]
+    if len(set(profile_ids)) != len(profile_ids) or not set(profile_ids) <= catalog_ids:
+        raise ValueError("Profile models must be unique catalog ids")
+    tasks = {t["id"] for t in doc["taskAxis"]}
+    for m in doc["models"]:
+        if m["aaRelease"] and m["aaRelease"] not in releases:
+            raise ValueError(f"Unknown AA release {m['aaRelease']}")
+        if m["guidanceId"] and m["guidanceId"] not in guidance:
+            raise ValueError(f"Unknown guidance id {m['guidanceId']}")
+    for ev in doc["evidence"]:
+        if not set(ev["modelIds"]) <= set(profile_ids) or not set(ev["tasks"]) <= tasks | {"all"}:
+            raise ValueError(f"Evidence {ev['id']} points at unknown model or task")
+        if not ev.get("url", "").startswith("https://") or not ev.get("checkedAt"):
+            raise ValueError(f"Evidence {ev['id']} needs a source URL and check date")
+
+
 def build(output_dir=ROOT):
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -194,6 +215,8 @@ def build(output_dir=ROOT):
                     "knowledge": round((m["AA-LCR v1.1"] + 2.0 * m["GDP.pdf"] + 3.0 * m["AA-Omniscience"]) / 6.0, 2),
                 }
 
+    profiles_doc = read_json(ROOT / "research/2026-10-24/model-effort-profiles.json")
+    check_model_profiles(profiles_doc, catalog, multi)
     market = read_json(ROOT / "research/2026-10-23/market-snapshot.json")
     refresh_panorama(multi["external_leaderboards"], market)
     for index, row in enumerate(rows):
@@ -204,6 +227,7 @@ def build(output_dir=ROOT):
         "computer_use_evidence": read_json(ROOT / "research/2026-10-20/computer-use-evidence.json"),
         "task_effort_guidance": read_json(ROOT / "research/2026-10-20/task-effort-guidance.json"),
         "practical_evidence": read_json(ROOT / "research/2026-10-20/practical-evidence.json"),
+        "model_effort_profiles": profiles_doc,
         "aa_capability_indexes": multi["aa_capability_indexes"],
         "aa_release_series": multi["aa_release_series"],
         "aa_effort_evals": {

@@ -86,6 +86,11 @@
     targets.forEach(el=>tocObserver.observe(el));
   }
   function showPanel(name, updateHash = true) {
+    // "#profiles?m=<model id>" deep-links a model in the profile tab; other panels ignore the query.
+    const [panelName, query] = String(name || "").split("?");
+    name = panelName;
+    const linkedModel = new URLSearchParams(query || "").get("m");
+    if (name === "profiles" && linkedModel && mpEntry(linkedModel)) mpView.model = linkedModel;
     if (![...document.querySelectorAll("[data-panel]")].some(tab => tab.dataset.panel === name)) name = "overview";
     document.querySelectorAll(".panel").forEach(panel => { panel.hidden = panel.id !== name; });
     document.querySelectorAll("[data-panel]").forEach(tab => {
@@ -93,13 +98,14 @@
       tab.tabIndex = tab.dataset.panel === name ? 0 : -1;
     });
     if (updateHash) {
-      history.replaceState(null, "", "#" + name);
+      history.replaceState(null, "", "#" + name + (name === "profiles" ? "?m=" + encodeURIComponent(mpView.model) : ""));
       window.scrollTo({top:Math.min(window.scrollY, document.querySelector(".nav-shell").offsetTop), behavior:"instant"});
     }
     if (name === "overview") renderTaskEffortChart();
     buildPageToc(name);
     if (name === "explorer") renderExplorer();
     if (name === "capabilities") { renderEffortScalingChart(); renderCapIndexChart(); }
+    if (name === "profiles") renderModelProfile();
   }
   const tabs = [...document.querySelectorAll("[data-panel]")];
   tabs.forEach((tab, i) => {
@@ -682,6 +688,12 @@
       <p><strong>降档条件：</strong>单文件或模板任务、需求明确且测试稳定，可${down ? '试 <code>'+down+'</code>' : '保留当前最低支持档位'}；验收未退步才保留。${modelId==='claude-fable-5-1' ? '日常 medium 仅是验证后的降档候选；low 可能少检索而依赖记忆。' : ''}</p></div>
       <p class="small">原生支持：${m.supportedEfforts.map(esc).join(' / ')}。${m.officialDefault ? '官方默认 '+esc(m.officialDefault)+' 不等于四类任务最优。' : '未核验官方默认或最佳档位。'}费用比较完整成功交付（含失败重试），延迟比较任务完成时间，不用 tokens/s 代替。</p>
       <h4>支撑证据与覆盖边界</h4><ul>${selected.support.map(e=>`<li><strong>${esc(e.evidenceType)}</strong> · ${link(e.sourceUrl,'来源')}<p>${esc(e.statement)}</p><p class="small">覆盖：${esc(e.scope)}；样本 ${e.sampleSize ?? '未提供'}；harness ${esc(e.harness || '未提供')}。</p></li>`).join('')}</ul>`;
+    const pm=(DATA.model_effort_profiles?.models||[]).find(x=>x.guidanceId===modelId);
+    if(pm){
+      const axis={complex:"complex",daily_code:"coding",repository_bug:"coding",design:"planning"}[taskType]||null;
+      $("adviceDetail").insertAdjacentHTML("beforeend",`<p><button class="inline-button" data-profile-open="${esc(pm.id)}">在模型档案中看 ${esc(m.name)} 全部任务 →</button></p>`);
+      $("adviceDetail").querySelector("[data-profile-open]").addEventListener("click",()=>{mpView.model=pm.id;mpView.task=axis;showPanel("profiles");$("report-nav").scrollIntoView({block:"start"});});
+    }
   }
   if($("adviceModel")) {
     const guidance=DATA.task_effort_guidance;
@@ -1725,6 +1737,11 @@
         refs.official?`<li><b>${esc(refs.official.kind)}${refs.official.taskSpecific?"起点":"默认"} ${esc(refs.official.effort)}</b>：${esc(refs.official.note)} ${refs.official.url?link(refs.official.url,"来源"):""}</li>`:`<li><b>官方</b>：未核验到官方默认档位。</li>`,
         ...refs.community.map(c=>`<li><b>社区 · ${esc(c.label)} ${esc(c.effort)}</b>${c.n?`（n=${c.n}）`:""}：${esc(c.note)} ${c.url?link(c.url,"来源"):""}${c.rows?`<span class="task-detail">逐档通过率：${c.rows.slice().sort((a,b)=>capabilityEfforts.indexOf(a.effort)-capabilityEfforts.indexOf(b.effort)).map(x=>`${esc(x.effort)} ${fmt(x.score,1)}% / ${money(x.cost_usd)}`).join(" · ")}</span>`:""}</li>`)];
       return `<div class="ss-refs-detail"><h4>参考依据</h4><ul>${items.join("")}</ul>${advice?`<p class="ss-advice"><b>建议做法：</b>${esc(advice)}</p>`:""}</div>`;})()}${alt?`<p class="ss-alt-note">有更省的替代：<strong>${esc(alt.release.shortName||alt.release.name)} ${esc(alt.v.effort)}</strong> 得分 ${sweetFmt(t,alt.score)}，不低于当前甜蜜点，成本 ${money(alt.cost)}（当前为 ${money(res.pick.cost)}）。</p>`:""}`;
+    const pm=(DATA.model_effort_profiles?.models||[]).find(m=>m.aaRelease===r.releaseSlug);
+    if(pm){
+      box.insertAdjacentHTML("beforeend",`<p><button class="inline-button" data-profile-open="${esc(pm.id)}">在模型档案中看 ${esc(r.shortName||r.name)} 全部任务 →</button></p>`);
+      box.querySelector("[data-profile-open]").addEventListener("click",e=>{mpView.model=e.currentTarget.dataset.profileOpen;mpView.task=t.key;showPanel("profiles");$("report-nav").scrollIntoView({block:"start"});});
+    }
   }
   if($("sweetTolerance")) $("sweetTolerance").addEventListener("change",renderSweetSpot);
   if($("toggleNotes")) $("toggleNotes").addEventListener("click",event=>{
@@ -1732,6 +1749,194 @@
     event.currentTarget.setAttribute("aria-pressed",String(full));
     event.currentTarget.textContent=full?"收起口径说明":"展开全部口径说明";
   });
+
+  // ---------- Model profile (模型档案): one model, every task × native effort ----------
+  // Measured picks reuse the overview knee (kneeOf / sweetThreshold), so both views always agree.
+  const MP=DATA.model_effort_profiles||{models:[],evidence:[],taskAxis:[]};
+  const mpEffortOrder=["none","minimal","low","medium","high","xhigh","max"];
+  const mpNorm=e=>e==="non-reasoning"?"none":e;
+  const mpEffortLabel=e=>e==="none"?"none（关推理）":e;
+  const mpView={model:"claude-opus-5-5",task:null};
+  const mpCat=id=>DATA.models.find(m=>m.id===id);
+  const mpEntry=id=>MP.models.find(m=>m.id===id);
+  const mpTol=()=>sweetTolerance[$("profileTolerance")?.value]||sweetTolerance.balanced;
+  function mpEfforts(entry,cat){
+    const listed=[...new Set((String(cat.efforts||"").replace(/（.*?）/g,"").match(/\b(none|minimal|low|medium|high|xhigh|max)\b/g)||[]))];
+    const pending=(entry.effortDiscrepancy?.extraEfforts||[]).filter(e=>!listed.includes(e));
+    return {listed,pending};
+  }
+  // Generic knee over measured points; falls back to the best score (lowest effort on ties) when costs are missing.
+  function mpPick(points,threshold,elo){
+    const pts=points.filter(p=>finite(p.score));
+    if(!pts.length) return null;
+    const best=Math.max(...pts.map(p=>p.score)), peak=pts.find(p=>p.score===best), top=pts[pts.length-1];
+    return {pick:kneeOf(pts,threshold)||peak,peak,top,topDrop:pts.length>1&&top.score<best-(elo?10:0.5),single:pts.length===1,threshold};
+  }
+  const mpSpread=values=>{const v=values.filter(finite);return v.length?Math.max(...v)-Math.min(...v):0;};
+  const mpSort=pts=>pts.sort((a,b)=>mpEffortOrder.indexOf(a.effort)-mpEffortOrder.indexOf(b.effort));
+  // Every benchmark series for one model. Each series keeps its own unit, cost definition and source.
+  function mpSeries(entry,cat){
+    const out=[], all=sweetReleases(), rel=(DATA.aa_release_series?.releases||[]).find(r=>r.releaseSlug===entry.aaRelease);
+    if(rel){
+      sweetTasks.forEach(t=>{
+        const points=mpSort(rel.variants.filter(v=>finite(t.get(v))).map(v=>({effort:mpNorm(v.effort),score:t.get(v),cost:v.costPerTask,fallback:v.fallbackLabel||null,url:v.evalSourceUrl||rel.sourceUrl})));
+        if(!points.length) return;
+        out.push({task:t.key,key:"aa-"+t.key,bench:t.key==="ii"?"AA 智能指数":`AA · ${t.sub}`,unit:t.elo?"Elo":"分",elo:t.elo,digits:t.elo?0:1,costLabel:"AA 单任务成本",
+          url:rel.sourceUrl,points,threshold:tol=>sweetThreshold(t,tol,all)});
+      });
+    }
+    const rowSeries=(bench,task,key,label,costLabel)=>{
+      const pool=DATA.rows.filter(r=>r.benchmark===bench&&finite(r.score));
+      const mine=pool.filter(r=>r.model===cat.name);
+      const points=mpSort(mine.filter(r=>mpEffortOrder.includes(mpNorm(r.effort))&&r.variant!=="unverified"&&r.variant!=="ultra_harness").map(r=>({effort:mpNorm(r.effort),score:r.score,cost:r.cost_usd,fallback:r.variant==="mixed_fallback"?"含回退配置":null,url:r.source_url,n:r.n})));
+      const others=mine.length-points.length;
+      if(!points.length&&!others) return;
+      out.push({task,key,bench:label,unit:bench==="coding"?"% 通过":"分",elo:false,digits:1,costLabel,url:mine[0]?.source_url,points,others,
+        threshold:tol=>tol.share*mpSpread(pool.map(r=>r.score))});
+    };
+    rowSeries("coding","coding","vulcan","Vulcan 编码 23 题","每次尝试费用");
+    rowSeries("writing","writing","tonebench","ToneBench 英文写作","每篇费用");
+    const cu=DATA.computer_use_evidence;
+    if(cu){
+      const sweep=cu.openaiSweep, s=sweep?.series?.find(x=>entry.cuIds.includes(x.modelId));
+      if(s){
+        const pool=sweep.series.flatMap(x=>x.scores);
+        out.push({task:"computer_use",key:"cu-openai",bench:`${sweep.benchmark} · ${sweep.subset} · ${sweep.metric}`,unit:"%",elo:false,digits:2,costLabel:"厂商报告单任务费用",url:sweep.source,
+          points:sweep.efforts.map((e,i)=>({effort:e,score:s.scores[i],cost:s.costUsdPerTask[i],url:sweep.source})),threshold:tol=>tol.share*mpSpread(pool)});
+      }
+      const am=cu.anthropicMax, ar=am?.rows?.find(x=>entry.cuIds.includes(x.modelId));
+      if(ar) out.push({task:"computer_use",key:"cu-anthropic",bench:`${am.displayLabel} · partial reward`,unit:"%",elo:false,digits:1,costLabel:"未披露",url:am.sourceRefs?.[0]?.sourceUrl,
+        points:[{effort:am.nativeEffort,score:ar.partialRewardPct,cost:null,url:am.sourceRefs?.[0]?.sourceUrl,note:`strict success ${fmt(ar.strictSuccessRatePct,1)}%`}],threshold:()=>0});
+      const gr=cu.geminiReference;
+      if(gr&&entry.cuIds.includes(gr.modelId)) out.push({task:"computer_use",key:"cu-gemini",bench:`${gr.benchmark} · ${gr.subset} · ${gr.statistic}`,unit:"%",elo:false,digits:1,costLabel:"未披露",url:gr.sources?.[0],
+        points:[],unplaced:`最高 thinking 设置（原生档位未核验）partial reward ${fmt(gr.partialRewardPct,1)}%，不放入档位列。`,threshold:()=>0});
+    }
+    return out;
+  }
+  function mpAnalyse(entry){
+    const cat=mpCat(entry.id), efforts=mpEfforts(entry,cat), series=mpSeries(entry,cat);
+    series.forEach(s=>{s.res={};Object.entries(sweetTolerance).forEach(([k,tol])=>{s.res[k]=mpPick(s.points,s.threshold(tol),s.elo);});});
+    const measured=new Set(series.flatMap(s=>s.points.map(p=>p.effort)));
+    const cols=mpEffortOrder.filter(e=>efforts.listed.includes(e)||efforts.pending.includes(e)||measured.has(e));
+    return {entry,cat,efforts,series,cols};
+  }
+  const mpEvidence=(modelId,task)=>(MP.evidence||[]).filter(x=>x.modelIds.includes(modelId)&&(task?x.tasks.includes(task):x.tasks.includes("all")));
+  const mpPresetKey=()=>$("profileTolerance")?.value||"balanced";
+  // Starting effort: task-specific guide record > task-scoped evidence > model-wide evidence > official default.
+  function mpStart(a,task){
+    const axis=(MP.taskAxis||[]).find(t=>t.id===task), g=DATA.task_effort_guidance;
+    const recs=(g?.recommendations||[]).filter(r=>r.modelId===a.entry.guidanceId&&(axis?.guideTasks||[]).includes(r.taskType));
+    if(recs.length){const r=recs.find(x=>x.evidenceType!=="社区实测")||recs[0];
+      return {effort:r.nativeEffort,kind:r.evidenceType,note:recs.map(x=>`${guideTaskLabel[x.taskType]||x.taskType} ${x.nativeEffort}（${x.evidenceType}）`).join(" · "),url:r.support?.[0]?.sourceUrl||r.sourceUrl};}
+    const scoped=mpEvidence(a.entry.id,task).find(x=>x.efforts?.start);
+    if(scoped) return {effort:scoped.efforts.start,kind:scoped.kind,note:scoped.statement,url:scoped.url};
+    const wide=mpEvidence(a.entry.id,null).find(x=>x.efforts?.start);
+    if(wide) return {effort:wide.efforts.start,kind:wide.kind,note:"适用于全部任务的证据（见本页底部）。",url:null};
+    const d=a.cat.default_effort;
+    if(d&&mpEffortOrder.includes(d)) return {effort:d,kind:"官方默认",note:`官方默认 ${d}，不分任务。`,url:a.cat.source};
+    return null;
+  }
+  function mpCardAdvice(start,pick,thrifty,perf,ev,single){
+    const idx=e=>mpEffortOrder.indexOf(e), parts=[];
+    if(start&&pick){
+      if(start.effort===pick) parts.push(`起步档与实测拐点都是 ${pick}，直接用它。`);
+      else if(idx(pick)>idx(start.effort)) parts.push(`从 ${start.effort} 起步；交付不达标时先升到实测拐点 ${pick}，不要直接跳到最高档。`);
+      else parts.push(`起步档是 ${start.effort}，实测拐点在更低的 ${pick}；需求明确、测试稳定时可以降到 ${pick} 省钱。`);
+    } else if(start) parts.push(`${single?`本报告只有 ${single} 单点，看不出升档收益`:"本报告没有这项任务的逐档实测"}；先按 ${start.effort} 起步，用自己的样本对比相邻一档。`);
+    else if(pick) parts.push(`实测拐点是 ${pick}；没有核验到官方起步档。`);
+    if(thrifty&&pick&&thrifty!==pick) parts.push(`预算紧时可退到 ${thrifty}（省钱门槛的拐点）。`);
+    if(perf&&pick&&perf!==pick) parts.push(`追求上限时最多到 ${perf}（性能优先门槛的拐点）。`);
+    const avoid=ev.find(x=>x.efforts?.avoid);
+    if(avoid) parts.push(`有证据提示慎用 ${avoid.efforts.avoid}。`);
+    return parts.join("");
+  }
+  function mpFmt(s,v){return finite(v)?fmt(v,s.digits):"—";}
+  function renderModelProfile(){
+    const host=$("profileGrid"); if(!host||!MP.models.length) return;
+    const entry=mpEntry(mpView.model)||MP.models[0]; mpView.model=entry.id;
+    if($("profileModel").value!==entry.id) $("profileModel").value=entry.id;
+    document.querySelectorAll("[data-mp-quick]").forEach(b=>{const on=b.dataset.mpQuick===entry.id;b.classList.toggle("is-active",on);b.setAttribute("aria-pressed",String(on));});
+    const a=mpAnalyse(entry), cat=a.cat, key=mpPresetKey(), tol=mpTol(), tier=(MP.tiers||[]).find(t=>t.id===entry.tier);
+    const multi=a.series.filter(s=>s.points.length>1).length, single=a.series.filter(s=>s.points.length===1).length;
+    const tasksCovered=new Set(a.series.filter(s=>s.points.length).map(s=>s.task));
+    const fallback=a.series.some(s=>s.points.some(p=>p.fallback));
+    const price=finite(cat.input)?`$${fmt(cat.input)} / $${fmt(cat.output)} 每百万 token（输入 / 输出）`:"未提供";
+    $("profileHeader").innerHTML=`<div class="mp-head"><div><span class="eyebrow">${esc(cat.vendor)} · ${esc(tier?.label||"")}</span><h3>${link(cat.source,cat.name)}</h3><p class="small muted">${esc(cat.role||"")}${cat.lifecycle==="Deprecated"?" · <strong>已弃用</strong>":""}</p></div>
+      <dl class="mp-facts"><div><dt>原生档位</dt><dd>${a.efforts.listed.length?a.efforts.listed.map(e=>`<span class="mp-chip e-${esc(e)}">${esc(e)}</span>`).join(""):esc(cat.efforts)}${a.efforts.pending.map(e=>`<span class="mp-chip pending" title="待核验">${esc(e)}?</span>`).join("")}</dd></div>
+      <div><dt>官方默认</dt><dd>${esc(cat.default_effort||"未提供")}</dd></div><div><dt>Standard 单价</dt><dd>${price}</dd></div><div><dt>上下文</dt><dd>${finite(cat.context)?fmt(cat.context,0)+" tokens":"未提供"}</dd></div>
+      <div><dt>证据覆盖</dt><dd>${tasksCovered.size} / ${(MP.taskAxis||[]).length} 类任务有实测 · ${multi} 条逐档曲线 · ${single} 个单点</dd></div></dl></div>
+      ${entry.effortDiscrepancy?`<p class="mp-note warn">档位待核验：${esc(entry.effortDiscrepancy.note)} ${entry.effortDiscrepancy.sources.map((u,i)=>link(u,"来源"+(i+1))).join(" · ")}</p>`:""}
+      ${fallback?`<p class="mp-note">AA 逐档记录标有 Default Fallback 或回退配置，回退比例未披露；分差是点估计。</p>`:""}
+      ${!multi?`<p class="mp-note warn">这款模型没有任何一项逐档曲线，下表只能显示单点或空白；选档主要依赖官方默认与经验证据，不补造曲线。</p>`:""}
+      <div class="mp-links">${entry.aaRelease&&sweetReleases().some(r=>r.releaseSlug===entry.aaRelease)?`<button class="inline-button" data-mp-jump="overview">在选档速查矩阵中定位 →</button>`:""}${entry.aaRelease&&$("reasoningRelease")&&[...$("reasoningRelease").options].some(o=>o.value===entry.aaRelease)?`<button class="inline-button" data-mp-jump="reasoning">看同模型档位曲线 →</button>`:""}</div>`;
+    $("profileHeader").querySelectorAll("[data-mp-jump]").forEach(b=>b.addEventListener("click",()=>{
+      if(b.dataset.mpJump==="overview"){sweetView.model=entry.aaRelease;sweetView.task="ii";showPanel("overview");renderSweetSpot();$("sweetMatrix")?.scrollIntoView({block:"start"});}
+      else {$("reasoningRelease").value=entry.aaRelease;$("reasoningRelease").dispatchEvent(new Event("change"));showPanel("reasoning");$("reasoningCharts")?.scrollIntoView({block:"start"});}
+    }));
+    // Grid: task rows × effort columns.
+    const head=`<tr><th scope="col">任务 · 评测</th>${a.cols.map(e=>`<th scope="col" class="mp-col"><b class="ss-effort e-${esc(e)}">${esc(mpEffortLabel(e))}</b>${e===cat.default_effort?'<span class="mp-tag def">默认</span>':""}${a.efforts.pending.includes(e)?'<span class="mp-tag pend">待核验</span>':""}${!a.efforts.listed.includes(e)&&!a.efforts.pending.includes(e)?'<span class="mp-tag">目录未列</span>':""}</th>`).join("")}</tr>`;
+    const body=(MP.taskAxis||[]).map(t=>{
+      const ss=a.series.filter(s=>s.task===t.id), start=mpStart(a,t.id);
+      const label=(s,i)=>`<th scope="row"${i===0?"":' class="mp-sub"'}>${i===0?`<span class="mp-task">${esc(t.label)}</span>`:""}<span class="task-detail">${esc(s?s.bench:t.sub)}${s?.others?` · 另有 ${s.others} 个未注明/编排配置`:""}</span></th>`;
+      if(!ss.length) return `<tr class="mp-row empty${mpView.task===t.id?" selected":""}" data-mp-task="${t.id}">${label(null,0)}${a.cols.map(e=>`<td class="mp-cell ${start?.effort===e?"is-start":""}">${start?.effort===e?'<span class="mp-mark start" title="起步档">起步</span>':'<span class="muted">未测</span>'}</td>`).join("")}</tr>`;
+      return ss.map((s,i)=>{
+        const r=s.res[key], lo=Math.min(...s.points.map(p=>p.score)), hi=Math.max(...s.points.map(p=>p.score));
+        const cells=a.cols.map(e=>{
+          const p=s.points.find(x=>x.effort===e), idx=s.points.indexOf(p), prev=idx>0?s.points[idx-1]:null;
+          const isStart=i===0&&start?.effort===e;
+          if(!p) return `<td class="mp-cell ${a.efforts.listed.includes(e)||a.efforts.pending.includes(e)?"":"unsupported"}${isStart?" is-start":""}">${isStart?'<span class="mp-mark start" title="起步档">起步</span>':""}<span class="muted">${a.efforts.listed.includes(e)||a.efforts.pending.includes(e)?"未测":"—"}</span></td>`;
+          const dbl=prev&&finite(p.cost)&&finite(prev.cost)&&prev.cost>0&&p.cost>prev.cost?(p.score-prev.score)/Math.log2(p.cost/prev.cost):null;
+          const heat=hi===lo?0.5:(p.score-lo)/(hi-lo);
+          const marks=[r&&r.pick===p?'<span class="mp-mark pick" title="当前门槛下的实测拐点">拐点</span>':"",r&&r.peak===p&&s.points.length>1&&r.pick!==p?'<span class="mp-mark peak" title="实测最高分">最高</span>':"",isStart?'<span class="mp-mark start" title="起步档">起步</span>':""].join("");
+          return `<td class="mp-cell has${r&&r.pick===p?" is-pick":""}${isStart?" is-start":""}" style="--heat:${heat.toFixed(2)}" aria-label="${esc(`${t.label} ${s.bench} ${e}：${mpFmt(s,p.score)} ${s.unit}，${finite(p.cost)?money(p.cost):"费用未测"}`)}"><span class="mp-score">${mpFmt(s,p.score)}</span><span class="mp-cost">${finite(p.cost)?money(p.cost):"费用未测"}</span>${finite(dbl)?`<span class="mp-dbl ${dbl>=r.threshold?"delta-positive":"delta-negative"}" title="成本每翻一倍的得分变化">${dbl>0?"+":""}${fmt(dbl,s.digits)}/×2</span>`:""}${p.note?`<span class="task-detail">${esc(p.note)}</span>`:""}${marks}</td>`;
+        }).join("");
+        return `<tr class="mp-row${mpView.task===t.id?" selected":""}" data-mp-task="${t.id}" data-mp-series="${esc(s.key)}" data-mp-pick="${esc(r?.pick.effort||"")}">${label(s,i)}${cells}</tr>`;
+      }).join("");
+    }).join("");
+    host.innerHTML=`<table class="mp-table"><caption class="sr-only">${esc(cat.name)} 各任务在各原生档位的实测分数与成本</caption><thead>${head}</thead><tbody>${body}</tbody></table>`;
+    host.querySelectorAll("tr[data-mp-task]").forEach(tr=>tr.addEventListener("click",()=>{mpView.task=tr.dataset.mpTask;renderModelProfile();$("profileCard-"+mpView.task)?.scrollIntoView({block:"nearest"});}));
+    $("profileRule").textContent=`拐点规则与选档速查相同（${tol.label}）：从最便宜的已测档往上走，成本每翻一倍仍提升该评测全部配置分差的 ${Math.round(tol.share*100)}% 以上就继续升档。每行只在同一评测内比较；不同评测的分数、单位与费用口径不混算。`;
+    // Task cards.
+    $("profileCards").innerHTML=(MP.taskAxis||[]).map(t=>{
+      const ss=a.series.filter(s=>s.task===t.id), main=ss.find(s=>s.points.length>1)||ss.find(s=>s.points.length)||null;
+      const r=main?.res[key], start=mpStart(a,t.id), ev=mpEvidence(entry.id,t.id);
+      const pick=r&&!r.single?r.pick.effort:null, thrifty=main?.res.thrifty&&!main.res.thrifty.single?main.res.thrifty.pick.effort:null, perf=main?.res.performance&&!main.res.performance.single?main.res.performance.pick.effort:null;
+      const ceil=ev.find(x=>x.efforts?.ceiling)?.efforts.ceiling;
+      const rows=[
+        `<div><dt>起步档</dt><dd>${start?`<b class="ss-effort e-${esc(start.effort)}">${esc(start.effort)}</b><span class="mp-kind">${esc(start.kind)}</span>`:'<span class="muted">未核验</span>'}</dd></div>`,
+        `<div><dt>实测拐点</dt><dd>${pick?`<b class="ss-effort e-${esc(pick)}">${esc(pick)}</b><span class="mp-kind">${esc(main.bench)}</span>`:r?.single?`<span class="muted">仅测 ${esc(r.pick.effort)} 单点</span>`:'<span class="muted">无逐档实测</span>'}</dd></div>`,
+        `<div><dt>降档候选</dt><dd>${thrifty&&thrifty!==pick?`<b class="ss-effort e-${esc(thrifty)}">${esc(thrifty)}</b><span class="mp-kind">省钱门槛</span>`:'<span class="muted">—</span>'}</dd></div>`,
+        `<div><dt>升档上限</dt><dd>${perf&&perf!==pick?`<b class="ss-effort e-${esc(perf)}">${esc(perf)}</b><span class="mp-kind">性能优先门槛</span>`:ceil?`<b class="ss-effort e-${esc(ceil)}">${esc(ceil)}</b><span class="mp-kind">经验证据</span>`:'<span class="muted">—</span>'}</dd></div>`];
+      const flags=[r?.topDrop?'<span class="ss-flag warn">顶档回落</span>':"",ss.some(s=>s.points.some(p=>p.fallback))?'<span class="ss-flag info">含回退</span>':""].join("");
+      const others=ss.filter(s=>s!==main&&(s.points.length||s.unplaced)).map(s=>{const rr=s.res[key];return `<li>${esc(s.bench)}：${s.unplaced?esc(s.unplaced):rr?.single?`仅 ${esc(rr.pick.effort)} 单点 ${mpFmt(s,rr.pick.score)}${s.unit}`:`拐点 <b>${esc(rr.pick.effort)}</b>（${mpFmt(s,rr.pick.score)}${s.unit}，${finite(rr.pick.cost)?money(rr.pick.cost):"费用未测"}）`} ${s.url?link(s.url,"来源"):""}</li>`;}).join("");
+      return `<article class="mp-card${mpView.task===t.id?" selected":""}" id="profileCard-${t.id}"><header><h4>${esc(t.label)}</h4><span class="small muted">${esc(t.sub)}</span>${flags}</header><dl class="mp-ladder">${rows.join("")}</dl>
+        <p class="mp-advice">${esc(mpCardAdvice(start,pick,thrifty,perf,ev,r?.single?r.pick.effort:null))}</p>
+        ${others?`<ul class="mp-others">${others}</ul>`:""}
+        ${ev.length?`<details class="mp-ev"><summary>相关证据 ${ev.length} 条</summary><ul>${ev.map(x=>`<li><span class="evidence-badge">${esc(x.kind)}</span>${esc(x.statement)} <b>动作：</b>${esc(x.action)} ${link(x.url,"来源")}${x.via?" · "+link(x.via,"转述"):""}<span class="task-detail">${x.verification==="search-summary"?"检索摘要，原页未直接打开":""} · ${esc(x.checkedAt)}</span></li>`).join("")}</ul></details>`:""}
+        ${start?.note&&start.kind!=="官方默认"?`<p class="small muted">起步依据：${esc(start.note)} ${start.url?link(start.url,"来源"):""}</p>`:""}</article>`;
+    }).join("");
+    const wide=mpEvidence(entry.id,null);
+    $("profileEvidence").innerHTML=wide.length?`<h4>适用于全部任务的证据</h4><ul>${wide.map(x=>`<li><span class="evidence-badge">${esc(x.kind)}</span>${esc(x.statement)} <b>动作：</b>${esc(x.action)} ${link(x.url,"来源")}<span class="task-detail">${x.verification==="search-summary"?"检索摘要，原页未直接打开":""} · ${esc(x.checkedAt)}</span></li>`).join("")}</ul>`:`<p class="small muted">暂无适用于全部任务的补充证据。</p>`;
+  }
+  function mpExportRows(){
+    const a=mpAnalyse(mpEntry(mpView.model)), out=[];
+    a.series.forEach(s=>s.points.forEach(p=>out.push({model:a.cat.name,model_id:a.entry.id,task:(MP.taskAxis.find(t=>t.id===s.task)||{}).label,benchmark:s.bench,effort:p.effort,
+      native_supported:a.efforts.listed.includes(p.effort)?"是":a.efforts.pending.includes(p.effort)?"待核验":"目录未列",official_default:p.effort===a.cat.default_effort,
+      score:p.score,unit:s.unit,cost_usd:p.cost,cost_definition:s.costLabel,fallback:p.fallback,
+      knee_thrifty:s.res.thrifty?.pick.effort,knee_balanced:s.res.balanced?.pick.effort,knee_performance:s.res.performance?.pick.effort,
+      start_effort:mpStart(a,s.task)?.effort,start_basis:mpStart(a,s.task)?.kind,source_url:p.url||s.url})));
+    return out;
+  }
+  if($("profileModel")){
+    const vendors=["Anthropic","OpenAI","Google","xAI"];
+    $("profileModel").innerHTML=vendors.map(v=>`<optgroup label="${v}">${MP.models.filter(m=>mpCat(m.id)?.vendor===v).map(m=>{const c=mpCat(m.id),t=(MP.tiers||[]).find(x=>x.id===m.tier);return `<option value="${esc(m.id)}">${esc(c.name)} · ${esc(t?.label||"")}${c.lifecycle==="Deprecated"?" · 已弃用":""}</option>`;}).join("")}</optgroup>`).join("");
+    const setModel=id=>{mpView.model=id;mpView.task=null;renderModelProfile();if(!$("profiles").hidden)history.replaceState(null,"","#profiles?m="+encodeURIComponent(id));};
+    $("profileModel").addEventListener("change",e=>setModel(e.target.value));
+    $("profileTolerance").addEventListener("change",renderModelProfile);
+    $("profileQuick").innerHTML=MP.models.filter(m=>m.tier==="main").map(m=>`<button type="button" class="pill-btn" data-mp-quick="${esc(m.id)}">${esc(mpCat(m.id).short||mpCat(m.id).name)}</button>`).join("");
+    $("profileQuick").querySelectorAll("[data-mp-quick]").forEach(b=>b.addEventListener("click",()=>{$("profileModel").value=b.dataset.mpQuick;setModel(b.dataset.mpQuick);}));
+    $("exportProfile").addEventListener("click",()=>exportCSV(mpExportRows(),`模型档案-${mpView.model}-${MP.checkedAt}.csv`));
+  }
 
   // BEGIN MARKET_MATH
   function usesLongContextPrice(model, input) {

@@ -67,3 +67,61 @@ def picks(data, share):
                 chosen = sorted(items, key=lambda x: (-x["score"], x["order"]))[0]
             out[(rel["releaseSlug"], key)] = chosen["effort"]
     return out
+
+
+# ---------- Model profile tab (mirrors report.js mpSeries / mpPick) ----------
+EFFORT_ORDER = ["none", "minimal", "low", "medium", "high", "xhigh", "max"]
+
+
+def _norm(effort):
+    return "none" if effort == "non-reasoning" else effort
+
+
+def _pick(items, threshold):
+    if not items:
+        return None
+    chosen = knee(items, threshold)
+    if chosen is None:
+        chosen = sorted(items, key=lambda x: (-x["score"], EFFORT_ORDER.index(x["effort"])))[0]
+    return chosen["effort"]
+
+
+def _spread(values):
+    values = [v for v in values if _finite(v)]
+    return max(values) - min(values) if values else 0
+
+
+def profile_series(data, model_id, share):
+    """Return {series_key: picked effort} for one profile model, using the same inputs as the page."""
+    profiles = data["model_effort_profiles"]
+    entry = next(m for m in profiles["models"] if m["id"] == model_id)
+    name = next(m["name"] for m in data["models"] if m["id"] == model_id)
+    out = {}
+    active = active_releases(data)
+    release = next((r for r in data["aa_release_series"]["releases"] if r["releaseSlug"] == entry["aaRelease"]), None)
+    if release:
+        for key, get in TASKS.items():
+            values = [get(v) for r in active for v in r["variants"] if _finite(get(v))]
+            threshold = share * (max(values) - min(values)) if values else 0
+            items = [{"effort": _norm(v["effort"]), "score": get(v), "cost": v.get("costPerTask")}
+                     for v in release["variants"] if _finite(get(v))]
+            if items:
+                out["aa-" + key] = _pick(items, threshold)
+    for bench, key in (("coding", "vulcan"), ("writing", "tonebench")):
+        pool = [r for r in data["rows"] if r["benchmark"] == bench and _finite(r["score"])]
+        mine = [r for r in pool if r["model"] == name and _norm(r["effort"]) in EFFORT_ORDER
+                and r.get("variant") not in ("unverified", "ultra_harness")]
+        if mine:
+            items = [{"effort": _norm(r["effort"]), "score": r["score"], "cost": r.get("cost_usd")} for r in mine]
+            out[key] = _pick(items, share * _spread([r["score"] for r in pool]))
+    cu = data["computer_use_evidence"]
+    sweep = cu["openaiSweep"]
+    series = next((s for s in sweep["series"] if s["modelId"] in entry["cuIds"]), None)
+    if series:
+        pool = [x for s in sweep["series"] for x in s["scores"]]
+        items = [{"effort": e, "score": sc, "cost": c} for e, sc, c in zip(sweep["efforts"], series["scores"], series["costUsdPerTask"])]
+        out["cu-openai"] = _pick(items, share * _spread(pool))
+    row = next((r for r in cu["anthropicMax"]["rows"] if r["modelId"] in entry["cuIds"]), None)
+    if row:
+        out["cu-anthropic"] = cu["anthropicMax"]["nativeEffort"]
+    return out

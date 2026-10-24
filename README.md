@@ -8,7 +8,13 @@
 
 原生 PR 预览及 `preview` Environment 配置见 [PREVIEWS.md](PREVIEWS.md)；按需研究与独立轻量复核见 [RESEARCH_WORKFLOW.md](RESEARCH_WORKFLOW.md)；已验证版本与回滚见 [RELEASES.md](RELEASES.md)。原生 PR 预览已启用，创建/更新/清理权限 smoke 已通过；定时 LLM 调用和自动合并仍未开启。正式环境已切换为 `release`；旧 `cloudflare-preview` 保留备用，记录见 [环境迁移](RELEASE_ENVIRONMENT.md)。
 
-## 当前项目状态（2026-10-23 研究更新）
+## 当前项目状态（2026-10-24 模型档案）
+
+本轮基于 `main` 的 `d8ae6c3`（PR18 合并后），在分支 `claude/nice-euler-cj5s04` 新增第 6 个页签**模型档案**（`#profiles`）：选一个模型，系统看它在 9 类任务 × 各原生档位下的实测分数、成本、边际收益、实测拐点和起步档，并给出每类任务的选档卡。范围是目录全部 24 款四家活跃型号（含 GPT 5.6 Sol / Luna），按“当前主力 / 上一代仍可用 / 兼容旧版”分组。“推理档位”页保持不变。
+
+逐档数据全部沿用既有冻结输入；新增的 14 条补充证据来自 10-24 网页检索摘要（整理环境只能搜索、无法直接打开原页），逐条标注并只作参考，冲突项不覆盖原值。五站榜单仍为 10-23 快照。研究记录见 [2026-10-24 研究记录](research/2026-10-24/README.md)，验收见 [本地验收记录](verification/model-profile-2026-10-24/README.md)。
+
+## 上一轮项目状态（2026-10-23 研究更新）
 
 本轮改版基于 `main` 的 `f34421104d89d517a44be685a1338ec8845365cb`（PR17）；开始工作时只读核对远端 `main`，与本地一致。工作分支 `feat/observatory-refresh-2026-10-23`；提交后的 CI 与独立预览状态以该分支 PR 的检查及机器人评论为准，合并与正式发布仍由用户另行决定。本次用户明确要求在当前目录更新网站，因此在 Mac 本地完成实现；此前的 Hermes 分工记录不代表本次执行环境。
 
@@ -29,7 +35,8 @@
 3. **成本与耗时**（`#explorer`）：AA、Vulcan、ToneBench、Agent Arena 各守分数与成本口径；可切换发布版本轨迹、来源、缺测、样本和点估计前沿。
 4. **规格与预算**（`#specs`）：官方 Standard 单价、输入能力、上下文、原生档位、缓存、推理用量、阶梯价及来源已公布的价格情景；假设同 token 用量不等于同任务成本。
 5. **推理档位**（`#reasoning`）：七模型×四任务的建议起点/甜点候选，与实测曲线分开。实测可选 AA 智能指数、HLE、CritPt、Terminal-Bench 4.0、SciCode 和六域；只有 AA 智能指数显示其综合加权成本，子评测无同口径费用时隐藏成本图。另有四张第三方能力证据卡、同模型差分和 Opus/Vulcan 四种独立证据视图。
-6. **证据与方法**（`#evidence`）：“如何参考评测”区分回答是否合意、任务是否省心、结果是否正确、成本是否值得；列方法、限制、核验时间与原始来源。英文原名仅在术语/原文来源语境保留。
+6. **模型档案**（`#profiles`）：选一个模型（深链 `#profiles?m=<目录 id>`），看它在 9 类任务 × 原生档位下的实测分数、成本和“成本每翻倍得分”，标出当前门槛的实测拐点、起步档和最高分；下方每类任务一张选档卡（起步档 / 实测拐点 / 降档候选 / 升档上限 + 相关证据）。只有单点或无实测的型号如实显示，不补造曲线。
+7. **证据与方法**（`#evidence`）：“如何参考评测”区分回答是否合意、任务是否省心、结果是否正确、成本是否值得；列方法、限制、核验时间与原始来源。英文原名仅在术语/原文来源语境保留。
 
 ## 更新线上报告
 
@@ -54,6 +61,7 @@
 | 原生档位建议 | [task-effort-guidance.json](research/2026-10-20/task-effort-guidance.json) → `task_effort_guidance`；`renderTaskAdvice`（`#taskEffortAdvice`） | [test_selection_guidance.py](tests/test_selection_guidance.py)、[selection_smoke.py](scripts/selection_smoke.py) |
 | 第三方方法导航、实战证据卡 | [practical-evidence.json](research/2026-10-20/practical-evidence.json) → `practical_evidence`；`report.js` 中 `#practicalEvidence`，静态说明 `report.template.html:#benchmarkGuide` | `scripts/capability_smoke.py`、`scripts/selection_smoke.py` |
 | 选档速查矩阵、官方/社区参考、避坑清单、象限分界 | `aa_release_series` 逐档数据 + `task_effort_guidance` + 编码行（Vulcan）；`report.js:renderSweetSpot` / `sweetPick` / `kneeOf` / `sweetRefs`，`taskQuadrant`；避坑数字用 `{{aa:…}}` 构建时解析；Python 参考实现 [sweet_spot.py](scripts/sweet_spot.py) | [test_sweet_spot.py](tests/test_sweet_spot.py)、`scripts/smoke.py:check_overview_ui` |
+| 模型档案（单模型 × 任务 × 档位、选档卡、深链） | [model-effort-profiles.json](research/2026-10-24/model-effort-profiles.json) → `model_effort_profiles`（构建校验 `build_report.py:check_model_profiles`）；`report.js:renderModelProfile` / `mpSeries` / `mpPick` / `mpStart`，AA 行复用 `kneeOf` / `sweetThreshold`；Python 参考 `scripts/sweet_spot.py:profile_series` | [test_model_profiles.py](tests/test_model_profiles.py)、`scripts/smoke.py:check_profile_ui` |
 | Computer Use、限定协议替代组合、三张经验卡 | [computer-use-evidence.json](research/2026-10-20/computer-use-evidence.json) → `computer_use_evidence`；`renderComputerUseEvidence`、`renderPitfallGuide` / `renderObservedConfig`；同一 `renderEffortScalingChart` 切换 OpenAI 曲线；`scalingRows` / `scalingPath`、`osworldSweepPoints` / `observedAlternatives` 负责差分、缺档和限定范围计算 | [test_computer_use.py](tests/test_computer_use.py)、[scaling_smoke.py](scripts/scaling_smoke.py) |
 
 建议记录含 `modelId`、`nativeEffort`、`taskType`、`evidenceType`、`sourceUrl`、`checkedAt`、`caveats` 和已知时的 `sampleSize` / `harness`；`support` 将官方支持与任务经验映射分开。Computer Use 使用 `openaiSweep`、`anthropicMax`、`geminiReference`、`grokReference`、`pitfallExperience`、`pitfallReminders` 独立分组。来源 URL、版本、统计量、原生档位与未知协议字段应随记录保存；未知保持 null，不借用相邻来源补齐。
@@ -116,6 +124,7 @@ python3 validate_report.py
 - **Computer Use**：OpenAI `OSWorld 2.0 / offline / v2026.08.08 / partial reward` 是 3 模型×5 档的 15 点同评测费用曲线，协议未知字段保留 null；Sol high→xhigh 的实际下降保留。Anthropic 是 `2026-09-10` 全套、max 单点，partial reward 与 strict success rate 分列，保留 Opus 文档称 2.0、Sonnet 文档称 v2.1 的原始命名。Gemini 是独立的最高 thinking、原生 effort 未核验、3 次取最大单点，不叠加到均值/其他曲线。Grok 为“未发现公开可核实成绩”，不填零、不推断不支持；旧 OSWorld-Verified 和 WebArena/浏览器任务也不混入。
 - **避坑指南**：实测参考仅在上述 OpenAI 15 个完整分数/费用点中，按同协议、单位与成本定义的原始精度计算观测支配：替代分数不低、费用不高，且至少一项严格改善。每项最多两个去重替代：达到当前分数的最低费用配置、当前预算内最高分配置；同分同价用稳定键排序，显示时才舍入。区分同模型较低档替代与跨模型“切换配置”，不推断品牌档次。无置信区间不声称显著优势或退化，无延迟不声称更快；非支配点不认证为最优。
 - **选档速查（个人偏好）**：报告定位是个人选型参考。甜蜜点是“边际收益拐点”：在（log₂ 单任务成本，分数）上取上凸包，从最便宜的已测档往上走，只要成本每翻一倍仍提升本列全部配置分差的 20% / 12% / 6%（省钱 / 均衡 / 性能优先）就继续升档。不要退回“离最高分 N 分内取最便宜”，它对一路上升的曲线会选到 max。门槛是可切换的个人偏好预设，不是通用最优；成本统一用 AA 综合单任务成本，只比较档位间的相对费用。官方 / 经验起点与社区实测（任务档位建议、Vulcan 同规则拐点）并排展示，不加权合成一个“综合档位”。规则改动须同步 `scripts/sweet_spot.py`，smoke 会逐格比对。
+- **模型档案**：每行只在同一评测内比较，拐点规则与选档速查完全相同（AA 行逐格一致，smoke 覆盖 24 款 × 三档门槛）。起步档的优先级：档位建议记录 > 任务范围补充证据 > 全任务补充证据 > 官方默认。检索摘要类证据只出现在文字里，不进入拐点、前沿或任何计算。目录未列但有实测的档位标“目录未列”，补充证据提到但目录未列的档位标“待核验”（目前仅 Grok 4.7 medium），不回写目录。
 - **象限与聚焦**：Most attractive quadrant 的分界取当前任务全部已测档位的分数中位数 × 成本中位数（发布版本图同理），也可选个人预算；不再用手填常量（旧的 $1.10 恰好框住 Sol 6.1 整条曲线）。点击胶囊 / 圆点聚焦一个系列，其他系列与标签淡化，再点或“显示全部模型”恢复；悬停只临时预览。
 - **视觉与导航**：颜色走 `report.css` 顶部的语义变量，深色模式只重定义变量；`report.js` 里 SVG 的硬编码颜色靠 CSS 属性选择器映射到变量，新增图表颜色要么用变量，要么加进这组映射。本页目录用按钮而非 `#锚点`，因为 hash 表示页签。长口径说明默认折叠为两行（悬停 / 聚焦展开、打印全文）；概览大表不用 `<details>` 折叠，smoke 会直接操作其中的控件。
 - **多源经验也可参考**：不是每条提醒都要求完整测量；必须保留任务/版本、条件、行动与独立原始来源，转载不计第二来源。当前三张“多源经验参考”默认只显示坑点和动作，来源/边界折叠；不视为所有当前模型的既定缺陷，不套用用户节省比例。`pitfallReminders.cards` 为空是有意的有效状态，不能造填充内容。
@@ -127,6 +136,7 @@ python3 validate_report.py
 - 方案/架构设计仍“暂无直接可比公开成绩”；第三方导航不表示已抓取完整新榜单，不用通用指数代替架构质量。新增来源/分数需另有范围授权及可比协议证据。
 - 先沿既有组件改善可读性、筛选/空状态和可访问性，再补证据；不用重复图表、任意价值阈值或负面传闻替代现有数据路径。选档门槛是用户可切换、在页面写明的偏好预设，属于展示规则，不是证据结论。
 - 选档矩阵的社区参考目前只覆盖编程列（Vulcan 23 题、一条修 bug 社区甜点）；七个任务的官方起点多为不分任务的默认档位。补社区实践需按研究流程带来源与日期并入 `task-effort-guidance.json`，矩阵会自动显示。
+- 模型档案的 10-24 补充证据全部是检索摘要，原页待有网络权限时逐条复核；Grok 4.7 medium 是否受支持、Gemini 3.8 Flash 逐档费用口径、GPT 6 Astra 默认档仍待核验。
 - 概览图在右上角模型密集时，聚焦系列的个别档位标签仍可能被模型名标签遮挡，明细以图下表格为准。
 - 自动调研、定时付费模型执行、自动合并及云端迁移均未启用。持久权限、执行器和网络变更须另行明确授权，见 [协作与环境边界](RESEARCH_WORKFLOW.md#当前手动协作与环境边界2026-10-20)。
 
