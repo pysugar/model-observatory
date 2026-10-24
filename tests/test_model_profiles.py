@@ -6,7 +6,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from sweet_spot import PRESETS, picks, profile_series  # noqa: E402
+from sweet_spot import PRESETS, picks, profile_pitfalls, profile_series  # noqa: E402
 
 
 class ModelProfileTests(unittest.TestCase):
@@ -47,6 +47,28 @@ class ModelProfileTests(unittest.TestCase):
         self.assertEqual(set(balanced["gpt-5.6-sol"]), {"aa-ii", "vulcan", "tonebench"})
         # Legacy models without measurements stay empty rather than borrowing a sibling's curve.
         self.assertEqual(balanced["claude-opus-4-7"], {})
+
+    def test_pitfalls_flag_the_known_traps(self):
+        pits = {m["id"]: profile_pitfalls(self.data, m["id"]) for m in self.doc["models"]}
+        # Cost trap: Sonnet 5.5 xhigh -> max costs 2.7x for about 4 AA points.
+        self.assertIn(("cost", "aa-ii", "max"), pits["claude-sonnet-5-5"])
+        self.assertNotIn(("cost", "aa-ii", "xhigh"), pits["claude-sonnet-5-5"])
+        # Grok 4.7: low -> high (the default) more than doubles the cost for about 4 points.
+        self.assertIn(("cost", "aa-ii", "high"), pits["grok-4-7"])
+        # Regression: Opus 5.5 Vulcan max scores below its own medium.
+        self.assertIn(("regress", "vulcan", "max"), pits["claude-opus-5-5"])
+        # Upgrade and step down: newer same-line models at a lower effort cover the old top effort.
+        self.assertIn(("upgrade", "config", "max", "claude-opus-5-5", "medium"), pits["claude-opus-5"])
+        self.assertIn(("upgrade", "config", "max", "gpt-6.1-sol", "medium"), pits["gpt-5.6-sol"])
+        # Other same-vendor model: every Fable 5.1 effort is covered by an Opus 5.5 effort.
+        self.assertTrue(all(x[3] == "claude-opus-5-5" for x in pits["claude-fable-5-1"] if x[0] == "dominated"))
+        # Models without curves get no invented pitfalls.
+        for model_id in ("claude-opus-4-7", "gemini-4-argon", "gemini-3.5-flash-lite"):
+            self.assertEqual(pits[model_id], set(), model_id)
+
+    def test_every_profile_model_has_a_product_line(self):
+        for m in self.doc["models"]:
+            self.assertTrue(m["line"], m["id"])
 
     def test_evidence_is_sourced_and_flagged(self):
         tasks = {t["id"] for t in self.doc["taskAxis"]} | {"all"}
