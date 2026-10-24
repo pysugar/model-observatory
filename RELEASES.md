@@ -16,6 +16,7 @@
 | `1ed2900a756c1833611e5fb89d6f242399827f8d` | PR #16：选档速查矩阵、官方/社区参考、本页目录、数据中位数象限、系列聚焦、深色模式 | [run 39423917650](https://github.com/pysugar/model-observatory/actions/runs/39423917650) |
 | `d8ae6c3088429599c2883c0c6bba07569cf4c268` | PR #18：最新榜单五站选录、官方价格复核、页面改版与主题选择 | [run 39987003757](https://github.com/pysugar/model-observatory/actions/runs/39987003757) |
 | `f8e36ec7e18c97a5f799afe167355ea3a7c699ae` | PR #19：模型档案页签（单模型 × 任务 × 档位、选档卡、深链） | [run 40132928451](https://github.com/pysugar/model-observatory/actions/runs/40132928451) |
+| `8040c1f58e2ba09e33d23703a7b0b296eb081241` | PR #21：模型档案统一“甜蜜点”说法与门槛演示、更优替代、避坑指南、固定评测行 | [run 40136499170](https://github.com/pysugar/model-observatory/actions/runs/40136499170) |
 
 以上版本均有成功发布 run；2026-10-18 的工作流修复与初始化没有改动研究数据内容。Cloudflare 版本 ID 以各 run 的上传日志与 Worker 控制台为准，不猜测 ID。
 
@@ -102,3 +103,19 @@
 上线功能：模型档案页签（`#profiles`，深链 `#profiles?m=<目录 id>`），覆盖目录 24 款四家活跃型号；9 类任务 × 原生档位表（分数、成本、成本每翻倍得分、实测拐点 / 起步档 / 最高分）；分任务选档卡（起步档、实测拐点、降档候选、升档上限、相关证据）；选档速查与档位建议详情跳转。功能决策见 [README](README.md#当前功能决策与不可回归边界)，研究说明见 [2026-10-24 研究记录](research/2026-10-24/README.md)，本地验收见 [模型档案验收记录](verification/model-profile-2026-10-24/README.md)。
 
 本轮在云端容器内开发：容器以 root 运行，本地浏览器检查未开 Chromium sandbox，仅用于迭代；sandbox 开启的验收以上述 CI 为准。容器网络只放行搜索，14 条补充证据为检索摘要（原页待复核），线上核验采用发布工作流内的 probe 结果与用户本人打开页面的确认。PR #18 的正式发布也已由 run 39987003757 完成双入口验收（该 run 的 Cloudflare 版本 ID 本文未记录，以其上传日志为准）。
+
+## 2026-10-24 PR21 模型档案甜蜜点、更优替代与避坑指南正式发布收束
+
+[PR #21](https://github.com/pysugar/model-observatory/pull/21) 已于 **2026-10-24T21:57:52Z** 合并。只改模型档案的展示与计算规则，研究数据不变（169 条记录、24 款模型、50 条来源，预览评论中的行数与来源数均未变化）；`model-effort-profiles.json` 仅新增产品线字段 `line`。
+
+| 阶段 | 已完成事实 |
+| --- | --- |
+| 最终源码与合并 | PR 最终 head `844be63948950187125b0575b170ff9f1df50463`；main merge `8040c1f58e2ba09e33d23703a7b0b296eb081241` |
+| PR 验证与预览（历史） | 最终 head 的 [CI 40136281156](https://github.com/pysugar/model-observatory/actions/runs/40136281156) 成功；各提交均有原生预览，它们是 PR 预览证据，不是生产发布 |
+| main CI 与正式发布 | [run 40136499170](https://github.com/pysugar/model-observatory/actions/runs/40136499170) 成功：56 项单元测试、干净构建、完整浏览器 smoke（含模型档案甜蜜点、避坑列表与每档更优替代在两种范围下与 Python 参考逐项一致） |
+| 正式版本 | 部署后 `publish.py probe` 对 [models.localgpt.net](https://models.localgpt.net) 与 [独立正式验收入口](https://model-observatory.openai-proxy-local.workers.dev) 均为 PASS，commit `8040c1f58e2ba09e33d23703a7b0b296eb081241`；用户另行确认线上页面可用 |
+| Cloudflare 版本 | `7d6bbe03-c9fa-41ec-ba1e-f32762d27aa9`（本次上传 `index.html`、`report-data.json`、`version.json` 三个变化资产） |
+
+上线功能：模型档案统一称“甜蜜点”（边际收益拐点）并附三档门槛（省钱 20% / 均衡 12% / 性能优先 6% × 评测分差）的逐步演示；“更优替代”按任意一档逐评测给出同分最省 / 同价最高替代（同厂商或四家全部）；可选避坑指南（费用刺客、档位倒退、新一代更省、被同家全面超越）；每类任务的评测行对所有模型固定并标单位。规则见 [README](README.md#当前功能决策与不可回归边界)，本地验收见 [模型档案避坑验收记录](verification/model-profile-pitfalls-2026-10-24/README.md)。PR #20 只改文档（发布 run 40133573211），不单列版本。
+
+本轮仍在云端容器内开发：本地浏览器检查未开 Chromium sandbox，仅用于迭代；sandbox 开启的验收以上述 CI 为准，线上核验采用发布工作流内的 probe 结果与用户本人确认。
