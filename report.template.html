@@ -427,18 +427,23 @@
   <div class="section-heading"><span class="eyebrow">06 / MODEL PROFILE</span><h2>选一个模型，看它在每类任务上该用哪一档。</h2><p>把散在选档速查、档位建议、档位曲线和 Computer Use 里的同一模型信息放到一处。档位名称只在同一模型内有顺序意义；每行只在同一评测内比较，不同评测的单位与费用口径不混算。</p></div>
   <section class="card mp-shell" aria-labelledby="profileTitle" data-toc="模型与覆盖">
     <h3 id="profileTitle" class="sr-only">模型档案</h3>
-    <div class="toolbar"><label>模型<select id="profileModel"></select></label><label>门槛<select id="profileTolerance"><option value="thrifty">省钱</option><option value="balanced" selected>均衡</option><option value="performance">性能优先</option></select></label><button id="exportProfile">导出本模型档案 CSV</button></div>
+    <div class="toolbar"><label>模型<select id="profileModel"></select></label><label>门槛<select id="profileTolerance"><option value="thrifty">省钱</option><option value="balanced" selected>均衡</option><option value="performance">性能优先</option></select></label><label class="mp-toggle"><input type="checkbox" id="profilePitfalls" checked> 显示避坑</label><button id="exportProfile">导出本模型档案 CSV</button></div>
     <div class="mp-quick" id="profileQuick" role="group" aria-label="当前主力快捷切换"></div>
     <div id="profileHeader" aria-live="polite"></div>
   </section>
   <section class="card" aria-labelledby="profileGridTitle" data-toc="任务 × 档位">
     <span class="eyebrow">实测 · 冻结来源</span><h3 id="profileGridTitle">任务 × 原生档位</h3>
-    <p id="profileRule" class="method-note"></p>
-    <p class="small muted"><span class="mp-mark pick">拐点</span> 当前门槛下的实测拐点 · <span class="mp-mark start">起步</span> 官方 / 经验起步档 · <span class="mp-mark peak">最高</span> 该行实测最高分 · “/×2” 为相对上一已测档、成本每翻一倍的得分变化（绿色达到升档门槛）。“未测”表示原生支持但本报告没有该档成绩；“—”表示目录未列该档。</p>
+    <details class="note-box mp-explain" open><summary>甜蜜点与三档门槛怎么算</summary><div id="profileRule"></div></details>
+    <p class="small muted"><span class="mp-mark pick">甜蜜点</span> 当前门槛下的甜蜜点（边际收益拐点） · <span class="mp-mark start">起步</span> 官方 / 经验起步档 · <span class="mp-mark peak">最高</span> 该行实测最高分 · “/×2” 为相对上一已测档、成本每翻一倍的得分变化（绿色达到升档门槛）。“未测”表示原生支持但本报告没有该档成绩；“—”表示目录未列该档。开启“显示避坑”时，格内另标 <span class="mp-pit k-cost">刺客</span> <span class="mp-pit k-regress">倒退</span> <span class="mp-pit k-upgrade">换新更省</span> <span class="mp-pit k-dominated">同家更省</span>，说明见下方避坑指南。</p>
     <div id="profileGrid" class="table-scroll" tabindex="0" role="region" aria-label="任务与档位表，可横向滚动"></div>
   </section>
+  <section class="card" id="profilePitfallsCard" aria-labelledby="profilePitfallsTitle" data-toc="避坑指南">
+    <span class="eyebrow">可选 · 由同一批冻结数据计算</span><h3 id="profilePitfallsTitle">避坑指南</h3>
+    <p class="small muted">费用刺客和档位倒退按单个评测逐档判断，标在格子里；新一代更省和被同家全面超越按整个档位判断（双方共同测过的所有评测都要满足），标在档位列头。同家比较只看目录里的活跃型号；“新一代”按产品线（如 Opus、Sol）与 AA 发布日期判断。分数是点估计，没有置信区间；AA 逐档含回退配置的型号已在上方标注。可在顶部取消“显示避坑”。</p>
+    <div id="profilePitfallList" class="mp-pit-grid"></div>
+  </section>
   <section aria-labelledby="profileCardsTitle" data-toc="分任务选档">
-    <div class="section-heading"><h2 id="profileCardsTitle">分任务选档卡</h2><p>起步档来自档位建议记录、补充证据或官方默认；降档候选与升档上限是同一评测在省钱 / 性能优先门槛下的拐点。均为个人选型参考，<strong>未建立任务最优结论</strong>，中文任务全部未实测。</p></div>
+    <div class="section-heading"><h2 id="profileCardsTitle">分任务选档卡</h2><p>起步档来自档位建议记录、补充证据或官方默认；降档候选与升档上限是同一评测在省钱 / 性能优先门槛下的甜蜜点。均为个人选型参考，<strong>未建立任务最优结论</strong>，中文任务全部未实测。</p></div>
     <div id="profileCards" class="mp-cards"></div>
   </section>
   <section class="card" data-toc="补充证据" aria-label="补充证据">
