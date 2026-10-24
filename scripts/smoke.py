@@ -21,7 +21,7 @@ from publish import ROOT, check, probe, require
 from capability_smoke import check_capabilities
 from selection_smoke import check_selection
 from scaling_smoke import check_scaling
-from sweet_spot import PRESETS, picks, profile_series, profile_pitfalls
+from sweet_spot import PRESETS, picks, profile_alternatives, profile_series, profile_pitfalls
 
 
 class QuietHandler(SimpleHTTPRequestHandler):
@@ -126,6 +126,22 @@ def check_profile_ui(page, data, output):
         got = {tuple(x for x in item if x is not None) for item in rendered}
         require(got == profile_pitfalls(data, m["id"]), f"Pitfalls drifted from reference: {m['id']}")
         require(len(rendered) == len(got), f"Duplicate pitfall rows: {m['id']}")
+    for scope in ("vendor", "all"):
+        page.select_option("#profileAltScope", scope)
+        for m in models:
+            page.select_option("#profileModel", m["id"])
+            for effort in page.eval_on_selector_all("#profileAltEffort option", "os => os.map(o => o.value)"):
+                page.select_option("#profileAltEffort", effort)
+                rows = page.eval_on_selector_all("#profileAltTable tr[data-alt-series]",
+                    "rs => rs.map(r => [r.dataset.altSeries, r.dataset.cheaper, r.dataset.stronger])")
+                pair = lambda v: tuple(v.split("|")) if v else None
+                got = {k: (pair(c), pair(st)) for k, c, st in rows}
+                require(got == profile_alternatives(data, m["id"], effort, scope), f"Alternatives drifted: {scope}/{m['id']}/{effort}")
+    page.select_option("#profileAltScope", "vendor")
+    page.select_option("#profileModel", "grok-4-7")
+    expect(page.locator("#profileAltEffort")).to_have_value("high")
+    page.locator('#profileGrid tr[data-mp-series="aa-ii"] td[data-mp-effort="xhigh"]').click()
+    expect(page.locator("#profileAltEffort")).to_have_value("xhigh")
     page.select_option("#profileModel", "claude-sonnet-5-5")
     expect(page.locator('#profileGrid tr[data-mp-series="aa-ii"] td[data-mp-effort="max"] .mp-pit.k-cost')).to_have_count(1)
     expect(page.locator("#profileRule")).to_contain_text("边际收益拐点")
@@ -363,7 +379,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
               "checks": ["fresh five-source search, filters, missing-cost export, dates, theme persistence and touch", "Grok 200k inclusive price boundary", "task-specific best variants in seven dimensions", "dataset-backed knowledge narrative and Elo differences", "effort filters and scaling charts", "pinned vs temporary highlight, missing gaps and singleton", "separate Computer Use protocols and scope-limited raw-precision alternatives", "three verified workflow cards, source boundaries and native disclosures on keyboard/touch",
                "capability missingness, tie ranks, per-domain denominators and CSV consistency",
                "reasoning charts, effort selection, nonmonotonic scores and keyboard access", "seven panels", "Claude filter", "CSV missing values", "budget boundaries", "four Opus evidence views",
-                         "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across seven panels and thirteen CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "sweet-spot matrix equals the Python reference for three presets", "median quadrant, series focus and page TOC", "model profile sweet spots and pitfalls equal the Python reference for every model and preset, deep link and cross-links", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
+                         "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across seven panels and thirteen CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "sweet-spot matrix equals the Python reference for three presets", "median quadrant, series focus and page TOC", "model profile sweet spots, pitfalls and better alternatives equal the Python reference for every model, effort, preset and scope; deep link and cross-links", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
               "cloudflare_headers_checked": cloudflare}
     (output / "smoke.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result, indent=2))

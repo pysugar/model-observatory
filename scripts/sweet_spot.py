@@ -218,3 +218,30 @@ def profile_pitfalls(data, model_id):
             newer_same_line = line[alt] == line[model_id] and mine_date and alt_date and alt_date > mine_date
             flags.add(("upgrade" if newer_same_line else "dominated", "config", effort, alt, best[4]))
     return flags
+
+
+# ---------- Better alternatives for one model x effort (mirrors report.js mpAlternatives) ----------
+def profile_alternatives(data, model_id, effort, scope="vendor"):
+    """{series_key: (cheaper, stronger)}; each is (model_id, effort) or None.
+
+    cheaper  = lowest-cost config scoring at least as high and costing strictly less;
+    stronger = highest-scoring config costing no more and scoring strictly higher.
+    Candidates are active profile models (same vendor, or all four vendors), own other efforts included.
+    """
+    vendor = {m["id"]: m["vendor"] for m in data["models"]}
+    pool = [m["id"] for m in data["model_effort_profiles"]["models"] if scope == "all" or vendor[m["id"]] == vendor[model_id]]
+    series = {o: _profile_points(data, o) for o in pool}
+    out = {}
+    for key, (pts, _elo, _spread) in series[model_id].items():
+        p = next((x for x in pts if x["effort"] == effort), None)
+        if not p or not _finite(p["cost"]):
+            continue
+        cands = [(o, q) for o in pool for q in series[o].get(key, ([], 0, 0))[0]
+                 if _finite(q["cost"]) and not (o == model_id and q["effort"] == effort)]
+        cheaper = sorted((c for c in cands if c[1]["score"] >= p["score"] and c[1]["cost"] < p["cost"]),
+                         key=lambda c: (c[1]["cost"], -c[1]["score"], c[0], EFFORT_ORDER.index(c[1]["effort"])))
+        stronger = sorted((c for c in cands if c[1]["cost"] <= p["cost"] and c[1]["score"] > p["score"]),
+                          key=lambda c: (-c[1]["score"], c[1]["cost"], c[0], EFFORT_ORDER.index(c[1]["effort"])))
+        pick = lambda lst: (lst[0][0], lst[0][1]["effort"]) if lst else None
+        out[key] = (pick(cheaper), pick(stronger))
+    return out

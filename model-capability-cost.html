@@ -883,6 +883,11 @@ main { padding-top:35px; }
 .mp-ev summary { font-size:var(--fs-sm); color:var(--teal); cursor:pointer; }
 .mp-ev .evidence-badge, #profileEvidence .evidence-badge { display:inline-block; margin:0 6px 0 0; }
 #profileEvidence h4 { margin:0 0 6px; }
+.mp-alt-table { min-width:620px; }
+.mp-alt-table td, .mp-alt-table th { vertical-align:top; font-size:var(--fs-sm); }
+.mp-alt-table td b { font-weight:700; }
+.mp-alt-table .mp-tag { margin-left:6px; }
+.mp-cell.has { cursor:pointer; }
 .mp-toggle { display:inline-flex; align-items:center; gap:6px; font-size:var(--fs-sm); }
 .mp-explain #profileRule p, .mp-explain #profileRule li { font-size:var(--fs-sm); }
 .mp-steps { margin:4px 0 6px; padding-left:20px; }
@@ -1332,6 +1337,13 @@ main { padding-top:35px; }
     <details class="note-box mp-explain" open><summary>甜蜜点与三档门槛怎么算</summary><div id="profileRule"></div></details>
     <p class="small muted"><span class="mp-mark pick">甜蜜点</span> 当前门槛下的甜蜜点（边际收益拐点） · <span class="mp-mark start">起步</span> 官方 / 经验起步档 · <span class="mp-mark peak">最高</span> 该行实测最高分 · “/×2” 为相对上一已测档、成本每翻一倍的得分变化（绿色达到升档门槛）。“未测”表示原生支持但本报告没有该档成绩；“—”表示目录未列该档。开启“显示避坑”时，格内另标 <span class="mp-pit k-cost">刺客</span> <span class="mp-pit k-regress">倒退</span> <span class="mp-pit k-upgrade">换新更省</span> <span class="mp-pit k-dominated">同家更省</span>，说明见下方避坑指南。</p>
     <div id="profileGrid" class="table-scroll" tabindex="0" role="region" aria-label="任务与档位表，可横向滚动"></div>
+  </section>
+  <section class="card" id="profileAltCard" aria-labelledby="profileAltTitle" data-toc="更优替代">
+    <span class="eyebrow">特定档位 · 有没有更好的选择</span><h3 id="profileAltTitle">更优替代</h3>
+    <p class="small muted">选一个档位（也可以直接点上表的格子），逐个评测看两种替代：<strong>同分最省</strong> = 分数不低于当前、费用最低的配置；<strong>同价最高</strong> = 费用不高于当前、分数最高的配置。只在同一评测内比较，候选是目录里的活跃型号，本模型的其它档位也算在内（标“降档/换档”）。分数是点估计，相差很小时请用自己的任务确认。</p>
+    <div class="toolbar"><label>档位<select id="profileAltEffort"></select></label><label>范围<select id="profileAltScope"><option value="vendor">同厂商</option><option value="all">四家全部</option></select></label></div>
+    <p id="profileAltSummary" class="method-note" aria-live="polite"></p>
+    <div id="profileAltTable" class="table-scroll" tabindex="0" role="region" aria-label="更优替代表，可横向滚动"></div>
   </section>
   <section class="card" id="profilePitfallsCard" aria-labelledby="profilePitfallsTitle" data-toc="避坑指南">
     <span class="eyebrow">可选 · 由同一批冻结数据计算</span><h3 id="profilePitfallsTitle">避坑指南</h3>
@@ -3248,6 +3260,45 @@ main { padding-top:35px; }
     });
     return out;
   }
+  // Better alternatives for one effort of one model, per benchmark series:
+  //  cheaper  = lowest-cost config scoring at least as high and costing strictly less;
+  //  stronger = highest-scoring config costing no more and scoring strictly higher.
+  const mpAltView={effort:null,scope:"vendor"};
+  function mpAlternatives(entry,effort,scope){
+    const vendor=mpCat(entry.id).vendor, pool=MP.models.filter(m=>scope==="all"||mpCat(m.id)?.vendor===vendor);
+    const ord=e=>mpEffortOrder.indexOf(e);
+    return mpSeriesOf(entry).map(s=>{
+      const p=s.points.find(x=>x.effort===effort);
+      if(!p||!finite(p.cost)) return null;
+      const cands=[];
+      pool.forEach(o=>(mpSeriesOf(o).find(x=>x.key===s.key)?.points||[]).forEach(q=>{if(finite(q.cost)&&!(o.id===entry.id&&q.effort===effort)) cands.push({o,q});}));
+      const tie=(a,b)=>a.o.id<b.o.id?-1:a.o.id>b.o.id?1:ord(a.q.effort)-ord(b.q.effort);
+      const cheaper=cands.filter(c=>c.q.score>=p.score&&c.q.cost<p.cost).sort((a,b)=>a.q.cost-b.q.cost||b.q.score-a.q.score||tie(a,b))[0]||null;
+      const stronger=cands.filter(c=>c.q.cost<=p.cost&&c.q.score>p.score).sort((a,b)=>b.q.score-a.q.score||a.q.cost-b.q.cost||tie(a,b))[0]||null;
+      return {s,p,cheaper,stronger};
+    }).filter(Boolean);
+  }
+  function mpAltCell(x,c,mode,entry){
+    if(!c) return '<span class="muted">无更优</span>';
+    const s=x.s,u=s.unit==="%"||s.unit==="% 通过"?"%":" "+s.unit, alt=mpCat(c.o.id), self=c.o.id===entry.id;
+    const delta=mode==="cheaper"?(x.p.cost>0?`省 ${Math.round((1-c.q.cost/x.p.cost)*100)}%`:""):`+${fmt(c.q.score-x.p.score,s.digits)}${u}`;
+    return `<b>${esc(self?"同模型":alt.short||alt.name)} ${esc(c.q.effort)}</b>${self?'<span class="mp-tag">降档/换档</span>':""}<span class="mp-cost">${mpFmt(s,c.q.score)}${esc(u)} · ${money(c.q.cost)} · ${esc(delta)}</span>`;
+  }
+  function renderProfileAlternatives(a){
+    const box=$("profileAltTable"); if(!box) return;
+    const efforts=mpEffortOrder.filter(e=>a.series.some(s=>s.points.some(p=>p.effort===e&&finite(p.cost))));
+    const sel=$("profileAltEffort");
+    if(!efforts.length){sel.innerHTML="";box.innerHTML='<p class="small muted">这款模型没有带费用的实测档位，无法比较替代。</p>';$("profileAltSummary").textContent="";return;}
+    // Default to the official default effort (what most calls use), then the overall sweet spot.
+    if(!efforts.includes(mpAltView.effort)){const ii=a.series.find(s=>s.key==="aa-ii"),sw=ii?.res.balanced?.pick.effort;mpAltView.effort=efforts.includes(a.cat.default_effort)?a.cat.default_effort:sw&&efforts.includes(sw)?sw:efforts[0];}
+    sel.innerHTML=efforts.map(e=>`<option value="${esc(e)}">${esc(mpEffortLabel(e))}</option>`).join("");sel.value=mpAltView.effort;
+    $("profileAltScope").value=mpAltView.scope;
+    const rows=mpAlternatives(a.entry,mpAltView.effort,mpAltView.scope);
+    const nC=rows.filter(r=>r.cheaper).length,nS=rows.filter(r=>r.stronger).length;
+    $("profileAltSummary").textContent=`${a.cat.name} · ${mpAltView.effort}：在 ${rows.length} 项有费用的评测里，${nC} 项有更省的同分替代，${nS} 项有同价更高分的替代（范围：${mpAltView.scope==="all"?"四家全部活跃型号":"同厂商活跃型号"}，含本模型其它档位）。`;
+    box.innerHTML=`<table class="mp-alt-table"><thead><tr><th scope="col">任务 · 评测</th><th scope="col">当前 ${esc(mpAltView.effort)}</th><th scope="col">同分最省</th><th scope="col">同价最高</th></tr></thead><tbody>${rows.map(x=>{const u=x.s.unit==="%"||x.s.unit==="% 通过"?"%":" "+x.s.unit;
+      return `<tr data-alt-series="${esc(x.s.key)}" data-cheaper="${x.cheaper?esc(x.cheaper.o.id+"|"+x.cheaper.q.effort):""}" data-stronger="${x.stronger?esc(x.stronger.o.id+"|"+x.stronger.q.effort):""}"><th scope="row">${esc(mpSeriesName(x.s))}</th><td>${mpFmt(x.s,x.p.score)}${esc(u)}<span class="mp-cost">${money(x.p.cost)}</span></td><td>${mpAltCell(x,x.cheaper,"cheaper",a.entry)}</td><td>${mpAltCell(x,x.stronger,"stronger",a.entry)}</td></tr>`;}).join("")}</tbody></table>`;
+  }
   function mpAnalyse(entry){
     const cat=mpCat(entry.id), efforts=mpEfforts(entry,cat), series=mpSeriesOf(entry);
     series.forEach(s=>{s.res={};Object.entries(sweetTolerance).forEach(([k,tol])=>{s.res[k]=mpPick(s.points,s.threshold(tol),s.elo);});});
@@ -3368,8 +3419,13 @@ main { padding-top:35px; }
       }).join("");
     }).join("");
     host.innerHTML=`<table class="mp-table"><caption class="sr-only">${esc(cat.name)} 各任务在各原生档位的实测分数与成本</caption><thead>${head}</thead><tbody>${body}</tbody></table>`;
-    host.querySelectorAll("tr[data-mp-task]").forEach(tr=>tr.addEventListener("click",()=>{mpView.task=tr.dataset.mpTask;renderModelProfile();$("profileCard-"+mpView.task)?.scrollIntoView({block:"nearest"});}));
+    host.querySelectorAll("tr[data-mp-task]").forEach(tr=>tr.addEventListener("click",ev=>{
+      const cell=ev.target.closest("td[data-mp-effort]");
+      mpView.task=tr.dataset.mpTask;
+      if(cell){mpAltView.effort=cell.dataset.mpEffort;renderModelProfile();$("profileAltCard")?.scrollIntoView({block:"nearest"});return;}
+      renderModelProfile();$("profileCard-"+mpView.task)?.scrollIntoView({block:"nearest"});}));
     $("profileRule").innerHTML=mpExplain(a,tol);
+    renderProfileAlternatives(a);
     // Pitfall guide.
     $("profilePitfallsCard").hidden=!showPits;
     const avoidEv=(MP.evidence||[]).filter(x=>x.modelIds.includes(entry.id)&&x.efforts?.avoid);
@@ -3418,10 +3474,12 @@ main { padding-top:35px; }
   if($("profileModel")){
     const vendors=["Anthropic","OpenAI","Google","xAI"];
     $("profileModel").innerHTML=vendors.map(v=>`<optgroup label="${v}">${MP.models.filter(m=>mpCat(m.id)?.vendor===v).map(m=>{const c=mpCat(m.id),t=(MP.tiers||[]).find(x=>x.id===m.tier);return `<option value="${esc(m.id)}">${esc(c.name)} · ${esc(t?.label||"")}${c.lifecycle==="Deprecated"?" · 已弃用":""}</option>`;}).join("")}</optgroup>`).join("");
-    const setModel=id=>{mpView.model=id;mpView.task=null;renderModelProfile();if(!$("profiles").hidden)history.replaceState(null,"","#profiles?m="+encodeURIComponent(id));};
+    const setModel=id=>{mpView.model=id;mpView.task=null;mpAltView.effort=null;renderModelProfile();if(!$("profiles").hidden)history.replaceState(null,"","#profiles?m="+encodeURIComponent(id));};
     $("profileModel").addEventListener("change",e=>setModel(e.target.value));
     $("profileTolerance").addEventListener("change",renderModelProfile);
     $("profilePitfalls").addEventListener("change",renderModelProfile);
+    $("profileAltEffort").addEventListener("change",e=>{mpAltView.effort=e.target.value;renderModelProfile();});
+    $("profileAltScope").addEventListener("change",e=>{mpAltView.scope=e.target.value;renderModelProfile();});
     $("profileQuick").innerHTML=MP.models.filter(m=>m.tier==="main").map(m=>`<button type="button" class="pill-btn" data-mp-quick="${esc(m.id)}">${esc(mpCat(m.id).short||mpCat(m.id).name)}</button>`).join("");
     $("profileQuick").querySelectorAll("[data-mp-quick]").forEach(b=>b.addEventListener("click",()=>{$("profileModel").value=b.dataset.mpQuick;setModel(b.dataset.mpQuick);}));
     $("exportProfile").addEventListener("click",()=>exportCSV(mpExportRows(),`模型档案-${mpView.model}-${MP.checkedAt}.csv`));
