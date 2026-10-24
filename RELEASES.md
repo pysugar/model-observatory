@@ -14,6 +14,8 @@
 | `e36e8f9e01e8b2362849a2009c62769e2138fa95` | PR #10：页脚构建身份、生产切换至受保护的 release | [run 39160593783](https://github.com/pysugar/model-observatory/actions/runs/39160593783) |
 | `5eab3d03a4abf61cdaa500669cd5d712e48d8428` | PR #14：能力完整性、档位交互与建议、Computer Use、避坑经验卡 | [run 39397926762](https://github.com/pysugar/model-observatory/actions/runs/39397926762) |
 | `1ed2900a756c1833611e5fb89d6f242399827f8d` | PR #16：选档速查矩阵、官方/社区参考、本页目录、数据中位数象限、系列聚焦、深色模式 | [run 39423917650](https://github.com/pysugar/model-observatory/actions/runs/39423917650) |
+| `d8ae6c3088429599c2883c0c6bba07569cf4c268` | PR #18：最新榜单五站选录、官方价格复核、页面改版与主题选择 | [run 39987003757](https://github.com/pysugar/model-observatory/actions/runs/39987003757) |
+| `f8e36ec7e18c97a5f799afe167355ea3a7c699ae` | PR #19：模型档案页签（单模型 × 任务 × 档位、选档卡、深链） | [run 40132928451](https://github.com/pysugar/model-observatory/actions/runs/40132928451) |
 
 以上版本均有成功发布 run；2026-10-18 的工作流修复与初始化没有改动研究数据内容。Cloudflare 版本 ID 以各 run 的上传日志与 Worker 控制台为准，不猜测 ID。
 
@@ -84,3 +86,19 @@
 上线功能：选档速查矩阵（边际收益拐点规则，省钱 / 均衡 / 性能优先三档门槛）、官方 / 经验起点与社区实测并排参考、各档位避坑清单、吸顶本页目录、按数据中位数或个人预算划分的 Most attractive quadrant、点击聚焦 / 悬停预览、档位曲线自适应纵轴、语义颜色变量与深色模式、长口径说明折叠。功能决策与不可回归边界见 [README](README.md#当前功能决策与不可回归边界)，本地验收记录见 [ui-refresh 记录](verification/ui-refresh-2026-10-20/validation.json)。
 
 本轮在云端容器内开发：该环境以 root 运行，本地浏览器检查未开 Chromium sandbox，仅用于迭代；sandbox 开启的验收以上述 CI 为准。容器网络策略不允许直接访问正式域名，线上核验采用发布工作流内的 probe 结果。
+
+## 2026-10-24 PR19 模型档案正式发布收束
+
+[PR #19](https://github.com/pysugar/model-observatory/pull/19) 已于 **2026-10-24T21:08:51Z** 合并。新增“模型档案”页签；逐档分数与成本沿用冻结输入，主表仍为 169 条记录、24 款模型、50 条来源（预览评论中的行数与来源数均未变化）。
+
+| 阶段 | 已完成事实 |
+| --- | --- |
+| 最终源码与合并 | PR 最终 head `5ff1308577067dbcb41e4551bae8e4a703db35c1`；main merge `f8e36ec7e18c97a5f799afe167355ea3a7c699ae` |
+| PR 验证与预览（历史） | 最终 head 的 [CI 40132434290](https://github.com/pysugar/model-observatory/actions/runs/40132434290) 成功；原生预览已部署（Cloudflare deployment `6936e361-b42b-410d-824f-d5286d14cec0`）。它们是 PR 预览证据，不是生产发布 |
+| main CI 与正式发布 | [run 40132928451](https://github.com/pysugar/model-observatory/actions/runs/40132928451) 成功：53 项单元测试、干净构建、完整浏览器 smoke（含模型档案 24 款 × 三档门槛与 Python 参考逐行一致、七个页签无溢出） |
+| 正式版本 | 部署后 `publish.py probe` 对 [models.localgpt.net](https://models.localgpt.net) 与 [独立正式验收入口](https://model-observatory.openai-proxy-local.workers.dev) 均为 PASS，commit `f8e36ec7e18c97a5f799afe167355ea3a7c699ae`；用户另行打开 `#profiles?m=claude-opus-5-5` 确认页面可用 |
+| Cloudflare 版本 | `967d0305-bfb6-41a0-8812-c348bffb1d4e`（本次上传 `index.html`、`report-data.json`、`version.json` 三个变化资产） |
+
+上线功能：模型档案页签（`#profiles`，深链 `#profiles?m=<目录 id>`），覆盖目录 24 款四家活跃型号；9 类任务 × 原生档位表（分数、成本、成本每翻倍得分、实测拐点 / 起步档 / 最高分）；分任务选档卡（起步档、实测拐点、降档候选、升档上限、相关证据）；选档速查与档位建议详情跳转。功能决策见 [README](README.md#当前功能决策与不可回归边界)，研究说明见 [2026-10-24 研究记录](research/2026-10-24/README.md)，本地验收见 [模型档案验收记录](verification/model-profile-2026-10-24/README.md)。
+
+本轮在云端容器内开发：容器以 root 运行，本地浏览器检查未开 Chromium sandbox，仅用于迭代；sandbox 开启的验收以上述 CI 为准。容器网络只放行搜索，14 条补充证据为检索摘要（原页待复核），线上核验采用发布工作流内的 probe 结果与用户本人打开页面的确认。PR #18 的正式发布也已由 run 39987003757 完成双入口验收（该 run 的 Cloudflare 版本 ID 本文未记录，以其上传日志为准）。
