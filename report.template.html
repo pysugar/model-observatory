@@ -21,7 +21,7 @@
         <span class="eyebrow"><span class="status-dot"></span> INDEPENDENT SIGNALS. BETTER DECISIONS.</span>
         <h1>为每一次任务，<br><span>选对 AI 模型。</span></h1>
         <p class="lead">从能力到成本，从公开榜单到推理档位。<br>用有来源的数据，找到适合你的模型与配置。</p>
-        <div class="hero-ctas"><button class="primary-action" data-scroll="latestBenchmarks">探索最新榜单 <span aria-hidden="true">↗</span></button><button class="secondary-action" data-jump="specs">估算调用预算 <span aria-hidden="true">→</span></button></div>
+        <div class="hero-ctas"><button class="primary-action" data-scroll="latestBenchmarks">探索最新榜单 <span aria-hidden="true">↗</span></button><button class="secondary-action" data-jump="profiles">按模型查档位 <span aria-hidden="true">→</span></button><button class="secondary-action" data-jump="specs">估算调用预算 <span aria-hidden="true">→</span></button></div>
       </div>
       <aside class="signal-panel" aria-label="本期榜单观察"><div class="signal-head"><span>本期观察</span><span class="mono" id="reviewDate">2026-10-23 核验</span></div><div id="heroSignals"></div><p class="signal-footnote">每个榜单回答不同的问题。分数仅在同一评测内比较。</p></aside>
     </div>
@@ -34,6 +34,7 @@
   <button role="tab" id="tab-explorer" aria-controls="explorer" aria-selected="false" data-panel="explorer" tabindex="-1">成本与耗时</button>
   <button role="tab" id="tab-specs" aria-controls="specs" aria-selected="false" data-panel="specs" tabindex="-1">规格与预算</button>
   <button role="tab" id="tab-reasoning" aria-controls="reasoning" aria-selected="false" data-panel="reasoning" tabindex="-1">推理档位</button>
+  <button role="tab" id="tab-profiles" aria-controls="profiles" aria-selected="false" data-panel="profiles" tabindex="-1">模型档案</button>
   <button role="tab" id="tab-evidence" aria-controls="evidence" aria-selected="false" data-panel="evidence" tabindex="-1">证据与方法</button>
 </nav><nav id="pageToc" class="page-toc" aria-label="本页目录"></nav></div>
 <main id="report-main">
@@ -422,6 +423,30 @@
   <details class="note-box" open><summary>一个通用的五步实测选型流程</summary><ol><li>先固定真实业务任务、输入材料、工具权限、输出预算与验收标准。</li><li>选 2–3 个候选模型，先测默认或 <code>medium / high</code> 档；预算允许的高难度任务，可加入 <code>xhigh</code> 作为能力上限参照。</li><li>若质量不达标，优先比较补齐上下文、升一档与换异构模型；若质量达标，再比较单任务总费用和完成时间。</li><li>分开记录正确性、交付完整性、格式合规率与人工返工量；保留所有失败和超时，不能只算成功样本。</li><li>用同题配对、随机顺序与多次重复确认小差异；中文内容用盲评补充英文公开榜单。</li></ol><p>API effort、OpenAI <code>reasoning.mode=pro</code>、产品 Ultra、服务 Fast/Ultrafast 是不同控制项。原数据集中的 Ultra 作为编排变体保存，不折算成 max。<a href="https://developers.openai.com/api/docs/guides/reasoning" target="_blank" rel="noopener">OpenAI 定义</a> · <a href="https://platform.claude.com/docs/en/build-with-claude/effort" target="_blank" rel="noopener">Claude 定义</a> · <a href="https://ai.google.dev/gemini-api/docs/thinking" target="_blank" rel="noopener">Gemini 定义</a></p></details>
 </section>
 
+<section class="panel" id="profiles" role="tabpanel" aria-labelledby="tab-profiles" hidden>
+  <div class="section-heading"><span class="eyebrow">06 / MODEL PROFILE</span><h2>选一个模型，看它在每类任务上该用哪一档。</h2><p>把散在选档速查、档位建议、档位曲线和 Computer Use 里的同一模型信息放到一处。档位名称只在同一模型内有顺序意义；每行只在同一评测内比较，不同评测的单位与费用口径不混算。</p></div>
+  <section class="card mp-shell" aria-labelledby="profileTitle" data-toc="模型与覆盖">
+    <h3 id="profileTitle" class="sr-only">模型档案</h3>
+    <div class="toolbar"><label>模型<select id="profileModel"></select></label><label>门槛<select id="profileTolerance"><option value="thrifty">省钱</option><option value="balanced" selected>均衡</option><option value="performance">性能优先</option></select></label><button id="exportProfile">导出本模型档案 CSV</button></div>
+    <div class="mp-quick" id="profileQuick" role="group" aria-label="当前主力快捷切换"></div>
+    <div id="profileHeader" aria-live="polite"></div>
+  </section>
+  <section class="card" aria-labelledby="profileGridTitle" data-toc="任务 × 档位">
+    <span class="eyebrow">实测 · 冻结来源</span><h3 id="profileGridTitle">任务 × 原生档位</h3>
+    <p id="profileRule" class="method-note"></p>
+    <p class="small muted"><span class="mp-mark pick">拐点</span> 当前门槛下的实测拐点 · <span class="mp-mark start">起步</span> 官方 / 经验起步档 · <span class="mp-mark peak">最高</span> 该行实测最高分 · “/×2” 为相对上一已测档、成本每翻一倍的得分变化（绿色达到升档门槛）。“未测”表示原生支持但本报告没有该档成绩；“—”表示目录未列该档。</p>
+    <div id="profileGrid" class="table-scroll" tabindex="0" role="region" aria-label="任务与档位表，可横向滚动"></div>
+  </section>
+  <section aria-labelledby="profileCardsTitle" data-toc="分任务选档">
+    <div class="section-heading"><h2 id="profileCardsTitle">分任务选档卡</h2><p>起步档来自档位建议记录、补充证据或官方默认；降档候选与升档上限是同一评测在省钱 / 性能优先门槛下的拐点。均为个人选型参考，<strong>未建立任务最优结论</strong>，中文任务全部未实测。</p></div>
+    <div id="profileCards" class="mp-cards"></div>
+  </section>
+  <section class="card" data-toc="补充证据" aria-label="补充证据">
+    <div id="profileEvidence"></div>
+    <details class="note-box"><summary>这些证据从哪里来</summary><p>逐档分数与成本全部来自既有冻结输入：AA v4.3.2 逐档与子评测（2026-10-19/20）、Vulcan 编码（2026-10-16）、ToneBench 写作、OSWorld 分协议记录（2026-10-20）。2026-10-24 新增的证据条目来自网页检索摘要，原页在本次整理环境中无法直接打开，均标“检索摘要”；与冻结数据冲突时只作提醒，不覆盖原值。档位升降的通用规则见“推理档位”页。</p></details>
+  </section>
+</section>
+
 <section class="panel" id="evidence" role="tabpanel" aria-labelledby="tab-evidence" hidden>
   <section class="card" id="benchmarkGuide" aria-labelledby="benchmarkGuideTitle" data-toc="如何参考评测">
     <h3 id="benchmarkGuideTitle">如何参考评测</h3>
@@ -441,7 +466,7 @@
     </ul><p class="small">目录核对日 2026-10-20；未采集新的排名、原始百分比、票数或置信区间，评测日期与 effort 未知。信号定义优先于旧文章中的 Recovery 和旧 Steerability 说明。</p></details>
   </section>
 
-  <div class="section-heading"><span class="eyebrow">06 / EVIDENCE & LIMITS</span><h2>知道每个数字能回答什么。</h2><p>本报告重整公开基准与官方文档证据，没有新增付费模型调用。官方规格、独立基准评测与真实路由统计分别标注。</p></div>
+  <div class="section-heading"><span class="eyebrow">07 / EVIDENCE & LIMITS</span><h2>知道每个数字能回答什么。</h2><p>本报告重整公开基准与官方文档证据，没有新增付费模型调用。官方规格、独立基准评测与真实路由统计分别标注。</p></div>
   <div class="table-scroll"><table class="decision-table"><thead><tr><th>数据层</th><th>时间与覆盖</th><th>可回答</th><th>不能推出</th></tr></thead><tbody>
     <tr><th>官方规格 / Standard 价格</th><td>24 型号；Grok 4.7 核验于 10-19，Claude 10-16，GPT / Gemini 10-15</td><td>模型身份、输入能力、上下文、支持档位、已公布的单价和优惠期</td><td>特定渠道配额、订阅扣额、同任务总 token、真实生产延迟</td></tr>
     <tr><th>AA v4.3.2 全档位与能力指数</th><td>30 个发布版本（94 个配置）、6 大能力指数、四大家族 11 款活跃模型 44 个档位的 10 项底层子评测（10-20 核验）</td><td>复杂问题解决、编程、方案规划、长文档抗幻觉在各推理档位下的同口径表现与单任务成本</td><td>中文写作、无回退纯模型排名、微小分差的统计显著性</td></tr>

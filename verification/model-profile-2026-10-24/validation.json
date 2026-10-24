@@ -1,0 +1,25 @@
+{
+  "verified_on": "2026-10-24",
+  "base_commit": "d8ae6c3088429599c2883c0c6bba07569cf4c268",
+  "branch": "claude/nice-euler-cj5s04",
+  "state": "local working tree before commit; no deployment",
+  "environment": "cloud container; Python Playwright 1.58.0 in a temporary venv driving the preinstalled Chrome for Testing 153.0.8010.12 with chromium_sandbox=False (root container); network allows search only",
+  "unit_tests": "53 passed (46 existing + 7 model profile)",
+  "browser_smoke": "smoke.json",
+  "screenshots": "screenshots.json",
+  "source_sha256": {
+    "build_report.py": "9228ca58edef8ba1464332c8ebb06f1080b9582da66848b55c223faf38efc491",
+    "report-content.json": "a21e96760f75d29bfb355b155246d1641bef275067c95216655588bb7235ebcb",
+    "report.css": "58626dd75d857639e3dfd5e222786580ad48eb2c057ba975201153e87e8c3266",
+    "report.js": "3b8342271814fa3f11808f063ba59d46c0621eb7659a8704d34588da26dfae8d",
+    "report.template.html": "d930697786889f26f62cb67afe3d41e25d791abe0976cef2c981f640e2d576f2",
+    "research/2026-10-24/model-effort-profiles.json": "9fd70595c6d8e7fd821f4796658d869cd62dad4200ffd133d01ca589fe37080c",
+    "scripts/sweet_spot.py": "eec6900996caaa89ea27c5908625adce536f60030655a8bb517bce9865ddc71b",
+    "scripts/smoke.py": "b5cdcbeedcc71a70073c335704423fee4f930c23890c101bdcd0ac7dfae576de",
+    "scripts/selection_smoke.py": "975c810a87172e4fb33a0892bbe9c8f68c84850778c117e97ebbba86cce2e53b",
+    "tests/test_model_profiles.py": "b0c434e9ad48a71a36a62ff17f278a55e4c1ef855b41477129fc05cfb891f013",
+    "model-capability-cost.html": "2b8892338834cbbfb1caa529c34477b7e9c1ac110365f9571a8393fe21a1c8a2",
+    "report-data.json": "73c857c3fe25d91b3b12410c06391664d25d82969b6f9a5b68b2418304e3e1b9",
+    "report-data.csv": "95426d2bdfd4dab5fea4083c339215981291b84e8c7aa93f2a78e1ec24edd61a"
+  }
+}

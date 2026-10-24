@@ -21,7 +21,7 @@ from publish import ROOT, check, probe, require
 from capability_smoke import check_capabilities
 from selection_smoke import check_selection
 from scaling_smoke import check_scaling
-from sweet_spot import PRESETS, picks
+from sweet_spot import PRESETS, picks, profile_series
 
 
 class QuietHandler(SimpleHTTPRequestHandler):
@@ -102,6 +102,44 @@ def check_overview_ui(page, data):
     require(page.locator("#pageToc button").count() >= 8, "Overview page TOC is missing sections")
     page.locator("#pageToc button").nth(3).click()
     require(page.evaluate("location.hash") == hash_before, "Page TOC changed the panel hash")
+
+
+def check_profile_ui(page, data, output):
+    """Model profile: every model x preset matches the Python reference; deep link and cross-links work."""
+    page.locator('[data-panel="profiles"]').click()
+    models = data["model_effort_profiles"]["models"]
+    expect(page.locator("#profileModel option")).to_have_count(len(models))
+    for preset, share in PRESETS.items():
+        page.select_option("#profileTolerance", preset)
+        for m in models:
+            page.select_option("#profileModel", m["id"])
+            expected = profile_series(data, m["id"], share)
+            rendered = dict(page.eval_on_selector_all("#profileGrid tr[data-mp-series]", "rows => rows.filter(r => r.dataset.mpPick).map(r => [r.dataset.mpSeries, r.dataset.mpPick])"))
+            require(rendered == expected, f"Profile drifted from reference: {preset}/{m['id']}: {rendered} != {expected}")
+            require(page.locator("#profileCards .mp-card").count() == len(data["model_effort_profiles"]["taskAxis"]), "Profile task cards missing")
+            require(page.locator('#profiles a[href=""]').count() == 0, "Empty source link in profile")
+    page.select_option("#profileTolerance", "balanced")
+    page.select_option("#profileModel", "grok-4-7")
+    expect(page.locator("#profileHeader")).to_contain_text("档位待核验")
+    expect(page.locator("#profileGrid thead")).to_contain_text("待核验")
+    require(page.evaluate("location.hash") == "#profiles?m=grok-4-7", "Profile deep link not written")
+    page.select_option("#profileModel", "claude-opus-4-7")
+    expect(page.locator("#profileHeader")).to_contain_text("不补造曲线")
+    page.locator('[data-mp-quick="claude-opus-5-5"]').click()
+    expect(page.locator('[data-mp-quick="claude-opus-5-5"]')).to_have_attribute("aria-pressed", "true")
+    page.locator('#profileGrid tr[data-mp-series="vulcan"]').click()
+    expect(page.locator("#profileCard-coding.selected")).to_have_count(1)
+    page.locator("#profiles").screenshot(path=str(output / "model-profile-desktop.png"), style=".nav-shell{visibility:hidden!important}")
+    page.locator('[data-mp-jump="overview"]').click()
+    expect(page.locator("#overview")).to_be_visible()
+    page.locator('[data-ss-model="gpt-6-1-sol"][data-ss-task="coding"]').click()
+    page.locator("#sweetDetail [data-profile-open]").click()
+    expect(page.locator("#profiles")).to_be_visible()
+    expect(page.locator("#profileModel")).to_have_value("gpt-6.1-sol")
+    expect(page.locator("#profileCard-coding.selected")).to_have_count(1)
+    page.goto(page.url.split("#")[0] + "#profiles?m=gpt-5.6-luna")
+    page.reload()
+    expect(page.locator("#profileModel")).to_have_value("gpt-5.6-luna")
 
 
 def check_market_ui(page, data, output):
@@ -198,7 +236,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
             page.route("**/*", route)
             page.goto(origin + "/", wait_until="networkidle")
             check_market_ui(page, data, output)
-            expect(page.locator('[role="tab"]')).to_have_count(6)
+            expect(page.locator('[role="tab"]')).to_have_count(7)
             expect(page.locator("#claudeCatalog tbody tr")).to_have_count(14)
             page.select_option("#claudeScope", "screenshot")
             expect(page.locator("#claudeCatalog tbody tr")).to_have_count(8)
@@ -243,6 +281,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
             check_scaling(page, data, output)
             check_selection(page, data, output)
             check_overview_ui(page, data)
+            check_profile_ui(page, data, output)
             page.locator('[data-panel="overview"]').click()
             page.screenshot(path=str(output / "desktop.png"), full_page=True)
             page.locator('[data-panel="explorer"]').click()
@@ -274,7 +313,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
             footer.screenshot(path=str(output / "build-footer-desktop.png"))
             for width in (390, 320):
                 page.set_viewport_size({"width": width, "height": 844})
-                for panel in ("overview", "capabilities", "explorer", "specs", "reasoning", "evidence"):
+                for panel in ("overview", "capabilities", "explorer", "specs", "reasoning", "profiles", "evidence"):
                     page.locator(f'[data-panel="{panel}"]').click()
                     fits = page.evaluate("document.documentElement.scrollWidth <= innerWidth")
                     if not fits:
@@ -306,8 +345,8 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
               "viewports": [1440, 390, 320], "rows": len(data["rows"]),
               "checks": ["fresh five-source search, filters, missing-cost export, dates, theme persistence and touch", "Grok 200k inclusive price boundary", "task-specific best variants in seven dimensions", "dataset-backed knowledge narrative and Elo differences", "effort filters and scaling charts", "pinned vs temporary highlight, missing gaps and singleton", "separate Computer Use protocols and scope-limited raw-precision alternatives", "three verified workflow cards, source boundaries and native disclosures on keyboard/touch",
                "capability missingness, tie ranks, per-domain denominators and CSV consistency",
-               "reasoning charts, effort selection, nonmonotonic scores and keyboard access", "six panels", "Claude filter", "CSV missing values", "budget boundaries", "four Opus evidence views",
-                         "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across six panels and twelve CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "sweet-spot matrix equals the Python reference for three presets", "median quadrant, series focus and page TOC", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
+               "reasoning charts, effort selection, nonmonotonic scores and keyboard access", "seven panels", "Claude filter", "CSV missing values", "budget boundaries", "four Opus evidence views",
+                         "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across seven panels and thirteen CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "sweet-spot matrix equals the Python reference for three presets", "median quadrant, series focus and page TOC", "model profile knees equal the Python reference for every model and preset, deep link and cross-links", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
               "cloudflare_headers_checked": cloudflare}
     (output / "smoke.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result, indent=2))
