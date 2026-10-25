@@ -1898,8 +1898,8 @@
     $("profileAltScope").value=mpAltView.scope;
     const rows=mpAlternatives(a.entry,mpAltView.effort,mpAltView.scope);
     const nC=rows.filter(r=>r.cheaper).length,nS=rows.filter(r=>r.stronger).length;
-    $("profileAltSummary").textContent=`${a.cat.name} · ${mpAltView.effort}：在 ${rows.length} 项有费用的评测里，${nC} 项有更省的同分替代，${nS} 项有同价更高分的替代（范围：${mpAltView.scope==="all"?"四家全部活跃型号":"同厂商活跃型号"}，含本模型其它档位）。`;
-    box.innerHTML=`<table class="mp-alt-table"><thead><tr><th scope="col">任务 · 评测</th><th scope="col">当前 ${esc(mpAltView.effort)}</th><th scope="col">同分最省</th><th scope="col">同价最高</th></tr></thead><tbody>${rows.map(x=>{const u=x.s.unit==="%"||x.s.unit==="% 通过"?"%":" "+x.s.unit;
+    $("profileAltSummary").textContent=`${a.cat.name} · ${mpAltView.effort}：在 ${rows.length} 项有费用的评测里，${nC} 项能在分数不降的情况下更省钱，${nS} 项能在不加预算的情况下拿到更高分（范围：${mpAltView.scope==="all"?"四家全部活跃型号":"同厂商活跃型号"}，含本模型其它档位）。`;
+    box.innerHTML=`<table class="mp-alt-table"><thead><tr><th scope="col">任务 · 评测</th><th scope="col">当前 ${esc(mpAltView.effort)}</th><th scope="col">同分最省<span class="task-detail">分数不低于当前，费用最低</span></th><th scope="col">同预算最强<span class="task-detail">费用不超过当前，分数最高</span></th></tr></thead><tbody>${rows.map(x=>{const u=x.s.unit==="%"||x.s.unit==="% 通过"?"%":" "+x.s.unit;
       return `<tr data-alt-series="${esc(x.s.key)}" data-cheaper="${x.cheaper?esc(x.cheaper.o.id+"|"+x.cheaper.q.effort):""}" data-stronger="${x.stronger?esc(x.stronger.o.id+"|"+x.stronger.q.effort):""}"><th scope="row">${esc(mpSeriesName(x.s))}</th><td>${mpFmt(x.s,x.p.score)}${esc(u)}<span class="mp-cost">${money(x.p.cost)}</span></td><td>${mpAltCell(x,x.cheaper,"cheaper",a.entry)}</td><td>${mpAltCell(x,x.stronger,"stronger",a.entry)}</td></tr>`;}).join("")}</tbody></table>`;
   }
   function mpAnalyse(entry){
@@ -1973,7 +1973,7 @@
   // Worked example of the sweet-spot rule on one of this model's series.
   function mpExplain(a,tol){
     const s=a.series.find(x=>x.key==="aa-ii"&&x.points.length>1)||a.series.find(x=>x.points.filter(p=>finite(p.cost)).length>1);
-    const general=`<p><b>甜蜜点是什么？</b>和“选档速查”里的甜蜜点是同一个东西，也就是<strong>边际收益拐点</strong>（本页上一版写作“拐点”）：从最便宜的已测档往上，每升一档看“成本每翻一倍，分数多涨多少”；只要不低于门槛就继续升，第一次低于门槛就停，停下的那一档就是甜蜜点。它回答“再多花钱还值不值”，不是“哪一档分数最高”。</p>
+    const general=`<p><b>甜蜜点是什么？</b>和“选档速查”里的甜蜜点是同一个东西，也就是<strong>边际收益拐点</strong>：从最便宜的已测档往上，每升一档看“成本每翻一倍，分数多涨多少”；只要不低于门槛就继续升，第一次低于门槛就停，停下的那一档就是甜蜜点。它回答“再多花钱还值不值”，不是“哪一档分数最高”。</p>
       <p><b>省钱 / 均衡 / 性能优先怎么定？</b>门槛 = 该评测里所有模型、所有已测档位的最高分减最低分（分差）× 比例：<strong>省钱 20%、均衡 12%、性能优先 6%</strong>。比例越小，越愿意为小幅提升多花钱，甜蜜点就越往高档走。比例是个人偏好预设，不是统计结论；成本只比较同一评测的相对费用。</p>`;
     if(!s) return general+`<p class="small muted">这款模型没有带费用的逐档曲线，无法演示计算过程。</p>`;
     const hull=upperHull(s.points), thr=s.threshold(tol), u=s.unit==="%"||s.unit==="% 通过"?"%":" "+s.unit;
