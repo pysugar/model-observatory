@@ -11087,6 +11087,184 @@
         "verification": "search-summary",
         "checkedAt": "2026-10-25"
       }
+    ],
+    "maxEffortScenariosNote": "不差钱时也不该默认最高档的常见场景。来源混合：本页冻结实测（AA 耗时与首字等待、逐档分数）、官方建议、社区经验与配对实验；能用本页数据计算的场景会对当前模型显示实测信号，其余只作提醒，不参与计算。",
+    "maxEffortScenarios": [
+      {
+        "id": "tie-but-slower",
+        "title": "分数打平却慢得多（过度思考）",
+        "why": "高档多想的时间没有换来可见的分数提升。",
+        "signal": "相邻两档耗时涨到 1.5 倍以上、分数提升不到分差 3%。",
+        "action": "不看预算也选打平配置里最快的一档。",
+        "measure": "overthink",
+        "sources": [
+          {
+            "label": "AA 逐档耗时（本页冻结数据）",
+            "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+            "type": "实测"
+          }
+        ]
+      },
+      {
+        "id": "interactive-wait",
+        "title": "交互式对话、需要快速首字",
+        "why": "高档常要先思考很久才开始输出，聊天、补全、客服等场景等不起。",
+        "signal": "首字等待（AA TTFA）随档位成倍上升。",
+        "action": "有人在等的场景用低 / 中档，长任务再升档。",
+        "measure": "ttfa",
+        "sources": [
+          {
+            "label": "AA 首字等待（本页冻结数据）",
+            "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+            "type": "实测"
+          },
+          {
+            "label": "Unifically · GPT 6 Luna 延迟建议",
+            "url": "https://unifically.com/models/gpt-6-luna",
+            "type": "社区经验"
+          }
+        ]
+      },
+      {
+        "id": "budget-exhaustion",
+        "title": "输出预算或超时用尽，最后没有交付",
+        "why": "最高档可能把输出 token 或时间预算花在思考上，结果没有答案或成品。",
+        "signal": "固定输出预算下高档无答案率上升；单例中 max 用完 128k 仍未交付。",
+        "action": "用 max 前放大 max_tokens 与超时，并把“有成品”列为验收条件；否则停在 xhigh。",
+        "measure": null,
+        "sources": [
+          {
+            "label": "Forcebench 配对研究",
+            "url": "https://forcebench.ai/studies/max-effort/",
+            "type": "配对实验"
+          },
+          {
+            "label": "Simon Willison 单例",
+            "url": "https://simonwillison.net/2026/Sep/28/claude-sonnet-5-5/",
+            "type": "社区经验"
+          },
+          {
+            "label": "Fable 5.1 prompting 指南",
+            "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1",
+            "type": "官方建议"
+          }
+        ]
+      },
+      {
+        "id": "scope-creep",
+        "title": "做多了：越界修改、额外动作、超时",
+        "why": "高档更倾向自行扩展任务（额外审查、改范围外文件），在 agent 编码里反而降低通过率。",
+        "signal": "Sonnet 5.5 FrontierCode 脚注转述：xhigh 52.1%、max 46.2%，max 更常超时或越界修改。",
+        "action": "边界明确的修改任务限定改动范围，优先 xhigh；用 max 时检查 diff 范围。",
+        "measure": null,
+        "sources": [
+          {
+            "label": "eesel · Sonnet 5.5 测试",
+            "url": "https://www.eesel.ai/de/blog/claude-sonnet-5-5-test",
+            "type": "检索摘要"
+          }
+        ]
+      },
+      {
+        "id": "higher-is-worse",
+        "title": "高档反而更差",
+        "why": "档位曲线并非单调，部分评测里最高档低于更低档，或幻觉指标变差。",
+        "signal": "本页“档位倒退”避坑；Opus 5 max 在三项官方 agent 编码评测中两项低于 xhigh（检索转述）。",
+        "action": "以自己的验收集比较相邻两档，保留更低但不差的那档。",
+        "measure": "regress",
+        "sources": [
+          {
+            "label": "本页逐档数据（AA / Vulcan / ToneBench）",
+            "url": "https://artificialanalysis.ai/methodology/capability-indices",
+            "type": "实测"
+          },
+          {
+            "label": "Gabriel Moraru · Opus 5 xhigh vs max",
+            "url": "https://gabrielmoraru.com/opus-5-xhigh-vs-max-effort/",
+            "type": "检索摘要"
+          }
+        ]
+      },
+      {
+        "id": "agent-loop-multiplier",
+        "title": "多轮 agent 循环：每一轮都多想",
+        "why": "一次任务几十轮工具调用时，每轮多出的思考会成倍放大总耗时，并更快占满上下文、提前触发压缩。",
+        "signal": "Opus 5.5 在 xhigh / max 下每轮思考明显多于 Opus 5（社区转述）；高档每任务输出 token 数倍增长。",
+        "action": "主控循环用中高档，只在规划、难点排查等关键步骤临时升档。",
+        "measure": null,
+        "sources": [
+          {
+            "label": "ClaudeFast · Opus 5.5 实践",
+            "url": "https://claudefa.st/blog/guide/development/opus-5-5-best-practices",
+            "type": "社区经验"
+          },
+          {
+            "label": "Trilogy AI · Astra effort 观察",
+            "url": "https://trilogyai.substack.com/p/astra-reasoning-effort-token-usage",
+            "type": "社区经验"
+          }
+        ]
+      },
+      {
+        "id": "simple-tasks",
+        "title": "简单、明确的任务：抽取、分类、改写、路由",
+        "why": "这类任务几乎不需要推理，高档只增加等待；部分模型在短任务上低 / 中档甚至不产生推理 token。",
+        "signal": "需求明确、输出格式固定、有确定答案。",
+        "action": "用低档或默认档；质量不够时先补示例和约束，而不是升档。",
+        "measure": null,
+        "sources": [
+          {
+            "label": "OpenAI GPT-5.6 指南（延迟敏感用 low）",
+            "url": "https://developers.openai.com/api/docs/guides/gpt-5.6",
+            "type": "官方建议"
+          },
+          {
+            "label": "ComputingForGeeks · Argon 短任务观察",
+            "url": "https://computingforgeeks.com/gemini-4-argon-released-features-benchmarks/",
+            "type": "检索摘要"
+          }
+        ]
+      },
+      {
+        "id": "quota-and-rate",
+        "title": "订阅额度与速率限制",
+        "why": "在订阅产品里，高档消耗额度更快，更容易触发限速，影响当天其它工作。",
+        "signal": "官方说明高档“更慢、消耗更多额度”；不同入口默认档不同。",
+        "action": "日常用默认档，把高档留给少数关键任务。",
+        "measure": null,
+        "sources": [
+          {
+            "label": "Flavio Copes · GPT-6.1 Sol 用法（转述 OpenAI）",
+            "url": "https://flaviocopes.com/gpt-6-1-sol/",
+            "type": "检索摘要"
+          },
+          {
+            "label": "eesel · Sonnet 5.5 各入口默认档",
+            "url": "https://www.eesel.ai/de/blog/claude-sonnet-5-5-test",
+            "type": "检索摘要"
+          }
+        ]
+      },
+      {
+        "id": "vendor-default",
+        "title": "官方建议：先默认档，实测有收益再升",
+        "why": "厂商普遍建议从默认档起步，只为测得收益的工作保留 xhigh / max；档位名称在不同代际间不对应同样的思考量。",
+        "signal": "没有在自己任务上比较过相邻档位。",
+        "action": "先跑默认档与高一档的小样本配对，再决定是否长期用最高档。",
+        "measure": null,
+        "sources": [
+          {
+            "label": "Claude effort 文档",
+            "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+            "type": "官方建议"
+          },
+          {
+            "label": "OpenAI reasoning 指南",
+            "url": "https://developers.openai.com/api/docs/guides/reasoning",
+            "type": "官方建议"
+          }
+        ]
+      }
     ]
   },
   "aa_capability_indexes": {

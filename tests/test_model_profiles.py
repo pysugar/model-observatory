@@ -77,14 +77,31 @@ class ModelProfileTests(unittest.TestCase):
             for scope in ("vendor", "all"):
                 for effort in ("low", "medium", "high", "xhigh", "max"):
                     for key, picks_ in profile_alternatives(self.data, model["id"], effort, scope).items():
-                        for alt in picks_:
+                        # The unbounded pick may be the current config ("当前就是"); the other two never are.
+                        for alt in picks_[:2]:
                             self.assertNotEqual(alt, (model["id"], effort), key)
+                        self.assertIsNotNone(picks_[2], key)
 
-    def test_unbounded_ceiling_surfaces_astra_over_sol(self):
-        # Without a budget cap, Astra's top efforts out-score Sol 6.1 max on the overall index.
+    def test_unbounded_pick_prefers_the_faster_near_tie(self):
         sol = profile_alternatives(self.data, "gpt-6.1-sol", "max", "vendor")
-        self.assertEqual(sol["aa-ii"][2], ("gpt-6-astra", "max"))
+        # Astra max tops the overall index, but Astra xhigh is within a tie and about 1.4x faster.
+        self.assertEqual(sol["aa-ii"][2], ("gpt-6-astra", "xhigh"))
         self.assertIsNone(sol["aa-ii"][1])  # nothing stronger within Sol max's budget
+        # Without timing data (OSWorld), the tie-break falls back to cost.
+        self.assertEqual(sol["cu-openai"][2], ("gpt-6-astra", "max"))
+
+    def test_overthinking_is_flagged(self):
+        pits = profile_pitfalls(self.data, "gpt-6.1-sol")
+        # xhigh -> max: about 2x the time per task for +0.8 AA points.
+        self.assertIn(("overthink", "aa-ii", "max"), pits)
+        self.assertNotIn(("overthink", "aa-ii", "max"), profile_pitfalls(self.data, "claude-sonnet-5-5"))
+
+    def test_max_effort_scenarios_are_sourced(self):
+        scenarios = self.data["community_consensus"]["maxEffortScenarios"]
+        self.assertGreaterEqual(len(scenarios), 8)
+        self.assertEqual({s["measure"] for s in scenarios if s["measure"]}, {"overthink", "regress", "ttfa"})
+        for sc in scenarios:
+            self.assertTrue(sc["sources"] and all(x["url"].startswith("https://") for x in sc["sources"]), sc["id"])
 
     def test_community_voices_are_sourced_text_only(self):
         doc = self.data["community_consensus"]

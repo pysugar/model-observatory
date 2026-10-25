@@ -130,6 +130,8 @@ def profile_series(data, model_id, share):
 # ---------- Model profile pitfalls (mirrors report.js mpPitfalls) ----------
 COST_ASSASSIN_RATIO = 2.0      # a step that at least doubles the cost ...
 COST_ASSASSIN_SHARE = PRESETS["balanced"]  # ... yet gains less than 12% of the benchmark's score spread
+TIE_SHARE = 0.03            # scores within 3% of the benchmark spread count as a tie
+OVERTHINK_TIME_RATIO = 1.5  # a step that takes 1.5x as long while gaining less than a tie
 
 
 def _profile_points(data, model_id):
@@ -144,7 +146,8 @@ def _profile_points(data, model_id):
     if release:
         for key, get in TASKS.items():
             values = [get(v) for r in active for v in r["variants"] if _finite(get(v))]
-            pts = [{"effort": _norm(v["effort"]), "score": get(v), "cost": v.get("costPerTask")} for v in release["variants"] if _finite(get(v))]
+            pts = [{"effort": _norm(v["effort"]), "score": get(v), "cost": v.get("costPerTask"), "time": v.get("timePerTaskSeconds")}
+                   for v in release["variants"] if _finite(get(v))]
             if pts:
                 out["aa-" + key] = (order(pts), key in ("agentic", "planning"), _spread(values))
     for bench, key in (("coding", "vulcan"), ("writing", "tonebench")):
@@ -152,13 +155,22 @@ def _profile_points(data, model_id):
         mine = [r for r in pool if r["model"] == name and _norm(r["effort"]) in EFFORT_ORDER
                 and r.get("variant") not in ("unverified", "ultra_harness")]
         if mine:
-            out[key] = (order([{"effort": _norm(r["effort"]), "score": r["score"], "cost": r.get("cost_usd")} for r in mine]), False, _spread([r["score"] for r in pool]))
+            out[key] = (order([{"effort": _norm(r["effort"]), "score": r["score"], "cost": r.get("cost_usd"), "time": _row_seconds(r)} for r in mine]),
+                        False, _spread([r["score"] for r in pool]))
     sweep = data["computer_use_evidence"]["openaiSweep"]
     series = next((s for s in sweep["series"] if s["modelId"] in entry["cuIds"]), None)
     if series:
         pts = [{"effort": e, "score": sc, "cost": c} for e, sc, c in zip(sweep["efforts"], series["scores"], series["costUsdPerTask"])]
         out["cu-openai"] = (pts, False, _spread([x for s in sweep["series"] for x in s["scores"]]))
     return out
+
+
+def _row_seconds(row):
+    if _finite(row.get("time_s")):
+        return row["time_s"]
+    if _finite(row.get("minutes_per_task_all_runs")):
+        return row["minutes_per_task_all_runs"] * 60
+    return None
 
 
 def _release_date(data, model_id):
@@ -182,6 +194,9 @@ def profile_pitfalls(data, model_id):
             if prev and _finite(p["cost"]) and _finite(prev["cost"]) and prev["cost"] > 0 \
                     and p["cost"] / prev["cost"] >= COST_ASSASSIN_RATIO and p["score"] - prev["score"] < COST_ASSASSIN_SHARE * spread:
                 flags.add(("cost", key, p["effort"]))
+            if prev and _finite(p.get("time")) and _finite(prev.get("time")) and prev["time"] > 0 \
+                    and p["time"] / prev["time"] >= OVERTHINK_TIME_RATIO and p["score"] - prev["score"] < TIE_SHARE * spread:
+                flags.add(("overthink", key, p["effort"]))
     # Same-vendor comprehensive dominance: another active model's effort is at least as good and no more
     # expensive on every benchmark series both have measured with costs (strictly better on at least one).
     others = [m["id"] for m in data["model_effort_profiles"]["models"] if m["id"] != model_id and vendor[m["id"]] == vendor[model_id]]
@@ -222,18 +237,19 @@ def profile_pitfalls(data, model_id):
 
 # ---------- Better alternatives for one model x effort (mirrors report.js mpAlternatives) ----------
 def profile_alternatives(data, model_id, effort, scope="vendor"):
-    """{series_key: (cheaper, stronger, ceiling)}; each is (model_id, effort) or None.
+    """{series_key: (cheaper, stronger, unbounded)}; each is (model_id, effort) or None.
 
     cheaper  = lowest-cost config scoring at least as high and costing strictly less;
     stronger = highest-scoring config costing no more and scoring strictly higher;
-    ceiling  = highest-scoring config at any cost, if it scores strictly higher.
+    unbounded = ignoring cost: among configs (the current one included) within a tie of the top score
+                (3% of the benchmark spread), the fastest; without timing data, the cheapest.
     Candidates are active profile models (same vendor, or all four vendors), own other efforts included.
     """
     vendor = {m["id"]: m["vendor"] for m in data["models"]}
     pool = [m["id"] for m in data["model_effort_profiles"]["models"] if scope == "all" or vendor[m["id"]] == vendor[model_id]]
     series = {o: _profile_points(data, o) for o in pool}
     out = {}
-    for key, (pts, _elo, _spread) in series[model_id].items():
+    for key, (pts, _elo, spread) in series[model_id].items():
         p = next((x for x in pts if x["effort"] == effort), None)
         if not p or not _finite(p["cost"]):
             continue
@@ -243,8 +259,11 @@ def profile_alternatives(data, model_id, effort, scope="vendor"):
                          key=lambda c: (c[1]["cost"], -c[1]["score"], c[0], EFFORT_ORDER.index(c[1]["effort"])))
         stronger = sorted((c for c in cands if c[1]["cost"] <= p["cost"] and c[1]["score"] > p["score"]),
                           key=lambda c: (-c[1]["score"], c[1]["cost"], c[0], EFFORT_ORDER.index(c[1]["effort"])))
-        ceiling = sorted((c for c in cands if c[1]["score"] > p["score"]),
-                         key=lambda c: (-c[1]["score"], c[1]["cost"], c[0], EFFORT_ORDER.index(c[1]["effort"])))
+        pool_all = cands + [(model_id, p)]
+        top = max(c[1]["score"] for c in pool_all)
+        ties = [c for c in pool_all if c[1]["score"] >= top - TIE_SHARE * spread]
+        timed = all(_finite(c[1].get("time")) for c in ties)
+        unbounded = sorted(ties, key=lambda c: ((c[1]["time"] if timed else c[1]["cost"]), -c[1]["score"], c[0], EFFORT_ORDER.index(c[1]["effort"])))
         pick = lambda lst: (lst[0][0], lst[0][1]["effort"]) if lst else None
-        out[key] = (pick(cheaper), pick(stronger), pick(ceiling))
+        out[key] = (pick(cheaper), pick(stronger), pick(unbounded))
     return out
