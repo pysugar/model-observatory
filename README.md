@@ -8,6 +8,16 @@
 
 原生 PR 预览及 `preview` Environment 配置见 [PREVIEWS.md](PREVIEWS.md)；按需研究与独立轻量复核见 [RESEARCH_WORKFLOW.md](RESEARCH_WORKFLOW.md)；已验证版本与回滚见 [RELEASES.md](RELEASES.md)。原生 PR 预览已启用，创建/更新/清理权限 smoke 已通过；定时 LLM 调用和自动合并仍未开启。正式环境已切换为 `release`；旧 `cloudflare-preview` 保留备用，记录见 [环境迁移](RELEASE_ENVIRONMENT.md)。
 
+## 项目毕业与维护入口（2026-10-26）
+
+本项目已从孵化阶段毕业，以 **Model Observatory / 模型观测站** 独立维护。仓库为 [pysugar/model-observatory](https://github.com/pysugar/model-observatory)，标准 SSH 地址为 `git@github.com:pysugar/model-observatory.git`。
+
+各机器可以把仓库放在任意目录。本文命令从仓库根目录执行，文件引用使用相对路径；需要定位根目录时使用 `git rev-parse --show-toplevel`。离线报告入口仍为 `model-capability-cost.html`。
+
+本机 checkout 路径、Python 解释器和 SSH 账号别名记录在各机器自己的 `LOCAL_CONTEXT.md` 中，该文件由 `.gitignore` 排除。开始任务时读取 [AGENTS.md](AGENTS.md)，并在存在时读取本地上下文。每台机器维护自己的环境信息，无需统一绝对路径或 SSH 别名；保留该 checkout 已配置的 `origin`，变更前核实用户要求与账号路由。
+
+工程入口和功能决策维护在本页，跨机器协作规则见 [研究与协作边界](RESEARCH_WORKFLOW.md#当前维护入口与执行边界2026-10-26)，发布事实维护在 `RELEASES.md`。
+
 ## 当前项目状态（2026-10-25 模型档案）
 
 [PR #25](https://github.com/pysugar/model-observatory/pull/25) 也已合并并正式发布（main merge `8d5ab9af93773d2d3e3701925b181611ea7f2638`，双入口 probe 通过，见 [PR25 发布收束](RELEASES.md#2026-10-25-pr25-社区主流声音覆盖全部主力型号正式发布收束)）：社区主流声音覆盖四家全部 11 款当前主力型号。
@@ -144,7 +154,7 @@ python3 validate_report.py
 - 选档矩阵的社区参考目前只覆盖编程列（Vulcan 23 题、一条修 bug 社区甜点）；七个任务的官方起点多为不分任务的默认档位。补社区实践需按研究流程带来源与日期并入 `task-effort-guidance.json`，矩阵会自动显示。
 - 模型档案的 10-24 补充证据全部是检索摘要，原页待有网络权限时逐条复核；Grok 4.7 medium 是否受支持、Gemini 3.8 Flash 逐档费用口径、GPT 6 Astra 默认档仍待核验。
 - 概览图在右上角模型密集时，聚焦系列的个别档位标签仍可能被模型名标签遮挡，明细以图下表格为准。
-- 自动调研、定时付费模型执行、自动合并及云端迁移均未启用。持久权限、执行器和网络变更须另行明确授权，见 [协作与环境边界](RESEARCH_WORKFLOW.md#当前手动协作与环境边界2026-10-20)。
+- 自动调研、定时付费模型执行、自动合并及云端迁移均未启用。持久权限、执行器和网络变更须另行明确授权，见 [协作与环境边界](RESEARCH_WORKFLOW.md#当前维护入口与执行边界2026-10-26)。
 
 ## 后续 agent 交接
 
@@ -152,7 +162,7 @@ python3 validate_report.py
 2. 对照上表查原始输入、JSON 字段、现有渲染与测试，区分已实现、冻结观测、经验建议和待验证。旧验收记录的 pending/dirty 属于当时 head，不能覆盖当前已完成状态。
 3. 改产品时只编辑真实源文件/冻结补充输入，再用 `python3 build_report.py` 同步必要生成文件；不要只手改生成 HTML/JSON。文档任务只改文档，不顺手重建报告。
 4. 验证按改动影响选择：数学/数据不变量用相应单元测试；交互沿 `scripts/smoke.py` 调用既有三个浏览器模块。真实产品改动在提交后做干净构建、准确 SHA 校验和 1440/390/320 键盘/真实触屏检查；纯文档做链接、路径、命令与差异校验即可。命令和 sandbox 要求见 [本地验证](DEPLOYMENT.md#本地验证)。
-5. 研究/方案与只读复核由协调线程准备，Hermes 顺序实现、测试、提交；Mac 做低成本中转、只读验收及当次明确授权的 API 操作。身份和权限边界见 RESEARCH_WORKFLOW，不读取或复制私钥/凭据，不改模型/reasoning 或全局环境。
+5. 先读取当前机器的 `LOCAL_CONTEXT.md`（如存在），使用其中约定的环境；2026-10-20 的 Hermes / Mac 分工是历史记录。保留当前 checkout 的 `origin` 与账号路由，GitHub API 身份在写入前核实。身份和权限边界见 RESEARCH_WORKFLOW。
 6. 提交/普通 SSH 推送后区分源码 head、CI build、预览部署与生产版本。新 Draft PR 可触发 CI，但原生预览不接收 Draft；查 [PREVIEWS.md](PREVIEWS.md)，不把旧预览当生产或用旧合并授权发布下一次变更。合并、正式发布和新持久授权都按当次任务范围处理。
 
 ## 已保留的解释边界

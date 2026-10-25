@@ -14,14 +14,24 @@
 
 完整流程是：用户发起任务包 → 研究者分别提交源码 PR → 无密钥确定性 CI → 独立 Worker 的原生 PR 预览 → 另一执行主体轻量复核 → 用户合并 → 现有 main 正式发布。研究者不能批准自己的研究变化。让多个 Agent 并行按厂商分工时，优先各自独立 PR；修改共享目录/模型身份映射前先协调，避免覆盖。
 
+## 当前维护入口与执行边界（2026-10-26）
+
+本项目由 `pysugar/model-observatory` 独立维护，工程入口见 [README](README.md#项目毕业与维护入口2026-10-26)。仓库位置和开发环境由各机器自行配置。
+
+- GitHub 标准地址为 `git@github.com:pysugar/model-observatory.git`。SSH 账号别名属于机器配置，记录在 Git 忽略的 `LOCAL_CONTEXT.md` 中；保留当前 checkout 已配置的 `origin`，不能因文档列出标准地址就覆盖账号路由。GitHub API host 使用 `github.com`。
+- 用户授权的实现和验证可在当前 checkout 进行；远端协作主机、checkout 和执行主体由具体任务决定。下方 2026-10-20 的 Hermes / Mac 分工只描述当时流程。
+- 使用当前机器已配置的 Python 环境，解释器位置和执行前缀放在 `LOCAL_CONTEXT.md`；通用文档和脚本使用仓库相对路径。
+- 目录迁移与文档更新不授权推送、创建 PR、合并或生产部署。后续外部写入按当次用户授权，GitHub 身份在写入前实时核实；不改全局 SSH 配置或账号凭据。
+
 ## 当前手动协作与环境边界（2026-10-20）
+
+本节保留 2026-10-20 的协作记录；现行维护位置与执行边界以上节为准。
 
 PR14 已按“协调线程研究/方案与只读验收 → Hermes 实现/测试/提交 → 既有预览与正式发布链路”完成并上线，见 [版本记录](RELEASES.md#2026-10-20-pr14-功能与正式发布收束)。这修正了早期“尚未使用 Hermes”的阶段描述，但没有启用自动调研、定时模型调用或自动合并。
 
-- Hermes 执行主机是 `ubuntu-desktop.local`，实际 hostname=`ubuntu-gk55`，用户 `james`。本轮延续 checkout 为 `/home/james/projects/model-observatory-pr14`；目录名是历史名称，不表示仍在旧 PR 分支。每次先核实当前分支/HEAD/状态，保留未预期修改，只允许一个写入者顺序实现。
-- 协调线程准备研究、方案和只读复核；Hermes/Codex CLI 在 Ubuntu 实际编辑和测试。Mac 只作低成本中转、只读验收及当次明确授权的 GitHub 操作，不在那里另行实现产品或文档。不擅自更换现有模型/reasoning 配置或派发其他 agent。
-- Git remote 保持 `git@z.github.com:pysugar/model-observatory.git`，它是选择已验证 pysugar 身份的 **Git SSH** 入口；只用正常分支推送，不 reset/force 覆盖他人工作。`z.github.com` 不是 GitHub API host；API 使用 `github.com`，绝不设置 `GH_HOST=z.github.com`。
-- Ubuntu `gh` 当前身份是 muchenzhan，不允许用它对该仓库做 API 写操作，也不切换账号。已有 Mac pysugar 身份由协调线程操作；新 PR、评论、描述等外部写入只按当次明确授权执行。本次文档 Draft PR 由 Hermes 准备标题/正文文件、Mac 创建并核验 draft；不授权合并或自动合并。
+- 当时由协调线程准备研究、方案和只读复核，Hermes/Codex CLI 在远端实现与测试，另一个环境负责已授权的 GitHub 操作。具体主机、路径和账号属于各机器的本地上下文，不作为跨机器开发前提。
+- 每次先核实当前分支、HEAD 和状态，保留未预期修改；共享 checkout 只允许一个写入者顺序实现。不擅自更换现有模型/reasoning 配置或派发其他 agent。
+- Git SSH 路由与 GitHub API 身份分别核实；账号不匹配时不执行写入、不自动切换账号。只用正常分支推送，不 reset/force 覆盖他人工作。
 - 先前 PR14 描述改写曾因缺少公开审阅/验收声明写入授权被自动审批拒绝，该拒绝仍有效。新的文档 Draft PR 授权不允许重试或间接改写 PR14 描述；被拒动作须报告目标、原因与是否执行，不换工具/路径/身份绕过。
 - 不读取、复制或保存私钥内容、Token 或其他凭据；不新增长期授权/API key，不改全局 SSH、安全、网络或环境配置。用户讨论未来云迁移不等于授权执行网络或主机迁移。
 - PR14 合并/发布授权已在该 PR 履行，不沿用到后续分支。后续从 main 新开任务分支；源码、CI build、预览和正式版本分开核验。Draft CI 与无预览的行为见 [PREVIEWS.md](PREVIEWS.md)。

@@ -36,4 +36,4 @@ node --check report.js
 git diff --check
 ```
 
-本次 Mac 使用共享 `/opt/local/.venv/bin/python`；执行前缀为 `UV_CACHE_DIR=/private/tmp/codex-uv-cache uv run --no-project /opt/local/.venv/bin/python`。浏览器 smoke 自行启动临时本地服务器和隔离浏览器配置，不需要个人浏览器资料；由 Codex 启动 Chrome 的命令须从第一次起获得 `require_escalated` 批准。未安装新依赖或创建持久虚拟环境。
+本次 Mac 验收通过 `uv` 使用已配置的共享 Python 环境；复跑时按当前机器的 `LOCAL_CONTEXT.md` 选择解释器和执行前缀。浏览器 smoke 自行启动临时本地服务器和隔离浏览器配置，不需要个人浏览器资料；由 Codex 在 macOS 启动 Chrome 的命令须从第一次起获得 `require_escalated` 批准。未安装新依赖或创建持久虚拟环境。

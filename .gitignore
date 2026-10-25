@@ -50,6 +50,9 @@ dist/
 test-results/
 .wrangler/
 
+# Machine-specific development context.
+/LOCAL_CONTEXT.md
+
 # ---- 浏览器验证产生的临时配置（validate_report.py 使用临时空白配置）----
 chrome-profile/
 .playwright/
