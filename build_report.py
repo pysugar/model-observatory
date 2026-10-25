@@ -91,6 +91,10 @@ def check_community(doc, profiles_doc):
             raise ValueError(f"Scenario {sc['id']} needs https sources")
         if sc.get("measure") not in (None, "overthink", "regress", "ttfa"):
             raise ValueError(f"Scenario {sc['id']} has an unknown measure")
+    tiers = ["low", "medium", "high", "xhigh", "max"]
+    for ph in doc.get("workPhases", []):
+        if ph["tier"] not in tiers or not all(t in tiers for t in ph["range"]) or not ph["sources"]:
+            raise ValueError(f"Work phase {ph['id']} needs a valid tier, range and sources")
 
 
 def build(output_dir=ROOT):

@@ -9,6 +9,7 @@
 - 在“更优替代”加“不限预算推荐”列：不看费用，与最高分相差不到该评测分差 3% 的视为打平，取其中最快的（AA 耗时、Vulcan 分钟、ToneBench 秒；无耗时数据时取最便宜）。只看分数会几乎总选 max，而例如 Sol 6.1 xhigh→max 耗时约翻倍、AA 智能指数只多 0.8。按冻结数据，Sol 6.1 max 的综合推荐是 Astra xhigh（52.4，比 Astra max 只低 0.3、快约 1.4 倍）。
 - 新增 `maxEffortScenarios`：不差钱时也不该默认最高档的九类场景，混合本页实测、官方建议、配对实验与社区经验；`measure` 为 overthink / regress / ttfa 的场景对当前模型显示实测信号（如 Sol 6.1 首字等待 low 3 秒 → max 178 秒）。
 - 避坑新增“过度思考”：相邻两档耗时 ≥1.5 倍，分数提升 < 分差 3%。
+- 新增 `workPhases`：按工作阶段记录主流档位（头脑风暴 medium、方案设计 xhigh、具体执行 medium、日常小改 low、复杂 BUG xhigh、环境 / 依赖问题 medium、代码审查 high、调研 high、写作 medium、数学推导 max、长时 agent high），每项附常见范围、升降条件、原因与依据。这类选择没有统一客观标准，条目是官方建议、主流工具工作流（如先计划再执行、architect / editor 分工）与社区经验的综合整理，页面标为“主流做法”，不参与计算；部分依据来自既有公开实践文章，原页未在本期逐条复核。
 - 列出这张表覆盖不到的维度（`uncoveredDimensions`）。
 - 新增社区主流声音条目：结论、可执行动作、来源一致性（`agreement`）与来源列表。
 

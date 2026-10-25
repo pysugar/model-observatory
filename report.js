@@ -1927,6 +1927,23 @@
     box.innerHTML=(cc?.maxEffortScenarios||[]).map(sc=>{const sig=signal(sc);
       return `<li data-scenario="${esc(sc.id)}"><b>${esc(sc.title)}</b>：${esc(sc.why)}<span class="task-detail">怎么识别：${esc(sc.signal)}</span><span class="mp-scn-action"><b>怎么做：</b>${esc(sc.action)}</span>${sig?`<span class="mp-scn-signal${sig.startsWith("本模型实测")?" hit":""}">${esc(sig)}</span>`:""}<span class="task-detail">${sc.sources.map(x=>`${esc(x.type)} · ${link(x.url,x.label)}`).join(" ； ")}</span></li>`;}).join("");
   }
+  // Map a generic tier (low..max) onto the model's native efforts: highest supported at or below it, else the lowest.
+  const MP_TIERS=["low","medium","high","xhigh","max"];
+  function mpMapTier(tier,listed){
+    const own=MP_TIERS.filter(e=>listed.includes(e)); if(!own.length) return null;
+    const below=own.filter(e=>MP_TIERS.indexOf(e)<=MP_TIERS.indexOf(tier));
+    return below.length?below[below.length-1]:own[0];
+  }
+  function renderProfilePhases(a){
+    const box=$("profilePhaseTable"); if(!box) return;
+    const phases=DATA.community_consensus?.workPhases||[], listed=a.efforts.listed;
+    const map=t=>mpMapTier(t,listed);
+    const cell=t=>{const m=map(t);return m?`<b class="ss-effort e-${esc(m)}">${esc(m)}</b>${m!==t?`<span class="task-detail">通用 ${esc(t)}，本模型没有这一档</span>`:""}`:'<span class="muted">无档位参数</span>';};
+    box.innerHTML=`<table class="mp-phase-table"><thead><tr><th scope="col">工作阶段</th><th scope="col">主流选择</th><th scope="col">${esc(a.cat.short||a.cat.name)} 对应</th><th scope="col">为什么</th><th scope="col">什么时候升 / 降</th></tr></thead><tbody>${phases.map(ph=>{
+      const lo=map(ph.range[0]),hi=map(ph.range[ph.range.length-1]);
+      return `<tr data-phase="${esc(ph.id)}" data-mapped="${esc(map(ph.tier)||"")}"><th scope="row">${esc(ph.phase)}<span class="task-detail">${esc(ph.examples)}</span></th><td><b class="ss-effort e-${esc(ph.tier)}">${esc(ph.tier)}</b><span class="task-detail">常见范围 ${esc(ph.range.join("–"))}</span></td><td>${cell(ph.tier)}${lo&&hi&&lo!==hi?`<span class="task-detail">范围 ${esc(lo)}–${esc(hi)}</span>`:""}</td><td>${esc(ph.why)}<span class="task-detail">${ph.sources.map(x=>`${esc(x.type)} · ${link(x.url,x.label)}`).join(" ； ")}</span></td><td>${ph.escalate?`<span class="mp-phase-up">升：${esc(ph.escalate)}</span>`:""}${ph.downgrade?`<span class="mp-phase-down">降：${esc(ph.downgrade)}</span>`:""}</td></tr>`;}).join("")}</tbody></table>`;
+    $("profilePhaseNote").textContent=DATA.community_consensus?.workPhasesNote||"";
+  }
   function renderProfileAlternatives(a){
     const box=$("profileAltTable"); if(!box) return;
     const efforts=mpEffortOrder.filter(e=>a.series.some(s=>s.points.some(p=>p.effort===e&&finite(p.cost))));
@@ -2089,6 +2106,7 @@
       renderModelProfile();$("profileCard-"+mpView.task)?.scrollIntoView({block:"nearest"});}));
     $("profileRule").innerHTML=mpExplain(a,tol);
     renderProfileScenarios(entry,pits);
+    renderProfilePhases(a);
     renderProfileAlternatives(a);
     // Pitfall guide.
     $("profilePitfallsCard").hidden=!showPits;

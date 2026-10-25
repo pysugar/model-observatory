@@ -113,6 +113,19 @@ class ModelProfileTests(unittest.TestCase):
             self.assertEqual(item["verification"], "search-summary")
             self.assertNotIn("efforts", item)  # community voices never feed the calculations
 
+    def test_work_phases_record_mainstream_choices(self):
+        phases = {p["id"]: p for p in self.data["community_consensus"]["workPhases"]}
+        tiers = ["low", "medium", "high", "xhigh", "max"]
+        for key in ("brainstorm", "design", "execute", "hard-bug", "env-issue"):
+            self.assertIn(key, phases)
+        # Mainstream practice: plan high, execute medium, iterate fast on environment problems, not max by default.
+        self.assertGreater(tiers.index(phases["design"]["tier"]), tiers.index(phases["execute"]["tier"]))
+        self.assertLess(tiers.index(phases["env-issue"]["tier"]), tiers.index("max"))
+        self.assertLess(tiers.index(phases["brainstorm"]["tier"]), tiers.index("max"))
+        for ph in phases.values():
+            self.assertIn(ph["tier"], tiers)
+            self.assertTrue(ph["sources"] and all(s["url"].startswith("https://") for s in ph["sources"]), ph["id"])
+
     def test_every_profile_model_has_a_product_line(self):
         for m in self.doc["models"]:
             self.assertTrue(m["line"], m["id"])
