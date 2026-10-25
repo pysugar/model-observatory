@@ -10,6 +10,8 @@
 
 ## 当前项目状态（2026-10-25 模型档案）
 
+[PR #25](https://github.com/pysugar/model-observatory/pull/25) 也已合并并正式发布（main merge `8d5ab9af93773d2d3e3701925b181611ea7f2638`，双入口 probe 通过，见 [PR25 发布收束](RELEASES.md#2026-10-25-pr25-社区主流声音覆盖全部主力型号正式发布收束)）：社区主流声音覆盖四家全部 11 款当前主力型号。
+
 [PR #23](https://github.com/pysugar/model-observatory/pull/23) 与 [PR #24](https://github.com/pysugar/model-observatory/pull/24) 已合并并正式发布（main merge `288defa3ffc7029e20c2a98a52e1ccf95a2a7e22`，双入口 probe 通过，见 [PR23 / PR24 发布收束](RELEASES.md#2026-10-25-pr23--pr24-模型档案文案不限预算推荐与主流档位正式发布收束)）：更优替代改为“同分最省 / 同预算最强 / 不限预算推荐”，新增过度思考避坑、“不差钱时什么情况不该用最高档”、按工作阶段的主流档位，以及 GPT-6 Astra / GPT-6.1 Sol 的社区主流声音（只作参考，不参与计算）。
 
 [PR #21](https://github.com/pysugar/model-observatory/pull/21) 也已合并并正式发布（main merge `8040c1f58e2ba09e33d23703a7b0b296eb081241`，双入口 probe 通过，见 [PR21 发布收束](RELEASES.md#2026-10-24-pr21-模型档案甜蜜点更优替代与避坑指南正式发布收束)）：模型档案统一称“甜蜜点”并演示三档门槛，新增“更优替代”与可选的避坑指南，评测行对所有模型固定。
@@ -146,7 +148,7 @@ python3 validate_report.py
 
 ## 后续 agent 交接
 
-1. 先读本页、[RELEASES.md](RELEASES.md) 和与任务相应的发布/研究文档，检查实际 HEAD、分支、状态及仓库指引；PR14、PR16、PR18、PR19、PR21、PR23、PR24 已合并关闭，后续从当前 main 新建分支，不复用它们或重置他人工作。
+1. 先读本页、[RELEASES.md](RELEASES.md) 和与任务相应的发布/研究文档，检查实际 HEAD、分支、状态及仓库指引；PR14、PR16、PR18、PR19、PR21、PR23、PR24、PR25 已合并关闭，后续从当前 main 新建分支，不复用它们或重置他人工作。
 2. 对照上表查原始输入、JSON 字段、现有渲染与测试，区分已实现、冻结观测、经验建议和待验证。旧验收记录的 pending/dirty 属于当时 head，不能覆盖当前已完成状态。
 3. 改产品时只编辑真实源文件/冻结补充输入，再用 `python3 build_report.py` 同步必要生成文件；不要只手改生成 HTML/JSON。文档任务只改文档，不顺手重建报告。
 4. 验证按改动影响选择：数学/数据不变量用相应单元测试；交互沿 `scripts/smoke.py` 调用既有三个浏览器模块。真实产品改动在提交后做干净构建、准确 SHA 校验和 1440/390/320 键盘/真实触屏检查；纯文档做链接、路径、命令与差异校验即可。命令和 sandbox 要求见 [本地验证](DEPLOYMENT.md#本地验证)。
