@@ -439,10 +439,21 @@
   </section>
   <section class="card" id="profileAltCard" aria-labelledby="profileAltTitle" data-toc="更优替代">
     <span class="eyebrow">特定档位 · 有没有更好的选择</span><h3 id="profileAltTitle">更优替代</h3>
-    <p class="small muted">选一个档位（也可以直接点上表的格子），逐个评测看两种替代：<strong>同分最省</strong> = 分数不低于当前、费用最低的配置，回答“效果不变能不能少花钱”；<strong>同预算最强</strong> = 费用不超过当前、分数最高的配置，回答“这笔钱能不能买到更好的效果”。只在同一评测内比较，候选是目录里的活跃型号，本模型的其它档位也算在内（标“降档/换档”）。分数是点估计，相差很小时请用自己的任务确认。</p>
+    <p class="small muted">选一个档位（也可以直接点上表的格子），逐个评测看三种替代：<strong>同分最省</strong> = 分数不低于当前、费用最低的配置，回答“效果不变能不能少花钱”；<strong>同预算最强</strong> = 费用不超过当前、分数最高的配置，回答“这笔钱能不能买到更好的效果”；<strong>不限预算推荐</strong> = 不看费用，先找最高分，与最高分相差不到该评测分差 3% 的都算打平，再在打平的配置里选最快的（没有耗时数据时选最便宜的），回答“不差钱时选谁”——分数几乎一样时，没必要为最高档多等。只在同一评测内比较，候选是目录里的活跃型号，本模型的其它档位也算在内（标“降档/换档”）。分数是点估计，相差很小时请用自己的任务确认。</p>
     <div class="toolbar"><label>档位<select id="profileAltEffort"></select></label><label>范围<select id="profileAltScope"><option value="vendor">同厂商</option><option value="all">四家全部</option></select></label></div>
     <p id="profileAltSummary" class="method-note" aria-live="polite"></p>
     <div id="profileAltTable" class="table-scroll" tabindex="0" role="region" aria-label="更优替代表，可横向滚动"></div>
+    <div id="profileAltCoverage" class="mp-alt-coverage"></div>
+  </section>
+  <section class="card" id="profileScenarioCard" aria-labelledby="profileScenarioTitle" data-toc="别默认最高档">
+    <span class="eyebrow">不差钱也要看 · 实测 + 官方 + 社区</span><h3 id="profileScenarioTitle">不差钱时，什么情况不该用最高档</h3>
+    <p class="small muted">“不限预算推荐”只用分数和耗时计算。下面是更完整的场景清单：能用本页数据计算的（过度思考、档位倒退、首字等待）会显示当前模型的实测信号，其余来自官方建议、配对实验和社区经验，只作提醒，不参与计算。社区与检索来源的原页尚未逐条核对。</p>
+    <ol id="profileScenarioList" class="mp-scenarios"></ol>
+  </section>
+  <section class="card" id="profilePhaseCard" aria-labelledby="profilePhaseTitle" data-toc="按工作阶段">
+    <span class="eyebrow">主流做法 · 综合整理，不是实测结论</span><h3 id="profilePhaseTitle">按工作阶段的主流档位</h3>
+    <p id="profilePhaseNote" class="small muted"></p>
+    <div id="profilePhaseTable" class="table-scroll" tabindex="0" role="region" aria-label="按工作阶段的主流档位表，可横向滚动"></div>
   </section>
   <section class="card" id="profilePitfallsCard" aria-labelledby="profilePitfallsTitle" data-toc="避坑指南">
     <span class="eyebrow">可选 · 由同一批冻结数据计算</span><h3 id="profilePitfallsTitle">避坑指南</h3>

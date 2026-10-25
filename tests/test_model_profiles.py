@@ -68,17 +68,63 @@ class ModelProfileTests(unittest.TestCase):
 
     def test_better_alternatives_for_a_specific_effort(self):
         grok = profile_alternatives(self.data, "grok-4-7", "high", "all")
-        self.assertEqual(grok["aa-ii"], (("gpt-6.1-sol", "medium"), ("claude-opus-5-5", "high")))
+        self.assertEqual(grok["aa-ii"][:2], (("gpt-6.1-sol", "medium"), ("claude-opus-5-5", "high")))
         # xAI has no other active model, so the same-vendor scope finds nothing better than Grok's own efforts.
-        self.assertEqual(profile_alternatives(self.data, "grok-4-7", "high", "vendor")["aa-ii"], (None, None))
+        self.assertEqual(profile_alternatives(self.data, "grok-4-7", "high", "vendor")["aa-ii"][:2], (None, None))
         sonnet = profile_alternatives(self.data, "claude-sonnet-5-5", "max", "vendor")
         self.assertEqual(sonnet["vulcan"][0], ("claude-opus-5-5", "medium"))
         for model in self.doc["models"]:
             for scope in ("vendor", "all"):
                 for effort in ("low", "medium", "high", "xhigh", "max"):
-                    for key, (cheaper, stronger) in profile_alternatives(self.data, model["id"], effort, scope).items():
-                        self.assertNotEqual(cheaper, (model["id"], effort), key)
-                        self.assertNotEqual(stronger, (model["id"], effort), key)
+                    for key, picks_ in profile_alternatives(self.data, model["id"], effort, scope).items():
+                        # The unbounded pick may be the current config ("当前就是"); the other two never are.
+                        for alt in picks_[:2]:
+                            self.assertNotEqual(alt, (model["id"], effort), key)
+                        self.assertIsNotNone(picks_[2], key)
+
+    def test_unbounded_pick_prefers_the_faster_near_tie(self):
+        sol = profile_alternatives(self.data, "gpt-6.1-sol", "max", "vendor")
+        # Astra max tops the overall index, but Astra xhigh is within a tie and about 1.4x faster.
+        self.assertEqual(sol["aa-ii"][2], ("gpt-6-astra", "xhigh"))
+        self.assertIsNone(sol["aa-ii"][1])  # nothing stronger within Sol max's budget
+        # Without timing data (OSWorld), the tie-break falls back to cost.
+        self.assertEqual(sol["cu-openai"][2], ("gpt-6-astra", "max"))
+
+    def test_overthinking_is_flagged(self):
+        pits = profile_pitfalls(self.data, "gpt-6.1-sol")
+        # xhigh -> max: about 2x the time per task for +0.8 AA points.
+        self.assertIn(("overthink", "aa-ii", "max"), pits)
+        self.assertNotIn(("overthink", "aa-ii", "max"), profile_pitfalls(self.data, "claude-sonnet-5-5"))
+
+    def test_max_effort_scenarios_are_sourced(self):
+        scenarios = self.data["community_consensus"]["maxEffortScenarios"]
+        self.assertGreaterEqual(len(scenarios), 8)
+        self.assertEqual({s["measure"] for s in scenarios if s["measure"]}, {"overthink", "regress", "ttfa"})
+        for sc in scenarios:
+            self.assertTrue(sc["sources"] and all(x["url"].startswith("https://") for x in sc["sources"]), sc["id"])
+
+    def test_community_voices_are_sourced_text_only(self):
+        doc = self.data["community_consensus"]
+        ids = {m["id"] for m in self.doc["models"]}
+        self.assertTrue(doc["uncoveredDimensions"])
+        for item in doc["items"]:
+            self.assertTrue(set(item["modelIds"]) <= ids, item["id"])
+            self.assertTrue(item["sources"] and all(s["url"].startswith("https://") for s in item["sources"]), item["id"])
+            self.assertEqual(item["verification"], "search-summary")
+            self.assertNotIn("efforts", item)  # community voices never feed the calculations
+
+    def test_work_phases_record_mainstream_choices(self):
+        phases = {p["id"]: p for p in self.data["community_consensus"]["workPhases"]}
+        tiers = ["low", "medium", "high", "xhigh", "max"]
+        for key in ("brainstorm", "design", "execute", "hard-bug", "env-issue"):
+            self.assertIn(key, phases)
+        # Mainstream practice: plan high, execute medium, iterate fast on environment problems, not max by default.
+        self.assertGreater(tiers.index(phases["design"]["tier"]), tiers.index(phases["execute"]["tier"]))
+        self.assertLess(tiers.index(phases["env-issue"]["tier"]), tiers.index("max"))
+        self.assertLess(tiers.index(phases["brainstorm"]["tier"]), tiers.index("max"))
+        for ph in phases.values():
+            self.assertIn(ph["tier"], tiers)
+            self.assertTrue(ph["sources"] and all(s["url"].startswith("https://") for s in ph["sources"]), ph["id"])
 
     def test_every_profile_model_has_a_product_line(self):
         for m in self.doc["models"]:
