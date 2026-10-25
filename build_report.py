@@ -86,6 +86,11 @@ def check_community(doc, profiles_doc):
             raise ValueError(f"Community item {item['id']} points at unknown model or task")
         if not item["sources"] or not all(s["url"].startswith("https://") for s in item["sources"]):
             raise ValueError(f"Community item {item['id']} needs https sources")
+    for sc in doc.get("maxEffortScenarios", []):
+        if not sc["sources"] or not all(s["url"].startswith("https://") for s in sc["sources"]):
+            raise ValueError(f"Scenario {sc['id']} needs https sources")
+        if sc.get("measure") not in (None, "overthink", "regress", "ttfa"):
+            raise ValueError(f"Scenario {sc['id']} has an unknown measure")
 
 
 def build(output_dir=ROOT):
