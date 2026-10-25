@@ -17,6 +17,8 @@
 | `d8ae6c3088429599c2883c0c6bba07569cf4c268` | PR #18：最新榜单五站选录、官方价格复核、页面改版与主题选择 | [run 39987003757](https://github.com/pysugar/model-observatory/actions/runs/39987003757) |
 | `f8e36ec7e18c97a5f799afe167355ea3a7c699ae` | PR #19：模型档案页签（单模型 × 任务 × 档位、选档卡、深链） | [run 40132928451](https://github.com/pysugar/model-observatory/actions/runs/40132928451) |
 | `8040c1f58e2ba09e33d23703a7b0b296eb081241` | PR #21：模型档案统一“甜蜜点”说法与门槛演示、更优替代、避坑指南、固定评测行 | [run 40136499170](https://github.com/pysugar/model-observatory/actions/runs/40136499170) |
+| `3c4080fd844c4d401b70b2449682a7310c09b7d7` | PR #23：更优替代列名改为“同预算最强”、去掉页面上的内部说明（仅文案） | [run 40161424122](https://github.com/pysugar/model-observatory/actions/runs/40161424122) |
+| `288defa3ffc7029e20c2a98a52e1ccf95a2a7e22` | PR #24：不限预算推荐、过度思考避坑、别默认最高档的场景、按工作阶段的主流档位、社区主流声音 | [run 40163673486](https://github.com/pysugar/model-observatory/actions/runs/40163673486) |
 
 以上版本均有成功发布 run；2026-10-18 的工作流修复与初始化没有改动研究数据内容。Cloudflare 版本 ID 以各 run 的上传日志与 Worker 控制台为准，不猜测 ID。
 
@@ -117,5 +119,21 @@
 | Cloudflare 版本 | `7d6bbe03-c9fa-41ec-ba1e-f32762d27aa9`（本次上传 `index.html`、`report-data.json`、`version.json` 三个变化资产） |
 
 上线功能：模型档案统一称“甜蜜点”（边际收益拐点）并附三档门槛（省钱 20% / 均衡 12% / 性能优先 6% × 评测分差）的逐步演示；“更优替代”按任意一档逐评测给出同分最省 / 同价最高替代（同厂商或四家全部）；可选避坑指南（费用刺客、档位倒退、新一代更省、被同家全面超越）；每类任务的评测行对所有模型固定并标单位。规则见 [README](README.md#当前功能决策与不可回归边界)，本地验收见 [模型档案避坑验收记录](verification/model-profile-pitfalls-2026-10-24/README.md)。PR #20 只改文档（发布 run 40133573211），不单列版本。
+
+本轮仍在云端容器内开发：本地浏览器检查未开 Chromium sandbox，仅用于迭代；sandbox 开启的验收以上述 CI 为准，线上核验采用发布工作流内的 probe 结果与用户本人确认。
+
+## 2026-10-25 PR23 / PR24 模型档案文案、不限预算推荐与主流档位正式发布收束
+
+两次发布都只改模型档案的展示、计算规则与参考文字，研究数据不变（169 条记录、24 款模型、50 条来源，预览评论中的行数与来源数均未变化）。
+
+| 阶段 | PR #23（仅文案） | PR #24 |
+| --- | --- | --- |
+| 合并 | 2026-10-25T04:18:47Z；PR 最终 head `cd4f7c5c8ba18939a93392ad5c0d9d4960e1d344`；main merge `3c4080fd844c4d401b70b2449682a7310c09b7d7` | 2026-10-25T04:55:53Z；PR 最终 head `c8388bf2ea2200b406550ad2cde0761267abf7c7`；main merge `288defa3ffc7029e20c2a98a52e1ccf95a2a7e22` |
+| PR 验证与预览（历史） | 最终 head 的 [CI 40161172094](https://github.com/pysugar/model-observatory/actions/runs/40161172094) 成功，原生预览已部署 | 最终 head 的 [CI 40163409349](https://github.com/pysugar/model-observatory/actions/runs/40163409349) 成功，原生预览已部署 |
+| main CI 与正式发布 | [run 40161424122](https://github.com/pysugar/model-observatory/actions/runs/40161424122) 成功（56 项单元测试、完整浏览器 smoke） | [run 40163673486](https://github.com/pysugar/model-observatory/actions/runs/40163673486) 成功（62 项单元测试、完整浏览器 smoke，含三种替代、过度思考避坑与工作阶段档位换算） |
+| 正式版本 | 双入口 `publish.py probe` 均为 PASS，commit `3c4080fd844c4d401b70b2449682a7310c09b7d7` | 双入口 `publish.py probe` 均为 PASS，commit `288defa3ffc7029e20c2a98a52e1ccf95a2a7e22`；用户另行确认线上页面可用 |
+| Cloudflare 版本 | `628fb809-d0fd-47c1-8269-f75fa4bb760c`（上传 `index.html`、`version.json`） | `7b80cf72-4a74-4302-8c78-d94ba52d03fb`（上传 `index.html`、`report-data.json`、`version.json`） |
+
+上线功能：PR #23 把“同价最高”改为“同预算最强”并在表头说明两种替代的含义，去掉页面上的改版过程说明。PR #24 把第三种替代定为“不限预算推荐”（与最高分相差不到分差 3% 的视为打平，取最快的；无耗时数据时取最便宜）；避坑新增“过度思考”；新增“不差钱时什么情况不该用最高档”九类场景与当前模型的实测信号；新增“按工作阶段的主流档位”（综合整理，按模型原生档位换算）；新增 GPT-6 Astra / GPT-6.1 Sol 的社区主流声音。社区与工作阶段内容只作文字参考、不参与计算，来源见 [2026-10-25 研究记录](research/2026-10-25/README.md)；规则见 [README](README.md#当前功能决策与不可回归边界)。PR #22 只改文档（发布 run 40160478249），不单列版本。
 
 本轮仍在云端容器内开发：本地浏览器检查未开 Chromium sandbox，仅用于迭代；sandbox 开启的验收以上述 CI 为准，线上核验采用发布工作流内的 probe 结果与用户本人确认。
