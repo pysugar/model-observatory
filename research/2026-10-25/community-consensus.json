@@ -1,0 +1,620 @@
+{
+  "checkedAt": "2026-10-25",
+  "method": "社区主流声音：整理多篇公开对比文章、评测博客与厂商定位中反复出现的结论，用来补充公开评测覆盖不到的维度（长时 agent 稳定性、最难题上限、需求模糊时的判断、速度体感等）。条目来自 2026-10-25 的网页检索摘要，原页尚未逐条核对；只作参考，不进入甜蜜点、避坑、更优替代或任何计算。agreement 标明来源之间是否一致。",
+  "uncoveredDimensions": [
+    "长时、多步 agent 任务的稳定性与中途纠偏",
+    "最难题、高风险任务的上限",
+    "需求模糊或证据冲突时的判断",
+    "人工主观偏好与写作风格",
+    "端到端速度与延迟",
+    "工具调用可靠性与对失败的如实报告",
+    "长上下文召回质量"
+  ],
+  "items": [
+    {
+      "id": "astra-default-when-unbounded",
+      "modelIds": [
+        "gpt-6-astra",
+        "gpt-6.1-sol"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "stance": "选型",
+      "statement": "多篇对比文章的共同结论：不考虑预算时默认用 GPT-6 Astra（OpenAI 定位为最强型号，适合最难、风险最高或需求模糊的工作）；GPT-6.1 Sol 在多数编码与专业任务上接近 Astra、单任务费用约为五分之一，预算受限、批量或高频调用时换 Sol。",
+      "action": "高价值、出错代价大的任务用 Astra；日常与批量任务先用 Sol 6.1，验收不过再升到 Astra。",
+      "agreement": "多源一致（定位）；质量差距大小有分歧",
+      "sources": [
+        {
+          "label": "The New Stack",
+          "url": "https://thenewstack.io/gpt-6-1-sol-vs-gpt-6-astra/"
+        },
+        {
+          "label": "Moe Lueker 对比",
+          "url": "https://moelueker.com/blog/gpt-6-1-sol-vs-astra-vs-opus-5-5-benchmarks"
+        },
+        {
+          "label": "MyClaw 对比",
+          "url": "https://myclaw.ai/blog/gpt-6-1-sol-vs-6-astra"
+        },
+        {
+          "label": "GlobalGPT 对比",
+          "url": "https://www.glbgpt.com/hub/gpt-6-1-sol-vs-gpt-6-astra/"
+        }
+      ],
+      "verification": "search-summary",
+      "checkedAt": "2026-10-25"
+    },
+    {
+      "id": "astra-hard-science",
+      "modelIds": [
+        "gpt-6-astra",
+        "gpt-6.1-sol"
+      ],
+      "tasks": [
+        "complex",
+        "coding"
+      ],
+      "stance": "Astra 优势",
+      "statement": "科学计算与最难题上差距明显：检索转述的 Terminal-Bench Science 成绩为 Astra 68.1%、Sol 6.1 57.0%（另一份 AA 榜单摘要记 Astra max 63%，口径不一）。",
+      "action": "科研计算、复杂推导等最难任务优先 Astra；本页 AA 复杂推理行两者差距很小，属于不同题集。",
+      "agreement": "方向一致，具体数字口径不一",
+      "sources": [
+        {
+          "label": "The New Stack",
+          "url": "https://thenewstack.io/gpt-6-1-sol-vs-gpt-6-astra/"
+        },
+        {
+          "label": "Artificial Analysis 对比页",
+          "url": "https://artificialanalysis.ai/models/releases/comparisons/gpt-6-1-sol-vs-gpt-6-astra"
+        }
+      ],
+      "verification": "search-summary",
+      "checkedAt": "2026-10-25"
+    },
+    {
+      "id": "astra-long-agentic",
+      "modelIds": [
+        "gpt-6-astra"
+      ],
+      "tasks": [
+        "computer_use",
+        "automation",
+        "agentic"
+      ],
+      "stance": "Astra 优势",
+      "statement": "社区把 Astra 定位为长时、多步 agent 任务的首选：支持异步工具调用与任务中途转向，并会持续对照主目标检查进度。本页 OSWorld 2.0 同协议数据中 Astra max 73.5% 也高于 Sol 6.1 max 71.4%，但费用约 7 倍。",
+      "action": "无人值守、需要长时间自主推进的 agent 任务优先 Astra；有人在环、可重试的流程用 Sol 6.1 更划算。",
+      "agreement": "多源一致（定位）",
+      "sources": [
+        {
+          "label": "MindStudio",
+          "url": "https://www.mindstudio.ai/blog/gpt6-astra-agentic-workflows/"
+        },
+        {
+          "label": "The Neuron",
+          "url": "https://theneuron.ai/news/gpt-6-astra-everything-you-need-to-know-about-openais-new-model/"
+        }
+      ],
+      "verification": "search-summary",
+      "checkedAt": "2026-10-25"
+    },
+    {
+      "id": "sol61-matches-coding",
+      "modelIds": [
+        "gpt-6.1-sol",
+        "gpt-6-astra"
+      ],
+      "tasks": [
+        "coding"
+      ],
+      "stance": "Sol 6.1 优势",
+      "statement": "编码上 Sol 6.1 基本追平 Astra：OpenAI 发布页称 DeepSWE v1.1 上与 Astra 持平、费用约五分之一；有评测者做了 3 组对比，Sol 6.1 每组都追平 Astra，长任务端到端还更快（样本很小）。",
+      "action": "常规编码与仓库修复默认用 Sol 6.1；只有 Sol 交付不过、且任务价值高时才换 Astra。",
+      "agreement": "多源一致（厂商自报 + 小样本实测）",
+      "sources": [
+        {
+          "label": "OpenAI 发布页",
+          "url": "https://openai.com/index/introducing-gpt-6-1-sol/"
+        },
+        {
+          "label": "The New Stack",
+          "url": "https://thenewstack.io/gpt-6-1-sol-vs-gpt-6-astra/"
+        }
+      ],
+      "verification": "search-summary",
+      "checkedAt": "2026-10-25"
+    },
+    {
+      "id": "sol61-unverified-limits",
+      "modelIds": [
+        "gpt-6.1-sol"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "stance": "提醒",
+      "statement": "“接近 Astra”是厂商定位，不保证每个任务都追平；目前缺少 Sol 6.1 独立的长上下文召回与幻觉数据。默认上下文已提到 500k，但单次 prompt 超过 272k 时整次请求按长上下文价计费。",
+      "action": "长文档、多文件分析先抽样验证召回；接近 272k 时注意计费跳档。",
+      "agreement": "单一或少数来源",
+      "sources": [
+        {
+          "label": "iWeaver",
+          "url": "https://www.iweaver.ai/blog/gpt-6-1-sol/"
+        },
+        {
+          "label": "Crypto Briefing",
+          "url": "https://cryptobriefing.com/openai-gpt-6-1-sol-500k-context/"
+        }
+      ],
+      "verification": "search-summary",
+      "checkedAt": "2026-10-25"
+    }
+  ],
+  "maxEffortScenariosNote": "不差钱时也不该默认最高档的常见场景。来源混合：本页冻结实测（AA 耗时与首字等待、逐档分数）、官方建议、社区经验与配对实验；能用本页数据计算的场景会对当前模型显示实测信号，其余只作提醒，不参与计算。",
+  "maxEffortScenarios": [
+    {
+      "id": "tie-but-slower",
+      "title": "分数打平却慢得多（过度思考）",
+      "why": "高档多想的时间没有换来可见的分数提升。",
+      "signal": "相邻两档耗时涨到 1.5 倍以上、分数提升不到分差 3%。",
+      "action": "不看预算也选打平配置里最快的一档。",
+      "measure": "overthink",
+      "sources": [
+        {
+          "label": "AA 逐档耗时（本页冻结数据）",
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "type": "实测"
+        }
+      ]
+    },
+    {
+      "id": "interactive-wait",
+      "title": "交互式对话、需要快速首字",
+      "why": "高档常要先思考很久才开始输出，聊天、补全、客服等场景等不起。",
+      "signal": "首字等待（AA TTFA）随档位成倍上升。",
+      "action": "有人在等的场景用低 / 中档，长任务再升档。",
+      "measure": "ttfa",
+      "sources": [
+        {
+          "label": "AA 首字等待（本页冻结数据）",
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "type": "实测"
+        },
+        {
+          "label": "Unifically · GPT 6 Luna 延迟建议",
+          "url": "https://unifically.com/models/gpt-6-luna",
+          "type": "社区经验"
+        }
+      ]
+    },
+    {
+      "id": "budget-exhaustion",
+      "title": "输出预算或超时用尽，最后没有交付",
+      "why": "最高档可能把输出 token 或时间预算花在思考上，结果没有答案或成品。",
+      "signal": "固定输出预算下高档无答案率上升；单例中 max 用完 128k 仍未交付。",
+      "action": "用 max 前放大 max_tokens 与超时，并把“有成品”列为验收条件；否则停在 xhigh。",
+      "measure": null,
+      "sources": [
+        {
+          "label": "Forcebench 配对研究",
+          "url": "https://forcebench.ai/studies/max-effort/",
+          "type": "配对实验"
+        },
+        {
+          "label": "Simon Willison 单例",
+          "url": "https://simonwillison.net/2026/Sep/28/claude-sonnet-5-5/",
+          "type": "社区经验"
+        },
+        {
+          "label": "Fable 5.1 prompting 指南",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1",
+          "type": "官方建议"
+        }
+      ]
+    },
+    {
+      "id": "scope-creep",
+      "title": "做多了：越界修改、额外动作、超时",
+      "why": "高档更倾向自行扩展任务（额外审查、改范围外文件），在 agent 编码里反而降低通过率。",
+      "signal": "Sonnet 5.5 FrontierCode 脚注转述：xhigh 52.1%、max 46.2%，max 更常超时或越界修改。",
+      "action": "边界明确的修改任务限定改动范围，优先 xhigh；用 max 时检查 diff 范围。",
+      "measure": null,
+      "sources": [
+        {
+          "label": "eesel · Sonnet 5.5 测试",
+          "url": "https://www.eesel.ai/de/blog/claude-sonnet-5-5-test",
+          "type": "检索摘要"
+        }
+      ]
+    },
+    {
+      "id": "higher-is-worse",
+      "title": "高档反而更差",
+      "why": "档位曲线并非单调，部分评测里最高档低于更低档，或幻觉指标变差。",
+      "signal": "本页“档位倒退”避坑；Opus 5 max 在三项官方 agent 编码评测中两项低于 xhigh（检索转述）。",
+      "action": "以自己的验收集比较相邻两档，保留更低但不差的那档。",
+      "measure": "regress",
+      "sources": [
+        {
+          "label": "本页逐档数据（AA / Vulcan / ToneBench）",
+          "url": "https://artificialanalysis.ai/methodology/capability-indices",
+          "type": "实测"
+        },
+        {
+          "label": "Gabriel Moraru · Opus 5 xhigh vs max",
+          "url": "https://gabrielmoraru.com/opus-5-xhigh-vs-max-effort/",
+          "type": "检索摘要"
+        }
+      ]
+    },
+    {
+      "id": "agent-loop-multiplier",
+      "title": "多轮 agent 循环：每一轮都多想",
+      "why": "一次任务几十轮工具调用时，每轮多出的思考会成倍放大总耗时，并更快占满上下文、提前触发压缩。",
+      "signal": "Opus 5.5 在 xhigh / max 下每轮思考明显多于 Opus 5（社区转述）；高档每任务输出 token 数倍增长。",
+      "action": "主控循环用中高档，只在规划、难点排查等关键步骤临时升档。",
+      "measure": null,
+      "sources": [
+        {
+          "label": "ClaudeFast · Opus 5.5 实践",
+          "url": "https://claudefa.st/blog/guide/development/opus-5-5-best-practices",
+          "type": "社区经验"
+        },
+        {
+          "label": "Trilogy AI · Astra effort 观察",
+          "url": "https://trilogyai.substack.com/p/astra-reasoning-effort-token-usage",
+          "type": "社区经验"
+        }
+      ]
+    },
+    {
+      "id": "simple-tasks",
+      "title": "简单、明确的任务：抽取、分类、改写、路由",
+      "why": "这类任务几乎不需要推理，高档只增加等待；部分模型在短任务上低 / 中档甚至不产生推理 token。",
+      "signal": "需求明确、输出格式固定、有确定答案。",
+      "action": "用低档或默认档；质量不够时先补示例和约束，而不是升档。",
+      "measure": null,
+      "sources": [
+        {
+          "label": "OpenAI GPT-5.6 指南（延迟敏感用 low）",
+          "url": "https://developers.openai.com/api/docs/guides/gpt-5.6",
+          "type": "官方建议"
+        },
+        {
+          "label": "ComputingForGeeks · Argon 短任务观察",
+          "url": "https://computingforgeeks.com/gemini-4-argon-released-features-benchmarks/",
+          "type": "检索摘要"
+        }
+      ]
+    },
+    {
+      "id": "quota-and-rate",
+      "title": "订阅额度与速率限制",
+      "why": "在订阅产品里，高档消耗额度更快，更容易触发限速，影响当天其它工作。",
+      "signal": "官方说明高档“更慢、消耗更多额度”；不同入口默认档不同。",
+      "action": "日常用默认档，把高档留给少数关键任务。",
+      "measure": null,
+      "sources": [
+        {
+          "label": "Flavio Copes · GPT-6.1 Sol 用法（转述 OpenAI）",
+          "url": "https://flaviocopes.com/gpt-6-1-sol/",
+          "type": "检索摘要"
+        },
+        {
+          "label": "eesel · Sonnet 5.5 各入口默认档",
+          "url": "https://www.eesel.ai/de/blog/claude-sonnet-5-5-test",
+          "type": "检索摘要"
+        }
+      ]
+    },
+    {
+      "id": "vendor-default",
+      "title": "官方建议：先默认档，实测有收益再升",
+      "why": "厂商普遍建议从默认档起步，只为测得收益的工作保留 xhigh / max；档位名称在不同代际间不对应同样的思考量。",
+      "signal": "没有在自己任务上比较过相邻档位。",
+      "action": "先跑默认档与高一档的小样本配对，再决定是否长期用最高档。",
+      "measure": null,
+      "sources": [
+        {
+          "label": "Claude effort 文档",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+          "type": "官方建议"
+        },
+        {
+          "label": "OpenAI reasoning 指南",
+          "url": "https://developers.openai.com/api/docs/guides/reasoning",
+          "type": "官方建议"
+        }
+      ]
+    }
+  ],
+  "workPhasesNote": "按工作阶段的主流档位选择。这类选择没有统一的客观标准，这里记录业界常见做法（官方建议、主流工具的默认工作流与社区经验的综合），不是实测结论，也不参与任何计算。档位用通用层级表示：low / medium / high / xhigh / max，页面再换算成当前模型支持的原生档位。",
+  "workPhases": [
+    {
+      "id": "brainstorm",
+      "phase": "头脑风暴 / 发散构思",
+      "examples": "起名、选题、列方案候选、需求发散",
+      "tier": "medium",
+      "range": [
+        "low",
+        "high"
+      ],
+      "why": "要的是数量、多样性和快速来回，高档倾向过早收敛、写成一个周密方案，反而压缩了选项；等待时间也打断思路。",
+      "escalate": "需要对候选做严谨比较或可行性论证时，切到“方案设计”档位。",
+      "downgrade": "只要大量简短点子时可用 low。",
+      "sources": [
+        {
+          "label": "OpenAI reasoning 指南",
+          "url": "https://developers.openai.com/api/docs/guides/reasoning",
+          "type": "官方建议"
+        },
+        {
+          "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+          "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+          "type": "官方建议"
+        }
+      ]
+    },
+    {
+      "id": "design",
+      "phase": "方案设计 / 架构规划",
+      "examples": "技术选型、模块拆分、迁移方案、接口设计",
+      "tier": "xhigh",
+      "range": [
+        "high",
+        "max"
+      ],
+      "why": "主流工作流把“计划”和“执行”分开：用强模型、高档位想清楚方案，再交给便宜配置执行。决策难以撤回、影响面大时值得多想。",
+      "escalate": "不可逆、高风险的决策可用 max，并要求列出备选与取舍。",
+      "downgrade": "范围小、有成熟模板的设计用 high 即可。",
+      "sources": [
+        {
+          "label": "Aider · architect / editor 分工",
+          "url": "https://aider.chat/2024/09/26/architect.html",
+          "type": "社区经验"
+        },
+        {
+          "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+          "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+          "type": "官方建议"
+        },
+        {
+          "label": "OpenAI · reasoning 最佳实践",
+          "url": "https://platform.openai.com/docs/guides/reasoning-best-practices",
+          "type": "官方建议"
+        }
+      ]
+    },
+    {
+      "id": "execute",
+      "phase": "按计划执行 / 具体实现",
+      "examples": "照着已定方案写代码、批量修改、补测试",
+      "tier": "medium",
+      "range": [
+        "low",
+        "high"
+      ],
+      "why": "方案已定，难点在准确落地和速度；高档会在每一步重复思考已经决定的事，拖慢多轮循环、占用上下文，还可能自行扩展范围。",
+      "escalate": "实现中遇到计划没覆盖的难点时临时升一档，或退回“方案设计”。",
+      "downgrade": "机械、重复的修改用 low。",
+      "sources": [
+        {
+          "label": "Aider · architect / editor 分工",
+          "url": "https://aider.chat/2024/09/26/architect.html",
+          "type": "社区经验"
+        },
+        {
+          "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+          "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+          "type": "官方建议"
+        },
+        {
+          "label": "Forcebench 配对研究",
+          "url": "https://forcebench.ai/studies/max-effort/",
+          "type": "配对实验"
+        }
+      ]
+    },
+    {
+      "id": "routine-edit",
+      "phase": "日常小改 / 格式整理",
+      "examples": "改文案、重命名、格式化、单文件小修",
+      "tier": "low",
+      "range": [
+        "low",
+        "medium"
+      ],
+      "why": "需求明确、结果易验证，推理收益很小，延迟最重要。",
+      "escalate": "小改连续失败时说明需求不清，先补上下文再升档。",
+      "downgrade": "",
+      "sources": [
+        {
+          "label": "OpenAI reasoning 指南",
+          "url": "https://developers.openai.com/api/docs/guides/reasoning",
+          "type": "官方建议"
+        },
+        {
+          "label": "Claude effort 文档",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+          "type": "官方建议"
+        }
+      ]
+    },
+    {
+      "id": "hard-bug",
+      "phase": "复杂 BUG 定位",
+      "examples": "跨模块根因、竞态、偶现问题、性能回退",
+      "tier": "xhigh",
+      "range": [
+        "high",
+        "max"
+      ],
+      "why": "需要在多个假设间推理、读大量代码和日志，深度思考收益最明显；但前提是先补齐复现步骤和日志，否则升档只是在猜。",
+      "escalate": "high / xhigh 给出的诊断被证伪、且能说清缺口时再试 max，并设好预算和停止条件。",
+      "downgrade": "根因已定位、只剩修复时降回“具体执行”档位。",
+      "sources": [
+        {
+          "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+          "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+          "type": "官方建议"
+        },
+        {
+          "label": "Claude effort 文档",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+          "type": "官方建议"
+        }
+      ]
+    },
+    {
+      "id": "env-issue",
+      "phase": "环境 / 依赖 / 构建问题",
+      "examples": "安装失败、版本冲突、CI 报错、配置问题",
+      "tier": "medium",
+      "range": [
+        "medium",
+        "high"
+      ],
+      "why": "这类问题靠“看报错—试—再看报错”的快速循环解决，信息在工具输出里而不在推理里；每轮多想几分钟往往不如多跑几轮。",
+      "escalate": "多轮尝试仍无进展、需要理解复杂的依赖关系时升到 high / xhigh。",
+      "downgrade": "",
+      "sources": [
+        {
+          "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+          "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+          "type": "官方建议"
+        },
+        {
+          "label": "OpenAI reasoning 指南",
+          "url": "https://developers.openai.com/api/docs/guides/reasoning",
+          "type": "官方建议"
+        }
+      ]
+    },
+    {
+      "id": "review",
+      "phase": "代码审查 / 方案复核",
+      "examples": "PR 审查、安全检查、复核别人的方案",
+      "tier": "high",
+      "range": [
+        "high",
+        "xhigh"
+      ],
+      "why": "发现细微问题需要推理，但审查一般有明确范围；主流做法是换一个模型或新会话复核，而不是同一模型开到最高档。",
+      "escalate": "安全、资金相关或大改动的审查用 xhigh。",
+      "downgrade": "",
+      "sources": [
+        {
+          "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+          "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+          "type": "官方建议"
+        },
+        {
+          "label": "Claude effort 文档",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+          "type": "官方建议"
+        }
+      ]
+    },
+    {
+      "id": "research",
+      "phase": "调研 / 长文档阅读与总结",
+      "examples": "读论文、整理资料、对比文档",
+      "tier": "high",
+      "range": [
+        "medium",
+        "xhigh"
+      ],
+      "why": "信息整合需要一定推理，但瓶颈常在上下文质量和检索，而不是思考深度。",
+      "escalate": "证据相互冲突、需要下结论时升到 xhigh。",
+      "downgrade": "只做摘要或提取要点时用 medium。",
+      "sources": [
+        {
+          "label": "OpenAI reasoning 指南",
+          "url": "https://developers.openai.com/api/docs/guides/reasoning",
+          "type": "官方建议"
+        },
+        {
+          "label": "OpenAI · reasoning 最佳实践",
+          "url": "https://platform.openai.com/docs/guides/reasoning-best-practices",
+          "type": "官方建议"
+        }
+      ]
+    },
+    {
+      "id": "writing",
+      "phase": "写作 / 润色",
+      "examples": "文案、邮件、报告润色",
+      "tier": "medium",
+      "range": [
+        "low",
+        "high"
+      ],
+      "why": "本页 ToneBench 写作分数随档位变化很小；写作质量更依赖提示中的风格、受众和示例。",
+      "escalate": "长篇、结构复杂或需要严谨论证时用 high。",
+      "downgrade": "短文本润色用 low。",
+      "sources": [
+        {
+          "label": "ToneBench 写作逐档（本页数据）",
+          "url": "https://benchmark.towardsai.com/data/leaderboard.json",
+          "type": "实测"
+        },
+        {
+          "label": "Claude effort 文档",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+          "type": "官方建议"
+        }
+      ]
+    },
+    {
+      "id": "math-science",
+      "phase": "数学 / 科学推导、竞赛难题",
+      "examples": "证明、复杂计算、算法难题",
+      "tier": "max",
+      "range": [
+        "xhigh",
+        "max"
+      ],
+      "why": "推理深度直接决定能否做对，是最高档最主流的用途；答案通常可验证，多花时间值得。",
+      "escalate": "",
+      "downgrade": "题目较常规时用 xhigh。",
+      "sources": [
+        {
+          "label": "OpenAI · reasoning 最佳实践",
+          "url": "https://platform.openai.com/docs/guides/reasoning-best-practices",
+          "type": "官方建议"
+        },
+        {
+          "label": "Claude effort 文档",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+          "type": "官方建议"
+        }
+      ]
+    },
+    {
+      "id": "long-agent",
+      "phase": "长时无人值守 agent",
+      "examples": "自主完成多小时任务、后台批处理流程",
+      "tier": "high",
+      "range": [
+        "medium",
+        "xhigh"
+      ],
+      "why": "主控循环每一轮都会叠加耗时和上下文占用；主流做法是主循环用中高档，只在规划、关键决策和卡住时临时升档。",
+      "escalate": "规划与验收步骤用 xhigh。",
+      "downgrade": "简单子任务交给更便宜的模型或 low 档。",
+      "sources": [
+        {
+          "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+          "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+          "type": "官方建议"
+        },
+        {
+          "label": "Aider · architect / editor 分工",
+          "url": "https://aider.chat/2024/09/26/architect.html",
+          "type": "社区经验"
+        }
+      ]
+    }
+  ]
+}
