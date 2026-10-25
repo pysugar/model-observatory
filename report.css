@@ -893,6 +893,11 @@ main { padding-top:35px; }
 .mp-scn-action { margin-top:2px; }
 .mp-scn-signal { margin-top:3px; color:var(--muted); }
 .mp-scn-signal.hit { color:var(--warn-ink); background:var(--warn-bg); border:1px dashed var(--warn-line); border-radius:6px; padding:2px 8px; display:inline-block !important; }
+.mp-phase-table { min-width:880px; }
+.mp-phase-table th, .mp-phase-table td { vertical-align:top; font-size:var(--fs-sm); }
+.mp-phase-table tbody th { min-width:150px; }
+.mp-phase-up, .mp-phase-down { display:block; }
+.mp-phase-down { color:var(--muted); margin-top:3px; }
 .mp-toggle { display:inline-flex; align-items:center; gap:6px; font-size:var(--fs-sm); }
 .mp-explain #profileRule p, .mp-explain #profileRule li { font-size:var(--fs-sm); }
 .mp-steps { margin:4px 0 6px; padding-left:20px; }

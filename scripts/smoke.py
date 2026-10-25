@@ -155,6 +155,13 @@ def check_profile_ui(page, data, output):
     expect(page.locator("#profileScenarioList li")).to_have_count(len(data["community_consensus"]["maxEffortScenarios"]))
     expect(page.locator('#profileScenarioList li[data-scenario="interactive-wait"] .mp-scn-signal.hit')).to_contain_text("首字等待")
     expect(page.locator('#profileScenarioList li[data-scenario="tie-but-slower"] .mp-scn-signal.hit')).to_be_visible()
+    # Work phases map generic tiers onto native efforts (Argon has no xhigh / max).
+    phases = data["community_consensus"]["workPhases"]
+    expect(page.locator("#profilePhaseTable tbody tr")).to_have_count(len(phases))
+    page.select_option("#profileModel", "gemini-4-argon")
+    expect(page.locator('#profilePhaseTable tr[data-phase="design"]')).to_have_attribute("data-mapped", "high")
+    page.select_option("#profileModel", "claude-opus-5-5")
+    expect(page.locator('#profilePhaseTable tr[data-phase="design"]')).to_have_attribute("data-mapped", "xhigh")
     page.select_option("#profileModel", "grok-4-7")
     expect(page.locator("#profileAltEffort")).to_have_value("high")
     page.locator('#profileGrid tr[data-mp-series="aa-ii"] td[data-mp-effort="xhigh"]').click()
@@ -396,7 +403,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
               "checks": ["fresh five-source search, filters, missing-cost export, dates, theme persistence and touch", "Grok 200k inclusive price boundary", "task-specific best variants in seven dimensions", "dataset-backed knowledge narrative and Elo differences", "effort filters and scaling charts", "pinned vs temporary highlight, missing gaps and singleton", "separate Computer Use protocols and scope-limited raw-precision alternatives", "three verified workflow cards, source boundaries and native disclosures on keyboard/touch",
                "capability missingness, tie ranks, per-domain denominators and CSV consistency",
                "reasoning charts, effort selection, nonmonotonic scores and keyboard access", "seven panels", "Claude filter", "CSV missing values", "budget boundaries", "four Opus evidence views",
-                         "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across seven panels and thirteen CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "sweet-spot matrix equals the Python reference for three presets", "median quadrant, series focus and page TOC", "model profile sweet spots, pitfalls (incl. overthinking) and three better alternatives equal the Python reference for every model, effort, preset and scope; max-effort scenarios with measured signals; community voices stay text-only; deep link and cross-links", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
+                         "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across seven panels and thirteen CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "sweet-spot matrix equals the Python reference for three presets", "median quadrant, series focus and page TOC", "model profile sweet spots, pitfalls (incl. overthinking) and three better alternatives equal the Python reference for every model, effort, preset and scope; max-effort scenarios with measured signals; work-phase mainstream efforts mapped to native levels; community voices stay text-only; deep link and cross-links", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
               "cloudflare_headers_checked": cloudflare}
     (output / "smoke.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result, indent=2))

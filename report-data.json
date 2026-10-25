@@ -11265,6 +11265,294 @@
           }
         ]
       }
+    ],
+    "workPhasesNote": "按工作阶段的主流档位选择。这类选择没有统一的客观标准，这里记录业界常见做法（官方建议、主流工具的默认工作流与社区经验的综合），不是实测结论，也不参与任何计算。档位用通用层级表示：low / medium / high / xhigh / max，页面再换算成当前模型支持的原生档位。",
+    "workPhases": [
+      {
+        "id": "brainstorm",
+        "phase": "头脑风暴 / 发散构思",
+        "examples": "起名、选题、列方案候选、需求发散",
+        "tier": "medium",
+        "range": [
+          "low",
+          "high"
+        ],
+        "why": "要的是数量、多样性和快速来回，高档倾向过早收敛、写成一个周密方案，反而压缩了选项；等待时间也打断思路。",
+        "escalate": "需要对候选做严谨比较或可行性论证时，切到“方案设计”档位。",
+        "downgrade": "只要大量简短点子时可用 low。",
+        "sources": [
+          {
+            "label": "OpenAI reasoning 指南",
+            "url": "https://developers.openai.com/api/docs/guides/reasoning",
+            "type": "官方建议"
+          },
+          {
+            "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+            "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+            "type": "官方建议"
+          }
+        ]
+      },
+      {
+        "id": "design",
+        "phase": "方案设计 / 架构规划",
+        "examples": "技术选型、模块拆分、迁移方案、接口设计",
+        "tier": "xhigh",
+        "range": [
+          "high",
+          "max"
+        ],
+        "why": "主流工作流把“计划”和“执行”分开：用强模型、高档位想清楚方案，再交给便宜配置执行。决策难以撤回、影响面大时值得多想。",
+        "escalate": "不可逆、高风险的决策可用 max，并要求列出备选与取舍。",
+        "downgrade": "范围小、有成熟模板的设计用 high 即可。",
+        "sources": [
+          {
+            "label": "Aider · architect / editor 分工",
+            "url": "https://aider.chat/2024/09/26/architect.html",
+            "type": "社区经验"
+          },
+          {
+            "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+            "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+            "type": "官方建议"
+          },
+          {
+            "label": "OpenAI · reasoning 最佳实践",
+            "url": "https://platform.openai.com/docs/guides/reasoning-best-practices",
+            "type": "官方建议"
+          }
+        ]
+      },
+      {
+        "id": "execute",
+        "phase": "按计划执行 / 具体实现",
+        "examples": "照着已定方案写代码、批量修改、补测试",
+        "tier": "medium",
+        "range": [
+          "low",
+          "high"
+        ],
+        "why": "方案已定，难点在准确落地和速度；高档会在每一步重复思考已经决定的事，拖慢多轮循环、占用上下文，还可能自行扩展范围。",
+        "escalate": "实现中遇到计划没覆盖的难点时临时升一档，或退回“方案设计”。",
+        "downgrade": "机械、重复的修改用 low。",
+        "sources": [
+          {
+            "label": "Aider · architect / editor 分工",
+            "url": "https://aider.chat/2024/09/26/architect.html",
+            "type": "社区经验"
+          },
+          {
+            "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+            "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+            "type": "官方建议"
+          },
+          {
+            "label": "Forcebench 配对研究",
+            "url": "https://forcebench.ai/studies/max-effort/",
+            "type": "配对实验"
+          }
+        ]
+      },
+      {
+        "id": "routine-edit",
+        "phase": "日常小改 / 格式整理",
+        "examples": "改文案、重命名、格式化、单文件小修",
+        "tier": "low",
+        "range": [
+          "low",
+          "medium"
+        ],
+        "why": "需求明确、结果易验证，推理收益很小，延迟最重要。",
+        "escalate": "小改连续失败时说明需求不清，先补上下文再升档。",
+        "downgrade": "",
+        "sources": [
+          {
+            "label": "OpenAI reasoning 指南",
+            "url": "https://developers.openai.com/api/docs/guides/reasoning",
+            "type": "官方建议"
+          },
+          {
+            "label": "Claude effort 文档",
+            "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+            "type": "官方建议"
+          }
+        ]
+      },
+      {
+        "id": "hard-bug",
+        "phase": "复杂 BUG 定位",
+        "examples": "跨模块根因、竞态、偶现问题、性能回退",
+        "tier": "xhigh",
+        "range": [
+          "high",
+          "max"
+        ],
+        "why": "需要在多个假设间推理、读大量代码和日志，深度思考收益最明显；但前提是先补齐复现步骤和日志，否则升档只是在猜。",
+        "escalate": "high / xhigh 给出的诊断被证伪、且能说清缺口时再试 max，并设好预算和停止条件。",
+        "downgrade": "根因已定位、只剩修复时降回“具体执行”档位。",
+        "sources": [
+          {
+            "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+            "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+            "type": "官方建议"
+          },
+          {
+            "label": "Claude effort 文档",
+            "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+            "type": "官方建议"
+          }
+        ]
+      },
+      {
+        "id": "env-issue",
+        "phase": "环境 / 依赖 / 构建问题",
+        "examples": "安装失败、版本冲突、CI 报错、配置问题",
+        "tier": "medium",
+        "range": [
+          "medium",
+          "high"
+        ],
+        "why": "这类问题靠“看报错—试—再看报错”的快速循环解决，信息在工具输出里而不在推理里；每轮多想几分钟往往不如多跑几轮。",
+        "escalate": "多轮尝试仍无进展、需要理解复杂的依赖关系时升到 high / xhigh。",
+        "downgrade": "",
+        "sources": [
+          {
+            "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+            "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+            "type": "官方建议"
+          },
+          {
+            "label": "OpenAI reasoning 指南",
+            "url": "https://developers.openai.com/api/docs/guides/reasoning",
+            "type": "官方建议"
+          }
+        ]
+      },
+      {
+        "id": "review",
+        "phase": "代码审查 / 方案复核",
+        "examples": "PR 审查、安全检查、复核别人的方案",
+        "tier": "high",
+        "range": [
+          "high",
+          "xhigh"
+        ],
+        "why": "发现细微问题需要推理，但审查一般有明确范围；主流做法是换一个模型或新会话复核，而不是同一模型开到最高档。",
+        "escalate": "安全、资金相关或大改动的审查用 xhigh。",
+        "downgrade": "",
+        "sources": [
+          {
+            "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+            "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+            "type": "官方建议"
+          },
+          {
+            "label": "Claude effort 文档",
+            "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+            "type": "官方建议"
+          }
+        ]
+      },
+      {
+        "id": "research",
+        "phase": "调研 / 长文档阅读与总结",
+        "examples": "读论文、整理资料、对比文档",
+        "tier": "high",
+        "range": [
+          "medium",
+          "xhigh"
+        ],
+        "why": "信息整合需要一定推理，但瓶颈常在上下文质量和检索，而不是思考深度。",
+        "escalate": "证据相互冲突、需要下结论时升到 xhigh。",
+        "downgrade": "只做摘要或提取要点时用 medium。",
+        "sources": [
+          {
+            "label": "OpenAI reasoning 指南",
+            "url": "https://developers.openai.com/api/docs/guides/reasoning",
+            "type": "官方建议"
+          },
+          {
+            "label": "OpenAI · reasoning 最佳实践",
+            "url": "https://platform.openai.com/docs/guides/reasoning-best-practices",
+            "type": "官方建议"
+          }
+        ]
+      },
+      {
+        "id": "writing",
+        "phase": "写作 / 润色",
+        "examples": "文案、邮件、报告润色",
+        "tier": "medium",
+        "range": [
+          "low",
+          "high"
+        ],
+        "why": "本页 ToneBench 写作分数随档位变化很小；写作质量更依赖提示中的风格、受众和示例。",
+        "escalate": "长篇、结构复杂或需要严谨论证时用 high。",
+        "downgrade": "短文本润色用 low。",
+        "sources": [
+          {
+            "label": "ToneBench 写作逐档（本页数据）",
+            "url": "https://benchmark.towardsai.com/data/leaderboard.json",
+            "type": "实测"
+          },
+          {
+            "label": "Claude effort 文档",
+            "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+            "type": "官方建议"
+          }
+        ]
+      },
+      {
+        "id": "math-science",
+        "phase": "数学 / 科学推导、竞赛难题",
+        "examples": "证明、复杂计算、算法难题",
+        "tier": "max",
+        "range": [
+          "xhigh",
+          "max"
+        ],
+        "why": "推理深度直接决定能否做对，是最高档最主流的用途；答案通常可验证，多花时间值得。",
+        "escalate": "",
+        "downgrade": "题目较常规时用 xhigh。",
+        "sources": [
+          {
+            "label": "OpenAI · reasoning 最佳实践",
+            "url": "https://platform.openai.com/docs/guides/reasoning-best-practices",
+            "type": "官方建议"
+          },
+          {
+            "label": "Claude effort 文档",
+            "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+            "type": "官方建议"
+          }
+        ]
+      },
+      {
+        "id": "long-agent",
+        "phase": "长时无人值守 agent",
+        "examples": "自主完成多小时任务、后台批处理流程",
+        "tier": "high",
+        "range": [
+          "medium",
+          "xhigh"
+        ],
+        "why": "主控循环每一轮都会叠加耗时和上下文占用；主流做法是主循环用中高档，只在规划、关键决策和卡住时临时升档。",
+        "escalate": "规划与验收步骤用 xhigh。",
+        "downgrade": "简单子任务交给更便宜的模型或 low 档。",
+        "sources": [
+          {
+            "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+            "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+            "type": "官方建议"
+          },
+          {
+            "label": "Aider · architect / editor 分工",
+            "url": "https://aider.chat/2024/09/26/architect.html",
+            "type": "社区经验"
+          }
+        ]
+      }
     ]
   },
   "aa_capability_indexes": {
