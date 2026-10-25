@@ -96,6 +96,11 @@ class ModelProfileTests(unittest.TestCase):
         self.assertIn(("overthink", "aa-ii", "max"), pits)
         self.assertNotIn(("overthink", "aa-ii", "max"), profile_pitfalls(self.data, "claude-sonnet-5-5"))
 
+    def test_every_main_model_has_a_community_voice(self):
+        covered = {m for item in self.data["community_consensus"]["items"] for m in item["modelIds"]}
+        main = {m["id"] for m in self.doc["models"] if m["tier"] == "main"}
+        self.assertEqual(main - covered, set())
+
     def test_max_effort_scenarios_are_sourced(self):
         scenarios = self.data["community_consensus"]["maxEffortScenarios"]
         self.assertGreaterEqual(len(scenarios), 8)

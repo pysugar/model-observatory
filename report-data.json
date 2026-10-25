@@ -10937,7 +10937,7 @@
   },
   "community_consensus": {
     "checkedAt": "2026-10-25",
-    "method": "社区主流声音：整理多篇公开对比文章、评测博客与厂商定位中反复出现的结论，用来补充公开评测覆盖不到的维度（长时 agent 稳定性、最难题上限、需求模糊时的判断、速度体感等）。条目来自 2026-10-25 的网页检索摘要，原页尚未逐条核对；只作参考，不进入甜蜜点、避坑、更优替代或任何计算。agreement 标明来源之间是否一致。",
+    "method": "社区主流声音：整理多篇公开对比文章、评测博客与厂商定位中反复出现的结论，覆盖四家当前主力型号，用来补充公开评测覆盖不到的维度（长时 agent 稳定性、最难题上限、需求模糊时的判断、速度体感等）。条目来自 2026-10-25 的网页检索摘要，原页尚未逐条核对；只作参考，不进入甜蜜点、避坑、更优替代或任何计算。agreement 标明来源之间是否一致。",
     "uncoveredDimensions": [
       "长时、多步 agent 任务的稳定性与中途纠偏",
       "最难题、高风险任务的上限",
@@ -11082,6 +11082,282 @@
           {
             "label": "Crypto Briefing",
             "url": "https://cryptobriefing.com/openai-gpt-6-1-sol-500k-context/"
+          }
+        ],
+        "verification": "search-summary",
+        "checkedAt": "2026-10-25"
+      },
+      {
+        "id": "sonnet55-default-opus55-judgment",
+        "modelIds": [
+          "claude-sonnet-5-5",
+          "claude-opus-5-5"
+        ],
+        "tasks": [
+          "all"
+        ],
+        "stance": "选型",
+        "statement": "多数对比的共同结论：Sonnet 5.5 是日常默认，适合定义清楚、结果容易检查的工作（可复现的 BUG、批量一致改写、整理既定资料）；Opus 5.5 留给开放式、需要判断的多步问题。多数公开评测两者差距很小，Sonnet 单价约为一半。",
+        "action": "日常与批量任务默认 Sonnet 5.5；需求模糊、需要权衡取舍或高风险改动时换 Opus 5.5。",
+        "agreement": "多源一致（定位）",
+        "sources": [
+          {
+            "label": "iWeaver 对比",
+            "url": "https://www.iweaver.ai/blog/claude-sonnet-5-5-vs-opus-5-5/"
+          },
+          {
+            "label": "Codersera 对比",
+            "url": "https://codersera.com/blog/claude-sonnet-5-5-vs-opus-5-5-2026/"
+          },
+          {
+            "label": "andrew.ooo",
+            "url": "https://andrew.ooo/answers/claude-sonnet-5-5-vs-claude-opus-5-5-which-to-use-september-2026/"
+          }
+        ],
+        "verification": "search-summary",
+        "checkedAt": "2026-10-25"
+      },
+      {
+        "id": "opusplan-split",
+        "modelIds": [
+          "claude-opus-5-5",
+          "claude-sonnet-5-5"
+        ],
+        "tasks": [
+          "planning",
+          "coding"
+        ],
+        "stance": "组合用法",
+        "statement": "Claude Code 社区常见的组合：Opus 负责计划模式和架构决策，执行写代码交给 Sonnet（opusplan 用法）。小样本代码审查对比中，Sonnet 5.5 能胜任常规 PR 审查，但高风险改动仍不能完全替代 Opus。",
+        "action": "规划和高风险审查用 Opus 5.5，具体实现用 Sonnet 5.5。",
+        "agreement": "多源一致（审查结论样本小）",
+        "sources": [
+          {
+            "label": "Codersera 对比",
+            "url": "https://codersera.com/blog/claude-sonnet-5-5-vs-opus-5-5-2026/"
+          },
+          {
+            "label": "The AI Career Lab",
+            "url": "https://theaicareerlab.com/blog/claude-sonnet-5-5-for-professionals-2026"
+          }
+        ],
+        "verification": "search-summary",
+        "checkedAt": "2026-10-25"
+      },
+      {
+        "id": "fable51-escalation",
+        "modelIds": [
+          "claude-fable-5-1",
+          "claude-opus-5-5"
+        ],
+        "tasks": [
+          "all"
+        ],
+        "stance": "选型",
+        "statement": "常见建议是先用 Opus 5.5，难题再升到 Fable 5.1：Anthropic 称 Opus 5.5 在多数工作上达到 Fable 5.1 的水平，小样本测试里差距也没有显现。Fable 5.1 单价约为 Opus 5.5 的 2.5 倍，但缓存读取更便宜，缓存占比高的长任务可能反而更省；部分订阅方案里 Fable 不在额度内。",
+        "action": "默认 Opus 5.5；只在 Opus 交付不过、或缓存很重的长任务里试 Fable 5.1，并先确认订阅额度。",
+        "agreement": "多源一致（定位）；缺独立严格对比",
+        "sources": [
+          {
+            "label": "The AI Career Lab",
+            "url": "https://theaicareerlab.com/blog/claude-opus-5-5-vs-fable-5-1-for-professionals"
+          },
+          {
+            "label": "LMMarketCap 对比",
+            "url": "https://lmmarketcap.com/compare/claude-fable-5-1/vs/claude-opus-5-5"
+          },
+          {
+            "label": "Techsy",
+            "url": "https://techsy.io/en/blog/claude-fable-5-1"
+          }
+        ],
+        "verification": "search-summary",
+        "checkedAt": "2026-10-25"
+      },
+      {
+        "id": "haiku55-subagent",
+        "modelIds": [
+          "claude-haiku-5-5"
+        ],
+        "tasks": [
+          "all"
+        ],
+        "stance": "定位",
+        "statement": "社区把 Haiku 5.5 定位为便宜的子 agent：摘要、上下文压缩、查询、分类、浏览器操作等窄而量大的调用，由 Opus 或 Sonnet 负责规划和最终回答。单价很低，但 prompt 超过 10 万 token 后整次涨价；用作主会话时很快越过这条线，所以最适合短小、专用的子任务。",
+        "action": "在 Claude Code 等工具里把搜索、跑测试、总结类子 agent 固定到 Haiku 5.5，并只给它需要的工具；主会话不要用它。",
+        "agreement": "多源一致",
+        "sources": [
+          {
+            "label": "StackOne",
+            "url": "https://www.stackone.com/blog/claude-haiku-subagent-permissions/"
+          },
+          {
+            "label": "Beam AI",
+            "url": "https://beam.ai/agentic-insights/claude-haiku-5-5-subagents"
+          },
+          {
+            "label": "wmedia · Claude Code",
+            "url": "https://wmedia.es/en/tips/claude-code-haiku-5-5-subagents"
+          },
+          {
+            "label": "Apidog",
+            "url": "https://apidog.com/blog/claude-haiku-5-5-claude-code/"
+          }
+        ],
+        "verification": "search-summary",
+        "checkedAt": "2026-10-25"
+      },
+      {
+        "id": "luna6-volume",
+        "modelIds": [
+          "gpt-6-luna",
+          "gpt-6.1-sol"
+        ],
+        "tasks": [
+          "all"
+        ],
+        "stance": "选型",
+        "statement": "常见分工：GPT-6.1 Sol 做复杂 agent、编码和文档工作；GPT-6 Luna 做摘要、抽取等高量、对成本敏感的任务。Luna 的进步主要是更便宜、幻觉更少，而不是更聪明（与 GPT-5.6 Luna 大致同分）。",
+        "action": "批量摘要、抽取、分类和子 agent 用 Luna；需要推理和编码质量时换 Sol 6.1。",
+        "agreement": "多源一致（来源为厂商博客与聚合站，证据较弱）",
+        "sources": [
+          {
+            "label": "GoSearch 博客",
+            "url": "https://www.gosearch.ai/blog/?p=6652"
+          },
+          {
+            "label": "LMMarketCap 对比",
+            "url": "https://lmmarketcap.com/compare/gpt-6-1-sol/vs/gpt-6-luna"
+          }
+        ],
+        "verification": "search-summary",
+        "checkedAt": "2026-10-25"
+      },
+      {
+        "id": "argon-strengths",
+        "modelIds": [
+          "gemini-4-argon"
+        ],
+        "tasks": [
+          "all"
+        ],
+        "stance": "定位",
+        "statement": "社区与评测把 Argon 看作 Google 的旗舰推理模型：多模态输入（文本、图像、音频、视频、PDF）与约 100 万共享上下文是主要优势；AA-Omniscience 幻觉率最低之一，但更多是选择不答而不是知道得更多。Google 自报的编码与知识工作成绩领先，但部分用的是自家 harness。",
+        "action": "视频、音频、长 PDF 等多模态或超长输入优先考虑 Argon；编码成绩以自己的仓库实测为准。",
+        "agreement": "方向一致；领先成绩多为厂商自报",
+        "sources": [
+          {
+            "label": "eesel · Argon 测试",
+            "url": "https://www.eesel.ai/de/blog/gemini-4-argon-test"
+          },
+          {
+            "label": "Vidmuse",
+            "url": "https://vidmuse.ai/blog/gemini-4-argon"
+          },
+          {
+            "label": "Korben",
+            "url": "https://korben.info/es/gemini-4-argon-supera-gpt-6-claude-codigo-inaccesible.html"
+          }
+        ],
+        "verification": "search-summary",
+        "checkedAt": "2026-10-25"
+      },
+      {
+        "id": "argon-token-hungry",
+        "modelIds": [
+          "gemini-4-argon"
+        ],
+        "tasks": [
+          "all"
+        ],
+        "stance": "提醒",
+        "statement": "开发者最常提到的缺点是输出 token 多：AA 智能指数测试中每任务约 6.2 万输出 token，约为 GPT-6 Astra 的两倍多，会抵消单价优势；当前优惠价结束后单价翻倍。",
+        "action": "按“每个完成任务的总费用”比较，不要只看单价；长期预算按优惠结束后的价格估。",
+        "agreement": "多源一致",
+        "sources": [
+          {
+            "label": "eesel · Argon 测试",
+            "url": "https://www.eesel.ai/de/blog/gemini-4-argon-test"
+          },
+          {
+            "label": "Vidmuse",
+            "url": "https://vidmuse.ai/blog/gemini-4-argon"
+          }
+        ],
+        "verification": "search-summary",
+        "checkedAt": "2026-10-25"
+      },
+      {
+        "id": "flash38-workhorse",
+        "modelIds": [
+          "gemini-3.8-flash",
+          "gemini-4-argon"
+        ],
+        "tasks": [
+          "all"
+        ],
+        "stance": "选型",
+        "statement": "Google 把 Argon 定位为推理旗舰、Flash 为编码与 agent 的主力。社区建议：步骤之间相互依赖、需要严密推理的任务用 Argon；常规摘要、按标准分类、可重复的流程用 Flash 3.8，响应更快、更便宜。公开对比多来自自动生成的比较站，差距区间重叠。",
+        "action": "可重复、量大的工作流默认 Flash 3.8；多步推理和冲突约束的评审换 Argon。",
+        "agreement": "定位一致；缺独立实测",
+        "sources": [
+          {
+            "label": "iWeaver · Argon vs Flash",
+            "url": "https://www.iweaver.ai/de/blog/gemini-4-argon-vs-gemini-3-8-flash/"
+          },
+          {
+            "label": "BenchLM 对比",
+            "url": "https://benchlm.ai/compare/gemini-3-8-flash-vs-gemini-4-argon"
+          }
+        ],
+        "verification": "search-summary",
+        "checkedAt": "2026-10-25"
+      },
+      {
+        "id": "flash-lite-thin",
+        "modelIds": [
+          "gemini-3.5-flash-lite"
+        ],
+        "tasks": [
+          "all"
+        ],
+        "stance": "提醒",
+        "statement": "检索只找到自动生成的比较站，没有独立评测或成熟的社区讨论。通用看法是适合对延迟不敏感的批量处理、后台摘要和离线分析。",
+        "action": "当作最便宜的批处理选项先在自己的数据上小样本测试，再决定是否放大用量。",
+        "agreement": "单一聚合站，证据弱",
+        "sources": [
+          {
+            "label": "LMMarketCap 对比",
+            "url": "https://lmmarketcap.com/compare/gemini-3-5-flash-lite-batch/vs/gemini-3-8-flash-batch"
+          }
+        ],
+        "verification": "search-summary",
+        "checkedAt": "2026-10-25"
+      },
+      {
+        "id": "grok47-agentic-cost",
+        "modelIds": [
+          "grok-4-7"
+        ],
+        "tasks": [
+          "all"
+        ],
+        "stance": "定位",
+        "statement": "社区评价：Grok 4.7 在长时、多步的 agent 编码上表现最好，在 Grok Build 里比通用指数显示得更强；单价便宜是主要卖点。但很啰嗦、耗 token（xhigh 每任务约 8 万输出 token，是 Grok 4.6 的两倍），可能抵消价格优势；前端和 3D 任务表现参差。",
+        "action": "长时 agent、仓库改动、长上下文文档任务可以试点；按每个完成任务的 token 计算成本；前端 / 3D 任务先和现有基线对比再用。",
+        "agreement": "方向一致；多为厂商数据与早期评测",
+        "sources": [
+          {
+            "label": "Braindetox 技术分析",
+            "url": "https://braindetox.kr/zh/posts/grok_4_7_release_2026.html"
+          },
+          {
+            "label": "MyClaw 评测",
+            "url": "https://myclaw.ai/ja/blog/grok-4-7-review"
+          },
+          {
+            "label": "Crystal Method",
+            "url": "https://crystal-method.com/blog/xai-grok-4-7-coding-knowledge-work-japan-business/"
           }
         ],
         "verification": "search-summary",
