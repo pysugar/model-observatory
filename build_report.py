@@ -77,6 +77,17 @@ def check_model_profiles(doc, catalog, multi):
             raise ValueError(f"Evidence {ev['id']} needs a source URL and check date")
 
 
+def check_community(doc, profiles_doc):
+    """Community voices are text-only; each needs known models/tasks and at least one https source."""
+    ids = {m["id"] for m in profiles_doc["models"]}
+    tasks = {t["id"] for t in profiles_doc["taskAxis"]} | {"all"}
+    for item in doc["items"]:
+        if not set(item["modelIds"]) <= ids or not set(item["tasks"]) <= tasks:
+            raise ValueError(f"Community item {item['id']} points at unknown model or task")
+        if not item["sources"] or not all(s["url"].startswith("https://") for s in item["sources"]):
+            raise ValueError(f"Community item {item['id']} needs https sources")
+
+
 def build(output_dir=ROOT):
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -219,6 +230,8 @@ def build(output_dir=ROOT):
 
     profiles_doc = read_json(ROOT / "research/2026-10-24/model-effort-profiles.json")
     check_model_profiles(profiles_doc, catalog, multi)
+    community_doc = read_json(ROOT / "research/2026-10-25/community-consensus.json")
+    check_community(community_doc, profiles_doc)
     market = read_json(ROOT / "research/2026-10-23/market-snapshot.json")
     refresh_panorama(multi["external_leaderboards"], market)
     for index, row in enumerate(rows):
@@ -230,6 +243,7 @@ def build(output_dir=ROOT):
         "task_effort_guidance": read_json(ROOT / "research/2026-10-20/task-effort-guidance.json"),
         "practical_evidence": read_json(ROOT / "research/2026-10-20/practical-evidence.json"),
         "model_effort_profiles": profiles_doc,
+        "community_consensus": community_doc,
         "aa_capability_indexes": multi["aa_capability_indexes"],
         "aa_release_series": multi["aa_release_series"],
         "aa_effort_evals": {

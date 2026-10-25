@@ -877,11 +877,17 @@ main { padding-top:35px; }
 .mp-ev summary { font-size:var(--fs-sm); color:var(--teal); cursor:pointer; }
 .mp-ev .evidence-badge, #profileEvidence .evidence-badge { display:inline-block; margin:0 6px 0 0; }
 #profileEvidence h4 { margin:0 0 6px; }
-.mp-alt-table { min-width:620px; }
 .mp-alt-table td, .mp-alt-table th { vertical-align:top; font-size:var(--fs-sm); }
 .mp-alt-table td b { font-weight:700; }
 .mp-alt-table .mp-tag { margin-left:6px; }
 .mp-cell.has { cursor:pointer; }
+.mp-alt-table { min-width:760px; }
+.mp-alt-coverage { margin-top:12px; }
+.mp-voices { font-size:var(--fs-sm); padding-left:18px; margin:6px 0; }
+.mp-voices .evidence-badge { display:inline-block; margin:0 6px 0 0; }
+.mp-voice-box { margin-top:12px; border:1px solid var(--info-line); background:var(--info-bg); border-radius:var(--radius-sm); padding:8px 12px; }
+.mp-voice-box h4 { margin:0 0 4px; font-size:14px; color:var(--info-ink); }
+.mp-card-voice { border-top:1px dashed var(--line); margin-top:6px; padding-top:4px; }
 .mp-toggle { display:inline-flex; align-items:center; gap:6px; font-size:var(--fs-sm); }
 .mp-explain #profileRule p, .mp-explain #profileRule li { font-size:var(--fs-sm); }
 .mp-steps { margin:4px 0 6px; padding-left:20px; }

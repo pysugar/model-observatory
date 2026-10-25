@@ -1,0 +1,49 @@
+{
+  "checkedAt": "2026-10-25",
+  "method": "社区主流声音：整理多篇公开对比文章、评测博客与厂商定位中反复出现的结论，用来补充公开评测覆盖不到的维度（长时 agent 稳定性、最难题上限、需求模糊时的判断、速度体感等）。条目来自 2026-10-25 的网页检索摘要，原页尚未逐条核对；只作参考，不进入甜蜜点、避坑、更优替代或任何计算。agreement 标明来源之间是否一致。",
+  "uncoveredDimensions": ["长时、多步 agent 任务的稳定性与中途纠偏", "最难题、高风险任务的上限", "需求模糊或证据冲突时的判断", "人工主观偏好与写作风格", "端到端速度与延迟", "工具调用可靠性与对失败的如实报告", "长上下文召回质量"],
+  "items": [
+    {"id": "astra-default-when-unbounded", "modelIds": ["gpt-6-astra", "gpt-6.1-sol"], "tasks": ["all"], "stance": "选型",
+     "statement": "多篇对比文章的共同结论：不考虑预算时默认用 GPT-6 Astra（OpenAI 定位为最强型号，适合最难、风险最高或需求模糊的工作）；GPT-6.1 Sol 在多数编码与专业任务上接近 Astra、单任务费用约为五分之一，预算受限、批量或高频调用时换 Sol。",
+     "action": "高价值、出错代价大的任务用 Astra；日常与批量任务先用 Sol 6.1，验收不过再升到 Astra。",
+     "agreement": "多源一致（定位）；质量差距大小有分歧",
+     "sources": [
+       {"label": "The New Stack", "url": "https://thenewstack.io/gpt-6-1-sol-vs-gpt-6-astra/"},
+       {"label": "Moe Lueker 对比", "url": "https://moelueker.com/blog/gpt-6-1-sol-vs-astra-vs-opus-5-5-benchmarks"},
+       {"label": "MyClaw 对比", "url": "https://myclaw.ai/blog/gpt-6-1-sol-vs-6-astra"},
+       {"label": "GlobalGPT 对比", "url": "https://www.glbgpt.com/hub/gpt-6-1-sol-vs-gpt-6-astra/"}
+     ], "verification": "search-summary", "checkedAt": "2026-10-25"},
+    {"id": "astra-hard-science", "modelIds": ["gpt-6-astra", "gpt-6.1-sol"], "tasks": ["complex", "coding"], "stance": "Astra 优势",
+     "statement": "科学计算与最难题上差距明显：检索转述的 Terminal-Bench Science 成绩为 Astra 68.1%、Sol 6.1 57.0%（另一份 AA 榜单摘要记 Astra max 63%，口径不一）。",
+     "action": "科研计算、复杂推导等最难任务优先 Astra；本页 AA 复杂推理行两者差距很小，属于不同题集。",
+     "agreement": "方向一致，具体数字口径不一",
+     "sources": [
+       {"label": "The New Stack", "url": "https://thenewstack.io/gpt-6-1-sol-vs-gpt-6-astra/"},
+       {"label": "Artificial Analysis 对比页", "url": "https://artificialanalysis.ai/models/releases/comparisons/gpt-6-1-sol-vs-gpt-6-astra"}
+     ], "verification": "search-summary", "checkedAt": "2026-10-25"},
+    {"id": "astra-long-agentic", "modelIds": ["gpt-6-astra"], "tasks": ["computer_use", "automation", "agentic"], "stance": "Astra 优势",
+     "statement": "社区把 Astra 定位为长时、多步 agent 任务的首选：支持异步工具调用与任务中途转向，并会持续对照主目标检查进度。本页 OSWorld 2.0 同协议数据中 Astra max 73.5% 也高于 Sol 6.1 max 71.4%，但费用约 7 倍。",
+     "action": "无人值守、需要长时间自主推进的 agent 任务优先 Astra；有人在环、可重试的流程用 Sol 6.1 更划算。",
+     "agreement": "多源一致（定位）",
+     "sources": [
+       {"label": "MindStudio", "url": "https://www.mindstudio.ai/blog/gpt6-astra-agentic-workflows/"},
+       {"label": "The Neuron", "url": "https://theneuron.ai/news/gpt-6-astra-everything-you-need-to-know-about-openais-new-model/"}
+     ], "verification": "search-summary", "checkedAt": "2026-10-25"},
+    {"id": "sol61-matches-coding", "modelIds": ["gpt-6.1-sol", "gpt-6-astra"], "tasks": ["coding"], "stance": "Sol 6.1 优势",
+     "statement": "编码上 Sol 6.1 基本追平 Astra：OpenAI 发布页称 DeepSWE v1.1 上与 Astra 持平、费用约五分之一；有评测者做了 3 组对比，Sol 6.1 每组都追平 Astra，长任务端到端还更快（样本很小）。",
+     "action": "常规编码与仓库修复默认用 Sol 6.1；只有 Sol 交付不过、且任务价值高时才换 Astra。",
+     "agreement": "多源一致（厂商自报 + 小样本实测）",
+     "sources": [
+       {"label": "OpenAI 发布页", "url": "https://openai.com/index/introducing-gpt-6-1-sol/"},
+       {"label": "The New Stack", "url": "https://thenewstack.io/gpt-6-1-sol-vs-gpt-6-astra/"}
+     ], "verification": "search-summary", "checkedAt": "2026-10-25"},
+    {"id": "sol61-unverified-limits", "modelIds": ["gpt-6.1-sol"], "tasks": ["all"], "stance": "提醒",
+     "statement": "“接近 Astra”是厂商定位，不保证每个任务都追平；目前缺少 Sol 6.1 独立的长上下文召回与幻觉数据。默认上下文已提到 500k，但单次 prompt 超过 272k 时整次请求按长上下文价计费。",
+     "action": "长文档、多文件分析先抽样验证召回；接近 272k 时注意计费跳档。",
+     "agreement": "单一或少数来源",
+     "sources": [
+       {"label": "iWeaver", "url": "https://www.iweaver.ai/blog/gpt-6-1-sol/"},
+       {"label": "Crypto Briefing", "url": "https://cryptobriefing.com/openai-gpt-6-1-sol-500k-context/"}
+     ], "verification": "search-summary", "checkedAt": "2026-10-25"}
+  ]
+}
