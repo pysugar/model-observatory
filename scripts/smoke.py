@@ -149,6 +149,11 @@ def check_profile_ui(page, data, output):
     page.select_option("#profileModel", "gpt-6.1-sol")
     expect(page.locator("#profileHeader .mp-voice-box")).to_contain_text("社区主流声音")
     expect(page.locator("#profileAltCoverage")).to_contain_text("这张表看不到的")
+    for m in models:
+        if m["tier"] == "main":
+            page.select_option("#profileModel", m["id"])
+            require(page.locator("#profileAltCoverage .mp-voices li").count() >= 1, f"No community voice shown for {m['id']}")
+    page.select_option("#profileModel", "gpt-6.1-sol")
     page.select_option("#profileAltEffort", "max")
     # Without a budget, near-ties go to the faster config: Astra xhigh, not the slower top-scoring Astra max.
     expect(page.locator('#profileAltTable tr[data-alt-series="aa-ii"]')).to_have_attribute("data-unbounded", "gpt-6-astra|xhigh")
@@ -403,7 +408,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
               "checks": ["fresh five-source search, filters, missing-cost export, dates, theme persistence and touch", "Grok 200k inclusive price boundary", "task-specific best variants in seven dimensions", "dataset-backed knowledge narrative and Elo differences", "effort filters and scaling charts", "pinned vs temporary highlight, missing gaps and singleton", "separate Computer Use protocols and scope-limited raw-precision alternatives", "three verified workflow cards, source boundaries and native disclosures on keyboard/touch",
                "capability missingness, tie ranks, per-domain denominators and CSV consistency",
                "reasoning charts, effort selection, nonmonotonic scores and keyboard access", "seven panels", "Claude filter", "CSV missing values", "budget boundaries", "four Opus evidence views",
-                         "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across seven panels and thirteen CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "sweet-spot matrix equals the Python reference for three presets", "median quadrant, series focus and page TOC", "model profile sweet spots, pitfalls (incl. overthinking) and three better alternatives equal the Python reference for every model, effort, preset and scope; max-effort scenarios with measured signals; work-phase mainstream efforts mapped to native levels; community voices stay text-only; deep link and cross-links", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
+                         "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across seven panels and thirteen CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "sweet-spot matrix equals the Python reference for three presets", "median quadrant, series focus and page TOC", "model profile sweet spots, pitfalls (incl. overthinking) and three better alternatives equal the Python reference for every model, effort, preset and scope; max-effort scenarios with measured signals; work-phase mainstream efforts mapped to native levels; community voices for every main model stay text-only; deep link and cross-links", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
               "cloudflare_headers_checked": cloudflare}
     (output / "smoke.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result, indent=2))
