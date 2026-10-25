@@ -19,6 +19,7 @@
 | `8040c1f58e2ba09e33d23703a7b0b296eb081241` | PR #21：模型档案统一“甜蜜点”说法与门槛演示、更优替代、避坑指南、固定评测行 | [run 40136499170](https://github.com/pysugar/model-observatory/actions/runs/40136499170) |
 | `3c4080fd844c4d401b70b2449682a7310c09b7d7` | PR #23：更优替代列名改为“同预算最强”、去掉页面上的内部说明（仅文案） | [run 40161424122](https://github.com/pysugar/model-observatory/actions/runs/40161424122) |
 | `288defa3ffc7029e20c2a98a52e1ccf95a2a7e22` | PR #24：不限预算推荐、过度思考避坑、别默认最高档的场景、按工作阶段的主流档位、社区主流声音 | [run 40163673486](https://github.com/pysugar/model-observatory/actions/runs/40163673486) |
+| `8d5ab9af93773d2d3e3701925b181611ea7f2638` | PR #25：社区主流声音覆盖四家全部当前主力型号（并带入 PR23 / PR24 发布记录） | [run 40168720237](https://github.com/pysugar/model-observatory/actions/runs/40168720237) |
 
 以上版本均有成功发布 run；2026-10-18 的工作流修复与初始化没有改动研究数据内容。Cloudflare 版本 ID 以各 run 的上传日志与 Worker 控制台为准，不猜测 ID。
 
@@ -135,5 +136,21 @@
 | Cloudflare 版本 | `628fb809-d0fd-47c1-8269-f75fa4bb760c`（上传 `index.html`、`version.json`） | `7b80cf72-4a74-4302-8c78-d94ba52d03fb`（上传 `index.html`、`report-data.json`、`version.json`） |
 
 上线功能：PR #23 把“同价最高”改为“同预算最强”并在表头说明两种替代的含义，去掉页面上的改版过程说明。PR #24 把第三种替代定为“不限预算推荐”（与最高分相差不到分差 3% 的视为打平，取最快的；无耗时数据时取最便宜）；避坑新增“过度思考”；新增“不差钱时什么情况不该用最高档”九类场景与当前模型的实测信号；新增“按工作阶段的主流档位”（综合整理，按模型原生档位换算）；新增 GPT-6 Astra / GPT-6.1 Sol 的社区主流声音。社区与工作阶段内容只作文字参考、不参与计算，来源见 [2026-10-25 研究记录](research/2026-10-25/README.md)；规则见 [README](README.md#当前功能决策与不可回归边界)。PR #22 只改文档（发布 run 40160478249），不单列版本。
+
+本轮仍在云端容器内开发：本地浏览器检查未开 Chromium sandbox，仅用于迭代；sandbox 开启的验收以上述 CI 为准，线上核验采用发布工作流内的 probe 结果与用户本人确认。
+
+## 2026-10-25 PR25 社区主流声音覆盖全部主力型号正式发布收束
+
+[PR #25](https://github.com/pysugar/model-observatory/pull/25) 已于 **2026-10-25T06:20:05Z** 合并。只新增社区主流声音条目与文档，研究数据不变（169 条记录、24 款模型、50 条来源，预览评论中的行数与来源数均未变化）。
+
+| 阶段 | 已完成事实 |
+| --- | --- |
+| 最终源码与合并 | PR 最终 head `000b301c1bed668e21944951e7caeeb1038d9c94`；main merge `8d5ab9af93773d2d3e3701925b181611ea7f2638` |
+| PR 验证与预览（历史） | 最终 head 的 [CI 40165550752](https://github.com/pysugar/model-observatory/actions/runs/40165550752) 成功，原生预览已部署 |
+| main CI 与正式发布 | [run 40168720237](https://github.com/pysugar/model-observatory/actions/runs/40168720237) 成功：63 项单元测试、完整浏览器 smoke（含每款主力型号都显示社区声音） |
+| 正式版本 | 双入口 `publish.py probe` 均为 PASS，commit `8d5ab9af93773d2d3e3701925b181611ea7f2638`；用户另行确认线上页面可用 |
+| Cloudflare 版本 | `e1a35191-bc8e-4dde-b1bf-8e872e4e6027`（上传 `index.html`、`report-data.json`、`version.json`） |
+
+上线内容：社区主流声音从 GPT-6 Astra / GPT-6.1 Sol 扩展到四家全部 11 款当前主力型号（共 15 条，见 [2026-10-25 研究记录](research/2026-10-25/README.md)），每条标出来源一致性与证据强弱，只作文字参考、不参与计算；测试要求每款主力至少一条。本次合并同时带入了 PR23 / PR24 的发布收束记录（提交 `5813914`）。上一代与兼容旧版型号暂未覆盖，社区条目原页仍待逐条核对。
 
 本轮仍在云端容器内开发：本地浏览器检查未开 Chromium sandbox，仅用于迭代；sandbox 开启的验收以上述 CI 为准，线上核验采用发布工作流内的 probe 结果与用户本人确认。
