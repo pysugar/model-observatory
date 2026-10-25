@@ -222,10 +222,11 @@ def profile_pitfalls(data, model_id):
 
 # ---------- Better alternatives for one model x effort (mirrors report.js mpAlternatives) ----------
 def profile_alternatives(data, model_id, effort, scope="vendor"):
-    """{series_key: (cheaper, stronger)}; each is (model_id, effort) or None.
+    """{series_key: (cheaper, stronger, ceiling)}; each is (model_id, effort) or None.
 
     cheaper  = lowest-cost config scoring at least as high and costing strictly less;
-    stronger = highest-scoring config costing no more and scoring strictly higher.
+    stronger = highest-scoring config costing no more and scoring strictly higher;
+    ceiling  = highest-scoring config at any cost, if it scores strictly higher.
     Candidates are active profile models (same vendor, or all four vendors), own other efforts included.
     """
     vendor = {m["id"]: m["vendor"] for m in data["models"]}
@@ -242,6 +243,8 @@ def profile_alternatives(data, model_id, effort, scope="vendor"):
                          key=lambda c: (c[1]["cost"], -c[1]["score"], c[0], EFFORT_ORDER.index(c[1]["effort"])))
         stronger = sorted((c for c in cands if c[1]["cost"] <= p["cost"] and c[1]["score"] > p["score"]),
                           key=lambda c: (-c[1]["score"], c[1]["cost"], c[0], EFFORT_ORDER.index(c[1]["effort"])))
+        ceiling = sorted((c for c in cands if c[1]["score"] > p["score"]),
+                         key=lambda c: (-c[1]["score"], c[1]["cost"], c[0], EFFORT_ORDER.index(c[1]["effort"])))
         pick = lambda lst: (lst[0][0], lst[0][1]["effort"]) if lst else None
-        out[key] = (pick(cheaper), pick(stronger))
+        out[key] = (pick(cheaper), pick(stronger), pick(ceiling))
     return out

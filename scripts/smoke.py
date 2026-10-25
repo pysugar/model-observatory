@@ -133,9 +133,9 @@ def check_profile_ui(page, data, output):
             for effort in page.eval_on_selector_all("#profileAltEffort option", "os => os.map(o => o.value)"):
                 page.select_option("#profileAltEffort", effort)
                 rows = page.eval_on_selector_all("#profileAltTable tr[data-alt-series]",
-                    "rs => rs.map(r => [r.dataset.altSeries, r.dataset.cheaper, r.dataset.stronger])")
+                    "rs => rs.map(r => [r.dataset.altSeries, r.dataset.cheaper, r.dataset.stronger, r.dataset.ceiling])")
                 pair = lambda v: tuple(v.split("|")) if v else None
-                got = {k: (pair(c), pair(st)) for k, c, st in rows}
+                got = {k: (pair(c), pair(st), pair(ce)) for k, c, st, ce in rows}
                 require(got == profile_alternatives(data, m["id"], effort, scope), f"Alternatives drifted: {scope}/{m['id']}/{effort}")
     # Every model shows the same benchmark rows, so coding always lists the AA row before Vulcan.
     page.select_option("#profileModel", "gpt-5.6-luna")
@@ -145,6 +145,12 @@ def check_profile_ui(page, data, output):
     expect(coding.nth(1)).to_contain_text("通过率 %")
     expect(page.locator('#profileGrid tr[data-mp-task="coding"]').nth(0)).to_contain_text("未测")
     page.select_option("#profileAltScope", "vendor")
+    # Community voices are shown as text next to the data, never inside the alternatives table.
+    page.select_option("#profileModel", "gpt-6.1-sol")
+    expect(page.locator("#profileHeader .mp-voice-box")).to_contain_text("社区主流声音")
+    expect(page.locator("#profileAltCoverage")).to_contain_text("这张表看不到的")
+    page.select_option("#profileAltEffort", "max")
+    expect(page.locator('#profileAltTable tr[data-alt-series="aa-ii"]')).to_have_attribute("data-ceiling", "gpt-6-astra|max")
     page.select_option("#profileModel", "grok-4-7")
     expect(page.locator("#profileAltEffort")).to_have_value("high")
     page.locator('#profileGrid tr[data-mp-series="aa-ii"] td[data-mp-effort="xhigh"]').click()
@@ -386,7 +392,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
               "checks": ["fresh five-source search, filters, missing-cost export, dates, theme persistence and touch", "Grok 200k inclusive price boundary", "task-specific best variants in seven dimensions", "dataset-backed knowledge narrative and Elo differences", "effort filters and scaling charts", "pinned vs temporary highlight, missing gaps and singleton", "separate Computer Use protocols and scope-limited raw-precision alternatives", "three verified workflow cards, source boundaries and native disclosures on keyboard/touch",
                "capability missingness, tie ranks, per-domain denominators and CSV consistency",
                "reasoning charts, effort selection, nonmonotonic scores and keyboard access", "seven panels", "Claude filter", "CSV missing values", "budget boundaries", "four Opus evidence views",
-                         "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across seven panels and thirteen CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "sweet-spot matrix equals the Python reference for three presets", "median quadrant, series focus and page TOC", "model profile sweet spots, pitfalls and better alternatives equal the Python reference for every model, effort, preset and scope; deep link and cross-links", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
+                         "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across seven panels and thirteen CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "sweet-spot matrix equals the Python reference for three presets", "median quadrant, series focus and page TOC", "model profile sweet spots, pitfalls and three better alternatives equal the Python reference for every model, effort, preset and scope; community voices stay text-only; deep link and cross-links", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
               "cloudflare_headers_checked": cloudflare}
     (output / "smoke.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result, indent=2))
