@@ -21,6 +21,7 @@
 | `288defa3ffc7029e20c2a98a52e1ccf95a2a7e22` | PR #24：不限预算推荐、过度思考避坑、别默认最高档的场景、按工作阶段的主流档位、社区主流声音 | [run 40163673486](https://github.com/pysugar/model-observatory/actions/runs/40163673486) |
 | `8d5ab9af93773d2d3e3701925b181611ea7f2638` | PR #25：社区主流声音覆盖四家全部当前主力型号（并带入 PR23 / PR24 发布记录） | [run 40168720237](https://github.com/pysugar/model-observatory/actions/runs/40168720237) |
 | `9ac686c2ba8057c1fa1d993ebb915b5054f04dd0` | PR #28：最新榜单新增 AA 智能指数 v5 页签（新口径、较 v4.3.2 变化、来源一致性、新版计算方式） | [run 40650595388](https://github.com/pysugar/model-observatory/actions/runs/40650595388) |
+| `c6ab1d6b6463aa49073b8aba1cc99a87633272db` | PR #30：AA v5 榜单改用原页数据（26 个配置含费用、速度、子评测）并默认打开，能力指数图标明版本 | [run 40658487724](https://github.com/pysugar/model-observatory/actions/runs/40658487724) |
 
 以上版本均有成功发布 run；2026-10-18 的工作流修复与初始化没有改动研究数据内容。Cloudflare 版本 ID 以各 run 的上传日志与 Worker 控制台为准，不猜测 ID。
 
@@ -171,3 +172,17 @@
 上线内容：“最新榜单”新增 **AA v5 新口径** 页签，12 个配置，每行显示“较 v4.3.2”变化并标出多源一致（8）/ 单一来源（4）；页签下可展开 v5 分类权重、移除评测与阅读提示；首页“综合基准”信号指向 v5。数据来自 10-28 网页检索摘要，见 [2026-10-28 研究记录](research/2026-10-28/README.md)。v5 费用、速度与子评测缺失，单一来源行待原页复核。
 
 本轮在云端容器内开发：本地只跑了单元测试和 Node Playwright 定向检查（容器无 Python Playwright）；完整 smoke 以上述 CI 为准，线上核验采用发布工作流内的 probe 结果。
+
+## 2026-10-28 PR30 AA v5 榜单原页数据与默认页签正式发布收束
+
+[PR #30](https://github.com/pysugar/model-observatory/pull/30) 已于 **2026-10-28T08:40Z** 合并。网络放行 artificialanalysis.ai 后，v5 榜单改由 `research/2026-10-28/fetch_aa_v5.py` 从 AA 公开榜单页重建；169 条记录、24 款模型、50 条来源不变。
+
+| 阶段 | 已完成事实 |
+| --- | --- |
+| 最终源码与合并 | PR 最终 head `b0ea27ce2a25d25e587216b44da7d041e97cde80`；main merge `c6ab1d6b6463aa49073b8aba1cc99a87633272db` |
+| PR 验证与预览（历史） | 最终 head 的 [CI 40658081295](https://github.com/pysugar/model-observatory/actions/runs/40658081295) 成功，原生预览已部署 |
+| main CI 与正式发布 | [run 40658487724](https://github.com/pysugar/model-observatory/actions/runs/40658487724) 成功：63 项单元测试、完整浏览器 smoke（含默认 v5 页签与第 2 行为 GPT-6 Astra） |
+| 正式版本 | 双入口 `publish.py probe` 均为 PASS，commit `c6ab1d6b6463aa49073b8aba1cc99a87633272db` |
+| Cloudflare 版本 | `3ced2e6a-b75a-4963-8ed1-e5a01cda34b4`（上传 `index.html`、`report-data.json`、`version.json`） |
+
+上线内容：v5 页签 26 个配置含总分、加权单任务成本、输出速度与九项子评测，PR #28 中来自检索摘要的 12 个分数全部经原页核实；新增 GPT-6.1 Terra 与开放权重标记；“最新榜单”默认打开 v5（GPT-6 Astra 排第 2），旧页签改名“AA v4.3.2（旧）”；能力指数图标明 v4.3.2。整站迁移到 v5 另见后续 PR。

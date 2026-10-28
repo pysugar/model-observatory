@@ -590,6 +590,9 @@ h2 { font-weight:700; letter-spacing:-.045em; }
 .masthead-tools { display:flex; gap:27px; align-items:center; }
 .edition { color:var(--hero-muted); font-size:10px; letter-spacing:1.5px; }
 .edition b { color:var(--hero-ink); font-weight:500; margin-left:12px; }
+html[data-aa="v5"] [data-aa-version="v4"], html[data-aa="v4"] [data-aa-version="v5"] { display:none !important; }
+.masthead-tools { flex-wrap:wrap; }
+.aa-version-control { margin-right:6px; }
 .theme-control select { color:var(--hero-muted); background:var(--hero-bg); border:1px solid var(--hero-line); min-height:34px; padding:5px 9px; font-size:11px; border-radius:6px; color-scheme:dark; }
 .hero-grid { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:70px; align-items:center; padding:28px 0 26px; }
 .hero .eyebrow { color:var(--hero-accent); font-size:10px; letter-spacing:1.8px; display:flex; align-items:center; gap:8px; }

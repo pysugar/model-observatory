@@ -45,6 +45,19 @@ Artificial Analysis 于 **2026-10-27** 把智能指数从 v4.3.2 升级到 v5.0�
 
 OpenAI 三款上升或持平；开放权重模型普遍下降 13–16 分，AA 称最佳闭源与最佳开放权重的差距由 3 分扩大到 12 分，差距在 HLE-Diamond 与 Terminal-Bench-Science 上最大。这与“公开题集被针对性优化”的担忧相符，但 AA 没有给出原因，页面不据此认定任何模型刷榜。私有题集也意味着外部无法复现。
 
-## 仍是 v4.3.2 的部分
+## 整站迁移到 v5
 
-AA 已按 v5 重算 6 大领域指数（例如 Opus 5.5 max 的财务与会计由 60.73 变为 59.40），各发布版本页也给出 v5 逐档总分与费用。但本站的能力指数图、发布版本曲线、逐档子评测、甜蜜点与模型档案互相绑定，任务视图又用到了 v5 已移除的 SciCode、GDPval-AA、AA-LCR，需要整体迁移并重新定义任务视图，另行处理。在此之前这些图表都标明 v4.3.2。
+[fetch_aa_v5_releases.py](fetch_aa_v5_releases.py) 读取 30 个已跟踪发布版本的 AA 页面，输出 [aa-v5-series.json](aa-v5-series.json)，结构与 2026-10-19 的 v4.3.2 快照相同：
+
+- **覆盖**：16 个发布版本、49 个档位有 v5 成绩；四大家族 11 款活跃模型的 44 个档位都有 9 项 v5 评测（与 v4.3.2 时的 44 个一致），并与榜单页分数逐项一致。
+- **未重测**：Opus 5、Fable 5、GPT-6 Sol、GPT-5.6 Sol / Luna、Grok 4.6、Opus 4.8、Sonnet 5、Sonnet 4.6、Muse Spark 1.3（xhigh）、GLM-5.3 Flash、Ling 3.1 Flash、Qwen3.8 Flash Next、DeepSeek V4.1 Flash、DeepSeek V4 0731 在 v5 下没有分数，列在 `unmeasured`，不从 v4.3.2 填补。
+- **页面读取**：只有一个档位的发布版本，其发布版本页在 AA 返回错误页；每个页面都内嵌了几十个对比型号的完整记录，脚本把全部记录合并后再按发布版本归位。页面按 URL + SHA-256 记录。
+- **档位标注**：名称里不带档位的配置（如 Gemini 3.5 Flash-Lite）沿用 v4.3.2 快照对同一 slug 的档位标注；这是配置身份，不是分数。
+- **领域指数**：6 大领域指数按 [AA 方法页](https://artificialanalysis.ai/methodology/capability-indices) 的 v5 构成更新说明（例如工程指数新增 FrontierCode 2.0 与 Terminal-Bench-Science）。
+- **任务视图**：复杂推理 = 0.5 × HLE-Diamond + 0.5 × CritPt v2 hard；编程 = 0.5 × Terminal-Bench 4.0 + 0.5 × FrontierCode 2.0；方案规划 = AA-Briefcase；长程代理 = Terminal-Bench-Science（替代已移除的 GDPval-AA）；工具自动化 = AutomationBench-AA；文档与抗幻觉 = (2 × GDP.pdf + 3 × AA-Omniscience v1.1) / 5（AA-LCR 已移除）。AA-Omniscience 在幻觉多于答对时为负，合成分可以低于 0。
+
+页面默认 v5，页首可切回 v4.3.2；两版各自完整，图表不混算。“均衡”门槛下 77 格甜蜜点有 21 格变化；Opus 5.5 的综合、编程、复杂推理推荐从 high / medium 升到 xhigh，与 AA “v5 中档位影响更大”的结论一致。
+
+## v4.3.2 视图
+
+切到 v4.3.2 后，页面与迁移前完全相同（原有逐格 smoke 断言在该视图下运行）。最新榜单的“较 v4.3.2”列、发布系列的五站全景表与成本页的 169 条历史记录仍是 v4.3.2，已标明。

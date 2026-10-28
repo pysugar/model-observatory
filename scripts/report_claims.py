@@ -8,9 +8,10 @@ def render_claims(text, data):
     def replace(match):
         kind, reference = match.groups()
         parts = reference.split(":")
-        if kind == "aa":
+        if kind in {"aa", "aa5"}:
             release, effort, metric, digits = parts
-            candidates = [v for r in data["aa_release_series"]["releases"] if r["releaseSlug"] == release
+            series = data["aa_release_series"] if kind == "aa" else data["aa_v5"]["aa_release_series"]
+            candidates = [v for r in series["releases"] if r["releaseSlug"] == release
                           for v in r["variants"] if v["effort"] == effort]
         else:
             benchmark, model, effort, metric, digits = parts
@@ -29,4 +30,4 @@ def render_claims(text, data):
             raise ValueError(f"Missing or invalid narrative value: {reference}")
         return f"{value:.{digits}f}"
 
-    return re.sub(r"\{\{(aa|row):([^{}]+)\}\}", replace, text)
+    return re.sub(r"\{\{(aa5|aa|row):([^{}]+)\}\}", replace, text)
