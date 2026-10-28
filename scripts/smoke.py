@@ -207,6 +207,9 @@ def check_profile_ui(page, data, output):
 def check_market_ui(page, data, output):
     """Exercise fresh evidence, missing values, price boundaries, themes and touch."""
     expect(page.locator("#marketTable tbody tr")).to_have_count(8)
+    # AA v5 is the default view: GPT-6 Astra ranks second under the new index.
+    expect(page.locator('[data-board="aa5"]')).to_have_attribute("aria-pressed", "true")
+    expect(page.locator("#marketTable tbody tr").nth(1)).to_contain_text("GPT-6 Astra")
     page.screenshot(path=str(output / "refresh-desktop.png"))
     page.locator('[data-board="livebench"]').click()
     page.fill("#marketSearch", "Grok")

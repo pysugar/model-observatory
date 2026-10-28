@@ -22305,238 +22305,9 @@
     },
     "boards": [
       {
-        "id": "aa",
-        "name": "Artificial Analysis",
-        "short": "AA 智能指数",
-        "kind": "综合能力",
-        "metric": "AA 智能指数",
-        "unit": "分",
-        "precision": 0,
-        "source_url": "https://artificialanalysis.ai/leaderboards/models",
-        "source_updated_at": null,
-        "version": "AA 智能指数 v4.3.2 · 公开榜单显示精度",
-        "cost_label": "加权单任务成本",
-        "cost_basis": "AA 智能指数加权单任务成本（USD），不是 API 每百万 token 单价。",
-        "extra_key": "output_tps",
-        "extra_label": "输出速度",
-        "extra_unit": "tok/s",
-        "selection": "选录四大家族代表配置与近期其他厂商模型，另保留 Opus / Sol / Grok 的对照档位；不是完整全球榜。榜单分数与费用保留页面舍入精度，不覆盖旧曲线的高精度原始值。",
-        "note": "含回退的 Claude 配置按来源完整标记；缺失成本、速度保持为空。输出速度不等于任务端到端完成速度。",
-        "rows": [
-          {
-            "id": "r1",
-            "model": "Claude Opus 5.5",
-            "vendor": "Anthropic",
-            "configuration": "max · 含回退",
-            "score": 58,
-            "cost_usd": 5.98,
-            "output_tps": 96
-          },
-          {
-            "id": "r2",
-            "model": "Claude Sonnet 5.5",
-            "vendor": "Anthropic",
-            "configuration": "max · 含回退",
-            "score": 56,
-            "cost_usd": 5.46,
-            "output_tps": 134
-          },
-          {
-            "id": "r3",
-            "model": "Muse Wonder Full",
-            "vendor": "Meta",
-            "configuration": "max",
-            "score": 56,
-            "cost_usd": null,
-            "output_tps": null
-          },
-          {
-            "id": "r4",
-            "model": "Claude Opus 5.5",
-            "vendor": "Anthropic",
-            "configuration": "high · 含回退",
-            "score": 54,
-            "cost_usd": 1.82,
-            "output_tps": 78
-          },
-          {
-            "id": "r5",
-            "model": "Claude Fable 5.1",
-            "vendor": "Anthropic",
-            "configuration": "max · 含回退",
-            "score": 53,
-            "cost_usd": 7.63,
-            "output_tps": 69
-          },
-          {
-            "id": "r6",
-            "model": "GPT-6 Astra",
-            "vendor": "OpenAI",
-            "configuration": "max",
-            "score": 53,
-            "cost_usd": 3.26,
-            "output_tps": 57
-          },
-          {
-            "id": "r7",
-            "model": "Gemini 4 Argon",
-            "vendor": "Google",
-            "configuration": "high",
-            "score": 53,
-            "cost_usd": 1.99,
-            "output_tps": 82
-          },
-          {
-            "id": "r8",
-            "model": "Muse Wonder",
-            "vendor": "Meta",
-            "configuration": "max",
-            "score": 52,
-            "cost_usd": 4.54,
-            "output_tps": 149
-          },
-          {
-            "id": "r9",
-            "model": "GPT-6.1 Sol",
-            "vendor": "OpenAI",
-            "configuration": "max",
-            "score": 52,
-            "cost_usd": 0.72,
-            "output_tps": 55
-          },
-          {
-            "id": "r10",
-            "model": "GPT-6.1 Sol",
-            "vendor": "OpenAI",
-            "configuration": "high",
-            "score": 50,
-            "cost_usd": 0.32,
-            "output_tps": 49
-          },
-          {
-            "id": "r11",
-            "model": "Grok 4.7",
-            "vendor": "xAI",
-            "configuration": "xhigh",
-            "score": 46,
-            "cost_usd": 3.74,
-            "output_tps": 97
-          },
-          {
-            "id": "r12",
-            "model": "Grok 4.7",
-            "vendor": "xAI",
-            "configuration": "high",
-            "score": 46,
-            "cost_usd": 2.73,
-            "output_tps": 92
-          },
-          {
-            "id": "r13",
-            "model": "MiMo-V2.6-Pro",
-            "vendor": "Xiaomi",
-            "configuration": "页面未注明档位",
-            "score": 46,
-            "cost_usd": 0.13,
-            "output_tps": 53
-          },
-          {
-            "id": "r14",
-            "model": "DeepSeek V4.1 Flash 1017",
-            "vendor": "DeepSeek",
-            "configuration": "max",
-            "score": 45,
-            "cost_usd": 0.26,
-            "output_tps": 204
-          },
-          {
-            "id": "r15",
-            "model": "Qwen3.8 Max (0902)",
-            "vendor": "Alibaba",
-            "configuration": "页面未注明档位",
-            "score": 45,
-            "cost_usd": 5.41,
-            "output_tps": 42
-          },
-          {
-            "id": "r16",
-            "model": "GLM-5.3",
-            "vendor": "Z.AI",
-            "configuration": "max",
-            "score": 45,
-            "cost_usd": 2.01,
-            "output_tps": 78
-          },
-          {
-            "id": "r17",
-            "model": "Ling 3.1 Flash 1019",
-            "vendor": "InclusionAI",
-            "configuration": "页面未注明档位",
-            "score": 44,
-            "cost_usd": 1.49,
-            "output_tps": null
-          },
-          {
-            "id": "r18",
-            "model": "Step 5 Preview",
-            "vendor": "StepFun",
-            "configuration": "页面未注明档位",
-            "score": 44,
-            "cost_usd": 1.03,
-            "output_tps": 217
-          },
-          {
-            "id": "r19",
-            "model": "Kimi K3",
-            "vendor": "Moonshot AI",
-            "configuration": "max",
-            "score": 44,
-            "cost_usd": 2,
-            "output_tps": 37
-          },
-          {
-            "id": "r20",
-            "model": "Claude Haiku 5.5",
-            "vendor": "Anthropic",
-            "configuration": "max",
-            "score": 43,
-            "cost_usd": 0.21,
-            "output_tps": 235
-          },
-          {
-            "id": "r21",
-            "model": "MiniMax-M3.1-Flash",
-            "vendor": "MiniMax",
-            "configuration": "页面未注明档位",
-            "score": 43,
-            "cost_usd": 0.22,
-            "output_tps": 96
-          },
-          {
-            "id": "r22",
-            "model": "Gemini 3.8 Flash",
-            "vendor": "Google",
-            "configuration": "high",
-            "score": 41,
-            "cost_usd": 1.24,
-            "output_tps": 141
-          },
-          {
-            "id": "r23",
-            "model": "GPT-6 Luna",
-            "vendor": "OpenAI",
-            "configuration": "max",
-            "score": 38,
-            "cost_usd": 0.07,
-            "output_tps": 136
-          }
-        ],
-        "checked_at": "2026-10-23"
-      },
-      {
         "id": "aa5",
         "name": "Artificial Analysis v5",
-        "short": "AA v5 新口径",
+        "short": "AA 智能指数 v5",
         "kind": "综合能力",
         "metric": "AA 智能指数 v5",
         "unit": "分",
@@ -22822,6 +22593,235 @@
           "Kimi K3.1 Pro 的 v4.3.2 旧分 55 来自报道与 AA 厂商页摘要，不在 10-23 选录中。",
           "全部 v5 费用、输出速度与九项子评测分数待原页可访问时补录；补录前不进入逐档曲线、甜蜜点或任何计算。"
         ]
+      },
+      {
+        "id": "aa",
+        "name": "Artificial Analysis",
+        "short": "AA v4.3.2（旧）",
+        "kind": "综合能力",
+        "metric": "AA 智能指数",
+        "unit": "分",
+        "precision": 0,
+        "source_url": "https://artificialanalysis.ai/leaderboards/models",
+        "source_updated_at": null,
+        "version": "AA 智能指数 v4.3.2 · 公开榜单显示精度",
+        "cost_label": "加权单任务成本",
+        "cost_basis": "AA 智能指数加权单任务成本（USD），不是 API 每百万 token 单价。",
+        "extra_key": "output_tps",
+        "extra_label": "输出速度",
+        "extra_unit": "tok/s",
+        "selection": "选录四大家族代表配置与近期其他厂商模型，另保留 Opus / Sol / Grok 的对照档位；不是完整全球榜。榜单分数与费用保留页面舍入精度，不覆盖旧曲线的高精度原始值。",
+        "note": "含回退的 Claude 配置按来源完整标记；缺失成本、速度保持为空。输出速度不等于任务端到端完成速度。",
+        "rows": [
+          {
+            "id": "r1",
+            "model": "Claude Opus 5.5",
+            "vendor": "Anthropic",
+            "configuration": "max · 含回退",
+            "score": 58,
+            "cost_usd": 5.98,
+            "output_tps": 96
+          },
+          {
+            "id": "r2",
+            "model": "Claude Sonnet 5.5",
+            "vendor": "Anthropic",
+            "configuration": "max · 含回退",
+            "score": 56,
+            "cost_usd": 5.46,
+            "output_tps": 134
+          },
+          {
+            "id": "r3",
+            "model": "Muse Wonder Full",
+            "vendor": "Meta",
+            "configuration": "max",
+            "score": 56,
+            "cost_usd": null,
+            "output_tps": null
+          },
+          {
+            "id": "r4",
+            "model": "Claude Opus 5.5",
+            "vendor": "Anthropic",
+            "configuration": "high · 含回退",
+            "score": 54,
+            "cost_usd": 1.82,
+            "output_tps": 78
+          },
+          {
+            "id": "r5",
+            "model": "Claude Fable 5.1",
+            "vendor": "Anthropic",
+            "configuration": "max · 含回退",
+            "score": 53,
+            "cost_usd": 7.63,
+            "output_tps": 69
+          },
+          {
+            "id": "r6",
+            "model": "GPT-6 Astra",
+            "vendor": "OpenAI",
+            "configuration": "max",
+            "score": 53,
+            "cost_usd": 3.26,
+            "output_tps": 57
+          },
+          {
+            "id": "r7",
+            "model": "Gemini 4 Argon",
+            "vendor": "Google",
+            "configuration": "high",
+            "score": 53,
+            "cost_usd": 1.99,
+            "output_tps": 82
+          },
+          {
+            "id": "r8",
+            "model": "Muse Wonder",
+            "vendor": "Meta",
+            "configuration": "max",
+            "score": 52,
+            "cost_usd": 4.54,
+            "output_tps": 149
+          },
+          {
+            "id": "r9",
+            "model": "GPT-6.1 Sol",
+            "vendor": "OpenAI",
+            "configuration": "max",
+            "score": 52,
+            "cost_usd": 0.72,
+            "output_tps": 55
+          },
+          {
+            "id": "r10",
+            "model": "GPT-6.1 Sol",
+            "vendor": "OpenAI",
+            "configuration": "high",
+            "score": 50,
+            "cost_usd": 0.32,
+            "output_tps": 49
+          },
+          {
+            "id": "r11",
+            "model": "Grok 4.7",
+            "vendor": "xAI",
+            "configuration": "xhigh",
+            "score": 46,
+            "cost_usd": 3.74,
+            "output_tps": 97
+          },
+          {
+            "id": "r12",
+            "model": "Grok 4.7",
+            "vendor": "xAI",
+            "configuration": "high",
+            "score": 46,
+            "cost_usd": 2.73,
+            "output_tps": 92
+          },
+          {
+            "id": "r13",
+            "model": "MiMo-V2.6-Pro",
+            "vendor": "Xiaomi",
+            "configuration": "页面未注明档位",
+            "score": 46,
+            "cost_usd": 0.13,
+            "output_tps": 53
+          },
+          {
+            "id": "r14",
+            "model": "DeepSeek V4.1 Flash 1017",
+            "vendor": "DeepSeek",
+            "configuration": "max",
+            "score": 45,
+            "cost_usd": 0.26,
+            "output_tps": 204
+          },
+          {
+            "id": "r15",
+            "model": "Qwen3.8 Max (0902)",
+            "vendor": "Alibaba",
+            "configuration": "页面未注明档位",
+            "score": 45,
+            "cost_usd": 5.41,
+            "output_tps": 42
+          },
+          {
+            "id": "r16",
+            "model": "GLM-5.3",
+            "vendor": "Z.AI",
+            "configuration": "max",
+            "score": 45,
+            "cost_usd": 2.01,
+            "output_tps": 78
+          },
+          {
+            "id": "r17",
+            "model": "Ling 3.1 Flash 1019",
+            "vendor": "InclusionAI",
+            "configuration": "页面未注明档位",
+            "score": 44,
+            "cost_usd": 1.49,
+            "output_tps": null
+          },
+          {
+            "id": "r18",
+            "model": "Step 5 Preview",
+            "vendor": "StepFun",
+            "configuration": "页面未注明档位",
+            "score": 44,
+            "cost_usd": 1.03,
+            "output_tps": 217
+          },
+          {
+            "id": "r19",
+            "model": "Kimi K3",
+            "vendor": "Moonshot AI",
+            "configuration": "max",
+            "score": 44,
+            "cost_usd": 2,
+            "output_tps": 37
+          },
+          {
+            "id": "r20",
+            "model": "Claude Haiku 5.5",
+            "vendor": "Anthropic",
+            "configuration": "max",
+            "score": 43,
+            "cost_usd": 0.21,
+            "output_tps": 235
+          },
+          {
+            "id": "r21",
+            "model": "MiniMax-M3.1-Flash",
+            "vendor": "MiniMax",
+            "configuration": "页面未注明档位",
+            "score": 43,
+            "cost_usd": 0.22,
+            "output_tps": 96
+          },
+          {
+            "id": "r22",
+            "model": "Gemini 3.8 Flash",
+            "vendor": "Google",
+            "configuration": "high",
+            "score": 41,
+            "cost_usd": 1.24,
+            "output_tps": 141
+          },
+          {
+            "id": "r23",
+            "model": "GPT-6 Luna",
+            "vendor": "OpenAI",
+            "configuration": "max",
+            "score": 38,
+            "cost_usd": 0.07,
+            "output_tps": 136
+          }
+        ],
+        "checked_at": "2026-10-23"
       },
       {
         "id": "arena",

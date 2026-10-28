@@ -9,12 +9,73 @@
     "methodology_url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
     "private_share": "约 60% 权重来自私有测试集或答案不公开（held-out）的评测；v4.2 为 40%，v4.3 为 45%。",
     "categories": [
-      {"name": "知识工作 Knowledge Work", "weight": 25, "evals": [["AA-Briefcase v1.1", 15], ["AutomationBench-AA", 5], ["GDP.pdf", 5]]},
-      {"name": "编程 Coding", "weight": 25, "evals": [["FrontierCode 2.0（Cognition，私有）", 15], ["Terminal-Bench 4.0", 10]]},
-      {"name": "科学 Science", "weight": 25, "evals": [["Terminal-Bench-Science 0.1.0（70 个 agentic 研究任务）", 15], ["CritPt v2 Hard Subset（40 题私有）", 10]]},
-      {"name": "通用 General", "weight": 25, "evals": [["AA-Omniscience v1.1（准确 10% + 不幻觉 5%）", 15], ["HLE-Diamond（1,000 题精修版）", 10]]}
+      {
+        "name": "知识工作 Knowledge Work",
+        "weight": 25,
+        "evals": [
+          [
+            "AA-Briefcase v1.1",
+            15
+          ],
+          [
+            "AutomationBench-AA",
+            5
+          ],
+          [
+            "GDP.pdf",
+            5
+          ]
+        ]
+      },
+      {
+        "name": "编程 Coding",
+        "weight": 25,
+        "evals": [
+          [
+            "FrontierCode 2.0（Cognition，私有）",
+            15
+          ],
+          [
+            "Terminal-Bench 4.0",
+            10
+          ]
+        ]
+      },
+      {
+        "name": "科学 Science",
+        "weight": 25,
+        "evals": [
+          [
+            "Terminal-Bench-Science 0.1.0（70 个 agentic 研究任务）",
+            15
+          ],
+          [
+            "CritPt v2 Hard Subset（40 题私有）",
+            10
+          ]
+        ]
+      },
+      {
+        "name": "通用 General",
+        "weight": 25,
+        "evals": [
+          [
+            "AA-Omniscience v1.1（准确 10% + 不幻觉 5%）",
+            15
+          ],
+          [
+            "HLE-Diamond（1,000 题精修版）",
+            10
+          ]
+        ]
+      }
     ],
-    "removed": ["GDPval-AA v2.1", "SciCode", "AA-LCR v1.1", "Humanity's Last Exam 原版（由 HLE-Diamond 取代）"],
+    "removed": [
+      "GDPval-AA v2.1",
+      "SciCode",
+      "AA-LCR v1.1",
+      "Humanity's Last Exam 原版（由 HLE-Diamond 取代）"
+    ],
     "previous_weights": "v4.3.2：Agents 30% / Coding 20% / General 30% / Scientific Reasoning 20%，10 项评测。",
     "reading": [
       "v5 与 v4.3.2 分数不可直接比较：权重、题集和评测都变了，AA 也说明旧分不与新分直接可比。下表的“较 v4.3.2”只用于观察排序变化，不表示模型本身变强或变弱。",
@@ -25,7 +86,7 @@
   "board": {
     "id": "aa5",
     "name": "Artificial Analysis v5",
-    "short": "AA v5 新口径",
+    "short": "AA 智能指数 v5",
     "kind": "综合能力",
     "metric": "AA 智能指数 v5",
     "unit": "分",
@@ -42,18 +103,186 @@
     "note": "v5 约 60% 权重来自私有或答案不公开的评测，四类各 25%。新旧版本分数不可直接比较，“较 v4.3.2”只看排序变化；开放权重模型普遍下滑，报道对原因只是推测。标“单一来源”的行待原页复核。",
     "checked_at": "2026-10-28",
     "rows": [
-      {"id": "r1", "model": "Claude Opus 5.5", "vendor": "Anthropic", "configuration": "max · 含回退", "score": 58, "prev_score": 58, "change": "持平 · 原 58", "evidence": "多源一致", "cost_usd": null, "sources": ["https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5", "https://global.techapple.com/2026/10/artificial-analysis-intelligence-index-v5/", "https://startupfortune.com/claude-opus-55-takes-top-spot-as-artificial-analysis-launches-intelligence-index-v5/"]},
-      {"id": "r2", "model": "GPT-6 Astra", "vendor": "OpenAI", "configuration": "max", "score": 57, "prev_score": 53, "change": "+4 · 原 53", "evidence": "多源一致", "cost_usd": null, "sources": ["https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5", "https://global.techapple.com/2026/10/artificial-analysis-intelligence-index-v5/", "https://startupfortune.com/claude-opus-55-takes-top-spot-as-artificial-analysis-launches-intelligence-index-v5/"]},
-      {"id": "r3", "model": "Claude Opus 5.5", "vendor": "Anthropic", "configuration": "xhigh · 含回退", "score": 57, "prev_score": null, "change": "旧选录无此档", "evidence": "单一来源", "cost_usd": null, "sources": ["https://artificialanalysis.ai/leaderboards/models"]},
-      {"id": "r4", "model": "GPT-6.1 Sol", "vendor": "OpenAI", "configuration": "max", "score": 55, "prev_score": 52, "change": "+3 · 原 52", "evidence": "多源一致", "cost_usd": null, "sources": ["https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5", "https://global.techapple.com/2026/10/artificial-analysis-intelligence-index-v5/", "https://startupfortune.com/claude-opus-55-takes-top-spot-as-artificial-analysis-launches-intelligence-index-v5/"]},
-      {"id": "r5", "model": "Gemini 4 Argon", "vendor": "Google", "configuration": "high", "score": 50, "prev_score": 53, "change": "−3 · 原 53", "evidence": "多源一致", "cost_usd": null, "sources": ["https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5", "https://global.techapple.com/2026/10/artificial-analysis-intelligence-index-v5/"]},
-      {"id": "r6", "model": "Kimi K3.1 Pro", "vendor": "Moonshot AI", "configuration": "页面未注明档位 · 权重尚未发布", "score": 46, "prev_score": 55, "change": "−9 · 原 55", "evidence": "多源一致", "cost_usd": null, "sources": ["https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5", "https://www.trendingtopics.eu/artificial-analysis-index-v5-open-weight-models/", "https://artificialanalysis.ai/models/kimi-k3-1-pro"]},
-      {"id": "r7", "model": "Muse Wonder", "vendor": "Meta", "configuration": "max", "score": 43, "prev_score": 52, "change": "−9 · 原 52", "evidence": "单一来源", "cost_usd": null, "sources": ["https://artificialanalysis.ai/models/muse-wonder"]},
-      {"id": "r8", "model": "Claude Haiku 5.5", "vendor": "Anthropic", "configuration": "max", "score": 36, "prev_score": 43, "change": "−7 · 原 43", "evidence": "多源一致", "cost_usd": null, "sources": ["https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5", "https://global.techapple.com/2026/10/artificial-analysis-intelligence-index-v5/"]},
-      {"id": "r9", "model": "Claude Opus 5.5", "vendor": "Anthropic", "configuration": "low · 含回退", "score": 35, "prev_score": null, "change": "旧选录无此档", "evidence": "单一来源", "cost_usd": null, "sources": ["https://startupfortune.com/claude-opus-55-takes-top-spot-as-artificial-analysis-launches-intelligence-index-v5/"]},
-      {"id": "r10", "model": "DeepSeek V4.1 Flash 1017", "vendor": "DeepSeek", "configuration": "max", "score": 32, "prev_score": 45, "change": "−13 · 原 45", "evidence": "多源一致", "cost_usd": null, "sources": ["https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5", "https://global.techapple.com/2026/10/artificial-analysis-intelligence-index-v5/"]},
-      {"id": "r11", "model": "GLM-5.3", "vendor": "Z.AI", "configuration": "max", "score": 32, "prev_score": 45, "change": "−13 · 原 45", "evidence": "多源一致", "cost_usd": null, "sources": ["https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5", "https://global.techapple.com/2026/10/artificial-analysis-intelligence-index-v5/"]},
-      {"id": "r12", "model": "MiMo-V2.6-Pro", "vendor": "Xiaomi", "configuration": "页面未注明档位", "score": 30, "prev_score": 46, "change": "−16 · 原 46", "evidence": "单一来源", "cost_usd": null, "sources": ["https://www.trendingtopics.eu/artificial-analysis-index-v5-open-weight-models/"]}
+      {
+        "id": "r1",
+        "model": "Claude Opus 5.5",
+        "vendor": "Anthropic",
+        "configuration": "max · 含回退",
+        "score": 58,
+        "prev_score": 58,
+        "change": "持平 · 原 58",
+        "evidence": "多源一致",
+        "cost_usd": null,
+        "sources": [
+          "https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5",
+          "https://global.techapple.com/2026/10/artificial-analysis-intelligence-index-v5/",
+          "https://startupfortune.com/claude-opus-55-takes-top-spot-as-artificial-analysis-launches-intelligence-index-v5/"
+        ]
+      },
+      {
+        "id": "r2",
+        "model": "GPT-6 Astra",
+        "vendor": "OpenAI",
+        "configuration": "max",
+        "score": 57,
+        "prev_score": 53,
+        "change": "+4 · 原 53",
+        "evidence": "多源一致",
+        "cost_usd": null,
+        "sources": [
+          "https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5",
+          "https://global.techapple.com/2026/10/artificial-analysis-intelligence-index-v5/",
+          "https://startupfortune.com/claude-opus-55-takes-top-spot-as-artificial-analysis-launches-intelligence-index-v5/"
+        ]
+      },
+      {
+        "id": "r3",
+        "model": "Claude Opus 5.5",
+        "vendor": "Anthropic",
+        "configuration": "xhigh · 含回退",
+        "score": 57,
+        "prev_score": null,
+        "change": "旧选录无此档",
+        "evidence": "单一来源",
+        "cost_usd": null,
+        "sources": [
+          "https://artificialanalysis.ai/leaderboards/models"
+        ]
+      },
+      {
+        "id": "r4",
+        "model": "GPT-6.1 Sol",
+        "vendor": "OpenAI",
+        "configuration": "max",
+        "score": 55,
+        "prev_score": 52,
+        "change": "+3 · 原 52",
+        "evidence": "多源一致",
+        "cost_usd": null,
+        "sources": [
+          "https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5",
+          "https://global.techapple.com/2026/10/artificial-analysis-intelligence-index-v5/",
+          "https://startupfortune.com/claude-opus-55-takes-top-spot-as-artificial-analysis-launches-intelligence-index-v5/"
+        ]
+      },
+      {
+        "id": "r5",
+        "model": "Gemini 4 Argon",
+        "vendor": "Google",
+        "configuration": "high",
+        "score": 50,
+        "prev_score": 53,
+        "change": "−3 · 原 53",
+        "evidence": "多源一致",
+        "cost_usd": null,
+        "sources": [
+          "https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5",
+          "https://global.techapple.com/2026/10/artificial-analysis-intelligence-index-v5/"
+        ]
+      },
+      {
+        "id": "r6",
+        "model": "Kimi K3.1 Pro",
+        "vendor": "Moonshot AI",
+        "configuration": "页面未注明档位 · 权重尚未发布",
+        "score": 46,
+        "prev_score": 55,
+        "change": "−9 · 原 55",
+        "evidence": "多源一致",
+        "cost_usd": null,
+        "sources": [
+          "https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5",
+          "https://www.trendingtopics.eu/artificial-analysis-index-v5-open-weight-models/",
+          "https://artificialanalysis.ai/models/kimi-k3-1-pro"
+        ]
+      },
+      {
+        "id": "r7",
+        "model": "Muse Wonder",
+        "vendor": "Meta",
+        "configuration": "max",
+        "score": 43,
+        "prev_score": 52,
+        "change": "−9 · 原 52",
+        "evidence": "单一来源",
+        "cost_usd": null,
+        "sources": [
+          "https://artificialanalysis.ai/models/muse-wonder"
+        ]
+      },
+      {
+        "id": "r8",
+        "model": "Claude Haiku 5.5",
+        "vendor": "Anthropic",
+        "configuration": "max",
+        "score": 36,
+        "prev_score": 43,
+        "change": "−7 · 原 43",
+        "evidence": "多源一致",
+        "cost_usd": null,
+        "sources": [
+          "https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5",
+          "https://global.techapple.com/2026/10/artificial-analysis-intelligence-index-v5/"
+        ]
+      },
+      {
+        "id": "r9",
+        "model": "Claude Opus 5.5",
+        "vendor": "Anthropic",
+        "configuration": "low · 含回退",
+        "score": 35,
+        "prev_score": null,
+        "change": "旧选录无此档",
+        "evidence": "单一来源",
+        "cost_usd": null,
+        "sources": [
+          "https://startupfortune.com/claude-opus-55-takes-top-spot-as-artificial-analysis-launches-intelligence-index-v5/"
+        ]
+      },
+      {
+        "id": "r10",
+        "model": "DeepSeek V4.1 Flash 1017",
+        "vendor": "DeepSeek",
+        "configuration": "max",
+        "score": 32,
+        "prev_score": 45,
+        "change": "−13 · 原 45",
+        "evidence": "多源一致",
+        "cost_usd": null,
+        "sources": [
+          "https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5",
+          "https://global.techapple.com/2026/10/artificial-analysis-intelligence-index-v5/"
+        ]
+      },
+      {
+        "id": "r11",
+        "model": "GLM-5.3",
+        "vendor": "Z.AI",
+        "configuration": "max",
+        "score": 32,
+        "prev_score": 45,
+        "change": "−13 · 原 45",
+        "evidence": "多源一致",
+        "cost_usd": null,
+        "sources": [
+          "https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5",
+          "https://global.techapple.com/2026/10/artificial-analysis-intelligence-index-v5/"
+        ]
+      },
+      {
+        "id": "r12",
+        "model": "MiMo-V2.6-Pro",
+        "vendor": "Xiaomi",
+        "configuration": "页面未注明档位",
+        "score": 30,
+        "prev_score": 46,
+        "change": "−16 · 原 46",
+        "evidence": "单一来源",
+        "cost_usd": null,
+        "sources": [
+          "https://www.trendingtopics.eu/artificial-analysis-index-v5-open-weight-models/"
+        ]
+      }
     ]
   },
   "pending": [
@@ -65,5 +294,6 @@
   "change_note": {
     "title": "AA 智能指数升级到 v5",
     "body": "约 60% 权重改用私有或答案不公开的评测，四类各 25%，移除 SciCode、GDPval-AA、AA-LCR。Opus 5.5 max 仍居首（58），GPT-6 Astra / 6.1 Sol 上升，开放权重模型普遍下降 9–16 分。新旧版本分数不可直接比较；本页逐档曲线仍是 v4.3.2。"
-  }
+  },
+  "previous_board_short": "AA v4.3.2（旧）"
 }

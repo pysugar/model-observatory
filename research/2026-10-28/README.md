@@ -1,6 +1,6 @@
 # 2026-10-28 AA 智能指数 v5 接入
 
-Artificial Analysis 在 2026 年 10 月下旬把智能指数从 v4.3.2 升级到 v5.0。本期把 v5 总分整理为 [aa-index-v5.json](aa-index-v5.json)，构建时由 `scripts/market_snapshot.py:merge_aa_v5` 作为“最新榜单”的 **AA v5 新口径** 页签插入，排在原 AA v4.3.2 页签之后。
+Artificial Analysis 在 2026 年 10 月下旬把智能指数从 v4.3.2 升级到 v5.0。本期把 v5 总分整理为 [aa-index-v5.json](aa-index-v5.json)，构建时由 `scripts/market_snapshot.py:merge_aa_v5` 作为“最新榜单”的 **AA 智能指数 v5** 页签插入，设为默认打开的第一个页签；原 v4.3.2 页签改名“AA v4.3.2（旧）”排在其后，内容不变。
 
 ## 读取方式与限制
 

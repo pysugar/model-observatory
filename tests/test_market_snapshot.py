@@ -41,9 +41,12 @@ class MarketSnapshotTests(unittest.TestCase):
 
     def test_aa_v5_board_is_separate_and_traceable(self):
         boards = {b["id"]: b for b in self.snapshot["boards"]}
-        self.assertEqual([b["id"] for b in self.snapshot["boards"]][:2], ["aa", "aa5"])
+        self.assertEqual([b["id"] for b in self.snapshot["boards"]][:2], ["aa5", "aa"])
         raw = json.loads((ROOT / "research/2026-10-23/market-snapshot.json").read_text())
-        self.assertEqual(boards["aa"], raw["boards"][0])  # v4.3.2 selection unchanged
+        self.assertEqual({**boards["aa"], "short": raw["boards"][0]["short"]}, raw["boards"][0])  # only the tab label changes
+        self.assertEqual(boards["aa"]["short"], "AA v4.3.2（旧）")
+        ranked = sorted(boards["aa5"]["rows"], key=lambda r: -r["score"])
+        self.assertEqual([r["model"] for r in ranked[:2]], ["Claude Opus 5.5", "GPT-6 Astra"])
         v5 = boards["aa5"]
         self.assertEqual(v5["checked_at"], "2026-10-28")
         self.assertIsNone(v5["cost_label"])

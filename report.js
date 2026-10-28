@@ -2275,6 +2275,6 @@
   $("marketReset").addEventListener("click", () => {$("marketSearch").value="";$("marketVendor").value="all";$("marketSort").value="score";marketState.expanded=false;renderMarket();});
   $("exportMarket").addEventListener("click", () => exportCSV(marketExportRows(currentMarketBoard(),currentMarketRows()),`模型观测-${marketState.board}-${market.reviewed_at}.csv`));
   document.querySelectorAll("[data-scroll]").forEach(button => button.addEventListener("click", () => {showPanel("overview");$(button.dataset.scroll)?.scrollIntoView({block:"start"});}));
-  renderMarketIntro();selectMarketBoard("aa");
+  renderMarketIntro();selectMarketBoard(market.boards[0].id);
   renderSweetSpot();renderReasoningCharts();renderTaskEffortChart();renderEffortScalingChart();renderPanorama();renderClaudeCatalog();renderProfiles();renderCapIndexChart();renderSpecs();renderDeltas();changeGroup("general");showPanel(location.hash.slice(1)||"overview",false);
 })();
