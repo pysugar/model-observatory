@@ -681,6 +681,11 @@ main { padding-top:35px; }
 .market-method { padding:12px 20px; font-size:11px; color:var(--muted); border-top:1px solid var(--line); }
 .market-method summary { cursor:pointer; color:var(--ink); }
 .market-method p { margin:8px 0 0; }
+.market-config>.evidence-tag { opacity:1; margin:0; padding:0 5px; border-radius:var(--radius-sm); background:var(--info-bg); color:var(--info-ink); }
+.market-config>.evidence-tag.single { background:var(--warn-bg); color:var(--warn-ink); }
+.method-weights { width:100%; border-collapse:collapse; margin-top:8px; }
+.method-weights th, .method-weights td { text-align:left; vertical-align:top; padding:5px 8px 5px 0; border-top:1px solid var(--line); font-weight:normal; }
+.method-weights th { color:var(--ink); min-width:6em; }
 .market-empty { padding:65px 20px; text-align:center; }
 .market-empty b { font-size:15px; }
 .market-empty p { color:var(--muted); font-size:12px; margin-top:8px; }

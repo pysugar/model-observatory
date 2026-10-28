@@ -5,8 +5,11 @@ from pathlib import Path
 import subprocess
 import unittest
 from urllib.parse import urlsplit
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from scripts.market_snapshot import merge_aa_v5  # noqa: E402
 
 
 class MarketSnapshotTests(unittest.TestCase):
@@ -17,7 +20,8 @@ class MarketSnapshotTests(unittest.TestCase):
 
     def test_sources_dates_and_missing_costs_survive_build(self):
         raw = json.loads((ROOT / "research/2026-10-23/market-snapshot.json").read_text())
-        self.assertEqual(self.snapshot, raw)
+        v5 = json.loads((ROOT / "research/2026-10-28/aa-index-v5.json").read_text())
+        self.assertEqual(self.snapshot, merge_aa_v5(raw, v5))
         self.assertEqual({b["id"] for b in raw["boards"]}, {"aa", "arena", "scale", "livebench", "openrouter"})
         self.assertEqual(sum(len(b["rows"]) for b in raw["boards"]), 87)
         for board in raw["boards"]:
@@ -34,6 +38,35 @@ class MarketSnapshotTests(unittest.TestCase):
         self.assertIsNone(boards["scale"]["source_updated_at"])
         self.assertEqual(boards["livebench"]["source_updated_at"], "2026-10-18")
         self.assertEqual(boards["livebench"]["checked_at"], "2026-10-23")
+
+    def test_aa_v5_board_is_separate_and_traceable(self):
+        boards = {b["id"]: b for b in self.snapshot["boards"]}
+        self.assertEqual([b["id"] for b in self.snapshot["boards"]][:2], ["aa", "aa5"])
+        raw = json.loads((ROOT / "research/2026-10-23/market-snapshot.json").read_text())
+        self.assertEqual(boards["aa"], raw["boards"][0])  # v4.3.2 selection unchanged
+        v5 = boards["aa5"]
+        self.assertEqual(v5["checked_at"], "2026-10-28")
+        self.assertIsNone(v5["cost_label"])
+        self.assertEqual(sum(c["weight"] for c in v5["methodology"]["categories"]), 100)
+        for cat in v5["methodology"]["categories"]:
+            self.assertEqual(sum(w for _, w in cat["evals"]), cat["weight"])
+        old = {(r["model"], r["configuration"]): r["score"] for r in boards["aa"]["rows"]}
+        for row in v5["rows"]:
+            self.assertIsNone(row["cost_usd"])
+            self.assertIn(row["evidence"], {"多源一致", "单一来源"})
+            self.assertTrue(row["sources"] and all(urlsplit(u).scheme == "https" for u in row["sources"]))
+            if row["evidence"] == "多源一致":
+                self.assertGreaterEqual(len(row["sources"]), 2)
+            if (row["model"], row["configuration"]) in old:
+                self.assertEqual(row["prev_score"], old[(row["model"], row["configuration"])])
+            if row["prev_score"] is None:
+                self.assertEqual(row["change"], "旧选录无此档")
+            else:
+                delta = row["score"] - row["prev_score"]
+                label = "持平" if delta == 0 else f"{'+' if delta > 0 else '−'}{abs(delta)}"
+                self.assertEqual(row["change"], f"{label} · 原 {row['prev_score']}")
+        self.assertEqual(self.snapshot["highlights"][0]["board_id"], "aa5")
+        self.assertEqual(self.snapshot["changes"][0]["title"], "AA 智能指数升级到 v5")
 
     def test_correct_model_costs_replace_old_panorama_estimates(self):
         rows = {r["model"]:r for r in self.data["external_leaderboards"]["four_family_matrix"]}
