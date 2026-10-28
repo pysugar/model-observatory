@@ -20,13 +20,13 @@
 
 ## 当前项目状态（2026-10-28 AA 智能指数 v5）
 
-**整站迁移到 v5（本轮）**：页首新增“AA 指数版本”切换，默认 v5，可切回 v4.3.2（选择写入地址栏 `?aa=v4` 与浏览器本地偏好，切换后整页重新加载，一次只装入一套数据，不混算）。v5 数据由 [fetch_aa_v5_releases.py](research/2026-10-28/fetch_aa_v5_releases.py) 从 AA 发布版本页读取：16 个发布版本、49 个档位，四大家族 11 款活跃模型 44 个档位的 9 项 v5 评测，6 大领域指数按 v5 构成。AA 没有用 v5 重测旧型号（Opus 5、Sonnet 5、GPT-6 Sol、GPT-5.6 Sol/Luna、Grok 4.6、Fable 5、Opus 4.8、Sonnet 4.6 等），它们在 v5 视图中显示为未测，只在 v4.3.2 视图中有数据。v5 任务视图：复杂推理 = HLE-Diamond + CritPt v2 hard，编程 = Terminal-Bench 4.0 + FrontierCode 2.0，长程代理改为 Terminal-Bench-Science，文档与抗幻觉 = (2 × GDP.pdf + 3 × AA-Omniscience v1.1) / 5，方案规划与工具自动化不变。“均衡”门槛下 77 格甜蜜点有 21 格变化（含评测已更换的长程代理列）。
+**整站迁移到 v5**（[PR #31](https://github.com/pysugar/model-observatory/pull/31) 已合并并正式发布，main merge `dbf234c49ac1521986bcb86e227e697f1fe3b209`，双入口 probe 通过，见 [PR31 发布收束](RELEASES.md#2026-10-28-pr31-整站迁移到-aa-智能指数-v5-正式发布收束)）：页首新增“AA 指数版本”切换，默认 v5，可切回 v4.3.2（选择写入地址栏 `?aa=v4` 与浏览器本地偏好，切换后整页重新加载，一次只装入一套数据，不混算）。v5 数据由 [fetch_aa_v5_releases.py](research/2026-10-28/fetch_aa_v5_releases.py) 从 AA 发布版本页读取：16 个发布版本、49 个档位，四大家族 11 款活跃模型 44 个档位的 9 项 v5 评测，6 大领域指数按 v5 构成。AA 没有用 v5 重测旧型号（Opus 5、Sonnet 5、GPT-6 Sol、GPT-5.6 Sol/Luna、Grok 4.6、Fable 5、Opus 4.8、Sonnet 4.6 等），它们在 v5 视图中显示为未测，只在 v4.3.2 视图中有数据。v5 任务视图：复杂推理 = HLE-Diamond + CritPt v2 hard，编程 = Terminal-Bench 4.0 + FrontierCode 2.0，长程代理改为 Terminal-Bench-Science，文档与抗幻觉 = (2 × GDP.pdf + 3 × AA-Omniscience v1.1) / 5，方案规划与工具自动化不变。“均衡”门槛下 77 格甜蜜点有 21 格变化（含评测已更换的长程代理列）。
 
 [PR #30](https://github.com/pysugar/model-observatory/pull/30) 已合并并正式发布（main merge `c6ab1d6b6463aa49073b8aba1cc99a87633272db`，双入口 probe 通过，见 [PR30 发布收束](RELEASES.md#2026-10-28-pr30-aa-v5-榜单原页数据与默认页签正式发布收束)）。
 
 [PR #28](https://github.com/pysugar/model-observatory/pull/28) 已合并并正式发布（main merge `9ac686c2ba8057c1fa1d993ebb915b5054f04dd0`，双入口 probe 通过，见 [PR28 发布收束](RELEASES.md#2026-10-28-pr28-aa-智能指数-v5-正式发布收束)）。
 
-Artificial Analysis 于 2026-10-27 发布智能指数 v5：约 60% 权重改用私有或答案不公开的评测，四类（知识工作 / 编程 / 科学 / 通用）各 25%，移除 SciCode、GDPval-AA、AA-LCR。“最新榜单”新增 **AA 智能指数 v5** 页签并设为默认打开：26 个配置由 [fetch_aa_v5.py](research/2026-10-28/fetch_aa_v5.py) 从 AA 公开榜单页读取，含总分、加权单任务成本、输出速度、九项子评测（CSV）、“较 v4.3.2”变化与开放权重标记，页签下可展开新版计算方式。原榜单改名“AA v4.3.2（旧）”排在其后。首页“综合基准”信号指向 v5。能力指数图、逐档曲线、甜蜜点和模型档案仍是 v4.3.2 并已标明，不与 v5 混算。见 [2026-10-28 研究记录](research/2026-10-28/README.md)。
+Artificial Analysis 于 2026-10-27 发布智能指数 v5：约 60% 权重改用私有或答案不公开的评测，四类（知识工作 / 编程 / 科学 / 通用）各 25%，移除 SciCode、GDPval-AA、AA-LCR。“最新榜单”新增 **AA 智能指数 v5** 页签并设为默认打开：26 个配置由 [fetch_aa_v5.py](research/2026-10-28/fetch_aa_v5.py) 从 AA 公开榜单页读取，含总分、加权单任务成本、输出速度、九项子评测（CSV）、“较 v4.3.2”变化与开放权重标记，页签下可展开新版计算方式。原榜单改名“AA v4.3.2（旧）”排在其后。首页“综合基准”信号指向 v5。PR #31 起能力指数图、逐档曲线、甜蜜点和模型档案也随页首切换使用 v5（见上文）。见 [2026-10-28 研究记录](research/2026-10-28/README.md)。
 
 ## 当前项目状态（2026-10-25 模型档案）
 
