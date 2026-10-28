@@ -1188,7 +1188,7 @@ main { padding-top:35px; }
   <div class="card chart-card" id="capIndexCard" data-toc="六域排名">
     <div class="chart-header">
       <div>
-        <span class="eyebrow">AA CAPABILITY INDEXES · 6 大专业领域能力指数对比</span>
+        <span class="eyebrow">AA CAPABILITY INDEXES · v4.3.2 · 6 大专业领域能力指数对比</span>
         <h3 id="capIndexTitle">能力指数对比：跨领域排名跃迁（Bump Chart）与单项得分</h3>
       </div>
       <div class="toolbar">
@@ -1199,11 +1199,11 @@ main { padding-top:35px; }
             <option value="all_top">全市场代表版本（含 Muse · MiMo · DeepSeek · GLM · Qwen）</option>
           </select>
         </label>
-        <label class="check"><input type="checkbox" id="capShowII" checked>含 AA 智能指数参照列</label>
+        <label class="check"><input type="checkbox" id="capShowII" checked>含 AA 智能指数 v4.3.2 参照列</label>
         <button id="exportCapIndexes">导出能力指数 CSV</button>
       </div>
     </div>
-    <p class="small">图表与明细可横向滚动查看。分数直接保留 <a href="https://artificialanalysis.ai/zh/indexes" target="_blank" rel="noopener">AA 官方领域指数</a>，不是本报告任务合成分。代表档按每个发布版本的AA 智能指数 最高分选择，不保证该域最佳。活跃与兼容版本包含旧代；切换领域保持同一候选集合。纵轴为当前集合排名，不是分差；两位小数同分并列，缺测不参排、连线断开。两侧只显示模型与具体档位；各点支持悬停、Tab 聚焦与触屏点选，下方固定展示选中配置的完整 7 项分数。</p>
+    <p class="small">本图全部为 AA v4.3.2 数据（总分与 6 个领域指数同一版本）；v5 总分排名见概览“最新榜单”的 AA 智能指数 v5 页签，v5 的领域指数尚未取得，不与本图混排。图表与明细可横向滚动查看。分数直接保留 <a href="https://artificialanalysis.ai/zh/indexes" target="_blank" rel="noopener">AA 官方领域指数</a>，不是本报告任务合成分。代表档按每个发布版本的AA 智能指数 最高分选择，不保证该域最佳。活跃与兼容版本包含旧代；切换领域保持同一候选集合。纵轴为当前集合排名，不是分差；两位小数同分并列，缺测不参排、连线断开。两侧只显示模型与具体档位；各点支持悬停、Tab 聚焦与触屏点选，下方固定展示选中配置的完整 7 项分数。</p>
     <div class="cap-index-tabs" id="capIndexTabs" role="group" aria-label="选择能力指数领域">
       <button type="button" data-cap-tab="all" aria-pressed="true">全部 · 排名对比</button>
       <button type="button" data-cap-tab="financeAndAccounting" aria-pressed="false">财务与会计</button>
@@ -1933,7 +1933,7 @@ main { padding-top:35px; }
     $("capModelPills").innerHTML = entries.map(e => `<button type="button" class="pill-btn ${e.slug === capState.selectedId ? "is-active" : ""}" aria-pressed="${e.slug === capState.selectedId}" data-cap-model="${esc(e.slug)}"><span class="swatch" style="background:${e.color}"></span>${esc(capLabel(e))}</button>`).join("");
     const width = Math.max(1180,Math.round(svg.getBoundingClientRect().width || 1180));
     const showII = $("capShowII").checked, domains = cap.domains;
-    const allCols = [...(showII ? [{key:"__ii__",shortLabel:"AA 智能指数"}] : []),...domains];
+    const allCols = [...(showII ? [{key:"__ii__",shortLabel:"AA 智能指数 v4.3.2"}] : []),...domains];
     const cols = capState.tab === "all" ? allCols : domains.filter(d => d.key === capState.tab);
     const rankings = new Map(cols.map(d => [d.key,capRanking(entries,d.key)]));
     const all = capState.tab === "all", margin = {left:all ? 255 : 265,right:all ? 255 : 140,top:90,bottom:40}, rowH=34;

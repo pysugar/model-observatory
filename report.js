@@ -500,7 +500,7 @@
     $("capModelPills").innerHTML = entries.map(e => `<button type="button" class="pill-btn ${e.slug === capState.selectedId ? "is-active" : ""}" aria-pressed="${e.slug === capState.selectedId}" data-cap-model="${esc(e.slug)}"><span class="swatch" style="background:${e.color}"></span>${esc(capLabel(e))}</button>`).join("");
     const width = Math.max(1180,Math.round(svg.getBoundingClientRect().width || 1180));
     const showII = $("capShowII").checked, domains = cap.domains;
-    const allCols = [...(showII ? [{key:"__ii__",shortLabel:"AA 智能指数"}] : []),...domains];
+    const allCols = [...(showII ? [{key:"__ii__",shortLabel:"AA 智能指数 v4.3.2"}] : []),...domains];
     const cols = capState.tab === "all" ? allCols : domains.filter(d => d.key === capState.tab);
     const rankings = new Map(cols.map(d => [d.key,capRanking(entries,d.key)]));
     const all = capState.tab === "all", margin = {left:all ? 255 : 265,right:all ? 255 : 140,top:90,bottom:40}, rowH=34;
