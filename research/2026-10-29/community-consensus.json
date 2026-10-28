@@ -1,0 +1,1142 @@
+{
+ "checkedAt": "2026-10-29",
+ "method": "社区主流声音：整理公开对比文章、评测博客、Hacker News 发布讨论与 Arena 真实会话信号里反复出现的结论，补充公开评测覆盖不到的维度（长时 agent 稳定性、最难题上限、需求模糊时的判断、速度体感等）。2026-10-29 已打开原页逐条核对：verification=source-checked 表示结论在所列原页中找到，correction 记录本期修正；个人实测与评论只代表单个使用者，按 agreement 标注证据强弱。只作参考，不进入甜蜜点、避坑、更优替代或任何计算。",
+ "uncoveredDimensions": [
+  "长时、多步 agent 任务的稳定性与中途纠偏",
+  "最难题、高风险任务的上限",
+  "需求模糊或证据冲突时的判断",
+  "人工主观偏好与写作风格",
+  "端到端速度与延迟",
+  "工具调用可靠性与对失败的如实报告",
+  "长上下文召回质量"
+ ],
+ "items": [
+  {
+   "id": "astra-default-when-unbounded",
+   "modelIds": [
+    "gpt-6-astra",
+    "gpt-6.1-sol"
+   ],
+   "tasks": [
+    "all"
+   ],
+   "stance": "选型",
+   "statement": "多篇对比文章的共同结论：不考虑预算时默认用 GPT-6 Astra（OpenAI 定位为最强型号，适合最难、风险最高或需求模糊的工作）；GPT-6.1 Sol 在多数编码与专业任务上接近 Astra、单任务费用约为五分之一，预算受限、批量或高频调用时换 Sol。",
+   "action": "高价值、出错代价大的任务用 Astra；日常与批量任务先用 Sol 6.1，验收不过再升到 Astra。",
+   "agreement": "多源一致（定位）；质量差距大小有分歧",
+   "sources": [
+    {
+     "label": "The New Stack",
+     "url": "https://thenewstack.io/gpt-6-1-sol-vs-gpt-6-astra/"
+    },
+    {
+     "label": "Moe Lueker 对比",
+     "url": "https://moelueker.com/blog/gpt-6-1-sol-vs-astra-vs-opus-5-5-benchmarks"
+    },
+    {
+     "label": "MyClaw 对比",
+     "url": "https://myclaw.ai/blog/gpt-6-1-sol-vs-6-astra"
+    },
+    {
+     "label": "GlobalGPT 对比",
+     "url": "https://www.glbgpt.com/hub/gpt-6-1-sol-vs-gpt-6-astra/"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29"
+  },
+  {
+   "id": "astra-hard-science",
+   "modelIds": [
+    "gpt-6-astra",
+    "gpt-6.1-sol"
+   ],
+   "tasks": [
+    "complex",
+    "coding"
+   ],
+   "stance": "Astra 优势",
+   "statement": "最难的科学计算题上 Astra 领先，但差距不大：AA v5 的 Terminal-Bench-Science 在 max 档 Astra 63.3%、Sol 6.1 58.1%，high 档 59.5% 对 46.2%。The New Stack 的三组编码实测里两者 15 次全部通过，没有拉开差距。",
+   "action": "科研计算、复杂推导等最难任务优先 Astra；本页 AA 复杂推理行两者差距很小，属于不同题集。",
+   "agreement": "方向一致；差距大小依任务而定",
+   "sources": [
+    {
+     "label": "AA v5 发布版本页（本页数据）",
+     "url": "https://artificialanalysis.ai/zh/models/releases"
+    },
+    {
+     "label": "The New Stack 实测",
+     "url": "https://thenewstack.io/gpt-6-1-sol-vs-gpt-6-astra/"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29",
+   "correction": "10-25 版的“Astra 68.1%、Sol 6.1 57.0%”在所列原文中找不到，改用 AA v5 原始数据。"
+  },
+  {
+   "id": "astra-long-agentic",
+   "modelIds": [
+    "gpt-6-astra"
+   ],
+   "tasks": [
+    "computer_use",
+    "automation",
+    "agentic"
+   ],
+   "stance": "Astra 优势",
+   "statement": "社区把 Astra 定位为长时、多步 agent 任务的首选：支持异步工具调用与任务中途转向，并会持续对照主目标检查进度。本页 OSWorld 2.0 同协议数据中 Astra max 73.5% 也高于 Sol 6.1 max 71.4%，但费用约 7 倍。",
+   "action": "无人值守、需要长时间自主推进的 agent 任务优先 Astra；有人在环、可重试的流程用 Sol 6.1 更划算。",
+   "agreement": "多源一致（定位）",
+   "sources": [
+    {
+     "label": "The Neuron",
+     "url": "https://theneuron.ai/news/gpt-6-astra-everything-you-need-to-know-about-openais-new-model/"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29",
+   "correction": "MindStudio 链接现为文章列表页，找不到对应论述，已移除；结论由 The Neuron 转述的 OpenAI 开发者说明支持（异步工具调用、中途转向不丢原目标）。"
+  },
+  {
+   "id": "sol61-matches-coding",
+   "modelIds": [
+    "gpt-6.1-sol",
+    "gpt-6-astra"
+   ],
+   "tasks": [
+    "coding"
+   ],
+   "stance": "Sol 6.1 优势",
+   "statement": "编码上 Sol 6.1 基本追平 Astra：OpenAI 发布页称 DeepSWE v1.1 上 Sol 6.1 与 Astra 持平、成本约五分之一；The New Stack 用三组测试各跑 5 次，两者 15 次全部通过，Sol 6.1 还更便宜、更快（样本很小）。",
+   "action": "常规编码与仓库修复默认用 Sol 6.1；只有 Sol 交付不过、且任务价值高时才换 Astra。",
+   "agreement": "多源一致（厂商自报 + 小样本实测）",
+   "sources": [
+    {
+     "label": "OpenAI 发布页",
+     "url": "https://openai.com/index/introducing-gpt-6-1-sol/"
+    },
+    {
+     "label": "The New Stack",
+     "url": "https://thenewstack.io/gpt-6-1-sol-vs-gpt-6-astra/"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29"
+  },
+  {
+   "id": "sol61-unverified-limits",
+   "modelIds": [
+    "gpt-6.1-sol"
+   ],
+   "tasks": [
+    "all"
+   ],
+   "stance": "提醒",
+   "statement": "“接近 Astra”是厂商定位，不保证每个任务都追平；目前缺少 Sol 6.1 独立的长上下文召回与幻觉数据。API 上下文窗口为 1.05M，单次输入超过 272K 时整次请求按输入 ×2、输出 ×1.5 计费；Codex 与 ChatGPT Work 默认用 500K 窗口，走订阅额度时没有长上下文附加费。",
+   "action": "长文档、多文件分析先抽样验证召回；API 调用接近 272K 时注意整次计费跳档。",
+   "agreement": "官方文档",
+   "sources": [
+    {
+     "label": "OpenAI 模型页 · GPT-6.1 Sol",
+     "url": "https://developers.openai.com/api/docs/models/gpt-6.1-sol"
+    },
+    {
+     "label": "iWeaver",
+     "url": "https://www.iweaver.ai/blog/gpt-6-1-sol/"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29",
+   "correction": "10-25 版把 500K 写成“默认上下文”；原文说明 500K 仅是 Codex / ChatGPT Work 的默认值，API 为 1.05M。Crypto Briefing 原页拒绝访问，已移除。"
+  },
+  {
+   "id": "sonnet55-default-opus55-judgment",
+   "modelIds": [
+    "claude-sonnet-5-5",
+    "claude-opus-5-5"
+   ],
+   "tasks": [
+    "all"
+   ],
+   "stance": "选型",
+   "statement": "多数对比的共同结论：Sonnet 5.5 是日常默认，适合定义清楚、结果容易检查的工作（可复现的 BUG、批量一致改写、整理既定资料）；Opus 5.5 留给开放式、需要判断的多步问题。多数公开评测两者差距很小，Sonnet 单价约为一半。",
+   "action": "日常与批量任务默认 Sonnet 5.5；需求模糊、需要权衡取舍或高风险改动时换 Opus 5.5。",
+   "agreement": "多源一致（定位）",
+   "sources": [
+    {
+     "label": "iWeaver 对比",
+     "url": "https://www.iweaver.ai/blog/claude-sonnet-5-5-vs-opus-5-5/"
+    },
+    {
+     "label": "Codersera 对比",
+     "url": "https://codersera.com/blog/claude-sonnet-5-5-vs-opus-5-5-2026/"
+    },
+    {
+     "label": "andrew.ooo",
+     "url": "https://andrew.ooo/answers/claude-sonnet-5-5-vs-claude-opus-5-5-which-to-use-september-2026/"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29"
+  },
+  {
+   "id": "opusplan-split",
+   "modelIds": [
+    "claude-opus-5-5",
+    "claude-sonnet-5-5"
+   ],
+   "tasks": [
+    "planning",
+    "coding"
+   ],
+   "stance": "组合用法",
+   "statement": "Claude Code 社区常见的组合：Opus 负责计划模式和架构决策，执行写代码交给 Sonnet（opusplan 用法）。小样本代码审查对比中，Sonnet 5.5 能胜任常规 PR 审查，但高风险改动仍不能完全替代 Opus。",
+   "action": "规划和高风险审查用 Opus 5.5，具体实现用 Sonnet 5.5。",
+   "agreement": "多源一致（审查结论样本小）",
+   "sources": [
+    {
+     "label": "Codersera 对比",
+     "url": "https://codersera.com/blog/claude-sonnet-5-5-vs-opus-5-5-2026/"
+    },
+    {
+     "label": "The AI Career Lab",
+     "url": "https://theaicareerlab.com/blog/claude-sonnet-5-5-for-professionals-2026"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29"
+  },
+  {
+   "id": "fable51-escalation",
+   "modelIds": [
+    "claude-fable-5-1",
+    "claude-opus-5-5"
+   ],
+   "tasks": [
+    "all"
+   ],
+   "stance": "选型",
+   "statement": "常见建议是先用 Opus 5.5，难题再升到 Fable 5.1：Anthropic 称 Opus 5.5 在多数工作上达到 Fable 5.1 的水平，Pro 方案包含 Opus 5.5 而不含 Fable。Fable 5.1 单价是 Opus 5.5 的 2.5 倍（$10 / $50 对 $4 / $20），缓存读取 $0.25 也高于 Opus 5.5 的 $0.20；Fable 5.1 只是把缓存读取从 Fable 5 的 $1 降了下来。Techsy 的 14 项对照任务里三款模型全部通过，Fable 5.1 账单约为 Opus 5 的 1.8 倍。",
+   "action": "默认 Opus 5.5；只在 Opus 交付不过时试 Fable 5.1，并先确认订阅额度。",
+   "agreement": "多源一致（定位）；缺独立严格对比",
+   "sources": [
+    {
+     "label": "The AI Career Lab",
+     "url": "https://theaicareerlab.com/blog/claude-opus-5-5-vs-fable-5-1-for-professionals"
+    },
+    {
+     "label": "LMMarketCap 对比",
+     "url": "https://lmmarketcap.com/compare/claude-fable-5-1/vs/claude-opus-5-5"
+    },
+    {
+     "label": "Techsy",
+     "url": "https://techsy.io/en/blog/claude-fable-5-1"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29",
+   "correction": "10-25 版称 Fable 5.1“缓存读取更便宜”有误：它只比 Fable 5 便宜，比 Opus 5.5 贵。"
+  },
+  {
+   "id": "haiku55-subagent",
+   "modelIds": [
+    "claude-haiku-5-5"
+   ],
+   "tasks": [
+    "all"
+   ],
+   "stance": "定位",
+   "statement": "社区把 Haiku 5.5 定位为便宜的子 agent：摘要、上下文压缩、查询、分类、浏览器操作等窄而量大的调用，由 Opus 或 Sonnet 负责规划和最终回答。单价很低，但 prompt 超过 10 万 token 后整次涨价；用作主会话时很快越过这条线，所以最适合短小、专用的子任务。",
+   "action": "在 Claude Code 等工具里把搜索、跑测试、总结类子 agent 固定到 Haiku 5.5，并只给它需要的工具；主会话不要用它。",
+   "agreement": "多源一致",
+   "sources": [
+    {
+     "label": "StackOne",
+     "url": "https://www.stackone.com/blog/claude-haiku-subagent-permissions/"
+    },
+    {
+     "label": "Beam AI",
+     "url": "https://beam.ai/agentic-insights/claude-haiku-5-5-subagents"
+    },
+    {
+     "label": "wmedia · Claude Code",
+     "url": "https://wmedia.es/en/tips/claude-code-haiku-5-5-subagents"
+    },
+    {
+     "label": "Apidog",
+     "url": "https://apidog.com/blog/claude-haiku-5-5-claude-code/"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29"
+  },
+  {
+   "id": "luna6-volume",
+   "modelIds": [
+    "gpt-6-luna",
+    "gpt-6.1-sol"
+   ],
+   "tasks": [
+    "all"
+   ],
+   "stance": "选型",
+   "statement": "常见分工：GPT-6.1 Sol 做复杂 agent、编码和文档工作；GPT-6 Luna 做摘要、抽取等高量、对成本敏感的任务。Luna 的进步主要是更便宜、幻觉更少，而不是更聪明（与 GPT-5.6 Luna 大致同分）。",
+   "action": "批量摘要、抽取、分类和子 agent 用 Luna；需要推理和编码质量时换 Sol 6.1。",
+   "agreement": "多源一致（来源为厂商博客与聚合站，证据较弱）",
+   "sources": [
+    {
+     "label": "GoSearch 博客",
+     "url": "https://www.gosearch.ai/blog/?p=6652"
+    },
+    {
+     "label": "LMMarketCap 对比",
+     "url": "https://lmmarketcap.com/compare/gpt-6-1-sol/vs/gpt-6-luna"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29"
+  },
+  {
+   "id": "argon-strengths",
+   "modelIds": [
+    "gemini-4-argon"
+   ],
+   "tasks": [
+    "all"
+   ],
+   "stance": "定位",
+   "statement": "社区与评测把 Argon 看作 Google 的旗舰推理模型：多模态输入（文本、图像、音频、视频、PDF）与约 100 万共享上下文是主要优势；AA-Omniscience 幻觉率最低之一，但更多是选择不答而不是知道得更多。Google 自报的编码与知识工作成绩领先，但部分用的是自家 harness。",
+   "action": "视频、音频、长 PDF 等多模态或超长输入优先考虑 Argon；编码成绩以自己的仓库实测为准。",
+   "agreement": "方向一致；领先成绩多为厂商自报",
+   "sources": [
+    {
+     "label": "eesel · Argon 测试",
+     "url": "https://www.eesel.ai/de/blog/gemini-4-argon-test"
+    },
+    {
+     "label": "HN · AA 幻觉率讨论",
+     "url": "https://news.ycombinator.com/item?id=49914850"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29",
+   "correction": "Vidmuse 与 Korben 原页拒绝访问，已移除；eesel 原文支持“答错少是因为更常说不知道”。"
+  },
+  {
+   "id": "argon-token-hungry",
+   "modelIds": [
+    "gemini-4-argon"
+   ],
+   "tasks": [
+    "all"
+   ],
+   "stance": "提醒",
+   "statement": "开发者最常提到的缺点是输出 token 多：eesel 按 AA v4.3.2 记每任务约 6.2 万输出 token，约为 GPT-6 Astra 的 2.3 倍；AA v5 中 Argon high 每任务约 11.6 万，是 Astra high（2.3 万）的约 5 倍、用时 22.7 分钟。AA 现已按 12-01 后的 $4 / $20 计 Argon 费用（$7.68 / 任务），11-30 前按优惠价实际约为一半。",
+   "action": "按“每个完成任务的总费用”比较，不要只看单价；长期预算按优惠结束后的价格估。",
+   "agreement": "多源一致",
+   "sources": [
+    {
+     "label": "eesel · Argon 测试",
+     "url": "https://www.eesel.ai/de/blog/gemini-4-argon-test"
+    },
+    {
+     "label": "AA v5 发布版本页（本页数据）",
+     "url": "https://artificialanalysis.ai/zh/models/releases"
+    },
+    {
+     "label": "AA · Gemini 4 Argon 定价说明",
+     "url": "https://artificialanalysis.ai/models/gemini-4-argon"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29",
+   "correction": "补充 AA v5 用量与计价变化；Vidmuse 原页拒绝访问，已移除。"
+  },
+  {
+   "id": "flash38-workhorse",
+   "modelIds": [
+    "gemini-3.8-flash",
+    "gemini-4-argon"
+   ],
+   "tasks": [
+    "all"
+   ],
+   "stance": "选型",
+   "statement": "Google 把 Argon 定位为推理旗舰、Flash 为编码与 agent 的主力。社区建议：步骤之间相互依赖、需要严密推理的任务用 Argon；常规摘要、按标准分类、可重复的流程用 Flash 3.8，响应更快、更便宜。公开对比多来自自动生成的比较站，差距区间重叠。",
+   "action": "可重复、量大的工作流默认 Flash 3.8；多步推理和冲突约束的评审换 Argon。",
+   "agreement": "定位一致；缺独立实测",
+   "sources": [
+    {
+     "label": "iWeaver · Argon vs Flash",
+     "url": "https://www.iweaver.ai/de/blog/gemini-4-argon-vs-gemini-3-8-flash/"
+    },
+    {
+     "label": "BenchLM 对比",
+     "url": "https://benchlm.ai/compare/gemini-3-8-flash-vs-gemini-4-argon"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29"
+  },
+  {
+   "id": "flash-lite-thin",
+   "modelIds": [
+    "gemini-3.5-flash-lite"
+   ],
+   "tasks": [
+    "all"
+   ],
+   "stance": "提醒",
+   "statement": "检索只找到自动生成的比较站，没有独立评测或成熟的社区讨论。通用看法是适合对延迟不敏感的批量处理、后台摘要和离线分析。",
+   "action": "当作最便宜的批处理选项先在自己的数据上小样本测试，再决定是否放大用量。",
+   "agreement": "单一聚合站，证据弱",
+   "sources": [
+    {
+     "label": "LMMarketCap 对比",
+     "url": "https://lmmarketcap.com/compare/gemini-3-5-flash-lite-batch/vs/gemini-3-8-flash-batch"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29"
+  },
+  {
+   "id": "grok47-agentic-cost",
+   "modelIds": [
+    "grok-4-7"
+   ],
+   "tasks": [
+    "all"
+   ],
+   "stance": "定位",
+   "statement": "社区评价：Grok 4.7 主打长时、多步的 agent 编码，单价与 Grok 4.6 相同是主要卖点。但耗 token：AA v4.3.2 中 xhigh 每任务约 8.1 万输出 token，是 Grok 4.6 xhigh（3.8 万）的两倍多；AA v5 中 high / xhigh 约 8.9 万 / 9.3 万。缓存读取 $0.50，是 Fable 5.1 的两倍，缓存占比高的 agent 任务里价格优势会缩小。",
+   "action": "长时 agent、仓库改动可以试点；按每个完成任务的总费用（含缓存）计算成本，不只看输入 / 输出单价。",
+   "agreement": "定位来自厂商与早期评测；token 与缓存价为实测 / 官方数字",
+   "sources": [
+    {
+     "label": "Braindetox 技术分析",
+     "url": "https://braindetox.kr/zh/posts/grok_4_7_release_2026.html"
+    },
+    {
+     "label": "Crystal Method",
+     "url": "https://crystal-method.com/blog/xai-grok-4-7-coding-knowledge-work-japan-business/"
+    },
+    {
+     "label": "AA v5 发布版本页（本页数据）",
+     "url": "https://artificialanalysis.ai/zh/models/releases"
+    },
+    {
+     "label": "HN · 缓存价讨论",
+     "url": "https://news.ycombinator.com/item?id=49790722"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29",
+   "correction": "token 数来自 AA 数据而非所列文章；“前端 / 3D 表现参差”在原文中找不到，已删除；MyClaw 日文页未提及相关论述，已移除。"
+  },
+  {
+   "id": "sonnet55-high-ceiling",
+   "modelIds": [
+    "claude-sonnet-5-5",
+    "claude-opus-5-5"
+   ],
+   "tasks": [
+    "all"
+   ],
+   "stance": "选型",
+   "statement": "HN 发布讨论里最多的疑问是 Sonnet 5.5 高档位不划算。AA v5 印证了这一点：Sonnet xhigh 49.6 分、$4.09，不如 Opus 5.5 high 的 51.7 分、$3.46；Sonnet max 54.2 分、$10.02，不如 Opus xhigh 的 57.0 分、$6.05。一位测试者的 max 档在 15 分钟里耗尽 12.8 万思考 token 仍未出结果；另一位发现它更常停下来问用户是否继续。",
+   "action": "Sonnet 5.5 用 medium / high；需要 xhigh 以上时改用 Opus 5.5 high / xhigh，通常更强也更省。",
+   "agreement": "多位评论一致，AA v5 数据支持；超时与停顿是个人测试",
+   "sources": [
+    {
+     "label": "HN · Sonnet 5.5 发布讨论",
+     "url": "https://news.ycombinator.com/item?id=49882333"
+    },
+    {
+     "label": "HN · max 档超时实测",
+     "url": "https://news.ycombinator.com/item?id=49882573"
+    },
+    {
+     "label": "HN · 更常停下询问",
+     "url": "https://news.ycombinator.com/item?id=49882880"
+    },
+    {
+     "label": "AA v5 发布版本页（本页数据）",
+     "url": "https://artificialanalysis.ai/zh/models/releases"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29"
+  },
+  {
+   "id": "safeguard-fallback",
+   "modelIds": [
+    "claude-opus-5-5",
+    "claude-sonnet-5-5",
+    "claude-fable-5-1"
+   ],
+   "tasks": [
+    "coding",
+    "agentic"
+   ],
+   "stance": "注意",
+   "statement": "Opus 5.5、Sonnet 5.5 与 Fable 5.1 带网络安全 / 生物安全护栏，触发后会悄悄改由另一个模型回答。有用户反映固件、硬件相关请求常被降到 Opus 4.8；评论者引用 Sonnet 5.5 System Card 8.5 节称，Terminal-Bench 中 Opus 5.5 有 10% 的试次由回退模型作答（Sonnet 为 1.5%），可能解释了 Sonnet 在该项反超 Opus。本页 AA 榜单里标“含回退”的 Claude 配置就是这种情况。",
+   "action": "安全研究、逆向、固件类工作先确认实际作答的模型（响应里的 model 字段）；读 Claude 的评测分数时留意“含回退”标记。",
+   "agreement": "多帖反复出现；System Card 数字为评论转述，本期未打开原文",
+   "sources": [
+    {
+     "label": "HN · Terminal-Bench 回退比例",
+     "url": "https://news.ycombinator.com/item?id=49882146"
+    },
+    {
+     "label": "HN · 固件请求被降级",
+     "url": "https://news.ycombinator.com/item?id=49527037"
+    },
+    {
+     "label": "HN · Opus 5.5 发布讨论",
+     "url": "https://news.ycombinator.com/item?id=49803892"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29"
+  },
+  {
+   "id": "haiku55-vs-luna",
+   "modelIds": [
+    "claude-haiku-5-5",
+    "gpt-6-luna"
+   ],
+   "tasks": [
+    "all"
+   ],
+   "stance": "分工",
+   "statement": "10 万 token 以内 Haiku 5.5 与 GPT-6 Luna 单价相同。AA v5 中 Haiku 更聪明（max 36.2 对 27.8），但每任务输出 token 多得多（max 22.6 万对 7.5 万）；一位用户的分类任务里 Luna 因分词更省、输出更短，总价约低四分之一。OpenRouter 上 Haiku 输出速度约为 Luna 的两倍；也有用户在延迟敏感的简单任务里觉得它比 Haiku 4.5 更慢、更差。",
+   "action": "批量分类 / 抽取先用自己的数据比较两者的 token 总量；需要推理质量、且请求在 10 万 token 以内时选 Haiku 5.5。",
+   "agreement": "价格为官方数字，体验因任务而异（个人实测）",
+   "sources": [
+    {
+     "label": "HN · 分类任务成本对比",
+     "url": "https://news.ycombinator.com/item?id=50000487"
+    },
+    {
+     "label": "HN · 输出速度",
+     "url": "https://news.ycombinator.com/item?id=49997193"
+    },
+    {
+     "label": "HN · 延迟敏感任务反馈",
+     "url": "https://news.ycombinator.com/item?id=49997391"
+    },
+    {
+     "label": "AA v5 发布版本页（本页数据）",
+     "url": "https://artificialanalysis.ai/zh/models/releases"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29"
+  },
+  {
+   "id": "argon-slow-interactive",
+   "modelIds": [
+    "gemini-4-argon"
+   ],
+   "tasks": [
+    "coding"
+   ],
+   "stance": "实际体验",
+   "statement": "HN 讨论对 Argon 的文字质量、回答条理和低幻觉评价很高，但交互式编码偏慢、偏贵：一位用户的 11 个小 BUG 修复里 Argon 解出 10 个，中位每次 $0.52、约 4 分钟，同组 Sonnet 5.5 $0.18、约 32 秒，Sol 6.1 $0.09、约 1.5 分钟；图生网页测试中被评为 B 档（Opus 5.5、Astra 为 A 档）。",
+   "action": "研究问答、长文档与写作可优先试 Argon；需要快速来回的小改动用 Sol 6.1 或 Sonnet 5.5。",
+   "agreement": "单个用户实测，方向与 AA v5 用时数据一致",
+   "sources": [
+    {
+     "label": "HN · 小 BUG 修复实测",
+     "url": "https://news.ycombinator.com/item?id=50077034"
+    },
+    {
+     "label": "HN · 图生网页对比",
+     "url": "https://news.ycombinator.com/item?id=50074851"
+    },
+    {
+     "label": "AA v5 发布版本页（本页数据）",
+     "url": "https://artificialanalysis.ai/zh/models/releases"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29"
+  },
+  {
+   "id": "sol61-cache",
+   "modelIds": [
+    "gpt-6.1-sol"
+   ],
+   "tasks": [
+    "agentic",
+    "coding"
+   ],
+   "stance": "Sol 6.1 优势",
+   "statement": "HN 发布讨论认为 Sol 6.1 真正的亮点是缓存输入 $0.10（比 GPT-6 Sol 低一半）；Anthropic 发布 Opus 5.5 时也提到缓存读取占 agent 与编码开销的大头，所以长会话的实际账单下降明显。多位用户也提到 GPT-6 Sol 一周内就被替换，提醒升级后重新验证。",
+   "action": "长会话、重复上下文的 agent 工作优先考虑 Sol 6.1，并保持提示前缀稳定以命中缓存。",
+   "agreement": "官方价格 + 多条评论",
+   "sources": [
+    {
+     "label": "HN · 缓存价讨论",
+     "url": "https://news.ycombinator.com/item?id=49896762"
+    },
+    {
+     "label": "OpenAI 发布页",
+     "url": "https://openai.com/index/introducing-gpt-6-1-sol/"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29"
+  },
+  {
+   "id": "opus55-agent-arena",
+   "modelIds": [
+    "claude-opus-5-5"
+   ],
+   "tasks": [
+    "agentic",
+    "coding"
+   ],
+   "stance": "Opus 5.5 优势",
+   "statement": "Arena 的真实代理会话里 Opus 5.5 max 明显领先：综合 IPS 0.208，第二名约 0.140；用户明确表扬 / 抱怨信号 0.453，第二名 GPT-6.1 Sol 0.313。WebDev 盲选也排第一。这是本页唯一来自大量真实用户会话的信号。",
+   "action": "用户体验要紧、需要长时间协作的代理会话优先 Opus 5.5；预算紧时第二梯队（Sonnet 5.5、Astra、Fable 5.1、Sol 6.1）差距在区间内。",
+   "agreement": "真实会话统计（单一来源）",
+   "sources": [
+    {
+     "label": "Arena 官方数据集 · agent",
+     "url": "https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset"
+    },
+    {
+     "label": "Agent Arena 榜单",
+     "url": "https://arena.ai/leaderboard/agent"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29"
+  },
+  {
+   "id": "astra-chat-preference",
+   "modelIds": [
+    "gpt-6-astra"
+   ],
+   "tasks": [
+    "writing",
+    "knowledge"
+   ],
+   "stance": "注意",
+   "statement": "Astra 在难题上领先（HLE Diamond 第 1、LiveBench 第 2、WebDev 第 2），但 Arena 文本对话盲选只排第 32（style control），低于 Opus 5.5、Fable 5.1 与 Gemini 3.8 Flash。",
+   "action": "日常对话、写作类任务不要只凭基准选 Astra，先用自己的样例比较回答风格。",
+   "agreement": "排名为来源数据；原因无定论",
+   "sources": [
+    {
+     "label": "Arena 官方数据集 · text_style_control",
+     "url": "https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset"
+    },
+    {
+     "label": "Scale HLE Diamond",
+     "url": "https://labs.scale.com/leaderboard/hle-diamond"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29"
+  },
+  {
+   "id": "release-pace",
+   "modelIds": [
+    "gpt-6.1-sol",
+    "claude-opus-5-5",
+    "gemini-4-argon"
+   ],
+   "tasks": [
+    "all"
+   ],
+   "stance": "选型",
+   "statement": "HN 讨论里最常见的抱怨之一是发布节奏：GPT-6 Sol 一周后被 6.1 取代，各家价格几乎每周变化，评测也在改版（AA v5 改版后开放权重模型普遍下降）。常见建议是让模型和供应商可替换，按自己的样例定期回归。",
+   "action": "把模型名放进配置而不是写死在代码里；每次切换前用固定样例集回归一次，并记录评测版本。",
+   "agreement": "多帖一致（观点）",
+   "sources": [
+    {
+     "label": "HN · Sol 6.1 发布讨论",
+     "url": "https://news.ycombinator.com/item?id=49896586"
+    },
+    {
+     "label": "HN · Argon 发布讨论",
+     "url": "https://news.ycombinator.com/item?id=49913571"
+    },
+    {
+     "label": "HN · AA v5 讨论",
+     "url": "https://news.ycombinator.com/item?id=50270428"
+    }
+   ],
+   "verification": "source-checked",
+   "checkedAt": "2026-10-29"
+  }
+ ],
+ "maxEffortScenariosNote": "不差钱时也不该默认最高档的常见场景。来源混合：本页冻结实测（AA 耗时与首字等待、逐档分数）、官方建议、社区经验与配对实验；能用本页数据计算的场景会对当前模型显示实测信号，其余只作提醒，不参与计算。",
+ "maxEffortScenarios": [
+  {
+   "id": "tie-but-slower",
+   "title": "分数打平却慢得多（过度思考）",
+   "why": "高档多想的时间没有换来可见的分数提升。",
+   "signal": "相邻两档耗时涨到 1.5 倍以上、分数提升不到分差 3%。",
+   "action": "不看预算也选打平配置里最快的一档。",
+   "measure": "overthink",
+   "sources": [
+    {
+     "label": "AA 逐档耗时（本页冻结数据）",
+     "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+     "type": "实测"
+    }
+   ]
+  },
+  {
+   "id": "interactive-wait",
+   "title": "交互式对话、需要快速首字",
+   "why": "高档常要先思考很久才开始输出，聊天、补全、客服等场景等不起。",
+   "signal": "首字等待（AA TTFA）随档位成倍上升。",
+   "action": "有人在等的场景用低 / 中档，长任务再升档。",
+   "measure": "ttfa",
+   "sources": [
+    {
+     "label": "AA 首字等待（本页冻结数据）",
+     "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+     "type": "实测"
+    },
+    {
+     "label": "Unifically · GPT 6 Luna 延迟建议",
+     "url": "https://unifically.com/models/gpt-6-luna",
+     "type": "社区经验"
+    }
+   ]
+  },
+  {
+   "id": "budget-exhaustion",
+   "title": "输出预算或超时用尽，最后没有交付",
+   "why": "最高档可能把输出 token 或时间预算花在思考上，结果没有答案或成品。",
+   "signal": "固定输出预算下高档无答案率上升；单例中 max 用完 128k 仍未交付。",
+   "action": "用 max 前放大 max_tokens 与超时，并把“有成品”列为验收条件；否则停在 xhigh。",
+   "measure": null,
+   "sources": [
+    {
+     "label": "Forcebench 配对研究",
+     "url": "https://forcebench.ai/studies/max-effort/",
+     "type": "配对实验"
+    },
+    {
+     "label": "Simon Willison 单例",
+     "url": "https://simonwillison.net/2026/Sep/28/claude-sonnet-5-5/",
+     "type": "社区经验"
+    },
+    {
+     "label": "Fable 5.1 prompting 指南",
+     "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1",
+     "type": "官方建议"
+    }
+   ]
+  },
+  {
+   "id": "scope-creep",
+   "title": "做多了：越界修改、额外动作、超时",
+   "why": "高档更倾向自行扩展任务（额外审查、改范围外文件），在 agent 编码里反而降低通过率。",
+   "signal": "Sonnet 5.5 FrontierCode 脚注转述：xhigh 52.1%、max 46.2%，max 更常超时或越界修改。",
+   "action": "边界明确的修改任务限定改动范围，优先 xhigh；用 max 时检查 diff 范围。",
+   "measure": null,
+   "sources": [
+    {
+     "label": "eesel · Sonnet 5.5 测试",
+     "url": "https://www.eesel.ai/de/blog/claude-sonnet-5-5-test",
+     "type": "检索摘要"
+    }
+   ]
+  },
+  {
+   "id": "higher-is-worse",
+   "title": "高档反而更差",
+   "why": "档位曲线并非单调，部分评测里最高档低于更低档，或幻觉指标变差。",
+   "signal": "本页“档位倒退”避坑；Opus 5 max 在三项官方 agent 编码评测中两项低于 xhigh（检索转述）。",
+   "action": "以自己的验收集比较相邻两档，保留更低但不差的那档。",
+   "measure": "regress",
+   "sources": [
+    {
+     "label": "本页逐档数据（AA / Vulcan / ToneBench）",
+     "url": "https://artificialanalysis.ai/methodology/capability-indices",
+     "type": "实测"
+    },
+    {
+     "label": "Gabriel Moraru · Opus 5 xhigh vs max",
+     "url": "https://gabrielmoraru.com/opus-5-xhigh-vs-max-effort/",
+     "type": "检索摘要"
+    }
+   ]
+  },
+  {
+   "id": "agent-loop-multiplier",
+   "title": "多轮 agent 循环：每一轮都多想",
+   "why": "一次任务几十轮工具调用时，每轮多出的思考会成倍放大总耗时，并更快占满上下文、提前触发压缩。",
+   "signal": "Opus 5.5 在 xhigh / max 下每轮思考明显多于 Opus 5（社区转述）；高档每任务输出 token 数倍增长。",
+   "action": "主控循环用中高档，只在规划、难点排查等关键步骤临时升档。",
+   "measure": null,
+   "sources": [
+    {
+     "label": "ClaudeFast · Opus 5.5 实践",
+     "url": "https://claudefa.st/blog/guide/development/opus-5-5-best-practices",
+     "type": "社区经验"
+    },
+    {
+     "label": "Trilogy AI · Astra effort 观察",
+     "url": "https://trilogyai.substack.com/p/astra-reasoning-effort-token-usage",
+     "type": "社区经验"
+    }
+   ]
+  },
+  {
+   "id": "simple-tasks",
+   "title": "简单、明确的任务：抽取、分类、改写、路由",
+   "why": "这类任务几乎不需要推理，高档只增加等待；部分模型在短任务上低 / 中档甚至不产生推理 token。",
+   "signal": "需求明确、输出格式固定、有确定答案。",
+   "action": "用低档或默认档；质量不够时先补示例和约束，而不是升档。",
+   "measure": null,
+   "sources": [
+    {
+     "label": "OpenAI GPT-5.6 指南（延迟敏感用 low）",
+     "url": "https://developers.openai.com/api/docs/guides/gpt-5.6",
+     "type": "官方建议"
+    },
+    {
+     "label": "ComputingForGeeks · Argon 短任务观察",
+     "url": "https://computingforgeeks.com/gemini-4-argon-released-features-benchmarks/",
+     "type": "检索摘要"
+    }
+   ]
+  },
+  {
+   "id": "quota-and-rate",
+   "title": "订阅额度与速率限制",
+   "why": "在订阅产品里，高档消耗额度更快，更容易触发限速，影响当天其它工作。",
+   "signal": "官方说明高档“更慢、消耗更多额度”；不同入口默认档不同。",
+   "action": "日常用默认档，把高档留给少数关键任务。",
+   "measure": null,
+   "sources": [
+    {
+     "label": "Flavio Copes · GPT-6.1 Sol 用法（转述 OpenAI）",
+     "url": "https://flaviocopes.com/gpt-6-1-sol/",
+     "type": "检索摘要"
+    },
+    {
+     "label": "eesel · Sonnet 5.5 各入口默认档",
+     "url": "https://www.eesel.ai/de/blog/claude-sonnet-5-5-test",
+     "type": "检索摘要"
+    }
+   ]
+  },
+  {
+   "id": "vendor-default",
+   "title": "官方建议：先默认档，实测有收益再升",
+   "why": "厂商普遍建议从默认档起步，只为测得收益的工作保留 xhigh / max；档位名称在不同代际间不对应同样的思考量。",
+   "signal": "没有在自己任务上比较过相邻档位。",
+   "action": "先跑默认档与高一档的小样本配对，再决定是否长期用最高档。",
+   "measure": null,
+   "sources": [
+    {
+     "label": "Claude effort 文档",
+     "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+     "type": "官方建议"
+    },
+    {
+     "label": "OpenAI reasoning 指南",
+     "url": "https://developers.openai.com/api/docs/guides/reasoning",
+     "type": "官方建议"
+    }
+   ]
+  }
+ ],
+ "workPhasesNote": "按工作阶段的主流档位选择。这类选择没有统一的客观标准，这里记录业界常见做法（官方建议、主流工具的默认工作流与社区经验的综合），不是实测结论，也不参与任何计算。档位用通用层级表示：low / medium / high / xhigh / max，页面再换算成当前模型支持的原生档位。",
+ "workPhases": [
+  {
+   "id": "brainstorm",
+   "phase": "头脑风暴 / 发散构思",
+   "examples": "起名、选题、列方案候选、需求发散",
+   "tier": "medium",
+   "range": [
+    "low",
+    "high"
+   ],
+   "why": "要的是数量、多样性和快速来回，高档倾向过早收敛、写成一个周密方案，反而压缩了选项；等待时间也打断思路。",
+   "escalate": "需要对候选做严谨比较或可行性论证时，切到“方案设计”档位。",
+   "downgrade": "只要大量简短点子时可用 low。",
+   "sources": [
+    {
+     "label": "OpenAI reasoning 指南",
+     "url": "https://developers.openai.com/api/docs/guides/reasoning",
+     "type": "官方建议"
+    },
+    {
+     "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+     "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+     "type": "官方建议"
+    }
+   ]
+  },
+  {
+   "id": "design",
+   "phase": "方案设计 / 架构规划",
+   "examples": "技术选型、模块拆分、迁移方案、接口设计",
+   "tier": "xhigh",
+   "range": [
+    "high",
+    "max"
+   ],
+   "why": "主流工作流把“计划”和“执行”分开：用强模型、高档位想清楚方案，再交给便宜配置执行。决策难以撤回、影响面大时值得多想。",
+   "escalate": "不可逆、高风险的决策可用 max，并要求列出备选与取舍。",
+   "downgrade": "范围小、有成熟模板的设计用 high 即可。",
+   "sources": [
+    {
+     "label": "Aider · architect / editor 分工",
+     "url": "https://aider.chat/2024/09/26/architect.html",
+     "type": "社区经验"
+    },
+    {
+     "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+     "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+     "type": "官方建议"
+    },
+    {
+     "label": "OpenAI · reasoning 最佳实践",
+     "url": "https://platform.openai.com/docs/guides/reasoning-best-practices",
+     "type": "官方建议"
+    }
+   ]
+  },
+  {
+   "id": "execute",
+   "phase": "按计划执行 / 具体实现",
+   "examples": "照着已定方案写代码、批量修改、补测试",
+   "tier": "medium",
+   "range": [
+    "low",
+    "high"
+   ],
+   "why": "方案已定，难点在准确落地和速度；高档会在每一步重复思考已经决定的事，拖慢多轮循环、占用上下文，还可能自行扩展范围。",
+   "escalate": "实现中遇到计划没覆盖的难点时临时升一档，或退回“方案设计”。",
+   "downgrade": "机械、重复的修改用 low。",
+   "sources": [
+    {
+     "label": "Aider · architect / editor 分工",
+     "url": "https://aider.chat/2024/09/26/architect.html",
+     "type": "社区经验"
+    },
+    {
+     "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+     "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+     "type": "官方建议"
+    },
+    {
+     "label": "Forcebench 配对研究",
+     "url": "https://forcebench.ai/studies/max-effort/",
+     "type": "配对实验"
+    }
+   ]
+  },
+  {
+   "id": "routine-edit",
+   "phase": "日常小改 / 格式整理",
+   "examples": "改文案、重命名、格式化、单文件小修",
+   "tier": "low",
+   "range": [
+    "low",
+    "medium"
+   ],
+   "why": "需求明确、结果易验证，推理收益很小，延迟最重要。",
+   "escalate": "小改连续失败时说明需求不清，先补上下文再升档。",
+   "downgrade": "",
+   "sources": [
+    {
+     "label": "OpenAI reasoning 指南",
+     "url": "https://developers.openai.com/api/docs/guides/reasoning",
+     "type": "官方建议"
+    },
+    {
+     "label": "Claude effort 文档",
+     "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+     "type": "官方建议"
+    }
+   ]
+  },
+  {
+   "id": "hard-bug",
+   "phase": "复杂 BUG 定位",
+   "examples": "跨模块根因、竞态、偶现问题、性能回退",
+   "tier": "xhigh",
+   "range": [
+    "high",
+    "max"
+   ],
+   "why": "需要在多个假设间推理、读大量代码和日志，深度思考收益最明显；但前提是先补齐复现步骤和日志，否则升档只是在猜。",
+   "escalate": "high / xhigh 给出的诊断被证伪、且能说清缺口时再试 max，并设好预算和停止条件。",
+   "downgrade": "根因已定位、只剩修复时降回“具体执行”档位。",
+   "sources": [
+    {
+     "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+     "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+     "type": "官方建议"
+    },
+    {
+     "label": "Claude effort 文档",
+     "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+     "type": "官方建议"
+    }
+   ]
+  },
+  {
+   "id": "env-issue",
+   "phase": "环境 / 依赖 / 构建问题",
+   "examples": "安装失败、版本冲突、CI 报错、配置问题",
+   "tier": "medium",
+   "range": [
+    "medium",
+    "high"
+   ],
+   "why": "这类问题靠“看报错—试—再看报错”的快速循环解决，信息在工具输出里而不在推理里；每轮多想几分钟往往不如多跑几轮。",
+   "escalate": "多轮尝试仍无进展、需要理解复杂的依赖关系时升到 high / xhigh。",
+   "downgrade": "",
+   "sources": [
+    {
+     "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+     "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+     "type": "官方建议"
+    },
+    {
+     "label": "OpenAI reasoning 指南",
+     "url": "https://developers.openai.com/api/docs/guides/reasoning",
+     "type": "官方建议"
+    }
+   ]
+  },
+  {
+   "id": "review",
+   "phase": "代码审查 / 方案复核",
+   "examples": "PR 审查、安全检查、复核别人的方案",
+   "tier": "high",
+   "range": [
+    "high",
+    "xhigh"
+   ],
+   "why": "发现细微问题需要推理，但审查一般有明确范围；主流做法是换一个模型或新会话复核，而不是同一模型开到最高档。",
+   "escalate": "安全、资金相关或大改动的审查用 xhigh。",
+   "downgrade": "",
+   "sources": [
+    {
+     "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+     "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+     "type": "官方建议"
+    },
+    {
+     "label": "Claude effort 文档",
+     "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+     "type": "官方建议"
+    }
+   ]
+  },
+  {
+   "id": "research",
+   "phase": "调研 / 长文档阅读与总结",
+   "examples": "读论文、整理资料、对比文档",
+   "tier": "high",
+   "range": [
+    "medium",
+    "xhigh"
+   ],
+   "why": "信息整合需要一定推理，但瓶颈常在上下文质量和检索，而不是思考深度。",
+   "escalate": "证据相互冲突、需要下结论时升到 xhigh。",
+   "downgrade": "只做摘要或提取要点时用 medium。",
+   "sources": [
+    {
+     "label": "OpenAI reasoning 指南",
+     "url": "https://developers.openai.com/api/docs/guides/reasoning",
+     "type": "官方建议"
+    },
+    {
+     "label": "OpenAI · reasoning 最佳实践",
+     "url": "https://platform.openai.com/docs/guides/reasoning-best-practices",
+     "type": "官方建议"
+    }
+   ]
+  },
+  {
+   "id": "writing",
+   "phase": "写作 / 润色",
+   "examples": "文案、邮件、报告润色",
+   "tier": "medium",
+   "range": [
+    "low",
+    "high"
+   ],
+   "why": "本页 ToneBench 写作分数随档位变化很小；写作质量更依赖提示中的风格、受众和示例。",
+   "escalate": "长篇、结构复杂或需要严谨论证时用 high。",
+   "downgrade": "短文本润色用 low。",
+   "sources": [
+    {
+     "label": "ToneBench 写作逐档（本页数据）",
+     "url": "https://benchmark.towardsai.com/data/leaderboard.json",
+     "type": "实测"
+    },
+    {
+     "label": "Claude effort 文档",
+     "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+     "type": "官方建议"
+    }
+   ]
+  },
+  {
+   "id": "math-science",
+   "phase": "数学 / 科学推导、竞赛难题",
+   "examples": "证明、复杂计算、算法难题",
+   "tier": "max",
+   "range": [
+    "xhigh",
+    "max"
+   ],
+   "why": "推理深度直接决定能否做对，是最高档最主流的用途；答案通常可验证，多花时间值得。",
+   "escalate": "",
+   "downgrade": "题目较常规时用 xhigh。",
+   "sources": [
+    {
+     "label": "OpenAI · reasoning 最佳实践",
+     "url": "https://platform.openai.com/docs/guides/reasoning-best-practices",
+     "type": "官方建议"
+    },
+    {
+     "label": "Claude effort 文档",
+     "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+     "type": "官方建议"
+    }
+   ]
+  },
+  {
+   "id": "long-agent",
+   "phase": "长时无人值守 agent",
+   "examples": "自主完成多小时任务、后台批处理流程",
+   "tier": "high",
+   "range": [
+    "medium",
+    "xhigh"
+   ],
+   "why": "主控循环每一轮都会叠加耗时和上下文占用；主流做法是主循环用中高档，只在规划、关键决策和卡住时临时升档。",
+   "escalate": "规划与验收步骤用 xhigh。",
+   "downgrade": "简单子任务交给更便宜的模型或 low 档。",
+   "sources": [
+    {
+     "label": "Anthropic · Claude Code 最佳实践（先计划再执行）",
+     "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+     "type": "官方建议"
+    },
+    {
+     "label": "Aider · architect / editor 分工",
+     "url": "https://aider.chat/2024/09/26/architect.html",
+     "type": "社区经验"
+    }
+   ]
+  }
+ ],
+ "coverageNote": "Reddit 被本期浏览环境拦截，X / Twitter 未检索；社区来源以 Hacker News 发布讨论、对比文章与 Arena 真实会话数据为主。"
+}

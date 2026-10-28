@@ -10936,8 +10936,8 @@
     ]
   },
   "community_consensus": {
-    "checkedAt": "2026-10-25",
-    "method": "社区主流声音：整理多篇公开对比文章、评测博客与厂商定位中反复出现的结论，覆盖四家当前主力型号，用来补充公开评测覆盖不到的维度（长时 agent 稳定性、最难题上限、需求模糊时的判断、速度体感等）。条目来自 2026-10-25 的网页检索摘要，原页尚未逐条核对；只作参考，不进入甜蜜点、避坑、更优替代或任何计算。agreement 标明来源之间是否一致。",
+    "checkedAt": "2026-10-29",
+    "method": "社区主流声音：整理公开对比文章、评测博客、Hacker News 发布讨论与 Arena 真实会话信号里反复出现的结论，补充公开评测覆盖不到的维度（长时 agent 稳定性、最难题上限、需求模糊时的判断、速度体感等）。2026-10-29 已打开原页逐条核对：verification=source-checked 表示结论在所列原页中找到，correction 记录本期修正；个人实测与评论只代表单个使用者，按 agreement 标注证据强弱。只作参考，不进入甜蜜点、避坑、更优替代或任何计算。",
     "uncoveredDimensions": [
       "长时、多步 agent 任务的稳定性与中途纠偏",
       "最难题、高风险任务的上限",
@@ -10979,8 +10979,8 @@
             "url": "https://www.glbgpt.com/hub/gpt-6-1-sol-vs-gpt-6-astra/"
           }
         ],
-        "verification": "search-summary",
-        "checkedAt": "2026-10-25"
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29"
       },
       {
         "id": "astra-hard-science",
@@ -10993,21 +10993,22 @@
           "coding"
         ],
         "stance": "Astra 优势",
-        "statement": "科学计算与最难题上差距明显：检索转述的 Terminal-Bench Science 成绩为 Astra 68.1%、Sol 6.1 57.0%（另一份 AA 榜单摘要记 Astra max 63%，口径不一）。",
+        "statement": "最难的科学计算题上 Astra 领先，但差距不大：AA v5 的 Terminal-Bench-Science 在 max 档 Astra 63.3%、Sol 6.1 58.1%，high 档 59.5% 对 46.2%。The New Stack 的三组编码实测里两者 15 次全部通过，没有拉开差距。",
         "action": "科研计算、复杂推导等最难任务优先 Astra；本页 AA 复杂推理行两者差距很小，属于不同题集。",
-        "agreement": "方向一致，具体数字口径不一",
+        "agreement": "方向一致；差距大小依任务而定",
         "sources": [
           {
-            "label": "The New Stack",
-            "url": "https://thenewstack.io/gpt-6-1-sol-vs-gpt-6-astra/"
+            "label": "AA v5 发布版本页（本页数据）",
+            "url": "https://artificialanalysis.ai/zh/models/releases"
           },
           {
-            "label": "Artificial Analysis 对比页",
-            "url": "https://artificialanalysis.ai/models/releases/comparisons/gpt-6-1-sol-vs-gpt-6-astra"
+            "label": "The New Stack 实测",
+            "url": "https://thenewstack.io/gpt-6-1-sol-vs-gpt-6-astra/"
           }
         ],
-        "verification": "search-summary",
-        "checkedAt": "2026-10-25"
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29",
+        "correction": "10-25 版的“Astra 68.1%、Sol 6.1 57.0%”在所列原文中找不到，改用 AA v5 原始数据。"
       },
       {
         "id": "astra-long-agentic",
@@ -11025,16 +11026,13 @@
         "agreement": "多源一致（定位）",
         "sources": [
           {
-            "label": "MindStudio",
-            "url": "https://www.mindstudio.ai/blog/gpt6-astra-agentic-workflows/"
-          },
-          {
             "label": "The Neuron",
             "url": "https://theneuron.ai/news/gpt-6-astra-everything-you-need-to-know-about-openais-new-model/"
           }
         ],
-        "verification": "search-summary",
-        "checkedAt": "2026-10-25"
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29",
+        "correction": "MindStudio 链接现为文章列表页，找不到对应论述，已移除；结论由 The Neuron 转述的 OpenAI 开发者说明支持（异步工具调用、中途转向不丢原目标）。"
       },
       {
         "id": "sol61-matches-coding",
@@ -11046,7 +11044,7 @@
           "coding"
         ],
         "stance": "Sol 6.1 优势",
-        "statement": "编码上 Sol 6.1 基本追平 Astra：OpenAI 发布页称 DeepSWE v1.1 上与 Astra 持平、费用约五分之一；有评测者做了 3 组对比，Sol 6.1 每组都追平 Astra，长任务端到端还更快（样本很小）。",
+        "statement": "编码上 Sol 6.1 基本追平 Astra：OpenAI 发布页称 DeepSWE v1.1 上 Sol 6.1 与 Astra 持平、成本约五分之一；The New Stack 用三组测试各跑 5 次，两者 15 次全部通过，Sol 6.1 还更便宜、更快（样本很小）。",
         "action": "常规编码与仓库修复默认用 Sol 6.1；只有 Sol 交付不过、且任务价值高时才换 Astra。",
         "agreement": "多源一致（厂商自报 + 小样本实测）",
         "sources": [
@@ -11059,8 +11057,8 @@
             "url": "https://thenewstack.io/gpt-6-1-sol-vs-gpt-6-astra/"
           }
         ],
-        "verification": "search-summary",
-        "checkedAt": "2026-10-25"
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29"
       },
       {
         "id": "sol61-unverified-limits",
@@ -11071,21 +11069,22 @@
           "all"
         ],
         "stance": "提醒",
-        "statement": "“接近 Astra”是厂商定位，不保证每个任务都追平；目前缺少 Sol 6.1 独立的长上下文召回与幻觉数据。默认上下文已提到 500k，但单次 prompt 超过 272k 时整次请求按长上下文价计费。",
-        "action": "长文档、多文件分析先抽样验证召回；接近 272k 时注意计费跳档。",
-        "agreement": "单一或少数来源",
+        "statement": "“接近 Astra”是厂商定位，不保证每个任务都追平；目前缺少 Sol 6.1 独立的长上下文召回与幻觉数据。API 上下文窗口为 1.05M，单次输入超过 272K 时整次请求按输入 ×2、输出 ×1.5 计费；Codex 与 ChatGPT Work 默认用 500K 窗口，走订阅额度时没有长上下文附加费。",
+        "action": "长文档、多文件分析先抽样验证召回；API 调用接近 272K 时注意整次计费跳档。",
+        "agreement": "官方文档",
         "sources": [
+          {
+            "label": "OpenAI 模型页 · GPT-6.1 Sol",
+            "url": "https://developers.openai.com/api/docs/models/gpt-6.1-sol"
+          },
           {
             "label": "iWeaver",
             "url": "https://www.iweaver.ai/blog/gpt-6-1-sol/"
-          },
-          {
-            "label": "Crypto Briefing",
-            "url": "https://cryptobriefing.com/openai-gpt-6-1-sol-500k-context/"
           }
         ],
-        "verification": "search-summary",
-        "checkedAt": "2026-10-25"
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29",
+        "correction": "10-25 版把 500K 写成“默认上下文”；原文说明 500K 仅是 Codex / ChatGPT Work 的默认值，API 为 1.05M。Crypto Briefing 原页拒绝访问，已移除。"
       },
       {
         "id": "sonnet55-default-opus55-judgment",
@@ -11114,8 +11113,8 @@
             "url": "https://andrew.ooo/answers/claude-sonnet-5-5-vs-claude-opus-5-5-which-to-use-september-2026/"
           }
         ],
-        "verification": "search-summary",
-        "checkedAt": "2026-10-25"
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29"
       },
       {
         "id": "opusplan-split",
@@ -11141,8 +11140,8 @@
             "url": "https://theaicareerlab.com/blog/claude-sonnet-5-5-for-professionals-2026"
           }
         ],
-        "verification": "search-summary",
-        "checkedAt": "2026-10-25"
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29"
       },
       {
         "id": "fable51-escalation",
@@ -11154,8 +11153,8 @@
           "all"
         ],
         "stance": "选型",
-        "statement": "常见建议是先用 Opus 5.5，难题再升到 Fable 5.1：Anthropic 称 Opus 5.5 在多数工作上达到 Fable 5.1 的水平，小样本测试里差距也没有显现。Fable 5.1 单价约为 Opus 5.5 的 2.5 倍，但缓存读取更便宜，缓存占比高的长任务可能反而更省；部分订阅方案里 Fable 不在额度内。",
-        "action": "默认 Opus 5.5；只在 Opus 交付不过、或缓存很重的长任务里试 Fable 5.1，并先确认订阅额度。",
+        "statement": "常见建议是先用 Opus 5.5，难题再升到 Fable 5.1：Anthropic 称 Opus 5.5 在多数工作上达到 Fable 5.1 的水平，Pro 方案包含 Opus 5.5 而不含 Fable。Fable 5.1 单价是 Opus 5.5 的 2.5 倍（$10 / $50 对 $4 / $20），缓存读取 $0.25 也高于 Opus 5.5 的 $0.20；Fable 5.1 只是把缓存读取从 Fable 5 的 $1 降了下来。Techsy 的 14 项对照任务里三款模型全部通过，Fable 5.1 账单约为 Opus 5 的 1.8 倍。",
+        "action": "默认 Opus 5.5；只在 Opus 交付不过时试 Fable 5.1，并先确认订阅额度。",
         "agreement": "多源一致（定位）；缺独立严格对比",
         "sources": [
           {
@@ -11171,8 +11170,9 @@
             "url": "https://techsy.io/en/blog/claude-fable-5-1"
           }
         ],
-        "verification": "search-summary",
-        "checkedAt": "2026-10-25"
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29",
+        "correction": "10-25 版称 Fable 5.1“缓存读取更便宜”有误：它只比 Fable 5 便宜，比 Opus 5.5 贵。"
       },
       {
         "id": "haiku55-subagent",
@@ -11204,8 +11204,8 @@
             "url": "https://apidog.com/blog/claude-haiku-5-5-claude-code/"
           }
         ],
-        "verification": "search-summary",
-        "checkedAt": "2026-10-25"
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29"
       },
       {
         "id": "luna6-volume",
@@ -11230,8 +11230,8 @@
             "url": "https://lmmarketcap.com/compare/gpt-6-1-sol/vs/gpt-6-luna"
           }
         ],
-        "verification": "search-summary",
-        "checkedAt": "2026-10-25"
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29"
       },
       {
         "id": "argon-strengths",
@@ -11251,16 +11251,13 @@
             "url": "https://www.eesel.ai/de/blog/gemini-4-argon-test"
           },
           {
-            "label": "Vidmuse",
-            "url": "https://vidmuse.ai/blog/gemini-4-argon"
-          },
-          {
-            "label": "Korben",
-            "url": "https://korben.info/es/gemini-4-argon-supera-gpt-6-claude-codigo-inaccesible.html"
+            "label": "HN · AA 幻觉率讨论",
+            "url": "https://news.ycombinator.com/item?id=49914850"
           }
         ],
-        "verification": "search-summary",
-        "checkedAt": "2026-10-25"
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29",
+        "correction": "Vidmuse 与 Korben 原页拒绝访问，已移除；eesel 原文支持“答错少是因为更常说不知道”。"
       },
       {
         "id": "argon-token-hungry",
@@ -11271,7 +11268,7 @@
           "all"
         ],
         "stance": "提醒",
-        "statement": "开发者最常提到的缺点是输出 token 多：AA 智能指数测试中每任务约 6.2 万输出 token，约为 GPT-6 Astra 的两倍多，会抵消单价优势；当前优惠价结束后单价翻倍。",
+        "statement": "开发者最常提到的缺点是输出 token 多：eesel 按 AA v4.3.2 记每任务约 6.2 万输出 token，约为 GPT-6 Astra 的 2.3 倍；AA v5 中 Argon high 每任务约 11.6 万，是 Astra high（2.3 万）的约 5 倍、用时 22.7 分钟。AA 现已按 12-01 后的 $4 / $20 计 Argon 费用（$7.68 / 任务），11-30 前按优惠价实际约为一半。",
         "action": "按“每个完成任务的总费用”比较，不要只看单价；长期预算按优惠结束后的价格估。",
         "agreement": "多源一致",
         "sources": [
@@ -11280,12 +11277,17 @@
             "url": "https://www.eesel.ai/de/blog/gemini-4-argon-test"
           },
           {
-            "label": "Vidmuse",
-            "url": "https://vidmuse.ai/blog/gemini-4-argon"
+            "label": "AA v5 发布版本页（本页数据）",
+            "url": "https://artificialanalysis.ai/zh/models/releases"
+          },
+          {
+            "label": "AA · Gemini 4 Argon 定价说明",
+            "url": "https://artificialanalysis.ai/models/gemini-4-argon"
           }
         ],
-        "verification": "search-summary",
-        "checkedAt": "2026-10-25"
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29",
+        "correction": "补充 AA v5 用量与计价变化；Vidmuse 原页拒绝访问，已移除。"
       },
       {
         "id": "flash38-workhorse",
@@ -11310,8 +11312,8 @@
             "url": "https://benchlm.ai/compare/gemini-3-8-flash-vs-gemini-4-argon"
           }
         ],
-        "verification": "search-summary",
-        "checkedAt": "2026-10-25"
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29"
       },
       {
         "id": "flash-lite-thin",
@@ -11331,8 +11333,8 @@
             "url": "https://lmmarketcap.com/compare/gemini-3-5-flash-lite-batch/vs/gemini-3-8-flash-batch"
           }
         ],
-        "verification": "search-summary",
-        "checkedAt": "2026-10-25"
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29"
       },
       {
         "id": "grok47-agentic-cost",
@@ -11343,25 +11345,268 @@
           "all"
         ],
         "stance": "定位",
-        "statement": "社区评价：Grok 4.7 在长时、多步的 agent 编码上表现最好，在 Grok Build 里比通用指数显示得更强；单价便宜是主要卖点。但很啰嗦、耗 token（xhigh 每任务约 8 万输出 token，是 Grok 4.6 的两倍），可能抵消价格优势；前端和 3D 任务表现参差。",
-        "action": "长时 agent、仓库改动、长上下文文档任务可以试点；按每个完成任务的 token 计算成本；前端 / 3D 任务先和现有基线对比再用。",
-        "agreement": "方向一致；多为厂商数据与早期评测",
+        "statement": "社区评价：Grok 4.7 主打长时、多步的 agent 编码，单价与 Grok 4.6 相同是主要卖点。但耗 token：AA v4.3.2 中 xhigh 每任务约 8.1 万输出 token，是 Grok 4.6 xhigh（3.8 万）的两倍多；AA v5 中 high / xhigh 约 8.9 万 / 9.3 万。缓存读取 $0.50，是 Fable 5.1 的两倍，缓存占比高的 agent 任务里价格优势会缩小。",
+        "action": "长时 agent、仓库改动可以试点；按每个完成任务的总费用（含缓存）计算成本，不只看输入 / 输出单价。",
+        "agreement": "定位来自厂商与早期评测；token 与缓存价为实测 / 官方数字",
         "sources": [
           {
             "label": "Braindetox 技术分析",
             "url": "https://braindetox.kr/zh/posts/grok_4_7_release_2026.html"
           },
           {
-            "label": "MyClaw 评测",
-            "url": "https://myclaw.ai/ja/blog/grok-4-7-review"
-          },
-          {
             "label": "Crystal Method",
             "url": "https://crystal-method.com/blog/xai-grok-4-7-coding-knowledge-work-japan-business/"
+          },
+          {
+            "label": "AA v5 发布版本页（本页数据）",
+            "url": "https://artificialanalysis.ai/zh/models/releases"
+          },
+          {
+            "label": "HN · 缓存价讨论",
+            "url": "https://news.ycombinator.com/item?id=49790722"
           }
         ],
-        "verification": "search-summary",
-        "checkedAt": "2026-10-25"
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29",
+        "correction": "token 数来自 AA 数据而非所列文章；“前端 / 3D 表现参差”在原文中找不到，已删除；MyClaw 日文页未提及相关论述，已移除。"
+      },
+      {
+        "id": "sonnet55-high-ceiling",
+        "modelIds": [
+          "claude-sonnet-5-5",
+          "claude-opus-5-5"
+        ],
+        "tasks": [
+          "all"
+        ],
+        "stance": "选型",
+        "statement": "HN 发布讨论里最多的疑问是 Sonnet 5.5 高档位不划算。AA v5 印证了这一点：Sonnet xhigh 49.6 分、$4.09，不如 Opus 5.5 high 的 51.7 分、$3.46；Sonnet max 54.2 分、$10.02，不如 Opus xhigh 的 57.0 分、$6.05。一位测试者的 max 档在 15 分钟里耗尽 12.8 万思考 token 仍未出结果；另一位发现它更常停下来问用户是否继续。",
+        "action": "Sonnet 5.5 用 medium / high；需要 xhigh 以上时改用 Opus 5.5 high / xhigh，通常更强也更省。",
+        "agreement": "多位评论一致，AA v5 数据支持；超时与停顿是个人测试",
+        "sources": [
+          {
+            "label": "HN · Sonnet 5.5 发布讨论",
+            "url": "https://news.ycombinator.com/item?id=49882333"
+          },
+          {
+            "label": "HN · max 档超时实测",
+            "url": "https://news.ycombinator.com/item?id=49882573"
+          },
+          {
+            "label": "HN · 更常停下询问",
+            "url": "https://news.ycombinator.com/item?id=49882880"
+          },
+          {
+            "label": "AA v5 发布版本页（本页数据）",
+            "url": "https://artificialanalysis.ai/zh/models/releases"
+          }
+        ],
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29"
+      },
+      {
+        "id": "safeguard-fallback",
+        "modelIds": [
+          "claude-opus-5-5",
+          "claude-sonnet-5-5",
+          "claude-fable-5-1"
+        ],
+        "tasks": [
+          "coding",
+          "agentic"
+        ],
+        "stance": "注意",
+        "statement": "Opus 5.5、Sonnet 5.5 与 Fable 5.1 带网络安全 / 生物安全护栏，触发后会悄悄改由另一个模型回答。有用户反映固件、硬件相关请求常被降到 Opus 4.8；评论者引用 Sonnet 5.5 System Card 8.5 节称，Terminal-Bench 中 Opus 5.5 有 10% 的试次由回退模型作答（Sonnet 为 1.5%），可能解释了 Sonnet 在该项反超 Opus。本页 AA 榜单里标“含回退”的 Claude 配置就是这种情况。",
+        "action": "安全研究、逆向、固件类工作先确认实际作答的模型（响应里的 model 字段）；读 Claude 的评测分数时留意“含回退”标记。",
+        "agreement": "多帖反复出现；System Card 数字为评论转述，本期未打开原文",
+        "sources": [
+          {
+            "label": "HN · Terminal-Bench 回退比例",
+            "url": "https://news.ycombinator.com/item?id=49882146"
+          },
+          {
+            "label": "HN · 固件请求被降级",
+            "url": "https://news.ycombinator.com/item?id=49527037"
+          },
+          {
+            "label": "HN · Opus 5.5 发布讨论",
+            "url": "https://news.ycombinator.com/item?id=49803892"
+          }
+        ],
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29"
+      },
+      {
+        "id": "haiku55-vs-luna",
+        "modelIds": [
+          "claude-haiku-5-5",
+          "gpt-6-luna"
+        ],
+        "tasks": [
+          "all"
+        ],
+        "stance": "分工",
+        "statement": "10 万 token 以内 Haiku 5.5 与 GPT-6 Luna 单价相同。AA v5 中 Haiku 更聪明（max 36.2 对 27.8），但每任务输出 token 多得多（max 22.6 万对 7.5 万）；一位用户的分类任务里 Luna 因分词更省、输出更短，总价约低四分之一。OpenRouter 上 Haiku 输出速度约为 Luna 的两倍；也有用户在延迟敏感的简单任务里觉得它比 Haiku 4.5 更慢、更差。",
+        "action": "批量分类 / 抽取先用自己的数据比较两者的 token 总量；需要推理质量、且请求在 10 万 token 以内时选 Haiku 5.5。",
+        "agreement": "价格为官方数字，体验因任务而异（个人实测）",
+        "sources": [
+          {
+            "label": "HN · 分类任务成本对比",
+            "url": "https://news.ycombinator.com/item?id=50000487"
+          },
+          {
+            "label": "HN · 输出速度",
+            "url": "https://news.ycombinator.com/item?id=49997193"
+          },
+          {
+            "label": "HN · 延迟敏感任务反馈",
+            "url": "https://news.ycombinator.com/item?id=49997391"
+          },
+          {
+            "label": "AA v5 发布版本页（本页数据）",
+            "url": "https://artificialanalysis.ai/zh/models/releases"
+          }
+        ],
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29"
+      },
+      {
+        "id": "argon-slow-interactive",
+        "modelIds": [
+          "gemini-4-argon"
+        ],
+        "tasks": [
+          "coding"
+        ],
+        "stance": "实际体验",
+        "statement": "HN 讨论对 Argon 的文字质量、回答条理和低幻觉评价很高，但交互式编码偏慢、偏贵：一位用户的 11 个小 BUG 修复里 Argon 解出 10 个，中位每次 $0.52、约 4 分钟，同组 Sonnet 5.5 $0.18、约 32 秒，Sol 6.1 $0.09、约 1.5 分钟；图生网页测试中被评为 B 档（Opus 5.5、Astra 为 A 档）。",
+        "action": "研究问答、长文档与写作可优先试 Argon；需要快速来回的小改动用 Sol 6.1 或 Sonnet 5.5。",
+        "agreement": "单个用户实测，方向与 AA v5 用时数据一致",
+        "sources": [
+          {
+            "label": "HN · 小 BUG 修复实测",
+            "url": "https://news.ycombinator.com/item?id=50077034"
+          },
+          {
+            "label": "HN · 图生网页对比",
+            "url": "https://news.ycombinator.com/item?id=50074851"
+          },
+          {
+            "label": "AA v5 发布版本页（本页数据）",
+            "url": "https://artificialanalysis.ai/zh/models/releases"
+          }
+        ],
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29"
+      },
+      {
+        "id": "sol61-cache",
+        "modelIds": [
+          "gpt-6.1-sol"
+        ],
+        "tasks": [
+          "agentic",
+          "coding"
+        ],
+        "stance": "Sol 6.1 优势",
+        "statement": "HN 发布讨论认为 Sol 6.1 真正的亮点是缓存输入 $0.10（比 GPT-6 Sol 低一半）；Anthropic 发布 Opus 5.5 时也提到缓存读取占 agent 与编码开销的大头，所以长会话的实际账单下降明显。多位用户也提到 GPT-6 Sol 一周内就被替换，提醒升级后重新验证。",
+        "action": "长会话、重复上下文的 agent 工作优先考虑 Sol 6.1，并保持提示前缀稳定以命中缓存。",
+        "agreement": "官方价格 + 多条评论",
+        "sources": [
+          {
+            "label": "HN · 缓存价讨论",
+            "url": "https://news.ycombinator.com/item?id=49896762"
+          },
+          {
+            "label": "OpenAI 发布页",
+            "url": "https://openai.com/index/introducing-gpt-6-1-sol/"
+          }
+        ],
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29"
+      },
+      {
+        "id": "opus55-agent-arena",
+        "modelIds": [
+          "claude-opus-5-5"
+        ],
+        "tasks": [
+          "agentic",
+          "coding"
+        ],
+        "stance": "Opus 5.5 优势",
+        "statement": "Arena 的真实代理会话里 Opus 5.5 max 明显领先：综合 IPS 0.208，第二名约 0.140；用户明确表扬 / 抱怨信号 0.453，第二名 GPT-6.1 Sol 0.313。WebDev 盲选也排第一。这是本页唯一来自大量真实用户会话的信号。",
+        "action": "用户体验要紧、需要长时间协作的代理会话优先 Opus 5.5；预算紧时第二梯队（Sonnet 5.5、Astra、Fable 5.1、Sol 6.1）差距在区间内。",
+        "agreement": "真实会话统计（单一来源）",
+        "sources": [
+          {
+            "label": "Arena 官方数据集 · agent",
+            "url": "https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset"
+          },
+          {
+            "label": "Agent Arena 榜单",
+            "url": "https://arena.ai/leaderboard/agent"
+          }
+        ],
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29"
+      },
+      {
+        "id": "astra-chat-preference",
+        "modelIds": [
+          "gpt-6-astra"
+        ],
+        "tasks": [
+          "writing",
+          "knowledge"
+        ],
+        "stance": "注意",
+        "statement": "Astra 在难题上领先（HLE Diamond 第 1、LiveBench 第 2、WebDev 第 2），但 Arena 文本对话盲选只排第 32（style control），低于 Opus 5.5、Fable 5.1 与 Gemini 3.8 Flash。",
+        "action": "日常对话、写作类任务不要只凭基准选 Astra，先用自己的样例比较回答风格。",
+        "agreement": "排名为来源数据；原因无定论",
+        "sources": [
+          {
+            "label": "Arena 官方数据集 · text_style_control",
+            "url": "https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset"
+          },
+          {
+            "label": "Scale HLE Diamond",
+            "url": "https://labs.scale.com/leaderboard/hle-diamond"
+          }
+        ],
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29"
+      },
+      {
+        "id": "release-pace",
+        "modelIds": [
+          "gpt-6.1-sol",
+          "claude-opus-5-5",
+          "gemini-4-argon"
+        ],
+        "tasks": [
+          "all"
+        ],
+        "stance": "选型",
+        "statement": "HN 讨论里最常见的抱怨之一是发布节奏：GPT-6 Sol 一周后被 6.1 取代，各家价格几乎每周变化，评测也在改版（AA v5 改版后开放权重模型普遍下降）。常见建议是让模型和供应商可替换，按自己的样例定期回归。",
+        "action": "把模型名放进配置而不是写死在代码里；每次切换前用固定样例集回归一次，并记录评测版本。",
+        "agreement": "多帖一致（观点）",
+        "sources": [
+          {
+            "label": "HN · Sol 6.1 发布讨论",
+            "url": "https://news.ycombinator.com/item?id=49896586"
+          },
+          {
+            "label": "HN · Argon 发布讨论",
+            "url": "https://news.ycombinator.com/item?id=49913571"
+          },
+          {
+            "label": "HN · AA v5 讨论",
+            "url": "https://news.ycombinator.com/item?id=50270428"
+          }
+        ],
+        "verification": "source-checked",
+        "checkedAt": "2026-10-29"
       }
     ],
     "maxEffortScenariosNote": "不差钱时也不该默认最高档的常见场景。来源混合：本页冻结实测（AA 耗时与首字等待、逐档分数）、官方建议、社区经验与配对实验；能用本页数据计算的场景会对当前模型显示实测信号，其余只作提醒，不参与计算。",
@@ -11829,7 +12074,8 @@
           }
         ]
       }
-    ]
+    ],
+    "coverageNote": "Reddit 被本期浏览环境拦截，X / Twitter 未检索；社区来源以 Hacker News 发布讨论、对比文章与 Arena 真实会话数据为主。"
   },
   "aa_capability_indexes": {
     "snapshot": "2026-10-19",
@@ -21969,7 +22215,7 @@
   },
   "aa_v5": {
     "version": "v5.0",
-    "fetched_at": "2026-10-28T09:00:27+00:00",
+    "fetched_at": "2026-10-28T20:36:40+00:00",
     "unmeasured": [
       {
         "releaseSlug": "claude-opus-5",
@@ -22150,15 +22396,15 @@
                 "answer": 0.2439
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 146.9,
-              "timePerTaskMinutes": 2.45,
+              "timePerTaskSeconds": 144.5,
+              "timePerTaskMinutes": 2.41,
               "outputTokensPerTask": 19060,
               "outputTokensBreakdown": {
                 "output": 19060,
                 "reasoning": 6864,
                 "answer": 12196
               },
-              "outputSpeed": 82.1,
+              "outputSpeed": 86.2,
               "ttfaSeconds": 5.24,
               "capabilities": {
                 "financeAndAccounting": 42.17,
@@ -22213,16 +22459,16 @@
                 "answer": 0.4628
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 336.6,
-              "timePerTaskMinutes": 5.61,
+              "timePerTaskSeconds": 331.0,
+              "timePerTaskMinutes": 5.52,
               "outputTokensPerTask": 43817,
               "outputTokensBreakdown": {
                 "output": 43817,
                 "reasoning": 20676,
                 "answer": 23140
               },
-              "outputSpeed": 81.9,
-              "ttfaSeconds": 16.48,
+              "outputSpeed": 83.3,
+              "ttfaSeconds": 15.35,
               "capabilities": {
                 "financeAndAccounting": 50.75,
                 "strategyAndOps": 55.99,
@@ -22284,8 +22530,8 @@
                 "reasoning": 31561,
                 "answer": 28510
               },
-              "outputSpeed": 80.5,
-              "ttfaSeconds": 33.57,
+              "outputSpeed": 84.0,
+              "ttfaSeconds": 35.05,
               "capabilities": {
                 "financeAndAccounting": 53.25,
                 "strategyAndOps": 57.57,
@@ -22347,8 +22593,8 @@
                 "reasoning": 63763,
                 "answer": 39632
               },
-              "outputSpeed": 84.1,
-              "ttfaSeconds": 119.09,
+              "outputSpeed": 85.4,
+              "ttfaSeconds": 131.0,
               "capabilities": {
                 "financeAndAccounting": 55.72,
                 "strategyAndOps": 59.0,
@@ -22402,16 +22648,16 @@
                 "answer": 1.0571
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 1132.6,
-              "timePerTaskMinutes": 18.88,
+              "timePerTaskSeconds": 1147.4,
+              "timePerTaskMinutes": 19.12,
               "outputTokensPerTask": 173313,
               "outputTokensBreakdown": {
                 "output": 173313,
                 "reasoning": 120460,
                 "answer": 52853
               },
-              "outputSpeed": 98.4,
-              "ttfaSeconds": 700.16,
+              "outputSpeed": 98.3,
+              "ttfaSeconds": 663.66,
               "capabilities": {
                 "financeAndAccounting": 59.4,
                 "strategyAndOps": 61.44,
@@ -22485,16 +22731,16 @@
                 "answer": 0.123
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 120.5,
-              "timePerTaskMinutes": 2.01,
+              "timePerTaskSeconds": 118.6,
+              "timePerTaskMinutes": 1.98,
               "outputTokensPerTask": 20856,
               "outputTokensBreakdown": {
                 "output": 20856,
                 "reasoning": 8559,
                 "answer": 12298
               },
-              "outputSpeed": 109.4,
-              "ttfaSeconds": 1.29,
+              "outputSpeed": 115.9,
+              "ttfaSeconds": 1.34,
               "capabilities": {
                 "financeAndAccounting": 35.94,
                 "strategyAndOps": 41.68,
@@ -22548,16 +22794,16 @@
                 "answer": 0.1638
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 177.6,
-              "timePerTaskMinutes": 2.96,
+              "timePerTaskSeconds": 175.3,
+              "timePerTaskMinutes": 2.92,
               "outputTokensPerTask": 30746,
               "outputTokensBreakdown": {
                 "output": 30746,
                 "reasoning": 14369,
                 "answer": 16377
               },
-              "outputSpeed": 108.8,
-              "ttfaSeconds": 3.02,
+              "outputSpeed": 113.8,
+              "ttfaSeconds": 2.88,
               "capabilities": {
                 "financeAndAccounting": 40.69,
                 "strategyAndOps": 46.67,
@@ -22611,16 +22857,16 @@
                 "answer": 0.2668
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 331.6,
-              "timePerTaskMinutes": 5.53,
+              "timePerTaskSeconds": 325.5,
+              "timePerTaskMinutes": 5.42,
               "outputTokensPerTask": 58421,
               "outputTokensBreakdown": {
                 "output": 58421,
                 "reasoning": 31741,
                 "answer": 26680
               },
-              "outputSpeed": 115.1,
-              "ttfaSeconds": 11.08,
+              "outputSpeed": 118.9,
+              "ttfaSeconds": 12.35,
               "capabilities": {
                 "financeAndAccounting": 44.46,
                 "strategyAndOps": 51.19,
@@ -22674,16 +22920,16 @@
                 "answer": 0.4321
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 690.7,
-              "timePerTaskMinutes": 11.51,
+              "timePerTaskSeconds": 677.4,
+              "timePerTaskMinutes": 11.29,
               "outputTokensPerTask": 122205,
               "outputTokensBreakdown": {
                 "output": 122205,
                 "reasoning": 78999,
                 "answer": 43206
               },
-              "outputSpeed": 112.9,
-              "ttfaSeconds": 28.63,
+              "outputSpeed": 118.0,
+              "ttfaSeconds": 27.94,
               "capabilities": {
                 "financeAndAccounting": 48.52,
                 "strategyAndOps": 54.09,
@@ -22737,16 +22983,16 @@
                 "answer": 0.7903
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 1325.7,
-              "timePerTaskMinutes": 22.1,
+              "timePerTaskSeconds": 1326.3,
+              "timePerTaskMinutes": 22.11,
               "outputTokensPerTask": 285387,
               "outputTokensBreakdown": {
                 "output": 285387,
                 "reasoning": 206362,
                 "answer": 79025
               },
-              "outputSpeed": 140.1,
-              "ttfaSeconds": 455.03,
+              "outputSpeed": 138.2,
+              "ttfaSeconds": 448.12,
               "capabilities": {
                 "financeAndAccounting": 55.76,
                 "strategyAndOps": 58.06,
@@ -22820,16 +23066,16 @@
                 "answer": 1.1135
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 411.2,
-              "timePerTaskMinutes": 6.85,
+              "timePerTaskSeconds": 390.1,
+              "timePerTaskMinutes": 6.5,
               "outputTokensPerTask": 37837,
               "outputTokensBreakdown": {
                 "output": 37837,
                 "reasoning": 15534,
                 "answer": 22303
               },
-              "outputSpeed": 57.5,
-              "ttfaSeconds": 1.99,
+              "outputSpeed": 62.3,
+              "ttfaSeconds": 1.84,
               "capabilities": {
                 "financeAndAccounting": 47.72,
                 "strategyAndOps": 51.13,
@@ -22883,16 +23129,16 @@
                 "answer": 1.3085
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 502.5,
-              "timePerTaskMinutes": 8.38,
+              "timePerTaskSeconds": 479.7,
+              "timePerTaskMinutes": 8.0,
               "outputTokensPerTask": 48545,
               "outputTokensBreakdown": {
                 "output": 48545,
                 "reasoning": 22374,
                 "answer": 26171
               },
-              "outputSpeed": 60.7,
-              "ttfaSeconds": 7.83,
+              "outputSpeed": 65.0,
+              "ttfaSeconds": 4.41,
               "capabilities": {
                 "financeAndAccounting": 47.47,
                 "strategyAndOps": 52.31,
@@ -22946,16 +23192,16 @@
                 "answer": 1.6
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 672.6,
-              "timePerTaskMinutes": 11.21,
+              "timePerTaskSeconds": 666.5,
+              "timePerTaskMinutes": 11.11,
               "outputTokensPerTask": 66031,
               "outputTokensBreakdown": {
                 "output": 66031,
                 "reasoning": 34029,
                 "answer": 32002
               },
-              "outputSpeed": 59.8,
-              "ttfaSeconds": 16.85,
+              "outputSpeed": 62.3,
+              "ttfaSeconds": 13.78,
               "capabilities": {
                 "financeAndAccounting": 49.61,
                 "strategyAndOps": 53.79,
@@ -23009,16 +23255,16 @@
                 "answer": 2.0515
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 950.8,
-              "timePerTaskMinutes": 15.85,
+              "timePerTaskSeconds": 949.4,
+              "timePerTaskMinutes": 15.82,
               "outputTokensPerTask": 97059,
               "outputTokensBreakdown": {
                 "output": 97059,
                 "reasoning": 55942,
                 "answer": 41116
               },
-              "outputSpeed": 66.3,
-              "ttfaSeconds": 103.75,
+              "outputSpeed": 66.4,
+              "ttfaSeconds": 83.03,
               "capabilities": {
                 "financeAndAccounting": 53.51,
                 "strategyAndOps": 56.43,
@@ -23072,16 +23318,16 @@
                 "answer": 2.3081
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 1177.6,
-              "timePerTaskMinutes": 19.63,
+              "timePerTaskSeconds": 1178.3,
+              "timePerTaskMinutes": 19.64,
               "outputTokensPerTask": 117941,
               "outputTokensBreakdown": {
                 "output": 117941,
                 "reasoning": 71387,
                 "answer": 46554
               },
-              "outputSpeed": 66.4,
-              "ttfaSeconds": 132.23,
+              "outputSpeed": 65.9,
+              "ttfaSeconds": 128.91,
               "capabilities": {
                 "financeAndAccounting": 53.82,
                 "strategyAndOps": 57.97,
@@ -23155,16 +23401,16 @@
                 "answer": 0.2911
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 189.2,
-              "timePerTaskMinutes": 3.15,
+              "timePerTaskSeconds": 157.0,
+              "timePerTaskMinutes": 2.62,
               "outputTokensPerTask": 9126,
               "outputTokensBreakdown": {
                 "output": 9126,
                 "reasoning": 3304,
                 "answer": 5821
               },
-              "outputSpeed": 48.3,
-              "ttfaSeconds": 2.71,
+              "outputSpeed": 58.0,
+              "ttfaSeconds": 2.6,
               "capabilities": {
                 "financeAndAccounting": 48.12,
                 "strategyAndOps": 49.88,
@@ -23218,16 +23464,16 @@
                 "answer": 0.4735
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 303.7,
-              "timePerTaskMinutes": 5.06,
+              "timePerTaskSeconds": 284.8,
+              "timePerTaskMinutes": 4.75,
               "outputTokensPerTask": 18052,
               "outputTokensBreakdown": {
                 "output": 18052,
                 "reasoning": 8581,
                 "answer": 9471
               },
-              "outputSpeed": 59.0,
-              "ttfaSeconds": 4.57,
+              "outputSpeed": 64.1,
+              "ttfaSeconds": 3.9,
               "capabilities": {
                 "financeAndAccounting": 53.69,
                 "strategyAndOps": 55.66,
@@ -23290,7 +23536,7 @@
                 "answer": 11042
               },
               "outputSpeed": 62.7,
-              "ttfaSeconds": 43.97,
+              "ttfaSeconds": 38.09,
               "capabilities": {
                 "financeAndAccounting": 56.13,
                 "strategyAndOps": 57.2,
@@ -23344,16 +23590,16 @@
                 "answer": 0.6015
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 390.9,
-              "timePerTaskMinutes": 6.52,
+              "timePerTaskSeconds": 388.2,
+              "timePerTaskMinutes": 6.47,
               "outputTokensPerTask": 26724,
               "outputTokensBreakdown": {
                 "output": 26724,
                 "reasoning": 14693,
                 "answer": 12031
               },
-              "outputSpeed": 68.2,
-              "ttfaSeconds": 158.59,
+              "outputSpeed": 69.4,
+              "ttfaSeconds": 129.78,
               "capabilities": {
                 "financeAndAccounting": 56.81,
                 "strategyAndOps": 57.86,
@@ -23407,16 +23653,16 @@
                 "answer": 0.8107
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 711.1,
-              "timePerTaskMinutes": 11.85,
+              "timePerTaskSeconds": 694.0,
+              "timePerTaskMinutes": 11.57,
               "outputTokensPerTask": 51973,
               "outputTokensBreakdown": {
                 "output": 51973,
                 "reasoning": 35760,
                 "answer": 16214
               },
-              "outputSpeed": 71.0,
-              "ttfaSeconds": 268.74,
+              "outputSpeed": 73.1,
+              "ttfaSeconds": 250.99,
               "capabilities": {
                 "financeAndAccounting": 57.38,
                 "strategyAndOps": 57.98,
@@ -23465,8 +23711,8 @@
           "contextWindowTokens": 1000000,
           "modelCount": 1,
           "maxIntelligenceIndex": 50.41,
-          "minCostPerTask": 3.8413,
-          "maxCostPerTask": 3.8413,
+          "minCostPerTask": 7.6827,
+          "maxCostPerTask": 7.6827,
           "strengthsGlobalRank": {},
           "sourceUrl": "https://artificialanalysis.ai/zh/models/releases/gemini-4-argon",
           "variants": [
@@ -23478,28 +23724,28 @@
               "effortOrder": 4,
               "intelligenceIndex": 50.41,
               "intelligenceIndexRounded": 50,
-              "costPerTask": 3.8413,
+              "costPerTask": 7.6827,
               "costBreakdown": {
-                "total": 3.8413,
-                "input": 2.6777,
-                "nonCacheInput": 0.0123,
-                "cacheRead": 1.0357,
-                "cacheWrite": 1.6297,
-                "output": 1.1637,
-                "reasoning": 0.683,
-                "answer": 0.4807
+                "total": 7.6827,
+                "input": 5.3553,
+                "nonCacheInput": 0.0245,
+                "cacheRead": 2.0715,
+                "cacheWrite": 3.2593,
+                "output": 2.3274,
+                "reasoning": 1.366,
+                "answer": 0.9613
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 1366.8,
-              "timePerTaskMinutes": 22.78,
+              "timePerTaskSeconds": 1363.9,
+              "timePerTaskMinutes": 22.73,
               "outputTokensPerTask": 116368,
               "outputTokensBreakdown": {
                 "output": 116368,
                 "reasoning": 68301,
                 "answer": 48067
               },
-              "outputSpeed": 82.0,
-              "ttfaSeconds": 46.64,
+              "outputSpeed": 82.7,
+              "ttfaSeconds": 44.96,
               "capabilities": {
                 "financeAndAccounting": 55.92,
                 "strategyAndOps": 57.2,
@@ -23573,16 +23819,16 @@
                 "answer": 0.0425
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 103.5,
-              "timePerTaskMinutes": 1.73,
+              "timePerTaskSeconds": 93.0,
+              "timePerTaskMinutes": 1.55,
               "outputTokensPerTask": 5838,
               "outputTokensBreakdown": {
                 "output": 5838,
                 "reasoning": 1585,
                 "answer": 4253
               },
-              "outputSpeed": 60.9,
-              "ttfaSeconds": 2.36,
+              "outputSpeed": 67.2,
+              "ttfaSeconds": 2.14,
               "capabilities": {
                 "financeAndAccounting": 44.25,
                 "strategyAndOps": 45.57,
@@ -23636,16 +23882,16 @@
                 "answer": 0.0871
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 231.1,
-              "timePerTaskMinutes": 3.85,
+              "timePerTaskSeconds": 207.4,
+              "timePerTaskMinutes": 3.46,
               "outputTokensPerTask": 13518,
               "outputTokensBreakdown": {
                 "output": 13518,
                 "reasoning": 4805,
                 "answer": 8714
               },
-              "outputSpeed": 58.9,
-              "ttfaSeconds": 3.62,
+              "outputSpeed": 66.3,
+              "ttfaSeconds": 3.5,
               "capabilities": {
                 "financeAndAccounting": 50.6,
                 "strategyAndOps": 53.26,
@@ -23699,8 +23945,8 @@
                 "answer": 0.1247
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 322.1,
-              "timePerTaskMinutes": 5.37,
+              "timePerTaskSeconds": 316.0,
+              "timePerTaskMinutes": 5.27,
               "outputTokensPerTask": 22606,
               "outputTokensBreakdown": {
                 "output": 22606,
@@ -23708,7 +23954,7 @@
                 "answer": 12471
               },
               "outputSpeed": 69.9,
-              "ttfaSeconds": 40.76,
+              "ttfaSeconds": 36.01,
               "capabilities": {
                 "financeAndAccounting": 53.18,
                 "strategyAndOps": 55.44,
@@ -23762,16 +24008,16 @@
                 "answer": 0.1471
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 435.9,
-              "timePerTaskMinutes": 7.27,
+              "timePerTaskSeconds": 433.5,
+              "timePerTaskMinutes": 7.22,
               "outputTokensPerTask": 30241,
               "outputTokensBreakdown": {
                 "output": 30241,
                 "reasoning": 15527,
                 "answer": 14715
               },
-              "outputSpeed": 69.6,
-              "ttfaSeconds": 106.4,
+              "outputSpeed": 70.8,
+              "ttfaSeconds": 101.93,
               "capabilities": {
                 "financeAndAccounting": 55.21,
                 "strategyAndOps": 57.24,
@@ -23825,16 +24071,16 @@
                 "answer": 0.1861
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 858.4,
-              "timePerTaskMinutes": 14.31,
+              "timePerTaskSeconds": 835.2,
+              "timePerTaskMinutes": 13.92,
               "outputTokensPerTask": 67824,
               "outputTokensBreakdown": {
                 "output": 67824,
                 "reasoning": 49213,
                 "answer": 18611
               },
-              "outputSpeed": 81.1,
-              "ttfaSeconds": 278.01,
+              "outputSpeed": 83.0,
+              "ttfaSeconds": 251.44,
               "capabilities": {
                 "financeAndAccounting": 56.23,
                 "strategyAndOps": 57.61,
@@ -23908,16 +24154,16 @@
                 "answer": 0.126
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 537.9,
-              "timePerTaskMinutes": 8.97,
+              "timePerTaskSeconds": 466.2,
+              "timePerTaskMinutes": 7.77,
               "outputTokensPerTask": 42670,
               "outputTokensBreakdown": {
                 "output": 42670,
                 "reasoning": 21674,
                 "answer": 20996
               },
-              "outputSpeed": 77.3,
-              "ttfaSeconds": 5.43,
+              "outputSpeed": 88.1,
+              "ttfaSeconds": 5.74,
               "capabilities": {
                 "financeAndAccounting": 45.3,
                 "strategyAndOps": 49.26,
@@ -23971,16 +24217,16 @@
                 "answer": 0.1857
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 952.5,
-              "timePerTaskMinutes": 15.88,
+              "timePerTaskSeconds": 843.6,
+              "timePerTaskMinutes": 14.06,
               "outputTokensPerTask": 89127,
               "outputTokensBreakdown": {
                 "output": 89127,
                 "reasoning": 58183,
                 "answer": 30944
               },
-              "outputSpeed": 97.1,
-              "ttfaSeconds": 21.63,
+              "outputSpeed": 106.1,
+              "ttfaSeconds": 21.25,
               "capabilities": {
                 "financeAndAccounting": 50.62,
                 "strategyAndOps": 53.15,
@@ -24034,16 +24280,16 @@
                 "answer": 0.2344
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 991.1,
-              "timePerTaskMinutes": 16.52,
+              "timePerTaskSeconds": 925.4,
+              "timePerTaskMinutes": 15.42,
               "outputTokensPerTask": 92970,
               "outputTokensBreakdown": {
                 "output": 92970,
                 "reasoning": 53902,
                 "answer": 39068
               },
-              "outputSpeed": 88.8,
-              "ttfaSeconds": 53.89,
+              "outputSpeed": 101.0,
+              "ttfaSeconds": 40.11,
               "capabilities": {
                 "financeAndAccounting": 51.69,
                 "strategyAndOps": 54.83,
@@ -24125,8 +24371,8 @@
                 "reasoning": 15280,
                 "answer": 12881
               },
-              "outputSpeed": 185.0,
-              "ttfaSeconds": 7.51,
+              "outputSpeed": 185.9,
+              "ttfaSeconds": 8.11,
               "capabilities": {
                 "financeAndAccounting": 28.51,
                 "strategyAndOps": 27.29,
@@ -24180,16 +24426,16 @@
                 "answer": 0.0106
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 193.0,
-              "timePerTaskMinutes": 3.22,
+              "timePerTaskSeconds": 190.7,
+              "timePerTaskMinutes": 3.18,
               "outputTokensPerTask": 53335,
               "outputTokensBreakdown": {
                 "output": 53335,
                 "reasoning": 32091,
                 "answer": 21244
               },
-              "outputSpeed": 175.1,
-              "ttfaSeconds": 10.36,
+              "outputSpeed": 180.8,
+              "ttfaSeconds": 10.13,
               "capabilities": {
                 "financeAndAccounting": 34.88,
                 "strategyAndOps": 32.97,
@@ -24243,16 +24489,16 @@
                 "answer": 0.0153
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 298.3,
-              "timePerTaskMinutes": 4.97,
+              "timePerTaskSeconds": 292.2,
+              "timePerTaskMinutes": 4.87,
               "outputTokensPerTask": 88064,
               "outputTokensBreakdown": {
                 "output": 88064,
                 "reasoning": 57529,
                 "answer": 30535
               },
-              "outputSpeed": 186.7,
-              "ttfaSeconds": 24.31,
+              "outputSpeed": 191.3,
+              "ttfaSeconds": 17.88,
               "capabilities": {
                 "financeAndAccounting": 37.84,
                 "strategyAndOps": 37.11,
@@ -24306,16 +24552,16 @@
                 "answer": 0.0195
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 441.3,
-              "timePerTaskMinutes": 7.35,
+              "timePerTaskSeconds": 454.2,
+              "timePerTaskMinutes": 7.57,
               "outputTokensPerTask": 136177,
               "outputTokensBreakdown": {
                 "output": 136177,
                 "reasoning": 97261,
                 "answer": 38916
               },
-              "outputSpeed": 196.0,
-              "ttfaSeconds": 67.2,
+              "outputSpeed": 195.7,
+              "ttfaSeconds": 53.58,
               "capabilities": {
                 "financeAndAccounting": 41.11,
                 "strategyAndOps": 39.14,
@@ -24369,16 +24615,16 @@
                 "answer": 0.0266
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 593.5,
-              "timePerTaskMinutes": 9.89,
+              "timePerTaskSeconds": 593.7,
+              "timePerTaskMinutes": 9.9,
               "outputTokensPerTask": 225966,
               "outputTokensBreakdown": {
                 "output": 225966,
                 "reasoning": 172814,
                 "answer": 53151
               },
-              "outputSpeed": 240.7,
-              "ttfaSeconds": 310.72,
+              "outputSpeed": 240.8,
+              "ttfaSeconds": 343.38,
               "capabilities": {
                 "financeAndAccounting": 43.56,
                 "strategyAndOps": 39.12,
@@ -24578,16 +24824,16 @@
                 "answer": 0.1458
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 724.4,
-              "timePerTaskMinutes": 12.07,
+              "timePerTaskSeconds": 682.3,
+              "timePerTaskMinutes": 11.37,
               "outputTokensPerTask": 98940,
               "outputTokensBreakdown": {
                 "output": 98940,
                 "reasoning": 60067,
                 "answer": 38872
               },
-              "outputSpeed": 132.6,
-              "ttfaSeconds": 27.26,
+              "outputSpeed": 140.1,
+              "ttfaSeconds": 27.53,
               "capabilities": {
                 "financeAndAccounting": 42.38,
                 "strategyAndOps": 46.52,
@@ -24661,15 +24907,15 @@
                 "answer": 0.005
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 86.2,
-              "timePerTaskMinutes": 1.44,
+              "timePerTaskSeconds": 86.0,
+              "timePerTaskMinutes": 1.43,
               "outputTokensPerTask": 10059,
               "outputTokensBreakdown": {
                 "output": 10059,
                 "reasoning": null,
                 "answer": 10059
               },
-              "outputSpeed": 116.3,
+              "outputSpeed": 116.6,
               "ttfaSeconds": 0.89,
               "capabilities": {
                 "financeAndAccounting": 19.02,
@@ -24724,16 +24970,16 @@
                 "answer": 0.0013
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 28.1,
-              "timePerTaskMinutes": 0.47,
+              "timePerTaskSeconds": 27.5,
+              "timePerTaskMinutes": 0.46,
               "outputTokensPerTask": 3296,
               "outputTokensBreakdown": {
                 "output": 3296,
                 "reasoning": 702,
                 "answer": 2594
               },
-              "outputSpeed": 119.0,
-              "ttfaSeconds": 2.43,
+              "outputSpeed": 122.9,
+              "ttfaSeconds": 2.25,
               "capabilities": {
                 "financeAndAccounting": 17.18,
                 "strategyAndOps": 16.8,
@@ -24850,16 +25096,16 @@
                 "answer": 0.0056
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 269.2,
-              "timePerTaskMinutes": 4.49,
+              "timePerTaskSeconds": 267.8,
+              "timePerTaskMinutes": 4.46,
               "outputTokensPerTask": 32839,
               "outputTokensBreakdown": {
                 "output": 32839,
                 "reasoning": 21618,
                 "answer": 11221
               },
-              "outputSpeed": 122.0,
-              "ttfaSeconds": 13.72,
+              "outputSpeed": 122.4,
+              "ttfaSeconds": 13.26,
               "capabilities": {
                 "financeAndAccounting": 29.26,
                 "strategyAndOps": 37.79,
@@ -24913,16 +25159,16 @@
                 "answer": 0.0069
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 357.2,
-              "timePerTaskMinutes": 5.95,
+              "timePerTaskSeconds": 357.6,
+              "timePerTaskMinutes": 5.96,
               "outputTokensPerTask": 43893,
               "outputTokensBreakdown": {
                 "output": 43893,
                 "reasoning": 30020,
                 "answer": 13873
               },
-              "outputSpeed": 122.6,
-              "ttfaSeconds": 16.8,
+              "outputSpeed": 121.7,
+              "ttfaSeconds": 16.41,
               "capabilities": {
                 "financeAndAccounting": 30.55,
                 "strategyAndOps": 39.39,
@@ -24976,16 +25222,16 @@
                 "answer": 0.0089
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 597.3,
-              "timePerTaskMinutes": 9.96,
+              "timePerTaskSeconds": 599.1,
+              "timePerTaskMinutes": 9.98,
               "outputTokensPerTask": 75296,
               "outputTokensBreakdown": {
                 "output": 75296,
                 "reasoning": 57562,
                 "answer": 17734
               },
-              "outputSpeed": 124.3,
-              "ttfaSeconds": 76.6,
+              "outputSpeed": 126.1,
+              "ttfaSeconds": 73.87,
               "capabilities": {
                 "financeAndAccounting": 33.87,
                 "strategyAndOps": 43.19,
@@ -25059,8 +25305,8 @@
                 "answer": 0.0338
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 64.6,
-              "timePerTaskMinutes": 1.08,
+              "timePerTaskSeconds": 62.6,
+              "timePerTaskMinutes": 1.04,
               "outputTokensPerTask": 30301,
               "outputTokensBreakdown": {
                 "output": 30301,
@@ -25068,7 +25314,7 @@
                 "answer": 13536
               },
               "outputSpeed": 460.6,
-              "ttfaSeconds": 6.63,
+              "ttfaSeconds": 6.86,
               "capabilities": {
                 "financeAndAccounting": 23.31,
                 "strategyAndOps": 20.73,
@@ -25142,16 +25388,16 @@
                 "answer": 0.7496
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 467.7,
-              "timePerTaskMinutes": 7.8,
+              "timePerTaskSeconds": 456.1,
+              "timePerTaskMinutes": 7.6,
               "outputTokensPerTask": 96063,
               "outputTokensBreakdown": {
                 "output": 96063,
                 "reasoning": 58584,
                 "answer": 37479
               },
-              "outputSpeed": 207.8,
-              "ttfaSeconds": 40.58,
+              "outputSpeed": 197.4,
+              "ttfaSeconds": 35.22,
               "capabilities": {
                 "financeAndAccounting": 51.13,
                 "strategyAndOps": 54.48,
@@ -25204,16 +25450,16 @@
                 "answer": 0.1555
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 447.7,
-              "timePerTaskMinutes": 7.46,
+              "timePerTaskSeconds": 467.9,
+              "timePerTaskMinutes": 7.8,
               "outputTokensPerTask": 91114,
               "outputTokensBreakdown": {
                 "output": 91114,
                 "reasoning": 54517,
                 "answer": 36597
               },
-              "outputSpeed": 205.2,
-              "ttfaSeconds": 51.7,
+              "outputSpeed": 201.8,
+              "ttfaSeconds": 48.92,
               "capabilities": {
                 "financeAndAccounting": 48.83,
                 "strategyAndOps": 50.26,
@@ -25266,16 +25512,16 @@
                 "answer": 0.0303
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 1828.4,
-              "timePerTaskMinutes": 30.47,
+              "timePerTaskSeconds": 1675.0,
+              "timePerTaskMinutes": 27.92,
               "outputTokensPerTask": 121073,
               "outputTokensBreakdown": {
                 "output": 121073,
                 "reasoning": 86273,
                 "answer": 34800
               },
-              "outputSpeed": 57.3,
-              "ttfaSeconds": 38.05,
+              "outputSpeed": 66.3,
+              "ttfaSeconds": 33.07,
               "capabilities": {
                 "financeAndAccounting": 38.93,
                 "strategyAndOps": 46.87,
@@ -25328,16 +25574,16 @@
                 "answer": 0.009
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 2222.2,
-              "timePerTaskMinutes": 37.04,
+              "timePerTaskSeconds": 2004.6,
+              "timePerTaskMinutes": 33.41,
               "outputTokensPerTask": 131806,
               "outputTokensBreakdown": {
                 "output": 131806,
                 "reasoning": 99712,
                 "answer": 32094
               },
-              "outputSpeed": 58.2,
-              "ttfaSeconds": 37.68,
+              "outputSpeed": 60.0,
+              "ttfaSeconds": 36.22,
               "capabilities": {
                 "financeAndAccounting": 36.93,
                 "strategyAndOps": 45.72,
@@ -25390,16 +25636,16 @@
                 "answer": 0.0545
               },
               "costTotalRun": null,
-              "timePerTaskSeconds": 667.0,
-              "timePerTaskMinutes": 11.12,
+              "timePerTaskSeconds": 702.7,
+              "timePerTaskMinutes": 11.71,
               "outputTokensPerTask": 91452,
               "outputTokensBreakdown": {
                 "output": 91452,
                 "reasoning": 46071,
                 "answer": 45381
               },
-              "outputSpeed": 108.6,
-              "ttfaSeconds": 19.45,
+              "outputSpeed": 107.4,
+              "ttfaSeconds": 19.73,
               "capabilities": {
                 "financeAndAccounting": 25.09,
                 "strategyAndOps": 27.88,
@@ -25541,7 +25787,7 @@
           "fallbackLabel": "Default Fallback",
           "intelligenceIndex": 34.5,
           "costPerTask": 0.9755,
-          "timePerTaskMinutes": 2.45,
+          "timePerTaskMinutes": 2.41,
           "outputTokensPerTask": 19060,
           "capabilities": {
             "financeAndAccounting": 42.17,
@@ -25572,7 +25818,7 @@
           "fallbackLabel": "Default Fallback",
           "intelligenceIndex": 48.06,
           "costPerTask": 2.4511,
-          "timePerTaskMinutes": 5.61,
+          "timePerTaskMinutes": 5.52,
           "outputTokensPerTask": 43817,
           "capabilities": {
             "financeAndAccounting": 50.75,
@@ -25665,7 +25911,7 @@
           "fallbackLabel": "Default Fallback",
           "intelligenceIndex": 58.41,
           "costPerTask": 10.0364,
-          "timePerTaskMinutes": 18.88,
+          "timePerTaskMinutes": 19.12,
           "outputTokensPerTask": 173313,
           "capabilities": {
             "financeAndAccounting": 59.4,
@@ -25696,7 +25942,7 @@
           "fallbackLabel": "Default Fallback",
           "intelligenceIndex": 25.3,
           "costPerTask": 0.5113,
-          "timePerTaskMinutes": 2.01,
+          "timePerTaskMinutes": 1.98,
           "outputTokensPerTask": 20856,
           "capabilities": {
             "financeAndAccounting": 35.94,
@@ -25727,7 +25973,7 @@
           "fallbackLabel": "Default Fallback",
           "intelligenceIndex": 30.32,
           "costPerTask": 0.7807,
-          "timePerTaskMinutes": 2.96,
+          "timePerTaskMinutes": 2.92,
           "outputTokensPerTask": 30746,
           "capabilities": {
             "financeAndAccounting": 40.69,
@@ -25758,7 +26004,7 @@
           "fallbackLabel": "Default Fallback",
           "intelligenceIndex": 41.12,
           "costPerTask": 1.6361,
-          "timePerTaskMinutes": 5.53,
+          "timePerTaskMinutes": 5.42,
           "outputTokensPerTask": 58421,
           "capabilities": {
             "financeAndAccounting": 44.46,
@@ -25789,7 +26035,7 @@
           "fallbackLabel": "Default Fallback",
           "intelligenceIndex": 49.57,
           "costPerTask": 4.092,
-          "timePerTaskMinutes": 11.51,
+          "timePerTaskMinutes": 11.29,
           "outputTokensPerTask": 122205,
           "capabilities": {
             "financeAndAccounting": 48.52,
@@ -25820,7 +26066,7 @@
           "fallbackLabel": "Default Fallback",
           "intelligenceIndex": 54.24,
           "costPerTask": 10.0206,
-          "timePerTaskMinutes": 22.1,
+          "timePerTaskMinutes": 22.11,
           "outputTokensPerTask": 285387,
           "capabilities": {
             "financeAndAccounting": 55.76,
@@ -25851,7 +26097,7 @@
           "fallbackLabel": "Default Fallback",
           "intelligenceIndex": 38.48,
           "costPerTask": 4.4867,
-          "timePerTaskMinutes": 6.85,
+          "timePerTaskMinutes": 6.5,
           "outputTokensPerTask": 37837,
           "capabilities": {
             "financeAndAccounting": 47.72,
@@ -25882,7 +26128,7 @@
           "fallbackLabel": "Default Fallback",
           "intelligenceIndex": 42.97,
           "costPerTask": 5.5805,
-          "timePerTaskMinutes": 8.38,
+          "timePerTaskMinutes": 8.0,
           "outputTokensPerTask": 48545,
           "capabilities": {
             "financeAndAccounting": 47.47,
@@ -25913,7 +26159,7 @@
           "fallbackLabel": "Default Fallback",
           "intelligenceIndex": 47.02,
           "costPerTask": 7.5608,
-          "timePerTaskMinutes": 11.21,
+          "timePerTaskMinutes": 11.11,
           "outputTokensPerTask": 66031,
           "capabilities": {
             "financeAndAccounting": 49.61,
@@ -25944,7 +26190,7 @@
           "fallbackLabel": "Default Fallback",
           "intelligenceIndex": 49.67,
           "costPerTask": 10.8855,
-          "timePerTaskMinutes": 15.85,
+          "timePerTaskMinutes": 15.82,
           "outputTokensPerTask": 97059,
           "capabilities": {
             "financeAndAccounting": 53.51,
@@ -25975,7 +26221,7 @@
           "fallbackLabel": "Default Fallback",
           "intelligenceIndex": 49.01,
           "costPerTask": 13.0393,
-          "timePerTaskMinutes": 19.63,
+          "timePerTaskMinutes": 19.64,
           "outputTokensPerTask": 117941,
           "capabilities": {
             "financeAndAccounting": 53.82,
@@ -26006,7 +26252,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 43.03,
           "costPerTask": 1.4237,
-          "timePerTaskMinutes": 3.15,
+          "timePerTaskMinutes": 2.62,
           "outputTokensPerTask": 9126,
           "capabilities": {
             "financeAndAccounting": 48.12,
@@ -26037,7 +26283,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 51.45,
           "costPerTask": 2.7324,
-          "timePerTaskMinutes": 5.06,
+          "timePerTaskMinutes": 4.75,
           "outputTokensPerTask": 18052,
           "capabilities": {
             "financeAndAccounting": 53.69,
@@ -26099,7 +26345,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 55.26,
           "costPerTask": 3.6589,
-          "timePerTaskMinutes": 6.52,
+          "timePerTaskMinutes": 6.47,
           "outputTokensPerTask": 26724,
           "capabilities": {
             "financeAndAccounting": 56.81,
@@ -26130,7 +26376,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 56.85,
           "costPerTask": 6.2447,
-          "timePerTaskMinutes": 11.85,
+          "timePerTaskMinutes": 11.57,
           "outputTokensPerTask": 51973,
           "capabilities": {
             "financeAndAccounting": 57.38,
@@ -26160,8 +26406,8 @@
           "hasFallback": false,
           "fallbackLabel": null,
           "intelligenceIndex": 50.41,
-          "costPerTask": 3.8413,
-          "timePerTaskMinutes": 22.78,
+          "costPerTask": 7.6827,
+          "timePerTaskMinutes": 22.73,
           "outputTokensPerTask": 116368,
           "capabilities": {
             "financeAndAccounting": 55.92,
@@ -26192,7 +26438,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 34.5,
           "costPerTask": 0.1615,
-          "timePerTaskMinutes": 1.73,
+          "timePerTaskMinutes": 1.55,
           "outputTokensPerTask": 5838,
           "capabilities": {
             "financeAndAccounting": 44.25,
@@ -26223,7 +26469,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 46.15,
           "costPerTask": 0.3594,
-          "timePerTaskMinutes": 3.85,
+          "timePerTaskMinutes": 3.46,
           "outputTokensPerTask": 13518,
           "capabilities": {
             "financeAndAccounting": 50.6,
@@ -26254,7 +26500,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 50.23,
           "costPerTask": 0.591,
-          "timePerTaskMinutes": 5.37,
+          "timePerTaskMinutes": 5.27,
           "outputTokensPerTask": 22606,
           "capabilities": {
             "financeAndAccounting": 53.18,
@@ -26285,7 +26531,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 52.31,
           "costPerTask": 0.764,
-          "timePerTaskMinutes": 7.27,
+          "timePerTaskMinutes": 7.22,
           "outputTokensPerTask": 30241,
           "capabilities": {
             "financeAndAccounting": 55.21,
@@ -26316,7 +26562,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 54.51,
           "costPerTask": 1.2721,
-          "timePerTaskMinutes": 14.31,
+          "timePerTaskMinutes": 13.92,
           "outputTokensPerTask": 67824,
           "capabilities": {
             "financeAndAccounting": 56.23,
@@ -26347,7 +26593,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 30.88,
           "costPerTask": 2.9222,
-          "timePerTaskMinutes": 8.97,
+          "timePerTaskMinutes": 7.77,
           "outputTokensPerTask": 42670,
           "capabilities": {
             "financeAndAccounting": 45.3,
@@ -26378,7 +26624,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 35.01,
           "costPerTask": 6.1836,
-          "timePerTaskMinutes": 15.88,
+          "timePerTaskMinutes": 14.06,
           "outputTokensPerTask": 89127,
           "capabilities": {
             "financeAndAccounting": 50.62,
@@ -26409,7 +26655,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 34.34,
           "costPerTask": 7.5118,
-          "timePerTaskMinutes": 16.52,
+          "timePerTaskMinutes": 15.42,
           "outputTokensPerTask": 92970,
           "capabilities": {
             "financeAndAccounting": 51.69,
@@ -26471,7 +26717,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 24.55,
           "costPerTask": 0.0918,
-          "timePerTaskMinutes": 3.22,
+          "timePerTaskMinutes": 3.18,
           "outputTokensPerTask": 53335,
           "capabilities": {
             "financeAndAccounting": 34.88,
@@ -26502,7 +26748,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 29.62,
           "costPerTask": 0.1586,
-          "timePerTaskMinutes": 4.97,
+          "timePerTaskMinutes": 4.87,
           "outputTokensPerTask": 88064,
           "capabilities": {
             "financeAndAccounting": 37.84,
@@ -26533,7 +26779,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 34.34,
           "costPerTask": 0.2484,
-          "timePerTaskMinutes": 7.35,
+          "timePerTaskMinutes": 7.57,
           "outputTokensPerTask": 136177,
           "capabilities": {
             "financeAndAccounting": 41.11,
@@ -26564,7 +26810,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 36.23,
           "costPerTask": 0.411,
-          "timePerTaskMinutes": 9.89,
+          "timePerTaskMinutes": 9.9,
           "outputTokensPerTask": 225966,
           "capabilities": {
             "financeAndAccounting": 43.56,
@@ -26657,7 +26903,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 30.55,
           "costPerTask": 7.766,
-          "timePerTaskMinutes": 12.07,
+          "timePerTaskMinutes": 11.37,
           "outputTokensPerTask": 98940,
           "capabilities": {
             "financeAndAccounting": 42.38,
@@ -26688,7 +26934,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 9.39,
           "costPerTask": 0.0714,
-          "timePerTaskMinutes": 1.44,
+          "timePerTaskMinutes": 1.43,
           "outputTokensPerTask": 10059,
           "capabilities": {
             "financeAndAccounting": 19.02,
@@ -26719,7 +26965,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 9.67,
           "costPerTask": 0.0051,
-          "timePerTaskMinutes": 0.47,
+          "timePerTaskMinutes": 0.46,
           "outputTokensPerTask": 3296,
           "capabilities": {
             "financeAndAccounting": 17.18,
@@ -26781,7 +27027,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 21.38,
           "costPerTask": 0.0729,
-          "timePerTaskMinutes": 4.49,
+          "timePerTaskMinutes": 4.46,
           "outputTokensPerTask": 32839,
           "capabilities": {
             "financeAndAccounting": 29.26,
@@ -26812,7 +27058,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 23.3,
           "costPerTask": 0.1041,
-          "timePerTaskMinutes": 5.95,
+          "timePerTaskMinutes": 5.96,
           "outputTokensPerTask": 43893,
           "capabilities": {
             "financeAndAccounting": 30.55,
@@ -26843,7 +27089,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 27.76,
           "costPerTask": 0.152,
-          "timePerTaskMinutes": 9.96,
+          "timePerTaskMinutes": 9.98,
           "outputTokensPerTask": 75296,
           "capabilities": {
             "financeAndAccounting": 33.87,
@@ -26874,7 +27120,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 11.66,
           "costPerTask": 0.6929,
-          "timePerTaskMinutes": 1.08,
+          "timePerTaskMinutes": 1.04,
           "outputTokensPerTask": 30301,
           "capabilities": {
             "financeAndAccounting": 23.31,
@@ -26905,7 +27151,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 43.32,
           "costPerTask": 6.952,
-          "timePerTaskMinutes": 7.8,
+          "timePerTaskMinutes": 7.6,
           "outputTokensPerTask": 96063,
           "capabilities": {
             "financeAndAccounting": 51.13,
@@ -26936,7 +27182,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 36.42,
           "costPerTask": 2.3858,
-          "timePerTaskMinutes": 7.46,
+          "timePerTaskMinutes": 7.8,
           "outputTokensPerTask": 91114,
           "capabilities": {
             "financeAndAccounting": 48.83,
@@ -26967,7 +27213,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 29.89,
           "costPerTask": 0.2572,
-          "timePerTaskMinutes": 30.47,
+          "timePerTaskMinutes": 27.92,
           "outputTokensPerTask": 121073,
           "capabilities": {
             "financeAndAccounting": 38.93,
@@ -26998,7 +27244,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 26.73,
           "costPerTask": 0.1285,
-          "timePerTaskMinutes": 37.04,
+          "timePerTaskMinutes": 33.41,
           "outputTokensPerTask": 131806,
           "capabilities": {
             "financeAndAccounting": 36.93,
@@ -27029,7 +27275,7 @@
           "fallbackLabel": null,
           "intelligenceIndex": 18.73,
           "costPerTask": 1.2851,
-          "timePerTaskMinutes": 11.12,
+          "timePerTaskMinutes": 11.71,
           "outputTokensPerTask": 91452,
           "capabilities": {
             "financeAndAccounting": 25.09,
@@ -27045,7 +27291,7 @@
       ]
     },
     "aa_effort_evals": {
-      "fetched_at": "2026-10-28T09:00:27+00:00",
+      "fetched_at": "2026-10-28T20:36:40+00:00",
       "source": "Artificial Analysis release pages (Intelligence Index v5.0)",
       "evals": [
         "Intelligence Index",
@@ -27988,7 +28234,7 @@
     }
   },
   "external_leaderboards": {
-    "reviewed_at": "2026-10-23",
+    "reviewed_at": "2026-10-29",
     "platforms": [
       {
         "id": "aa",
@@ -28004,7 +28250,7 @@
         "id": "scale",
         "name": "Scale Labs SEAL",
         "url": "https://labs.scale.com/leaderboard/hle-diamond",
-        "snapshot": "Humanity's Last Exam · Diamond · 来源更新 未披露 · 核验 2026-10-23",
+        "snapshot": "Humanity's Last Exam · Diamond · 来源更新 未披露 · 核验 2026-10-29",
         "focus": "HLE Diamond。Diamond 与 AA 采用的 HLE 数据及工具口径不同，不能拼接比较。保留来源 ± 区间；校准误差越低越好，主分数越高越好。",
         "cost_metric": "来源未给出每任务成本，保持缺失。"
       },
@@ -28012,7 +28258,7 @@
         "id": "openrouter",
         "name": "OpenRouter Rankings",
         "url": "https://openrouter.ai/rankings",
-        "snapshot": "Text · This Week · 截至 10 月 22 日的滚动 7 天 · 来源更新 2026-10-22 · 核验 2026-10-23",
+        "snapshot": "Text · This Week · 截至 10 月 27 日的滚动 7 天 · 来源更新 2026-10-27 · 核验 2026-10-29",
         "focus": "近 7 日 Token 用量。热度反映 OpenRouter 平台路由流量，不能作为能力分、用户数或付费规模。新上榜表示前一周期无对应用量，不表示模型刚发布。",
         "cost_metric": "该视图统计输入与输出 token 用量，不报告同任务费用。"
       },
@@ -28020,15 +28266,15 @@
         "id": "livebench",
         "name": "LiveBench 2.0",
         "url": "https://livebench.ai/#/",
-        "snapshot": "LiveBench 2.0 · release 2026-10-14 · 来源更新 2026-10-18 · 核验 2026-10-23",
-        "focus": "Overall。Overall 为有分数套件的均值；页面说明每个套件一次运行，主表未注明原生 effort。不可据此把成绩归给 high 或 max。",
+        "snapshot": "LiveBench 2.0 · release 2026-10-25（长程代理 ×2、编程与设计 ×1.5 加权） · 来源更新 2026-10-25 · 核验 2026-10-29",
+        "focus": "Overall。10-25 版起 Overall 改为加权均值（长程代理 ×2，编程、设计 ×1.5），与 10-14 版不能直接比较。主表未注明原生 effort，不可据此把成绩归给 high 或 max。",
         "cost_metric": "LiveBench 报告的 Cost per successful task（USD）；含任务循环，与 AA 加权成本独立。"
       },
       {
         "id": "arena",
         "name": "Arena.ai (LMSYS)",
         "url": "https://arena.ai/leaderboard/chat/text",
-        "snapshot": "Text Arena · Overall · 来源更新 2026-10-22 · 核验 2026-10-23",
+        "snapshot": "Text Arena · Overall · 来源更新 2026-10-22 · 核验 2026-10-29",
         "focus": "Text Arena Elo。人类对回答的偏好不等于任务成功率。保留 ± 区间与 Preliminary 状态；小分差和区间重叠不说明显著领先。",
         "cost_metric": "本次 Text 页未展示 Cost/Task，保持缺失；不挪用 Agent Arena 的费用。"
       }
@@ -28041,16 +28287,16 @@
         "aa_ii": "57.6 (max) / 53.6 (high)",
         "aa_cost_task": "$0.55 (low) – $1.82 (high) – $5.98 (max)",
         "scale_seal": "RLI 远程劳动 #1 (21.25%) · HLE Diamond #2 (55.0%) · 第六感 #4 (44.6%)",
-        "openrouter": "周用量 #7 · 7.45T tokens · +27%",
-        "livebench_2": "Overall 86.5 · $4.190/成功任务",
+        "openrouter": "周用量 #7 · 8.07T tokens · +19%",
+        "livebench_2": "Overall 85.1 · $4.290/成功任务",
         "arena": "Text 2026-10-22：1509 ±7 Elo · high",
         "sweet_spot": "先按任务与原生档位查看上方选档速查，再用同一评测的成绩与费用验证；各站指标独立参考。",
         "aa_cap_release_slug": "claude-opus-5-5",
         "aa_cap_highlights": "max · Default Fallback · 财务与会计 60.73 · 战略与运营 63.68 · 法律 63.26 · 医疗与健康 60.54 · 工程 60.35 · 经济学 65.60",
         "aa_cap_variant_slug": "claude-opus-5-5",
         "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/releases/claude-opus-5-5",
-        "livebench_snapshot": "2026-10-18",
-        "openrouter_snapshot": "2026-10-22",
+        "livebench_snapshot": "2026-10-25",
+        "openrouter_snapshot": "2026-10-27",
         "scale_snapshot": "2026-10-19 历史选录；新核验 HLE / HSS / MultiChallenge 见下方"
       },
       {
@@ -28061,15 +28307,15 @@
         "aa_cost_task": "$0.35 (low) – $0.88 (high) – $5.46 (max)",
         "scale_seal": "Agentic Coding 与多步工具调用主力梯队",
         "openrouter": "本次周用量前十选录未收录；不表示不可用或能力较低",
-        "livebench_2": "Overall 82.5 · $3.516/成功任务",
+        "livebench_2": "Overall 80.0 · $3.718/成功任务",
         "arena": "Text 2026-10-22：1478 ±7 Elo · xhigh",
         "sweet_spot": "先按任务与原生档位查看上方选档速查，再用同一评测的成绩与费用验证；各站指标独立参考。",
         "aa_cap_release_slug": "claude-sonnet-5-5",
         "aa_cap_highlights": "max · Default Fallback · 财务与会计 57.23 · 战略与运营 59.62 · 法律 56.44 · 医疗与健康 58.06 · 工程 58.37 · 经济学 60.84",
         "aa_cap_variant_slug": "claude-sonnet-5-5",
         "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/releases/claude-sonnet-5-5",
-        "livebench_snapshot": "2026-10-18",
-        "openrouter_snapshot": "2026-10-22",
+        "livebench_snapshot": "2026-10-25",
+        "openrouter_snapshot": "2026-10-27",
         "scale_snapshot": "2026-10-19 历史选录；新核验 HLE / HSS / MultiChallenge 见下方"
       },
       {
@@ -28080,15 +28326,15 @@
         "aa_cost_task": "$2.37 (low) – $3.91 (high) – $7.63 (max)",
         "scale_seal": "SWE-Bench Pro V2 Full #3 (99.1%) · Hard #2 (92.2%) · RLI #3 (17.92%)",
         "openrouter": "本次周用量前十选录未收录；不表示不可用或能力较低",
-        "livebench_2": "Overall 88.0 · $5.096/成功任务",
+        "livebench_2": "Overall 85.7 · $6.904/成功任务",
         "arena": "Text 2026-10-22：1503 ±6 Elo · max",
         "sweet_spot": "先按任务与原生档位查看上方选档速查，再用同一评测的成绩与费用验证；各站指标独立参考。",
         "aa_cap_release_slug": "claude-fable-5-1",
         "aa_cap_highlights": "max · Default Fallback · 财务与会计 56.42 · 战略与运营 59.67 · 法律 60.49 · 医疗与健康 58.00 · 工程 56.47 · 经济学 62.67",
         "aa_cap_variant_slug": "claude-fable-5-1",
         "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/releases/claude-fable-5-1",
-        "livebench_snapshot": "2026-10-18",
-        "openrouter_snapshot": "2026-10-22",
+        "livebench_snapshot": "2026-10-25",
+        "openrouter_snapshot": "2026-10-27",
         "scale_snapshot": "2026-10-19 历史选录；新核验 HLE / HSS / MultiChallenge 见下方"
       },
       {
@@ -28099,15 +28345,15 @@
         "aa_cost_task": "$0.024 (low) – $0.079 (high) – $0.213 (max)",
         "scale_seal": "MultiChallenge 67.67 ±5.34（当前页面序号 #8）",
         "openrouter": "本次周用量前十选录未收录；不表示不可用或能力较低",
-        "livebench_2": "Overall 75.6 · $0.818/成功任务",
+        "livebench_2": "Overall 69.8 · $0.905/成功任务",
         "arena": "Agent Code 历史快照 2026-10-14：Agent Code #10 (+2.58% ±1.53%, P50 $0.08)",
         "sweet_spot": "先按任务与原生档位查看上方选档速查，再用同一评测的成绩与费用验证；各站指标独立参考。",
         "aa_cap_release_slug": "claude-haiku-5-5",
         "aa_cap_highlights": "max · 财务与会计 43.90 · 战略与运营 40.38 · 法律 42.28 · 医疗与健康 44.13 · 工程 44.88 · 经济学 51.23",
         "aa_cap_variant_slug": "claude-haiku-5-5",
         "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/releases/claude-haiku-5-5",
-        "livebench_snapshot": "2026-10-18",
-        "openrouter_snapshot": "2026-10-22",
+        "livebench_snapshot": "2026-10-25",
+        "openrouter_snapshot": "2026-10-27",
         "scale_snapshot": "2026-10-23 核验"
       },
       {
@@ -28118,15 +28364,15 @@
         "aa_cost_task": "$0.13 (low) – $0.32 (high) – $0.72 (max)",
         "scale_seal": "MultiChallenge #1 (81.95% ±4.16%) · 第六感 #3 (46.6%)",
         "openrouter": "本次周用量前十选录未收录；不表示不可用或能力较低",
-        "livebench_2": "Overall 85.4 · $0.726/成功任务",
+        "livebench_2": "Overall 84.1 · $0.761/成功任务",
         "arena": "Text 2026-10-22：1480 ±7 Elo · max",
         "sweet_spot": "先按任务与原生档位查看上方选档速查，再用同一评测的成绩与费用验证；各站指标独立参考。",
         "aa_cap_release_slug": "gpt-6-1-sol",
         "aa_cap_highlights": "max · 财务与会计 53.98 · 战略与运营 56.98 · 法律 57.69 · 医疗与健康 51.18 · 工程 53.90 · 经济学 59.28",
         "aa_cap_variant_slug": "gpt-6-1-sol",
         "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/releases/gpt-6-1-sol",
-        "livebench_snapshot": "2026-10-18",
-        "openrouter_snapshot": "2026-10-22",
+        "livebench_snapshot": "2026-10-25",
+        "openrouter_snapshot": "2026-10-27",
         "scale_snapshot": "2026-10-19 历史选录；新核验 HLE / HSS / MultiChallenge 见下方"
       },
       {
@@ -28137,15 +28383,15 @@
         "aa_cost_task": "$0.82 (low) – $1.73 (high) – $3.26 (max)",
         "scale_seal": "HLE Diamond #1 (60.6%) · 第六感 #2 (53.6%) · RLI #2 (20.83%) · SWE-Bench Pro V2 #4/#5",
         "openrouter": "本次周用量前十选录未收录；不表示不可用或能力较低",
-        "livebench_2": "Overall 86.1 · $3.805/成功任务",
+        "livebench_2": "Overall 85.6 · $4.548/成功任务",
         "arena": "Text 2026-10-22：1476 ±6 Elo · max",
         "sweet_spot": "先按任务与原生档位查看上方选档速查，再用同一评测的成绩与费用验证；各站指标独立参考。",
         "aa_cap_release_slug": "gpt-6-astra",
         "aa_cap_highlights": "max · 财务与会计 55.24 · 战略与运营 57.34 · 法律 58.53 · 医疗与健康 51.67 · 工程 54.71 · 经济学 59.83",
         "aa_cap_variant_slug": "gpt-6-astra",
         "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/releases/gpt-6-astra",
-        "livebench_snapshot": "2026-10-18",
-        "openrouter_snapshot": "2026-10-22",
+        "livebench_snapshot": "2026-10-25",
+        "openrouter_snapshot": "2026-10-27",
         "scale_snapshot": "2026-10-19 历史选录；新核验 HLE / HSS / MultiChallenge 见下方"
       },
       {
@@ -28155,16 +28401,16 @@
         "aa_ii": "38.1 (max) / 32.9 (high)",
         "aa_cost_task": "$0.005 (low) – $0.029 (high) – $0.068 (max)",
         "scale_seal": "轻量级高吞吐基线",
-        "openrouter": "周用量 #8 · 6.1T tokens · −10%",
-        "livebench_2": "Overall 69.4 · $0.127/成功任务",
+        "openrouter": "周用量 #4 · 9.08T tokens · +46%",
+        "livebench_2": "Overall 64.6 · $0.133/成功任务",
         "arena": "Agent Code 历史快照 2026-10-14：Agent Code #11 (-2.44% ±1.50%, P50 $0.02)",
         "sweet_spot": "先按任务与原生档位查看上方选档速查，再用同一评测的成绩与费用验证；各站指标独立参考。",
         "aa_cap_release_slug": "gpt-6-luna",
         "aa_cap_highlights": "max · 财务与会计 40.30 · 战略与运营 45.74 · 法律 40.28 · 医疗与健康 37.40 · 工程 37.09 · 经济学 45.22",
         "aa_cap_variant_slug": "gpt-6-luna",
         "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/releases/gpt-6-luna",
-        "livebench_snapshot": "2026-10-18",
-        "openrouter_snapshot": "2026-10-22",
+        "livebench_snapshot": "2026-10-25",
+        "openrouter_snapshot": "2026-10-27",
         "scale_snapshot": "2026-10-19 历史选录；新核验 HLE / HSS / MultiChallenge 见下方"
       },
       {
@@ -28175,15 +28421,15 @@
         "aa_cost_task": "$1.99 (high · 优惠期 $2/$10)",
         "scale_seal": "HSS 55.40 ±4.20；HLE Diamond 53.20 ±3.07；MultiChallenge 78.70 ±5.30",
         "openrouter": "本次周用量前十选录未收录；不表示不可用或能力较低",
-        "livebench_2": "Overall 84.1 · $1.802/成功任务",
+        "livebench_2": "Overall 79.3 · $2.073/成功任务",
         "arena": "Text 2026-10-22：1517 ±7 Elo · high · Preliminary",
         "sweet_spot": "先按任务与原生档位查看上方选档速查，再用同一评测的成绩与费用验证；各站指标独立参考。",
         "aa_cap_release_slug": "gemini-4-argon",
         "aa_cap_highlights": "high · 财务与会计 53.79 · 战略与运营 56.24 · 法律 60.02 · 医疗与健康 无数据（不参排） · 工程 55.22 · 经济学 60.42",
         "aa_cap_variant_slug": "gemini-4-argon",
         "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/gemini-4-argon",
-        "livebench_snapshot": "2026-10-18",
-        "openrouter_snapshot": "2026-10-22",
+        "livebench_snapshot": "2026-10-25",
+        "openrouter_snapshot": "2026-10-27",
         "scale_snapshot": "2026-10-23 核验"
       },
       {
@@ -28194,15 +28440,15 @@
         "aa_cost_task": "$0.93 (medium) – $1.24 (high)",
         "scale_seal": "HSS 41.60 ±3.70（当前页面序号 #6）",
         "openrouter": "本次周用量前十选录未收录；不表示不可用或能力较低",
-        "livebench_2": "Overall 67.3 · $1.172/成功任务",
+        "livebench_2": "Overall 59.2 · $1.659/成功任务",
         "arena": "Text 2026-10-22：1496 ±4 Elo · high · Preliminary",
         "sweet_spot": "先按任务与原生档位查看上方选档速查，再用同一评测的成绩与费用验证；各站指标独立参考。",
         "aa_cap_release_slug": "gemini-3-8-flash",
         "aa_cap_highlights": "high · 财务与会计 46.76 · 战略与运营 48.40 · 法律 51.63 · 医疗与健康 41.78 · 工程 42.81 · 经济学 52.36",
         "aa_cap_variant_slug": "gemini-3-8-flash",
         "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/releases/gemini-3-8-flash",
-        "livebench_snapshot": "2026-10-18",
-        "openrouter_snapshot": "2026-10-22",
+        "livebench_snapshot": "2026-10-25",
+        "openrouter_snapshot": "2026-10-27",
         "scale_snapshot": "2026-10-23 核验"
       },
       {
@@ -28220,8 +28466,8 @@
         "aa_cap_highlights": "high · 财务与会计 23.54 · 战略与运营 22.39 · 法律 30.32 · 医疗与健康 23.07 · 工程 24.41 · 经济学 31.45",
         "aa_cap_variant_slug": "gemini-3-5-flash-lite",
         "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/gemini-3-5-flash-lite",
-        "livebench_snapshot": "2026-10-18",
-        "openrouter_snapshot": "2026-10-22",
+        "livebench_snapshot": "2026-10-25",
+        "openrouter_snapshot": "2026-10-27",
         "scale_snapshot": "2026-10-19 历史选录；新核验 HLE / HSS / MultiChallenge 见下方"
       },
       {
@@ -28232,15 +28478,15 @@
         "aa_cost_task": "$1.25 (low) – $2.73 (high) – $3.74 (xhigh)",
         "scale_seal": "前十梯队推理与实时检索增强候选",
         "openrouter": "本次周用量前十选录未收录；不表示不可用或能力较低",
-        "livebench_2": "Overall 74.1 · $2.687/成功任务",
+        "livebench_2": "Overall 70.1 · $2.913/成功任务",
         "arena": "本次 Text 选录未收录；旧版近似 Elo 不再作为当前成绩",
         "sweet_spot": "先按任务与原生档位查看上方选档速查，再用同一评测的成绩与费用验证；各站指标独立参考。",
         "aa_cap_release_slug": "grok-4-7",
         "aa_cap_highlights": "xhigh · 财务与会计 51.93 · 战略与运营 54.43 · 法律 54.13 · 医疗与健康 47.19 · 工程 47.43 · 经济学 55.65",
         "aa_cap_variant_slug": "grok-4-7",
         "aa_cap_source_url": "https://artificialanalysis.ai/zh/models/releases/grok-4-7",
-        "livebench_snapshot": "2026-10-18",
-        "openrouter_snapshot": "2026-10-22",
+        "livebench_snapshot": "2026-10-25",
+        "openrouter_snapshot": "2026-10-27",
         "scale_snapshot": "2026-10-19 历史选录；新核验 HLE / HSS / MultiChallenge 见下方"
       }
     ],
@@ -28296,7 +28542,7 @@
     ]
   },
   "market_snapshot": {
-    "reviewed_at": "2026-10-23",
+    "reviewed_at": "2026-10-29",
     "scale_highlight_updates": {
       "0": {
         "top1": "Gemini 4 Argon high (55.40 ±4.20)",
@@ -28341,8 +28587,8 @@
         "extra_label": "较 v4.3.2",
         "extra_unit": "",
         "selection": "沿用 10-23 v4.3.2 选录的配置，另加 v5 发布文章点名的 Opus 5.5 low、Kimi K3.1 Pro、10-26 发布的 GPT-6.1 Terra 与 Gemini 3.5 Flash-Lite；不是完整全球榜。分数按页面整数显示（四舍五入），CSV 另含两位小数原值、输出速度与九项子评测。“较 v4.3.2”的旧分取自 10-23 选录，Kimi K3.1 Pro 取自 AA 10-23 发布文章。",
-        "note": "v5 约 60% 权重来自私有或答案不公开的评测，四类各 25%。新旧版本分数不可直接比较，“较 v4.3.2”只看排序变化。开放权重模型普遍下滑，AA 未说明原因。含回退的 Claude 配置按来源标记。",
-        "checked_at": "2026-10-28",
+        "note": "v5 约 60% 权重来自私有或答案不公开的评测，四类各 25%。新旧版本分数不可直接比较，“较 v4.3.2”只看排序变化。开放权重模型普遍下滑，AA 未说明原因。含回退的 Claude 配置按来源标记。10-29 重新读取：分数未变，速度与用时随实时测量波动；Gemini 4 Argon 费用已按 AA 采用的 12-01 后价格（$4 / $20）计，11-30 前按优惠价约为一半。",
+        "checked_at": "2026-10-29",
         "rows": [
           {
             "id": "r1",
@@ -28381,7 +28627,7 @@
             "prev_score": 53,
             "change": "+4 · 原 53",
             "cost_usd": 6.24,
-            "output_tps": 71,
+            "output_tps": 73,
             "open_weights": false,
             "evals": {
               "AA-Briefcase (Elo)": 1568.14,
@@ -28407,7 +28653,7 @@
             "prev_score": 52,
             "change": "+3 · 原 52",
             "cost_usd": 1.27,
-            "output_tps": 81,
+            "output_tps": 83,
             "open_weights": false,
             "evals": {
               "AA-Briefcase (Elo)": 1555.1,
@@ -28433,7 +28679,7 @@
             "prev_score": 56,
             "change": "−2 · 原 56",
             "cost_usd": 10.02,
-            "output_tps": 140,
+            "output_tps": 138,
             "open_weights": false,
             "evals": {
               "AA-Briefcase (Elo)": 1811.82,
@@ -28459,7 +28705,7 @@
             "prev_score": 54,
             "change": "−2 · 原 54",
             "cost_usd": 3.46,
-            "output_tps": 81,
+            "output_tps": 84,
             "open_weights": false,
             "evals": {
               "AA-Briefcase (Elo)": 1680.92,
@@ -28510,8 +28756,8 @@
             "score_exact": 50.41,
             "prev_score": 53,
             "change": "−3 · 原 53",
-            "cost_usd": 3.84,
-            "output_tps": 82,
+            "cost_usd": 7.68,
+            "output_tps": 83,
             "open_weights": false,
             "evals": {
               "AA-Briefcase (Elo)": 1483.28,
@@ -28615,7 +28861,7 @@
             "prev_score": 55,
             "change": "−9 · 原 55",
             "cost_usd": 3.68,
-            "output_tps": 41,
+            "output_tps": 43,
             "open_weights": false,
             "evals": {
               "AA-Briefcase (Elo)": 1677.79,
@@ -28642,7 +28888,7 @@
             "prev_score": 52,
             "change": "−9 · 原 52",
             "cost_usd": 6.95,
-            "output_tps": 208,
+            "output_tps": 197,
             "open_weights": false,
             "evals": {
               "AA-Briefcase (Elo)": 1658.65,
@@ -28694,7 +28940,7 @@
             "prev_score": 46,
             "change": "−11 · 原 46",
             "cost_usd": 6.18,
-            "output_tps": 97,
+            "output_tps": 106,
             "open_weights": false,
             "evals": {
               "AA-Briefcase (Elo)": 1628.78,
@@ -28720,7 +28966,7 @@
             "prev_score": null,
             "change": "旧选录无此档",
             "cost_usd": 0.98,
-            "output_tps": 82,
+            "output_tps": 86,
             "open_weights": false,
             "evals": {
               "AA-Briefcase (Elo)": 1277.76,
@@ -28746,7 +28992,7 @@
             "prev_score": 46,
             "change": "−12 · 原 46",
             "cost_usd": 7.51,
-            "output_tps": 89,
+            "output_tps": 101,
             "open_weights": false,
             "evals": {
               "AA-Briefcase (Elo)": 1637.84,
@@ -28772,7 +29018,7 @@
             "prev_score": 45,
             "change": "−11 · 原 45",
             "cost_usd": 10.02,
-            "output_tps": 42,
+            "output_tps": 41,
             "open_weights": false,
             "evals": {
               "AA-Briefcase (Elo)": 1607.7,
@@ -28798,7 +29044,7 @@
             "prev_score": 45,
             "change": "−13 · 原 45",
             "cost_usd": 0.6,
-            "output_tps": 173,
+            "output_tps": 184,
             "open_weights": true,
             "evals": {
               "AA-Briefcase (Elo)": 1570.42,
@@ -28850,7 +29096,7 @@
             "prev_score": 41,
             "change": "−10 · 原 41",
             "cost_usd": 7.77,
-            "output_tps": 133,
+            "output_tps": 140,
             "open_weights": false,
             "evals": {
               "AA-Briefcase (Elo)": 1202.25,
@@ -28876,7 +29122,7 @@
             "prev_score": 46,
             "change": "−16 · 原 46",
             "cost_usd": 0.26,
-            "output_tps": 57,
+            "output_tps": 66,
             "open_weights": true,
             "evals": {
               "AA-Briefcase (Elo)": 1510.67,
@@ -28954,7 +29200,7 @@
             "prev_score": 44,
             "change": "−15 · 原 44",
             "cost_usd": 2.35,
-            "output_tps": 183,
+            "output_tps": 181,
             "open_weights": true,
             "evals": {
               "AA-Briefcase (Elo)": 1422.86,
@@ -28980,7 +29226,7 @@
             "prev_score": 38,
             "change": "−10 · 原 38",
             "cost_usd": 0.15,
-            "output_tps": 124,
+            "output_tps": 126,
             "open_weights": false,
             "evals": {
               "AA-Briefcase (Elo)": 1336.19,
@@ -29355,7 +29601,7 @@
         "extra_key": "votes",
         "extra_label": "投票数",
         "extra_unit": "票",
-        "selection": "选录来源前十名及部分主流模型。页面序号与本页选录排序分别保留；不重算来源排名。",
+        "selection": "选录来源前十名及部分主流模型。页面序号与本页选录排序分别保留；不重算来源排名。 10 月 29 日用 Arena 官方数据集（text_style_control）逐行核对，分数、区间与票数一致；来源本期没有新发布。",
         "note": "人类对回答的偏好不等于任务成功率。保留 ± 区间与 Preliminary 状态；小分差和区间重叠不说明显著领先。",
         "rows": [
           {
@@ -29546,7 +29792,396 @@
             "cost_usd": null
           }
         ],
-        "checked_at": "2026-10-23"
+        "checked_at": "2026-10-29"
+      },
+      {
+        "id": "arena_webdev",
+        "name": "Arena",
+        "short": "Arena WebDev",
+        "kind": "网页开发偏好",
+        "metric": "Code Arena (WebDev) 分数",
+        "unit": "分",
+        "precision": 0,
+        "source_url": "https://arena.ai/leaderboard/webdev",
+        "source_updated_at": "2026-10-27",
+        "version": "WebDev · Overall（HTML / React / 图生网页）",
+        "cost_label": null,
+        "cost_basis": "来源不报告费用。",
+        "extra_key": "votes",
+        "extra_label": "对战数",
+        "extra_unit": "场",
+        "selection": "选录来源前 15 名（共 151 项）。arena.ai 拦截自动读取，数据取自 Arena 官方 Hugging Face 数据集同一发布，版本固定在 6852ae7。",
+        "note": "用户对两个模型生成的网页做盲选，衡量前端与交互生成的偏好，不等于后端工程或代码审查能力。同一模型不同档位分列；区间重叠不说明显著领先。",
+        "checked_at": "2026-10-29",
+        "rows": [
+          {
+            "id": "r1",
+            "model": "Claude Opus 5.5",
+            "vendor": "Anthropic",
+            "configuration": "max",
+            "score": 1808.7,
+            "interval": 12.8,
+            "source_rank": 1,
+            "cost_usd": null,
+            "votes": 3451
+          },
+          {
+            "id": "r2",
+            "model": "GPT-6 Astra",
+            "vendor": "OpenAI",
+            "configuration": "max",
+            "score": 1773.5,
+            "interval": 9.5,
+            "source_rank": 2,
+            "cost_usd": null,
+            "votes": 7185
+          },
+          {
+            "id": "r3",
+            "model": "Claude Sonnet 5.5",
+            "vendor": "Anthropic",
+            "configuration": "xhigh",
+            "score": 1769.3,
+            "interval": 11.3,
+            "source_rank": 3,
+            "cost_usd": null,
+            "votes": 4435
+          },
+          {
+            "id": "r4",
+            "model": "GPT-6.1 Sol",
+            "vendor": "OpenAI",
+            "configuration": "max",
+            "score": 1751.6,
+            "interval": 11.4,
+            "source_rank": 4,
+            "cost_usd": null,
+            "votes": 4073
+          },
+          {
+            "id": "r5",
+            "model": "Claude Fable 5.1",
+            "vendor": "Anthropic",
+            "configuration": "max",
+            "score": 1745.0,
+            "interval": 8.5,
+            "source_rank": 5,
+            "cost_usd": null,
+            "votes": 8598
+          },
+          {
+            "id": "r6",
+            "model": "Muse Wonder Full",
+            "vendor": "Meta",
+            "configuration": "max",
+            "score": 1726.1,
+            "interval": 13.9,
+            "source_rank": 6,
+            "cost_usd": null,
+            "votes": 2248
+          },
+          {
+            "id": "r7",
+            "model": "Claude Sonnet 5.5",
+            "vendor": "Anthropic",
+            "configuration": "high",
+            "score": 1710.9,
+            "interval": 9.2,
+            "source_rank": 7,
+            "cost_usd": null,
+            "votes": 6341
+          },
+          {
+            "id": "r8",
+            "model": "Kimi K3.1 Pro",
+            "vendor": "Moonshot AI",
+            "configuration": "max",
+            "score": 1694.5,
+            "interval": 12.9,
+            "source_rank": 8,
+            "cost_usd": null,
+            "votes": 2685
+          },
+          {
+            "id": "r9",
+            "model": "Claude Opus 5",
+            "vendor": "Anthropic",
+            "configuration": "max",
+            "score": 1690.3,
+            "interval": 6.1,
+            "source_rank": 9,
+            "cost_usd": null,
+            "votes": 19592
+          },
+          {
+            "id": "r10",
+            "model": "Gemini 4 Argon",
+            "vendor": "Google",
+            "configuration": "high",
+            "score": 1679.9,
+            "interval": 11.5,
+            "source_rank": 10,
+            "cost_usd": null,
+            "votes": 3418
+          },
+          {
+            "id": "r11",
+            "model": "GPT-6 Sol",
+            "vendor": "OpenAI",
+            "configuration": "max",
+            "score": 1677.4,
+            "interval": 9.4,
+            "source_rank": 11,
+            "cost_usd": null,
+            "votes": 5681
+          },
+          {
+            "id": "r12",
+            "model": "Qwen3.8-Max (0902)",
+            "vendor": "Alibaba",
+            "configuration": "未注明档位",
+            "score": 1676.0,
+            "interval": 6.7,
+            "source_rank": 12,
+            "cost_usd": null,
+            "votes": 17830
+          },
+          {
+            "id": "r13",
+            "model": "Qwen3.8-Max",
+            "vendor": "Alibaba",
+            "configuration": "未注明档位",
+            "score": 1671.9,
+            "interval": 12.1,
+            "source_rank": 13,
+            "cost_usd": null,
+            "votes": 3405
+          },
+          {
+            "id": "r14",
+            "model": "GPT-6.1 Terra",
+            "vendor": "OpenAI",
+            "configuration": "max",
+            "score": 1670.7,
+            "interval": 16.2,
+            "source_rank": 14,
+            "cost_usd": null,
+            "votes": 1615
+          },
+          {
+            "id": "r15",
+            "model": "DeepSeek-V4.1-Flash-20261017",
+            "vendor": "DeepSeek",
+            "configuration": "max · 开放权重",
+            "score": 1666.3,
+            "interval": 8.2,
+            "source_rank": 15,
+            "cost_usd": null,
+            "votes": 7489
+          }
+        ]
+      },
+      {
+        "id": "arena_agent",
+        "name": "Arena",
+        "short": "Agent Arena",
+        "kind": "真实代理会话",
+        "metric": "Agent Arena 综合 IPS",
+        "unit": "",
+        "precision": 3,
+        "source_url": "https://arena.ai/leaderboard/agent",
+        "source_updated_at": "2026-10-23",
+        "version": "Agent Arena · Overall（IPS 估计）",
+        "cost_label": null,
+        "cost_basis": "来源不报告费用。",
+        "extra_key": "praise",
+        "extra_label": "表扬 / 抱怨信号",
+        "extra_unit": "",
+        "selection": "选录来源前 15 名（共 50 项）。数据取自 Arena 官方 Hugging Face 数据集，版本 6852ae7；“表扬 / 抱怨信号”取同一发布的 agent_praise_complaint 分项。",
+        "note": "来自真实代理会话里的多种信号（任务结果、可引导性、工具幻觉、bash 可靠性、用户表扬与抱怨），用 IPS 估计，越高越好；不是任务成功率。10 月 12 日起 bash 信号口径已改。方法原页拦截自动读取，本期未直接打开。",
+        "checked_at": "2026-10-29",
+        "rows": [
+          {
+            "id": "r1",
+            "model": "Claude Opus 5.5",
+            "vendor": "Anthropic",
+            "configuration": "max",
+            "score": 0.2077,
+            "interval": 0.0238,
+            "source_rank": 1,
+            "cost_usd": null,
+            "praise": 0.4532,
+            "sessions": 12057
+          },
+          {
+            "id": "r2",
+            "model": "Claude Sonnet 5.5",
+            "vendor": "Anthropic",
+            "configuration": "max",
+            "score": 0.1399,
+            "interval": 0.0303,
+            "source_rank": 2,
+            "cost_usd": null,
+            "praise": 0.232,
+            "sessions": 8097
+          },
+          {
+            "id": "r3",
+            "model": "GPT-6 Astra",
+            "vendor": "OpenAI",
+            "configuration": "max",
+            "score": 0.1396,
+            "interval": 0.0208,
+            "source_rank": 3,
+            "cost_usd": null,
+            "praise": 0.2976,
+            "sessions": 14567
+          },
+          {
+            "id": "r4",
+            "model": "Claude Fable 5.1",
+            "vendor": "Anthropic",
+            "configuration": "max",
+            "score": 0.1394,
+            "interval": 0.0193,
+            "source_rank": 4,
+            "cost_usd": null,
+            "praise": 0.2766,
+            "sessions": 17062
+          },
+          {
+            "id": "r5",
+            "model": "GPT-6.1 Sol",
+            "vendor": "OpenAI",
+            "configuration": "max",
+            "score": 0.1364,
+            "interval": 0.0163,
+            "source_rank": 5,
+            "cost_usd": null,
+            "praise": 0.3126,
+            "sessions": 16092
+          },
+          {
+            "id": "r6",
+            "model": "Gemini 4 Argon",
+            "vendor": "Google",
+            "configuration": "high",
+            "score": 0.1175,
+            "interval": 0.0091,
+            "source_rank": 6,
+            "cost_usd": null,
+            "praise": 0.2662,
+            "sessions": 45840
+          },
+          {
+            "id": "r7",
+            "model": "GPT-6 Sol",
+            "vendor": "OpenAI",
+            "configuration": "max",
+            "score": 0.0857,
+            "interval": 0.0171,
+            "source_rank": 7,
+            "cost_usd": null,
+            "praise": 0.141,
+            "sessions": 10305
+          },
+          {
+            "id": "r8",
+            "model": "Claude Opus 5",
+            "vendor": "Anthropic",
+            "configuration": "max",
+            "score": 0.0822,
+            "interval": 0.0163,
+            "source_rank": 8,
+            "cost_usd": null,
+            "praise": 0.1236,
+            "sessions": 24440
+          },
+          {
+            "id": "r9",
+            "model": "Claude Fable 5",
+            "vendor": "Anthropic",
+            "configuration": "high",
+            "score": 0.0775,
+            "interval": 0.014,
+            "source_rank": 9,
+            "cost_usd": null,
+            "praise": 0.1528,
+            "sessions": 43567
+          },
+          {
+            "id": "r10",
+            "model": "GPT-5.6 Sol",
+            "vendor": "OpenAI",
+            "configuration": "xhigh",
+            "score": 0.0606,
+            "interval": 0.0133,
+            "source_rank": 10,
+            "cost_usd": null,
+            "praise": 0.1037,
+            "sessions": 37542
+          },
+          {
+            "id": "r11",
+            "model": "Claude Sonnet 5",
+            "vendor": "Anthropic",
+            "configuration": "high",
+            "score": 0.0375,
+            "interval": 0.017,
+            "source_rank": 11,
+            "cost_usd": null,
+            "praise": 0.0381,
+            "sessions": 33991
+          },
+          {
+            "id": "r12",
+            "model": "Muse Wonder",
+            "vendor": "Meta",
+            "configuration": "max",
+            "score": 0.0331,
+            "interval": 0.0158,
+            "source_rank": 12,
+            "cost_usd": null,
+            "praise": 0.0107,
+            "sessions": 11134
+          },
+          {
+            "id": "r13",
+            "model": "MiMo-V2.6-Pro",
+            "vendor": "Xiaomi",
+            "configuration": "未注明档位 · 开放权重",
+            "score": 0.033,
+            "interval": 0.008,
+            "source_rank": 13,
+            "cost_usd": null,
+            "praise": 0.0412,
+            "sessions": 43983
+          },
+          {
+            "id": "r14",
+            "model": "Gemini 3.8 Flash",
+            "vendor": "Google",
+            "configuration": "high",
+            "score": 0.0317,
+            "interval": 0.0108,
+            "source_rank": 14,
+            "cost_usd": null,
+            "praise": 0.0417,
+            "sessions": 39719
+          },
+          {
+            "id": "r15",
+            "model": "Muse Spark 1.3",
+            "vendor": "Meta",
+            "configuration": "max",
+            "score": 0.0305,
+            "interval": 0.0083,
+            "source_rank": 15,
+            "cost_usd": null,
+            "praise": 0.0287,
+            "sessions": 78017
+          }
+        ]
       },
       {
         "id": "livebench",
@@ -29557,43 +30192,43 @@
         "unit": "分",
         "precision": 1,
         "source_url": "https://livebench.ai/#/",
-        "source_updated_at": "2026-10-18",
-        "version": "LiveBench 2.0 · release 2026-10-14",
+        "source_updated_at": "2026-10-25",
+        "version": "LiveBench 2.0 · release 2026-10-25（长程代理 ×2、编程与设计 ×1.5 加权）",
         "cost_label": "每成功任务成本",
         "cost_basis": "LiveBench 报告的 Cost per successful task（USD）；含任务循环，与 AA 加权成本独立。",
         "extra_key": "coding",
         "extra_label": "Coding",
         "extra_unit": "分",
-        "selection": "选录前十项及主流系列与近期模型，原始页面共 49 项。本次从动态页面读取，页面更新时间与 release 日期分别保留。",
-        "note": "Overall 为有分数套件的均值；页面说明每个套件一次运行，主表未注明原生 effort。不可据此把成绩归给 high 或 max。",
+        "selection": "选录页面列出名称的 22 项（原始页面共 31 项）。Overall 与每成功任务成本按页面规则由发布静态文件重算，并与页面抽查值一致。",
+        "note": "10-25 版起 Overall 改为加权均值（长程代理 ×2，编程、设计 ×1.5），与 10-14 版不能直接比较。主表未注明原生 effort，不可据此把成绩归给 high 或 max。",
         "rows": [
           {
             "id": "r1",
             "model": "Claude Fable 5.1",
             "vendor": "Anthropic",
-            "score": 88,
-            "cost_usd": 5.096,
+            "score": 85.7,
+            "cost_usd": 6.904,
             "coding": 97.7,
             "source_order": 1,
             "configuration": "页面未注明档位"
           },
           {
             "id": "r2",
-            "model": "Claude Opus 5.5",
-            "vendor": "Anthropic",
-            "score": 86.5,
-            "cost_usd": 4.19,
-            "coding": 96.3,
+            "model": "GPT-6 Astra",
+            "vendor": "OpenAI",
+            "score": 85.6,
+            "cost_usd": 4.548,
+            "coding": 93.7,
             "source_order": 2,
             "configuration": "页面未注明档位"
           },
           {
             "id": "r3",
-            "model": "GPT-6 Astra",
-            "vendor": "OpenAI",
-            "score": 86.1,
-            "cost_usd": 3.805,
-            "coding": 93.7,
+            "model": "Claude Opus 5.5",
+            "vendor": "Anthropic",
+            "score": 85.1,
+            "cost_usd": 4.29,
+            "coding": 96.3,
             "source_order": 3,
             "configuration": "页面未注明档位"
           },
@@ -29601,194 +30236,194 @@
             "id": "r4",
             "model": "GPT-6.1 Sol",
             "vendor": "OpenAI",
-            "score": 85.4,
-            "cost_usd": 0.726,
-            "coding": 96,
+            "score": 84.1,
+            "cost_usd": 0.761,
+            "coding": 96.0,
             "source_order": 4,
             "configuration": "页面未注明档位"
           },
           {
             "id": "r5",
-            "model": "Gemini 4 Argon",
-            "vendor": "Google",
-            "score": 84.1,
-            "cost_usd": 1.802,
-            "coding": 89.7,
+            "model": "Claude Sonnet 5.5",
+            "vendor": "Anthropic",
+            "score": 80.0,
+            "cost_usd": 3.718,
+            "coding": 94.7,
             "source_order": 5,
             "configuration": "页面未注明档位"
           },
           {
             "id": "r6",
-            "model": "Claude Fable 5",
-            "vendor": "Anthropic",
-            "score": 83.6,
-            "cost_usd": 6.354,
-            "coding": 98.3,
+            "model": "Gemini 4 Argon",
+            "vendor": "Google",
+            "score": 79.3,
+            "cost_usd": 2.073,
+            "coding": 89.7,
             "source_order": 6,
             "configuration": "页面未注明档位"
           },
           {
             "id": "r7",
-            "model": "Claude Sonnet 5.5",
-            "vendor": "Anthropic",
-            "score": 82.5,
-            "cost_usd": 3.516,
-            "coding": 94.7,
+            "model": "GPT-6.1 Terra",
+            "vendor": "OpenAI",
+            "score": 77.8,
+            "cost_usd": 0.665,
+            "coding": 94.3,
             "source_order": 7,
             "configuration": "页面未注明档位"
           },
           {
             "id": "r8",
-            "model": "Claude Opus 5",
-            "vendor": "Anthropic",
-            "score": 82.1,
-            "cost_usd": 4.451,
-            "coding": 90.8,
+            "model": "Muse Wonder 1.0",
+            "vendor": "Meta",
+            "score": 74.2,
+            "cost_usd": 2.015,
+            "coding": 86.2,
             "source_order": 8,
             "configuration": "页面未注明档位"
           },
           {
             "id": "r9",
-            "model": "GPT-6 Sol",
-            "vendor": "OpenAI",
-            "score": 81.9,
-            "cost_usd": 1.057,
-            "coding": 93.1,
+            "model": "DeepSeek V4.1 Flash 1017",
+            "vendor": "DeepSeek",
+            "score": 74.0,
+            "cost_usd": 0.181,
+            "coding": 96.0,
             "source_order": 9,
-            "configuration": "页面未注明档位"
+            "configuration": "页面未注明档位 · 开放权重"
           },
           {
             "id": "r10",
-            "model": "DeepSeek V4.1 Flash 1017",
-            "vendor": "DeepSeek",
-            "score": 79.2,
-            "cost_usd": 0.165,
-            "coding": 96,
+            "model": "Kimi K3.1 Pro",
+            "vendor": "Moonshot AI",
+            "score": 71.3,
+            "cost_usd": 1.044,
+            "coding": 81.8,
             "source_order": 10,
             "configuration": "页面未注明档位"
           },
           {
             "id": "r11",
-            "model": "Muse Wonder 1.0",
-            "vendor": "Meta",
-            "score": 78.1,
-            "cost_usd": 1.804,
-            "coding": 86.2,
+            "model": "Grok 4.7",
+            "vendor": "xAI",
+            "score": 70.1,
+            "cost_usd": 2.913,
+            "coding": 84.5,
             "source_order": 11,
             "configuration": "页面未注明档位"
           },
           {
             "id": "r12",
-            "model": "DeepSeek V4.1 Flash",
-            "vendor": "DeepSeek",
-            "score": 78,
-            "cost_usd": 0.214,
-            "coding": 90.2,
+            "model": "Claude Haiku 5.5",
+            "vendor": "Anthropic",
+            "score": 69.8,
+            "cost_usd": 0.905,
+            "coding": 91.4,
             "source_order": 12,
             "configuration": "页面未注明档位"
           },
           {
             "id": "r13",
-            "model": "Claude Haiku 5.5",
-            "vendor": "Anthropic",
-            "score": 75.6,
-            "cost_usd": 0.818,
-            "coding": 91.4,
-            "source_order": 15,
-            "configuration": "页面未注明档位"
+            "model": "MiMo V2.6 Pro",
+            "vendor": "Xiaomi",
+            "score": 68.5,
+            "cost_usd": 0.183,
+            "coding": 81.5,
+            "source_order": 13,
+            "configuration": "页面未注明档位 · 开放权重"
           },
           {
             "id": "r14",
-            "model": "MiMo V2.6 Pro",
-            "vendor": "Xiaomi",
-            "score": 74.9,
-            "cost_usd": 0.167,
-            "coding": 81.5,
-            "source_order": 18,
+            "model": "GPT-5.6 Terra",
+            "vendor": "OpenAI",
+            "score": 67.8,
+            "cost_usd": 1.957,
+            "coding": 86.2,
+            "source_order": 14,
             "configuration": "页面未注明档位"
           },
           {
             "id": "r15",
+            "model": "Grok 4.6",
+            "vendor": "xAI",
+            "score": 67.8,
+            "cost_usd": 1.422,
+            "coding": 89.1,
+            "source_order": 15,
+            "configuration": "页面未注明档位"
+          },
+          {
+            "id": "r16",
+            "model": "MiniMax M3.1 Flash",
+            "vendor": "MiniMax",
+            "score": 66.9,
+            "cost_usd": 0.153,
+            "coding": 83.9,
+            "source_order": 16,
+            "configuration": "页面未注明档位 · 开放权重"
+          },
+          {
+            "id": "r17",
+            "model": "GPT-6 Luna",
+            "vendor": "OpenAI",
+            "score": 64.6,
+            "cost_usd": 0.133,
+            "coding": 84.5,
+            "source_order": 17,
+            "configuration": "页面未注明档位"
+          },
+          {
+            "id": "r18",
+            "model": "Kimi K3",
+            "vendor": "Moonshot AI",
+            "score": 64.6,
+            "cost_usd": 2.189,
+            "coding": 59.3,
+            "source_order": 18,
+            "configuration": "页面未注明档位 · 开放权重"
+          },
+          {
+            "id": "r19",
             "model": "Muse Spark 1.3",
             "vendor": "Meta",
-            "score": 74.8,
-            "cost_usd": 1.062,
+            "score": 63.0,
+            "cost_usd": 1.372,
             "coding": 90.2,
             "source_order": 19,
             "configuration": "页面未注明档位"
           },
           {
-            "id": "r16",
-            "model": "Grok 4.7",
-            "vendor": "xAI",
-            "score": 74.1,
-            "cost_usd": 2.687,
-            "coding": 84.5,
-            "source_order": 20,
-            "configuration": "页面未注明档位"
-          },
-          {
-            "id": "r17",
-            "model": "MiniMax M3.1 Flash",
-            "vendor": "MiniMax",
-            "score": 73.1,
-            "cost_usd": 0.145,
-            "coding": 83.9,
-            "source_order": 21,
-            "configuration": "页面未注明档位"
-          },
-          {
-            "id": "r18",
+            "id": "r20",
             "model": "GLM-5.3 Flash",
             "vendor": "Z.AI",
-            "score": 70.6,
-            "cost_usd": 0.153,
+            "score": 62.1,
+            "cost_usd": 0.177,
             "coding": 80.6,
-            "source_order": 23,
-            "configuration": "页面未注明档位"
-          },
-          {
-            "id": "r19",
-            "model": "GPT-6 Luna",
-            "vendor": "OpenAI",
-            "score": 69.4,
-            "cost_usd": 0.127,
-            "coding": 84.5,
-            "source_order": 25,
-            "configuration": "页面未注明档位"
-          },
-          {
-            "id": "r20",
-            "model": "Gemini 3.8 Flash",
-            "vendor": "Google",
-            "score": 67.3,
-            "cost_usd": 1.172,
-            "coding": 82.2,
-            "source_order": 28,
-            "configuration": "页面未注明档位"
+            "source_order": 20,
+            "configuration": "页面未注明档位 · 开放权重"
           },
           {
             "id": "r21",
             "model": "Qwen3.8 Max",
             "vendor": "Alibaba",
-            "score": 64.2,
-            "cost_usd": 1.594,
+            "score": 61.6,
+            "cost_usd": 1.856,
             "coding": 60.3,
-            "source_order": 32,
-            "configuration": "页面未注明档位"
+            "source_order": 21,
+            "configuration": "页面未注明档位 · 开放权重"
           },
           {
             "id": "r22",
-            "model": "Kimi K3",
-            "vendor": "Moonshot AI",
-            "score": 63.4,
-            "cost_usd": 1.887,
-            "coding": 59.3,
-            "source_order": 34,
+            "model": "Gemini 3.8 Flash",
+            "vendor": "Google",
+            "score": 59.2,
+            "cost_usd": 1.659,
+            "coding": 82.2,
+            "source_order": 22,
             "configuration": "页面未注明档位"
           }
         ],
-        "checked_at": "2026-10-23"
+        "checked_at": "2026-10-29"
       },
       {
         "id": "scale",
@@ -29806,7 +30441,7 @@
         "extra_key": "calibration_error",
         "extra_label": "校准误差",
         "extra_unit": "",
-        "selection": "选录页面前 15 项。核验日期不是评测日期；页面未明确更新日期，保留未知。",
+        "selection": "选录页面全部 17 项。核验日期不是评测日期；页面未明确更新日期，保留未知。",
         "note": "Diamond 与 AA 采用的 HLE 数据及工具口径不同，不能拼接比较。保留来源 ± 区间；校准误差越低越好，主分数越高越好。",
         "rows": [
           {
@@ -29814,7 +30449,7 @@
             "model": "GPT-6 Astra",
             "vendor": "OpenAI",
             "score": 60.6,
-            "interval": 3,
+            "interval": 3.0,
             "calibration_error": 28.1,
             "configuration": "页面未注明档位",
             "cost_usd": null
@@ -29823,7 +30458,7 @@
             "id": "r2",
             "model": "Claude Opus 5.5",
             "vendor": "Anthropic",
-            "score": 55,
+            "score": 55.0,
             "interval": 3.1,
             "calibration_error": 7.1,
             "configuration": "页面未注明档位",
@@ -29854,7 +30489,7 @@
             "model": "Claude Opus 5",
             "vendor": "Anthropic",
             "score": 38.6,
-            "interval": 3,
+            "interval": 3.0,
             "calibration_error": 21.5,
             "configuration": "页面未注明档位",
             "cost_usd": null
@@ -29864,7 +30499,7 @@
             "model": "Claude Sonnet 5.5",
             "vendor": "Anthropic",
             "score": 37.5,
-            "interval": 3,
+            "interval": 3.0,
             "calibration_error": 36.8,
             "configuration": "页面未注明档位",
             "cost_usd": null
@@ -29913,7 +30548,7 @@
             "id": "r11",
             "model": "Muse Spark Open",
             "vendor": "Meta",
-            "score": 28,
+            "score": 28.0,
             "interval": 2.86,
             "calibration_error": 32.5,
             "configuration": "页面未注明档位",
@@ -29958,9 +30593,29 @@
             "calibration_error": 53.1,
             "configuration": "页面未注明档位",
             "cost_usd": null
+          },
+          {
+            "id": "r16",
+            "model": "DeepSeek V4 Pro",
+            "vendor": "DeepSeek",
+            "score": 13.4,
+            "interval": 2.1,
+            "calibration_error": 76.3,
+            "configuration": "页面未注明档位",
+            "cost_usd": null
+          },
+          {
+            "id": "r17",
+            "model": "Inkling",
+            "vendor": "Thinking Machines",
+            "score": 11.2,
+            "interval": 2.11,
+            "calibration_error": 64.6,
+            "configuration": "页面未注明档位",
+            "cost_usd": null
           }
         ],
-        "checked_at": "2026-10-23"
+        "checked_at": "2026-10-29"
       },
       {
         "id": "openrouter",
@@ -29971,8 +30626,8 @@
         "unit": "T",
         "precision": 2,
         "source_url": "https://openrouter.ai/rankings",
-        "source_updated_at": "2026-10-22",
-        "version": "Text · This Week · 截至 10 月 22 日的滚动 7 天",
+        "source_updated_at": "2026-10-27",
+        "version": "Text · This Week · 截至 10 月 27 日的滚动 7 天",
         "cost_label": null,
         "cost_basis": "该视图统计输入与输出 token 用量，不报告同任务费用。",
         "extra_key": "change",
@@ -29983,106 +30638,106 @@
         "rows": [
           {
             "id": "r1",
-            "model": "DeepSeek V4.1 Flash",
+            "model": "DeepSeek V4.1 Flash 1017",
             "vendor": "DeepSeek",
-            "score": 23.5,
-            "change": "−37%",
+            "score": 37.3,
+            "change": "+224%",
             "source_rank": 1,
-            "configuration": "平台全部已统计档位",
-            "cost_usd": null
+            "cost_usd": null,
+            "configuration": "平台全部已统计档位"
           },
           {
             "id": "r2",
-            "model": "DeepSeek V4.1 Flash 1017",
+            "model": "DeepSeek V4.1 Flash",
             "vendor": "DeepSeek",
-            "score": 21.7,
-            "change": "新上榜",
+            "score": 17,
+            "change": "−38%",
             "source_rank": 2,
-            "configuration": "平台全部已统计档位",
-            "cost_usd": null
+            "cost_usd": null,
+            "configuration": "平台全部已统计档位"
           },
           {
             "id": "r3",
-            "model": "MiniMax M3.1 Flash (free)",
-            "vendor": "MiniMax",
-            "score": 13.7,
-            "change": "新上榜",
+            "model": "GLM 5.3 Flash",
+            "vendor": "Z.AI",
+            "score": 14.1,
+            "change": "+22%",
             "source_rank": 3,
-            "configuration": "免费路由 · 与付费版分列",
-            "cost_usd": null
+            "cost_usd": null,
+            "configuration": "平台全部已统计档位"
           },
           {
             "id": "r4",
-            "model": "GLM 5.3 Flash",
-            "vendor": "Z.AI",
-            "score": 11.4,
-            "change": "−12%",
+            "model": "GPT-6 Luna",
+            "vendor": "OpenAI",
+            "score": 9.08,
+            "change": "+46%",
             "source_rank": 4,
-            "configuration": "平台全部已统计档位",
-            "cost_usd": null
+            "cost_usd": null,
+            "configuration": "平台全部已统计档位"
           },
           {
             "id": "r5",
             "model": "Hy4 preview",
             "vendor": "Tencent",
-            "score": 8.67,
+            "score": 8.97,
             "change": "+10%",
             "source_rank": 5,
-            "configuration": "平台全部已统计档位",
-            "cost_usd": null
+            "cost_usd": null,
+            "configuration": "平台全部已统计档位"
           },
           {
             "id": "r6",
-            "model": "MiMo-V2.6-Flash",
-            "vendor": "Xiaomi",
-            "score": 8,
-            "change": "−29%",
+            "model": "MiniMax M3.1 Flash (free)",
+            "vendor": "MiniMax",
+            "score": 8.71,
+            "change": "+75%",
             "source_rank": 6,
-            "configuration": "平台全部已统计档位",
-            "cost_usd": null
+            "cost_usd": null,
+            "configuration": "免费路由 · 与付费版分列"
           },
           {
             "id": "r7",
             "model": "Claude Opus 5.5",
             "vendor": "Anthropic",
-            "score": 7.45,
-            "change": "+27%",
+            "score": 8.07,
+            "change": "+19%",
             "source_rank": 7,
-            "configuration": "平台全部已统计档位",
-            "cost_usd": null
+            "cost_usd": null,
+            "configuration": "平台全部已统计档位"
           },
           {
             "id": "r8",
-            "model": "GPT-6 Luna",
-            "vendor": "OpenAI",
-            "score": 6.1,
-            "change": "−10%",
-            "source_rank": 8,
-            "configuration": "平台全部已统计档位",
-            "cost_usd": null
-          },
-          {
-            "id": "r9",
             "model": "GLM 5.3",
             "vendor": "Z.AI",
             "score": 5.15,
-            "change": "+7%",
+            "change": "−3%",
+            "source_rank": 8,
+            "cost_usd": null,
+            "configuration": "平台全部已统计档位"
+          },
+          {
+            "id": "r9",
+            "model": "Nemotron 3 Ultra (free)",
+            "vendor": "NVIDIA",
+            "score": 4.99,
+            "change": "+11%",
             "source_rank": 9,
-            "configuration": "平台全部已统计档位",
-            "cost_usd": null
+            "cost_usd": null,
+            "configuration": "免费路由 · 与付费版分列"
           },
           {
             "id": "r10",
-            "model": "Nemotron 3 Ultra (free)",
-            "vendor": "NVIDIA",
-            "score": 4.63,
-            "change": "−36%",
+            "model": "MiMo-V2.6-Flash",
+            "vendor": "Xiaomi",
+            "score": 4.71,
+            "change": "−48%",
             "source_rank": 10,
-            "configuration": "免费路由 · 与付费版分列",
-            "cost_usd": null
+            "cost_usd": null,
+            "configuration": "平台全部已统计档位"
           }
         ],
-        "checked_at": "2026-10-23"
+        "checked_at": "2026-10-29"
       }
     ],
     "highlights": [
@@ -30108,19 +30763,23 @@
     "changes": [
       {
         "title": "AA 智能指数升级到 v5",
-        "body": "10 月 27 日起约 60% 权重改用私有或答案不公开的评测，四类各 25%，移除 SciCode、GDPval-AA、AA-LCR。Opus 5.5 max 仍居首（58），GPT-6 Astra（57）升至第二，开放权重模型普遍下降 9–16 分。新旧版本分数不可直接比较；本页逐档曲线仍是 v4.3.2。"
+        "body": "10 月 27 日起约 60% 权重改用私有或答案不公开的评测，四类各 25%，移除 SciCode、GDPval-AA、AA-LCR。Opus 5.5 max 仍居首（58），GPT-6 Astra（57）升至第二，开放权重模型普遍下降 9–16 分。新旧版本分数不可直接比较；全站默认 v5，页首可切回 v4.3.2。"
       },
       {
-        "title": "扩展模型观察范围",
-        "body": "补入 DeepSeek V4.1 Flash 1017、Muse Wonder、MiMo、MiniMax 等来源已测模型。新旧版本分别列示，尚无同版逐档数据的模型不补造推理曲线。"
+        "title": "新增两个 Arena 榜单",
+        "body": "Arena WebDev 看网页生成的盲选偏好（Opus 5.5 max 第一，GPT-6 Astra、Sonnet 5.5 xhigh 随后）；Agent Arena 看真实代理会话里的多种信号（Opus 5.5 明显领先，其后四款差距在区间内）。两者都取自 Arena 官方数据集，文本榜按同一数据集逐行核对无误。"
       },
       {
-        "title": "按来源刷新成绩",
-        "body": "更新 Arena 10 月 22 日与 OpenRouter 滚动周榜，复核 LiveBench 动态榜和 Scale 专项结果。Grok / Haiku 的旧摘要已按当前 LiveBench 修正。"
+        "title": "LiveBench 10-25 版改为加权",
+        "body": "长程代理 ×2、编程与设计 ×1.5。Fable 5.1 85.7 与 GPT-6 Astra 85.6 并列第一，Opus 5.5 85.1、Sol 6.1 84.1 紧随其后；Sol 6.1 每成功任务 $0.76，约为前三名的五分之一到九分之一。"
       },
       {
-        "title": "官方价格重新核对",
-        "body": "复核目录 24 款模型的 Standard 输入、缓存读取与输出价；补齐 Grok 4.7 达到 200k 输入后的整次阶梯价。Google 优惠结束情景保留官方生效日期。"
+        "title": "AA v5：读数前先看口径",
+        "body": "改版后开放权重模型普遍下降（DeepSeek V4.1 Flash 1017、GLM-5.3 −13，Kimi K3.1 Pro −9），闭源模型持平或小涨，社区对新评测与评分方式有质疑；同一批开放模型在 LiveBench、WebDev 与 OpenRouter 用量中靠前。另外，AA 已按 12-01 后的 $4 / $20 计 Argon 费用，11-30 前实际约为页面费用的一半。"
+      },
+      {
+        "title": "社区声音逐条对照原文",
+        "body": "10-25 的 15 条检索摘要已打开原页核对：10 条成立，5 条修正（Fable 缓存价、Sol 6.1 上下文与长价口径、Astra 科学题数字、Grok 4.7 token 数出处、Argon 的 v5 用量）。新增 Hacker News 发布讨论与 Agent Arena 用户信号整理的 8 条。"
       }
     ],
     "official_sources": [
@@ -30139,8 +30798,8 @@
       {
         "vendor": "Google",
         "url": "https://ai.google.dev/gemini-api/docs/pricing",
-        "checked_at": "2026-10-23",
-        "note": "Argon 优惠至 2026-11-30；Flash 3.8 优惠至 2026-12-31。"
+        "checked_at": "2026-10-29",
+        "note": "Argon 优惠价 $2 / $10 仍至 2026-11-30；12-01 起 $4 / $20。AA v5 已按 12-01 后价格计 Argon 费用。"
       },
       {
         "vendor": "xAI",
@@ -30148,10 +30807,549 @@
         "checked_at": "2026-10-23",
         "note": "Grok 4.7：输入达到 200k 后整次采用 $4 / $1 / $12。"
       }
-    ]
+    ],
+    "cross_source": {
+      "columns": [
+        {
+          "id": "aa5",
+          "label": "AA v5",
+          "group": "能力",
+          "unit": "智能指数",
+          "covered": 14
+        },
+        {
+          "id": "arena",
+          "label": "Arena 文本",
+          "group": "偏好",
+          "unit": "Elo",
+          "covered": 12
+        },
+        {
+          "id": "arena_webdev",
+          "label": "Arena WebDev",
+          "group": "偏好",
+          "unit": "分",
+          "covered": 14
+        },
+        {
+          "id": "arena_agent",
+          "label": "Agent Arena",
+          "group": "真实会话",
+          "unit": "IPS",
+          "covered": 12
+        },
+        {
+          "id": "livebench",
+          "label": "LiveBench",
+          "group": "能力",
+          "unit": "分",
+          "covered": 13
+        },
+        {
+          "id": "scale",
+          "label": "HLE Diamond",
+          "group": "能力",
+          "unit": "%",
+          "covered": 8
+        },
+        {
+          "id": "openrouter",
+          "label": "OpenRouter 用量",
+          "group": "热度",
+          "unit": "T tokens",
+          "covered": 4
+        }
+      ],
+      "models": [
+        {
+          "model": "GPT-6 Astra",
+          "open_weights": false,
+          "cells": {
+            "aa5": {
+              "rank": 2,
+              "value": 56.85,
+              "config": "max"
+            },
+            "arena": {
+              "rank": 9,
+              "value": 1476.5,
+              "config": "max"
+            },
+            "arena_webdev": {
+              "rank": 2,
+              "value": 1773.5,
+              "config": "max"
+            },
+            "arena_agent": {
+              "rank": 3,
+              "value": 0.1396,
+              "config": "max"
+            },
+            "livebench": {
+              "rank": 2,
+              "value": 85.6,
+              "config": ""
+            },
+            "scale": {
+              "rank": 1,
+              "value": 60.6,
+              "config": ""
+            }
+          },
+          "spread": 8
+        },
+        {
+          "model": "GPT-6.1 Sol",
+          "open_weights": false,
+          "cells": {
+            "aa5": {
+              "rank": 3,
+              "value": 54.51,
+              "config": "max"
+            },
+            "arena": {
+              "rank": 6,
+              "value": 1479.9,
+              "config": "max"
+            },
+            "arena_webdev": {
+              "rank": 4,
+              "value": 1751.6,
+              "config": "max"
+            },
+            "arena_agent": {
+              "rank": 5,
+              "value": 0.1364,
+              "config": "max"
+            },
+            "livebench": {
+              "rank": 4,
+              "value": 84.1,
+              "config": ""
+            }
+          },
+          "spread": 3
+        },
+        {
+          "model": "GPT-6 Luna",
+          "open_weights": false,
+          "cells": {
+            "aa5": {
+              "rank": 14,
+              "value": 27.76,
+              "config": "max"
+            },
+            "arena": {
+              "rank": 10,
+              "value": 1442.2,
+              "config": "max"
+            },
+            "arena_webdev": {
+              "rank": 14,
+              "value": 1579.8,
+              "config": "max"
+            },
+            "arena_agent": {
+              "rank": 10,
+              "value": 0.0279,
+              "config": "max"
+            },
+            "livebench": {
+              "rank": 12,
+              "value": 64.6,
+              "config": ""
+            },
+            "openrouter": {
+              "rank": 2,
+              "value": 9.08,
+              "config": ""
+            }
+          },
+          "spread": 4
+        },
+        {
+          "model": "Claude Opus 5.5",
+          "open_weights": false,
+          "cells": {
+            "aa5": {
+              "rank": 1,
+              "value": 58.41,
+              "config": "max · 含回退"
+            },
+            "arena": {
+              "rank": 2,
+              "value": 1508.7,
+              "config": "high"
+            },
+            "arena_webdev": {
+              "rank": 1,
+              "value": 1808.7,
+              "config": "max"
+            },
+            "arena_agent": {
+              "rank": 1,
+              "value": 0.2077,
+              "config": "max"
+            },
+            "livebench": {
+              "rank": 3,
+              "value": 85.1,
+              "config": ""
+            },
+            "scale": {
+              "rank": 2,
+              "value": 55.0,
+              "config": ""
+            },
+            "openrouter": {
+              "rank": 3,
+              "value": 8.07,
+              "config": ""
+            }
+          },
+          "spread": 2
+        },
+        {
+          "model": "Claude Fable 5.1",
+          "open_weights": false,
+          "cells": {
+            "aa5": {
+              "rank": 6,
+              "value": 49.01,
+              "config": "max · 含回退"
+            },
+            "arena": {
+              "rank": 3,
+              "value": 1503.2,
+              "config": "max"
+            },
+            "arena_webdev": {
+              "rank": 5,
+              "value": 1745.0,
+              "config": "max"
+            },
+            "arena_agent": {
+              "rank": 4,
+              "value": 0.1394,
+              "config": "max"
+            },
+            "livebench": {
+              "rank": 1,
+              "value": 85.7,
+              "config": ""
+            },
+            "scale": {
+              "rank": 4,
+              "value": 51.3,
+              "config": ""
+            }
+          },
+          "spread": 5
+        },
+        {
+          "model": "Claude Sonnet 5.5",
+          "open_weights": false,
+          "cells": {
+            "aa5": {
+              "rank": 4,
+              "value": 54.24,
+              "config": "max · 含回退"
+            },
+            "arena": {
+              "rank": 8,
+              "value": 1477.5,
+              "config": "xhigh"
+            },
+            "arena_webdev": {
+              "rank": 3,
+              "value": 1769.3,
+              "config": "xhigh"
+            },
+            "arena_agent": {
+              "rank": 2,
+              "value": 0.1399,
+              "config": "max"
+            },
+            "livebench": {
+              "rank": 5,
+              "value": 80.0,
+              "config": ""
+            },
+            "scale": {
+              "rank": 5,
+              "value": 37.5,
+              "config": ""
+            }
+          },
+          "spread": 6
+        },
+        {
+          "model": "Claude Haiku 5.5",
+          "open_weights": false,
+          "cells": {
+            "aa5": {
+              "rank": 8,
+              "value": 36.23,
+              "config": "max"
+            },
+            "arena": {
+              "rank": 12,
+              "value": 1424.6,
+              "config": "high"
+            },
+            "arena_webdev": {
+              "rank": 12,
+              "value": 1587.8,
+              "config": "high"
+            },
+            "arena_agent": {
+              "rank": 12,
+              "value": 0.0114,
+              "config": "high"
+            },
+            "livebench": {
+              "rank": 10,
+              "value": 69.8,
+              "config": ""
+            }
+          },
+          "spread": 4
+        },
+        {
+          "model": "Gemini 4 Argon",
+          "open_weights": false,
+          "cells": {
+            "aa5": {
+              "rank": 5,
+              "value": 50.41,
+              "config": "high"
+            },
+            "arena": {
+              "rank": 1,
+              "value": 1517.2,
+              "config": "high"
+            },
+            "arena_webdev": {
+              "rank": 7,
+              "value": 1679.9,
+              "config": "high"
+            },
+            "arena_agent": {
+              "rank": 6,
+              "value": 0.1175,
+              "config": "high"
+            },
+            "livebench": {
+              "rank": 6,
+              "value": 79.3,
+              "config": ""
+            },
+            "scale": {
+              "rank": 3,
+              "value": 53.2,
+              "config": ""
+            }
+          },
+          "spread": 6
+        },
+        {
+          "model": "Gemini 3.8 Flash",
+          "open_weights": false,
+          "cells": {
+            "aa5": {
+              "rank": 12,
+              "value": 30.55,
+              "config": "high"
+            },
+            "arena": {
+              "rank": 4,
+              "value": 1495.7,
+              "config": "high"
+            },
+            "arena_webdev": {
+              "rank": 13,
+              "value": 1583.6,
+              "config": "high"
+            },
+            "arena_agent": {
+              "rank": 8,
+              "value": 0.0317,
+              "config": "high"
+            },
+            "livebench": {
+              "rank": 13,
+              "value": 59.2,
+              "config": ""
+            },
+            "scale": {
+              "rank": 6,
+              "value": 34.3,
+              "config": ""
+            }
+          },
+          "spread": 9
+        },
+        {
+          "model": "Grok 4.7",
+          "open_weights": false,
+          "cells": {
+            "aa5": {
+              "rank": 9,
+              "value": 35.01,
+              "config": "high"
+            },
+            "arena": {
+              "rank": 11,
+              "value": 1441.0,
+              "config": "xhigh"
+            },
+            "arena_webdev": {
+              "rank": 9,
+              "value": 1637.2,
+              "config": "xhigh"
+            },
+            "arena_agent": {
+              "rank": 9,
+              "value": 0.0302,
+              "config": "xhigh"
+            },
+            "livebench": {
+              "rank": 9,
+              "value": 70.1,
+              "config": ""
+            },
+            "scale": {
+              "rank": 7,
+              "value": 23.4,
+              "config": ""
+            }
+          },
+          "spread": 4
+        },
+        {
+          "model": "DeepSeek V4.1 Flash 1017",
+          "open_weights": true,
+          "cells": {
+            "aa5": {
+              "rank": 10,
+              "value": 32.49,
+              "config": "max · 开放权重"
+            },
+            "arena_webdev": {
+              "rank": 8,
+              "value": 1666.3,
+              "config": "max"
+            },
+            "livebench": {
+              "rank": 7,
+              "value": 74.0,
+              "config": ""
+            },
+            "openrouter": {
+              "rank": 1,
+              "value": 37.3,
+              "config": ""
+            }
+          },
+          "spread": 3
+        },
+        {
+          "model": "Kimi K3.1 Pro",
+          "open_weights": false,
+          "cells": {
+            "aa5": {
+              "rank": 7,
+              "value": 46.0,
+              "config": "页面未注明档位 · 开放权重（尚未发布）"
+            },
+            "arena_webdev": {
+              "rank": 6,
+              "value": 1694.5,
+              "config": "max"
+            },
+            "livebench": {
+              "rank": 8,
+              "value": 71.3,
+              "config": ""
+            }
+          },
+          "spread": 2
+        },
+        {
+          "model": "GLM-5.3",
+          "open_weights": true,
+          "cells": {
+            "aa5": {
+              "rank": 11,
+              "value": 31.65,
+              "config": "max · 开放权重"
+            },
+            "arena": {
+              "rank": 5,
+              "value": 1480.7,
+              "config": "max"
+            },
+            "arena_webdev": {
+              "rank": 11,
+              "value": 1622.7,
+              "config": "max"
+            },
+            "arena_agent": {
+              "rank": 11,
+              "value": 0.0122,
+              "config": "max"
+            },
+            "scale": {
+              "rank": 8,
+              "value": 16.4,
+              "config": ""
+            },
+            "openrouter": {
+              "rank": 4,
+              "value": 5.15,
+              "config": ""
+            }
+          },
+          "spread": 6
+        },
+        {
+          "model": "MiMo V2.6 Pro",
+          "open_weights": true,
+          "cells": {
+            "aa5": {
+              "rank": 13,
+              "value": 29.89,
+              "config": "页面未注明档位 · 开放权重"
+            },
+            "arena": {
+              "rank": 7,
+              "value": 1479.5,
+              "config": "default"
+            },
+            "arena_webdev": {
+              "rank": 10,
+              "value": 1625.5,
+              "config": "default"
+            },
+            "arena_agent": {
+              "rank": 7,
+              "value": 0.033,
+              "config": "default"
+            },
+            "livebench": {
+              "rank": 11,
+              "value": 68.5,
+              "config": ""
+            }
+          },
+          "spread": 6
+        }
+      ],
+      "note": "名次只在这 14 款模型之间排列，每款取该来源最好的一个配置；“—”表示来源这次没有收录或没有上榜，不代表能力差。跨度只看能力、偏好与真实会话来源，不含 OpenRouter 用量。各列口径不同，名次不能相加或平均。"
+    }
   },
   "meta": {
-    "reviewed_at": "2026-10-23",
+    "reviewed_at": "2026-10-29",
     "original_rows": 121,
     "tonebench_sha256": "9cb40d5512ca5f338e720edcb12d0fe5368b3812482afa2bd63c225f385b380b",
     "tonebench_fingerprint": {

@@ -40,7 +40,7 @@
 <main id="report-main">
 <section class="panel" id="overview" role="tabpanel" aria-labelledby="tab-overview">
   <section id="latestBenchmarks" class="latest-section" aria-labelledby="latest-heading" data-toc="最新榜单">
-    <div class="section-heading latest-heading"><div><span class="eyebrow">01 / THE MODEL LANDSCAPE</span><h2 id="latest-heading">把分数放回它的评测里。</h2><p>综合能力、人类偏好、长程任务与调用热度，分别看，才有参考价值。</p></div><span class="snapshot-label"><span class="status-dot"></span> 本期核验 <span id="snapshotDate">2026-10-23</span></span></div>
+    <div class="section-heading latest-heading"><div><span class="eyebrow">01 / THE MODEL LANDSCAPE</span><h2 id="latest-heading">把分数放回它的评测里。</h2><p>综合能力、人类偏好、真实代理会话、长程任务与调用热度，分别看，再对照看。</p></div><span class="snapshot-label"><span class="status-dot"></span> 本期核验 <span id="snapshotDate">2026-10-23</span></span></div>
     <div class="latest-layout">
       <div class="card latest-card">
         <div id="boardButtons" class="board-buttons" role="group" aria-label="选择评测来源"></div>
@@ -61,6 +61,11 @@
         <article class="rail-card price-calendar"><span class="eyebrow">PRICE WATCH</span><h3>留意优惠结束日期</h3><div id="priceCalendar"></div><button data-jump="specs" class="inline-button">比较优惠结束后的预算 →</button></article>
       </aside>
     </div>
+    <section id="crossSource" class="card cross-card" aria-labelledby="cross-heading">
+      <div class="cross-head"><div><span class="eyebrow">CROSS-CHECK</span><h3 id="cross-heading">跨榜对照 · 同一批模型在各来源的名次</h3><p class="small muted">一致靠前的模型更可靠；名次跨度大说明它的长处集中在某一类任务。点列名切换到该榜单。</p></div></div>
+      <div id="crossTable" class="table-scroll cross-scroll"></div>
+      <p id="crossNote" class="market-note"></p>
+    </section>
     <div id="officialChecks" class="official-checks" aria-label="官方价格核验来源"></div>
   </section>
   <div class="section-heading"><span class="eyebrow">02 / REASONING PLAYBOOK</span><h2>找到模型，也选对档位。</h2><p>以下逐档曲线沿用 10 月 19–20 日的同版测量。官方起点、社区观察和计算出的拐点分开呈现。</p></div>

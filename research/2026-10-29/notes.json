@@ -1,0 +1,20 @@
+{
+  "changes": [
+    {
+      "title": "新增两个 Arena 榜单",
+      "body": "Arena WebDev 看网页生成的盲选偏好（Opus 5.5 max 第一，GPT-6 Astra、Sonnet 5.5 xhigh 随后）；Agent Arena 看真实代理会话里的多种信号（Opus 5.5 明显领先，其后四款差距在区间内）。两者都取自 Arena 官方数据集，文本榜按同一数据集逐行核对无误。"
+    },
+    {
+      "title": "LiveBench 10-25 版改为加权",
+      "body": "长程代理 ×2、编程与设计 ×1.5。Fable 5.1 85.7 与 GPT-6 Astra 85.6 并列第一，Opus 5.5 85.1、Sol 6.1 84.1 紧随其后；Sol 6.1 每成功任务 $0.76，约为前三名的五分之一到九分之一。"
+    },
+    {
+      "title": "AA v5：读数前先看口径",
+      "body": "改版后开放权重模型普遍下降（DeepSeek V4.1 Flash 1017、GLM-5.3 −13，Kimi K3.1 Pro −9），闭源模型持平或小涨，社区对新评测与评分方式有质疑；同一批开放模型在 LiveBench、WebDev 与 OpenRouter 用量中靠前。另外，AA 已按 12-01 后的 $4 / $20 计 Argon 费用，11-30 前实际约为页面费用的一半。"
+    },
+    {
+      "title": "社区声音逐条对照原文",
+      "body": "10-25 的 15 条检索摘要已打开原页核对：10 条成立，5 条修正（Fable 缓存价、Sol 6.1 上下文与长价口径、Astra 科学题数字、Grok 4.7 token 数出处、Argon 的 v5 用量）。新增 Hacker News 发布讨论与 Agent Arena 用户信号整理的 8 条。"
+    }
+  ]
+}
