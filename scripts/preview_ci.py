@@ -51,6 +51,14 @@ def save(path, value):
     path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n")
 
 
+class PrClosed(ValueError):
+    """The PR closed or became a draft before its preview finished.
+
+    Merging right after CI passes routinely wins this race; the close event's cleanup owns the
+    preview from then on, so this run stops without publishing and is not reported as a failure.
+    """
+
+
 def output(**values):
     if os.environ.get("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"], "a") as handle:
@@ -103,7 +111,8 @@ def validate_run(run, workflow_id, run_id, attempt, now=None):
 
 
 def validate_identity(run, pr, main_sha, merge_commit):
-    require(pr["state"] == "open" and not pr["draft"], "PR is closed or draft")
+    if pr["state"] != "open" or pr["draft"]:
+        raise PrClosed("PR is closed or draft")
     require(pr["base"]["repo"]["full_name"] == REPO and pr["base"]["ref"] == "main", "Unexpected PR base")
     require(pr["head"]["repo"]["full_name"] == REPO, "External PRs receive build checks only")
     require(pr["head"]["sha"] == run["head_sha"], "PR head advanced; verify its current commit")
@@ -122,9 +131,11 @@ def current_context(run_id, attempt, pr_number=None):
     run = repo_api(f"/actions/runs/{positive(run_id)}")
     validate_run(run, workflow["id"], run_id, attempt)
     if pr_number is None:
-        candidates = repo_api(f"/commits/{run['head_sha']}/pulls")
-        candidates = [p for p in candidates if p["state"] == "open" and p["head"]["sha"] == run["head_sha"]
-                      and p["base"]["ref"] == "main" and p["base"]["repo"]["full_name"] == REPO]
+        pulls = [p for p in repo_api(f"/commits/{run['head_sha']}/pulls") if p["head"]["sha"] == run["head_sha"]
+                 and p["base"]["ref"] == "main" and p["base"]["repo"]["full_name"] == REPO]
+        candidates = [p for p in pulls if p["state"] == "open"]
+        if not candidates and pulls:
+            raise PrClosed("PR is closed or draft")
         require(len(candidates) == 1, "Cannot identify one current PR for this verification run")
         pr_number = candidates[0]["number"]
     pr = repo_api(f"/pulls/{positive(pr_number)}")
@@ -472,6 +483,25 @@ def comment(pr_number):
         repo_api(f"/issues/{number}/comments", method="POST", data={"body": body})
 
 
+def run_command(args):
+    if args.command == "resolve":
+        resolve()
+    elif args.command == "prepare":
+        prepare(args.run_id, args.attempt, args.pr)
+    elif args.command == "initialize":
+        initialize()
+    elif args.command == "deploy":
+        deploy()
+    elif args.command == "cleanup":
+        cleanup(args.pr)
+    elif args.command == "smoke":
+        smoke()
+    elif args.command == "cleanup-smoke":
+        save(RECORD, {"worker": WORKER, "preview_name": "permission-smoke", "status": delete_preview("permission-smoke")})
+    else:
+        comment(args.pr)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=["resolve", "prepare", "deploy", "cleanup", "smoke", "cleanup-smoke", "comment", "initialize"])
@@ -480,22 +510,13 @@ def main():
     parser.add_argument("--pr")
     args = parser.parse_args()
     try:
-        if args.command == "resolve":
-            resolve()
-        elif args.command == "prepare":
-            prepare(args.run_id, args.attempt, args.pr)
-        elif args.command == "initialize":
-            initialize()
-        elif args.command == "deploy":
-            deploy()
-        elif args.command == "cleanup":
-            cleanup(args.pr)
-        elif args.command == "smoke":
-            smoke()
-        elif args.command == "cleanup-smoke":
-            save(RECORD, {"worker": WORKER, "preview_name": "permission-smoke", "status": delete_preview("permission-smoke")})
-        else:
-            comment(args.pr)
+        run_command(args)
+    except PrClosed as error:
+        # Not a failure: later workflow steps check `skipped` and publish nothing.
+        EVIDENCE.mkdir(parents=True, exist_ok=True)
+        (EVIDENCE / "skipped.txt").write_text(f"{args.command}: {error}\n")
+        output(skipped="true", mode="skip")
+        print(f"::notice::{args.command}: {error}; preview skipped, the close event's cleanup owns it")
     except (ValueError, KeyError, OSError, zipfile.BadZipFile, subprocess.TimeoutExpired) as error:
         # No token, raw Cloudflare response, signed URL, PR code or Wrangler log is printed.
         EVIDENCE.mkdir(parents=True, exist_ok=True)

@@ -56,6 +56,8 @@ jobs:
 
   preview:
     needs: resolve
+    # `skip`: the PR closed before its preview started (usually merged right after CI passed).
+    if: needs.resolve.outputs.mode != 'skip'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
@@ -91,6 +93,7 @@ jobs:
         if: needs.resolve.outputs.mode == 'deploy' || needs.resolve.outputs.mode == 'permission-smoke' || needs.resolve.outputs.mode == 'initialize'
         run: npm ci --ignore-scripts
       - name: Validate the exact five-file artifact before accessing Cloudflare
+        id: prepare
         if: needs.resolve.outputs.mode == 'deploy'
         env:
           GH_TOKEN: ${{ github.token }}
@@ -102,6 +105,7 @@ jobs:
         run: python scripts/publish.py build --require-clean
       - name: Publish or clean the isolated native Preview
         id: publish
+        if: steps.prepare.outputs.skipped != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -117,7 +121,9 @@ jobs:
             *) echo 'Unexpected operation'; exit 1 ;;
           esac
       - name: Update the PR link after confirmed publication or cleanup
-        if: needs.resolve.outputs.mode == 'deploy' || needs.resolve.outputs.mode == 'cleanup'
+        if: >-
+          (needs.resolve.outputs.mode == 'deploy' || needs.resolve.outputs.mode == 'cleanup') &&
+          steps.prepare.outputs.skipped != 'true' && steps.publish.outputs.skipped != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: python scripts/preview_ci.py comment --pr "$PREVIEW_PR"
