@@ -234,6 +234,9 @@ def check_market_ui(page, data, output):
     page.locator('[data-board="arena_agent"]').click()
     expect(page.locator("#marketTable tbody tr").first).to_contain_text("Claude Opus 5.5")
     expect(page.locator("#marketTable tbody tr").first).to_contain_text("0.208")
+    # Fixed three decimals so 0.140 and 0.139 read as the same precision.
+    expect(page.locator("#marketTable tbody tr").nth(1)).to_contain_text("0.140")
+    expect(page.locator("#marketTable tbody tr").first).to_contain_text("0.453")
     require(page.locator("#marketSort option[value=cost]").evaluate("o => o.disabled"), "Agent Arena has no cost")
     page.locator('[data-board="arena_webdev"]').click()
     expect(page.locator("#boardMeta")).to_contain_text("2026-10-27")

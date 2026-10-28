@@ -58,6 +58,7 @@ class MarketSnapshotTests(unittest.TestCase):
         self.assertEqual(agent["source_updated_at"], "2026-10-23")
         self.assertEqual(agent["rows"][0]["model"], "Claude Opus 5.5")
         self.assertAlmostEqual(agent["rows"][0]["praise"], 0.4532, places=4)
+        self.assertTrue(agent["fixed_precision"])  # small IPS values keep three decimals on screen
         self.assertEqual(boards["arena_webdev"]["source_updated_at"], "2026-10-27")
         # LiveBench Overall: long agentic x2, coding and design x1.5, the rest x1.
         live = json.loads((folder / "livebench.json").read_text())

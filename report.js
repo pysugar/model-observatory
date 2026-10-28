@@ -23,6 +23,8 @@
   const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const finite = value => typeof value === "number" && Number.isFinite(value);
   const fmt = (value, digits = 2) => finite(value) ? value.toLocaleString("en-US", {maximumFractionDigits:digits}) : "未提供";
+  // Fixed decimals for scores read side by side at small magnitudes (0.140 vs 0.139).
+  const fixedNum = (value, digits) => finite(value) ? value.toLocaleString("en-US", {minimumFractionDigits:digits, maximumFractionDigits:digits}) : "未提供";
   const money = value => finite(value) ? "$" + fmt(value, value < 1 ? 4 : 2) : "未提供";
   const medianOf = arr => { const a = arr.filter(finite).sort((p,q) => p-q), m = Math.floor(a.length/2); return a.length ? (a.length % 2 ? a[m] : (a[m-1]+a[m])/2) : NaN; };
   const link = (url, label) => `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(label)}</a>`;
@@ -2369,7 +2371,8 @@
   const marketState = {board:"aa", expanded:false};
   const currentMarketBoard = () => market.boards.find(board => board.id === marketState.board);
   const currentMarketRows = () => marketRows(currentMarketBoard(), $("marketSearch").value, $("marketVendor").value, $("marketSort").value);
-  const marketScore = (board, row) => `${fmt(row.score,board.precision)}${finite(row.interval) ? ` <small>±${fmt(row.interval,2)}</small>` : ""}<span class="score-unit">${esc(board.unit)}</span>`;
+  const marketNum = (board, value, digits) => board.fixed_precision ? fixedNum(value, board.precision) : fmt(value, digits);
+  const marketScore = (board, row) => `${marketNum(board,row.score,board.precision)}${finite(row.interval) ? ` <small>±${marketNum(board,row.interval,2)}</small>` : ""}<span class="score-unit">${esc(board.unit)}</span>`;
   function renderMarket() {
     const board = currentMarketBoard(), rows = currentMarketRows();
     const visible = marketState.expanded ? rows : rows.slice(0,8);
@@ -2389,7 +2392,7 @@
     const costHeader = board.cost_label ? `${esc(board.cost_label)}<small>USD / ${board.id === "livebench" ? "成功任务" : "任务"}</small>` : "费用<small>本视图未提供</small>";
     $("marketTable").innerHTML = rows.length ? `<table class="market-table"><caption class="sr">${esc(board.name)} · ${esc(board.metric)} · 当前选录，非跨站总榜</caption><thead><tr><th scope="col">序号</th><th scope="col">模型 / 测试配置</th><th scope="col">${esc(board.id === "openrouter" ? "用量" : "得分")}</th><th scope="col">${costHeader}</th><th scope="col">${esc(board.extra_label)}</th></tr></thead><tbody>${visible.map((row,i) => {
       const extra = row[board.extra_key];
-      return `<tr><td class="row-number">${String(i+1).padStart(2,"0")}</td><th scope="row"><span class="market-model">${esc(row.model)}</span><span class="market-config">${esc(row.vendor)} <span aria-hidden="true">/</span> ${esc(row.configuration)}${row.source_rank ? ` · 来源 #${row.source_rank}` : ""}</span></th><td class="market-score" data-label="${esc(board.id === "openrouter" ? "用量" : "得分")}"><b>${marketScore(board,row)}</b><span class="score-track" aria-hidden="true"><span style="width:${Math.max(0,Math.min(100,100*row.score/maxScore))}%"></span></span></td><td class="market-cost" data-label="${esc(board.cost_label || "费用")}">${finite(row.cost_usd) ? money(row.cost_usd) : '<span class="missing-value">—<span class="sr">未提供</span></span>'}</td><td class="market-extra" data-label="${esc(board.extra_label)}">${typeof extra === "string" ? esc(extra) : finite(extra) ? fmt(extra,2) : "—"}${extra != null && board.extra_unit ? `<small>${esc(board.extra_unit)}</small>` : ""}</td></tr>`;
+      return `<tr><td class="row-number">${String(i+1).padStart(2,"0")}</td><th scope="row"><span class="market-model">${esc(row.model)}</span><span class="market-config">${esc(row.vendor)} <span aria-hidden="true">/</span> ${esc(row.configuration)}${row.source_rank ? ` · 来源 #${row.source_rank}` : ""}</span></th><td class="market-score" data-label="${esc(board.id === "openrouter" ? "用量" : "得分")}"><b>${marketScore(board,row)}</b><span class="score-track" aria-hidden="true"><span style="width:${Math.max(0,Math.min(100,100*row.score/maxScore))}%"></span></span></td><td class="market-cost" data-label="${esc(board.cost_label || "费用")}">${finite(row.cost_usd) ? money(row.cost_usd) : '<span class="missing-value">—<span class="sr">未提供</span></span>'}</td><td class="market-extra" data-label="${esc(board.extra_label)}">${typeof extra === "string" ? esc(extra) : finite(extra) ? marketNum(board,extra,2) : "—"}${extra != null && board.extra_unit ? `<small>${esc(board.extra_unit)}</small>` : ""}</td></tr>`;
     }).join("")}</tbody></table>` : '<div class="market-empty"><b>没有匹配的模型</b><p>试试模型简称，或重置筛选查看本次选录。</p></div>';
     $("marketCount").textContent = `显示 ${visible.length} / ${rows.length} 项 · 本榜选录 ${board.rows.length} 项`;
     $("marketMore").hidden = rows.length <= 8;
@@ -2401,7 +2404,7 @@
   function renderCrossSource() {
     const cs = market.cross_source;
     if (!cs) { $("crossSource").hidden = true; return; }
-    const unit = (col, v) => col.id === "arena_agent" ? fmt(v,3) : col.id === "openrouter" ? `${fmt(v,2)}T` : col.id === "aa5" ? fmt(v,1) : fmt(v, v < 100 ? 1 : 0);
+    const unit = (col, v) => col.id === "arena_agent" ? fixedNum(v,3) : col.id === "openrouter" ? `${fmt(v,2)}T` : col.id === "aa5" ? fmt(v,1) : fmt(v, v < 100 ? 1 : 0);
     const tier = r => r <= 3 ? "top" : r <= 7 ? "mid" : "low";
     const head = `<tr><th scope="col">模型</th>${cs.columns.map(c => `<th scope="col"><button type="button" class="cross-col" data-cross-board="${esc(c.id)}">${esc(c.label)}<small>${esc(c.group)} · ${c.covered} 款</small></button></th>`).join("")}<th scope="col">名次跨度</th></tr>`;
     const body = cs.models.map(m => `<tr><th scope="row"><span class="market-model">${esc(m.model)}</span>${m.open_weights ? '<span class="market-config">开放权重</span>' : ""}</th>${cs.columns.map(c => {
