@@ -186,3 +186,18 @@
 | Cloudflare 版本 | `3ced2e6a-b75a-4963-8ed1-e5a01cda34b4`（上传 `index.html`、`report-data.json`、`version.json`） |
 
 上线内容：v5 页签 26 个配置含总分、加权单任务成本、输出速度与九项子评测，PR #28 中来自检索摘要的 12 个分数全部经原页核实；新增 GPT-6.1 Terra 与开放权重标记；“最新榜单”默认打开 v5（GPT-6 Astra 排第 2），旧页签改名“AA v4.3.2（旧）”；能力指数图标明 v4.3.2。整站迁移到 v5 另见后续 PR。
+
+## 2026-10-28 PR31 整站迁移到 AA 智能指数 v5 正式发布收束
+
+[PR #31](https://github.com/pysugar/model-observatory/pull/31) 已于 **2026-10-28T14:24Z** 合并。全站改为页首“AA 指数版本”切换，默认 v5，可切回 v4.3.2；169 条记录、24 款模型、50 条来源不变。
+
+| 阶段 | 已完成事实 |
+| --- | --- |
+| 最终源码与合并 | PR 最终 head `cc718feb9abe1c98179b25781051674810f721f7`；main merge `dbf234c49ac1521986bcb86e227e697f1fe3b209` |
+| PR 验证与预览（历史） | 最终 head 的 [CI 40662623608](https://github.com/pysugar/model-observatory/actions/runs/40662623608) 成功，[原生预览 40663026112](https://github.com/pysugar/model-observatory/actions/runs/40663026112) 已部署 |
+| 合并前独立复核 | 重跑 `fetch_aa_v5_releases.py` 与 `fetch_aa_v5.py`：30 个发布版本页与 2 个榜单页的 SHA-256 及全部数值与提交一致，仅 `fetched_at` 不同；分支重建产物逐字节一致；预览站 v5 默认视图与 `?aa=v4` 视图文案互斥、无控制台错误、无横向溢出 |
+| main CI 与正式发布 | [run 40705606470](https://github.com/pysugar/model-observatory/actions/runs/40705606470) 成功：70 项单元测试、干净构建、完整浏览器 smoke（含 `scripts/v5_smoke.py` 与 `?aa=v4` 原有逐格断言） |
+| 正式版本 | `publish.py check` PASS（commit `dbf234c`、clean、169 行 / 24 模型 / 50 来源）；双入口 `publish.py probe` 均为 PASS：[models.localgpt.net](https://models.localgpt.net) 与 [独立正式验收入口](https://model-observatory.openai-proxy-local.workers.dev)；发布后本机读取两入口 `version.json`，`source_commit` 均为 `dbf234c` |
+| Cloudflare 版本 | `0f0b30dd-8b77-4e97-9e7f-11f1a1ab5e2b`（上传 `index.html`、`report-data.json`、`version.json`） |
+
+上线内容：v5 数据由 `research/2026-10-28/fetch_aa_v5_releases.py` 从 AA 发布版本页读取（16 个发布版本、49 个档位，四大家族 11 款活跃模型 44 个档位的 9 项 v5 评测，6 大领域指数按 v5 构成）；AA 未用 v5 重测的旧型号在 v5 视图显示未测，不用 v4.3.2 填补。v5 任务视图改用新评测（长程代理改为 Terminal-Bench-Science），“均衡”门槛下 77 格甜蜜点有 21 格变化。仍为 v4.3.2 并已标明：最新榜单“较 v4.3.2”列、五站全景表、成本页 169 条历史记录、21 个代表配置的速度矩阵。Gemini 3.8 Flash low 无 v5 费用，甜蜜点计算自动排除。
