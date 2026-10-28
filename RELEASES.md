@@ -20,6 +20,7 @@
 | `3c4080fd844c4d401b70b2449682a7310c09b7d7` | PR #23：更优替代列名改为“同预算最强”、去掉页面上的内部说明（仅文案） | [run 40161424122](https://github.com/pysugar/model-observatory/actions/runs/40161424122) |
 | `288defa3ffc7029e20c2a98a52e1ccf95a2a7e22` | PR #24：不限预算推荐、过度思考避坑、别默认最高档的场景、按工作阶段的主流档位、社区主流声音 | [run 40163673486](https://github.com/pysugar/model-observatory/actions/runs/40163673486) |
 | `8d5ab9af93773d2d3e3701925b181611ea7f2638` | PR #25：社区主流声音覆盖四家全部当前主力型号（并带入 PR23 / PR24 发布记录） | [run 40168720237](https://github.com/pysugar/model-observatory/actions/runs/40168720237) |
+| `9ac686c2ba8057c1fa1d993ebb915b5054f04dd0` | PR #28：最新榜单新增 AA 智能指数 v5 页签（新口径、较 v4.3.2 变化、来源一致性、新版计算方式） | [run 40650595388](https://github.com/pysugar/model-observatory/actions/runs/40650595388) |
 
 以上版本均有成功发布 run；2026-10-18 的工作流修复与初始化没有改动研究数据内容。Cloudflare 版本 ID 以各 run 的上传日志与 Worker 控制台为准，不猜测 ID。
 
@@ -154,3 +155,19 @@
 上线内容：社区主流声音从 GPT-6 Astra / GPT-6.1 Sol 扩展到四家全部 11 款当前主力型号（共 15 条，见 [2026-10-25 研究记录](research/2026-10-25/README.md)），每条标出来源一致性与证据强弱，只作文字参考、不参与计算；测试要求每款主力至少一条。本次合并同时带入了 PR23 / PR24 的发布收束记录（提交 `5813914`）。上一代与兼容旧版型号暂未覆盖，社区条目原页仍待逐条核对。
 
 本轮仍在云端容器内开发：本地浏览器检查未开 Chromium sandbox，仅用于迭代；sandbox 开启的验收以上述 CI 为准，线上核验采用发布工作流内的 probe 结果与用户本人确认。
+
+## 2026-10-28 PR28 AA 智能指数 v5 正式发布收束
+
+[PR #28](https://github.com/pysugar/model-observatory/pull/28) 已于 **2026-10-28T07:31Z** 合并。新增 AA v5 冻结输入与榜单页签；169 条记录、24 款模型、50 条来源不变，原 AA v4.3.2 选录、逐档曲线、甜蜜点与模型档案不变。
+
+| 阶段 | 已完成事实 |
+| --- | --- |
+| 最终源码与合并 | PR 最终 head `6756df555f18d7195d0a2a980c261bf355a82166`；main merge `9ac686c2ba8057c1fa1d993ebb915b5054f04dd0` |
+| PR 验证（历史） | 首次 [CI 40649763288](https://github.com/pysugar/model-observatory/actions/runs/40649763288) 失败：新增 smoke 断言用 Playwright `is_disabled()` 判断 `<option>`，恒为 false；`6756df5` 改读 `option.disabled` 后 [CI 40650247992](https://github.com/pysugar/model-observatory/actions/runs/40650247992) 成功 |
+| main CI 与正式发布 | [run 40650595388](https://github.com/pysugar/model-observatory/actions/runs/40650595388) 成功：63 项单元测试、干净构建、完整浏览器 smoke（含 AA v5 页签、方法说明与成本排序禁用） |
+| 正式版本 | `publish.py check` PASS（commit `9ac686c`、clean、169 行 / 24 模型 / 50 来源）；双入口 `publish.py probe` 均为 PASS：[models.localgpt.net](https://models.localgpt.net) 与 [独立正式验收入口](https://model-observatory.openai-proxy-local.workers.dev) |
+| Cloudflare 版本 | `8262ec6c-e613-418d-9bf9-5f1100f9ee82`（上传 `index.html`、`report-data.json`、`version.json`） |
+
+上线内容：“最新榜单”新增 **AA v5 新口径** 页签，12 个配置，每行显示“较 v4.3.2”变化并标出多源一致（8）/ 单一来源（4）；页签下可展开 v5 分类权重、移除评测与阅读提示；首页“综合基准”信号指向 v5。数据来自 10-28 网页检索摘要，见 [2026-10-28 研究记录](research/2026-10-28/README.md)。v5 费用、速度与子评测缺失，单一来源行待原页复核。
+
+本轮在云端容器内开发：本地只跑了单元测试和 Node Playwright 定向检查（容器无 Python Playwright）；完整 smoke 以上述 CI 为准，线上核验采用发布工作流内的 probe 结果。
