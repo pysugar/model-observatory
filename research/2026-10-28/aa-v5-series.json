@@ -1,138 +1,138 @@
 {
-  "fetched_at": "2026-10-28T09:00:27+00:00",
+  "fetched_at": "2026-10-28T20:36:40+00:00",
   "version": "v5.0",
   "source": "Artificial Analysis public release pages (Intelligence Index v5.0)",
   "pages": [
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/claude-opus-5-5",
-      "sha256": "21bb99ab5e2dd97138e510007a1790a0748b21cc7e5b20268a368f0f55c00282"
+      "sha256": "acb55bcb859e3c02ed9a2dbde30706c6b87baf1cb570f60ca6d99d967ed71120"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/claude-sonnet-5-5",
-      "sha256": "dfb2dc4e6448206359781c86a73470eadc85a81bfd705d332cd0260ef4204461"
+      "sha256": "55f16f97cd784a27b79164fec11f1d13586af8ad4caabde6cb87d7473f60b83c"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/claude-fable-5-1",
-      "sha256": "f895bca9928c5b87499a42f4c219d7e93014d3a6f23f6407c0bf4c2e96668bd6"
+      "sha256": "c6b9ecacb4583ca0cade8e29b6e96014e2a43ff60a1c1b668a3d750d848d57a3"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/gpt-6-astra",
-      "sha256": "949caf364900ff36458e123cc826b060dfdbf046d246c3de59668b82f1b7b8a5"
+      "sha256": "1d2945b0da7246d3f74bf30ae7589494208579639c7f8af46f6bbc285ff3c3d0"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/gemini-4-argon",
-      "sha256": "5e471e702ca35ed9a2694b9c5331a31f50b4241ad5d55cbc3b97152d41604460",
+      "sha256": "42cf875f9f755bdc822b4ce16d731e560b0c27c085e6922c3adb541845df1351",
       "note": "no embedded records (AA error page for single-configuration releases)"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/gpt-6-1-sol",
-      "sha256": "571c455ae5680167976353f74d6ecff319592f492f50f7e7eb03c56fe63df564"
+      "sha256": "b34634e8b07a90e5491e0c4fc752c1ae7157d40eb78944db70bebacecc50277c"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/claude-opus-5",
-      "sha256": "22d8ce3a094f39e74dd0f2a7d3937eb0b4729e1960b156261ddec375b1fef76d"
+      "sha256": "12359342e2ee88bd806e76abe8cd8b5449aa13dc5b6233b1e37bd729ad81c928"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/claude-fable-5",
-      "sha256": "f55f91e6d12bd501bb12a6211455fec5248f2bcacc9791c3479a118a79ea5753",
+      "sha256": "18152b345ead9373432e579a09aa0930b3d71261d79f8f1bfb0b413e1352c4c4",
       "note": "no embedded records (AA error page for single-configuration releases)"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/gpt-6-sol",
-      "sha256": "9a861f100e3523e7f090f3ebf4d962d6b174386395081d6400977fb396b74d54"
+      "sha256": "256c566875b7556c808c48ca6c7c03553ded7cf9b4506b46faff6c7b32ba472f"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/gpt-5-6-sol",
-      "sha256": "766178c0094fa27887c39176e084594477f1116a36a3cd02f592168addcb21f0"
+      "sha256": "f390e76c4b54b6568c5acf0a85a3e2a7d657d3b93094334e1b2823209435a5ad"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/grok-4-7",
-      "sha256": "9cf2fc746bad41e6c8fec897a55aaadf302f9ca2eca6f44787f94705931b2c9a"
+      "sha256": "7a3b0917a37702fb66953332e4fb7956ab101efcc7ca4bebdf5593bee4585fee"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/grok-4-6",
-      "sha256": "6b59a050f8ca16afd4cb50b6be41e01ebae2c47cd0b079c1b385003a0baee4ad"
+      "sha256": "5b94c3e875b87873775532deb0c6eacaf882843943b0e38c4184ac09c62ea3a5"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/claude-haiku-5-5",
-      "sha256": "b9831c16e901ad2cb165aa82f857e12796824a694265c51f37b061e04b702ba3"
+      "sha256": "5bb3139d628eb274538094e8943a69b538cfa50ed5ceb20343c6de8b149a6406"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/claude-opus-4-8",
-      "sha256": "5fba7a1f09bc6ecb06f99ffde2d386b551239ff21cb7b5d0849afcad249c4617",
+      "sha256": "52e125469f6cd4171c67f9d8f3c86db27f4b370e67d4928bf7ec05973cd229fc",
       "note": "no embedded records (AA error page for single-configuration releases)"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/gemini-3-8-flash",
-      "sha256": "d6788388353bf79837b0a8706c44948518d5f9ca06c8f32b9e37a0e8e05cebcd"
+      "sha256": "137e762e773362e94249566070a0577621f13d649b6e6cb68bd259b1c44c6e24"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/claude-sonnet-5",
-      "sha256": "56891d3e4b7531308f78cba19f3a3b54554b808bb7e5a2ff1dd12337ea47a8cf"
+      "sha256": "160da602cbd4ee5661c8d5274be5000e355dd46d8d42c053d721d2fa2965a4cb"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/gpt-6-luna",
-      "sha256": "7324d5c669d3f5fb5f07cb2d9eb7fe83d70dfcafd3d6e6a8fdc6f46035d0f4a7"
+      "sha256": "b9b4df6423a00d77aab68ed70f1293917969bc00058963629e7172342c97453c"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/gpt-5-6-luna",
-      "sha256": "ad3f68b4e55a7d4755c5bd2083f27c8328eba45018fbbcdd79ddda5a60821300"
+      "sha256": "c14275f41e956e0bd8f216dab7cd227d9664062859a39301c962de3c69c08d39"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/claude-sonnet-4-6",
-      "sha256": "27db316984964ae95a04df5e462fc2b14b6cce632252fffcdd366300053c4164"
+      "sha256": "43acf6acd16629a52a5e79d7a50b45b29dade20878a96e63ee97891fe70ced72"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/gemini-3-5-flash-lite",
-      "sha256": "116da341aa725530238f78fdd6a867d0030a25e4ca1ded220a6a831616a44a06",
+      "sha256": "49c08cfa098f835118f2a2935baeb855a71e2a87c512a3e38488b997c3fbbcfe",
       "note": "no embedded records (AA error page for single-configuration releases)"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/muse-wonder",
-      "sha256": "3bfd17a44266d5ffda5176c6893209cf0ef7a337434306923e30374f58546a26",
+      "sha256": "3cca3f1eaed0aeae6af3123070a647405754d7563fa55d5b395884ffa92bcfd0",
       "note": "no embedded records (AA error page for single-configuration releases)"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/muse-spark-1-3",
-      "sha256": "9cfe32454c0457a4f48072ff652cbeaa3852046db4fc7e90bedb239d4b9b1139"
+      "sha256": "9df7198a5f8b54b15cb885bfd84bb3e67a6691f8e2965a271a90816368809dfb"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/mimo-v2-6-pro",
-      "sha256": "a77bdbdaa14fd69605c6487978ead250ed1e7dac22c72c99d0a0af9686c5c04c",
+      "sha256": "f5e251b80b0caa299da6a6dd079bbe6b65f4aa2131c2d52481f030199316fa25",
       "note": "no embedded records (AA error page for single-configuration releases)"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/glm-5-3-flash",
-      "sha256": "512ee7057c8cc1e081169e826c0b0ab30688848fa3a530c0f4e26f887d1be132",
+      "sha256": "037539d05509f61dea2a56e887f5b0c7fc041c0da0c395686c77f0f5092dc30f",
       "note": "no embedded records (AA error page for single-configuration releases)"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/ling-3-1-flash",
-      "sha256": "83bdefc6275fedd186d12727175a0f730f5e37aff75b09a84e001bb0a9e8fa64",
+      "sha256": "f6a59d1c04ac2a7278b03e67c6c8ea9639e29390c67a01abfdd24250fc79251e",
       "note": "no embedded records (AA error page for single-configuration releases)"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/qwen3-8-flash-next",
-      "sha256": "ee036238fec6098b4b2e262f5503589e44f2bf4c5e00cdf8a2f33b70da9eafba",
+      "sha256": "f5899a401fd9c21c333132c0de58a8ae4aa1e57ad15a50914ef65fdfe569ab47",
       "note": "no embedded records (AA error page for single-configuration releases)"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/deepseek-v4-1-flash",
-      "sha256": "0968f3ea76fb4124205486333dfa3730413b47b86761f64719e707beff6cfc5a"
+      "sha256": "9cf6f7edcea420c72aad754d2b537a39bc3e93b4dc570fc4b3012f992eea9667"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/mimo-v2-6-flash",
-      "sha256": "f8508968cbec288903b845c7f6df6cd4010a24497398251557e001e844117a0d",
+      "sha256": "fef6352818a4d03590461b4415a8b3afe1e678fbade34ce30310e18d8d1a5cc9",
       "note": "no embedded records (AA error page for single-configuration releases)"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/deepseek-v4-flash",
-      "sha256": "8b19061ebd0f0a491aaa9be10eb4fdcfb3d521babbe8673cc55879b9396443dd",
+      "sha256": "ffdccdcbd61049ad12538b3ad293fbdb5ac60d89058a72c2c454361e6a45d8e0",
       "note": "no embedded records (AA error page for single-configuration releases)"
     },
     {
       "url": "https://artificialanalysis.ai/zh/models/releases/minimax-m3",
-      "sha256": "d7fb3ebc8f71b512d01e9186ac7da0bd201b3126accb5a1be371f0e644abe5ed",
+      "sha256": "fb804ecbaadb10f792c0bcb7ed30e1240668a07b99746523c7b5c65916d1249e",
       "note": "no embedded records (AA error page for single-configuration releases)"
     }
   ],
@@ -316,15 +316,15 @@
               "answer": 0.2439
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 146.9,
-            "timePerTaskMinutes": 2.45,
+            "timePerTaskSeconds": 144.5,
+            "timePerTaskMinutes": 2.41,
             "outputTokensPerTask": 19060,
             "outputTokensBreakdown": {
               "output": 19060,
               "reasoning": 6864,
               "answer": 12196
             },
-            "outputSpeed": 82.1,
+            "outputSpeed": 86.2,
             "ttfaSeconds": 5.24,
             "capabilities": {
               "financeAndAccounting": 42.17,
@@ -358,16 +358,16 @@
               "answer": 0.4628
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 336.6,
-            "timePerTaskMinutes": 5.61,
+            "timePerTaskSeconds": 331.0,
+            "timePerTaskMinutes": 5.52,
             "outputTokensPerTask": 43817,
             "outputTokensBreakdown": {
               "output": 43817,
               "reasoning": 20676,
               "answer": 23140
             },
-            "outputSpeed": 81.9,
-            "ttfaSeconds": 16.48,
+            "outputSpeed": 83.3,
+            "ttfaSeconds": 15.35,
             "capabilities": {
               "financeAndAccounting": 50.75,
               "strategyAndOps": 55.99,
@@ -408,8 +408,8 @@
               "reasoning": 31561,
               "answer": 28510
             },
-            "outputSpeed": 80.5,
-            "ttfaSeconds": 33.57,
+            "outputSpeed": 84.0,
+            "ttfaSeconds": 35.05,
             "capabilities": {
               "financeAndAccounting": 53.25,
               "strategyAndOps": 57.57,
@@ -450,8 +450,8 @@
               "reasoning": 63763,
               "answer": 39632
             },
-            "outputSpeed": 84.1,
-            "ttfaSeconds": 119.09,
+            "outputSpeed": 85.4,
+            "ttfaSeconds": 131.0,
             "capabilities": {
               "financeAndAccounting": 55.72,
               "strategyAndOps": 59.0,
@@ -484,16 +484,16 @@
               "answer": 1.0571
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 1132.6,
-            "timePerTaskMinutes": 18.88,
+            "timePerTaskSeconds": 1147.4,
+            "timePerTaskMinutes": 19.12,
             "outputTokensPerTask": 173313,
             "outputTokensBreakdown": {
               "output": 173313,
               "reasoning": 120460,
               "answer": 52853
             },
-            "outputSpeed": 98.4,
-            "ttfaSeconds": 700.16,
+            "outputSpeed": 98.3,
+            "ttfaSeconds": 663.66,
             "capabilities": {
               "financeAndAccounting": 59.4,
               "strategyAndOps": 61.44,
@@ -546,16 +546,16 @@
               "answer": 0.123
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 120.5,
-            "timePerTaskMinutes": 2.01,
+            "timePerTaskSeconds": 118.6,
+            "timePerTaskMinutes": 1.98,
             "outputTokensPerTask": 20856,
             "outputTokensBreakdown": {
               "output": 20856,
               "reasoning": 8559,
               "answer": 12298
             },
-            "outputSpeed": 109.4,
-            "ttfaSeconds": 1.29,
+            "outputSpeed": 115.9,
+            "ttfaSeconds": 1.34,
             "capabilities": {
               "financeAndAccounting": 35.94,
               "strategyAndOps": 41.68,
@@ -588,16 +588,16 @@
               "answer": 0.1638
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 177.6,
-            "timePerTaskMinutes": 2.96,
+            "timePerTaskSeconds": 175.3,
+            "timePerTaskMinutes": 2.92,
             "outputTokensPerTask": 30746,
             "outputTokensBreakdown": {
               "output": 30746,
               "reasoning": 14369,
               "answer": 16377
             },
-            "outputSpeed": 108.8,
-            "ttfaSeconds": 3.02,
+            "outputSpeed": 113.8,
+            "ttfaSeconds": 2.88,
             "capabilities": {
               "financeAndAccounting": 40.69,
               "strategyAndOps": 46.67,
@@ -630,16 +630,16 @@
               "answer": 0.2668
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 331.6,
-            "timePerTaskMinutes": 5.53,
+            "timePerTaskSeconds": 325.5,
+            "timePerTaskMinutes": 5.42,
             "outputTokensPerTask": 58421,
             "outputTokensBreakdown": {
               "output": 58421,
               "reasoning": 31741,
               "answer": 26680
             },
-            "outputSpeed": 115.1,
-            "ttfaSeconds": 11.08,
+            "outputSpeed": 118.9,
+            "ttfaSeconds": 12.35,
             "capabilities": {
               "financeAndAccounting": 44.46,
               "strategyAndOps": 51.19,
@@ -672,16 +672,16 @@
               "answer": 0.4321
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 690.7,
-            "timePerTaskMinutes": 11.51,
+            "timePerTaskSeconds": 677.4,
+            "timePerTaskMinutes": 11.29,
             "outputTokensPerTask": 122205,
             "outputTokensBreakdown": {
               "output": 122205,
               "reasoning": 78999,
               "answer": 43206
             },
-            "outputSpeed": 112.9,
-            "ttfaSeconds": 28.63,
+            "outputSpeed": 118.0,
+            "ttfaSeconds": 27.94,
             "capabilities": {
               "financeAndAccounting": 48.52,
               "strategyAndOps": 54.09,
@@ -714,16 +714,16 @@
               "answer": 0.7903
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 1325.7,
-            "timePerTaskMinutes": 22.1,
+            "timePerTaskSeconds": 1326.3,
+            "timePerTaskMinutes": 22.11,
             "outputTokensPerTask": 285387,
             "outputTokensBreakdown": {
               "output": 285387,
               "reasoning": 206362,
               "answer": 79025
             },
-            "outputSpeed": 140.1,
-            "ttfaSeconds": 455.03,
+            "outputSpeed": 138.2,
+            "ttfaSeconds": 448.12,
             "capabilities": {
               "financeAndAccounting": 55.76,
               "strategyAndOps": 58.06,
@@ -776,16 +776,16 @@
               "answer": 1.1135
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 411.2,
-            "timePerTaskMinutes": 6.85,
+            "timePerTaskSeconds": 390.1,
+            "timePerTaskMinutes": 6.5,
             "outputTokensPerTask": 37837,
             "outputTokensBreakdown": {
               "output": 37837,
               "reasoning": 15534,
               "answer": 22303
             },
-            "outputSpeed": 57.5,
-            "ttfaSeconds": 1.99,
+            "outputSpeed": 62.3,
+            "ttfaSeconds": 1.84,
             "capabilities": {
               "financeAndAccounting": 47.72,
               "strategyAndOps": 51.13,
@@ -818,16 +818,16 @@
               "answer": 1.3085
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 502.5,
-            "timePerTaskMinutes": 8.38,
+            "timePerTaskSeconds": 479.7,
+            "timePerTaskMinutes": 8.0,
             "outputTokensPerTask": 48545,
             "outputTokensBreakdown": {
               "output": 48545,
               "reasoning": 22374,
               "answer": 26171
             },
-            "outputSpeed": 60.7,
-            "ttfaSeconds": 7.83,
+            "outputSpeed": 65.0,
+            "ttfaSeconds": 4.41,
             "capabilities": {
               "financeAndAccounting": 47.47,
               "strategyAndOps": 52.31,
@@ -860,16 +860,16 @@
               "answer": 1.6
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 672.6,
-            "timePerTaskMinutes": 11.21,
+            "timePerTaskSeconds": 666.5,
+            "timePerTaskMinutes": 11.11,
             "outputTokensPerTask": 66031,
             "outputTokensBreakdown": {
               "output": 66031,
               "reasoning": 34029,
               "answer": 32002
             },
-            "outputSpeed": 59.8,
-            "ttfaSeconds": 16.85,
+            "outputSpeed": 62.3,
+            "ttfaSeconds": 13.78,
             "capabilities": {
               "financeAndAccounting": 49.61,
               "strategyAndOps": 53.79,
@@ -902,16 +902,16 @@
               "answer": 2.0515
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 950.8,
-            "timePerTaskMinutes": 15.85,
+            "timePerTaskSeconds": 949.4,
+            "timePerTaskMinutes": 15.82,
             "outputTokensPerTask": 97059,
             "outputTokensBreakdown": {
               "output": 97059,
               "reasoning": 55942,
               "answer": 41116
             },
-            "outputSpeed": 66.3,
-            "ttfaSeconds": 103.75,
+            "outputSpeed": 66.4,
+            "ttfaSeconds": 83.03,
             "capabilities": {
               "financeAndAccounting": 53.51,
               "strategyAndOps": 56.43,
@@ -944,16 +944,16 @@
               "answer": 2.3081
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 1177.6,
-            "timePerTaskMinutes": 19.63,
+            "timePerTaskSeconds": 1178.3,
+            "timePerTaskMinutes": 19.64,
             "outputTokensPerTask": 117941,
             "outputTokensBreakdown": {
               "output": 117941,
               "reasoning": 71387,
               "answer": 46554
             },
-            "outputSpeed": 66.4,
-            "ttfaSeconds": 132.23,
+            "outputSpeed": 65.9,
+            "ttfaSeconds": 128.91,
             "capabilities": {
               "financeAndAccounting": 53.82,
               "strategyAndOps": 57.97,
@@ -1006,16 +1006,16 @@
               "answer": 0.2911
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 189.2,
-            "timePerTaskMinutes": 3.15,
+            "timePerTaskSeconds": 157.0,
+            "timePerTaskMinutes": 2.62,
             "outputTokensPerTask": 9126,
             "outputTokensBreakdown": {
               "output": 9126,
               "reasoning": 3304,
               "answer": 5821
             },
-            "outputSpeed": 48.3,
-            "ttfaSeconds": 2.71,
+            "outputSpeed": 58.0,
+            "ttfaSeconds": 2.6,
             "capabilities": {
               "financeAndAccounting": 48.12,
               "strategyAndOps": 49.88,
@@ -1048,16 +1048,16 @@
               "answer": 0.4735
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 303.7,
-            "timePerTaskMinutes": 5.06,
+            "timePerTaskSeconds": 284.8,
+            "timePerTaskMinutes": 4.75,
             "outputTokensPerTask": 18052,
             "outputTokensBreakdown": {
               "output": 18052,
               "reasoning": 8581,
               "answer": 9471
             },
-            "outputSpeed": 59.0,
-            "ttfaSeconds": 4.57,
+            "outputSpeed": 64.1,
+            "ttfaSeconds": 3.9,
             "capabilities": {
               "financeAndAccounting": 53.69,
               "strategyAndOps": 55.66,
@@ -1099,7 +1099,7 @@
               "answer": 11042
             },
             "outputSpeed": 62.7,
-            "ttfaSeconds": 43.97,
+            "ttfaSeconds": 38.09,
             "capabilities": {
               "financeAndAccounting": 56.13,
               "strategyAndOps": 57.2,
@@ -1132,16 +1132,16 @@
               "answer": 0.6015
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 390.9,
-            "timePerTaskMinutes": 6.52,
+            "timePerTaskSeconds": 388.2,
+            "timePerTaskMinutes": 6.47,
             "outputTokensPerTask": 26724,
             "outputTokensBreakdown": {
               "output": 26724,
               "reasoning": 14693,
               "answer": 12031
             },
-            "outputSpeed": 68.2,
-            "ttfaSeconds": 158.59,
+            "outputSpeed": 69.4,
+            "ttfaSeconds": 129.78,
             "capabilities": {
               "financeAndAccounting": 56.81,
               "strategyAndOps": 57.86,
@@ -1174,16 +1174,16 @@
               "answer": 0.8107
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 711.1,
-            "timePerTaskMinutes": 11.85,
+            "timePerTaskSeconds": 694.0,
+            "timePerTaskMinutes": 11.57,
             "outputTokensPerTask": 51973,
             "outputTokensBreakdown": {
               "output": 51973,
               "reasoning": 35760,
               "answer": 16214
             },
-            "outputSpeed": 71.0,
-            "ttfaSeconds": 268.74,
+            "outputSpeed": 73.1,
+            "ttfaSeconds": 250.99,
             "capabilities": {
               "financeAndAccounting": 57.38,
               "strategyAndOps": 57.98,
@@ -1211,8 +1211,8 @@
         "contextWindowTokens": 1000000,
         "modelCount": 1,
         "maxIntelligenceIndex": 50.41,
-        "minCostPerTask": 3.8413,
-        "maxCostPerTask": 3.8413,
+        "minCostPerTask": 7.6827,
+        "maxCostPerTask": 7.6827,
         "strengthsGlobalRank": {},
         "sourceUrl": "https://artificialanalysis.ai/zh/models/releases/gemini-4-argon",
         "variants": [
@@ -1224,28 +1224,28 @@
             "effortOrder": 4,
             "intelligenceIndex": 50.41,
             "intelligenceIndexRounded": 50,
-            "costPerTask": 3.8413,
+            "costPerTask": 7.6827,
             "costBreakdown": {
-              "total": 3.8413,
-              "input": 2.6777,
-              "nonCacheInput": 0.0123,
-              "cacheRead": 1.0357,
-              "cacheWrite": 1.6297,
-              "output": 1.1637,
-              "reasoning": 0.683,
-              "answer": 0.4807
+              "total": 7.6827,
+              "input": 5.3553,
+              "nonCacheInput": 0.0245,
+              "cacheRead": 2.0715,
+              "cacheWrite": 3.2593,
+              "output": 2.3274,
+              "reasoning": 1.366,
+              "answer": 0.9613
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 1366.8,
-            "timePerTaskMinutes": 22.78,
+            "timePerTaskSeconds": 1363.9,
+            "timePerTaskMinutes": 22.73,
             "outputTokensPerTask": 116368,
             "outputTokensBreakdown": {
               "output": 116368,
               "reasoning": 68301,
               "answer": 48067
             },
-            "outputSpeed": 82.0,
-            "ttfaSeconds": 46.64,
+            "outputSpeed": 82.7,
+            "ttfaSeconds": 44.96,
             "capabilities": {
               "financeAndAccounting": 55.92,
               "strategyAndOps": 57.2,
@@ -1298,16 +1298,16 @@
               "answer": 0.0425
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 103.5,
-            "timePerTaskMinutes": 1.73,
+            "timePerTaskSeconds": 93.0,
+            "timePerTaskMinutes": 1.55,
             "outputTokensPerTask": 5838,
             "outputTokensBreakdown": {
               "output": 5838,
               "reasoning": 1585,
               "answer": 4253
             },
-            "outputSpeed": 60.9,
-            "ttfaSeconds": 2.36,
+            "outputSpeed": 67.2,
+            "ttfaSeconds": 2.14,
             "capabilities": {
               "financeAndAccounting": 44.25,
               "strategyAndOps": 45.57,
@@ -1340,16 +1340,16 @@
               "answer": 0.0871
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 231.1,
-            "timePerTaskMinutes": 3.85,
+            "timePerTaskSeconds": 207.4,
+            "timePerTaskMinutes": 3.46,
             "outputTokensPerTask": 13518,
             "outputTokensBreakdown": {
               "output": 13518,
               "reasoning": 4805,
               "answer": 8714
             },
-            "outputSpeed": 58.9,
-            "ttfaSeconds": 3.62,
+            "outputSpeed": 66.3,
+            "ttfaSeconds": 3.5,
             "capabilities": {
               "financeAndAccounting": 50.6,
               "strategyAndOps": 53.26,
@@ -1382,8 +1382,8 @@
               "answer": 0.1247
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 322.1,
-            "timePerTaskMinutes": 5.37,
+            "timePerTaskSeconds": 316.0,
+            "timePerTaskMinutes": 5.27,
             "outputTokensPerTask": 22606,
             "outputTokensBreakdown": {
               "output": 22606,
@@ -1391,7 +1391,7 @@
               "answer": 12471
             },
             "outputSpeed": 69.9,
-            "ttfaSeconds": 40.76,
+            "ttfaSeconds": 36.01,
             "capabilities": {
               "financeAndAccounting": 53.18,
               "strategyAndOps": 55.44,
@@ -1424,16 +1424,16 @@
               "answer": 0.1471
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 435.9,
-            "timePerTaskMinutes": 7.27,
+            "timePerTaskSeconds": 433.5,
+            "timePerTaskMinutes": 7.22,
             "outputTokensPerTask": 30241,
             "outputTokensBreakdown": {
               "output": 30241,
               "reasoning": 15527,
               "answer": 14715
             },
-            "outputSpeed": 69.6,
-            "ttfaSeconds": 106.4,
+            "outputSpeed": 70.8,
+            "ttfaSeconds": 101.93,
             "capabilities": {
               "financeAndAccounting": 55.21,
               "strategyAndOps": 57.24,
@@ -1466,16 +1466,16 @@
               "answer": 0.1861
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 858.4,
-            "timePerTaskMinutes": 14.31,
+            "timePerTaskSeconds": 835.2,
+            "timePerTaskMinutes": 13.92,
             "outputTokensPerTask": 67824,
             "outputTokensBreakdown": {
               "output": 67824,
               "reasoning": 49213,
               "answer": 18611
             },
-            "outputSpeed": 81.1,
-            "ttfaSeconds": 278.01,
+            "outputSpeed": 83.0,
+            "ttfaSeconds": 251.44,
             "capabilities": {
               "financeAndAccounting": 56.23,
               "strategyAndOps": 57.61,
@@ -1528,16 +1528,16 @@
               "answer": 0.126
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 537.9,
-            "timePerTaskMinutes": 8.97,
+            "timePerTaskSeconds": 466.2,
+            "timePerTaskMinutes": 7.77,
             "outputTokensPerTask": 42670,
             "outputTokensBreakdown": {
               "output": 42670,
               "reasoning": 21674,
               "answer": 20996
             },
-            "outputSpeed": 77.3,
-            "ttfaSeconds": 5.43,
+            "outputSpeed": 88.1,
+            "ttfaSeconds": 5.74,
             "capabilities": {
               "financeAndAccounting": 45.3,
               "strategyAndOps": 49.26,
@@ -1570,16 +1570,16 @@
               "answer": 0.1857
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 952.5,
-            "timePerTaskMinutes": 15.88,
+            "timePerTaskSeconds": 843.6,
+            "timePerTaskMinutes": 14.06,
             "outputTokensPerTask": 89127,
             "outputTokensBreakdown": {
               "output": 89127,
               "reasoning": 58183,
               "answer": 30944
             },
-            "outputSpeed": 97.1,
-            "ttfaSeconds": 21.63,
+            "outputSpeed": 106.1,
+            "ttfaSeconds": 21.25,
             "capabilities": {
               "financeAndAccounting": 50.62,
               "strategyAndOps": 53.15,
@@ -1612,16 +1612,16 @@
               "answer": 0.2344
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 991.1,
-            "timePerTaskMinutes": 16.52,
+            "timePerTaskSeconds": 925.4,
+            "timePerTaskMinutes": 15.42,
             "outputTokensPerTask": 92970,
             "outputTokensBreakdown": {
               "output": 92970,
               "reasoning": 53902,
               "answer": 39068
             },
-            "outputSpeed": 88.8,
-            "ttfaSeconds": 53.89,
+            "outputSpeed": 101.0,
+            "ttfaSeconds": 40.11,
             "capabilities": {
               "financeAndAccounting": 51.69,
               "strategyAndOps": 54.83,
@@ -1682,8 +1682,8 @@
               "reasoning": 15280,
               "answer": 12881
             },
-            "outputSpeed": 185.0,
-            "ttfaSeconds": 7.51,
+            "outputSpeed": 185.9,
+            "ttfaSeconds": 8.11,
             "capabilities": {
               "financeAndAccounting": 28.51,
               "strategyAndOps": 27.29,
@@ -1716,16 +1716,16 @@
               "answer": 0.0106
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 193.0,
-            "timePerTaskMinutes": 3.22,
+            "timePerTaskSeconds": 190.7,
+            "timePerTaskMinutes": 3.18,
             "outputTokensPerTask": 53335,
             "outputTokensBreakdown": {
               "output": 53335,
               "reasoning": 32091,
               "answer": 21244
             },
-            "outputSpeed": 175.1,
-            "ttfaSeconds": 10.36,
+            "outputSpeed": 180.8,
+            "ttfaSeconds": 10.13,
             "capabilities": {
               "financeAndAccounting": 34.88,
               "strategyAndOps": 32.97,
@@ -1758,16 +1758,16 @@
               "answer": 0.0153
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 298.3,
-            "timePerTaskMinutes": 4.97,
+            "timePerTaskSeconds": 292.2,
+            "timePerTaskMinutes": 4.87,
             "outputTokensPerTask": 88064,
             "outputTokensBreakdown": {
               "output": 88064,
               "reasoning": 57529,
               "answer": 30535
             },
-            "outputSpeed": 186.7,
-            "ttfaSeconds": 24.31,
+            "outputSpeed": 191.3,
+            "ttfaSeconds": 17.88,
             "capabilities": {
               "financeAndAccounting": 37.84,
               "strategyAndOps": 37.11,
@@ -1800,16 +1800,16 @@
               "answer": 0.0195
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 441.3,
-            "timePerTaskMinutes": 7.35,
+            "timePerTaskSeconds": 454.2,
+            "timePerTaskMinutes": 7.57,
             "outputTokensPerTask": 136177,
             "outputTokensBreakdown": {
               "output": 136177,
               "reasoning": 97261,
               "answer": 38916
             },
-            "outputSpeed": 196.0,
-            "ttfaSeconds": 67.2,
+            "outputSpeed": 195.7,
+            "ttfaSeconds": 53.58,
             "capabilities": {
               "financeAndAccounting": 41.11,
               "strategyAndOps": 39.14,
@@ -1842,16 +1842,16 @@
               "answer": 0.0266
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 593.5,
-            "timePerTaskMinutes": 9.89,
+            "timePerTaskSeconds": 593.7,
+            "timePerTaskMinutes": 9.9,
             "outputTokensPerTask": 225966,
             "outputTokensBreakdown": {
               "output": 225966,
               "reasoning": 172814,
               "answer": 53151
             },
-            "outputSpeed": 240.7,
-            "ttfaSeconds": 310.72,
+            "outputSpeed": 240.8,
+            "ttfaSeconds": 343.38,
             "capabilities": {
               "financeAndAccounting": 43.56,
               "strategyAndOps": 39.12,
@@ -1988,16 +1988,16 @@
               "answer": 0.1458
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 724.4,
-            "timePerTaskMinutes": 12.07,
+            "timePerTaskSeconds": 682.3,
+            "timePerTaskMinutes": 11.37,
             "outputTokensPerTask": 98940,
             "outputTokensBreakdown": {
               "output": 98940,
               "reasoning": 60067,
               "answer": 38872
             },
-            "outputSpeed": 132.6,
-            "ttfaSeconds": 27.26,
+            "outputSpeed": 140.1,
+            "ttfaSeconds": 27.53,
             "capabilities": {
               "financeAndAccounting": 42.38,
               "strategyAndOps": 46.52,
@@ -2050,15 +2050,15 @@
               "answer": 0.005
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 86.2,
-            "timePerTaskMinutes": 1.44,
+            "timePerTaskSeconds": 86.0,
+            "timePerTaskMinutes": 1.43,
             "outputTokensPerTask": 10059,
             "outputTokensBreakdown": {
               "output": 10059,
               "reasoning": null,
               "answer": 10059
             },
-            "outputSpeed": 116.3,
+            "outputSpeed": 116.6,
             "ttfaSeconds": 0.89,
             "capabilities": {
               "financeAndAccounting": 19.02,
@@ -2092,16 +2092,16 @@
               "answer": 0.0013
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 28.1,
-            "timePerTaskMinutes": 0.47,
+            "timePerTaskSeconds": 27.5,
+            "timePerTaskMinutes": 0.46,
             "outputTokensPerTask": 3296,
             "outputTokensBreakdown": {
               "output": 3296,
               "reasoning": 702,
               "answer": 2594
             },
-            "outputSpeed": 119.0,
-            "ttfaSeconds": 2.43,
+            "outputSpeed": 122.9,
+            "ttfaSeconds": 2.25,
             "capabilities": {
               "financeAndAccounting": 17.18,
               "strategyAndOps": 16.8,
@@ -2176,16 +2176,16 @@
               "answer": 0.0056
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 269.2,
-            "timePerTaskMinutes": 4.49,
+            "timePerTaskSeconds": 267.8,
+            "timePerTaskMinutes": 4.46,
             "outputTokensPerTask": 32839,
             "outputTokensBreakdown": {
               "output": 32839,
               "reasoning": 21618,
               "answer": 11221
             },
-            "outputSpeed": 122.0,
-            "ttfaSeconds": 13.72,
+            "outputSpeed": 122.4,
+            "ttfaSeconds": 13.26,
             "capabilities": {
               "financeAndAccounting": 29.26,
               "strategyAndOps": 37.79,
@@ -2218,16 +2218,16 @@
               "answer": 0.0069
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 357.2,
-            "timePerTaskMinutes": 5.95,
+            "timePerTaskSeconds": 357.6,
+            "timePerTaskMinutes": 5.96,
             "outputTokensPerTask": 43893,
             "outputTokensBreakdown": {
               "output": 43893,
               "reasoning": 30020,
               "answer": 13873
             },
-            "outputSpeed": 122.6,
-            "ttfaSeconds": 16.8,
+            "outputSpeed": 121.7,
+            "ttfaSeconds": 16.41,
             "capabilities": {
               "financeAndAccounting": 30.55,
               "strategyAndOps": 39.39,
@@ -2260,16 +2260,16 @@
               "answer": 0.0089
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 597.3,
-            "timePerTaskMinutes": 9.96,
+            "timePerTaskSeconds": 599.1,
+            "timePerTaskMinutes": 9.98,
             "outputTokensPerTask": 75296,
             "outputTokensBreakdown": {
               "output": 75296,
               "reasoning": 57562,
               "answer": 17734
             },
-            "outputSpeed": 124.3,
-            "ttfaSeconds": 76.6,
+            "outputSpeed": 126.1,
+            "ttfaSeconds": 73.87,
             "capabilities": {
               "financeAndAccounting": 33.87,
               "strategyAndOps": 43.19,
@@ -2322,8 +2322,8 @@
               "answer": 0.0338
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 64.6,
-            "timePerTaskMinutes": 1.08,
+            "timePerTaskSeconds": 62.6,
+            "timePerTaskMinutes": 1.04,
             "outputTokensPerTask": 30301,
             "outputTokensBreakdown": {
               "output": 30301,
@@ -2331,7 +2331,7 @@
               "answer": 13536
             },
             "outputSpeed": 460.6,
-            "ttfaSeconds": 6.63,
+            "ttfaSeconds": 6.86,
             "capabilities": {
               "financeAndAccounting": 23.31,
               "strategyAndOps": 20.73,
@@ -2384,16 +2384,16 @@
               "answer": 0.7496
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 467.7,
-            "timePerTaskMinutes": 7.8,
+            "timePerTaskSeconds": 456.1,
+            "timePerTaskMinutes": 7.6,
             "outputTokensPerTask": 96063,
             "outputTokensBreakdown": {
               "output": 96063,
               "reasoning": 58584,
               "answer": 37479
             },
-            "outputSpeed": 207.8,
-            "ttfaSeconds": 40.58,
+            "outputSpeed": 197.4,
+            "ttfaSeconds": 35.22,
             "capabilities": {
               "financeAndAccounting": 51.13,
               "strategyAndOps": 54.48,
@@ -2446,16 +2446,16 @@
               "answer": 0.1555
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 447.7,
-            "timePerTaskMinutes": 7.46,
+            "timePerTaskSeconds": 467.9,
+            "timePerTaskMinutes": 7.8,
             "outputTokensPerTask": 91114,
             "outputTokensBreakdown": {
               "output": 91114,
               "reasoning": 54517,
               "answer": 36597
             },
-            "outputSpeed": 205.2,
-            "ttfaSeconds": 51.7,
+            "outputSpeed": 201.8,
+            "ttfaSeconds": 48.92,
             "capabilities": {
               "financeAndAccounting": 48.83,
               "strategyAndOps": 50.26,
@@ -2508,16 +2508,16 @@
               "answer": 0.0303
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 1828.4,
-            "timePerTaskMinutes": 30.47,
+            "timePerTaskSeconds": 1675.0,
+            "timePerTaskMinutes": 27.92,
             "outputTokensPerTask": 121073,
             "outputTokensBreakdown": {
               "output": 121073,
               "reasoning": 86273,
               "answer": 34800
             },
-            "outputSpeed": 57.3,
-            "ttfaSeconds": 38.05,
+            "outputSpeed": 66.3,
+            "ttfaSeconds": 33.07,
             "capabilities": {
               "financeAndAccounting": 38.93,
               "strategyAndOps": 46.87,
@@ -2570,16 +2570,16 @@
               "answer": 0.009
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 2222.2,
-            "timePerTaskMinutes": 37.04,
+            "timePerTaskSeconds": 2004.6,
+            "timePerTaskMinutes": 33.41,
             "outputTokensPerTask": 131806,
             "outputTokensBreakdown": {
               "output": 131806,
               "reasoning": 99712,
               "answer": 32094
             },
-            "outputSpeed": 58.2,
-            "ttfaSeconds": 37.68,
+            "outputSpeed": 60.0,
+            "ttfaSeconds": 36.22,
             "capabilities": {
               "financeAndAccounting": 36.93,
               "strategyAndOps": 45.72,
@@ -2632,16 +2632,16 @@
               "answer": 0.0545
             },
             "costTotalRun": null,
-            "timePerTaskSeconds": 667.0,
-            "timePerTaskMinutes": 11.12,
+            "timePerTaskSeconds": 702.7,
+            "timePerTaskMinutes": 11.71,
             "outputTokensPerTask": 91452,
             "outputTokensBreakdown": {
               "output": 91452,
               "reasoning": 46071,
               "answer": 45381
             },
-            "outputSpeed": 108.6,
-            "ttfaSeconds": 19.45,
+            "outputSpeed": 107.4,
+            "ttfaSeconds": 19.73,
             "capabilities": {
               "financeAndAccounting": 25.09,
               "strategyAndOps": 27.88,
@@ -2783,7 +2783,7 @@
         "fallbackLabel": "Default Fallback",
         "intelligenceIndex": 34.5,
         "costPerTask": 0.9755,
-        "timePerTaskMinutes": 2.45,
+        "timePerTaskMinutes": 2.41,
         "outputTokensPerTask": 19060,
         "capabilities": {
           "financeAndAccounting": 42.17,
@@ -2814,7 +2814,7 @@
         "fallbackLabel": "Default Fallback",
         "intelligenceIndex": 48.06,
         "costPerTask": 2.4511,
-        "timePerTaskMinutes": 5.61,
+        "timePerTaskMinutes": 5.52,
         "outputTokensPerTask": 43817,
         "capabilities": {
           "financeAndAccounting": 50.75,
@@ -2907,7 +2907,7 @@
         "fallbackLabel": "Default Fallback",
         "intelligenceIndex": 58.41,
         "costPerTask": 10.0364,
-        "timePerTaskMinutes": 18.88,
+        "timePerTaskMinutes": 19.12,
         "outputTokensPerTask": 173313,
         "capabilities": {
           "financeAndAccounting": 59.4,
@@ -2938,7 +2938,7 @@
         "fallbackLabel": "Default Fallback",
         "intelligenceIndex": 25.3,
         "costPerTask": 0.5113,
-        "timePerTaskMinutes": 2.01,
+        "timePerTaskMinutes": 1.98,
         "outputTokensPerTask": 20856,
         "capabilities": {
           "financeAndAccounting": 35.94,
@@ -2969,7 +2969,7 @@
         "fallbackLabel": "Default Fallback",
         "intelligenceIndex": 30.32,
         "costPerTask": 0.7807,
-        "timePerTaskMinutes": 2.96,
+        "timePerTaskMinutes": 2.92,
         "outputTokensPerTask": 30746,
         "capabilities": {
           "financeAndAccounting": 40.69,
@@ -3000,7 +3000,7 @@
         "fallbackLabel": "Default Fallback",
         "intelligenceIndex": 41.12,
         "costPerTask": 1.6361,
-        "timePerTaskMinutes": 5.53,
+        "timePerTaskMinutes": 5.42,
         "outputTokensPerTask": 58421,
         "capabilities": {
           "financeAndAccounting": 44.46,
@@ -3031,7 +3031,7 @@
         "fallbackLabel": "Default Fallback",
         "intelligenceIndex": 49.57,
         "costPerTask": 4.092,
-        "timePerTaskMinutes": 11.51,
+        "timePerTaskMinutes": 11.29,
         "outputTokensPerTask": 122205,
         "capabilities": {
           "financeAndAccounting": 48.52,
@@ -3062,7 +3062,7 @@
         "fallbackLabel": "Default Fallback",
         "intelligenceIndex": 54.24,
         "costPerTask": 10.0206,
-        "timePerTaskMinutes": 22.1,
+        "timePerTaskMinutes": 22.11,
         "outputTokensPerTask": 285387,
         "capabilities": {
           "financeAndAccounting": 55.76,
@@ -3093,7 +3093,7 @@
         "fallbackLabel": "Default Fallback",
         "intelligenceIndex": 38.48,
         "costPerTask": 4.4867,
-        "timePerTaskMinutes": 6.85,
+        "timePerTaskMinutes": 6.5,
         "outputTokensPerTask": 37837,
         "capabilities": {
           "financeAndAccounting": 47.72,
@@ -3124,7 +3124,7 @@
         "fallbackLabel": "Default Fallback",
         "intelligenceIndex": 42.97,
         "costPerTask": 5.5805,
-        "timePerTaskMinutes": 8.38,
+        "timePerTaskMinutes": 8.0,
         "outputTokensPerTask": 48545,
         "capabilities": {
           "financeAndAccounting": 47.47,
@@ -3155,7 +3155,7 @@
         "fallbackLabel": "Default Fallback",
         "intelligenceIndex": 47.02,
         "costPerTask": 7.5608,
-        "timePerTaskMinutes": 11.21,
+        "timePerTaskMinutes": 11.11,
         "outputTokensPerTask": 66031,
         "capabilities": {
           "financeAndAccounting": 49.61,
@@ -3186,7 +3186,7 @@
         "fallbackLabel": "Default Fallback",
         "intelligenceIndex": 49.67,
         "costPerTask": 10.8855,
-        "timePerTaskMinutes": 15.85,
+        "timePerTaskMinutes": 15.82,
         "outputTokensPerTask": 97059,
         "capabilities": {
           "financeAndAccounting": 53.51,
@@ -3217,7 +3217,7 @@
         "fallbackLabel": "Default Fallback",
         "intelligenceIndex": 49.01,
         "costPerTask": 13.0393,
-        "timePerTaskMinutes": 19.63,
+        "timePerTaskMinutes": 19.64,
         "outputTokensPerTask": 117941,
         "capabilities": {
           "financeAndAccounting": 53.82,
@@ -3248,7 +3248,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 43.03,
         "costPerTask": 1.4237,
-        "timePerTaskMinutes": 3.15,
+        "timePerTaskMinutes": 2.62,
         "outputTokensPerTask": 9126,
         "capabilities": {
           "financeAndAccounting": 48.12,
@@ -3279,7 +3279,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 51.45,
         "costPerTask": 2.7324,
-        "timePerTaskMinutes": 5.06,
+        "timePerTaskMinutes": 4.75,
         "outputTokensPerTask": 18052,
         "capabilities": {
           "financeAndAccounting": 53.69,
@@ -3341,7 +3341,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 55.26,
         "costPerTask": 3.6589,
-        "timePerTaskMinutes": 6.52,
+        "timePerTaskMinutes": 6.47,
         "outputTokensPerTask": 26724,
         "capabilities": {
           "financeAndAccounting": 56.81,
@@ -3372,7 +3372,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 56.85,
         "costPerTask": 6.2447,
-        "timePerTaskMinutes": 11.85,
+        "timePerTaskMinutes": 11.57,
         "outputTokensPerTask": 51973,
         "capabilities": {
           "financeAndAccounting": 57.38,
@@ -3402,8 +3402,8 @@
         "hasFallback": false,
         "fallbackLabel": null,
         "intelligenceIndex": 50.41,
-        "costPerTask": 3.8413,
-        "timePerTaskMinutes": 22.78,
+        "costPerTask": 7.6827,
+        "timePerTaskMinutes": 22.73,
         "outputTokensPerTask": 116368,
         "capabilities": {
           "financeAndAccounting": 55.92,
@@ -3434,7 +3434,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 34.5,
         "costPerTask": 0.1615,
-        "timePerTaskMinutes": 1.73,
+        "timePerTaskMinutes": 1.55,
         "outputTokensPerTask": 5838,
         "capabilities": {
           "financeAndAccounting": 44.25,
@@ -3465,7 +3465,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 46.15,
         "costPerTask": 0.3594,
-        "timePerTaskMinutes": 3.85,
+        "timePerTaskMinutes": 3.46,
         "outputTokensPerTask": 13518,
         "capabilities": {
           "financeAndAccounting": 50.6,
@@ -3496,7 +3496,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 50.23,
         "costPerTask": 0.591,
-        "timePerTaskMinutes": 5.37,
+        "timePerTaskMinutes": 5.27,
         "outputTokensPerTask": 22606,
         "capabilities": {
           "financeAndAccounting": 53.18,
@@ -3527,7 +3527,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 52.31,
         "costPerTask": 0.764,
-        "timePerTaskMinutes": 7.27,
+        "timePerTaskMinutes": 7.22,
         "outputTokensPerTask": 30241,
         "capabilities": {
           "financeAndAccounting": 55.21,
@@ -3558,7 +3558,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 54.51,
         "costPerTask": 1.2721,
-        "timePerTaskMinutes": 14.31,
+        "timePerTaskMinutes": 13.92,
         "outputTokensPerTask": 67824,
         "capabilities": {
           "financeAndAccounting": 56.23,
@@ -3589,7 +3589,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 30.88,
         "costPerTask": 2.9222,
-        "timePerTaskMinutes": 8.97,
+        "timePerTaskMinutes": 7.77,
         "outputTokensPerTask": 42670,
         "capabilities": {
           "financeAndAccounting": 45.3,
@@ -3620,7 +3620,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 35.01,
         "costPerTask": 6.1836,
-        "timePerTaskMinutes": 15.88,
+        "timePerTaskMinutes": 14.06,
         "outputTokensPerTask": 89127,
         "capabilities": {
           "financeAndAccounting": 50.62,
@@ -3651,7 +3651,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 34.34,
         "costPerTask": 7.5118,
-        "timePerTaskMinutes": 16.52,
+        "timePerTaskMinutes": 15.42,
         "outputTokensPerTask": 92970,
         "capabilities": {
           "financeAndAccounting": 51.69,
@@ -3713,7 +3713,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 24.55,
         "costPerTask": 0.0918,
-        "timePerTaskMinutes": 3.22,
+        "timePerTaskMinutes": 3.18,
         "outputTokensPerTask": 53335,
         "capabilities": {
           "financeAndAccounting": 34.88,
@@ -3744,7 +3744,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 29.62,
         "costPerTask": 0.1586,
-        "timePerTaskMinutes": 4.97,
+        "timePerTaskMinutes": 4.87,
         "outputTokensPerTask": 88064,
         "capabilities": {
           "financeAndAccounting": 37.84,
@@ -3775,7 +3775,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 34.34,
         "costPerTask": 0.2484,
-        "timePerTaskMinutes": 7.35,
+        "timePerTaskMinutes": 7.57,
         "outputTokensPerTask": 136177,
         "capabilities": {
           "financeAndAccounting": 41.11,
@@ -3806,7 +3806,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 36.23,
         "costPerTask": 0.411,
-        "timePerTaskMinutes": 9.89,
+        "timePerTaskMinutes": 9.9,
         "outputTokensPerTask": 225966,
         "capabilities": {
           "financeAndAccounting": 43.56,
@@ -3899,7 +3899,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 30.55,
         "costPerTask": 7.766,
-        "timePerTaskMinutes": 12.07,
+        "timePerTaskMinutes": 11.37,
         "outputTokensPerTask": 98940,
         "capabilities": {
           "financeAndAccounting": 42.38,
@@ -3930,7 +3930,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 9.39,
         "costPerTask": 0.0714,
-        "timePerTaskMinutes": 1.44,
+        "timePerTaskMinutes": 1.43,
         "outputTokensPerTask": 10059,
         "capabilities": {
           "financeAndAccounting": 19.02,
@@ -3961,7 +3961,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 9.67,
         "costPerTask": 0.0051,
-        "timePerTaskMinutes": 0.47,
+        "timePerTaskMinutes": 0.46,
         "outputTokensPerTask": 3296,
         "capabilities": {
           "financeAndAccounting": 17.18,
@@ -4023,7 +4023,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 21.38,
         "costPerTask": 0.0729,
-        "timePerTaskMinutes": 4.49,
+        "timePerTaskMinutes": 4.46,
         "outputTokensPerTask": 32839,
         "capabilities": {
           "financeAndAccounting": 29.26,
@@ -4054,7 +4054,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 23.3,
         "costPerTask": 0.1041,
-        "timePerTaskMinutes": 5.95,
+        "timePerTaskMinutes": 5.96,
         "outputTokensPerTask": 43893,
         "capabilities": {
           "financeAndAccounting": 30.55,
@@ -4085,7 +4085,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 27.76,
         "costPerTask": 0.152,
-        "timePerTaskMinutes": 9.96,
+        "timePerTaskMinutes": 9.98,
         "outputTokensPerTask": 75296,
         "capabilities": {
           "financeAndAccounting": 33.87,
@@ -4116,7 +4116,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 11.66,
         "costPerTask": 0.6929,
-        "timePerTaskMinutes": 1.08,
+        "timePerTaskMinutes": 1.04,
         "outputTokensPerTask": 30301,
         "capabilities": {
           "financeAndAccounting": 23.31,
@@ -4147,7 +4147,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 43.32,
         "costPerTask": 6.952,
-        "timePerTaskMinutes": 7.8,
+        "timePerTaskMinutes": 7.6,
         "outputTokensPerTask": 96063,
         "capabilities": {
           "financeAndAccounting": 51.13,
@@ -4178,7 +4178,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 36.42,
         "costPerTask": 2.3858,
-        "timePerTaskMinutes": 7.46,
+        "timePerTaskMinutes": 7.8,
         "outputTokensPerTask": 91114,
         "capabilities": {
           "financeAndAccounting": 48.83,
@@ -4209,7 +4209,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 29.89,
         "costPerTask": 0.2572,
-        "timePerTaskMinutes": 30.47,
+        "timePerTaskMinutes": 27.92,
         "outputTokensPerTask": 121073,
         "capabilities": {
           "financeAndAccounting": 38.93,
@@ -4240,7 +4240,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 26.73,
         "costPerTask": 0.1285,
-        "timePerTaskMinutes": 37.04,
+        "timePerTaskMinutes": 33.41,
         "outputTokensPerTask": 131806,
         "capabilities": {
           "financeAndAccounting": 36.93,
@@ -4271,7 +4271,7 @@
         "fallbackLabel": null,
         "intelligenceIndex": 18.73,
         "costPerTask": 1.2851,
-        "timePerTaskMinutes": 11.12,
+        "timePerTaskMinutes": 11.71,
         "outputTokensPerTask": 91452,
         "capabilities": {
           "financeAndAccounting": 25.09,
@@ -4287,7 +4287,7 @@
     ]
   },
   "aa_effort_evals": {
-    "fetched_at": "2026-10-28T09:00:27+00:00",
+    "fetched_at": "2026-10-28T20:36:40+00:00",
     "source": "Artificial Analysis release pages (Intelligence Index v5.0)",
     "evals": [
       "Intelligence Index",
