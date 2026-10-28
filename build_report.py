@@ -54,6 +54,41 @@ def bind_panorama_capabilities(multi):
         row["aa_cap_source_url"] = entry["sourceUrl"]
 
 
+def v5_task_scores(m):
+    """Task views on v5 evaluations only; v5 dropped SciCode, GDPval-AA and AA-LCR."""
+    return {
+        "complex": round(0.5 * m["HLE-Diamond"] + 0.5 * m["CritPt v2 hard"], 2),
+        "coding": round(0.5 * m["Terminal-Bench 4.0"] + 0.5 * m["FrontierCode 2.0"], 2),
+        "planning": m["AA-Briefcase v1.1"],
+        "agentic": m["Terminal-Bench-Science"],
+        "automation": m["AutomationBench-AA"],
+        "knowledge": round((2.0 * m["GDP.pdf"] + 3.0 * m["AA-Omniscience v1.1"]) / 5.0, 2),
+    }
+
+
+def build_aa_v5(doc):
+    """Intelligence Index v5 data in the same shape as the v4.3.2 series; nothing is filled from v4.3.2."""
+    evals = doc["aa_effort_evals"]["variants"]
+    for rel in doc["aa_release_series"]["releases"]:
+        for var in rel["variants"]:
+            ev = evals.get(var["slug"])
+            if ev:
+                if any(value is None for value in ev["metrics"].values()):
+                    raise ValueError(f"Incomplete v5 evaluations: {var['slug']}")
+                var["evalMetrics"] = ev["metrics"]
+                var["evalSourceUrl"] = ev["source_url"]
+                var["taskScores"] = v5_task_scores(ev["metrics"])
+    variants = {v["slug"] for r in doc["aa_release_series"]["releases"] for v in r["variants"]}
+    if any(e["slug"] not in variants for e in doc["aa_capability_indexes"]["entries"]):
+        raise ValueError("Every v5 capability entry must match a v5 release variant")
+    return {
+        "version": doc["version"], "fetched_at": doc["fetched_at"], "unmeasured": doc["unmeasured"],
+        "aa_release_series": doc["aa_release_series"],
+        "aa_capability_indexes": doc["aa_capability_indexes"],
+        "aa_effort_evals": {k: doc["aa_effort_evals"][k] for k in ("fetched_at", "source", "evals", "variants")},
+    }
+
+
 def check_model_profiles(doc, catalog, multi):
     """The profile tab joins catalog, AA releases and guidance by id; every link must resolve."""
     catalog_ids = {m["id"] for m in catalog["models"]}
@@ -237,6 +272,8 @@ def build(output_dir=ROOT):
                     "knowledge": round((m["AA-LCR v1.1"] + 2.0 * m["GDP.pdf"] + 3.0 * m["AA-Omniscience"]) / 6.0, 2),
                 }
 
+    aa_v5 = build_aa_v5(read_json(ROOT / "research/2026-10-28/aa-v5-series.json"))
+
     profiles_doc = read_json(ROOT / "research/2026-10-24/model-effort-profiles.json")
     check_model_profiles(profiles_doc, catalog, multi)
     community_doc = read_json(ROOT / "research/2026-10-25/community-consensus.json")
@@ -263,6 +300,7 @@ def build(output_dir=ROOT):
             "evals": effort_evals["evals"],
             "variants": eval_variants,
         },
+        "aa_v5": aa_v5,
         "external_leaderboards": multi["external_leaderboards"],
         "market_snapshot": market,
         "meta": {"reviewed_at": market["reviewed_at"], "original_rows": 121,

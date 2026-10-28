@@ -14,7 +14,7 @@
   <header class="hero">
     <div class="masthead">
       <a class="brand" href="#overview" aria-label="模型观测站首页"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="14"/><ellipse cx="20" cy="20" rx="19" ry="7" transform="rotate(-35 20 20)"/><circle class="brand-star" cx="30" cy="10" r="3"/></svg><span>模型观测站<small>MODEL OBSERVATORY</small></span></a>
-      <div class="masthead-tools"><span class="edition">RESEARCH EDITION <b>10 / 23</b></span><label class="theme-control"><span class="sr">页面主题</span><select id="themeSelect" aria-label="页面主题"><option value="auto">跟随系统</option><option value="light">浅色模式</option><option value="dark">深色模式</option></select></label></div>
+      <div class="masthead-tools"><span class="edition">RESEARCH EDITION <b>10 / 23</b></span><label class="theme-control aa-version-control"><span class="sr">AA 智能指数版本</span><select id="aaVersionSelect" aria-label="AA 智能指数版本"><option value="v5">AA 指数 v5（默认）</option><option value="v4">AA 指数 v4.3.2（含旧型号）</option></select></label><label class="theme-control"><span class="sr">页面主题</span><select id="themeSelect" aria-label="页面主题"><option value="auto">跟随系统</option><option value="light">浅色模式</option><option value="dark">深色模式</option></select></label></div>
     </div>
     <div class="hero-grid">
       <div class="hero-copy">
@@ -75,7 +75,7 @@
   </section>
   <section class="card pitfalls" aria-labelledby="pitfalls-heading" data-toc="档位避坑">
     <h3 id="pitfalls-heading">各档位避坑</h3>
-    <ol class="pitfall-list">
+    <ol class="pitfall-list" data-aa-version="v4">
       <li><strong>多步 agent 与终端任务，先验证低档能否完成。</strong>Opus 5.5 的 Terminal-Bench 从 medium 的 {{aa:claude-opus-5-5:medium:eval/Terminal-Bench 4.0:0}}% 跌到 low 的 {{aa:claude-opus-5-5:low:eval/Terminal-Bench 4.0:0}}%，Sol 6.1 从 {{aa:gpt-6-1-sol:medium:eval/Terminal-Bench 4.0:0}}% 跌到 {{aa:gpt-6-1-sol:low:eval/Terminal-Bench 4.0:0}}%。这两条曲线支持优先验证 medium；分类、抽取、改写等单步任务可另测 low。</li>
       <li><strong>max 的增益需要覆盖额外成本。</strong>Opus 5.5 从 xhigh 升到 max，单任务成本从 ${{aa:claude-opus-5-5:xhigh:costPerTask:2}} 涨到 ${{aa:claude-opus-5-5:max:costPerTask:2}}，智能指数只从 {{aa:claude-opus-5-5:xhigh:intelligenceIndexRounded:0}} 升到 {{aa:claude-opus-5-5:max:intelligenceIndexRounded:0}}。Fable 5.1 的 Terminal-Bench 在 max 档还从 {{aa:claude-fable-5-1:xhigh:eval/Terminal-Bench 4.0:0}}% 降到 {{aa:claude-fable-5-1:max:eval/Terminal-Bench 4.0:0}}%。先确认 xhigh 没通过验收、并且说得出缺什么，再开 max。</li>
       <li><strong>升档之前，也比较另一模型的较低档。</strong>Sonnet 5.5 xhigh（{{aa:claude-sonnet-5-5:xhigh:intelligenceIndexRounded:0}} 分 / ${{aa:claude-sonnet-5-5:xhigh:costPerTask:2}}）不如 Opus 5.5 medium（{{aa:claude-opus-5-5:medium:intelligenceIndexRounded:0}} 分 / ${{aa:claude-opus-5-5:medium:costPerTask:2}}）划算；Grok 4.7 high（{{aa:grok-4-7:high:intelligenceIndexRounded:0}} 分 / ${{aa:grok-4-7:high:costPerTask:2}}）不如 Sol 6.1 medium（{{aa:gpt-6-1-sol:medium:intelligenceIndexRounded:0}} 分 / ${{aa:gpt-6-1-sol:medium:costPerTask:2}}）。这些是当前快照的点估计比较；点开矩阵可查看同一任务指标下的候选替代。</li>
@@ -83,15 +83,28 @@
       <li><strong>事实问答的缺口可能需要检索或换模型。</strong>Luna 的 AA-Omniscience 从 low 的 {{aa:gpt-6-luna:low:eval/AA-Omniscience:0}} 降到 max 的 {{aa:gpt-6-luna:max:eval/AA-Omniscience:0}}，Haiku 5.5 最高也只有 {{aa:claude-haiku-5-5:max:eval/AA-Omniscience:0}}。</li>
       <li><strong>不同厂商的同名档位不等价。</strong>要比完成一个任务并通过验收的总费用，包括失败的重试；缺日志、复现步骤或验收标准时，先补上下文，再考虑升档。</li>
     </ol>
+    <ol class="pitfall-list" data-aa-version="v5">
+      <li><strong>多步 agent 与终端任务，先验证低档能否完成。</strong>Opus 5.5 的 Terminal-Bench 4.0 从 medium 的 {{aa5:claude-opus-5-5:medium:eval/Terminal-Bench 4.0:0}}% 跌到 low 的 {{aa5:claude-opus-5-5:low:eval/Terminal-Bench 4.0:0}}%，Sol 6.1 从 {{aa5:gpt-6-1-sol:medium:eval/Terminal-Bench 4.0:0}}% 跌到 {{aa5:gpt-6-1-sol:low:eval/Terminal-Bench 4.0:0}}%。优先验证 medium；分类、抽取、改写等单步任务可另测 low。</li>
+      <li><strong>max 的增益需要覆盖额外成本。</strong>Opus 5.5 从 xhigh 升到 max，单任务成本从 ${{aa5:claude-opus-5-5:xhigh:costPerTask:2}} 涨到 ${{aa5:claude-opus-5-5:max:costPerTask:2}}，智能指数只从 {{aa5:claude-opus-5-5:xhigh:intelligenceIndex:1}} 升到 {{aa5:claude-opus-5-5:max:intelligenceIndex:1}}。Fable 5.1 的 max 比 xhigh 更贵（${{aa5:claude-fable-5-1:xhigh:costPerTask:2}} → ${{aa5:claude-fable-5-1:max:costPerTask:2}}），智能指数反而从 {{aa5:claude-fable-5-1:xhigh:intelligenceIndex:1}} 降到 {{aa5:claude-fable-5-1:max:intelligenceIndex:1}}。先确认 xhigh 没通过验收、并且说得出缺什么，再开 max。</li>
+      <li><strong>升档之前，也比较另一模型的较低档。</strong>Grok 4.7 high（{{aa5:grok-4-7:high:intelligenceIndex:1}} 分 / ${{aa5:grok-4-7:high:costPerTask:2}}）与 Sol 6.1 low（{{aa5:gpt-6-1-sol:low:intelligenceIndex:1}} 分 / ${{aa5:gpt-6-1-sol:low:costPerTask:2}}）智能指数相近，费用差几十倍；Sonnet 5.5 xhigh（{{aa5:claude-sonnet-5-5:xhigh:intelligenceIndex:1}} 分 / ${{aa5:claude-sonnet-5-5:xhigh:costPerTask:2}}）不如 Sol 6.1 high（{{aa5:gpt-6-1-sol:high:intelligenceIndex:1}} 分 / ${{aa5:gpt-6-1-sol:high:costPerTask:2}}）划算。这些是当前快照的点估计比较；点开矩阵可查看同一任务指标下的候选替代。</li>
+      <li><strong>最高档不一定是某项任务的最高分。</strong>Opus 5.5 的 Terminal-Bench-Science 在 xhigh 是 {{aa5:claude-opus-5-5:xhigh:eval/Terminal-Bench-Science:1}}%，max 反而是 {{aa5:claude-opus-5-5:max:eval/Terminal-Bench-Science:1}}%；Grok 4.7 从 high 升到 xhigh，智能指数从 {{aa5:grok-4-7:high:intelligenceIndex:1}} 降到 {{aa5:grok-4-7:xhigh:intelligenceIndex:1}}，费用却更高。</li>
+      <li><strong>事实问答的缺口可能需要检索或换模型。</strong>AA-Omniscience v1.1 在幻觉多于答对时为负：Luna 从 low 的 {{aa5:gpt-6-luna:low:eval/AA-Omniscience v1.1:1}} 升到 max 的 {{aa5:gpt-6-luna:max:eval/AA-Omniscience v1.1:1}}，仍是负值；Haiku 5.5 最高也只有 {{aa5:claude-haiku-5-5:max:eval/AA-Omniscience v1.1:1}}。</li>
+      <li><strong>不同厂商的同名档位不等价。</strong>要比完成一个任务并通过验收的总费用，包括失败的重试；缺日志、复现步骤或验收标准时，先补上下文，再考虑升档。</li>
+    </ol>
   </section>
-  <div class="summary-grid">
+  <div class="summary-grid" data-aa-version="v4">
     <article><span class="summary-number">01</span><h3>编程与软件工程：高性价比看 Sol 6.1 high，上限看 Opus 5.5 / Sonnet 5.5</h3><p>AA 编程（Terminal-Bench 4.0 + SciCode）与 Vulcan 23 题中：<strong>Sol 6.1 high（{{aa:gpt-6-1-sol:high:coding:1}}% / ${{aa:gpt-6-1-sol:high:costPerTask:2}}）</strong>稳居高吸引象限帕累托前沿，Vulcan 达 {{row:coding:GPT 6.1 Sol:high:passes:0}}/23；<strong>Opus 5.5 xhigh/max（{{aa:claude-opus-5-5:xhigh:coding:1}}%–{{aa:claude-opus-5-5:max:coding:1}}%）</strong>与 <strong>Sonnet 5.5 max（Terminal-Bench {{aa:claude-sonnet-5-5:max:eval/Terminal-Bench 4.0:0}}%）</strong>领跑绝对上限，<strong>Argon high（{{aa:gemini-4-argon:high:coding:1}}% / ${{aa:gemini-4-argon:high:costPerTask:2}}）</strong>居单档位前列。</p><p class="citation"><a href="https://artificialanalysis.ai/zh/models/releases" target="_blank" rel="noopener">AA 发布版本数据</a> · <button data-jump="explorer" data-benchmark="coding" class="inline-button">查看编码成本曲线 →</button></p></article>
     <article><span class="summary-number">02</span><h3>知识工作：分别比较 Briefcase 与 GDPval 原始成绩</h3><p>在知识工作评测 <strong>AA-Briefcase v1.1</strong> 与 <strong>GDPval-AA v2.1</strong> 中：<strong>Sonnet 5.5 max（Briefcase {{aa:claude-sonnet-5-5:max:planning:0}} / GDPval {{aa:claude-sonnet-5-5:max:agentic:0}} Elo）</strong>与 <strong>Opus 5.5 max（Briefcase {{aa:claude-opus-5-5:max:planning:0}} / GDPval {{aa:claude-opus-5-5:max:agentic:0}} Elo）</strong>分别领先两项（不能据此评定架构设计质量）；<strong>Grok 4.7 high（Briefcase {{aa:grok-4-7:high:planning:0}} / GDPval {{aa:grok-4-7:high:agentic:0}} Elo）</strong>超越 Sol 6.1 与 Astra，其 xhigh 为 Briefcase {{aa:grok-4-7:xhigh:planning:0}} / GDPval {{aa:grok-4-7:xhigh:agentic:0}}；小分差未做显著性检验。</p><p class="citation"><a href="https://artificialanalysis.ai/zh/indexes" target="_blank" rel="noopener">AA 能力指数对比</a> · <button data-jump="capabilities" class="inline-button">查看 6 大领域排名图 →</button></p></article>
     <article><span class="summary-number">03</span><h3>复杂问题解决与前沿推理：升档收益因模型与任务而异</h3><p>在 <strong>Humanity's Last Exam + CritPt</strong> 复杂数理与跨学科推理中：<strong>Opus 5.5（low {{aa:claude-opus-5-5:low:complex:1}}% → medium {{aa:claude-opus-5-5:medium:complex:1}}% → max {{aa:claude-opus-5-5:max:complex:1}}%）</strong>与 <strong>Fable 5.1 xhigh（{{aa:claude-fable-5-1:xhigh:complex:1}}%）</strong>居首；<strong>Sol 6.1 xhigh（{{aa:gpt-6-1-sol:xhigh:complex:1}}% / ${{aa:gpt-6-1-sol:xhigh:costPerTask:2}}）</strong>与 <strong>Astra xhigh（{{aa:gpt-6-astra:xhigh:complex:1}}% / ${{aa:gpt-6-astra:xhigh:costPerTask:2}}）</strong>以更低成本逼近顶尖水平。</p><p class="citation"><a href="https://artificialanalysis.ai/models/comparisons/claude-opus-5-5-vs-gpt-6-1-sol" target="_blank" rel="noopener">AA HLE / CritPt 比较页</a> · <button data-jump="reasoning" class="inline-button">查看同模型升档差分 →</button></p></article>
   </div>
+  <div class="summary-grid" data-aa-version="v5">
+    <article><span class="summary-number">01</span><h3>编程与软件工程：高性价比看 Sol 6.1 high，上限看 Opus 5.5 / Sonnet 5.5 max</h3><p>AA v5 编程（Terminal-Bench 4.0 + FrontierCode 2.0）与 Vulcan 23 题中：<strong>Sol 6.1 high（{{aa5:gpt-6-1-sol:high:coding:1}}% / ${{aa5:gpt-6-1-sol:high:costPerTask:2}}）</strong>与 <strong>xhigh（{{aa5:gpt-6-1-sol:xhigh:coding:1}}% / ${{aa5:gpt-6-1-sol:xhigh:costPerTask:2}}）</strong>单任务不到 $1，已达到 Opus 5.5 max 的八成以上，Sol high 的 Vulcan 达 {{row:coding:GPT 6.1 Sol:high:passes:0}}/23；<strong>Opus 5.5 max（{{aa5:claude-opus-5-5:max:coding:1}}%）</strong>与 <strong>Sonnet 5.5 max（{{aa5:claude-sonnet-5-5:max:coding:1}}%，Terminal-Bench {{aa5:claude-sonnet-5-5:max:eval/Terminal-Bench 4.0:0}}%）</strong>领跑上限，但单任务成本约 ${{aa5:claude-opus-5-5:max:costPerTask:0}}。私有的 FrontierCode 2.0 上 Opus 5.5 max 为 {{aa5:claude-opus-5-5:max:eval/FrontierCode 2.0:1}}%。</p><p class="citation"><a href="https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5" target="_blank" rel="noopener">AA v5 发布说明</a> · <button data-jump="explorer" data-benchmark="coding" class="inline-button">查看编码成本曲线 →</button></p></article>
+    <article><span class="summary-number">02</span><h3>知识工作与长程代理：Briefcase 与 Terminal-Bench-Science 分开看</h3><p>在 <strong>AA-Briefcase v1.1</strong> 中 <strong>Sonnet 5.5 max（{{aa5:claude-sonnet-5-5:max:planning:0}} Elo）</strong>与 <strong>Opus 5.5 max（{{aa5:claude-opus-5-5:max:planning:0}} Elo）</strong>领先；在长程科研代理 <strong>Terminal-Bench-Science</strong> 中 <strong>Astra max（{{aa5:gpt-6-astra:max:agentic:1}}%）</strong>最高，<strong>Sol 6.1 max（{{aa5:gpt-6-1-sol:max:agentic:1}}% / ${{aa5:gpt-6-1-sol:max:costPerTask:2}}）</strong>费用低得多。<strong>Grok 4.7 high</strong> 的 Briefcase 达 {{aa5:grok-4-7:high:planning:0}}，Terminal-Bench-Science 却只有 {{aa5:grok-4-7:high:agentic:1}}%。两项都不能据此评定架构设计质量；小分差未做显著性检验。</p><p class="citation"><a href="https://artificialanalysis.ai/zh/indexes" target="_blank" rel="noopener">AA 能力指数对比</a> · <button data-jump="capabilities" class="inline-button">查看 6 大领域排名图 →</button></p></article>
+    <article><span class="summary-number">03</span><h3>复杂问题解决与前沿推理：OpenAI 在私有题上领先，升档收益因模型而异</h3><p>在 <strong>HLE-Diamond + CritPt v2 hard</strong>（后者为私有子集）中：<strong>Astra max（{{aa5:gpt-6-astra:max:complex:1}}%）</strong>最高；<strong>Opus 5.5（low {{aa5:claude-opus-5-5:low:complex:1}}% → medium {{aa5:claude-opus-5-5:medium:complex:1}}% → max {{aa5:claude-opus-5-5:max:complex:1}}%）</strong>升档收益明显；<strong>Sol 6.1 xhigh（{{aa5:gpt-6-1-sol:xhigh:complex:1}}% / ${{aa5:gpt-6-1-sol:xhigh:costPerTask:2}}）</strong>以很低成本逼近顶尖水平。</p><p class="citation"><a href="https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5" target="_blank" rel="noopener">AA v5 发布说明（HLE-Diamond / CritPt v2）</a> · <button data-jump="reasoning" class="inline-button">查看同模型升档差分 →</button></p></article>
+  </div>
   <p class="callout">以下数据均来自公开基准快照与官方文档，保留原始指标单位与独立成本口径，不跨站硬折算总分，也不将 API 美元单价换算为各产品的订阅配额。</p>
 
-  <div class="section-heading" id="task-effort-heading"><h2>能力—成本象限：模型 × 档位 × 任务</h2><p>2026-10-20 核验：基于 Artificial Analysis v4.3.2 的 10 项底层评测，按本报告任务视图组织，将 Grok、GPT、Gemini、Claude 当前活跃的 11 个模型系列（44 个推理档位配置）置于统一「高能力·低成本优选象限（Most attractive quadrant）」与帕累托前沿坐标系中。</p></div>
+  <div class="section-heading" id="task-effort-heading"><h2>能力—成本象限：模型 × 档位 × 任务</h2><p><span data-aa-version="v4">2026-10-20 核验：基于 Artificial Analysis v4.3.2 的 10 项底层评测，按本报告任务视图组织，将 Grok、GPT、Gemini、Claude 当前活跃的 11 个模型系列（44 个推理档位配置）置于统一「高能力·低成本优选象限（Most attractive quadrant）」与帕累托前沿坐标系中。</span><span data-aa-version="v5">2026-10-28 读取：基于 Artificial Analysis 智能指数 v5 的 9 项评测，按本报告任务视图组织，将 Grok、GPT、Gemini、Claude 当前活跃的 11 个模型系列（44 个推理档位配置）置于统一「高能力·低成本优选象限（Most attractive quadrant）」与帕累托前沿坐标系中。v5 移除了 SciCode、GDPval-AA 与 AA-LCR，编程、长程代理与文档三个视图已改用 v5 评测，与 v4.3.2 视图不可直接比较。</span></p></div>
 
   <div class="card chart-card aa-style-card" id="taskEffortCard">
     <div class="chart-header">
@@ -218,7 +231,7 @@
 </section>
 
 <section class="panel" id="capabilities" role="tabpanel" aria-labelledby="tab-capabilities" hidden>
-  <div class="section-heading"><span class="eyebrow">02 / CAPABILITY PROFILE</span><h2>同一个 AA 智能指数，会掩盖不同的任务长处与升档弹性。</h2><p>AA v4.3.2：涵盖 6 大行业能力指数（90 个配置）、四大家族 11 款活跃模型的全推理档位 10 项底层子评测（44 个配置）及 21 个核心代表配置的速度响应矩阵。* 为来源估计值；缺测不是零。AA 已于 2026 年 10 月下旬发布 v5（约 60% 私有评测），本页数据仍是 v4.3.2，两版分数不可直接比较；v5 总分见概览“最新榜单”的 AA v5 页签。</p></div>
+  <div class="section-heading"><span class="eyebrow">02 / CAPABILITY PROFILE</span><h2>同一个 AA 智能指数，会掩盖不同的任务长处与升档弹性。</h2><p><span data-aa-version="v4">AA v4.3.2：涵盖 6 大行业能力指数（90 个配置）、四大家族 11 款活跃模型的全推理档位 10 项底层子评测（44 个配置）及 21 个核心代表配置的速度响应矩阵。* 为来源估计值；缺测不是零。AA 已于 2026-10-27 发布 v5，可在页首切换到 v5 视图；两版分数不可直接比较。</span><span data-aa-version="v5">AA v5：涵盖 6 大行业能力指数（49 个配置，构成已按 v5 调整）与四大家族 11 款活跃模型全推理档位的 9 项评测（44 个配置）。AA 没有用 v5 重测旧型号，旧型号见页首切换的 v4.3.2 视图；21 个核心代表配置的速度响应矩阵仍是 v4.3.2 快照。缺测不是零。</span></p></div>
 
   <div class="card chart-card aa-style-card" id="effortScalingCard" data-toc="档位曲线">
     <div class="chart-header">
@@ -264,7 +277,7 @@
   <div class="card chart-card" id="capIndexCard" data-toc="六域排名">
     <div class="chart-header">
       <div>
-        <span class="eyebrow">AA CAPABILITY INDEXES · v4.3.2 · 6 大专业领域能力指数对比</span>
+        <span class="eyebrow"><span data-aa-version="v4">AA CAPABILITY INDEXES · v4.3.2 · 6 大专业领域能力指数对比</span><span data-aa-version="v5">AA CAPABILITY INDEXES · v5 · 6 大专业领域能力指数对比</span></span>
         <h3 id="capIndexTitle">能力指数对比：跨领域排名跃迁（Bump Chart）与单项得分</h3>
       </div>
       <div class="toolbar">
@@ -275,11 +288,11 @@
             <option value="all_top">全市场代表版本（含 Muse · MiMo · DeepSeek · GLM · Qwen）</option>
           </select>
         </label>
-        <label class="check"><input type="checkbox" id="capShowII" checked>含 AA 智能指数 v4.3.2 参照列</label>
+        <label class="check"><input type="checkbox" id="capShowII" checked>含 AA 智能指数参照列<span data-aa-version="v4">（v4.3.2）</span><span data-aa-version="v5">（v5）</span></label>
         <button id="exportCapIndexes">导出能力指数 CSV</button>
       </div>
     </div>
-    <p class="small">本图全部为 AA v4.3.2 数据（总分与 6 个领域指数同一版本）；v5 总分排名见概览“最新榜单”的 AA 智能指数 v5 页签，v5 的领域指数尚未取得，不与本图混排。图表与明细可横向滚动查看。分数直接保留 <a href="https://artificialanalysis.ai/zh/indexes" target="_blank" rel="noopener">AA 官方领域指数</a>，不是本报告任务合成分。代表档按每个发布版本的AA 智能指数 最高分选择，不保证该域最佳。活跃与兼容版本包含旧代；切换领域保持同一候选集合。纵轴为当前集合排名，不是分差；两位小数同分并列，缺测不参排、连线断开。两侧只显示模型与具体档位；各点支持悬停、Tab 聚焦与触屏点选，下方固定展示选中配置的完整 7 项分数。</p>
+    <p class="small"><span data-aa-version="v4">本图全部为 AA v4.3.2 数据（总分与 6 个领域指数同一版本）；v5 总分排名见概览“最新榜单”的 AA 智能指数 v5 页签，v5 的领域指数尚未取得，不与本图混排。</span><span data-aa-version="v5">本图为 AA v5 数据（总分与 6 个领域指数同一版本，领域指数构成见 AA 方法页）；AA 没有用 v5 重测旧型号，含旧型号的排名见页首切换的 v4.3.2 视图。</span>图表与明细可横向滚动查看。分数直接保留 <a href="https://artificialanalysis.ai/zh/indexes" target="_blank" rel="noopener">AA 官方领域指数</a>，不是本报告任务合成分。代表档按每个发布版本的AA 智能指数 最高分选择，不保证该域最佳。活跃与兼容版本包含旧代；切换领域保持同一候选集合。纵轴为当前集合排名，不是分差；两位小数同分并列，缺测不参排、连线断开。两侧只显示模型与具体档位；各点支持悬停、Tab 聚焦与触屏点选，下方固定展示选中配置的完整 7 项分数。</p>
     <div class="cap-index-tabs" id="capIndexTabs" role="group" aria-label="选择能力指数领域">
       <button type="button" data-cap-tab="all" aria-pressed="true">全部 · 排名对比</button>
       <button type="button" data-cap-tab="financeAndAccounting" aria-pressed="false">财务与会计</button>
@@ -467,7 +480,7 @@
   </section>
   <section class="card" data-toc="补充证据" aria-label="补充证据">
     <div id="profileEvidence"></div>
-    <details class="note-box"><summary>这些证据从哪里来</summary><p>逐档分数与成本全部来自既有冻结输入：AA v4.3.2 逐档与子评测（2026-10-19/20）、Vulcan 编码（2026-10-16）、ToneBench 写作、OSWorld 分协议记录（2026-10-20）。2026-10-24 新增的证据条目来自网页检索摘要，原页尚未逐条核对，均标“检索摘要”；与冻结数据冲突时只作提醒，不覆盖原值。档位升降的通用规则见“推理档位”页。</p></details>
+    <details class="note-box"><summary>这些证据从哪里来</summary><p><span data-aa-version="v4">逐档分数与成本全部来自既有冻结输入：AA v4.3.2 逐档与子评测（2026-10-19/20）</span><span data-aa-version="v5">逐档分数与成本来自 AA v5 发布版本页（2026-10-28 读取，旧型号无 v5 成绩，显示为未测）</span>、Vulcan 编码（2026-10-16）、ToneBench 写作、OSWorld 分协议记录（2026-10-20）。2026-10-24 新增的证据条目来自网页检索摘要，原页尚未逐条核对，均标“检索摘要”；与冻结数据冲突时只作提醒，不覆盖原值。档位升降的通用规则见“推理档位”页。</p></details>
   </section>
 </section>
 
@@ -493,8 +506,8 @@
   <div class="section-heading"><span class="eyebrow">07 / EVIDENCE & LIMITS</span><h2>知道每个数字能回答什么。</h2><p>本报告重整公开基准与官方文档证据，没有新增付费模型调用。官方规格、独立基准评测与真实路由统计分别标注。</p></div>
   <div class="table-scroll"><table class="decision-table"><thead><tr><th>数据层</th><th>时间与覆盖</th><th>可回答</th><th>不能推出</th></tr></thead><tbody>
     <tr><th>官方规格 / Standard 价格</th><td>24 型号；Grok 4.7 核验于 10-19，Claude 10-16，GPT / Gemini 10-15</td><td>模型身份、输入能力、上下文、支持档位、已公布的单价和优惠期</td><td>特定渠道配额、订阅扣额、同任务总 token、真实生产延迟</td></tr>
-    <tr><th>AA v4.3.2 全档位与能力指数</th><td>30 个发布版本（94 个配置）、6 大能力指数、四大家族 11 款活跃模型 44 个档位的 10 项底层子评测（10-20 核验）</td><td>复杂问题解决、编程、方案规划、长文档抗幻觉在各推理档位下的同口径表现与单任务成本</td><td>中文写作、无回退纯模型排名、微小分差的统计显著性</td></tr>
-    <tr><th>AA 智能指数 v5</th><td>2026-10-27 发布；10-28 从 AA 公开榜单页读取 26 个配置的总分、加权单任务成本、输出速度与九项子评测</td><td>新口径下的排序变化：约 60% 权重改用私有或答案不公开的评测后，哪些模型上升、哪些下滑；同版本内的费用比较</td><td>与 v4.3.2 分数相减得到的“真实能力变化”、开放权重模型刷榜的定论、逐档甜蜜点（仍为 v4.3.2）</td></tr>
+    <tr><th>AA v4.3.2 全档位与能力指数（页首可切换）</th><td>30 个发布版本（94 个配置）、6 大能力指数、四大家族 11 款活跃模型 44 个档位的 10 项底层子评测（10-20 核验）</td><td>复杂问题解决、编程、方案规划、长文档抗幻觉在各推理档位下的同口径表现与单任务成本</td><td>中文写作、无回退纯模型排名、微小分差的统计显著性</td></tr>
+    <tr><th>AA 智能指数 v5（默认视图）</th><td>2026-10-27 发布；10-28 从 AA 公开榜单页读取 26 个配置，从发布版本页读取 16 个发布版本的 49 个档位（含四大家族 11 款活跃模型 44 个档位的 9 项评测）；旧型号未重测</td><td>新口径下的排序与升档收益；约 60% 权重为私有或答案不公开的评测，降低刷题与数据污染的影响</td><td>与 v4.3.2 分数相减得到的“真实能力变化”、开放权重模型刷榜的定论、旧型号的 v5 成绩</td></tr>
     <tr><th>Vulcan SWE v4</th><td>9 型号 × 5 档 × 23 题；运行日期与 CLI 不同</td><td>仓库级重建任务完整隐藏测试通过率、费用和墙钟时间</td><td>全领域编程排名、Gemini/Fable 的相同题集成绩、通用代码审美</td></tr>
     <tr><th>ToneBench</th><td>10-13 20:08 UTC；共 50 条；补充 19 条与原 31 条使用的原始 SHA256 一致</td><td>同一编辑风格的英文脚本评分与费用、耗时</td><td>中文内容质量、人类普遍偏好、已确认的全部重试费用</td></tr>
     <tr><th>Scale SEAL / OpenRouter / LiveBench / Arena</th><td>10-19 跨平台核验快照</td><td>专家盲测专项上限、真实生产 Token 份额与每请求成本、抗污染执行力与真实用户代码偏好</td><td>不同平台成本与分数的直接线性换算</td></tr>

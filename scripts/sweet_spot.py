@@ -22,6 +22,11 @@ def _finite(value):
     return isinstance(value, (int, float)) and math.isfinite(value)
 
 
+def _is_elo(data, key):
+    """Briefcase is Elo in both versions; the agentic view is GDPval Elo in v4.3.2, a pass rate in v5."""
+    return key == "planning" or (key == "agentic" and not data["aa_release_series"].get("version", "").startswith("v5"))
+
+
 def active_releases(data):
     return [r for r in data["aa_release_series"]["releases"] if any(v.get("taskScores") for v in r["variants"])]
 
@@ -149,7 +154,7 @@ def _profile_points(data, model_id):
             pts = [{"effort": _norm(v["effort"]), "score": get(v), "cost": v.get("costPerTask"), "time": v.get("timePerTaskSeconds")}
                    for v in release["variants"] if _finite(get(v))]
             if pts:
-                out["aa-" + key] = (order(pts), key in ("agentic", "planning"), _spread(values))
+                out["aa-" + key] = (order(pts), _is_elo(data, key), _spread(values))
     for bench, key in (("coding", "vulcan"), ("writing", "tonebench")):
         pool = [r for r in data["rows"] if r["benchmark"] == bench and _finite(r["score"])]
         mine = [r for r in pool if r["model"] == name and _norm(r["effort"]) in EFFORT_ORDER

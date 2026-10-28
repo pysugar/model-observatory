@@ -1,6 +1,24 @@
 "use strict";
 (() => {
   const DATA = JSON.parse(document.getElementById("report-data").textContent);
+  // AA Intelligence Index version. v5 is the default; v4.3.2 keeps the older models AA did
+  // not re-run. One version is loaded per page view, so no chart mixes the two.
+  const AA_VERSIONS = {
+    v5:{label:"v5.0",short:"AA v5",evalsLabel:"9 项评测"},
+    v4:{label:"v4.3.2",short:"AA v4.3.2",evalsLabel:"10 项评测"}
+  };
+  const aaVersion = (() => {
+    let v = new URLSearchParams(location.search).get("aa");
+    if (!AA_VERSIONS[v]) { try { v = localStorage.getItem("observatory-aa-version"); } catch (_) { v = null; } }
+    return AA_VERSIONS[v] ? v : "v5";
+  })();
+  const AAV = AA_VERSIONS[aaVersion];
+  if (aaVersion === "v5") {
+    DATA.aa_release_series = DATA.aa_v5.aa_release_series;
+    DATA.aa_capability_indexes = DATA.aa_v5.aa_capability_indexes;
+    DATA.aa_effort_evals = DATA.aa_v5.aa_effort_evals;
+  }
+  document.documentElement.dataset.aa = aaVersion;
   const $ = id => document.getElementById(id);
   const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const finite = value => typeof value === "number" && Number.isFinite(value);
@@ -420,6 +438,8 @@
 
   // Capability values stay official; missing domains never borrow Intelligence Index.
   // BEGIN CAPABILITY_MATH (also exercised by the offline regression tests)
+  // Version label for exported effort rows; set to the loaded AA version after this block.
+  let capVersionLabel = "AA v4.3.2";
   const capabilityEfforts = ["non-reasoning", "minimal", "low", "medium", "high", "xhigh", "max", "unspecified"];
   const capScore = (e, key) => {
     const value = key === "__ii__" ? e.intelligenceIndex : key.startsWith("eval:") ? e.evalMetrics?.[key.slice(5)] : e.capabilities?.[key];
@@ -475,17 +495,18 @@
         previous_measured_effort:previous?.effort ?? null, selected:e.slug === selectedSlug,
         representative_by_overall_ii:!!e.isTopVariant,
         best_for_metric:finite(score) && capPrecision(score) === capPrecision(best),
-        fallback:e.fallbackLabel || "", source_url:key.startsWith("eval:") ? (finite(score) ? e.evalSourceUrl || null : null) : e.sourceUrl || null, evidence_type:key==="eval:Terminal-Bench 4.0" ? "model + agent; exact AA configuration; harness not archived" : "exact model + effort", version:"AA v4.3.2", evaluation_date:null, harness:null, budget:null, confidence_interval:null,
+        fallback:e.fallbackLabel || "", source_url:key.startsWith("eval:") ? (finite(score) ? e.evalSourceUrl || null : null) : e.sourceUrl || null, evidence_type:key==="eval:Terminal-Bench 4.0" ? "model + agent; exact AA configuration; harness not archived" : "exact model + effort", version:capVersionLabel, evaluation_date:null, harness:null, budget:null, confidence_interval:null,
         raw_unit:key.startsWith("eval:") ? "%" : "index points", collected_at:"2026-10-19", attempts:null, snapshot:"2026-10-19", cost_scope:"AA 智能指数加权单任务成本；非子评测专属费用"};
     });
   }
   // END CAPABILITY_MATH
+  capVersionLabel = AAV.short;
   const capState = {tab:"all", selectedId:null};
   const getCapEntries = () => capScopeEntries(DATA.aa_capability_indexes?.entries || [], $("capIndexScope")?.value || "four_family_top");
   const capLabel = e => `${e.releaseShort || e.releaseName} · ${e.effort}`;
   function renderCapDetail(entry, entries, domains) {
     if (!entry || !$("capIndexDetail")) return;
-    const rows = [{key:"__ii__",slug:"intelligence",label:"AA 智能指数",coreEvals:["AA 智能指数"],weightNote:"10 项底层评测；沿用 AA 官方方法"},...domains].map(d => {
+    const rows = [{key:"__ii__",slug:"intelligence",label:"AA 智能指数",coreEvals:["AA 智能指数"],weightNote:AAV.evalsLabel+"；沿用 AA 官方方法"},...domains].map(d => {
       const score = capScore(entry,d.key), ranking = capRanking(entries,d.key), rank = ranking.ranks.get(entry.slug);
       return `<tr><th>${link(d.key==="__ii__" ? "https://artificialanalysis.ai/methodology/intelligence-benchmarking" : "https://artificialanalysis.ai/zh/indexes/"+d.slug,d.label)}<span class="task-detail">${esc(d.coreEvals.join(" · "))}<br>${esc(d.weightNote)}</span></th><td>${finite(score) ? fmt(score,2) : "无数据 · 不参排"}</td><td>${rank ? `#${rank} / ${ranking.n} 个有效配置` : `不参排 / ${ranking.n} 个有效配置`}<span class="task-detail">候选 ${entries.length} 个；缺测 ${entries.length-ranking.n} 个</span></td><td>${entry.strengthsGlobalRank?.[d.slug] ? `AA 来源全球发布排名 #${entry.strengthsGlobalRank[d.slug]}` : "未提供"}<span class="task-detail">AA 全库分母未存档；与当前筛选排名不同</span></td></tr>`;
     }).join("");
@@ -500,7 +521,7 @@
     $("capModelPills").innerHTML = entries.map(e => `<button type="button" class="pill-btn ${e.slug === capState.selectedId ? "is-active" : ""}" aria-pressed="${e.slug === capState.selectedId}" data-cap-model="${esc(e.slug)}"><span class="swatch" style="background:${e.color}"></span>${esc(capLabel(e))}</button>`).join("");
     const width = Math.max(1180,Math.round(svg.getBoundingClientRect().width || 1180));
     const showII = $("capShowII").checked, domains = cap.domains;
-    const allCols = [...(showII ? [{key:"__ii__",shortLabel:"AA 智能指数 v4.3.2"}] : []),...domains];
+    const allCols = [...(showII ? [{key:"__ii__",shortLabel:"AA 智能指数 "+AAV.label}] : []),...domains];
     const cols = capState.tab === "all" ? allCols : domains.filter(d => d.key === capState.tab);
     const rankings = new Map(cols.map(d => [d.key,capRanking(entries,d.key)]));
     const all = capState.tab === "all", margin = {left:all ? 255 : 265,right:all ? 255 : 140,top:90,bottom:40}, rowH=34;
@@ -586,11 +607,11 @@
       renderCapIndexChart();
     }));
     ["capIndexScope","capShowII"].forEach(id=>$(id).addEventListener("change",renderCapIndexChart));
-    $("exportCapIndexes").addEventListener("click",()=>exportCSV(capExportRows(getCapEntries(),DATA.aa_capability_indexes.domains),"AA官方能力指数-2026-10-19.csv"));
+    $("exportCapIndexes").addEventListener("click",()=>exportCSV(capExportRows(getCapEntries(),DATA.aa_capability_indexes.domains),`AA官方能力指数-${AAV.label}-${DATA.aa_capability_indexes.snapshot}.csv`));
   }
 
   // Same-release, same-snapshot official effort evidence in the reasoning tab.
-  const reasoningEvals = ["Humanity's Last Exam", "CritPt", "Terminal-Bench 4.0", "SciCode"];
+  const reasoningEvals = aaVersion === "v5" ? ["HLE-Diamond", "CritPt v2 hard", "Terminal-Bench 4.0", "FrontierCode 2.0", "Terminal-Bench-Science"] : ["Humanity's Last Exam", "CritPt", "Terminal-Bench 4.0", "SciCode"];
   const reasoningEntries = () => {
     const variants=new Map(DATA.aa_release_series.releases.flatMap(r=>r.variants).map(v=>[v.slug,v]));
     return DATA.aa_capability_indexes.entries.map(e=>{
@@ -808,7 +829,7 @@
   }
 
   // 3. Flagship Task × Reasoning Effort Quadrant & Trajectory Chart (#overview -> #taskEffortCard)
-  const TASK_DEFINITIONS = {
+  const TASK_DEFINITIONS_V4 = {
     complex: {
       key: "complex",
       shortLabel: "复杂问题解决",
@@ -908,6 +929,127 @@
       getScore: v => v.intelligenceIndex
     }
   };
+  // Same task views rebuilt on Intelligence Index v5 evaluations (v5 dropped SciCode, GDPval-AA, AA-LCR).
+  const TASK_DEFINITIONS_V5 = {
+    complex: {
+      key: "complex",
+      shortLabel: "复杂问题解决",
+      title: "复杂问题解决能力（HLE-Diamond 50% + CritPt v2 hard 50%）vs. 单任务成本（对数刻度）",
+      yLabel: "复杂问题解决得分（HLE-Diamond + CritPt v2 hard 均值 · %）",
+      unit: "%",
+      digits: 1,
+      yrange: [0, 72],
+      yTicks: [0, 10, 20, 30, 40, 50, 60, 70],
+      attractiveY: 50,
+      attractiveX: 1.10,
+      subnote: "本报告任务视图（v5）：HLE-Diamond 与私有 CritPt v2 hard 子集的等权均值，不是 AA 单独发布的任务指数。Astra max {{aa5:gpt-6-astra:max:complex:1}}% 最高；Sol high {{aa5:gpt-6-1-sol:high:complex:1}}%，成本 ${{aa5:gpt-6-1-sol:high:costPerTask:2}}；Opus 5.5 low {{aa5:claude-opus-5-5:low:complex:1}}% → max {{aa5:claude-opus-5-5:max:complex:1}}%。点估计差异不证明统计显著性。",
+      getScore: v => v.taskScores?.complex
+    },
+    coding: {
+      key: "coding",
+      shortLabel: "编程与软件工程",
+      title: "编程与软件工程能力（Terminal-Bench 4.0 + FrontierCode 2.0）vs. 单任务成本（对数刻度）",
+      yLabel: "编程与软件工程得分（Terminal-Bench 4.0 + FrontierCode 2.0 均值 · %）",
+      unit: "%",
+      digits: 1,
+      yrange: [0, 60],
+      yTicks: [0, 10, 20, 30, 40, 50, 60],
+      attractiveY: 40,
+      attractiveX: 1.10,
+      subnote: "本报告任务视图（v5）：Terminal-Bench 4.0 与 Cognition 私有 FrontierCode 2.0（按维护者是否会合并评分）的等权均值，不是通用软件工程通过率。Opus 5.5 max {{aa5:claude-opus-5-5:max:coding:1}}%、Sonnet 5.5 max {{aa5:claude-sonnet-5-5:max:coding:1}}%；Sol high {{aa5:gpt-6-1-sol:high:coding:1}}%（${{aa5:gpt-6-1-sol:high:costPerTask:2}}）。Vulcan 的题集、脚手架与成本另列。",
+      getScore: v => v.taskScores?.coding
+    },
+    planning: {
+      key: "planning",
+      shortLabel: "AA-Briefcase 知识工作",
+      title: "AA-Briefcase v1.1 知识工作（原始 Elo）vs. 单任务成本",
+      yLabel: "知识工作（AA-Briefcase v1.1 · 原始 Elo）",
+      unit: " Elo",
+      digits: 0,
+      yrange: [600, 1880],
+      yTicks: [800, 1000, 1200, 1400, 1600, 1800],
+      attractiveY: 1450,
+      attractiveX: 1.10,
+      subnote: "本报告任务视图（v5）：直接展示 AA-Briefcase v1.1 原始 Elo，不是架构设计能力成绩。Sonnet 5.5 max {{aa5:claude-sonnet-5-5:max:planning:0}}、Opus 5.5 max {{aa5:claude-opus-5-5:max:planning:0}}；Grok high {{aa5:grok-4-7:high:planning:0}} → xhigh {{aa5:grok-4-7:xhigh:planning:0}}，成本 ${{aa5:grok-4-7:high:costPerTask:2}} → ${{aa5:grok-4-7:xhigh:costPerTask:2}}。Elo 只作同基准相对比较，不能换算为能力百分比。",
+      getScore: v => v.taskScores?.planning
+    },
+    agentic: {
+      key: "agentic",
+      shortLabel: "长程科研代理",
+      title: "长程科研代理（Terminal-Bench-Science 通过率）vs. 单任务成本",
+      yLabel: "长程科研代理（Terminal-Bench-Science · %）",
+      unit: "%",
+      digits: 1,
+      yrange: [0, 70],
+      yTicks: [0, 10, 20, 30, 40, 50, 60, 70],
+      attractiveY: 45,
+      attractiveX: 1.10,
+      subnote: "本报告任务视图（v5）：Terminal-Bench-Science 的 70 个终端科研工作流，任务的每项测试都通过才计分；v5 不再计入 GDPval-AA，本视图改用这项长程代理评测。Astra max {{aa5:gpt-6-astra:max:agentic:1}}%、Opus 5.5 xhigh {{aa5:claude-opus-5-5:xhigh:agentic:1}}%（max {{aa5:claude-opus-5-5:max:agentic:1}}%）；Sol max {{aa5:gpt-6-1-sol:max:agentic:1}}% / ${{aa5:gpt-6-1-sol:max:costPerTask:2}}；Grok 4.7 high 只有 {{aa5:grok-4-7:high:agentic:1}}%。",
+      getScore: v => v.taskScores?.agentic
+    },
+    automation: {
+      key: "automation",
+      shortLabel: "多工具自动化",
+      title: "多工具业务流程自动化（AutomationBench-AA 完成率）vs. 单任务成本",
+      yLabel: "多工具流程自动化（AutomationBench-AA · %）",
+      unit: "%",
+      digits: 0,
+      yrange: [0, 86],
+      yTicks: [0, 20, 40, 60, 80],
+      attractiveY: 58,
+      attractiveX: 1.10,
+      subnote: "本报告任务视图（v5）：直接展示 AutomationBench-AA 完成率。Argon high {{aa5:gemini-4-argon:high:automation:0}}% 最高，Sonnet 5.5 max {{aa5:claude-sonnet-5-5:max:automation:0}}%、Opus 5.5 max {{aa5:claude-opus-5-5:max:automation:0}}%；Sol high {{aa5:gpt-6-1-sol:high:automation:0}}%。同名档位不表示相同推理预算。",
+      getScore: v => v.taskScores?.automation
+    },
+    knowledge: {
+      key: "knowledge",
+      shortLabel: "文档与抗幻觉",
+      title: "文档分析与知识抗幻觉（GDP.pdf + AA-Omniscience v1.1）vs. 单任务成本",
+      yLabel: "文档与知识抗幻觉合成得分（分）",
+      unit: " 分",
+      digits: 1,
+      yrange: [-15, 45],
+      yTicks: [-10, 0, 10, 20, 30, 40],
+      attractiveY: 30,
+      attractiveX: 1.10,
+      subnote: "本报告自定义合成分（v5）：(2 × GDP.pdf + 3 × AA-Omniscience v1.1) / 5；v5 不再计入 AA-LCR，因此去掉长上下文项。Omniscience 指数在幻觉多于答对时为负，所以合成分可以低于 0。Opus 5.5 max {{aa5:claude-opus-5-5:max:knowledge:1}} 分、Astra high {{aa5:gpt-6-astra:high:knowledge:1}} 分；Luna max {{aa5:gpt-6-luna:max:knowledge:1}} 分。档位变化不证明幻觉变化的原因。",
+      getScore: v => v.taskScores?.knowledge
+    },
+    intelligenceIndex: {
+      key: "intelligenceIndex",
+      shortLabel: "AA 智能指数",
+      title: "AA 智能指数（v5，9 项评测）vs. 单任务成本",
+      yLabel: "AA 智能指数 v5（分）",
+      unit: " 分",
+      digits: 1,
+      yrange: [5, 62],
+      yTicks: [10, 20, 30, 40, 50, 60],
+      attractiveY: 40,
+      attractiveX: 1.10,
+      subnote: "直接使用 AA 智能指数 v5（9 项评测；知识工作、编程、科学、通用各 25%，约 60% 权重为私有或答案不公开的评测）。AA 没有用 v5 重测旧型号，旧版本只在 v4.3.2 视图中显示；两版分数不可直接比较。",
+      getScore: v => v.intelligenceIndex
+    }
+  };
+  const TASK_DEFINITIONS = aaVersion === "v5" ? TASK_DEFINITIONS_V5 : TASK_DEFINITIONS_V4;
+  // Static tab and option labels in the template describe v4.3.2; rewrite them for v5.
+  if (aaVersion === "v5") {
+    const tabText = {complex:"复杂问题解决（HLE-Diamond + CritPt v2）",coding:"编程与软件工程（Terminal-Bench + FrontierCode）",
+      agentic:"长程科研代理（Terminal-Bench-Science）",knowledge:"文档与知识抗幻觉（PDF + Omniscience）",intelligenceIndex:"AA 智能指数（v5 · 9 项）"};
+    const optionText = {complex:"复杂问题解决（HLE-Diamond 50% + CritPt v2 hard 50% · 百分点）",coding:"编程与软件工程（Terminal-Bench 4.0 + FrontierCode 2.0 · 百分点）",
+      agentic:"长程科研代理（Terminal-Bench-Science · 通过率 %）",knowledge:"文档与知识抗幻觉（GDP.pdf + AA-Omniscience v1.1）",intelligenceIndex:"AA 智能指数（v5）"};
+    document.querySelectorAll("[data-task-tab]").forEach(btn => { if (tabText[btn.dataset.taskTab]) btn.textContent = tabText[btn.dataset.taskTab]; });
+    document.querySelectorAll("#effortScalingTask option").forEach(o => { if (optionText[o.value]) o.textContent = optionText[o.value]; });
+  }
+  const pct = value => `${fmt(value, 0)}%`;
+  const DETAIL_EVAL_HEADS = aaVersion === "v5"
+    ? ["复杂问题：HLE-Diamond / CritPt v2","编程工程：Terminal / FrontierCode","规划与代理：Briefcase / TB-Science / AutoBench","知识与文档：GDP.pdf / Omniscience v1.1"]
+    : ["复杂问题：HLE / CritPt","编程工程：Terminal / SciCode","规划与代理：Briefcase / GDPval / AutoBench","知识与文档：LCR / PDF / Omniscience"];
+  const detailEvalCells = em => (aaVersion === "v5"
+    ? [`${pct(em["HLE-Diamond"])} / ${pct(em["CritPt v2 hard"])}`, `${pct(em["Terminal-Bench 4.0"])} / ${pct(em["FrontierCode 2.0"])}`,
+       `${fmt(em["AA-Briefcase v1.1"], 0)} / ${pct(em["Terminal-Bench-Science"])} / ${pct(em["AutomationBench-AA"])}`, `${pct(em["GDP.pdf"])} / ${fmt(em["AA-Omniscience v1.1"], 0)}`]
+    : [`${pct(em["Humanity's Last Exam"])} / ${pct(em["CritPt"])}`, `${pct(em["Terminal-Bench 4.0"])} / ${pct(em["SciCode"])}`,
+       `${fmt(em["AA-Briefcase v1.1"], 0)} / ${fmt(em["GDPval-AA v2.1"], 0)} / ${pct(em["AutomationBench-AA"])}`, `${pct(em["AA-LCR v1.1"])} / ${pct(em["GDP.pdf"])} / ${fmt(em["AA-Omniscience"], 0)}`]
+  ).map(cell => `<td class="metric-value">${cell}</td>`).join("");
 
   const taskEffortState = {
     tab: "complex",
@@ -991,9 +1133,9 @@
       const prevSc = idx > 0 ? taskDef.getScore(rel.variants[idx - 1]) : null;
       const delta = finite(sc) && finite(prevSc) ? sc - prevSc : null;
       const em = vr.evalMetrics || {};
-      return `<tr class="${vr.slug === v.slug ? "recommended-controller" : ""}"><th>${esc(vr.effort)} ${vr === best ? '<span class="badge">当前任务最佳档</span>' : ""}</th><td class="metric-value"><strong>${fmt(sc, taskDef.digits)}${taskDef.unit}</strong>${delta !== null ? `<span class="spec-detail ${delta < 0 ? "delta-negative" : "delta-positive"}">${delta > 0 ? "+" : ""}${fmt(delta, taskDef.digits)}</span>` : ""}</td><td class="metric-value">${fmt(vr.intelligenceIndex, 1)}</td><td class="metric-value">${fmt(em["Humanity's Last Exam"], 0)}% / ${fmt(em["CritPt"], 0)}%</td><td class="metric-value">${fmt(em["Terminal-Bench 4.0"], 0)}% / ${fmt(em["SciCode"], 0)}%</td><td class="metric-value">${fmt(em["AA-Briefcase v1.1"], 0)} / ${fmt(em["GDPval-AA v2.1"], 0)} / ${fmt(em["AutomationBench-AA"], 0)}%</td><td class="metric-value">${fmt(em["AA-LCR v1.1"], 0)}% / ${fmt(em["GDP.pdf"], 0)}% / ${fmt(em["AA-Omniscience"], 0)}</td><td class="metric-value">${money(vr.costPerTask)}<span class="task-detail">${fmt(vr.timePerTaskMinutes, 2)}m · ${fmt(vr.outputTokensPerTask, 0)} tok</span></td></tr>`;
+      return `<tr class="${vr.slug === v.slug ? "recommended-controller" : ""}"><th>${esc(vr.effort)} ${vr === best ? '<span class="badge">当前任务最佳档</span>' : ""}</th><td class="metric-value"><strong>${fmt(sc, taskDef.digits)}${taskDef.unit}</strong>${delta !== null ? `<span class="spec-detail ${delta < 0 ? "delta-negative" : "delta-positive"}">${delta > 0 ? "+" : ""}${fmt(delta, taskDef.digits)}</span>` : ""}</td><td class="metric-value">${fmt(vr.intelligenceIndex, 1)}</td>${detailEvalCells(em)}<td class="metric-value">${money(vr.costPerTask)}<span class="task-detail">${fmt(vr.timePerTaskMinutes, 2)}m · ${fmt(vr.outputTokensPerTask, 0)} tok</span></td></tr>`;
     }).join("");
-    el.innerHTML = `<div class="topline"><h3><span class="swatch" style="display:inline-block;background:${rel.color};margin-right:7px"></span>${esc(rel.name)} · 全推理档位 × 主流任务实测明细（当前档位：${esc(v.effort)}）</h3><span class="tag">${esc(rel.vendor)} · ${rel.variants.length} 个已测档位 · ${v.evalSourceUrl ? link(v.evalSourceUrl, "AA 比较页来源") : "AA v4.3.2"}</span></div><div class="numbers"><div><b>${fmt(score, taskDef.digits)}${taskDef.unit}</b><span>当前维度：${esc(taskDef.shortLabel)}</span></div><div><b>${fmt(v.intelligenceIndex, 1)}</b><span>AA 智能指数</span></div><div><b>${money(v.costPerTask)}</b><span>单任务加权成本</span></div><div><b>${fmt(v.timePerTaskMinutes, 2)} 分钟</b><span>每任务推算耗时（${fmt(v.outputTokensPerTask, 0)} tok）</span></div></div><div class="table-scroll" style="margin-top:10px">${table(["推理档位","当前维度得分 / 升档差分","AA 智能指数","复杂问题：HLE / CritPt","编程工程：Terminal / SciCode","规划与代理：Briefcase / GDPval / AutoBench","知识与文档：LCR / PDF / Omniscience","单任务成本 / 耗时 / 输出 Token"], rowsHtml)}</div>`;
+    el.innerHTML = `<div class="topline"><h3><span class="swatch" style="display:inline-block;background:${rel.color};margin-right:7px"></span>${esc(rel.name)} · 全推理档位 × 主流任务实测明细（当前档位：${esc(v.effort)}）</h3><span class="tag">${esc(rel.vendor)} · ${rel.variants.length} 个已测档位 · ${v.evalSourceUrl ? link(v.evalSourceUrl, aaVersion === "v5" ? "AA 发布版本页来源" : "AA 比较页来源") : AAV.short}</span></div><div class="numbers"><div><b>${fmt(score, taskDef.digits)}${taskDef.unit}</b><span>当前维度：${esc(taskDef.shortLabel)}</span></div><div><b>${fmt(v.intelligenceIndex, 1)}</b><span>AA 智能指数</span></div><div><b>${money(v.costPerTask)}</b><span>单任务加权成本</span></div><div><b>${fmt(v.timePerTaskMinutes, 2)} 分钟</b><span>每任务推算耗时（${fmt(v.outputTokensPerTask, 0)} tok）</span></div></div><div class="table-scroll" style="margin-top:10px">${table(["推理档位","当前维度得分 / 升档差分","AA 智能指数",...DETAIL_EVAL_HEADS,"单任务成本 / 耗时 / 输出 Token"], rowsHtml)}</div>`;
   }
 
   function renderTaskEffortChart() {
@@ -1198,16 +1340,11 @@
         complex_problem_solving: v.taskScores?.complex,
         coding_software_eng: v.taskScores?.coding,
         planning_briefcase_elo: v.taskScores?.planning,
-        agentic_gdpval_elo: v.taskScores?.agentic,
+        [aaVersion === "v5" ? "agentic_tb_science_pct" : "agentic_gdpval_elo"]: v.taskScores?.agentic,
         automation_bench_pct: v.taskScores?.automation,
         knowledge_doc_score: v.taskScores?.knowledge,
-        hle_pct: v.evalMetrics?.["Humanity's Last Exam"],
-        critpt_pct: v.evalMetrics?.["CritPt"],
-        terminal_bench_pct: v.evalMetrics?.["Terminal-Bench 4.0"],
-        scicode_pct: v.evalMetrics?.["SciCode"],
-        aa_lcr_pct: v.evalMetrics?.["AA-LCR v1.1"],
-        gdp_pdf_pct: v.evalMetrics?.["GDP.pdf"],
-        aa_omniscience: v.evalMetrics?.["AA-Omniscience"],
+        aa_index_version: AAV.label,
+        ...Object.fromEntries(Object.entries(v.evalMetrics || {}).filter(([name]) => name !== "Intelligence Index")),
         cost_per_task_usd: v.costPerTask,
         time_per_task_minutes: v.timePerTaskMinutes,
         output_tokens_per_task: v.outputTokensPerTask,
@@ -1594,8 +1731,16 @@
   $("sourceList").innerHTML=types.map(type => `<div class="source-group"><h3>${esc(type)}</h3>${DATA.sources.filter(s => s.type === type).map(s => `<div class="source-item"><span class="source-id">${s.id}</span><div>${link(s.url,s.title)}<p>${esc(s.note)}</p><p>${esc(s.status)} · ${s.accessed}</p></div></div>`).join("")}</div>`).join("");
   $("integrityNote").textContent=`原记录 ${DATA.meta.original_rows} 条＋新增 ${DATA.rows.length-DATA.meta.original_rows} 条＝${DATA.rows.length} 条；AA分项 ${DATA.aa_profiles.length} 个配置。ToneBench SHA256：${DATA.meta.tonebench_sha256}`;
   // Personal effort sweet-spot matrix: lowest-cost measured effort within a tolerance of each model's best score.
-  const sweetTasks=[
-    {key:"ii",label:"综合",sub:"AA 智能指数",get:v=>v.intelligenceIndex,elo:false},
+  const sweetTasks=aaVersion==="v5" ? [
+    {key:"ii",label:"综合",sub:"AA 智能指数 v5",get:v=>v.intelligenceIndex,elo:false},
+    {key:"coding",label:"编程",sub:"Terminal-Bench + FrontierCode",get:v=>v.taskScores?.coding,elo:false},
+    {key:"complex",label:"复杂推理",sub:"HLE-Diamond + CritPt v2",get:v=>v.taskScores?.complex,elo:false},
+    {key:"automation",label:"工具自动化",sub:"AutomationBench",get:v=>v.taskScores?.automation,elo:false},
+    {key:"agentic",label:"长程科研代理",sub:"Terminal-Bench-Science",get:v=>v.taskScores?.agentic,elo:false},
+    {key:"planning",label:"方案规划",sub:"Briefcase Elo",get:v=>v.taskScores?.planning,elo:true},
+    {key:"knowledge",label:"文档 · 事实",sub:"PDF / Omniscience",get:v=>v.taskScores?.knowledge,elo:false}
+  ] : [
+    {key:"ii",label:"综合",sub:"AA 智能指数 v4.3.2",get:v=>v.intelligenceIndex,elo:false},
     {key:"coding",label:"编程",sub:"Terminal-Bench + SciCode",get:v=>v.taskScores?.coding,elo:false},
     {key:"complex",label:"复杂推理",sub:"HLE + CritPt",get:v=>v.taskScores?.complex,elo:false},
     {key:"automation",label:"工具自动化",sub:"AutomationBench",get:v=>v.taskScores?.automation,elo:false},
@@ -1757,6 +1902,12 @@
   // ---------- Model profile (模型档案): one model, every task × native effort ----------
   // Measured picks reuse the overview knee (kneeOf / sweetThreshold), so both views always agree.
   const MP=DATA.model_effort_profiles||{models:[],evidence:[],taskAxis:[]};
+  // The profile rows follow the loaded AA version's task definitions.
+  if(aaVersion==="v5"){
+    const v5Axis={ii:{sub:"AA 智能指数 v5"},coding:{sub:"Terminal-Bench + FrontierCode · Vulcan 23 题"},complex:{sub:"HLE-Diamond + CritPt v2"},
+      agentic:{label:"长程科研代理",sub:"Terminal-Bench-Science"},knowledge:{label:"文档 · 事实",sub:"PDF / Omniscience"}};
+    MP.taskAxis=MP.taskAxis.map(t=>({...t,...(v5Axis[t.id]||{})}));
+  }
   const mpEffortOrder=["none","minimal","low","medium","high","xhigh","max"];
   const mpNorm=e=>e==="non-reasoning"?"none":e;
   const mpEffortLabel=e=>e==="none"?"none（关推理）":e;
@@ -2206,6 +2357,13 @@
     try { localStorage.setItem("observatory-theme", event.target.value); } catch (_) { /* Storage is optional. */ }
   });
   themeMedia.addEventListener("change", () => { if ($("themeSelect").value === "auto") applyTheme("auto"); });
+  $("aaVersionSelect").value = aaVersion;
+  $("aaVersionSelect").addEventListener("change", event => {
+    try { localStorage.setItem("observatory-aa-version", event.target.value); } catch (_) { /* Storage is optional. */ }
+    const url = new URL(location.href);
+    url.searchParams.set("aa", event.target.value);
+    location.replace(url.toString());
+  });
 
   const market = DATA.market_snapshot;
   const marketState = {board:"aa", expanded:false};

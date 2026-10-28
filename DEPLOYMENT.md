@@ -24,7 +24,7 @@ python scripts/smoke.py --wrangler
 
 macOS 若使用已安装的 Chrome，可用 `python scripts/smoke.py --browser-channel chrome`。由 Codex 启动浏览器时须遵循主机审批限制，不能用 `--no-sandbox` 绕过。Linux 首次安装浏览器系统依赖可运行 `python -m playwright install --with-deps chromium`。Ubuntu 23.10+ 若限制下载版 Chromium 的 user namespace，使用系统 Chrome：`python -m playwright install --with-deps chrome`，再给 smoke 命令加 `--browser-channel chrome`。CI 采用此通道并保持 sandbox 开启；不修改 AppArmor/sysctl。[Chromium 说明](https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md)。实际浏览器版本记入 `test-results/smoke.json`，随 runner 系统 Chrome 更新。
 
-`smoke.py` 自动创建临时本地 HTTP 服务并关闭；`--wrangler` 自动启停实际 Wrangler 本地服务，并检查响应头。验证 6 个面板、12 类 CSV 下载、缺值/排名/预算边界、4 种 Opus 证据、固定与临时曲线高亮、分协议 Computer Use / 原始精度替代组合、28 个任务建议入口、三卡来源折叠、选档速查矩阵与 Python 参考逐格一致（三档门槛）、中位数象限、系列聚焦与本页目录，以及 1440/390/320、键盘和真实触屏；检查无页面溢出、JS 错误或外部加载请求。它调用 `scripts/capability_smoke.py`、`scripts/scaling_smoke.py`、`scripts/selection_smoke.py`，不要另建重复的浏览器检查路径。输出在被 Git 忽略的 `test-results/`。它也可检查已经启动的 Wrangler 本地服务：
+`smoke.py` 自动创建临时本地 HTTP 服务并关闭；`--wrangler` 自动启停实际 Wrangler 本地服务，并检查响应头。验证 6 个面板、12 类 CSV 下载、缺值/排名/预算边界、4 种 Opus 证据、固定与临时曲线高亮、分协议 Computer Use / 原始精度替代组合、28 个任务建议入口、三卡来源折叠、选档速查矩阵与 Python 参考逐格一致（三档门槛）、中位数象限、系列聚焦与本页目录，以及 1440/390/320、键盘和真实触屏；检查无页面溢出、JS 错误或外部加载请求。默认页面是 AA v5 视图；原有逐格断言在 `?aa=v4` 下运行，`scripts/v5_smoke.py` 再把 v5 视图的甜蜜点、档案与避坑逐项对照 Python 参考实现并检查版本切换。它调用 `scripts/capability_smoke.py`、`scripts/scaling_smoke.py`、`scripts/selection_smoke.py`，不要另建重复的浏览器检查路径。输出在被 Git 忽略的 `test-results/`。它也可检查已经启动的 Wrangler 本地服务：
 
 ```sh
 npm run preview

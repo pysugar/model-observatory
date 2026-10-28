@@ -22,6 +22,7 @@ from capability_smoke import check_capabilities
 from selection_smoke import check_selection
 from scaling_smoke import check_scaling
 from sweet_spot import PRESETS, picks, profile_alternatives, profile_series, profile_pitfalls
+from v5_smoke import check_v5_views
 
 
 class QuietHandler(SimpleHTTPRequestHandler):
@@ -310,6 +311,10 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
             page.route("**/*", route)
             page.goto(origin + "/", wait_until="networkidle")
             check_market_ui(page, data, output)
+            # The default view is AA v5; the checks below pin v4.3.2 numbers, so run them on ?aa=v4.
+            require(page.evaluate("document.documentElement.dataset.aa") == "v5", "AA v5 is not the default view")
+            page.goto(origin + "/?aa=v4", wait_until="networkidle")
+            require(page.evaluate("document.documentElement.dataset.aa") == "v4", "v4.3.2 view did not load")
             expect(page.locator('[role="tab"]')).to_have_count(7)
             expect(page.locator("#claudeCatalog tbody tr")).to_have_count(14)
             page.select_option("#claudeScope", "screenshot")
@@ -356,6 +361,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
             check_selection(page, data, output)
             check_overview_ui(page, data)
             check_profile_ui(page, data, output)
+            check_v5_views(page, data, origin, output)
             page.locator('[data-panel="overview"]').click()
             page.screenshot(path=str(output / "desktop.png"), full_page=True)
             page.locator('[data-panel="explorer"]').click()
@@ -420,7 +426,7 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
               "checks": ["fresh five-source search, filters, missing-cost export, dates, theme persistence and touch", "Grok 200k inclusive price boundary", "task-specific best variants in seven dimensions", "dataset-backed knowledge narrative and Elo differences", "effort filters and scaling charts", "pinned vs temporary highlight, missing gaps and singleton", "separate Computer Use protocols and scope-limited raw-precision alternatives", "three verified workflow cards, source boundaries and native disclosures on keyboard/touch",
                "capability missingness, tie ranks, per-domain denominators and CSV consistency",
                "reasoning charts, effort selection, nonmonotonic scores and keyboard access", "seven panels", "Claude filter", "CSV missing values", "budget boundaries", "four Opus evidence views",
-                         "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across seven panels and thirteen CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "sweet-spot matrix equals the Python reference for three presets", "median quadrant, series focus and page TOC", "model profile sweet spots, pitfalls (incl. overthinking) and three better alternatives equal the Python reference for every model, effort, preset and scope; max-effort scenarios with measured signals; work-phase mainstream efforts mapped to native levels; community voices for every main model stay text-only; deep link and cross-links", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
+                         "28 version-specific task priors, unknown-version state, native keyboard and true touch", "AA terminology across seven panels and thirteen CSV downloads", "Arena preference, causal signals and factuality boundaries", "source index", "sweet-spot matrix equals the Python reference for three presets", "median quadrant, series focus and page TOC", "AA v5 default view: sweet spots, profiles and pitfalls equal the reference on v5 data, v5 prose and labels, version switch", "model profile sweet spots, pitfalls (incl. overthinking) and three better alternatives equal the Python reference for every model, effort, preset and scope; max-effort scenarios with measured signals; work-phase mainstream efforts mapped to native levels; community voices for every main model stay text-only; deep link and cross-links", "no page overflow", "no JS errors or external requests", "source paths return 404", "version and asset hashes"],
               "cloudflare_headers_checked": cloudflare}
     (output / "smoke.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result, indent=2))
