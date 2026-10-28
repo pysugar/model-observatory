@@ -8,6 +8,22 @@ CATALOG_NAMES = {
 }
 
 
+def merge_aa_v5(snapshot, v5):
+    """Add the AA v5 board beside v4.3.2; frozen v4.3.2 rows and curves stay untouched."""
+    board = {**v5["board"], "methodology": v5["methodology"], "pending": v5["pending"]}
+    boards = [b for b in snapshot["boards"] if b["id"] != board["id"]]
+    aa_index = next(i for i, b in enumerate(boards) if b["id"] == "aa")
+    boards.insert(aa_index + 1, board)
+    top = max(board["rows"], key=lambda row: row["score"])
+    highlights = [dict(h) for h in snapshot["highlights"]]
+    for item in highlights:
+        if item["board_id"] == "aa":
+            item.update(board_id=board["id"], row_id=top["id"],
+                        caption=f'AA 智能指数 v5 · {top["configuration"]}')
+    return {**snapshot, "boards": boards, "highlights": highlights,
+            "changes": [v5["change_note"], *snapshot["changes"]]}
+
+
 def refresh_panorama(external, snapshot):
     """Refresh only observed fields; each source retains its own date and metric."""
     boards = {board["id"]: board for board in snapshot["boards"]}

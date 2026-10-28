@@ -18,6 +18,10 @@
 
 工程入口和功能决策维护在本页，跨机器协作规则见 [研究与协作边界](RESEARCH_WORKFLOW.md#当前维护入口与执行边界2026-10-26)，发布事实维护在 `RELEASES.md`。
 
+## 当前项目状态（2026-10-28 AA 智能指数 v5）
+
+Artificial Analysis 在 10 月下旬发布智能指数 v5：约 60% 权重改用私有或答案不公开的评测，四类（知识工作 / 编程 / 科学 / 通用）各 25%，移除 SciCode、GDPval-AA、AA-LCR。“最新榜单”新增 **AA v5 新口径** 页签（12 个配置，含“较 v4.3.2”变化、来源一致性标记和新版计算方式说明），首页“综合基准”信号改指向 v5。原 AA v4.3.2 页签、逐档曲线、甜蜜点和模型档案全部保持 v4.3.2，不与 v5 混算。数据来自检索摘要（原页无法直接打开），无费用与子评测，见 [2026-10-28 研究记录](research/2026-10-28/README.md)。
+
 ## 当前项目状态（2026-10-25 模型档案）
 
 [PR #25](https://github.com/pysugar/model-observatory/pull/25) 也已合并并正式发布（main merge `8d5ab9af93773d2d3e3701925b181611ea7f2638`，双入口 probe 通过，见 [PR25 发布收束](RELEASES.md#2026-10-25-pr25-社区主流声音覆盖全部主力型号正式发布收束)）：社区主流声音覆盖四家全部 11 款当前主力型号。
@@ -70,7 +74,7 @@
 
 | 功能 / 数据结构 | 冻结输入与渲染入口 | 回归入口 |
 | --- | --- | --- |
-| 最新榜单、官方价格日期提醒、主题选择 | [market-snapshot.json](research/2026-10-23/market-snapshot.json) → `market_snapshot`；`scripts/market_snapshot.py:refresh_panorama` 同步全景；`report.js:renderMarket` / `marketRows` / `marketExportRows` / `renderMarketIntro`；价格日历来自目录 `promo_end` / `future_*` | [test_market_snapshot.py](tests/test_market_snapshot.py)、`scripts/smoke.py:check_market_ui` |
+| 最新榜单、官方价格日期提醒、主题选择 | [market-snapshot.json](research/2026-10-23/market-snapshot.json) + [aa-index-v5.json](research/2026-10-28/aa-index-v5.json)（`scripts/market_snapshot.py:merge_aa_v5` 插入 AA v5 页签）→ `market_snapshot`；`scripts/market_snapshot.py:refresh_panorama` 同步全景；`report.js:renderMarket` / `marketRows` / `marketExportRows` / `renderMarketIntro`；价格日历来自目录 `promo_end` / `future_*` | [test_market_snapshot.py](tests/test_market_snapshot.py)、`scripts/smoke.py:check_market_ui` |
 | 既有记录、AA 代表配置、Opus 独立证据 | `research/2026-10-15/aa-pair-*.json`、[tonebench-leaderboard.json](research/2026-10-15/tonebench-leaderboard.json)、[arena-web-extract.json](research/2026-10-15/arena-web-extract.json)；`research/2026-10-16/claude-catalog/claude-supplement.json`、`research/2026-10-16/opus55-coding-supplement.json`；后者进入 `opus_coding_evidence` | `tests/test_publish.py`、`scripts/smoke.py`；历史复算入口见下文 |
 | AA 六域、发布系列与五站全景 | [multi-benchmark-supplement.json](research/2026-10-19/multi-benchmark-supplement.json) → `aa_capability_indexes`、`aa_release_series`、`external_leaderboards`；`build_report.py:bind_panorama_capabilities`，`report.js:renderCapIndexChart` / `renderCapDetail`，计算/CSV 共用 `capScore` / `capRanking` / `capExportRows` | [test_capability_integrity.py](tests/test_capability_integrity.py)、[capability_smoke.py](scripts/capability_smoke.py) |
 | 44 配置底层子评测 | [aa-effort-evals.json](research/2026-10-20/aa-effort-evals.json) → `aa_effort_evals` 及精确 variant 的 `evalMetrics` / `evalSourceUrl`；构建中另保留并标注派生 `taskScores`；`effortRows` / `renderReasoningCharts`、`renderEffortScalingChart` | `tests/test_report_claims.py`、`tests/test_capability_integrity.py`、`scripts/capability_smoke.py`、`scripts/scaling_smoke.py` |
@@ -131,6 +135,7 @@ python3 validate_report.py
 ## 当前功能决策与不可回归边界
 
 - **最新榜单**：序号仅表示当前筛选的排列位置，来源排名另列；AA 保留公开榜单舍入精度，含回退配置显式标记。LiveBench 的每成功任务成本与 AA 的加权单任务成本不同；Arena、Scale 与 OpenRouter 本视图不提供费用。来源更新日期未知保留 null。OpenRouter 是周 token 用量热度，free 版本独立，不是能力或用户数；保留 CC BY 4.0 归属。
+- **AA v5 与 v4.3.2**：v5 是独立页签，“较 v4.3.2”只看排序变化，不表示能力涨跌；v5 无费用时保持空值，不借 v4.3.2 费用。v5 分数不进入逐档曲线、甜蜜点或模型档案，直到取得同版逐档数据。每行标“多源一致 / 单一来源”。开放权重下滑只作为与刷榜担忧相符的观察，不下定论。
 - **价格边界**：`tier_inclusive=true` 用于 Grok 4.7 的 ≥200k 整次计费；其余已有 `tier_threshold` 默认严格大于，不能统一改成含边界。本轮价格复核不自动改变未复核的模型生命周期、原生档位或评测协议。
 - **术语与排名**：用户可见文字和 CSV 表头统一“AA 智能指数”，不用裸缩写 II。内部字段和原始引用不盲目重命名。代表配置按该版整体最高分选取，不等于每个子领域最佳；按来源精度并列（1、1、3），分母为有效样本，当前筛选排名与来源全球排名分开。
 - **缺失与来源**：缺失领域/子评测不借总体分填充、不填零、不参排，不跨缺测档连线；已测档位图的相邻档位差分遇缺档留空，显式跨档比较须标明两端实测配置。没有该指标成绩来源就显示普通空状态，不能生成空 href 或伪造评测来源。不同版本、harness、单位和成本定义不混算。

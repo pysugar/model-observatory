@@ -8,7 +8,7 @@ import math
 import re
 import argparse
 from scripts.report_claims import render_claims
-from scripts.market_snapshot import refresh_panorama
+from scripts.market_snapshot import merge_aa_v5, refresh_panorama
 
 ROOT = Path(__file__).resolve().parent
 RESEARCH = ROOT / "research" / "2026-10-15"
@@ -243,6 +243,8 @@ def build(output_dir=ROOT):
     check_community(community_doc, profiles_doc)
     market = read_json(ROOT / "research/2026-10-23/market-snapshot.json")
     refresh_panorama(multi["external_leaderboards"], market)
+    # v5 is a separate, newer board; the panorama keeps its v4.3.2 references.
+    market = merge_aa_v5(market, read_json(ROOT / "research/2026-10-28/aa-index-v5.json"))
     for index, row in enumerate(rows):
         row["id"] = index
     data = {
