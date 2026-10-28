@@ -2048,7 +2048,7 @@
   function mpVoices(modelId,task,any){
     return (DATA.community_consensus?.items||[]).filter(x=>x.modelIds.includes(modelId)&&(any||(task?x.tasks.includes(task):x.tasks.includes("all"))));
   }
-  const mpVoiceList=items=>`<ul class="mp-voices">${items.map(x=>`<li><span class="evidence-badge basis-official">社区主流声音 · ${esc(x.stance)}</span>${esc(x.statement)} <b>动作：</b>${esc(x.action)}<span class="task-detail">${esc(x.agreement)} · ${x.sources.map(s=>link(s.url,s.label)).join(" · ")} · 检索摘要，原页尚未逐条核对 · ${esc(x.checkedAt)}</span></li>`).join("")}</ul>`;
+  const mpVoiceList=items=>`<ul class="mp-voices">${items.map(x=>`<li><span class="evidence-badge basis-official">社区主流声音 · ${esc(x.stance)}</span>${esc(x.statement)} <b>动作：</b>${esc(x.action)}<span class="task-detail">${esc(x.agreement)} · ${x.sources.map(s=>link(s.url,s.label)).join(" · ")} · ${x.verification==="source-checked"?"已对照原页":"检索摘要，原页尚未逐条核对"} · ${esc(x.checkedAt)}</span>${x.correction?`<span class="task-detail voice-fix">本期修正：${esc(x.correction)}</span>`:""}</li>`).join("")}</ul>`;
   function mpUnboundedCell(x,entry){
     const c=x.unbounded, s=x.s, u=s.unit==="%"||s.unit==="% 通过"?"%":" "+s.unit;
     const isSelf=c.o.id===entry.id&&c.q===x.p, alt=mpCat(c.o.id), name=c.o.id===entry.id?"同模型":alt.short||alt.name;
@@ -2397,6 +2397,24 @@
     $("marketMore").setAttribute("aria-expanded", String(marketState.expanded));
     $("exportMarket").disabled = !rows.length;
   }
+  // Rank of the same focus models within each source; never summed across sources.
+  function renderCrossSource() {
+    const cs = market.cross_source;
+    if (!cs) { $("crossSource").hidden = true; return; }
+    const unit = (col, v) => col.id === "arena_agent" ? fmt(v,3) : col.id === "openrouter" ? `${fmt(v,2)}T` : col.id === "aa5" ? fmt(v,1) : fmt(v, v < 100 ? 1 : 0);
+    const tier = r => r <= 3 ? "top" : r <= 7 ? "mid" : "low";
+    const head = `<tr><th scope="col">模型</th>${cs.columns.map(c => `<th scope="col"><button type="button" class="cross-col" data-cross-board="${esc(c.id)}">${esc(c.label)}<small>${esc(c.group)} · ${c.covered} 款</small></button></th>`).join("")}<th scope="col">名次跨度</th></tr>`;
+    const body = cs.models.map(m => `<tr><th scope="row"><span class="market-model">${esc(m.model)}</span>${m.open_weights ? '<span class="market-config">开放权重</span>' : ""}</th>${cs.columns.map(c => {
+      const cell = m.cells[c.id];
+      return cell ? `<td class="cross-cell r-${tier(cell.rank)}" data-label="${esc(c.label)}" title="${esc(`${c.label}：${unit(c,cell.value)} ${c.unit}${cell.config ? " · " + cell.config : ""}`)}"><b>#${cell.rank}</b><small>${esc(unit(c,cell.value))}</small></td>`
+        : `<td class="cross-cell r-none" data-label="${esc(c.label)}"><span class="missing-value">—<span class="sr">未收录</span></span></td>`;
+    }).join("")}<td class="cross-spread${m.spread >= 6 ? " wide" : ""}" data-label="名次跨度">${m.spread == null ? "—" : m.spread}</td></tr>`).join("");
+    $("crossTable").innerHTML = `<table class="cross-table"><caption class="sr">同一批模型在各来源中的名次</caption><thead>${head}</thead><tbody>${body}</tbody></table>`;
+    $("crossNote").textContent = cs.note;
+    $("crossTable").querySelectorAll("[data-cross-board]").forEach(b => b.addEventListener("click", () => {
+      selectMarketBoard(b.dataset.crossBoard); $("latestBenchmarks").scrollIntoView({block:"start"});
+    }));
+  }
   function selectMarketBoard(id) {
     if (!market.boards.some(board => board.id === id)) return;
     marketState.board = id;
@@ -2433,6 +2451,6 @@
   $("marketReset").addEventListener("click", () => {$("marketSearch").value="";$("marketVendor").value="all";$("marketSort").value="score";marketState.expanded=false;renderMarket();});
   $("exportMarket").addEventListener("click", () => exportCSV(marketExportRows(currentMarketBoard(),currentMarketRows()),`模型观测-${marketState.board}-${market.reviewed_at}.csv`));
   document.querySelectorAll("[data-scroll]").forEach(button => button.addEventListener("click", () => {showPanel("overview");$(button.dataset.scroll)?.scrollIntoView({block:"start"});}));
-  renderMarketIntro();selectMarketBoard(market.boards[0].id);
+  renderMarketIntro();selectMarketBoard(market.boards[0].id);renderCrossSource();
   renderSweetSpot();renderReasoningCharts();renderTaskEffortChart();renderEffortScalingChart();renderPanorama();renderClaudeCatalog();renderProfiles();renderCapIndexChart();renderSpecs();renderDeltas();changeGroup("general");showPanel(location.hash.slice(1)||"overview",false);
 })();

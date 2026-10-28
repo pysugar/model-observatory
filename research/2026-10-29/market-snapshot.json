@@ -1,0 +1,2017 @@
+{
+  "reviewed_at": "2026-10-29",
+  "scale_highlight_updates": {
+    "0": {
+      "top1": "Gemini 4 Argon high (55.40 ±4.20)",
+      "top2": "GPT-6 Astra max (53.60 ±4.10)",
+      "top3": "GPT-6.1 Sol max (46.60 ±3.80)",
+      "top4": "Claude Opus 5.5 xhigh (44.60 ±3.80)",
+      "source_url": "https://labs.scale.com/leaderboard/hss",
+      "checked_at": "2026-10-23"
+    },
+    "1": {
+      "top1": "GPT-6 Astra (60.60 ±3.00)",
+      "top2": "Claude Opus 5.5 (55.00 ±3.10)",
+      "top3": "Gemini 4 Argon (53.20 ±3.07)",
+      "top4": "Claude Fable 5.1 (51.30 ±3.10)",
+      "source_url": "https://labs.scale.com/leaderboard/hle-diamond",
+      "checked_at": "2026-10-23"
+    },
+    "5": {
+      "top1": "GPT-6.1 Sol (81.95 ±4.16)",
+      "top2": "Gemini 4 Argon (78.70 ±5.30)",
+      "top3": "Muse Spark (75.52 ±4.05)",
+      "top4": "Muse Spark 1.1 (75.30 ±0.60)",
+      "source_url": "https://labs.scale.com/leaderboard/multichallenge?tab=large",
+      "checked_at": "2026-10-23"
+    }
+  },
+  "boards": [
+    {
+      "id": "aa",
+      "name": "Artificial Analysis",
+      "short": "AA 智能指数",
+      "kind": "综合能力",
+      "metric": "AA 智能指数",
+      "unit": "分",
+      "precision": 0,
+      "source_url": "https://artificialanalysis.ai/leaderboards/models",
+      "source_updated_at": null,
+      "version": "AA 智能指数 v4.3.2 · 公开榜单显示精度",
+      "cost_label": "加权单任务成本",
+      "cost_basis": "AA 智能指数加权单任务成本（USD），不是 API 每百万 token 单价。",
+      "extra_key": "output_tps",
+      "extra_label": "输出速度",
+      "extra_unit": "tok/s",
+      "selection": "选录四大家族代表配置与近期其他厂商模型，另保留 Opus / Sol / Grok 的对照档位；不是完整全球榜。榜单分数与费用保留页面舍入精度，不覆盖旧曲线的高精度原始值。",
+      "note": "含回退的 Claude 配置按来源完整标记；缺失成本、速度保持为空。输出速度不等于任务端到端完成速度。",
+      "rows": [
+        {
+          "id": "r1",
+          "model": "Claude Opus 5.5",
+          "vendor": "Anthropic",
+          "configuration": "max · 含回退",
+          "score": 58,
+          "cost_usd": 5.98,
+          "output_tps": 96
+        },
+        {
+          "id": "r2",
+          "model": "Claude Sonnet 5.5",
+          "vendor": "Anthropic",
+          "configuration": "max · 含回退",
+          "score": 56,
+          "cost_usd": 5.46,
+          "output_tps": 134
+        },
+        {
+          "id": "r3",
+          "model": "Muse Wonder Full",
+          "vendor": "Meta",
+          "configuration": "max",
+          "score": 56,
+          "cost_usd": null,
+          "output_tps": null
+        },
+        {
+          "id": "r4",
+          "model": "Claude Opus 5.5",
+          "vendor": "Anthropic",
+          "configuration": "high · 含回退",
+          "score": 54,
+          "cost_usd": 1.82,
+          "output_tps": 78
+        },
+        {
+          "id": "r5",
+          "model": "Claude Fable 5.1",
+          "vendor": "Anthropic",
+          "configuration": "max · 含回退",
+          "score": 53,
+          "cost_usd": 7.63,
+          "output_tps": 69
+        },
+        {
+          "id": "r6",
+          "model": "GPT-6 Astra",
+          "vendor": "OpenAI",
+          "configuration": "max",
+          "score": 53,
+          "cost_usd": 3.26,
+          "output_tps": 57
+        },
+        {
+          "id": "r7",
+          "model": "Gemini 4 Argon",
+          "vendor": "Google",
+          "configuration": "high",
+          "score": 53,
+          "cost_usd": 1.99,
+          "output_tps": 82
+        },
+        {
+          "id": "r8",
+          "model": "Muse Wonder",
+          "vendor": "Meta",
+          "configuration": "max",
+          "score": 52,
+          "cost_usd": 4.54,
+          "output_tps": 149
+        },
+        {
+          "id": "r9",
+          "model": "GPT-6.1 Sol",
+          "vendor": "OpenAI",
+          "configuration": "max",
+          "score": 52,
+          "cost_usd": 0.72,
+          "output_tps": 55
+        },
+        {
+          "id": "r10",
+          "model": "GPT-6.1 Sol",
+          "vendor": "OpenAI",
+          "configuration": "high",
+          "score": 50,
+          "cost_usd": 0.32,
+          "output_tps": 49
+        },
+        {
+          "id": "r11",
+          "model": "Grok 4.7",
+          "vendor": "xAI",
+          "configuration": "xhigh",
+          "score": 46,
+          "cost_usd": 3.74,
+          "output_tps": 97
+        },
+        {
+          "id": "r12",
+          "model": "Grok 4.7",
+          "vendor": "xAI",
+          "configuration": "high",
+          "score": 46,
+          "cost_usd": 2.73,
+          "output_tps": 92
+        },
+        {
+          "id": "r13",
+          "model": "MiMo-V2.6-Pro",
+          "vendor": "Xiaomi",
+          "configuration": "页面未注明档位",
+          "score": 46,
+          "cost_usd": 0.13,
+          "output_tps": 53
+        },
+        {
+          "id": "r14",
+          "model": "DeepSeek V4.1 Flash 1017",
+          "vendor": "DeepSeek",
+          "configuration": "max",
+          "score": 45,
+          "cost_usd": 0.26,
+          "output_tps": 204
+        },
+        {
+          "id": "r15",
+          "model": "Qwen3.8 Max (0902)",
+          "vendor": "Alibaba",
+          "configuration": "页面未注明档位",
+          "score": 45,
+          "cost_usd": 5.41,
+          "output_tps": 42
+        },
+        {
+          "id": "r16",
+          "model": "GLM-5.3",
+          "vendor": "Z.AI",
+          "configuration": "max",
+          "score": 45,
+          "cost_usd": 2.01,
+          "output_tps": 78
+        },
+        {
+          "id": "r17",
+          "model": "Ling 3.1 Flash 1019",
+          "vendor": "InclusionAI",
+          "configuration": "页面未注明档位",
+          "score": 44,
+          "cost_usd": 1.49,
+          "output_tps": null
+        },
+        {
+          "id": "r18",
+          "model": "Step 5 Preview",
+          "vendor": "StepFun",
+          "configuration": "页面未注明档位",
+          "score": 44,
+          "cost_usd": 1.03,
+          "output_tps": 217
+        },
+        {
+          "id": "r19",
+          "model": "Kimi K3",
+          "vendor": "Moonshot AI",
+          "configuration": "max",
+          "score": 44,
+          "cost_usd": 2,
+          "output_tps": 37
+        },
+        {
+          "id": "r20",
+          "model": "Claude Haiku 5.5",
+          "vendor": "Anthropic",
+          "configuration": "max",
+          "score": 43,
+          "cost_usd": 0.21,
+          "output_tps": 235
+        },
+        {
+          "id": "r21",
+          "model": "MiniMax-M3.1-Flash",
+          "vendor": "MiniMax",
+          "configuration": "页面未注明档位",
+          "score": 43,
+          "cost_usd": 0.22,
+          "output_tps": 96
+        },
+        {
+          "id": "r22",
+          "model": "Gemini 3.8 Flash",
+          "vendor": "Google",
+          "configuration": "high",
+          "score": 41,
+          "cost_usd": 1.24,
+          "output_tps": 141
+        },
+        {
+          "id": "r23",
+          "model": "GPT-6 Luna",
+          "vendor": "OpenAI",
+          "configuration": "max",
+          "score": 38,
+          "cost_usd": 0.07,
+          "output_tps": 136
+        }
+      ],
+      "checked_at": "2026-10-23"
+    },
+    {
+      "id": "arena",
+      "name": "Arena",
+      "short": "Arena 偏好",
+      "kind": "人类偏好",
+      "metric": "Text Arena Elo",
+      "unit": "Elo",
+      "precision": 0,
+      "source_url": "https://arena.ai/leaderboard/chat/text",
+      "source_updated_at": "2026-10-22",
+      "version": "Text Arena · Overall",
+      "cost_label": null,
+      "cost_basis": "本次 Text 页未展示 Cost/Task，保持缺失；不挪用 Agent Arena 的费用。",
+      "extra_key": "votes",
+      "extra_label": "投票数",
+      "extra_unit": "票",
+      "selection": "选录来源前十名及部分主流模型。页面序号与本页选录排序分别保留；不重算来源排名。 10 月 29 日用 Arena 官方数据集（text_style_control）逐行核对，分数、区间与票数一致；来源本期没有新发布。",
+      "note": "人类对回答的偏好不等于任务成功率。保留 ± 区间与 Preliminary 状态；小分差和区间重叠不说明显著领先。",
+      "rows": [
+        {
+          "id": "r1",
+          "model": "Gemini 4 Argon",
+          "vendor": "Google",
+          "configuration": "high · Preliminary",
+          "score": 1517,
+          "interval": 7,
+          "votes": 10083,
+          "source_rank": 1,
+          "cost_usd": null
+        },
+        {
+          "id": "r2",
+          "model": "Claude Opus 5.5",
+          "vendor": "Anthropic",
+          "configuration": "high",
+          "score": 1509,
+          "interval": 7,
+          "votes": 10322,
+          "source_rank": 2,
+          "cost_usd": null
+        },
+        {
+          "id": "r3",
+          "model": "Muse Wonder",
+          "vendor": "Meta",
+          "configuration": "max",
+          "score": 1509,
+          "interval": 8,
+          "votes": 6001,
+          "source_rank": 3,
+          "cost_usd": null
+        },
+        {
+          "id": "r4",
+          "model": "Claude Fable 5",
+          "vendor": "Anthropic",
+          "configuration": "high",
+          "score": 1503,
+          "interval": 4,
+          "votes": 44253,
+          "source_rank": 4,
+          "cost_usd": null
+        },
+        {
+          "id": "r5",
+          "model": "Claude Fable 5.1",
+          "vendor": "Anthropic",
+          "configuration": "max",
+          "score": 1503,
+          "interval": 6,
+          "votes": 16343,
+          "source_rank": 5,
+          "cost_usd": null
+        },
+        {
+          "id": "r6",
+          "model": "Claude Opus 4.6",
+          "vendor": "Anthropic",
+          "configuration": "high",
+          "score": 1503,
+          "interval": 3,
+          "votes": 83454,
+          "source_rank": 6,
+          "cost_usd": null
+        },
+        {
+          "id": "r7",
+          "model": "Claude Opus 4.7",
+          "vendor": "Anthropic",
+          "configuration": "high",
+          "score": 1501,
+          "interval": 4,
+          "votes": 65140,
+          "source_rank": 7,
+          "cost_usd": null
+        },
+        {
+          "id": "r8",
+          "model": "Claude Opus 4.6",
+          "vendor": "Anthropic",
+          "configuration": "页面未注明档位",
+          "score": 1497,
+          "interval": 3,
+          "votes": 88206,
+          "source_rank": 8,
+          "cost_usd": null
+        },
+        {
+          "id": "r9",
+          "model": "Gemini 3.8 Flash",
+          "vendor": "Google",
+          "configuration": "high · Preliminary",
+          "score": 1496,
+          "interval": 4,
+          "votes": 43997,
+          "source_rank": 9,
+          "cost_usd": null
+        },
+        {
+          "id": "r10",
+          "model": "Muse Spark 1.3",
+          "vendor": "Meta",
+          "configuration": "max",
+          "score": 1496,
+          "interval": 5,
+          "votes": 20506,
+          "source_rank": 10,
+          "cost_usd": null
+        },
+        {
+          "id": "r11",
+          "model": "Kimi K3",
+          "vendor": "Moonshot AI",
+          "configuration": "max",
+          "score": 1487,
+          "interval": 4,
+          "votes": 35379,
+          "source_rank": 18,
+          "cost_usd": null
+        },
+        {
+          "id": "r12",
+          "model": "Qwen3.8-Max",
+          "vendor": "Alibaba",
+          "configuration": "页面未注明档位",
+          "score": 1483,
+          "interval": 5,
+          "votes": 30500,
+          "source_rank": 23,
+          "cost_usd": null
+        },
+        {
+          "id": "r13",
+          "model": "GLM-5.3",
+          "vendor": "Z.AI",
+          "configuration": "max",
+          "score": 1481,
+          "interval": 5,
+          "votes": 25144,
+          "source_rank": 26,
+          "cost_usd": null
+        },
+        {
+          "id": "r14",
+          "model": "GPT-6.1 Sol",
+          "vendor": "OpenAI",
+          "configuration": "max",
+          "score": 1480,
+          "interval": 7,
+          "votes": 8305,
+          "source_rank": 27,
+          "cost_usd": null
+        },
+        {
+          "id": "r15",
+          "model": "Claude Sonnet 5.5",
+          "vendor": "Anthropic",
+          "configuration": "xhigh",
+          "score": 1478,
+          "interval": 7,
+          "votes": 8977,
+          "source_rank": 29,
+          "cost_usd": null
+        },
+        {
+          "id": "r16",
+          "model": "GPT-6 Astra",
+          "vendor": "OpenAI",
+          "configuration": "max",
+          "score": 1476,
+          "interval": 6,
+          "votes": 14076,
+          "source_rank": 32,
+          "cost_usd": null
+        },
+        {
+          "id": "r17",
+          "model": "DeepSeek-V4.1-Flash-20260910",
+          "vendor": "DeepSeek",
+          "configuration": "max",
+          "score": 1476,
+          "interval": 6,
+          "votes": 13750,
+          "source_rank": 34,
+          "cost_usd": null
+        }
+      ],
+      "checked_at": "2026-10-29"
+    },
+    {
+      "id": "arena_webdev",
+      "name": "Arena",
+      "short": "Arena WebDev",
+      "kind": "网页开发偏好",
+      "metric": "Code Arena (WebDev) 分数",
+      "unit": "分",
+      "precision": 0,
+      "source_url": "https://arena.ai/leaderboard/webdev",
+      "source_updated_at": "2026-10-27",
+      "version": "WebDev · Overall（HTML / React / 图生网页）",
+      "cost_label": null,
+      "cost_basis": "来源不报告费用。",
+      "extra_key": "votes",
+      "extra_label": "对战数",
+      "extra_unit": "场",
+      "selection": "选录来源前 15 名（共 151 项）。arena.ai 拦截自动读取，数据取自 Arena 官方 Hugging Face 数据集同一发布，版本固定在 6852ae7。",
+      "note": "用户对两个模型生成的网页做盲选，衡量前端与交互生成的偏好，不等于后端工程或代码审查能力。同一模型不同档位分列；区间重叠不说明显著领先。",
+      "checked_at": "2026-10-29",
+      "rows": [
+        {
+          "id": "r1",
+          "model": "Claude Opus 5.5",
+          "vendor": "Anthropic",
+          "configuration": "max",
+          "score": 1808.7,
+          "interval": 12.8,
+          "source_rank": 1,
+          "cost_usd": null,
+          "votes": 3451
+        },
+        {
+          "id": "r2",
+          "model": "GPT-6 Astra",
+          "vendor": "OpenAI",
+          "configuration": "max",
+          "score": 1773.5,
+          "interval": 9.5,
+          "source_rank": 2,
+          "cost_usd": null,
+          "votes": 7185
+        },
+        {
+          "id": "r3",
+          "model": "Claude Sonnet 5.5",
+          "vendor": "Anthropic",
+          "configuration": "xhigh",
+          "score": 1769.3,
+          "interval": 11.3,
+          "source_rank": 3,
+          "cost_usd": null,
+          "votes": 4435
+        },
+        {
+          "id": "r4",
+          "model": "GPT-6.1 Sol",
+          "vendor": "OpenAI",
+          "configuration": "max",
+          "score": 1751.6,
+          "interval": 11.4,
+          "source_rank": 4,
+          "cost_usd": null,
+          "votes": 4073
+        },
+        {
+          "id": "r5",
+          "model": "Claude Fable 5.1",
+          "vendor": "Anthropic",
+          "configuration": "max",
+          "score": 1745.0,
+          "interval": 8.5,
+          "source_rank": 5,
+          "cost_usd": null,
+          "votes": 8598
+        },
+        {
+          "id": "r6",
+          "model": "Muse Wonder Full",
+          "vendor": "Meta",
+          "configuration": "max",
+          "score": 1726.1,
+          "interval": 13.9,
+          "source_rank": 6,
+          "cost_usd": null,
+          "votes": 2248
+        },
+        {
+          "id": "r7",
+          "model": "Claude Sonnet 5.5",
+          "vendor": "Anthropic",
+          "configuration": "high",
+          "score": 1710.9,
+          "interval": 9.2,
+          "source_rank": 7,
+          "cost_usd": null,
+          "votes": 6341
+        },
+        {
+          "id": "r8",
+          "model": "Kimi K3.1 Pro",
+          "vendor": "Moonshot AI",
+          "configuration": "max",
+          "score": 1694.5,
+          "interval": 12.9,
+          "source_rank": 8,
+          "cost_usd": null,
+          "votes": 2685
+        },
+        {
+          "id": "r9",
+          "model": "Claude Opus 5",
+          "vendor": "Anthropic",
+          "configuration": "max",
+          "score": 1690.3,
+          "interval": 6.1,
+          "source_rank": 9,
+          "cost_usd": null,
+          "votes": 19592
+        },
+        {
+          "id": "r10",
+          "model": "Gemini 4 Argon",
+          "vendor": "Google",
+          "configuration": "high",
+          "score": 1679.9,
+          "interval": 11.5,
+          "source_rank": 10,
+          "cost_usd": null,
+          "votes": 3418
+        },
+        {
+          "id": "r11",
+          "model": "GPT-6 Sol",
+          "vendor": "OpenAI",
+          "configuration": "max",
+          "score": 1677.4,
+          "interval": 9.4,
+          "source_rank": 11,
+          "cost_usd": null,
+          "votes": 5681
+        },
+        {
+          "id": "r12",
+          "model": "Qwen3.8-Max (0902)",
+          "vendor": "Alibaba",
+          "configuration": "未注明档位",
+          "score": 1676.0,
+          "interval": 6.7,
+          "source_rank": 12,
+          "cost_usd": null,
+          "votes": 17830
+        },
+        {
+          "id": "r13",
+          "model": "Qwen3.8-Max",
+          "vendor": "Alibaba",
+          "configuration": "未注明档位",
+          "score": 1671.9,
+          "interval": 12.1,
+          "source_rank": 13,
+          "cost_usd": null,
+          "votes": 3405
+        },
+        {
+          "id": "r14",
+          "model": "GPT-6.1 Terra",
+          "vendor": "OpenAI",
+          "configuration": "max",
+          "score": 1670.7,
+          "interval": 16.2,
+          "source_rank": 14,
+          "cost_usd": null,
+          "votes": 1615
+        },
+        {
+          "id": "r15",
+          "model": "DeepSeek-V4.1-Flash-20261017",
+          "vendor": "DeepSeek",
+          "configuration": "max · 开放权重",
+          "score": 1666.3,
+          "interval": 8.2,
+          "source_rank": 15,
+          "cost_usd": null,
+          "votes": 7489
+        }
+      ]
+    },
+    {
+      "id": "arena_agent",
+      "name": "Arena",
+      "short": "Agent Arena",
+      "kind": "真实代理会话",
+      "metric": "Agent Arena 综合 IPS",
+      "unit": "",
+      "precision": 3,
+      "source_url": "https://arena.ai/leaderboard/agent",
+      "source_updated_at": "2026-10-23",
+      "version": "Agent Arena · Overall（IPS 估计）",
+      "cost_label": null,
+      "cost_basis": "来源不报告费用。",
+      "extra_key": "praise",
+      "extra_label": "表扬 / 抱怨信号",
+      "extra_unit": "",
+      "selection": "选录来源前 15 名（共 50 项）。数据取自 Arena 官方 Hugging Face 数据集，版本 6852ae7；“表扬 / 抱怨信号”取同一发布的 agent_praise_complaint 分项。",
+      "note": "来自真实代理会话里的多种信号（任务结果、可引导性、工具幻觉、bash 可靠性、用户表扬与抱怨），用 IPS 估计，越高越好；不是任务成功率。10 月 12 日起 bash 信号口径已改。方法原页拦截自动读取，本期未直接打开。",
+      "checked_at": "2026-10-29",
+      "rows": [
+        {
+          "id": "r1",
+          "model": "Claude Opus 5.5",
+          "vendor": "Anthropic",
+          "configuration": "max",
+          "score": 0.2077,
+          "interval": 0.0238,
+          "source_rank": 1,
+          "cost_usd": null,
+          "praise": 0.4532,
+          "sessions": 12057
+        },
+        {
+          "id": "r2",
+          "model": "Claude Sonnet 5.5",
+          "vendor": "Anthropic",
+          "configuration": "max",
+          "score": 0.1399,
+          "interval": 0.0303,
+          "source_rank": 2,
+          "cost_usd": null,
+          "praise": 0.232,
+          "sessions": 8097
+        },
+        {
+          "id": "r3",
+          "model": "GPT-6 Astra",
+          "vendor": "OpenAI",
+          "configuration": "max",
+          "score": 0.1396,
+          "interval": 0.0208,
+          "source_rank": 3,
+          "cost_usd": null,
+          "praise": 0.2976,
+          "sessions": 14567
+        },
+        {
+          "id": "r4",
+          "model": "Claude Fable 5.1",
+          "vendor": "Anthropic",
+          "configuration": "max",
+          "score": 0.1394,
+          "interval": 0.0193,
+          "source_rank": 4,
+          "cost_usd": null,
+          "praise": 0.2766,
+          "sessions": 17062
+        },
+        {
+          "id": "r5",
+          "model": "GPT-6.1 Sol",
+          "vendor": "OpenAI",
+          "configuration": "max",
+          "score": 0.1364,
+          "interval": 0.0163,
+          "source_rank": 5,
+          "cost_usd": null,
+          "praise": 0.3126,
+          "sessions": 16092
+        },
+        {
+          "id": "r6",
+          "model": "Gemini 4 Argon",
+          "vendor": "Google",
+          "configuration": "high",
+          "score": 0.1175,
+          "interval": 0.0091,
+          "source_rank": 6,
+          "cost_usd": null,
+          "praise": 0.2662,
+          "sessions": 45840
+        },
+        {
+          "id": "r7",
+          "model": "GPT-6 Sol",
+          "vendor": "OpenAI",
+          "configuration": "max",
+          "score": 0.0857,
+          "interval": 0.0171,
+          "source_rank": 7,
+          "cost_usd": null,
+          "praise": 0.141,
+          "sessions": 10305
+        },
+        {
+          "id": "r8",
+          "model": "Claude Opus 5",
+          "vendor": "Anthropic",
+          "configuration": "max",
+          "score": 0.0822,
+          "interval": 0.0163,
+          "source_rank": 8,
+          "cost_usd": null,
+          "praise": 0.1236,
+          "sessions": 24440
+        },
+        {
+          "id": "r9",
+          "model": "Claude Fable 5",
+          "vendor": "Anthropic",
+          "configuration": "high",
+          "score": 0.0775,
+          "interval": 0.014,
+          "source_rank": 9,
+          "cost_usd": null,
+          "praise": 0.1528,
+          "sessions": 43567
+        },
+        {
+          "id": "r10",
+          "model": "GPT-5.6 Sol",
+          "vendor": "OpenAI",
+          "configuration": "xhigh",
+          "score": 0.0606,
+          "interval": 0.0133,
+          "source_rank": 10,
+          "cost_usd": null,
+          "praise": 0.1037,
+          "sessions": 37542
+        },
+        {
+          "id": "r11",
+          "model": "Claude Sonnet 5",
+          "vendor": "Anthropic",
+          "configuration": "high",
+          "score": 0.0375,
+          "interval": 0.017,
+          "source_rank": 11,
+          "cost_usd": null,
+          "praise": 0.0381,
+          "sessions": 33991
+        },
+        {
+          "id": "r12",
+          "model": "Muse Wonder",
+          "vendor": "Meta",
+          "configuration": "max",
+          "score": 0.0331,
+          "interval": 0.0158,
+          "source_rank": 12,
+          "cost_usd": null,
+          "praise": 0.0107,
+          "sessions": 11134
+        },
+        {
+          "id": "r13",
+          "model": "MiMo-V2.6-Pro",
+          "vendor": "Xiaomi",
+          "configuration": "未注明档位 · 开放权重",
+          "score": 0.033,
+          "interval": 0.008,
+          "source_rank": 13,
+          "cost_usd": null,
+          "praise": 0.0412,
+          "sessions": 43983
+        },
+        {
+          "id": "r14",
+          "model": "Gemini 3.8 Flash",
+          "vendor": "Google",
+          "configuration": "high",
+          "score": 0.0317,
+          "interval": 0.0108,
+          "source_rank": 14,
+          "cost_usd": null,
+          "praise": 0.0417,
+          "sessions": 39719
+        },
+        {
+          "id": "r15",
+          "model": "Muse Spark 1.3",
+          "vendor": "Meta",
+          "configuration": "max",
+          "score": 0.0305,
+          "interval": 0.0083,
+          "source_rank": 15,
+          "cost_usd": null,
+          "praise": 0.0287,
+          "sessions": 78017
+        }
+      ]
+    },
+    {
+      "id": "livebench",
+      "name": "LiveBench 2.0",
+      "short": "LiveBench 任务",
+      "kind": "长程任务",
+      "metric": "Overall",
+      "unit": "分",
+      "precision": 1,
+      "source_url": "https://livebench.ai/#/",
+      "source_updated_at": "2026-10-25",
+      "version": "LiveBench 2.0 · release 2026-10-25（长程代理 ×2、编程与设计 ×1.5 加权）",
+      "cost_label": "每成功任务成本",
+      "cost_basis": "LiveBench 报告的 Cost per successful task（USD）；含任务循环，与 AA 加权成本独立。",
+      "extra_key": "coding",
+      "extra_label": "Coding",
+      "extra_unit": "分",
+      "selection": "选录页面列出名称的 22 项（原始页面共 31 项）。Overall 与每成功任务成本按页面规则由发布静态文件重算，并与页面抽查值一致。",
+      "note": "10-25 版起 Overall 改为加权均值（长程代理 ×2，编程、设计 ×1.5），与 10-14 版不能直接比较。主表未注明原生 effort，不可据此把成绩归给 high 或 max。",
+      "rows": [
+        {
+          "id": "r1",
+          "model": "Claude Fable 5.1",
+          "vendor": "Anthropic",
+          "score": 85.7,
+          "cost_usd": 6.904,
+          "coding": 97.7,
+          "source_order": 1,
+          "configuration": "页面未注明档位"
+        },
+        {
+          "id": "r2",
+          "model": "GPT-6 Astra",
+          "vendor": "OpenAI",
+          "score": 85.6,
+          "cost_usd": 4.548,
+          "coding": 93.7,
+          "source_order": 2,
+          "configuration": "页面未注明档位"
+        },
+        {
+          "id": "r3",
+          "model": "Claude Opus 5.5",
+          "vendor": "Anthropic",
+          "score": 85.1,
+          "cost_usd": 4.29,
+          "coding": 96.3,
+          "source_order": 3,
+          "configuration": "页面未注明档位"
+        },
+        {
+          "id": "r4",
+          "model": "GPT-6.1 Sol",
+          "vendor": "OpenAI",
+          "score": 84.1,
+          "cost_usd": 0.761,
+          "coding": 96.0,
+          "source_order": 4,
+          "configuration": "页面未注明档位"
+        },
+        {
+          "id": "r5",
+          "model": "Claude Sonnet 5.5",
+          "vendor": "Anthropic",
+          "score": 80.0,
+          "cost_usd": 3.718,
+          "coding": 94.7,
+          "source_order": 5,
+          "configuration": "页面未注明档位"
+        },
+        {
+          "id": "r6",
+          "model": "Gemini 4 Argon",
+          "vendor": "Google",
+          "score": 79.3,
+          "cost_usd": 2.073,
+          "coding": 89.7,
+          "source_order": 6,
+          "configuration": "页面未注明档位"
+        },
+        {
+          "id": "r7",
+          "model": "GPT-6.1 Terra",
+          "vendor": "OpenAI",
+          "score": 77.8,
+          "cost_usd": 0.665,
+          "coding": 94.3,
+          "source_order": 7,
+          "configuration": "页面未注明档位"
+        },
+        {
+          "id": "r8",
+          "model": "Muse Wonder 1.0",
+          "vendor": "Meta",
+          "score": 74.2,
+          "cost_usd": 2.015,
+          "coding": 86.2,
+          "source_order": 8,
+          "configuration": "页面未注明档位"
+        },
+        {
+          "id": "r9",
+          "model": "DeepSeek V4.1 Flash 1017",
+          "vendor": "DeepSeek",
+          "score": 74.0,
+          "cost_usd": 0.181,
+          "coding": 96.0,
+          "source_order": 9,
+          "configuration": "页面未注明档位 · 开放权重"
+        },
+        {
+          "id": "r10",
+          "model": "Kimi K3.1 Pro",
+          "vendor": "Moonshot AI",
+          "score": 71.3,
+          "cost_usd": 1.044,
+          "coding": 81.8,
+          "source_order": 10,
+          "configuration": "页面未注明档位"
+        },
+        {
+          "id": "r11",
+          "model": "Grok 4.7",
+          "vendor": "xAI",
+          "score": 70.1,
+          "cost_usd": 2.913,
+          "coding": 84.5,
+          "source_order": 11,
+          "configuration": "页面未注明档位"
+        },
+        {
+          "id": "r12",
+          "model": "Claude Haiku 5.5",
+          "vendor": "Anthropic",
+          "score": 69.8,
+          "cost_usd": 0.905,
+          "coding": 91.4,
+          "source_order": 12,
+          "configuration": "页面未注明档位"
+        },
+        {
+          "id": "r13",
+          "model": "MiMo V2.6 Pro",
+          "vendor": "Xiaomi",
+          "score": 68.5,
+          "cost_usd": 0.183,
+          "coding": 81.5,
+          "source_order": 13,
+          "configuration": "页面未注明档位 · 开放权重"
+        },
+        {
+          "id": "r14",
+          "model": "GPT-5.6 Terra",
+          "vendor": "OpenAI",
+          "score": 67.8,
+          "cost_usd": 1.957,
+          "coding": 86.2,
+          "source_order": 14,
+          "configuration": "页面未注明档位"
+        },
+        {
+          "id": "r15",
+          "model": "Grok 4.6",
+          "vendor": "xAI",
+          "score": 67.8,
+          "cost_usd": 1.422,
+          "coding": 89.1,
+          "source_order": 15,
+          "configuration": "页面未注明档位"
+        },
+        {
+          "id": "r16",
+          "model": "MiniMax M3.1 Flash",
+          "vendor": "MiniMax",
+          "score": 66.9,
+          "cost_usd": 0.153,
+          "coding": 83.9,
+          "source_order": 16,
+          "configuration": "页面未注明档位 · 开放权重"
+        },
+        {
+          "id": "r17",
+          "model": "GPT-6 Luna",
+          "vendor": "OpenAI",
+          "score": 64.6,
+          "cost_usd": 0.133,
+          "coding": 84.5,
+          "source_order": 17,
+          "configuration": "页面未注明档位"
+        },
+        {
+          "id": "r18",
+          "model": "Kimi K3",
+          "vendor": "Moonshot AI",
+          "score": 64.6,
+          "cost_usd": 2.189,
+          "coding": 59.3,
+          "source_order": 18,
+          "configuration": "页面未注明档位 · 开放权重"
+        },
+        {
+          "id": "r19",
+          "model": "Muse Spark 1.3",
+          "vendor": "Meta",
+          "score": 63.0,
+          "cost_usd": 1.372,
+          "coding": 90.2,
+          "source_order": 19,
+          "configuration": "页面未注明档位"
+        },
+        {
+          "id": "r20",
+          "model": "GLM-5.3 Flash",
+          "vendor": "Z.AI",
+          "score": 62.1,
+          "cost_usd": 0.177,
+          "coding": 80.6,
+          "source_order": 20,
+          "configuration": "页面未注明档位 · 开放权重"
+        },
+        {
+          "id": "r21",
+          "model": "Qwen3.8 Max",
+          "vendor": "Alibaba",
+          "score": 61.6,
+          "cost_usd": 1.856,
+          "coding": 60.3,
+          "source_order": 21,
+          "configuration": "页面未注明档位 · 开放权重"
+        },
+        {
+          "id": "r22",
+          "model": "Gemini 3.8 Flash",
+          "vendor": "Google",
+          "score": 59.2,
+          "cost_usd": 1.659,
+          "coding": 82.2,
+          "source_order": 22,
+          "configuration": "页面未注明档位"
+        }
+      ],
+      "checked_at": "2026-10-29"
+    },
+    {
+      "id": "scale",
+      "name": "Scale Labs",
+      "short": "Scale 推理",
+      "kind": "专家难题",
+      "metric": "HLE Diamond",
+      "unit": "%",
+      "precision": 2,
+      "source_url": "https://labs.scale.com/leaderboard/hle-diamond",
+      "source_updated_at": null,
+      "version": "Humanity's Last Exam · Diamond",
+      "cost_label": null,
+      "cost_basis": "来源未给出每任务成本，保持缺失。",
+      "extra_key": "calibration_error",
+      "extra_label": "校准误差",
+      "extra_unit": "",
+      "selection": "选录页面全部 17 项。核验日期不是评测日期；页面未明确更新日期，保留未知。",
+      "note": "Diamond 与 AA 采用的 HLE 数据及工具口径不同，不能拼接比较。保留来源 ± 区间；校准误差越低越好，主分数越高越好。",
+      "rows": [
+        {
+          "id": "r1",
+          "model": "GPT-6 Astra",
+          "vendor": "OpenAI",
+          "score": 60.6,
+          "interval": 3.0,
+          "calibration_error": 28.1,
+          "configuration": "页面未注明档位",
+          "cost_usd": null
+        },
+        {
+          "id": "r2",
+          "model": "Claude Opus 5.5",
+          "vendor": "Anthropic",
+          "score": 55.0,
+          "interval": 3.1,
+          "calibration_error": 7.1,
+          "configuration": "页面未注明档位",
+          "cost_usd": null
+        },
+        {
+          "id": "r3",
+          "model": "Gemini 4 Argon",
+          "vendor": "Google",
+          "score": 53.2,
+          "interval": 3.07,
+          "calibration_error": 53.3,
+          "configuration": "页面未注明档位",
+          "cost_usd": null
+        },
+        {
+          "id": "r4",
+          "model": "Claude Fable 5.1",
+          "vendor": "Anthropic",
+          "score": 51.3,
+          "interval": 3.1,
+          "calibration_error": 13.8,
+          "configuration": "页面未注明档位",
+          "cost_usd": null
+        },
+        {
+          "id": "r5",
+          "model": "Claude Opus 5",
+          "vendor": "Anthropic",
+          "score": 38.6,
+          "interval": 3.0,
+          "calibration_error": 21.5,
+          "configuration": "页面未注明档位",
+          "cost_usd": null
+        },
+        {
+          "id": "r6",
+          "model": "Claude Sonnet 5.5",
+          "vendor": "Anthropic",
+          "score": 37.5,
+          "interval": 3.0,
+          "calibration_error": 36.8,
+          "configuration": "页面未注明档位",
+          "cost_usd": null
+        },
+        {
+          "id": "r7",
+          "model": "Muse Wonder 1.0",
+          "vendor": "Meta",
+          "score": 37.3,
+          "interval": 3.04,
+          "calibration_error": 31.1,
+          "configuration": "页面未注明档位",
+          "cost_usd": null
+        },
+        {
+          "id": "r8",
+          "model": "Gemini 3.8 Flash",
+          "vendor": "Google",
+          "score": 34.3,
+          "interval": 2.9,
+          "calibration_error": 57.2,
+          "configuration": "页面未注明档位",
+          "cost_usd": null
+        },
+        {
+          "id": "r9",
+          "model": "GPT-6 Sol",
+          "vendor": "OpenAI",
+          "score": 33.8,
+          "interval": 2.9,
+          "calibration_error": 38.8,
+          "configuration": "页面未注明档位",
+          "cost_usd": null
+        },
+        {
+          "id": "r10",
+          "model": "GPT-5.6 Sol",
+          "vendor": "OpenAI",
+          "score": 31.2,
+          "interval": 2.9,
+          "calibration_error": 53.8,
+          "configuration": "页面未注明档位",
+          "cost_usd": null
+        },
+        {
+          "id": "r11",
+          "model": "Muse Spark Open",
+          "vendor": "Meta",
+          "score": 28.0,
+          "interval": 2.86,
+          "calibration_error": 32.5,
+          "configuration": "页面未注明档位",
+          "cost_usd": null
+        },
+        {
+          "id": "r12",
+          "model": "Muse Spark 1.3",
+          "vendor": "Meta",
+          "score": 25.4,
+          "interval": 2.7,
+          "calibration_error": 48.2,
+          "configuration": "页面未注明档位",
+          "cost_usd": null
+        },
+        {
+          "id": "r13",
+          "model": "Grok 4.7",
+          "vendor": "xAI",
+          "score": 23.4,
+          "interval": 2.6,
+          "calibration_error": 28.9,
+          "configuration": "页面未注明档位",
+          "cost_usd": null
+        },
+        {
+          "id": "r14",
+          "model": "Kimi K3",
+          "vendor": "Moonshot AI",
+          "score": 22.2,
+          "interval": 2.6,
+          "calibration_error": 54.4,
+          "configuration": "页面未注明档位",
+          "cost_usd": null
+        },
+        {
+          "id": "r15",
+          "model": "GLM-5.3",
+          "vendor": "Z.AI",
+          "score": 16.4,
+          "interval": 2.3,
+          "calibration_error": 53.1,
+          "configuration": "页面未注明档位",
+          "cost_usd": null
+        },
+        {
+          "id": "r16",
+          "model": "DeepSeek V4 Pro",
+          "vendor": "DeepSeek",
+          "score": 13.4,
+          "interval": 2.1,
+          "calibration_error": 76.3,
+          "configuration": "页面未注明档位",
+          "cost_usd": null
+        },
+        {
+          "id": "r17",
+          "model": "Inkling",
+          "vendor": "Thinking Machines",
+          "score": 11.2,
+          "interval": 2.11,
+          "calibration_error": 64.6,
+          "configuration": "页面未注明档位",
+          "cost_usd": null
+        }
+      ],
+      "checked_at": "2026-10-29"
+    },
+    {
+      "id": "openrouter",
+      "name": "OpenRouter",
+      "short": "OpenRouter 热度",
+      "kind": "调用热度",
+      "metric": "近 7 日 Token 用量",
+      "unit": "T",
+      "precision": 2,
+      "source_url": "https://openrouter.ai/rankings",
+      "source_updated_at": "2026-10-27",
+      "version": "Text · This Week · 截至 10 月 27 日的滚动 7 天",
+      "cost_label": null,
+      "cost_basis": "该视图统计输入与输出 token 用量，不报告同任务费用。",
+      "extra_key": "change",
+      "extra_label": "较上个 7 天",
+      "extra_unit": "",
+      "selection": "选录 This Week 前十，免费与付费路由保持分列。Data by OpenRouter · CC BY 4.0（数据选录与中文说明）。",
+      "note": "热度反映 OpenRouter 平台路由流量，不能作为能力分、用户数或付费规模。新上榜表示前一周期无对应用量，不表示模型刚发布。",
+      "rows": [
+        {
+          "id": "r1",
+          "model": "DeepSeek V4.1 Flash 1017",
+          "vendor": "DeepSeek",
+          "score": 37.3,
+          "change": "+224%",
+          "source_rank": 1,
+          "cost_usd": null,
+          "configuration": "平台全部已统计档位"
+        },
+        {
+          "id": "r2",
+          "model": "DeepSeek V4.1 Flash",
+          "vendor": "DeepSeek",
+          "score": 17,
+          "change": "−38%",
+          "source_rank": 2,
+          "cost_usd": null,
+          "configuration": "平台全部已统计档位"
+        },
+        {
+          "id": "r3",
+          "model": "GLM 5.3 Flash",
+          "vendor": "Z.AI",
+          "score": 14.1,
+          "change": "+22%",
+          "source_rank": 3,
+          "cost_usd": null,
+          "configuration": "平台全部已统计档位"
+        },
+        {
+          "id": "r4",
+          "model": "GPT-6 Luna",
+          "vendor": "OpenAI",
+          "score": 9.08,
+          "change": "+46%",
+          "source_rank": 4,
+          "cost_usd": null,
+          "configuration": "平台全部已统计档位"
+        },
+        {
+          "id": "r5",
+          "model": "Hy4 preview",
+          "vendor": "Tencent",
+          "score": 8.97,
+          "change": "+10%",
+          "source_rank": 5,
+          "cost_usd": null,
+          "configuration": "平台全部已统计档位"
+        },
+        {
+          "id": "r6",
+          "model": "MiniMax M3.1 Flash (free)",
+          "vendor": "MiniMax",
+          "score": 8.71,
+          "change": "+75%",
+          "source_rank": 6,
+          "cost_usd": null,
+          "configuration": "免费路由 · 与付费版分列"
+        },
+        {
+          "id": "r7",
+          "model": "Claude Opus 5.5",
+          "vendor": "Anthropic",
+          "score": 8.07,
+          "change": "+19%",
+          "source_rank": 7,
+          "cost_usd": null,
+          "configuration": "平台全部已统计档位"
+        },
+        {
+          "id": "r8",
+          "model": "GLM 5.3",
+          "vendor": "Z.AI",
+          "score": 5.15,
+          "change": "−3%",
+          "source_rank": 8,
+          "cost_usd": null,
+          "configuration": "平台全部已统计档位"
+        },
+        {
+          "id": "r9",
+          "model": "Nemotron 3 Ultra (free)",
+          "vendor": "NVIDIA",
+          "score": 4.99,
+          "change": "+11%",
+          "source_rank": 9,
+          "cost_usd": null,
+          "configuration": "免费路由 · 与付费版分列"
+        },
+        {
+          "id": "r10",
+          "model": "MiMo-V2.6-Flash",
+          "vendor": "Xiaomi",
+          "score": 4.71,
+          "change": "−48%",
+          "source_rank": 10,
+          "cost_usd": null,
+          "configuration": "平台全部已统计档位"
+        }
+      ],
+      "checked_at": "2026-10-29"
+    }
+  ],
+  "highlights": [
+    {
+      "board_id": "aa",
+      "row_id": "r1",
+      "label": "综合基准",
+      "caption": "AA 智能指数 · max 含回退"
+    },
+    {
+      "board_id": "arena",
+      "row_id": "r1",
+      "label": "人类偏好",
+      "caption": "Text Arena · high · Preliminary"
+    },
+    {
+      "board_id": "livebench",
+      "row_id": "r1",
+      "label": "长程交付",
+      "caption": "LiveBench 2.0 · Overall"
+    }
+  ],
+  "changes": [
+    {
+      "title": "新增两个 Arena 榜单",
+      "body": "Arena WebDev 看网页生成的盲选偏好（Opus 5.5 max 第一，GPT-6 Astra、Sonnet 5.5 xhigh 随后）；Agent Arena 看真实代理会话里的多种信号（Opus 5.5 明显领先，其后四款差距在区间内）。两者都取自 Arena 官方数据集，文本榜按同一数据集逐行核对无误。"
+    },
+    {
+      "title": "LiveBench 10-25 版改为加权",
+      "body": "长程代理 ×2、编程与设计 ×1.5。Fable 5.1 85.7 与 GPT-6 Astra 85.6 并列第一，Opus 5.5 85.1、Sol 6.1 84.1 紧随其后；Sol 6.1 每成功任务 $0.76，约为前三名的五分之一到九分之一。"
+    },
+    {
+      "title": "AA v5：读数前先看口径",
+      "body": "改版后开放权重模型普遍下降（DeepSeek V4.1 Flash 1017、GLM-5.3 −13，Kimi K3.1 Pro −9），闭源模型持平或小涨，社区对新评测与评分方式有质疑；同一批开放模型在 LiveBench、WebDev 与 OpenRouter 用量中靠前。另外，AA 已按 12-01 后的 $4 / $20 计 Argon 费用，11-30 前实际约为页面费用的一半。"
+    },
+    {
+      "title": "社区声音逐条对照原文",
+      "body": "10-25 的 15 条检索摘要已打开原页核对：10 条成立，5 条修正（Fable 缓存价、Sol 6.1 上下文与长价口径、Astra 科学题数字、Grok 4.7 token 数出处、Argon 的 v5 用量）。新增 Hacker News 发布讨论与 Agent Arena 用户信号整理的 8 条。"
+    }
+  ],
+  "official_sources": [
+    {
+      "vendor": "OpenAI",
+      "url": "https://developers.openai.com/api/docs/pricing",
+      "checked_at": "2026-10-23",
+      "note": "Standard；旧 Sol / Luna 同时读取对应模型页。"
+    },
+    {
+      "vendor": "Anthropic",
+      "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "checked_at": "2026-10-23",
+      "note": "14 款目录型号；Haiku 5.5 保留 >100k 阶梯价。"
+    },
+    {
+      "vendor": "Google",
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "checked_at": "2026-10-29",
+      "note": "Argon 优惠价 $2 / $10 仍至 2026-11-30；12-01 起 $4 / $20。AA v5 已按 12-01 后价格计 Argon 费用。"
+    },
+    {
+      "vendor": "xAI",
+      "url": "https://docs.x.ai/developers/pricing",
+      "checked_at": "2026-10-23",
+      "note": "Grok 4.7：输入达到 200k 后整次采用 $4 / $1 / $12。"
+    }
+  ],
+  "cross_source": {
+    "columns": [
+      {
+        "id": "aa5",
+        "label": "AA v5",
+        "group": "能力",
+        "unit": "智能指数",
+        "covered": 14
+      },
+      {
+        "id": "arena",
+        "label": "Arena 文本",
+        "group": "偏好",
+        "unit": "Elo",
+        "covered": 12
+      },
+      {
+        "id": "arena_webdev",
+        "label": "Arena WebDev",
+        "group": "偏好",
+        "unit": "分",
+        "covered": 14
+      },
+      {
+        "id": "arena_agent",
+        "label": "Agent Arena",
+        "group": "真实会话",
+        "unit": "IPS",
+        "covered": 12
+      },
+      {
+        "id": "livebench",
+        "label": "LiveBench",
+        "group": "能力",
+        "unit": "分",
+        "covered": 13
+      },
+      {
+        "id": "scale",
+        "label": "HLE Diamond",
+        "group": "能力",
+        "unit": "%",
+        "covered": 8
+      },
+      {
+        "id": "openrouter",
+        "label": "OpenRouter 用量",
+        "group": "热度",
+        "unit": "T tokens",
+        "covered": 4
+      }
+    ],
+    "models": [
+      {
+        "model": "GPT-6 Astra",
+        "open_weights": false,
+        "cells": {
+          "aa5": {
+            "rank": 2,
+            "value": 56.85,
+            "config": "max"
+          },
+          "arena": {
+            "rank": 9,
+            "value": 1476.5,
+            "config": "max"
+          },
+          "arena_webdev": {
+            "rank": 2,
+            "value": 1773.5,
+            "config": "max"
+          },
+          "arena_agent": {
+            "rank": 3,
+            "value": 0.1396,
+            "config": "max"
+          },
+          "livebench": {
+            "rank": 2,
+            "value": 85.6,
+            "config": ""
+          },
+          "scale": {
+            "rank": 1,
+            "value": 60.6,
+            "config": ""
+          }
+        },
+        "spread": 8
+      },
+      {
+        "model": "GPT-6.1 Sol",
+        "open_weights": false,
+        "cells": {
+          "aa5": {
+            "rank": 3,
+            "value": 54.51,
+            "config": "max"
+          },
+          "arena": {
+            "rank": 6,
+            "value": 1479.9,
+            "config": "max"
+          },
+          "arena_webdev": {
+            "rank": 4,
+            "value": 1751.6,
+            "config": "max"
+          },
+          "arena_agent": {
+            "rank": 5,
+            "value": 0.1364,
+            "config": "max"
+          },
+          "livebench": {
+            "rank": 4,
+            "value": 84.1,
+            "config": ""
+          }
+        },
+        "spread": 3
+      },
+      {
+        "model": "GPT-6 Luna",
+        "open_weights": false,
+        "cells": {
+          "aa5": {
+            "rank": 14,
+            "value": 27.76,
+            "config": "max"
+          },
+          "arena": {
+            "rank": 10,
+            "value": 1442.2,
+            "config": "max"
+          },
+          "arena_webdev": {
+            "rank": 14,
+            "value": 1579.8,
+            "config": "max"
+          },
+          "arena_agent": {
+            "rank": 10,
+            "value": 0.0279,
+            "config": "max"
+          },
+          "livebench": {
+            "rank": 12,
+            "value": 64.6,
+            "config": ""
+          },
+          "openrouter": {
+            "rank": 2,
+            "value": 9.08,
+            "config": ""
+          }
+        },
+        "spread": 4
+      },
+      {
+        "model": "Claude Opus 5.5",
+        "open_weights": false,
+        "cells": {
+          "aa5": {
+            "rank": 1,
+            "value": 58.41,
+            "config": "max · 含回退"
+          },
+          "arena": {
+            "rank": 2,
+            "value": 1508.7,
+            "config": "high"
+          },
+          "arena_webdev": {
+            "rank": 1,
+            "value": 1808.7,
+            "config": "max"
+          },
+          "arena_agent": {
+            "rank": 1,
+            "value": 0.2077,
+            "config": "max"
+          },
+          "livebench": {
+            "rank": 3,
+            "value": 85.1,
+            "config": ""
+          },
+          "scale": {
+            "rank": 2,
+            "value": 55.0,
+            "config": ""
+          },
+          "openrouter": {
+            "rank": 3,
+            "value": 8.07,
+            "config": ""
+          }
+        },
+        "spread": 2
+      },
+      {
+        "model": "Claude Fable 5.1",
+        "open_weights": false,
+        "cells": {
+          "aa5": {
+            "rank": 6,
+            "value": 49.01,
+            "config": "max · 含回退"
+          },
+          "arena": {
+            "rank": 3,
+            "value": 1503.2,
+            "config": "max"
+          },
+          "arena_webdev": {
+            "rank": 5,
+            "value": 1745.0,
+            "config": "max"
+          },
+          "arena_agent": {
+            "rank": 4,
+            "value": 0.1394,
+            "config": "max"
+          },
+          "livebench": {
+            "rank": 1,
+            "value": 85.7,
+            "config": ""
+          },
+          "scale": {
+            "rank": 4,
+            "value": 51.3,
+            "config": ""
+          }
+        },
+        "spread": 5
+      },
+      {
+        "model": "Claude Sonnet 5.5",
+        "open_weights": false,
+        "cells": {
+          "aa5": {
+            "rank": 4,
+            "value": 54.24,
+            "config": "max · 含回退"
+          },
+          "arena": {
+            "rank": 8,
+            "value": 1477.5,
+            "config": "xhigh"
+          },
+          "arena_webdev": {
+            "rank": 3,
+            "value": 1769.3,
+            "config": "xhigh"
+          },
+          "arena_agent": {
+            "rank": 2,
+            "value": 0.1399,
+            "config": "max"
+          },
+          "livebench": {
+            "rank": 5,
+            "value": 80.0,
+            "config": ""
+          },
+          "scale": {
+            "rank": 5,
+            "value": 37.5,
+            "config": ""
+          }
+        },
+        "spread": 6
+      },
+      {
+        "model": "Claude Haiku 5.5",
+        "open_weights": false,
+        "cells": {
+          "aa5": {
+            "rank": 8,
+            "value": 36.23,
+            "config": "max"
+          },
+          "arena": {
+            "rank": 12,
+            "value": 1424.6,
+            "config": "high"
+          },
+          "arena_webdev": {
+            "rank": 12,
+            "value": 1587.8,
+            "config": "high"
+          },
+          "arena_agent": {
+            "rank": 12,
+            "value": 0.0114,
+            "config": "high"
+          },
+          "livebench": {
+            "rank": 10,
+            "value": 69.8,
+            "config": ""
+          }
+        },
+        "spread": 4
+      },
+      {
+        "model": "Gemini 4 Argon",
+        "open_weights": false,
+        "cells": {
+          "aa5": {
+            "rank": 5,
+            "value": 50.41,
+            "config": "high"
+          },
+          "arena": {
+            "rank": 1,
+            "value": 1517.2,
+            "config": "high"
+          },
+          "arena_webdev": {
+            "rank": 7,
+            "value": 1679.9,
+            "config": "high"
+          },
+          "arena_agent": {
+            "rank": 6,
+            "value": 0.1175,
+            "config": "high"
+          },
+          "livebench": {
+            "rank": 6,
+            "value": 79.3,
+            "config": ""
+          },
+          "scale": {
+            "rank": 3,
+            "value": 53.2,
+            "config": ""
+          }
+        },
+        "spread": 6
+      },
+      {
+        "model": "Gemini 3.8 Flash",
+        "open_weights": false,
+        "cells": {
+          "aa5": {
+            "rank": 12,
+            "value": 30.55,
+            "config": "high"
+          },
+          "arena": {
+            "rank": 4,
+            "value": 1495.7,
+            "config": "high"
+          },
+          "arena_webdev": {
+            "rank": 13,
+            "value": 1583.6,
+            "config": "high"
+          },
+          "arena_agent": {
+            "rank": 8,
+            "value": 0.0317,
+            "config": "high"
+          },
+          "livebench": {
+            "rank": 13,
+            "value": 59.2,
+            "config": ""
+          },
+          "scale": {
+            "rank": 6,
+            "value": 34.3,
+            "config": ""
+          }
+        },
+        "spread": 9
+      },
+      {
+        "model": "Grok 4.7",
+        "open_weights": false,
+        "cells": {
+          "aa5": {
+            "rank": 9,
+            "value": 35.01,
+            "config": "high"
+          },
+          "arena": {
+            "rank": 11,
+            "value": 1441.0,
+            "config": "xhigh"
+          },
+          "arena_webdev": {
+            "rank": 9,
+            "value": 1637.2,
+            "config": "xhigh"
+          },
+          "arena_agent": {
+            "rank": 9,
+            "value": 0.0302,
+            "config": "xhigh"
+          },
+          "livebench": {
+            "rank": 9,
+            "value": 70.1,
+            "config": ""
+          },
+          "scale": {
+            "rank": 7,
+            "value": 23.4,
+            "config": ""
+          }
+        },
+        "spread": 4
+      },
+      {
+        "model": "DeepSeek V4.1 Flash 1017",
+        "open_weights": true,
+        "cells": {
+          "aa5": {
+            "rank": 10,
+            "value": 32.49,
+            "config": "max · 开放权重"
+          },
+          "arena_webdev": {
+            "rank": 8,
+            "value": 1666.3,
+            "config": "max"
+          },
+          "livebench": {
+            "rank": 7,
+            "value": 74.0,
+            "config": ""
+          },
+          "openrouter": {
+            "rank": 1,
+            "value": 37.3,
+            "config": ""
+          }
+        },
+        "spread": 3
+      },
+      {
+        "model": "Kimi K3.1 Pro",
+        "open_weights": false,
+        "cells": {
+          "aa5": {
+            "rank": 7,
+            "value": 46.0,
+            "config": "页面未注明档位 · 开放权重（尚未发布）"
+          },
+          "arena_webdev": {
+            "rank": 6,
+            "value": 1694.5,
+            "config": "max"
+          },
+          "livebench": {
+            "rank": 8,
+            "value": 71.3,
+            "config": ""
+          }
+        },
+        "spread": 2
+      },
+      {
+        "model": "GLM-5.3",
+        "open_weights": true,
+        "cells": {
+          "aa5": {
+            "rank": 11,
+            "value": 31.65,
+            "config": "max · 开放权重"
+          },
+          "arena": {
+            "rank": 5,
+            "value": 1480.7,
+            "config": "max"
+          },
+          "arena_webdev": {
+            "rank": 11,
+            "value": 1622.7,
+            "config": "max"
+          },
+          "arena_agent": {
+            "rank": 11,
+            "value": 0.0122,
+            "config": "max"
+          },
+          "scale": {
+            "rank": 8,
+            "value": 16.4,
+            "config": ""
+          },
+          "openrouter": {
+            "rank": 4,
+            "value": 5.15,
+            "config": ""
+          }
+        },
+        "spread": 6
+      },
+      {
+        "model": "MiMo V2.6 Pro",
+        "open_weights": true,
+        "cells": {
+          "aa5": {
+            "rank": 13,
+            "value": 29.89,
+            "config": "页面未注明档位 · 开放权重"
+          },
+          "arena": {
+            "rank": 7,
+            "value": 1479.5,
+            "config": "default"
+          },
+          "arena_webdev": {
+            "rank": 10,
+            "value": 1625.5,
+            "config": "default"
+          },
+          "arena_agent": {
+            "rank": 7,
+            "value": 0.033,
+            "config": "default"
+          },
+          "livebench": {
+            "rank": 11,
+            "value": 68.5,
+            "config": ""
+          }
+        },
+        "spread": 6
+      }
+    ],
+    "note": "名次只在这 14 款模型之间排列，每款取该来源最好的一个配置；“—”表示来源这次没有收录或没有上榜，不代表能力差。跨度只看能力、偏好与真实会话来源，不含 OpenRouter 用量。各列口径不同，名次不能相加或平均。"
+  }
+}

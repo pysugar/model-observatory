@@ -762,7 +762,7 @@ main { padding-top:35px; }
   .latest-layout { gap:16px; }
   .latest-section { margin-bottom:36px; }
   .latest-card { padding:0; }
-  .board-buttons { padding:10px; }
+  .board-buttons { padding:10px; flex-wrap:wrap; overflow-x:visible; }
   .board-description { padding:17px 14px 9px; align-items:flex-start; }
   .board-description h3 { font-size:16px; }
   .board-description .small { font-size:9px; }
@@ -923,3 +923,29 @@ main { padding-top:35px; }
   .mp-table thead th { min-width:84px; }
 }
 @media print { .mp-quick, .mp-links { display:none !important; } .mp-cell.has { background:none; } }
+
+/* Cross-source ranks: same focus models, ranked within each source. */
+.cross-card { padding:0; margin-top:18px; overflow:hidden; }
+/* Visually hidden labels in cells are absolute; keep them inside the scroller. */
+.cross-scroll { position:relative; }
+.cross-head { padding:20px 22px 12px; }
+.cross-head h3 { margin:4px 0 6px; }
+.cross-table { width:100%; min-width:760px; border-collapse:collapse; font-size:12px; }
+.cross-table th, .cross-table td { padding:10px 12px; border-bottom:1px solid var(--line); text-align:center; }
+.cross-table thead th { background:var(--thead); color:var(--muted); font-size:10px; font-weight:500; vertical-align:bottom; }
+.cross-table tbody th { text-align:left; min-width:170px; font-weight:500; position:sticky; left:0; background:var(--paper); z-index:1; }
+.cross-table tbody tr:last-child>* { border-bottom:0; }
+.cross-col { border:0; background:none; padding:0; min-height:0; font:inherit; color:var(--teal); font-weight:600; cursor:pointer; }
+.cross-col small { display:block; color:var(--muted); font-weight:400; font-size:9px; margin-top:3px; }
+.cross-cell b { display:block; font-size:13px; }
+.cross-cell small { display:block; color:var(--muted); font-size:10px; margin-top:2px; }
+.cross-cell.r-top { background:color-mix(in srgb, var(--teal) 16%, transparent); }
+.cross-cell.r-mid { background:color-mix(in srgb, var(--teal) 6%, transparent); }
+.cross-spread { font-weight:600; color:var(--muted); }
+.cross-spread.wide { color:var(--neg); }
+.voice-fix { color:var(--warn-ink); }
+@media (max-width: 760px) {
+  .cross-head { padding:16px 16px 10px; }
+  .cross-table th, .cross-table td { padding:8px 8px; }
+  .cross-table tbody th { min-width:128px; }
+}

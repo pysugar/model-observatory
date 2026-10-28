@@ -276,9 +276,9 @@ def build(output_dir=ROOT):
 
     profiles_doc = read_json(ROOT / "research/2026-10-24/model-effort-profiles.json")
     check_model_profiles(profiles_doc, catalog, multi)
-    community_doc = read_json(ROOT / "research/2026-10-25/community-consensus.json")
+    community_doc = read_json(ROOT / "research/2026-10-29/community-consensus.json")
     check_community(community_doc, profiles_doc)
-    market = read_json(ROOT / "research/2026-10-23/market-snapshot.json")
+    market = read_json(ROOT / "research/2026-10-29/market-snapshot.json")
     refresh_panorama(multi["external_leaderboards"], market)
     # v5 is a separate, newer board; the panorama keeps its v4.3.2 references.
     market = merge_aa_v5(market, read_json(ROOT / "research/2026-10-28/aa-index-v5.json"))

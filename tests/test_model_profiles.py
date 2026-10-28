@@ -115,8 +115,17 @@ class ModelProfileTests(unittest.TestCase):
         for item in doc["items"]:
             self.assertTrue(set(item["modelIds"]) <= ids, item["id"])
             self.assertTrue(item["sources"] and all(s["url"].startswith("https://") for s in item["sources"]), item["id"])
-            self.assertEqual(item["verification"], "search-summary")
+            self.assertEqual(item["verification"], "source-checked", item["id"])
+            self.assertEqual(item["checkedAt"], "2026-10-29")
             self.assertNotIn("efforts", item)  # community voices never feed the calculations
+        items = {i["id"]: i for i in doc["items"]}
+        # Claims that the 10-29 source check corrected keep a visible note.
+        for key in ("astra-hard-science", "sol61-unverified-limits", "fable51-escalation",
+                    "argon-token-hungry", "grok47-agentic-cost"):
+            self.assertTrue(items[key].get("correction"), key)
+        self.assertNotIn("68.1", items["astra-hard-science"]["statement"])
+        self.assertIn("$0.25", items["fable51-escalation"]["statement"])
+        self.assertIn("1.05M", items["sol61-unverified-limits"]["statement"])
 
     def test_work_phases_record_mainstream_choices(self):
         phases = {p["id"]: p for p in self.data["community_consensus"]["workPhases"]}
