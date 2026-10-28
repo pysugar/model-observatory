@@ -108,7 +108,7 @@ def main():
     }
     agent = {
         "id": "arena_agent", "name": "Arena", "short": "Agent Arena", "kind": "真实代理会话",
-        "metric": "Agent Arena 综合 IPS", "unit": "", "precision": 3,
+        "metric": "Agent Arena 综合 IPS", "unit": "", "precision": 3, "fixed_precision": True,
         "source_url": "https://arena.ai/leaderboard/agent", "source_updated_at": agent_src["published"],
         "version": "Agent Arena · Overall（IPS 估计）", "cost_label": None, "cost_basis": "来源不报告费用。",
         "extra_key": "praise", "extra_label": "表扬 / 抱怨信号", "extra_unit": "",

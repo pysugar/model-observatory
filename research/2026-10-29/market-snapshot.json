@@ -660,6 +660,7 @@
       "metric": "Agent Arena 综合 IPS",
       "unit": "",
       "precision": 3,
+      "fixed_precision": true,
       "source_url": "https://arena.ai/leaderboard/agent",
       "source_updated_at": "2026-10-23",
       "version": "Agent Arena · Overall（IPS 估计）",
