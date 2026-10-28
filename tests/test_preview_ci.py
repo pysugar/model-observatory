@@ -239,6 +239,63 @@ class PreviewTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "Checkout"):
                     publish.ci_context(HEAD)
 
+    def api(self, pulls):
+        responses = {"/actions/workflows/verify.yml": {"id": 10}, "/actions/runs/101": self.run,
+                     f"/commits/{HEAD}/pulls": pulls, "/pulls/5": pulls[0] if pulls else self.pr,
+                     "/branches/main": {"commit": {"sha": BASE}}, f"/commits/{BUILD}": self.commit}
+        return lambda path, **_: responses[path]
+
+    def test_pr_closed_before_resolve_is_a_skip_not_a_failure(self):
+        with patch.object(ci, "datetime") as clock:
+            clock.now.return_value, clock.fromisoformat = NOW, datetime.fromisoformat
+            for state, draft in (("closed", False), ("open", True)):
+                with self.subTest(state=state, draft=draft):
+                    with patch.object(ci, "repo_api", self.api([{**self.pr, "state": state, "draft": draft}])), \
+                            self.assertRaises(ci.PrClosed):
+                        ci.current_context(101, 2, 5 if draft else None)
+            # No PR at all for this commit is still an error, never a silent skip.
+            with patch.object(ci, "repo_api", self.api([])), self.assertRaisesRegex(ValueError, "Cannot identify") as caught:
+                ci.current_context(101, 2)
+            self.assertNotIsInstance(caught.exception, ci.PrClosed)
+
+    def test_pr_closed_during_deploy_removes_preview_then_skips(self):
+        with tempfile.TemporaryDirectory() as temp, patch.object(ci, "CONTEXT", Path(temp) / "context.json"), \
+                patch.object(ci, "RECORD", Path(temp) / "record.json"), \
+                patch.object(ci, "still_current", side_effect=[None, ci.PrClosed("PR is closed or draft")]), \
+                patch.object(ci.publish, "check"), patch.object(ci, "upload", return_value={}), \
+                patch.object(ci, "delete_preview", return_value="deleted") as delete:
+            ci.save(ci.CONTEXT, self.context)
+            with self.assertRaises(ci.PrClosed):
+                ci.deploy()
+            self.assertEqual(json.loads(ci.RECORD.read_text())["status"], "stale-removed")
+            delete.assert_called_once_with("pr-5")
+
+    def test_main_exits_zero_with_skip_output_only_for_closed_pr(self):
+        for error, code in ((ci.PrClosed("PR is closed or draft"), None), (ValueError("PR head advanced"), 1)):
+            with self.subTest(error=str(error)), tempfile.TemporaryDirectory() as temp, \
+                    patch.object(ci, "EVIDENCE", Path(temp) / "evidence"), patch.object(ci, "prepare", side_effect=error), \
+                    patch.object(sys, "argv", ["preview_ci.py", "prepare", "--run-id", "101", "--attempt", "2", "--pr", "5"]), \
+                    patch.dict(os.environ, {"GITHUB_OUTPUT": str(Path(temp) / "out")}), patch("sys.stdout", io.StringIO()), \
+                    patch("sys.stderr", io.StringIO()):
+                if code is None:
+                    ci.main()
+                    self.assertEqual((Path(temp) / "out").read_text(), "skipped=true\nmode=skip\n")
+                    self.assertFalse((Path(temp) / "evidence/failure.txt").exists())
+                else:
+                    with self.assertRaises(SystemExit) as caught:
+                        ci.main()
+                    self.assertEqual(caught.exception.code, code)
+                    self.assertFalse((Path(temp) / "out").exists())
+
+    def test_workflow_publishes_nothing_after_a_skip(self):
+        workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/preview.yml").read_text()
+        self.assertIn("if: needs.resolve.outputs.mode != 'skip'", workflow)
+        self.assertIn("id: prepare", workflow)
+        publish_step = workflow.split("- name: Publish or clean the isolated native Preview")[1].split("- name:")[0]
+        self.assertIn("if: steps.prepare.outputs.skipped != 'true'", publish_step)
+        comment_step = workflow.split("- name: Update the PR link")[1].split("- name:")[0]
+        self.assertIn("steps.prepare.outputs.skipped != 'true' && steps.publish.outputs.skipped != 'true'", comment_step)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -8,6 +8,7 @@
 
 1. 在本仓库分支提交目标为 `main` 的非 Draft PR。打开 PR、重新打开或向其分支推送新提交，会触发 **Verify static report**；没有 `paths` 或目标分支过滤，文档改动也会验证。普通分支在没有 PR 时的 push 不触发这套 PR 构建。
 2. CI 成功后，可信 main 上的 **Native PR previews** 收到 `workflow_run: completed`，核查当前 PR 与产物，再发布并验收。仅 CI 绿色不表示预览已经完成；在 [Actions](https://github.com/pysugar/model-observatory/actions/workflows/preview.yml) 查看第二阶段。
+   - 若 PR 在这一阶段完成前已合并、关闭或转为草稿（常见于 CI 一通过就合并），运行以成功结束并留下 “preview skipped” 提示，不发布、不更新评论；若已上传则先删除该预览。其余校验失败仍让运行失败。
 3. 打开 PR 的 **Conversation**，找到 **github-actions[bot]** 的同一条预览评论，点击“最新预览”。评论只在两个地址均验收成功后创建或更新：
 
    ```text
