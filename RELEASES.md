@@ -201,3 +201,18 @@
 | Cloudflare 版本 | `0f0b30dd-8b77-4e97-9e7f-11f1a1ab5e2b`（上传 `index.html`、`report-data.json`、`version.json`） |
 
 上线内容：v5 数据由 `research/2026-10-28/fetch_aa_v5_releases.py` 从 AA 发布版本页读取（16 个发布版本、49 个档位，四大家族 11 款活跃模型 44 个档位的 9 项 v5 评测，6 大领域指数按 v5 构成）；AA 未用 v5 重测的旧型号在 v5 视图显示未测，不用 v4.3.2 填补。v5 任务视图改用新评测（长程代理改为 Terminal-Bench-Science），“均衡”门槛下 77 格甜蜜点有 21 格变化。仍为 v4.3.2 并已标明：最新榜单“较 v4.3.2”列、五站全景表、成本页 169 条历史记录、21 个代表配置的速度矩阵。Gemini 3.8 Flash low 无 v5 费用，甜蜜点计算自动排除。
+
+## 2026-10-29 PR34 多源榜单、跨榜对照与社区声音核对正式发布收束
+
+[PR #34](https://github.com/pysugar/model-observatory/pull/34) 已于 **2026-10-28T21:27Z** 合并。“最新榜单”新增 Arena WebDev、Agent Arena 与跨榜对照，LiveBench / Scale / OpenRouter 更新，AA v5 重读，社区声音逐条对照原页；169 条记录、24 款模型、50 条来源不变。
+
+| 阶段 | 已完成事实 |
+| --- | --- |
+| 最终源码与合并 | PR 最终 head `4a77b7dab74b1551550a7857f868f017e7169dac`；main merge `9493c5a98d3b4b579cbefbbdcd2cead437f0648d` |
+| PR 验证与预览（历史） | 最终 head 的 [CI 40770783666](https://github.com/pysugar/model-observatory/actions/runs/40770783666) 成功，[原生预览 40771199129](https://github.com/pysugar/model-observatory/actions/runs/40771199129) 已部署；合并后的[清理 40772061098](https://github.com/pysugar/model-observatory/actions/runs/40772061098) 成功 |
+| 合并前本地验证 | 76 项单元测试、`publish.py build` / `check`、完整 `scripts/smoke.py --browser-channel chrome` 均 PASS（含 Agent Arena / WebDev / 跨榜对照，390 / 320 无溢出） |
+| main CI 与正式发布 | [run 40772060039](https://github.com/pysugar/model-observatory/actions/runs/40772060039) 成功：76 项单元测试、干净构建、完整浏览器 smoke |
+| 正式版本 | `publish.py check` PASS（commit `9493c5a`、clean、169 行 / 24 模型 / 50 来源）；双入口 `publish.py probe` 均为 PASS：[models.localgpt.net](https://models.localgpt.net) 与 [独立正式验收入口](https://model-observatory.openai-proxy-local.workers.dev)；发布后本机读取两入口 `version.json`，`source_commit` 均为 `9493c5a` |
+| Cloudflare 版本 | `2eb4bef8-57ad-415e-905f-4c7f35443beb`（上传 `index.html`、`report-data.json`、`version.json`） |
+
+上线内容：Arena WebDev（10-27）与 Agent Arena（10-23）取自 Arena 官方 Hugging Face 数据集（arena.ai 拦截自动读取），10-23 文本榜与数据集逐行一致；LiveBench 10-25 版由静态文件按页面规则重算加权 Overall；Scale HLE Diamond 17 项、OpenRouter 截至 10-27。跨榜对照把 14 款模型在每个来源内部排名并列展示。AA v5 分数不变，Gemini 4 Argon 费用已按 AA 采用的 12-01 后价格计。社区声音 15 条中 10 条成立、5 条修正，新增 8 条。来源与未核实项见 [2026-10-29 研究记录](research/2026-10-29/README.md)。研究内容尚未独立复核。
