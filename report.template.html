@@ -264,7 +264,7 @@
   <div class="card chart-card" id="capIndexCard" data-toc="六域排名">
     <div class="chart-header">
       <div>
-        <span class="eyebrow">AA CAPABILITY INDEXES · 6 大专业领域能力指数对比</span>
+        <span class="eyebrow">AA CAPABILITY INDEXES · v4.3.2 · 6 大专业领域能力指数对比</span>
         <h3 id="capIndexTitle">能力指数对比：跨领域排名跃迁（Bump Chart）与单项得分</h3>
       </div>
       <div class="toolbar">
@@ -275,11 +275,11 @@
             <option value="all_top">全市场代表版本（含 Muse · MiMo · DeepSeek · GLM · Qwen）</option>
           </select>
         </label>
-        <label class="check"><input type="checkbox" id="capShowII" checked>含 AA 智能指数参照列</label>
+        <label class="check"><input type="checkbox" id="capShowII" checked>含 AA 智能指数 v4.3.2 参照列</label>
         <button id="exportCapIndexes">导出能力指数 CSV</button>
       </div>
     </div>
-    <p class="small">图表与明细可横向滚动查看。分数直接保留 <a href="https://artificialanalysis.ai/zh/indexes" target="_blank" rel="noopener">AA 官方领域指数</a>，不是本报告任务合成分。代表档按每个发布版本的AA 智能指数 最高分选择，不保证该域最佳。活跃与兼容版本包含旧代；切换领域保持同一候选集合。纵轴为当前集合排名，不是分差；两位小数同分并列，缺测不参排、连线断开。两侧只显示模型与具体档位；各点支持悬停、Tab 聚焦与触屏点选，下方固定展示选中配置的完整 7 项分数。</p>
+    <p class="small">本图全部为 AA v4.3.2 数据（总分与 6 个领域指数同一版本）；v5 总分排名见概览“最新榜单”的 AA 智能指数 v5 页签，v5 的领域指数尚未取得，不与本图混排。图表与明细可横向滚动查看。分数直接保留 <a href="https://artificialanalysis.ai/zh/indexes" target="_blank" rel="noopener">AA 官方领域指数</a>，不是本报告任务合成分。代表档按每个发布版本的AA 智能指数 最高分选择，不保证该域最佳。活跃与兼容版本包含旧代；切换领域保持同一候选集合。纵轴为当前集合排名，不是分差；两位小数同分并列，缺测不参排、连线断开。两侧只显示模型与具体档位；各点支持悬停、Tab 聚焦与触屏点选，下方固定展示选中配置的完整 7 项分数。</p>
     <div class="cap-index-tabs" id="capIndexTabs" role="group" aria-label="选择能力指数领域">
       <button type="button" data-cap-tab="all" aria-pressed="true">全部 · 排名对比</button>
       <button type="button" data-cap-tab="financeAndAccounting" aria-pressed="false">财务与会计</button>
@@ -494,7 +494,7 @@
   <div class="table-scroll"><table class="decision-table"><thead><tr><th>数据层</th><th>时间与覆盖</th><th>可回答</th><th>不能推出</th></tr></thead><tbody>
     <tr><th>官方规格 / Standard 价格</th><td>24 型号；Grok 4.7 核验于 10-19，Claude 10-16，GPT / Gemini 10-15</td><td>模型身份、输入能力、上下文、支持档位、已公布的单价和优惠期</td><td>特定渠道配额、订阅扣额、同任务总 token、真实生产延迟</td></tr>
     <tr><th>AA v4.3.2 全档位与能力指数</th><td>30 个发布版本（94 个配置）、6 大能力指数、四大家族 11 款活跃模型 44 个档位的 10 项底层子评测（10-20 核验）</td><td>复杂问题解决、编程、方案规划、长文档抗幻觉在各推理档位下的同口径表现与单任务成本</td><td>中文写作、无回退纯模型排名、微小分差的统计显著性</td></tr>
-    <tr><th>AA 智能指数 v5</th><td>10-28 检索摘要整理，12 个配置的总分（多源一致 8 条、单一来源 4 条）；无费用、速度和子评测</td><td>新口径下的排序变化：约 60% 权重改用私有或答案不公开的评测后，哪些模型上升、哪些下滑</td><td>与 v4.3.2 分数相减得到的“真实能力变化”、开放权重模型刷榜的定论、逐档成本与甜蜜点</td></tr>
+    <tr><th>AA 智能指数 v5</th><td>2026-10-27 发布；10-28 从 AA 公开榜单页读取 26 个配置的总分、加权单任务成本、输出速度与九项子评测</td><td>新口径下的排序变化：约 60% 权重改用私有或答案不公开的评测后，哪些模型上升、哪些下滑；同版本内的费用比较</td><td>与 v4.3.2 分数相减得到的“真实能力变化”、开放权重模型刷榜的定论、逐档甜蜜点（仍为 v4.3.2）</td></tr>
     <tr><th>Vulcan SWE v4</th><td>9 型号 × 5 档 × 23 题；运行日期与 CLI 不同</td><td>仓库级重建任务完整隐藏测试通过率、费用和墙钟时间</td><td>全领域编程排名、Gemini/Fable 的相同题集成绩、通用代码审美</td></tr>
     <tr><th>ToneBench</th><td>10-13 20:08 UTC；共 50 条；补充 19 条与原 31 条使用的原始 SHA256 一致</td><td>同一编辑风格的英文脚本评分与费用、耗时</td><td>中文内容质量、人类普遍偏好、已确认的全部重试费用</td></tr>
     <tr><th>Scale SEAL / OpenRouter / LiveBench / Arena</th><td>10-19 跨平台核验快照</td><td>专家盲测专项上限、真实生产 Token 份额与每请求成本、抗污染执行力与真实用户代码偏好</td><td>不同平台成本与分数的直接线性换算</td></tr>

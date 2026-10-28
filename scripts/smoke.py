@@ -207,6 +207,9 @@ def check_profile_ui(page, data, output):
 def check_market_ui(page, data, output):
     """Exercise fresh evidence, missing values, price boundaries, themes and touch."""
     expect(page.locator("#marketTable tbody tr")).to_have_count(8)
+    # AA v5 is the default view: GPT-6 Astra ranks second under the new index.
+    expect(page.locator('[data-board="aa5"]')).to_have_attribute("aria-pressed", "true")
+    expect(page.locator("#marketTable tbody tr").nth(1)).to_contain_text("GPT-6 Astra")
     page.screenshot(path=str(output / "refresh-desktop.png"))
     page.locator('[data-board="livebench"]').click()
     page.fill("#marketSearch", "Grok")
@@ -234,8 +237,10 @@ def check_market_ui(page, data, output):
     expect(page.locator("#boardMethod")).to_be_visible()
     expect(page.locator("#marketTable tbody tr").first).to_contain_text("Claude Opus 5.5")
     expect(page.locator("#marketTable")).to_contain_text("+4 · 原 53")
-    expect(page.locator("#marketTable .evidence-tag.single")).not_to_have_count(0)
-    require(page.locator("#marketSort option[value=cost]").evaluate("o => o.disabled"), "AA v5 has no cost column")
+    require(not page.locator("#marketSort option[value=cost]").evaluate("o => o.disabled"), "AA v5 cost sort disabled")
+    page.select_option("#marketSort", "cost")
+    expect(page.locator("#marketTable tbody tr").first).to_contain_text("GPT-6 Luna")
+    page.select_option("#marketSort", "score")
     page.locator('[data-board="aa"]').click()
     expect(page.locator("#boardMethod")).to_be_hidden()
     page.select_option("#marketVendor", "OpenAI")

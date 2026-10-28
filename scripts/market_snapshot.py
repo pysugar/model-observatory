@@ -9,11 +9,12 @@ CATALOG_NAMES = {
 
 
 def merge_aa_v5(snapshot, v5):
-    """Add the AA v5 board beside v4.3.2; frozen v4.3.2 rows and curves stay untouched."""
+    """Show AA v5 first; the frozen v4.3.2 board follows with only its tab label changed."""
     board = {**v5["board"], "methodology": v5["methodology"], "pending": v5["pending"]}
     boards = [b for b in snapshot["boards"] if b["id"] != board["id"]]
     aa_index = next(i for i, b in enumerate(boards) if b["id"] == "aa")
-    boards.insert(aa_index + 1, board)
+    boards[aa_index] = {**boards[aa_index], "short": v5["previous_board_short"]}
+    boards.insert(aa_index, board)
     top = max(board["rows"], key=lambda row: row["score"])
     highlights = [dict(h) for h in snapshot["highlights"]]
     for item in highlights:

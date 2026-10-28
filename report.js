@@ -500,7 +500,7 @@
     $("capModelPills").innerHTML = entries.map(e => `<button type="button" class="pill-btn ${e.slug === capState.selectedId ? "is-active" : ""}" aria-pressed="${e.slug === capState.selectedId}" data-cap-model="${esc(e.slug)}"><span class="swatch" style="background:${e.color}"></span>${esc(capLabel(e))}</button>`).join("");
     const width = Math.max(1180,Math.round(svg.getBoundingClientRect().width || 1180));
     const showII = $("capShowII").checked, domains = cap.domains;
-    const allCols = [...(showII ? [{key:"__ii__",shortLabel:"AA 智能指数"}] : []),...domains];
+    const allCols = [...(showII ? [{key:"__ii__",shortLabel:"AA 智能指数 v4.3.2"}] : []),...domains];
     const cols = capState.tab === "all" ? allCols : domains.filter(d => d.key === capState.tab);
     const rankings = new Map(cols.map(d => [d.key,capRanking(entries,d.key)]));
     const all = capState.tab === "all", margin = {left:all ? 255 : 265,right:all ? 255 : 140,top:90,bottom:40}, rowH=34;
@@ -2231,7 +2231,7 @@
     const costHeader = board.cost_label ? `${esc(board.cost_label)}<small>USD / ${board.id === "livebench" ? "成功任务" : "任务"}</small>` : "费用<small>本视图未提供</small>";
     $("marketTable").innerHTML = rows.length ? `<table class="market-table"><caption class="sr">${esc(board.name)} · ${esc(board.metric)} · 当前选录，非跨站总榜</caption><thead><tr><th scope="col">序号</th><th scope="col">模型 / 测试配置</th><th scope="col">${esc(board.id === "openrouter" ? "用量" : "得分")}</th><th scope="col">${costHeader}</th><th scope="col">${esc(board.extra_label)}</th></tr></thead><tbody>${visible.map((row,i) => {
       const extra = row[board.extra_key];
-      return `<tr><td class="row-number">${String(i+1).padStart(2,"0")}</td><th scope="row"><span class="market-model">${esc(row.model)}</span><span class="market-config">${esc(row.vendor)} <span aria-hidden="true">/</span> ${esc(row.configuration)}${row.source_rank ? ` · 来源 #${row.source_rank}` : ""}${row.evidence ? ` · <span class="evidence-tag${row.evidence === "单一来源" ? " single" : ""}">${esc(row.evidence)}</span>` : ""}</span></th><td class="market-score" data-label="${esc(board.id === "openrouter" ? "用量" : "得分")}"><b>${marketScore(board,row)}</b><span class="score-track" aria-hidden="true"><span style="width:${Math.max(0,Math.min(100,100*row.score/maxScore))}%"></span></span></td><td class="market-cost" data-label="${esc(board.cost_label || "费用")}">${finite(row.cost_usd) ? money(row.cost_usd) : '<span class="missing-value">—<span class="sr">未提供</span></span>'}</td><td class="market-extra" data-label="${esc(board.extra_label)}">${typeof extra === "string" ? esc(extra) : finite(extra) ? fmt(extra,2) : "—"}${extra != null && board.extra_unit ? `<small>${esc(board.extra_unit)}</small>` : ""}</td></tr>`;
+      return `<tr><td class="row-number">${String(i+1).padStart(2,"0")}</td><th scope="row"><span class="market-model">${esc(row.model)}</span><span class="market-config">${esc(row.vendor)} <span aria-hidden="true">/</span> ${esc(row.configuration)}${row.source_rank ? ` · 来源 #${row.source_rank}` : ""}</span></th><td class="market-score" data-label="${esc(board.id === "openrouter" ? "用量" : "得分")}"><b>${marketScore(board,row)}</b><span class="score-track" aria-hidden="true"><span style="width:${Math.max(0,Math.min(100,100*row.score/maxScore))}%"></span></span></td><td class="market-cost" data-label="${esc(board.cost_label || "费用")}">${finite(row.cost_usd) ? money(row.cost_usd) : '<span class="missing-value">—<span class="sr">未提供</span></span>'}</td><td class="market-extra" data-label="${esc(board.extra_label)}">${typeof extra === "string" ? esc(extra) : finite(extra) ? fmt(extra,2) : "—"}${extra != null && board.extra_unit ? `<small>${esc(board.extra_unit)}</small>` : ""}</td></tr>`;
     }).join("")}</tbody></table>` : '<div class="market-empty"><b>没有匹配的模型</b><p>试试模型简称，或重置筛选查看本次选录。</p></div>';
     $("marketCount").textContent = `显示 ${visible.length} / ${rows.length} 项 · 本榜选录 ${board.rows.length} 项`;
     $("marketMore").hidden = rows.length <= 8;
@@ -2275,6 +2275,6 @@
   $("marketReset").addEventListener("click", () => {$("marketSearch").value="";$("marketVendor").value="all";$("marketSort").value="score";marketState.expanded=false;renderMarket();});
   $("exportMarket").addEventListener("click", () => exportCSV(marketExportRows(currentMarketBoard(),currentMarketRows()),`模型观测-${marketState.board}-${market.reviewed_at}.csv`));
   document.querySelectorAll("[data-scroll]").forEach(button => button.addEventListener("click", () => {showPanel("overview");$(button.dataset.scroll)?.scrollIntoView({block:"start"});}));
-  renderMarketIntro();selectMarketBoard("aa");
+  renderMarketIntro();selectMarketBoard(market.boards[0].id);
   renderSweetSpot();renderReasoningCharts();renderTaskEffortChart();renderEffortScalingChart();renderPanorama();renderClaudeCatalog();renderProfiles();renderCapIndexChart();renderSpecs();renderDeltas();changeGroup("general");showPanel(location.hash.slice(1)||"overview",false);
 })();
