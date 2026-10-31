@@ -145,9 +145,9 @@ def eval_metrics(record):
             for name, (key, scale) in EVALS.items()}
 
 
-def main():
+def main(release_metadata=None, request_delay=1.0):
     v4 = json.loads(V4.read_text())
-    v4_releases = v4["aa_release_series"]["releases"]
+    v4_releases = release_metadata if release_metadata is not None else v4["aa_release_series"]["releases"]
     known_efforts = {v["slug"]: v["effort"] for r in v4_releases for v in r["variants"]}
     pages, releases, entries, evals, unmeasured = [], [], [], {}, []
     # Single-configuration releases have no working release page; every page also embeds
@@ -155,6 +155,7 @@ def main():
     pool = {}
     for meta in v4_releases:
         url = BASE + meta["releaseSlug"]
+        print("Fetch " + meta["releaseSlug"], file=sys.stderr, flush=True)
         body = fetch(url)
         page = {"url": url, "sha256": hashlib.sha256(body).hexdigest()}
         found = records(flight_data(body.decode("utf-8", "replace")))
@@ -163,7 +164,7 @@ def main():
         pages.append(page)
         for x in found:
             pool.setdefault(x["slug"], x)
-        time.sleep(1.0)
+        time.sleep(request_delay)
     for meta in v4_releases:
         slug = meta["releaseSlug"]
         url = BASE + slug

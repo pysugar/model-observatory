@@ -949,3 +949,11 @@ main { padding-top:35px; }
   .cross-table th, .cross-table td { padding:8px 8px; }
   .cross-table tbody th { min-width:128px; }
 }
+
+/* Five-vendor snapshot keeps scores, availability and source links together. */
+.vendor-overview{margin:0 0 24px}.vendor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px}.vendor-card{min-width:0}.vendor-card ul{padding:0;list-style:none}.vendor-card li{margin:12px 0}.vendor-card li span{display:block;font-size:.78rem;color:var(--muted);overflow-wrap:anywhere}.vendor-card p{font-size:.82rem;line-height:1.7}.vendor-card a{font-size:.8rem}
+@media (max-width:640px) {
+  #releaseChartCard .toolbar { width:100%; }
+  #releaseChartCard .toolbar label:not(.check) { display:grid; width:100%; gap:5px; }
+  #releaseChartCard .toolbar select { width:100%; max-width:none; }
+}

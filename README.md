@@ -18,7 +18,19 @@
 
 工程入口和功能决策维护在本页，跨机器协作规则见 [研究与协作边界](RESEARCH_WORKFLOW.md#当前维护入口与执行边界2026-10-26)，发布事实维护在 `RELEASES.md`。
 
-## 当前项目状态（2026-10-29 多源榜单与社区声音）
+## 当前项目状态（2026-10-31 五厂评测刷新，待 PR 审阅）
+
+本轮源码与离线报告在 `feat/five-vendor-refresh-2026-10-31` 供 PR 审阅，尚未正式发布；云端 CI 与预览状态以 PR 最新 head 的记录为准。研究与来源边界见 [10-31 研究记录](research/2026-10-31/README.md)。新增五厂速览；AA v5 更新为 62 个榜单配置、20 个发布版本的 58 个配置，补入 Carbon、Terra 全档位、Opus xhigh 与 Meta 主流闭源系列；Arena 三榜更新到 10-28，LiveBench 保留 10-25 题集并刷新任务费用，Scale HLE Diamond 更新为 18 项选录。跨榜对照扩为 19 款，目录和档案扩为 29 款。OpenRouter 周用量仍为 10-27，社区声音仍为 10-29，分别保留日期。
+
+**监测范围**：Google、Meta、xAI、OpenAI、Anthropic；Meta 仅保留主流闭源 Muse Wonder、Wonder Full、Spark 1.3，不纳入开放权重系列。Carbon 仅限部分合作方，Wonder Full 仅 Muse Code 指定订阅；受限访问、缺少费用与未测档位分别显示，单点不标为计算出的甜蜜点。
+
+本期活动输入位于 `research/2026-10-31/`（`build_report.py:CURRENT_RESEARCH`）：`aa-index-v5.json`、`aa-v5-series.json`、`market-snapshot.json`、`catalog-supplement.json`、`model-effort-profiles.json`。更早的日期目录继续保留为历史证据；下方较早维护表的旧路径描述当时版本。
+
+本地验证：77 项单元测试、静态构建与发布目录检查、Chrome 全量 smoke 均 PASS，覆盖 1440 / 390 / 320 视口、版本切换、CSV、档案与预算缺值；独立只读 GUI 复核确认 Meta 范围、Spark 补充来源和 Wonder Full 单点标记。日志与截图在忽略目录 `test-results/refresh-2026-10-31/`。未执行云端预览或正式发布。
+
+最后一轮复核已完成：成本页显式区分当前 AA 与历史 v4.3.2，标题跟随成本 / 耗时 / Token 横轴，范围与规格数量由数据生成；纵轴包含低于 14 分的配置，缺横轴型号在图旁列出；Carbon / Wonder Full 详情直接展示访问限制。发布版本 CSV 新增指数版本、快照、来源和可用性说明。77 项单元测试、静态构建、全量 Chrome smoke 与 390 / 320 只读 GUI 复核再次 PASS，记录在 `test-results/refresh-2026-10-31/final-review/`。
+
+## 上一期项目状态（2026-10-29 多源榜单与社区声音）
 
 **多源刷新**（[PR #34](https://github.com/pysugar/model-observatory/pull/34) 已合并并正式发布，main merge `9493c5a98d3b4b579cbefbbdcd2cead437f0648d`，双入口 probe 通过，见 [PR34 发布收束](RELEASES.md#2026-10-29-pr34-多源榜单跨榜对照与社区声音核对正式发布收束)）：在 AA v5 之外补齐其他主流来源，见 [2026-10-29 研究记录](research/2026-10-29/README.md)。“最新榜单”新增 **Arena WebDev** 与 **Agent Arena**（真实代理会话 IPS，含用户表扬 / 抱怨分项），三个 Arena 榜单取自 Arena 官方 Hugging Face 数据集（arena.ai 拦截自动读取）；LiveBench 更新到 10-25 版（改为加权 Overall），Scale HLE Diamond 17 项，OpenRouter 截至 10-27。新增 **跨榜对照**：14 款模型在每个来源内部排名、并列展示，标出名次跨度。AA 重读后分数不变，Gemini 4 Argon 费用已按 12-01 后价格计。社区声音逐条对照原页（10 条成立、5 条修正），新增 Hacker News 发布讨论与 Agent Arena 信号整理的 8 条。
 
