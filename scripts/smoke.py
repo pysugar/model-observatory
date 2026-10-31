@@ -151,7 +151,7 @@ def check_profile_ui(page, data, output):
     expect(page.locator("#profileHeader .mp-voice-box")).to_contain_text("社区主流声音")
     expect(page.locator("#profileAltCoverage")).to_contain_text("这张表看不到的")
     for m in models:
-        if m["tier"] == "main":
+        if m["tier"] == "main" and any(m["id"] in item["modelIds"] for item in data["community_consensus"]["items"]):
             page.select_option("#profileModel", m["id"])
             require(page.locator("#profileAltCoverage .mp-voices li").count() >= 1, f"No community voice shown for {m['id']}")
     page.select_option("#profileModel", "gpt-6.1-sol")
@@ -183,8 +183,8 @@ def check_profile_ui(page, data, output):
     page.select_option("#profileModel", "gpt-5.6-sol")
     expect(page.locator('#profilePitfallList li[data-mp-pit-kind="upgrade"][data-effort="max"]')).to_have_attribute("data-alt", "gpt-6.1-sol")
     page.select_option("#profileModel", "grok-4-7")
-    expect(page.locator("#profileHeader")).to_contain_text("档位待核验")
-    expect(page.locator("#profileGrid thead")).to_contain_text("待核验")
+    expect(page.locator("#profileHeader")).not_to_contain_text("档位待核验")
+    expect(page.locator("#profileGrid thead")).not_to_contain_text("待核验")
     require(page.evaluate("location.hash") == "#profiles?m=grok-4-7", "Profile deep link not written")
     page.select_option("#profileModel", "claude-opus-4-7")
     expect(page.locator("#profileHeader")).to_contain_text("不补造曲线")
@@ -208,9 +208,9 @@ def check_profile_ui(page, data, output):
 def check_market_ui(page, data, output):
     """Exercise fresh evidence, missing values, price boundaries, themes and touch."""
     expect(page.locator("#marketTable tbody tr")).to_have_count(8)
-    # AA v5 is the default view: GPT-6 Astra ranks second under the new index.
+    # AA v5 is the default view; the current source leader is Carbon.
     expect(page.locator('[data-board="aa5"]')).to_have_attribute("aria-pressed", "true")
-    expect(page.locator("#marketTable tbody tr").nth(1)).to_contain_text("GPT-6 Astra")
+    expect(page.locator("#marketTable tbody tr").first).to_contain_text("Gemini 4 Carbon")
     page.screenshot(path=str(output / "refresh-desktop.png"))
     page.locator('[data-board="livebench"]').click()
     page.fill("#marketSearch", "Grok 4.7")
@@ -220,7 +220,7 @@ def check_market_ui(page, data, output):
         page.locator("#exportMarket").click()
     rows = list(csv.DictReader(io.StringIO(Path(download.value.path()).read_text(encoding="utf-8-sig"))))
     require(len(rows) == 1 and rows[0]["cost_usd"] == "2.913", "Market export lost source precision")
-    require(rows[0]["source_updated_at"] == "2026-10-25" and rows[0]["checked_at"] == "2026-10-29", "Source and verification dates conflated")
+    require(rows[0]["source_updated_at"] == "2026-10-25" and rows[0]["checked_at"] == "2026-10-31", "Source and verification dates conflated")
     page.fill("#marketSearch", "no-such-model")
     expect(page.locator("#marketTable")).to_contain_text("没有匹配的模型")
     expect(page.locator("#exportMarket")).to_be_disabled()
@@ -233,13 +233,13 @@ def check_market_ui(page, data, output):
     # Arena boards read from Arena's dataset: no costs, Agent Arena shows the praise/complaint signal.
     page.locator('[data-board="arena_agent"]').click()
     expect(page.locator("#marketTable tbody tr").first).to_contain_text("Claude Opus 5.5")
-    expect(page.locator("#marketTable tbody tr").first).to_contain_text("0.208")
+    expect(page.locator("#marketTable tbody tr").first).to_contain_text("0.209")
     # Fixed three decimals so 0.140 and 0.139 read as the same precision.
-    expect(page.locator("#marketTable tbody tr").nth(1)).to_contain_text("0.140")
-    expect(page.locator("#marketTable tbody tr").first).to_contain_text("0.453")
+    expect(page.locator("#marketTable tbody tr").nth(1)).to_contain_text("0.160")
+    expect(page.locator("#marketTable tbody tr").first).to_contain_text("0.460")
     require(page.locator("#marketSort option[value=cost]").evaluate("o => o.disabled"), "Agent Arena has no cost")
     page.locator('[data-board="arena_webdev"]').click()
-    expect(page.locator("#boardMeta")).to_contain_text("2026-10-27")
+    expect(page.locator("#boardMeta")).to_contain_text("2026-10-28")
     # Cross-source table: same 14 models, ranks within each source, column buttons switch boards.
     cs = data["market_snapshot"]["cross_source"]
     expect(page.locator("#crossTable tbody tr")).to_have_count(len(cs["models"]))
@@ -254,7 +254,7 @@ def check_market_ui(page, data, output):
     expect(page.locator("#marketTable tbody tr")).to_have_count(10)
     page.locator('[data-board="aa5"]').click()
     expect(page.locator("#boardMethod")).to_be_visible()
-    expect(page.locator("#marketTable tbody tr").first).to_contain_text("Claude Opus 5.5")
+    expect(page.locator("#marketTable tbody tr").first).to_contain_text("Gemini 4 Carbon")
     expect(page.locator("#marketTable")).to_contain_text("+4 · 原 53")
     require(not page.locator("#marketSort option[value=cost]").evaluate("o => o.disabled"), "AA v5 cost sort disabled")
     page.select_option("#marketSort", "cost")

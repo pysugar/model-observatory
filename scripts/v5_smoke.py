@@ -5,6 +5,10 @@ Python reference implementation (scripts/sweet_spot.py) fed the v5 data, so noth
 hard-codes a v5 number.
 """
 
+import csv
+import io
+from pathlib import Path
+
 from playwright.sync_api import expect
 from publish import require
 from sweet_spot import PRESETS, picks, profile_pitfalls, profile_series
@@ -27,6 +31,38 @@ def check_v5_views(page, data, origin, output):
     expect(page.locator('.pitfall-list[data-aa-version="v4"]')).to_be_hidden()
     require("{{" not in page.content(), "Unresolved narrative placeholder")
 
+    # Current and historical AA charts remain explicit; low v5 scores stay inside the plot.
+    page.locator('[data-panel="explorer"]').click()
+    expect(page.locator("#explorerIntro")).to_contain_text("20 个发布版本、58 个配置")
+    expect(page.locator("#charttitle")).to_contain_text("AA v4.3.2（历史）")
+    current = [r for r in view["aa_release_series"]["releases"] if r["isTrackedFamily"] and r["isCurrent"]]
+    selected = sum(len(r["variants"]) for r in current)
+    for axis, label in (("costPerTask","加权单任务成本"), ("timePerTaskMinutes","每任务耗时"),
+                        ("outputTokensPerTask","每任务输出 Token 数")):
+        page.select_option("#releaseXMetric", axis)
+        expect(page.locator("#releaseChartTitle")).to_contain_text("AA v5")
+        expect(page.locator("#releaseChartTitle")).to_contain_text(label)
+        plotted = sum(v.get(axis) is not None and v[axis] > 0 for r in current for v in r["variants"])
+        expect(page.locator("#releaseCount")).to_contain_text(f"已选 {selected} 个配置 · 可绘 {plotted} 个 · 未绘 {selected-plotted} 个")
+        expect(page.locator("#releaseMissing")).to_contain_text("Wonder Full max")
+        expect(page.locator("#releaseChart .release-dot")).to_have_count(plotted)
+        require(page.eval_on_selector("#releaseChart", "svg => [...svg.querySelectorAll('.release-dot circle')].every(c => Number(c.getAttribute('cy')) >= 34 && Number(c.getAttribute('cy')) <= svg.viewBox.baseVal.height - 62)"), "v5 score outside the plotted y range")
+        require("未提供m" not in page.locator("#releaseChart").text_content(), "Missing time received a unit")
+    page.select_option("#releaseXMetric", "costPerTask")
+    for release, text in (("gemini-4-carbon","安全合作方"), ("muse-wonder-full","Muse Code")):
+        page.locator(f'[data-rel-pill="{release}"]').click()
+        expect(page.locator("#releaseDetail .release-availability")).to_contain_text(text)
+        expect(page.locator("#releaseDetail")).to_contain_text("不是官方 token 单价或订阅扣额")
+    with page.expect_download() as download:
+        page.locator("#exportReleases").click()
+    rows = list(csv.DictReader(io.StringIO(Path(download.value.path()).read_text(encoding="utf-8-sig"))))
+    require(all(r["aa_version"] == "v5.0" and r["aa_snapshot"] == "2026-10-31" and r["source_url"].startswith("https://") for r in rows), "Release export lost version, date or source")
+    full = next(r for r in rows if r["variant_id"] == "muse-wonder-full")
+    require(full["cost_per_task_usd"] == "" and "Muse Code" in full["availability_note"], "Missing-cost release export lost availability")
+    page.locator('[data-panel="specs"]').click()
+    expect(page.locator('#specScope option[value="all"]')).to_contain_text(str(len(data["models"])))
+    page.locator('[data-panel="overview"]').click()
+
     # Sweet-spot matrix equals the reference on v5 data for every preset.
     page.locator('[data-panel="overview"]').click()
     expect(page.locator("#sweetMatrix thead")).to_contain_text("FrontierCode")
@@ -38,6 +74,25 @@ def check_v5_views(page, data, origin, output):
         for model, task, effort in rendered:
             require(expected[(model, task)] == effort, f"v5 sweet spot drifted: {preset}/{model}/{task}")
     page.select_option("#sweetTolerance", "balanced")
+
+    # Missing-cost single points remain observations, not computed sweet spots.
+    page.locator('[data-panel="profiles"]').click()
+    page.select_option("#profileModel", "claude-opus-5-5")
+    page.select_option("#profileModel", "muse-wonder-full")
+    expect(page.locator("#profileGrid .mp-mark.pick")).to_have_count(0)
+    expect(page.locator("#profileGrid")).to_contain_text("仅测单点")
+    expect(page.locator("#profileAltCoverage .mp-voices")).to_have_count(0)
+    page.locator('[data-panel="specs"]').click()
+    for model in ("muse-wonder-full", "gemini-4-carbon"):
+        expect(page.locator(f'[data-cost-model="{model}"]')).to_have_attribute("data-per", "")
+        expect(page.locator(f'[data-cost-model="{model}"]')).to_contain_text("暂不提供公开 API 预算")
+    page.locator('[data-panel="overview"]').click()
+    expect(page.locator("#vendorCoverage .vendor-card")).to_have_count(5)
+    page.select_option("#marketVendor", "Meta")
+    expect(page.locator("#marketTable tbody tr")).to_have_count(3)
+    expect(page.locator("#marketTable")).to_contain_text("Muse Spark 1.3")
+    expect(page.locator('#marketTable a[href*="muse-spark-1-3"]')).to_have_count(1)
+    page.locator("#marketReset").click()
 
     # Task chart: one dot per measured variant, with v5 task labels.
     page.locator('[data-task-tab="agentic"]').click()

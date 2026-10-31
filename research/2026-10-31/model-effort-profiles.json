@@ -1,0 +1,603 @@
+{
+  "checkedAt": "2026-10-31",
+  "basedOn": "d8ae6c3（PR18 合并后的 main）",
+  "method": "本期在云端会话中整理。会话网络策略只放行搜索，artificialanalysis.ai、docs.x.ai 等原页无法直接打开；新增条目均来自 2026-10-24 的网页检索摘要，记录检索到的原始 URL，并标记 verification=search-summary。凡是与仓库已冻结数据冲突的数字，只作为待核验提醒，不覆盖原值。逐档分数与成本仍全部来自既有冻结输入（AA v4.3.2 逐档、Vulcan、ToneBench、OSWorld）。",
+  "taskAxis": [
+    {
+      "id": "ii",
+      "label": "综合",
+      "sub": "AA 智能指数",
+      "guideTasks": []
+    },
+    {
+      "id": "coding",
+      "label": "编程",
+      "sub": "Terminal-Bench + SciCode · Vulcan 23 题",
+      "guideTasks": [
+        "daily_code",
+        "repository_bug"
+      ]
+    },
+    {
+      "id": "complex",
+      "label": "复杂推理",
+      "sub": "HLE + CritPt",
+      "guideTasks": [
+        "complex"
+      ]
+    },
+    {
+      "id": "automation",
+      "label": "工具自动化",
+      "sub": "AutomationBench",
+      "guideTasks": []
+    },
+    {
+      "id": "agentic",
+      "label": "知识工作交付",
+      "sub": "GDPval Elo",
+      "guideTasks": []
+    },
+    {
+      "id": "planning",
+      "label": "方案规划",
+      "sub": "Briefcase Elo",
+      "guideTasks": [
+        "design"
+      ]
+    },
+    {
+      "id": "knowledge",
+      "label": "长文档 · 事实",
+      "sub": "LCR / PDF / Omniscience",
+      "guideTasks": []
+    },
+    {
+      "id": "writing",
+      "label": "写作",
+      "sub": "ToneBench（英文脚本）",
+      "guideTasks": []
+    },
+    {
+      "id": "computer_use",
+      "label": "Computer Use",
+      "sub": "OSWorld（分协议）",
+      "guideTasks": []
+    }
+  ],
+  "lineNote": "line 表示同一产品线（如 Opus、Sol）。避坑指南里，同一产品线、AA 发布日期更新的型号覆盖旧型号时记为“新一代更省”，其它同家型号记为“同家其它型号更省”。",
+  "tiers": [
+    {
+      "id": "main",
+      "label": "当前主力"
+    },
+    {
+      "id": "previous",
+      "label": "上一代 · 仍可用"
+    },
+    {
+      "id": "legacy",
+      "label": "兼容旧版"
+    },
+    {
+      "id": "watch",
+      "label": "新增观察 · 访问受限"
+    }
+  ],
+  "models": [
+    {
+      "id": "claude-opus-5-5",
+      "tier": "main",
+      "line": "opus",
+      "aaRelease": "claude-opus-5-5",
+      "guidanceId": "claude-opus-5-5",
+      "cuIds": [
+        "claude-opus-5-5"
+      ]
+    },
+    {
+      "id": "claude-fable-5-1",
+      "tier": "main",
+      "line": "fable",
+      "aaRelease": "claude-fable-5-1",
+      "guidanceId": "claude-fable-5-1",
+      "cuIds": [
+        "claude-fable-5-1"
+      ]
+    },
+    {
+      "id": "claude-sonnet-5-5",
+      "tier": "main",
+      "line": "sonnet",
+      "aaRelease": "claude-sonnet-5-5",
+      "guidanceId": "claude-sonnet-5-5",
+      "cuIds": [
+        "claude-sonnet-5-5"
+      ]
+    },
+    {
+      "id": "claude-haiku-5-5",
+      "tier": "main",
+      "line": "haiku",
+      "aaRelease": "claude-haiku-5-5",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-opus-5",
+      "tier": "previous",
+      "line": "opus",
+      "aaRelease": "claude-opus-5",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-fable-5",
+      "tier": "previous",
+      "line": "fable",
+      "aaRelease": "claude-fable-5",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-sonnet-5",
+      "tier": "previous",
+      "line": "sonnet",
+      "aaRelease": "claude-sonnet-5",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-opus-4-8",
+      "tier": "legacy",
+      "line": "opus",
+      "aaRelease": "claude-opus-4-8",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-opus-4-7",
+      "tier": "legacy",
+      "line": "opus",
+      "aaRelease": null,
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-opus-4-6",
+      "tier": "legacy",
+      "line": "opus",
+      "aaRelease": null,
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-sonnet-4-6",
+      "tier": "legacy",
+      "line": "sonnet",
+      "aaRelease": "claude-sonnet-4-6",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-opus-4-5-20251101",
+      "tier": "legacy",
+      "line": "opus",
+      "aaRelease": null,
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-haiku-4-5-20251001",
+      "tier": "legacy",
+      "line": "haiku",
+      "aaRelease": null,
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-sonnet-4-5-20250929",
+      "tier": "legacy",
+      "line": "sonnet",
+      "aaRelease": null,
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "gpt-6-astra",
+      "tier": "main",
+      "line": "astra",
+      "aaRelease": "gpt-6-astra",
+      "guidanceId": "gpt-6-astra",
+      "cuIds": [
+        "gpt-6-astra"
+      ]
+    },
+    {
+      "id": "gpt-6.1-sol",
+      "tier": "main",
+      "line": "sol",
+      "aaRelease": "gpt-6-1-sol",
+      "guidanceId": "gpt-6-1-sol",
+      "cuIds": [
+        "gpt-6-1-sol"
+      ]
+    },
+    {
+      "id": "gpt-6-luna",
+      "tier": "main",
+      "line": "luna",
+      "aaRelease": "gpt-6-luna",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "gpt-6-sol",
+      "tier": "previous",
+      "line": "sol",
+      "aaRelease": "gpt-6-sol",
+      "guidanceId": null,
+      "cuIds": [
+        "gpt-6-sol"
+      ]
+    },
+    {
+      "id": "gpt-5.6-sol",
+      "tier": "previous",
+      "line": "sol",
+      "aaRelease": "gpt-5-6-sol",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "gpt-5.6-luna",
+      "tier": "previous",
+      "line": "luna",
+      "aaRelease": "gpt-5-6-luna",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "gemini-4-argon",
+      "tier": "main",
+      "line": "argon",
+      "aaRelease": "gemini-4-argon",
+      "guidanceId": "gemini-4-argon",
+      "cuIds": [
+        "gemini-4-argon"
+      ]
+    },
+    {
+      "id": "gemini-3.8-flash",
+      "tier": "main",
+      "line": "flash",
+      "aaRelease": "gemini-3-8-flash",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "gemini-3.5-flash-lite",
+      "tier": "main",
+      "line": "flash-lite",
+      "aaRelease": "gemini-3-5-flash-lite",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "grok-4-7",
+      "tier": "main",
+      "line": "grok",
+      "aaRelease": "grok-4-7",
+      "guidanceId": "grok-4-7",
+      "cuIds": []
+    },
+    {
+      "id": "muse-wonder-1.0",
+      "tier": "main",
+      "line": "wonder",
+      "aaRelease": "muse-wonder",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "muse-wonder-full",
+      "tier": "watch",
+      "line": "wonder-full",
+      "aaRelease": "muse-wonder-full",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "muse-spark-1.3",
+      "tier": "main",
+      "line": "spark",
+      "aaRelease": "muse-spark-1-3",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "gpt-6.1-terra",
+      "tier": "main",
+      "line": "terra",
+      "aaRelease": "gpt-6-1-terra",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "gemini-4-carbon",
+      "tier": "watch",
+      "line": "carbon",
+      "aaRelease": "gemini-4-carbon",
+      "guidanceId": null,
+      "cuIds": []
+    }
+  ],
+  "evidence": [
+    {
+      "id": "opus55-coding-ladder",
+      "modelIds": [
+        "claude-opus-5-5"
+      ],
+      "tasks": [
+        "coding"
+      ],
+      "kind": "社区经验",
+      "statement": "实践指南把 medium（默认）作为日常编码要先打败的基线；medium 漏东西时升 high；xhigh 只留给已测出收益的长时 agent 任务。另提醒 Opus 5.5 在 xhigh / max 下每轮思考比 Opus 5 更多。",
+      "action": "编码从 medium 起步，按交付缺口逐级升档，xhigh 前先在自己的任务上对比。",
+      "efforts": {
+        "start": "medium",
+        "ceiling": "xhigh"
+      },
+      "url": "https://claudefa.st/blog/guide/development/opus-5-5-best-practices",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "opus55-vs-opus5",
+      "modelIds": [
+        "claude-opus-5-5",
+        "claude-opus-5"
+      ],
+      "tasks": [
+        "coding"
+      ],
+      "kind": "厂商自报（转述）",
+      "statement": "据实践指南转述 Anthropic 发布说明：Terminal-Bench 4.0 上 Opus 5.5 默认档已超过 Opus 5 max，费用约为五分之一。",
+      "action": "从 Opus 5 迁移时，先用 Opus 5.5 默认档对照原来的 max 配置，而不是直接沿用 max。",
+      "url": "https://claudefa.st/blog/guide/development/opus-5-5-best-practices",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "opus5-start-conflict",
+      "modelIds": [
+        "claude-opus-5"
+      ],
+      "tasks": [
+        "coding",
+        "automation",
+        "agentic"
+      ],
+      "kind": "官方建议（转述）",
+      "statement": "两份 Anthropic 文档的说法不一致：effort 参考页建议从默认 high 起步，高要求 agent 任务升 xhigh；同期的 prompting 指南称编码与 agent 工作仍推荐从 xhigh 起步。第三方分析称 max 在三项官方 agent 编码评测中有两项低于 xhigh，且贵 12–15%（差距约 1 分，接近噪声）。",
+      "action": "编码 / agent 任务在 high 与 xhigh 间做配对对比；没有实测收益不用 max。",
+      "efforts": {
+        "start": "high",
+        "ceiling": "xhigh"
+      },
+      "url": "https://gabrielmoraru.com/opus-5-xhigh-vs-max-effort/",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "sonnet55-defaults",
+      "modelIds": [
+        "claude-sonnet-5-5"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "官方建议（转述）",
+      "statement": "多份第三方文章转述 Sonnet 5.5 发布说明：Claude 应用与 Claude Code 默认 medium，API 默认 high。",
+      "action": "比较不同入口的结果时先确认实际 effort，别把 Claude Code 的 medium 当成 API 的 high。",
+      "url": "https://www.eesel.ai/de/blog/claude-sonnet-5-5-test",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "sonnet55-max-trap",
+      "modelIds": [
+        "claude-sonnet-5-5"
+      ],
+      "tasks": [
+        "coding"
+      ],
+      "kind": "第三方评测（转述）",
+      "statement": "转述 AA Coding Agent Index（Claude Code 环境）：max 68、xhigh 63，单任务 $14.19 对 $3.33，max 输出 token 约 4.8 倍。另有评测转述 Anthropic FrontierCode 脚注：xhigh 52.1%、max 46.2%，max 更常触发超时或越界修改。",
+      "action": "编码 agent 优先试 xhigh；max 只在配对实测有收益、且预算和超时都放宽时使用。",
+      "efforts": {
+        "ceiling": "xhigh",
+        "avoid": "max"
+      },
+      "url": "https://www.eesel.ai/de/blog/claude-sonnet-5-5-test",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "fable51-official",
+      "modelIds": [
+        "claude-fable-5-1"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "官方建议（检索摘要）",
+      "statement": "Fable 5.1 prompting 指南：从默认 high 起步，再用自己的评测测 low / medium / xhigh / max；medium 大致追平 Fable 5 且更便宜；xhigh / max 可能耗时很长或触达 max_tokens，需预留输出空间。档位名称在不同模型间不对应同样的思考量，换代要重测。",
+      "action": "默认 high；质量稳定的任务试降到 medium；升到 xhigh / max 前先放大 max_tokens 与超时。",
+      "efforts": {
+        "start": "high"
+      },
+      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "haiku55-xhigh",
+      "modelIds": [
+        "claude-haiku-5-5"
+      ],
+      "tasks": [
+        "coding",
+        "computer_use"
+      ],
+      "kind": "厂商自报（转述）",
+      "statement": "转述 Haiku 5.5 系统卡：FrontierCode 1.1 max 46.4%、xhigh 45.8%；OSWorld 2.1 max 72.4%、xhigh 67.6%，单次尝试约 $0.61 对 $0.28。默认档 medium。",
+      "action": "编码先用 xhigh；Computer Use 若要最后几个百分点再上 max，并按约两倍费用做预算。",
+      "efforts": {
+        "ceiling": "xhigh"
+      },
+      "url": "https://apidog.com/blog/claude-haiku-5-5-benchmarks/",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "sol61-official",
+      "modelIds": [
+        "gpt-6.1-sol"
+      ],
+      "tasks": [
+        "coding",
+        "planning",
+        "complex"
+      ],
+      "kind": "官方建议（转述）",
+      "statement": "使用指南转述 OpenAI 文档：预期会反复修改的复杂技术工作用 medium；要打磨成品或基于冲突证据做决策用 xhigh；先用默认档，任务需要更深规划时再升。OpenAI 发布图表中 DeepSWE v1.1 high 档 75.2%、约 $0.65 / 任务。",
+      "action": "迭代型工作 medium；一次性交付或决策文档试 xhigh；仓库修复参考 high。",
+      "efforts": {
+        "start": "medium",
+        "ceiling": "xhigh"
+      },
+      "url": "https://flaviocopes.com/gpt-6-1-sol/",
+      "via": "https://aicatchup.com/news/openai-gpt-6-1-sol",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "gpt56-migration",
+      "modelIds": [
+        "gpt-5.6-sol",
+        "gpt-5.6-luna"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "官方建议（检索摘要）",
+      "statement": "OpenAI GPT-5.6 迁移指南：从 GPT-5.5 / 5.4 迁来时保留原 effort 作为基线，再比较低一档；原来用 none 的保留 none 作延迟基线，工作流需要推理或工具时加测 low；新接入以 medium 起步，延迟敏感用 low。",
+      "action": "先沿用旧档位，再试低一档；none 只在延迟优先的简单调用中保留。",
+      "efforts": {
+        "start": "medium"
+      },
+      "url": "https://developers.openai.com/api/docs/guides/gpt-5.6",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "astra-default-flat",
+      "modelIds": [
+        "gpt-6-astra"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "第三方评测（转述）",
+      "statement": "默认档说法冲突：LLM Stats 称 API 默认 low，另有指南称 medium，目录记为“按端点明确设置”。Hex DataBench 转述各档分数大致持平（约 52–55），单任务费用从约 $0.85（low）升到 $2.11（max）。",
+      "action": "调用时显式写明 effort；数据分析类任务先比较 low 与 medium，再决定是否升档。",
+      "url": "https://llm-stats.com/blog/research/gpt-6-astra-launch",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "luna6-latency",
+      "modelIds": [
+        "gpt-6-luna"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "第三方评测（转述）",
+      "statement": "模型目录转述 AA：GPT 6 Luna 的最高分依赖 max，困难题平均约 109 秒；每任务输出约 5.1 万 token，高于 GPT 5.6 Luna 的约 4.1 万。延迟敏感调用建议 low / medium。",
+      "action": "作子 agent 或批处理时先 low / medium；只有难题再升档，并按 token 量估费用。",
+      "efforts": {
+        "start": "low"
+      },
+      "url": "https://unifically.com/models/gpt-6-luna",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "argon-single-point",
+      "modelIds": [
+        "gemini-4-argon"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "检索结论",
+      "statement": "10-24 检索未找到 Gemini 4 Argon low / medium 的公开逐档成绩；AA 仅收录 high 单点，Google 模型卡成绩为最高 thinking 设置。默认档为 medium（Gemini 3.1 Pro 曾默认 high），不显式设置时思考可能比旧版少。",
+      "action": "难题显式设 high；medium / low 能否守住质量需要自己的配对测试。",
+      "efforts": {
+        "start": "medium"
+      },
+      "url": "https://computingforgeeks.com/gemini-4-argon-released-features-benchmarks/",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "flash38-cost-conflict",
+      "modelIds": [
+        "gemini-3.8-flash"
+      ],
+      "tasks": [
+        "ii"
+      ],
+      "kind": "第三方评测（转述）",
+      "statement": "第三方文章转述 AA 优惠价下单任务约 low $0.24 / medium $0.41 / high $0.58，与本报告冻结的 AA 逐档值（medium $0.931、high $1.243）不一致，口径或价格时点可能不同。Google 指南默认 medium。",
+      "action": "预算以本报告冻结值为准，并留意 12-31 优惠结束后的价格变化。",
+      "url": "https://apidog.com/blog/gemini-3-8-flash-thinking-levels/",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "grok47-cursorbench",
+      "modelIds": [
+        "grok-4-7"
+      ],
+      "tasks": [
+        "coding"
+      ],
+      "kind": "第三方评测（转述）",
+      "statement": "CursorBench 4.0（Cursor 自家 harness，费用按 token × 公开价计算）：xhigh 46.3%、$6.01 / 任务；medium $3.49、high $4.69；low 33.1%、$1.58 只见于二手转述。AA 自测 xhigh 与 high 同为约 46 分、费用高 37%。",
+      "action": "编码默认 high；只有在自己的仓库测出 xhigh 收益时才升档。",
+      "efforts": {
+        "start": "high",
+        "ceiling": "high"
+      },
+      "url": "https://cursor.com/en/cursorbench",
+      "via": "https://www.respan.ai/articles/grok-4.7-vs-opus-5.5",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    }
+  ],
+  "marketWatch": [
+    {
+      "statement": "AA 账号 10-23 前后发布：Kimi K3.1 Pro 以 55 分进入 AA 智能指数第 4。非四大家族，未纳入本报告目录与榜单选录。",
+      "url": "https://x.com/ArtificialAnlys/status/2113688083145314416",
+      "verification": "search-summary"
+    },
+    {
+      "statement": "10-24 检索未发现四大家族在 10-23 快照之后的新型号或 AA 逐档新数据；五站榜单沿用 10-23 快照。",
+      "url": null,
+      "verification": "search-summary"
+    }
+  ]
+}

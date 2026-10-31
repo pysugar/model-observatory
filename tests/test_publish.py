@@ -43,7 +43,7 @@ class ReleaseTests(unittest.TestCase):
         publish.build(other)
         self.assertEqual({p.name: p.read_bytes() for p in self.base.iterdir()}, {p.name: p.read_bytes() for p in other.iterdir()})
         result = publish.check(other)
-        self.assertEqual((result["rows"], result["models"]), (169, 24))
+        self.assertEqual((result["rows"], result["models"]), (169, 29))
 
     def test_unknown_files_and_symlinks_are_rejected(self):
         (self.site / "secret.txt").write_text("not for publication")

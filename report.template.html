@@ -14,7 +14,7 @@
   <header class="hero">
     <div class="masthead">
       <a class="brand" href="#overview" aria-label="模型观测站首页"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="14"/><ellipse cx="20" cy="20" rx="19" ry="7" transform="rotate(-35 20 20)"/><circle class="brand-star" cx="30" cy="10" r="3"/></svg><span>模型观测站<small>MODEL OBSERVATORY</small></span></a>
-      <div class="masthead-tools"><span class="edition">RESEARCH EDITION <b>10 / 23</b></span><label class="theme-control aa-version-control"><span class="sr">AA 智能指数版本</span><select id="aaVersionSelect" aria-label="AA 智能指数版本"><option value="v5">AA 指数 v5（默认）</option><option value="v4">AA 指数 v4.3.2（含旧型号）</option></select></label><label class="theme-control"><span class="sr">页面主题</span><select id="themeSelect" aria-label="页面主题"><option value="auto">跟随系统</option><option value="light">浅色模式</option><option value="dark">深色模式</option></select></label></div>
+      <div class="masthead-tools"><span class="edition">RESEARCH EDITION <b>10 / 31</b></span><label class="theme-control aa-version-control"><span class="sr">AA 智能指数版本</span><select id="aaVersionSelect" aria-label="AA 智能指数版本"><option value="v5">AA 指数 v5（默认）</option><option value="v4">AA 指数 v4.3.2（含旧型号）</option></select></label><label class="theme-control"><span class="sr">页面主题</span><select id="themeSelect" aria-label="页面主题"><option value="auto">跟随系统</option><option value="light">浅色模式</option><option value="dark">深色模式</option></select></label></div>
     </div>
     <div class="hero-grid">
       <div class="hero-copy">
@@ -41,6 +41,7 @@
 <section class="panel" id="overview" role="tabpanel" aria-labelledby="tab-overview">
   <section id="latestBenchmarks" class="latest-section" aria-labelledby="latest-heading" data-toc="最新榜单">
     <div class="section-heading latest-heading"><div><span class="eyebrow">01 / THE MODEL LANDSCAPE</span><h2 id="latest-heading">把分数放回它的评测里。</h2><p>综合能力、人类偏好、真实代理会话、长程任务与调用热度，分别看，再对照看。</p></div><span class="snapshot-label"><span class="status-dot"></span> 本期核验 <span id="snapshotDate">2026-10-23</span></span></div>
+    <section class="vendor-overview" aria-labelledby="vendor-heading" data-toc="五厂速览"><h3 id="vendor-heading">五厂速览 · AA v5 最新已测配置</h3><p class="small muted">Google / Meta / xAI / OpenAI / Anthropic；读取于 2026-10-31。Meta 仅主流闭源系列；访问受限与缺价分别标注。</p><div id="vendorCoverage" class="vendor-grid"></div></section>
     <div class="latest-layout">
       <div class="card latest-card">
         <div id="boardButtons" class="board-buttons" role="group" aria-label="选择评测来源"></div>
@@ -68,7 +69,7 @@
     </section>
     <div id="officialChecks" class="official-checks" aria-label="官方价格核验来源"></div>
   </section>
-  <div class="section-heading"><span class="eyebrow">02 / REASONING PLAYBOOK</span><h2>找到模型，也选对档位。</h2><p>以下逐档曲线沿用 10 月 19–20 日的同版测量。官方起点、社区观察和计算出的拐点分开呈现。</p></div>
+  <div class="section-heading"><span class="eyebrow">02 / REASONING PLAYBOOK</span><h2>找到模型，也选对档位。</h2><p>默认逐档曲线使用本期 AA v5；切回旧版时使用 10 月 19–20 日的冻结测量。官方起点、社区观察和计算出的拐点分开呈现。</p></div>
   <section class="card sweet-spot" aria-labelledby="sweet-spot-heading" data-toc="选档速查">
     <div class="sweet-head">
       <div><h3 id="sweet-spot-heading">选档速查 · 模型 × 任务</h3><p class="small muted" id="sweetRule"></p></div>
@@ -236,7 +237,7 @@
 </section>
 
 <section class="panel" id="capabilities" role="tabpanel" aria-labelledby="tab-capabilities" hidden>
-  <div class="section-heading"><span class="eyebrow">02 / CAPABILITY PROFILE</span><h2>同一个 AA 智能指数，会掩盖不同的任务长处与升档弹性。</h2><p><span data-aa-version="v4">AA v4.3.2：涵盖 6 大行业能力指数（90 个配置）、四大家族 11 款活跃模型的全推理档位 10 项底层子评测（44 个配置）及 21 个核心代表配置的速度响应矩阵。* 为来源估计值；缺测不是零。AA 已于 2026-10-27 发布 v5，可在页首切换到 v5 视图；两版分数不可直接比较。</span><span data-aa-version="v5">AA v5：涵盖 6 大行业能力指数（49 个配置，构成已按 v5 调整）与四大家族 11 款活跃模型全推理档位的 9 项评测（44 个配置）。AA 没有用 v5 重测旧型号，旧型号见页首切换的 v4.3.2 视图；21 个核心代表配置的速度响应矩阵仍是 v4.3.2 快照。缺测不是零。</span></p></div>
+  <div class="section-heading"><span class="eyebrow">02 / CAPABILITY PROFILE</span><h2>同一个 AA 智能指数，会掩盖不同的任务长处与升档弹性。</h2><p><span data-aa-version="v4">AA v4.3.2：涵盖 6 大行业能力指数（90 个配置）、四大家族 11 款活跃模型的全推理档位 10 项底层子评测（44 个配置）及 21 个核心代表配置的速度响应矩阵。* 为来源估计值；缺测不是零。AA 已于 2026-10-27 发布 v5，可在页首切换到 v5 视图；两版分数不可直接比较。</span><span data-aa-version="v5">AA v5：本期覆盖五家厂商；20 个发布版本、58 个配置，含 54 个配置的 9 项底层评测与 57 个配置的 6 大行业指数。Wonder Full 仅有榜单单点，领域、用量与费用不补值。AA 没有用 v5 重测旧型号，旧型号见页首切换的 v4.3.2 视图；21 个核心代表配置的速度响应矩阵仍是 v4.3.2 快照。缺测不是零。</span></p></div>
 
   <div class="card chart-card aa-style-card" id="effortScalingCard" data-toc="档位曲线">
     <div class="chart-header">
@@ -263,6 +264,7 @@
             <option value="Anthropic">Claude (Opus 5.5 · Sonnet 5.5 · Fable 5.1 · Haiku 5.5)</option>
             <option value="OpenAI">ChatGPT / OpenAI (GPT 6.1 Sol · GPT 6 Astra · GPT 6 Luna)</option>
             <option value="Google">Gemini (Gemini 4 Argon · 3.8 Flash · 3.5 Flash-Lite)</option>
+            <option value="Meta">Meta（Muse 闭源系列）</option>
             <option value="xAI">Grok (Grok 4.7)</option>
           </select>
         </label>
@@ -288,8 +290,8 @@
       <div class="toolbar">
         <label>展示范围
           <select id="capIndexScope">
-            <option value="four_family_top">四大家族活跃与兼容版本 · 每版 AA 智能指数 最高档</option>
-            <option value="four_family_all">四大家族活跃与兼容版本 · 全部已测档（不截断）</option>
+            <option value="four_family_top">关注厂商活跃与兼容版本 · 每版 AA 智能指数 最高档</option>
+            <option value="four_family_all">关注厂商活跃与兼容版本 · 全部已测档（不截断）</option>
             <option value="all_top">全市场代表版本（含 Muse · MiMo · DeepSeek · GLM · Qwen）</option>
           </select>
         </label>
@@ -315,7 +317,7 @@
     <div id="capIndexDetail" class="detail" aria-live="polite"></div>
   </div>
 
-  <div class="section-heading"><h2>AA 子评测与速度矩阵</h2><p>21 个核心代表配置。保留每一项子评测的原始单位（Elo、百分比、指数、token/s、秒、美元），支持按任意分项列排序。</p></div>
+  <div class="section-heading"><h2>AA v4.3.2 子评测与速度矩阵（历史）</h2><p>21 个历史核心代表配置，不随页首指数版本切换。保留每一项子评测的原始单位（Elo、百分比、指数、token/s、秒、美元），支持按任意分项列排序。</p></div>
   <div class="toolbar"><label>关注维度<select id="dimension"><option value="all">全部分项</option><option value="work">知识工作与自动化</option><option value="coding">编码与科学推理</option><option value="reliability">文档、长上下文与事实</option><option value="speed">速度与响应时间</option></select></label><label>型号范围<select id="profileScope"><option value="all">全部 21 个配置</option><option value="claude">14 款 Claude</option><option value="screenshot">客户端常见 8 款 Claude</option></select></label><button id="exportProfiles">导出分项数据</button><span class="small">点击列标题排序；各列保留原始单位。</span></div>
   <div class="table-scroll" id="capabilityTable"></div><div id="dimensionNotes" class="method-note"></div>
   <p class="callout">Fable 5.1、Opus 5.5、Sonnet 5.5 的 AA 配置含 Default Fallback；Fable 5 max 含 Opus 4.8 回退，比例未披露。Opus 4.7 / 4.6 / 4.5 的 AA 智能指数为估计值，部分子项和费用缺失。Haiku 5.5 的 >100k 阶梯价覆盖仍未确认。AA 的 Time per Task 是 token 与吞吐推算值；不等于评测过程中的墙钟耗时。<a href="https://artificialanalysis.ai/methodology" target="_blank" rel="noopener">AA 定义</a></p>
@@ -325,7 +327,7 @@
 </section>
 
 <section class="panel" id="explorer" role="tabpanel" aria-labelledby="tab-explorer" hidden>
-  <div class="section-heading"><span class="eyebrow">03 / MEASURED TRADE-OFFS</span><h2>一套基准，一种成本口径。</h2><p>共 169 条主表记录（原 121 条保持不变，补入 Gemini、Claude、Grok 4.7 与 Agent Arena 数据），并新增按模型发布版本（By Release）划分的 30 个发布版本、94 个推理档位全轨迹对照。</p></div>
+  <div class="section-heading"><span class="eyebrow">03 / MEASURED TRADE-OFFS</span><h2>一套基准，一种成本口径。</h2><p id="explorerIntro"></p></div>
 
   <div class="card chart-card aa-style-card" id="releaseChartCard" data-toc="发布版本轨迹">
     <div class="chart-header">
@@ -343,15 +345,15 @@
         </label>
         <label>发布版本范围
           <select id="releaseScope">
-            <option value="four_family_current">四大家族当前可用主力（Grok · GPT · Gemini · Claude + 全市场参照）</option>
-            <option value="four_family_flagship">仅四大家族核心旗舰（Grok 4.7 · Sol 6.1 · Astra · Argon · Opus/Sonnet/Fable 5.5）</option>
-            <option value="all_releases">全市场 30 个发布版本全彩对照（含 Muse · MiMo · DeepSeek · GLM · Qwen）</option>
+            <option value="four_family_current">五厂主力与受限观察</option>
+            <option value="four_family_flagship">核心旗舰与受限观察</option>
+            <option value="all_releases">全部已收录发布版本</option>
           </select>
         </label>
         <label>图表模式
           <select id="releaseViewMode">
-            <option value="trajectories">按发布版本连线轨迹（By Release）</option>
-            <option value="top_only">仅各版本最佳代表点（Top Variant Scatter）</option>
+            <option value="trajectories">完整档位轨迹</option>
+            <option value="top_only">每款最高分档</option>
           </select>
         </label>
         <label>配色
@@ -369,12 +371,13 @@
     <div id="releaseLegendBar" class="aa-legend-bar" aria-label="象限、帕累托线与厂商图例"></div>
     <div class="topline"><span id="releaseCount" class="small" aria-live="polite"></span><span class="small">左上更优（高能力、低成本/低耗时） · 点击版本胶囊可快速定位并查看成本堆叠明细</span></div>
     <div id="releasePills" class="release-pills" aria-label="筛选模型发布版本"></div>
+    <p id="releaseMissing" class="chart-note" role="status" aria-live="polite" hidden></p>
     <div class="svg-scroll aa-svg-wrap"><svg id="releaseChart" role="group" aria-label="按模型发布版本划分的 AA 智能指数 与单任务成本散点轨迹图"></svg></div>
     <div id="releaseDetail" class="detail" aria-live="polite"></div>
   </div>
 
-  <div class="section-heading"><h2>四基准逐配置探索器</h2><p>综合 AA · 编码 Vulcan · 写作 ToneBench · 用户任务 Arena。保留全部 169 条逐配置记录、置信区间与收据完整性检验。</p></div>
-  <div class="benchmark-tabs" role="group" aria-label="选择评测"><button data-group="general" aria-pressed="true">综合 · AA</button><button data-group="coding" aria-pressed="false">编码 · Vulcan</button><button data-group="writing" aria-pressed="false">写作 · ToneBench</button><button data-group="arena" aria-pressed="false">用户任务 · Arena</button></div>
+  <div class="section-heading"><h2>历史实验 · 四基准逐配置探索器</h2><p>以下 169 条冻结记录保留原始题集、价格和运行日期，不随页首 AA 版本切换；综合指标使用 AA v4.3.2。各实验的成本与时间不能跨基准混算。</p></div>
+  <div class="benchmark-tabs" role="group" aria-label="选择评测"><button data-group="general" aria-pressed="true">综合 · AA v4.3.2（历史）</button><button data-group="coding" aria-pressed="false">编码 · Vulcan</button><button data-group="writing" aria-pressed="false">写作 · ToneBench</button><button data-group="arena" aria-pressed="false">用户任务 · Arena</button></div>
   <details class="filters card" open><summary>模型与档位筛选 <span class="small">颜色表示模型，形状表示档位</span></summary><div id="models" class="model-filters"></div><div id="efforts" class="effort-filters"></div><div class="toolbar filter-footer"><button id="currentModels">选型与兼容候选</button><button id="claudeModels">只看 Claude</button><button id="screenshotModels">客户端常见 8 款</button><button id="selectAll">全选含基线</button><button id="clearAll">清空模型</button><button id="reset">重置</button><label class="check"><input type="checkbox" id="verifiedOnly">仅前沿可参与配置</label></div></details>
   <div class="chart-card card aa-style-card"><div class="chart-header"><h3 id="charttitle"></h3><div class="toolbar"><label>横轴<select id="xmetric"></select></label><label>刻度<select id="scale"><option value="log">对数</option><option value="linear">线性</option></select></label><label class="check"><input id="pareto" type="checkbox" checked>条件前沿与优选象限</label></div></div><p id="unit" class="small"></p><p class="chart-note" id="caveat"></p><div class="topline"><span id="count" class="small" aria-live="polite"></span><span class="small">左上浅绿区域为当前筛选优选象限 · 可悬停、点按或用键盘选取</span></div><svg id="chart" role="group" aria-label="能力、成本与耗时散点图"></svg><p id="frontnote" class="small"></p><div id="detail" class="detail" aria-live="polite"></div><div id="gaps"></div></div>
   <div class="toolbar"><h3>当前筛选记录</h3><button id="export">导出当前 CSV</button><span id="table-count" class="small"></span></div><div class="table-scroll data-table"><table><thead><tr><th>模型与配置</th><th>分数</th><th>费用 USD</th><th>耗时</th><th>样本</th><th>前沿资格</th><th>来源</th></tr></thead><tbody id="tbody"></tbody></table></div>
@@ -382,8 +385,8 @@
 </section>
 
 <section class="panel" id="specs" role="tabpanel" aria-labelledby="tab-specs" hidden>
-  <div class="section-heading"><span class="eyebrow">04 / SPECIFICATIONS & BUDGET</span><h2>单价只是起点，推理用量会改变账单。</h2><p>官方 API Standard、美元 / 百万 token；Grok 4.7 核验于 10-19，Claude 核验于 10-16，GPT / Gemini 于 10-15；每款保留核验日期。产品订阅、服务加速、Batch/Flex 与工具调用另算。</p></div>
-  <div class="toolbar"><label>显示型号<select id="specScope"><option value="current">21 个选型与兼容候选</option><option value="claude">14 款 Claude</option><option value="screenshot">客户端常见 8 款 Claude</option><option value="all">全部 24 个含 GPT 基线</option></select></label><button id="exportSpecs">导出规格 CSV</button></div><div id="specTable" class="table-scroll"></div>
+  <div class="section-heading"><span class="eyebrow">04 / SPECIFICATIONS & BUDGET</span><h2>单价只是起点，推理用量会改变账单。</h2><p>官方 API Standard、美元 / 百万 token；以各型号表内标注的价格核验日期为准。受限访问、无公开 API 定价、未核实输出上限分别标记。产品订阅、服务加速、Batch/Flex 与工具调用另算。</p></div>
+  <div class="toolbar"><label>显示型号<select id="specScope"><option value="current">选型与观察型号（含受限）</option><option value="claude">14 款 Claude</option><option value="screenshot">客户端常见 8 款 Claude</option><option value="all">全部型号（含历史基线）</option></select></label><button id="exportSpecs">导出规格 CSV</button></div><div id="specTable" class="table-scroll"></div>
   <details class="note-box"><summary>如何理解“1M 上下文”和多模态支持</summary><p>上下文上限代表可容纳量，不保证长文档推理或信息召回质量。Argon 的 1,048,576 是输入、思考、输出共享窗口；Flash / Flash-Lite 列的是输入上限，输出另有 65,536 上限。GPT 的窗口为 1,050,000；Claude 4.6 及以后为 1M / 128k；本次核验的 Opus 4.5、Sonnet 4.5、Haiku 4.5 为 200k / 64k。旧评测页面的窗口标注不覆盖当前官方规格。</p><p>表中只列这些通用 API 模型的原生输入和文本输出。GPT / Claude 的产品或工具可以处理其他媒体，但不应据此把通用模型标为原生音频、视频输入；Gemini 的音频/视频理解也不等于能生成音频/视频。图像生成、TTS、Live 与视频生成另有专用模型。</p></details>
   <div class="section-heading"><h2>用同一组用量假设比较 API 预算</h2><p>这是费用情景，不是实测成本。每次请求的 token 数相同，不能保证不同模型完成同一任务会使用同样的 token。</p></div>
   <div class="calculator card"><div class="calc-inputs">
@@ -399,7 +402,7 @@
 </section>
 
 <section class="panel" id="reasoning" role="tabpanel" aria-labelledby="tab-reasoning" hidden>
-  <div class="section-heading"><span class="eyebrow">05 / REASONING EFFORT</span><h2>区分收益变小、观测下降和未能交付。</h2><p>更高档位是更多推理机会，不是每类任务都能稳定获益。四大厂商的档位名称不能视为统一计算预算。</p></div>
+  <div class="section-heading"><span class="eyebrow">05 / REASONING EFFORT</span><h2>区分收益变小、观测下降和未能交付。</h2><p>更高档位是更多推理机会，不是每类任务都能稳定获益。不同厂商的档位名称不能视为统一计算预算。</p></div>
   <section class="card effort-advice" id="taskEffortAdvice" aria-labelledby="taskEffortAdviceTitle" data-toc="档位建议">
     <span class="eyebrow">建议起点 · 与下方实测曲线分开</span><h3 id="taskEffortAdviceTitle">按任务选择档位</h3>
     <p>原生档位只在同一模型内有顺序意义，不同厂商的 high 不等预算。下表是建议起点 / 甜点候选，<strong>未建立任务最优结论</strong>。四任务映射含经验先验，官方默认与社区小样本在展开证据中分别标记。</p>
@@ -459,7 +462,7 @@
   <section class="card" id="profileAltCard" aria-labelledby="profileAltTitle" data-toc="更优替代">
     <span class="eyebrow">特定档位 · 有没有更好的选择</span><h3 id="profileAltTitle">更优替代</h3>
     <p class="small muted">选一个档位（也可以直接点上表的格子），逐个评测看三种替代：<strong>同分最省</strong> = 分数不低于当前、费用最低的配置，回答“效果不变能不能少花钱”；<strong>同预算最强</strong> = 费用不超过当前、分数最高的配置，回答“这笔钱能不能买到更好的效果”；<strong>不限预算推荐</strong> = 不看费用，先找最高分，与最高分相差不到该评测分差 3% 的都算打平，再在打平的配置里选最快的（没有耗时数据时选最便宜的），回答“不差钱时选谁”——分数几乎一样时，没必要为最高档多等。只在同一评测内比较，候选是目录里的活跃型号，本模型的其它档位也算在内（标“降档/换档”）。分数是点估计，相差很小时请用自己的任务确认。</p>
-    <div class="toolbar"><label>档位<select id="profileAltEffort"></select></label><label>范围<select id="profileAltScope"><option value="vendor">同厂商</option><option value="all">四家全部</option></select></label></div>
+    <div class="toolbar"><label>档位<select id="profileAltEffort"></select></label><label>范围<select id="profileAltScope"><option value="vendor">同厂商</option><option value="all">目录全部厂商</option></select></label></div>
     <p id="profileAltSummary" class="method-note" aria-live="polite"></p>
     <div id="profileAltTable" class="table-scroll" tabindex="0" role="region" aria-label="更优替代表，可横向滚动"></div>
     <div id="profileAltCoverage" class="mp-alt-coverage"></div>
@@ -512,7 +515,7 @@
   <div class="table-scroll"><table class="decision-table"><thead><tr><th>数据层</th><th>时间与覆盖</th><th>可回答</th><th>不能推出</th></tr></thead><tbody>
     <tr><th>官方规格 / Standard 价格</th><td>24 型号；Grok 4.7 核验于 10-19，Claude 10-16，GPT / Gemini 10-15</td><td>模型身份、输入能力、上下文、支持档位、已公布的单价和优惠期</td><td>特定渠道配额、订阅扣额、同任务总 token、真实生产延迟</td></tr>
     <tr><th>AA v4.3.2 全档位与能力指数（页首可切换）</th><td>30 个发布版本（94 个配置）、6 大能力指数、四大家族 11 款活跃模型 44 个档位的 10 项底层子评测（10-20 核验）</td><td>复杂问题解决、编程、方案规划、长文档抗幻觉在各推理档位下的同口径表现与单任务成本</td><td>中文写作、无回退纯模型排名、微小分差的统计显著性</td></tr>
-    <tr><th>AA 智能指数 v5（默认视图）</th><td>2026-10-27 发布；10-28 从 AA 公开榜单页读取 26 个配置，从发布版本页读取 16 个发布版本的 49 个档位（含四大家族 11 款活跃模型 44 个档位的 9 项评测）；旧型号未重测</td><td>新口径下的排序与升档收益；约 60% 权重为私有或答案不公开的评测，降低刷题与数据污染的影响</td><td>与 v4.3.2 分数相减得到的“真实能力变化”、开放权重模型刷榜的定论、旧型号的 v5 成绩</td></tr>
+    <tr><th>AA 智能指数 v5（默认视图）</th><td>2026-10-27 发布；10-31 重读 62 个榜单配置、20 个发布版本的 58 个配置，其中 54 个配置有 9 项底层评测。Meta 仅闭源主流系列；Carbon 访问受限，Wonder Full 缺领域与费用；未测不补值</td><td>新口径下的排序与升档收益；约 60% 权重为私有或答案不公开的评测，降低刷题与数据污染的影响</td><td>与 v4.3.2 分数相减得到的“真实能力变化”、开放权重模型刷榜的定论、旧型号的 v5 成绩</td></tr>
     <tr><th>Vulcan SWE v4</th><td>9 型号 × 5 档 × 23 题；运行日期与 CLI 不同</td><td>仓库级重建任务完整隐藏测试通过率、费用和墙钟时间</td><td>全领域编程排名、Gemini/Fable 的相同题集成绩、通用代码审美</td></tr>
     <tr><th>ToneBench</th><td>10-13 20:08 UTC；共 50 条；补充 19 条与原 31 条使用的原始 SHA256 一致</td><td>同一编辑风格的英文脚本评分与费用、耗时</td><td>中文内容质量、人类普遍偏好、已确认的全部重试费用</td></tr>
     <tr><th>Scale SEAL / OpenRouter / LiveBench / Arena</th><td>10-19 跨平台核验快照</td><td>专家盲测专项上限、真实生产 Token 份额与每请求成本、抗污染执行力与真实用户代码偏好</td><td>不同平台成本与分数的直接线性换算</td></tr>
@@ -521,7 +524,7 @@
   <div class="section-heading"><h2>可追溯来源</h2><p>各图、每行数据与规格表附直接来源；以下为解释方法和主要结论所用资料。离线打开不会自动请求这些页面。</p></div><div id="sourceList"></div>
   <details class="note-box"><summary>复算与文件说明</summary><p>主 HTML 含全部数据、样式与脚本，可单独离线打开。旁边的 <code>report-data.json</code> 与 <code>report-data.csv</code> 保存完整数据；<code>report-content.json</code> 保存官方规格与说明；<code>build_report.py</code> 负责从原始快照重建。原 121 条字段和值未改写。</p><p>前沿定义：在当前基准、横轴和筛选中，如果另一个可参与配置的成本/时间不高于本点、分数不低于本点，且至少一项严格更好，则本点受支配。这个点估计前沿不检验显著性，也不代表所有未测配置。</p><p id="integrityNote" class="mono"></p></details>
 </section>
-<footer><p>报告更新：2026-10-20（Asia/Taipei）；覆盖 Grok、ChatGPT (GPT)、Gemini、Claude 四大家族公开基准与推理档位实测。各基准使用各自明确标注的快照，所有筛选与计算在本地完成。候选与建议仅供公共工程与研究选型参考，落地前请结合真实业务样本与中文盲评验收。</p><!-- BUILD_INFO --></footer>
+<footer><p>报告更新：2026-10-31（Asia/Taipei）；覆盖 Google、Meta、xAI、OpenAI、Anthropic 公开评测；Meta 仅主流闭源系列。各基准使用各自明确标注的快照，所有筛选与计算在本地完成。候选与建议仅供公共工程与研究选型参考，落地前请结合真实业务样本与中文盲评验收。</p><!-- BUILD_INFO --></footer>
 </main>
 <noscript>请启用 JavaScript 查看交互图表、完整规格和数据表；静态结论仍可阅读。</noscript>
 <script id="report-data" type="application/json">REPORT_DATA_JSON</script>

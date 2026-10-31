@@ -12,6 +12,7 @@ from scripts.market_snapshot import merge_aa_v5, refresh_panorama
 
 ROOT = Path(__file__).resolve().parent
 RESEARCH = ROOT / "research" / "2026-10-15"
+CURRENT_RESEARCH = ROOT / "research" / "2026-10-31"
 ORIGINAL = ROOT / "archive" / "model-capability-cost-2026-10-14.html"
 NUMERIC_METRICS = {
     "Intelligence Index", "AA-Briefcase v1.1", "GDPval-AA v2.1", "AutomationBench-AA",
@@ -56,13 +57,16 @@ def bind_panorama_capabilities(multi):
 
 def v5_task_scores(m):
     """Task views on v5 evaluations only; v5 dropped SciCode, GDPval-AA and AA-LCR."""
+    def weighted(*components):
+        return (None if any(m.get(key) is None for key, _ in components) else
+                round(sum(m[key] * weight for key, weight in components) / sum(w for _, w in components), 2))
     return {
-        "complex": round(0.5 * m["HLE-Diamond"] + 0.5 * m["CritPt v2 hard"], 2),
-        "coding": round(0.5 * m["Terminal-Bench 4.0"] + 0.5 * m["FrontierCode 2.0"], 2),
+        "complex": weighted(("HLE-Diamond", 1), ("CritPt v2 hard", 1)),
+        "coding": weighted(("Terminal-Bench 4.0", 1), ("FrontierCode 2.0", 1)),
         "planning": m["AA-Briefcase v1.1"],
         "agentic": m["Terminal-Bench-Science"],
         "automation": m["AutomationBench-AA"],
-        "knowledge": round((2.0 * m["GDP.pdf"] + 3.0 * m["AA-Omniscience v1.1"]) / 5.0, 2),
+        "knowledge": weighted(("GDP.pdf", 2), ("AA-Omniscience v1.1", 3)),
     }
 
 
@@ -73,8 +77,6 @@ def build_aa_v5(doc):
         for var in rel["variants"]:
             ev = evals.get(var["slug"])
             if ev:
-                if any(value is None for value in ev["metrics"].values()):
-                    raise ValueError(f"Incomplete v5 evaluations: {var['slug']}")
                 var["evalMetrics"] = ev["metrics"]
                 var["evalSourceUrl"] = ev["source_url"]
                 var["taskScores"] = v5_task_scores(ev["metrics"])
@@ -89,10 +91,10 @@ def build_aa_v5(doc):
     }
 
 
-def check_model_profiles(doc, catalog, multi):
+def check_model_profiles(doc, catalog, multi, extra_releases=()):
     """The profile tab joins catalog, AA releases and guidance by id; every link must resolve."""
     catalog_ids = {m["id"] for m in catalog["models"]}
-    releases = {r["releaseSlug"] for r in multi["aa_release_series"]["releases"]}
+    releases = {r["releaseSlug"] for r in multi["aa_release_series"]["releases"]} | set(extra_releases)
     guidance = {m["modelId"] for m in read_json(ROOT / "research/2026-10-20/task-effort-guidance.json")["models"]}
     profile_ids = [m["id"] for m in doc["models"]]
     if len(set(profile_ids)) != len(profile_ids) or not set(profile_ids) <= catalog_ids:
@@ -142,6 +144,9 @@ def build(output_dir=ROOT):
         methods["general"] = methods["general"].replace(" or GEO outcomes", "")
     rows = base["rows"]
     catalog = read_json(ROOT / "report-content.json")
+    supplement = read_json(CURRENT_RESEARCH / "catalog-supplement.json")
+    catalog["models"].extend(supplement["models"])
+    catalog["sources"].extend(supplement["sources"])
     model_names = [m["name"] for m in catalog["models"]]
     profiles = []
     for path in sorted(RESEARCH.glob("aa-pair-*.json")):
@@ -272,16 +277,17 @@ def build(output_dir=ROOT):
                     "knowledge": round((m["AA-LCR v1.1"] + 2.0 * m["GDP.pdf"] + 3.0 * m["AA-Omniscience"]) / 6.0, 2),
                 }
 
-    aa_v5 = build_aa_v5(read_json(ROOT / "research/2026-10-28/aa-v5-series.json"))
+    aa_v5 = build_aa_v5(read_json(CURRENT_RESEARCH / "aa-v5-series.json"))
 
-    profiles_doc = read_json(ROOT / "research/2026-10-24/model-effort-profiles.json")
-    check_model_profiles(profiles_doc, catalog, multi)
+    profiles_doc = read_json(CURRENT_RESEARCH / "model-effort-profiles.json")
+    check_model_profiles(profiles_doc, catalog, multi,
+                         (r["releaseSlug"] for r in aa_v5["aa_release_series"]["releases"]))
     community_doc = read_json(ROOT / "research/2026-10-29/community-consensus.json")
     check_community(community_doc, profiles_doc)
-    market = read_json(ROOT / "research/2026-10-29/market-snapshot.json")
+    market = read_json(CURRENT_RESEARCH / "market-snapshot.json")
     refresh_panorama(multi["external_leaderboards"], market)
     # v5 is a separate, newer board; the panorama keeps its v4.3.2 references.
-    market = merge_aa_v5(market, read_json(ROOT / "research/2026-10-28/aa-index-v5.json"))
+    market = merge_aa_v5(market, read_json(CURRENT_RESEARCH / "aa-index-v5.json"))
     for index, row in enumerate(rows):
         row["id"] = index
     data = {

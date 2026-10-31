@@ -14,7 +14,7 @@ class ModelProfileTests(unittest.TestCase):
     def setUpClass(cls):
         cls.data = json.loads((ROOT / "report-data.json").read_text())
         cls.doc = cls.data["model_effort_profiles"]
-        cls.source = json.loads((ROOT / "research/2026-10-24/model-effort-profiles.json").read_text())
+        cls.source = json.loads((ROOT / "research/2026-10-31/model-effort-profiles.json").read_text())
 
     def test_build_embeds_the_frozen_research_file(self):
         self.assertEqual(self.doc, self.source)
@@ -24,7 +24,7 @@ class ModelProfileTests(unittest.TestCase):
         ids = [m["id"] for m in self.doc["models"]]
         self.assertEqual(len(ids), len(set(ids)))
         self.assertEqual(set(ids), set(catalog))
-        for vendor in ("Anthropic", "OpenAI", "Google", "xAI"):
+        for vendor in ("Anthropic", "OpenAI", "Google", "Meta", "xAI"):
             self.assertTrue(any(catalog[m["id"]]["vendor"] == vendor and m["tier"] == "main" for m in self.doc["models"]), vendor)
         # The user asked for the GPT-5.6 generation as well.
         self.assertTrue({"gpt-5.6-sol", "gpt-5.6-luna"} <= set(ids))
@@ -98,7 +98,8 @@ class ModelProfileTests(unittest.TestCase):
 
     def test_every_main_model_has_a_community_voice(self):
         covered = {m for item in self.data["community_consensus"]["items"] for m in item["modelIds"]}
-        main = {m["id"] for m in self.doc["models"] if m["tier"] == "main"}
+        baseline = json.loads((ROOT / "research/2026-10-24/model-effort-profiles.json").read_text())
+        main = {m["id"] for m in baseline["models"] if m["tier"] == "main"}
         self.assertEqual(main - covered, set())
 
     def test_max_effort_scenarios_are_sourced(self):
@@ -155,11 +156,11 @@ class ModelProfileTests(unittest.TestCase):
             for effort in (ev.get("efforts") or {}).values():
                 self.assertIn(effort, ["none", "minimal", "low", "medium", "high", "xhigh", "max"])
 
-    def test_grok_medium_stays_pending_without_rewriting_the_catalog(self):
+    def test_grok_medium_is_supported_after_official_doc_check(self):
         grok = next(m for m in self.data["models"] if m["id"] == "grok-4-7")
-        self.assertEqual(grok["efforts"], "low / high / xhigh")
+        self.assertEqual(grok["efforts"], "low / medium / high / xhigh")
         entry = next(m for m in self.doc["models"] if m["id"] == "grok-4-7")
-        self.assertEqual(entry["effortDiscrepancy"]["extraEfforts"], ["medium"])
+        self.assertNotIn("effortDiscrepancy", entry)
 
     def test_guidance_tasks_map_onto_the_axis(self):
         guide = {t["id"] for t in self.data["task_effort_guidance"]["tasks"]}

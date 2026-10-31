@@ -16,14 +16,14 @@ class AaV5Tests(unittest.TestCase):
     def setUpClass(cls):
         cls.data = json.loads((ROOT / "report-data.json").read_text())
         cls.v5 = cls.data["aa_v5"]
-        cls.raw = json.loads((ROOT / "research/2026-10-28/aa-v5-series.json").read_text())
+        cls.raw = json.loads((ROOT / "research/2026-10-31/aa-v5-series.json").read_text())
 
     def test_versions_stay_separate(self):
         # v4.3.2 stays in the top-level keys; v5 lives in its own bundle and the page loads one of them.
         self.assertEqual(self.data["aa_release_series"]["version"], "v4.3.2")
         self.assertEqual(len(self.data["aa_release_series"]["releases"]), 30)
         self.assertEqual(self.v5["aa_release_series"]["version"], "v5.0")
-        self.assertEqual(len(self.v5["aa_release_series"]["releases"]), 16)
+        self.assertEqual(len(self.v5["aa_release_series"]["releases"]), 20)
 
     def test_unmeasured_models_are_listed_not_filled(self):
         unmeasured = {u["releaseSlug"] for u in self.v5["unmeasured"]}
@@ -36,11 +36,11 @@ class AaV5Tests(unittest.TestCase):
         present = {v["slug"] for r in self.v5["aa_release_series"]["releases"] for v in r["variants"]}
         self.assertFalse(listed & present)
 
-    def test_four_families_have_every_v5_evaluation(self):
-        current = [r for r in self.v5["aa_release_series"]["releases"] if r["isFourFamily"] and r["isCurrent"]]
-        self.assertEqual(len(current), 11)
+    def test_five_families_have_every_v5_evaluation(self):
+        current = [r for r in self.v5["aa_release_series"]["releases"] if r["isTrackedFamily"] and r["isCurrent"]]
+        self.assertEqual(len(current), 16)
         variants = [v for r in current for v in r["variants"]]
-        self.assertEqual(len(variants), 44)
+        self.assertEqual(len(variants), 54)
         for v in variants:
             self.assertEqual(set(v["evalMetrics"]), set(self.raw["aa_effort_evals"]["evals"]))
             self.assertEqual(v["taskScores"], v5_task_scores(v["evalMetrics"]))
@@ -53,6 +53,21 @@ class AaV5Tests(unittest.TestCase):
              "GDP.pdf": 30, "AA-Omniscience v1.1": -10}
         self.assertEqual(v5_task_scores(m), {"complex": 50.0, "coding": 40.0, "planning": 1500,
                                              "agentic": 45, "automation": 70, "knowledge": 6.0})
+
+    def test_partial_measurement_and_closed_meta_scope(self):
+        m = {"HLE-Diamond":None,"CritPt v2 hard":40,"Terminal-Bench 4.0":50,"FrontierCode 2.0":30,
+             "AA-Briefcase v1.1":1500,"Terminal-Bench-Science":45,"AutomationBench-AA":70,
+             "GDP.pdf":30,"AA-Omniscience v1.1":None}
+        self.assertIsNone(v5_task_scores(m)["complex"])
+        self.assertIsNone(v5_task_scores(m)["knowledge"])
+        self.assertEqual(v5_task_scores(m)["coding"],40)
+        meta = [r for r in self.v5["aa_release_series"]["releases"] if r["vendor"] == "Meta"]
+        self.assertEqual({r["releaseSlug"] for r in meta}, {"muse-wonder","muse-wonder-full","muse-spark-1-3"})
+        full = next(r for r in meta if r["releaseSlug"] == "muse-wonder-full")["variants"][0]
+        self.assertIsNone(full["costPerTask"])
+        self.assertEqual(full["capabilities"], {})
+        spark = next(r for r in meta if r["releaseSlug"] == "muse-spark-1-3")
+        self.assertEqual([v["effort"] for v in spark["variants"]],["max"])
 
     def test_rounding_capabilities_and_top_variant(self):
         variants = {v["slug"]: v for r in self.v5["aa_release_series"]["releases"] for v in r["variants"]}
