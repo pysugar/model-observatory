@@ -216,3 +216,24 @@
 | Cloudflare 版本 | `2eb4bef8-57ad-415e-905f-4c7f35443beb`（上传 `index.html`、`report-data.json`、`version.json`） |
 
 上线内容：Arena WebDev（10-27）与 Agent Arena（10-23）取自 Arena 官方 Hugging Face 数据集（arena.ai 拦截自动读取），10-23 文本榜与数据集逐行一致；LiveBench 10-25 版由静态文件按页面规则重算加权 Overall；Scale HLE Diamond 17 项、OpenRouter 截至 10-27。跨榜对照把 14 款模型在每个来源内部排名并列展示。AA v5 分数不变，Gemini 4 Argon 费用已按 AA 采用的 12-01 后价格计。社区声音 15 条中 10 条成立、5 条修正，新增 8 条。来源与未核实项见 [2026-10-29 研究记录](research/2026-10-29/README.md)。研究内容尚未独立复核。
+
+## 2026-10-31 PR37 五厂评测与 AA v5 成本视图正式发布收束
+
+[PR #37](https://github.com/pysugar/model-observatory/pull/37) 已于 **2026-10-31 16:57:08（Asia/Taipei）** 合并，并完成 `release` 环境正式发布。以下记录对应这次发布及其部署后核验；后续线上版本仍以正式站 `version.json` 和对应发布 run 为准。
+
+| 阶段 | 已完成事实 |
+| --- | --- |
+| 最终源码与合并 | PR head `183d8a30cc99a955b85bad1bd51bd6f3242c0aeb`；main merge `7a24b9527650728829e0780257542a920b64775f` |
+| PR CI | [run 41186123784](https://github.com/pysugar/model-observatory/actions/runs/41186123784) 成功：77 项单元测试、干净构建、产物审计、Wrangler dry-run 与完整 Chrome smoke |
+| 独立预览 | [run 41186316137](https://github.com/pysugar/model-observatory/actions/runs/41186316137) 成功；预览产物的 head 为上述 `183d8a3`、base 为 `051f72fe545df4b50bed2273821698d77d311c0d`、合成 build 为 `3ff5f6d079b009944513b6083b9ce7267bd38f3e`。稳定与固定预览地址均通过版本、文件哈希和响应头 probe，页面、v4/v5 切换与 320px 布局复核通过；其整理数据与本地已验证数据逐字节一致 |
+| main CI 与正式发布 | [run 41186660344](https://github.com/pysugar/model-observatory/actions/runs/41186660344) 成功：77 项单元测试、干净构建和完整 Chrome smoke；Environment=`release`，部署使用同次 CI 上传的不可变产物 |
+| 正式版本与双入口 | 下载正式 CI 产物后独立执行 `publish.py check` PASS（commit `7a24b95`、clean、169 行 / 29 模型 / 55 来源）；对 [models.localgpt.net](https://models.localgpt.net) 与 [独立正式验收入口](https://model-observatory.openai-proxy-local.workers.dev) 执行 `publish.py probe` 均 PASS：版本及 HTML / JSON / CSV 哈希匹配该产物。另核对两入口首页和 `version.json` 的 CSP、安全、缓存响应头与内容类型；正式整理数据与预览数据逐字节一致 |
+| 正式页面复核 | 主站显示 `release / main / 7a24b95`；五厂范围、Carbon 榜首、当前与历史图表口径、受限型号说明、Wonder Full 单点与缺价档案、320px 布局均通过只读 GUI 复核 |
+| 部署身份 | GitHub deployment `7456570041`；Cloudflare version `671d6b6c-1e36-4e3b-996a-9c3649415512` |
+| 预览清理 | [run 41186660807](https://github.com/pysugar/model-observatory/actions/runs/41186660807) 成功；[预览机器人评论](https://github.com/pysugar/model-observatory/pull/37#issuecomment-6541370297) 已更新为临时预览已清理，原稳定地址与固定部署地址均不再作为有效入口 |
+
+上线内容：五厂速览覆盖 Google、Meta、xAI、OpenAI、Anthropic；Meta 仅主流闭源 Muse Wonder、Wonder Full、Spark 1.3。AA v5 选录 62 个榜单配置，发布系列覆盖 20 个版本 / 58 个配置，目录与模型档案由 24 增至 29 款，来源由 50 增至 55 条，跨榜对照扩为 19 款。Arena 三榜刷新至 10-28，LiveBench 保留 10-25 题集并更新费用，Scale HLE Diamond 选录 18 项；OpenRouter 周用量与社区资料分别保留 10-27、10-29 日期，不冒充本期新数据。
+
+成本页明确区分当前 AA 与历史 v4.3.2，标题随成本 / 耗时 / Token 横轴切换；纵轴完整容纳低分配置，缺横轴型号在图旁说明，缺价单点不标为计算出的甜蜜点。Carbon / Wonder Full 直接标注访问限制；发布版本 CSV 保留指数版本、快照、来源和可用性。研究来源与限制见 [2026-10-31 研究记录](research/2026-10-31/README.md)；CI 与页面验收不等于重新运行或独立复现公开评测。
+
+本次在 Mac 本地完成实现与验证；最终源码的本地 77 项单元测试、静态构建和完整 Chrome smoke 已通过。发布后本地 `main` 已快进同步到上述合并提交，核验时工作区干净。验收记录保存在忽略目录 `test-results/pr37-release/verification.json`，同目录保留预览 / 正式产物、probe 结果及响应头记录；临时预览与 GitHub artifact 不作为永久归档入口。

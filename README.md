@@ -18,15 +18,15 @@
 
 工程入口和功能决策维护在本页，跨机器协作规则见 [研究与协作边界](RESEARCH_WORKFLOW.md#当前维护入口与执行边界2026-10-26)，发布事实维护在 `RELEASES.md`。
 
-## 当前项目状态（2026-10-31 五厂评测刷新，待 PR 审阅）
+## 当前项目状态（2026-10-31 五厂评测刷新，已正式发布）
 
-本轮源码与离线报告在 `feat/five-vendor-refresh-2026-10-31` 供 PR 审阅，尚未正式发布；云端 CI 与预览状态以 PR 最新 head 的记录为准。研究与来源边界见 [10-31 研究记录](research/2026-10-31/README.md)。新增五厂速览；AA v5 更新为 62 个榜单配置、20 个发布版本的 58 个配置，补入 Carbon、Terra 全档位、Opus xhigh 与 Meta 主流闭源系列；Arena 三榜更新到 10-28，LiveBench 保留 10-25 题集并刷新任务费用，Scale HLE Diamond 更新为 18 项选录。跨榜对照扩为 19 款，目录和档案扩为 29 款。OpenRouter 周用量仍为 10-27，社区声音仍为 10-29，分别保留日期。
+[PR #37](https://github.com/pysugar/model-observatory/pull/37) 已合并并正式发布，本次发布的 main 合并提交为 `7a24b9527650728829e0780257542a920b64775f`；PR CI、独立预览、正式发布与双入口核验均通过，临时预览已清理，详见 [PR37 发布收束](RELEASES.md#2026-10-31-pr37-五厂评测与-aa-v5-成本视图正式发布收束)。研究与来源边界见 [10-31 研究记录](research/2026-10-31/README.md)。新增五厂速览；AA v5 更新为 62 个榜单配置、20 个发布版本的 58 个配置，补入 Carbon、Terra 全档位、Opus xhigh 与 Meta 主流闭源系列；Arena 三榜更新到 10-28，LiveBench 保留 10-25 题集并刷新任务费用，Scale HLE Diamond 更新为 18 项选录。跨榜对照扩为 19 款，目录和档案扩为 29 款。OpenRouter 周用量仍为 10-27，社区声音仍为 10-29，分别保留日期。
 
 **监测范围**：Google、Meta、xAI、OpenAI、Anthropic；Meta 仅保留主流闭源 Muse Wonder、Wonder Full、Spark 1.3，不纳入开放权重系列。Carbon 仅限部分合作方，Wonder Full 仅 Muse Code 指定订阅；受限访问、缺少费用与未测档位分别显示，单点不标为计算出的甜蜜点。
 
 本期活动输入位于 `research/2026-10-31/`（`build_report.py:CURRENT_RESEARCH`）：`aa-index-v5.json`、`aa-v5-series.json`、`market-snapshot.json`、`catalog-supplement.json`、`model-effort-profiles.json`。更早的日期目录继续保留为历史证据；下方较早维护表的旧路径描述当时版本。
 
-本地验证：77 项单元测试、静态构建与发布目录检查、Chrome 全量 smoke 均 PASS，覆盖 1440 / 390 / 320 视口、版本切换、CSV、档案与预算缺值；独立只读 GUI 复核确认 Meta 范围、Spark 补充来源和 Wonder Full 单点标记。日志与截图在忽略目录 `test-results/refresh-2026-10-31/`。未执行云端预览或正式发布。
+本地验证：77 项单元测试、静态构建与发布目录检查、Chrome 全量 smoke 均 PASS，覆盖 1440 / 390 / 320 视口、版本切换、CSV、档案与预算缺值；独立只读 GUI 复核确认 Meta 范围、Spark 补充来源和 Wonder Full 单点标记。日志与截图在忽略目录 `test-results/refresh-2026-10-31/`。合并后的云端 CI 与正式发布同样通过 77 项单元测试及完整 Chrome smoke；部署后另行核验两个正式入口的版本、HTML / JSON / CSV 哈希、安全与缓存响应头，并完成主站页面及 320px 只读 GUI 复核，记录在 `test-results/pr37-release/`。
 
 最后一轮复核已完成：成本页显式区分当前 AA 与历史 v4.3.2，标题跟随成本 / 耗时 / Token 横轴，范围与规格数量由数据生成；纵轴包含低于 14 分的配置，缺横轴型号在图旁列出；Carbon / Wonder Full 详情直接展示访问限制。发布版本 CSV 新增指数版本、快照、来源和可用性说明。77 项单元测试、静态构建、全量 Chrome smoke 与 390 / 320 只读 GUI 复核再次 PASS，记录在 `test-results/refresh-2026-10-31/final-review/`。
 
