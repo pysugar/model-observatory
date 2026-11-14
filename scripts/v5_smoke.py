@@ -136,6 +136,10 @@ def check_v5_views(page, data, origin, output):
         expect(page.locator("#taskEffortChart .axis-label").last).to_contain_text("AA v5 单任务加权成本")
     page.select_option("#taskEffortFocus", "all")
     page.locator('[data-task-tab="complex"]').click()
+    fable = next(r for r in view["aa_release_series"]["releases"] if r["releaseSlug"] == "claude-fable-5-2")
+    max_score = next(v for v in fable["variants"] if v["effort"] == "max")["taskScores"]["complex"]
+    display_score = page.evaluate("v=>v.toLocaleString('en-US',{maximumFractionDigits:1})", max_score)
+    expect(page.locator("#taskEffortSubnote")).to_contain_text(f"Fable 5.2 max {display_score}%")
     expect(page.locator("#taskEffortLegend")).to_contain_text("Meta")
     page.locator('[data-task-pill="muse-wonder-full"]').click()
     expect(page.locator("#taskEffortDetail")).to_contain_text("未提供耗时")
@@ -171,11 +175,15 @@ def check_v5_views(page, data, origin, output):
         got = {tuple(x for x in item if x is not None) for item in rendered}
         require(got == profile_pitfalls(view, m["id"]), f"v5 pitfalls drifted: {m['id']}")
 
-    for width in (390, 320):
+    page.select_option("#profileModel", "claude-opus-5-5")
+    # 305px also covers a 320px window with a traditional 15px scrollbar.
+    for width in (390, 320, 305):
         page.set_viewport_size({"width": width, "height": 844})
         for panel in ("overview", "capabilities", "explorer", "reasoning", "profiles", "evidence"):
             page.locator(f'[data-panel="{panel}"]').click()
-            require(page.evaluate("document.documentElement.scrollWidth <= innerWidth"), f"v5 page overflow: {width}px/{panel}")
+            require(page.evaluate("document.documentElement.scrollWidth <= document.documentElement.clientWidth"), f"v5 page overflow: {width}px/{panel}")
+            if panel == "profiles":
+                require(page.locator("#profilePitfallList").evaluate("el => [...el.children].every(c=>c.getBoundingClientRect().right <= el.getBoundingClientRect().right + 1)"), "Profile pitfalls exceed their grid")
     page.set_viewport_size({"width": 1440, "height": 1000})
     page.locator('[data-panel="overview"]').click()
     page.screenshot(path=str(output / "v5-overview.png"))

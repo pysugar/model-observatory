@@ -918,7 +918,7 @@ main { padding-top:35px; }
 .mp-pit { display:inline-block; font-size:10px; font-weight:700; border-radius:5px; padding:0 5px; margin:3px 3px 0 0; border:1px dashed var(--warn-line); color:var(--warn-ink); background:var(--warn-bg); }
 .mp-pit.k-regress { border-color:var(--neg); color:var(--neg); background:var(--paper); }
 .mp-pit.k-upgrade, .mp-pit.k-dominated { border-color:var(--info-line); color:var(--info-ink); background:var(--info-bg); }
-.mp-pit-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:12px 20px; }
+.mp-pit-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:12px 20px; }
 .mp-pit-group h4 { margin:6px 0 2px; font-size:15px; }
 .mp-pit-group ul { font-size:var(--fs-sm); padding-left:18px; margin:6px 0; }
 .mp-pit-group details summary { font-size:var(--fs-sm); color:var(--teal); cursor:pointer; }
@@ -1052,7 +1052,7 @@ main { padding-top:35px; }
       <li><strong>多步 agent 与终端任务，先验证低档能否完成。</strong>Opus 5.5 的 Terminal-Bench 4.0 从 medium 的 53% 跌到 low 的 31%，Sol 6.1 从 48% 跌到 31%。优先验证 medium；分类、抽取、改写等单步任务可另测 low。</li>
       <li><strong>max 的增益需要覆盖额外成本。</strong>Opus 5.5 从 xhigh 升到 max，单任务成本从 $6.05 涨到 $10.04，智能指数只从 57.4 升到 59.1。Fable 5.1 的 max 比 xhigh 更贵（$10.85 → $12.99），智能指数反而从 50.0 降到 49.2。先确认 xhigh 没通过验收、并且说得出缺什么，再开 max。</li>
       <li><strong>升档之前，也比较另一模型的较低档。</strong>Grok 4.7 high（35.2 分 / $6.18）与 Sol 6.1 low（34.8 分 / $0.16）智能指数相近，费用差几十倍；Sonnet 5.5 xhigh（49.9 分 / $4.09）不如 Sol 6.1 high（50.3 分 / $0.59）划算。这些是当前快照的点估计比较；点开矩阵可查看同一任务指标下的候选替代。</li>
-      <li><strong>最高档不一定是某项任务的最高分。</strong>Opus 5.5 的 Terminal-Bench-Science 在 xhigh 是 61.9%，max 反而是 59.0%；Fable 5.2 的编程合成分在 high 为 54.4%、max 为 54.2%，综合任务费用却从 $9.08 升至 $26.54。</li>
+      <li><strong>最高档不一定是某项任务的最高分。</strong>Opus 5.5 的 Terminal-Bench-Science 在 xhigh 是 61.9%，max 反而是 59.1%；Fable 5.2 的编程合成分在 high 为 54.4%、max 为 54.2%，综合任务费用却从 $9.08 升至 $26.54。</li>
       <li><strong>事实问答的缺口可能需要检索或换模型。</strong>AA-Omniscience v1.1 在幻觉多于答对时为负：Luna 从 low 的 -18.1 升到 max 的 -8.3，仍是负值；Haiku 5.5 最高也只有 12.3。</li>
       <li><strong>不同厂商的同名档位不等价。</strong>要比完成一个任务并通过验收的总费用，包括失败的重试；缺日志、复现步骤或验收标准时，先补上下文，再考虑升档。</li>
     </ol>
@@ -1065,7 +1065,7 @@ main { padding-top:35px; }
   <div class="summary-grid" data-aa-version="v5">
     <article><span class="summary-number">01</span><h3>编程：Fable 5.2 提升上限，high 与 max 要分任务比较</h3><p>Terminal-Bench 4.0 与 FrontierCode 2.0 的均值：Fable 5.2 high 54.4%、xhigh 54.6%、max 54.2%。high 与 max 的 AA 综合任务费用分别为 $9.08 和 $26.54，最高档并非编程最高分。Sol 6.1 high 为 44.1% / $0.59，仍可作成本敏感基线。费用不是这两项编程评测的独立费用。</p><p class="citation"><a href="https://artificialanalysis.ai/zh/models/releases/claude-fable-5-2" target="_blank" rel="noopener">AA Fable 5.2 逐档来源</a> · <button data-jump="profiles" class="inline-button">查看模型档案 →</button></p></article>
     <article><span class="summary-number">02</span><h3>知识工作、科研代理与低成本执行分别选</h3><p>Briefcase v1.1 中 Sonnet 5.5 max 1816 Elo、Opus 5.5 max 1801 Elo；科研代理 Terminal-Bench-Science 中 Fable 5.2 max 73.3%。Hydrogen high AA 智能指数 50.8 / $1.87；Ember max 36.0 / $0.14，为执行任务提供新的比较对象。不同指标不合成总排名。</p><p class="citation"><a href="https://artificialanalysis.ai/leaderboards/models" target="_blank" rel="noopener">AA 当前榜单</a> · <button data-jump="capabilities" class="inline-button">查看分项能力 →</button></p></article>
-    <article><span class="summary-number">03</span><h3>复杂推理：Fable 5.2 领先，Carbon 已开放付费 API</h3><p>HLE-Diamond 与 CritPt v2 hard 的均值：Fable 5.2 max 78.3%、Carbon high 69.0%、Astra max 67.2%。Carbon medium 的 AA 智能指数 58.3、费用 $4.68，本期比 low 更省、更高分；先验证默认 medium，再比较 high。Carbon / Argon 12-01 单价翻倍，当前费用不能当长期预算。</p><p class="citation"><a href="https://artificialanalysis.ai/zh/models/releases/gemini-4-carbon" target="_blank" rel="noopener">AA Carbon 逐档来源</a> · <button data-jump="reasoning" class="inline-button">查看升档曲线 →</button></p></article>
+    <article><span class="summary-number">03</span><h3>复杂推理：Fable 5.2 领先，Carbon 已开放付费 API</h3><p>HLE-Diamond 与 CritPt v2 hard 的均值：Fable 5.2 max 78.4%、Carbon high 69.1%、Astra max 67.2%。Carbon medium 的 AA 智能指数 58.3、费用 $4.68，本期比 low 更省、更高分；先验证默认 medium，再比较 high。Carbon / Argon 12-01 单价翻倍，当前费用不能当长期预算。</p><p class="citation"><a href="https://artificialanalysis.ai/zh/models/releases/gemini-4-carbon" target="_blank" rel="noopener">AA Carbon 逐档来源</a> · <button data-jump="reasoning" class="inline-button">查看升档曲线 →</button></p></article>
   </div>
   <p class="callout">以下数据均来自公开基准快照与官方文档，保留原始指标单位与独立成本口径，不跨站硬折算总分，也不将 API 美元单价换算为各产品的订阅配额。</p>
 
@@ -2436,7 +2436,7 @@ main { padding-top:35px; }
       yTicks: [0, 10, 20, 30, 40, 50, 60, 70],
       attractiveY: 50,
       attractiveX: 1.10,
-      subnote: "本报告任务视图（v5）：HLE-Diamond 与私有 CritPt v2 hard 子集的等权均值，不是 AA 单独发布的任务指数。Fable 5.2 max 78.3% 最高，Astra max 67.2%；Sol high 60.2%，成本 $0.59；Opus 5.5 low 38.9% → max 68.0%。点估计差异不证明统计显著性。",
+      subnote: "本报告任务视图（v5）：HLE-Diamond 与私有 CritPt v2 hard 子集的等权均值，不是 AA 单独发布的任务指数。Fable 5.2 max 78.4% 最高，Astra max 67.2%；Sol high 60.2%，成本 $0.59；Opus 5.5 low 38.9% → max 68.0%。点估计差异不证明统计显著性。",
       getScore: v => v.taskScores?.complex
     },
     coding: {
@@ -2478,7 +2478,7 @@ main { padding-top:35px; }
       yTicks: [0, 10, 20, 30, 40, 50, 60, 70],
       attractiveY: 45,
       attractiveX: 1.10,
-      subnote: "本报告任务视图（v5）：Terminal-Bench-Science 的 70 个终端科研工作流，任务的每项测试都通过才计分；v5 不再计入 GDPval-AA，本视图改用这项长程代理评测。Fable 5.2 max 73.3%、Astra max 63.3%、Opus 5.5 xhigh 61.9%（max 59.0%）；Sol max 58.1% / $1.27；Grok 4.7 high 只有 9.5%。",
+      subnote: "本报告任务视图（v5）：Terminal-Bench-Science 的 70 个终端科研工作流，任务的每项测试都通过才计分；v5 不再计入 GDPval-AA，本视图改用这项长程代理评测。Fable 5.2 max 73.3%、Astra max 63.3%、Opus 5.5 xhigh 61.9%（max 59.1%）；Sol max 58.1% / $1.27；Grok 4.7 high 只有 9.5%。",
       getScore: v => v.taskScores?.agentic
     },
     automation: {
@@ -2492,7 +2492,7 @@ main { padding-top:35px; }
       yTicks: [0, 20, 40, 60, 80],
       attractiveY: 58,
       attractiveX: 1.10,
-      subnote: "本报告任务视图（v5）：直接展示 AutomationBench-AA 完成率。Argon high 78% 最高，Sonnet 5.5 max 72%、Opus 5.5 max 70%；Sol high 64%。同名档位不表示相同推理预算。",
+      subnote: "本报告任务视图（v5）：直接展示 AutomationBench-AA 完成率。Carbon high 77.8%、Argon high 77.5%、Sonnet 5.5 max 71.8%、Opus 5.5 max 69.5%；Sol high 64.5%。同名档位不表示相同推理预算。",
       getScore: v => v.taskScores?.automation
     },
     knowledge: {

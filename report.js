@@ -1002,7 +1002,7 @@
       yTicks: [0, 20, 40, 60, 80],
       attractiveY: 58,
       attractiveX: 1.10,
-      subnote: "本报告任务视图（v5）：直接展示 AutomationBench-AA 完成率。Argon high {{aa5:gemini-4-argon:high:automation:0}}% 最高，Sonnet 5.5 max {{aa5:claude-sonnet-5-5:max:automation:0}}%、Opus 5.5 max {{aa5:claude-opus-5-5:max:automation:0}}%；Sol high {{aa5:gpt-6-1-sol:high:automation:0}}%。同名档位不表示相同推理预算。",
+      subnote: "本报告任务视图（v5）：直接展示 AutomationBench-AA 完成率。Carbon high {{aa5:gemini-4-carbon:high:automation:1}}%、Argon high {{aa5:gemini-4-argon:high:automation:1}}%、Sonnet 5.5 max {{aa5:claude-sonnet-5-5:max:automation:1}}%、Opus 5.5 max {{aa5:claude-opus-5-5:max:automation:1}}%；Sol high {{aa5:gpt-6-1-sol:high:automation:1}}%。同名档位不表示相同推理预算。",
       getScore: v => v.taskScores?.automation
     },
     knowledge: {

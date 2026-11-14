@@ -3,6 +3,7 @@
 import copy
 import json
 from pathlib import Path
+import subprocess
 import unittest
 
 from scripts.report_claims import render_claims
@@ -39,6 +40,19 @@ class NarrativeTests(unittest.TestCase):
                                    (r["benchmark"], r["model"], r["effort"]) == ("writing", "Claude Opus 5.5", "high")))
         with self.assertRaises(ValueError):
             render_claims("{{row:writing:Claude Opus 5.5:high:score:2}}", changed)
+
+    def test_display_rounding_matches_browser_for_halfway_values(self):
+        samples = [[value, digits] for value in (78.35, 69.05, 2.675, 0.005, 46.5, -1.25)
+                   for digits in range(5)]
+        result = subprocess.run(["node", "-e",
+            "const a=JSON.parse(require('fs').readFileSync(0,'utf8'));"
+            "process.stdout.write(JSON.stringify(a.map(([v,d])=>v.toLocaleString('en-US',"
+            "{useGrouping:false,minimumFractionDigits:d,maximumFractionDigits:d}))));"],
+            input=json.dumps(samples), capture_output=True, text=True, check=True)
+        for (value, digits), expected in zip(samples, json.loads(result.stdout)):
+            data = {"aa_release_series": {"releases": [{"releaseSlug": "test",
+                    "variants": [{"effort": "max", "intelligenceIndex": value}]}]}}
+            self.assertEqual(render_claims("{{aa:test:max:intelligenceIndex:"+str(digits)+"}}", data), expected)
 
     def test_task_formulas_match_raw_evaluations_for_every_variant(self):
         evidence = json.loads((ROOT / "research/2026-10-20/aa-effort-evals.json").read_text())["variants"]

@@ -28,7 +28,7 @@ AA v5 更新为 75 个榜单配置、23 个发布版本 / 73 个配置；Arena �
 
 监测仍限五家主流系列，Meta 仅闭源 Wonder / Wonder Full / Spark 1.3 / Ember。活动输入为 `research/2026-11-15/`（`build_report.py:CURRENT_RESEARCH`）；旧目录保留为历史证据。本轮研究基线为 `bd80181`；下文记录本地验证，云端发布事实见 `RELEASES.md`，当前线上版本以[正式版本清单](https://models.localgpt.net/version.json)为准。
 
-本地验证：78 项单元测试、离线构建与产物检查、Chrome 全量 smoke 通过；覆盖 1440 / 390 / 320、版本切换、CSV、32 款档案参考计算、Carbon 优惠情景和 Ember 200k 阈值。截图复核后的 Meta 图例与缺失耗时修正也通过 v5 定向复验；历史 AA / 专项原始记录与社区声音逐项比对未变。日志与截图位于忽略目录 `test-results/refresh-2026-11-15/`。
+本地验证：79 项单元测试、离线构建与产物检查、Chrome 全量 smoke 通过；覆盖 1440 / 390 / 320、版本切换、CSV、32 款档案参考计算、Carbon 优惠情景和 Ember 200k 阈值。截图复核后的 Meta 图例与缺失耗时修正也通过 v5 定向复验；历史 AA / 专项原始记录与社区声音逐项比对未变。日志与截图位于忽略目录 `test-results/refresh-2026-11-15/`。
 
 ## 上一期项目状态（2026-10-31 五厂评测刷新，已正式发布）
 
