@@ -208,19 +208,19 @@ def check_profile_ui(page, data, output):
 def check_market_ui(page, data, output):
     """Exercise fresh evidence, missing values, price boundaries, themes and touch."""
     expect(page.locator("#marketTable tbody tr")).to_have_count(8)
-    # AA v5 is the default view; the current source leader is Carbon.
+    # AA v5 is the default view; the current source leader is Fable 5.2.
     expect(page.locator('[data-board="aa5"]')).to_have_attribute("aria-pressed", "true")
-    expect(page.locator("#marketTable tbody tr").first).to_contain_text("Gemini 4 Carbon")
+    expect(page.locator("#marketTable tbody tr").first).to_contain_text("Claude Fable 5.2")
     page.screenshot(path=str(output / "refresh-desktop.png"))
     page.locator('[data-board="livebench"]').click()
     page.fill("#marketSearch", "Grok 4.7")
-    expect(page.locator("#marketTable")).to_contain_text("70.1")
-    expect(page.locator("#marketTable")).to_contain_text("$2.91")
+    expect(page.locator("#marketTable")).to_contain_text("67.9")
+    expect(page.locator("#marketTable")).to_contain_text("$4.18")
     with page.expect_download() as download:
         page.locator("#exportMarket").click()
     rows = list(csv.DictReader(io.StringIO(Path(download.value.path()).read_text(encoding="utf-8-sig"))))
-    require(len(rows) == 1 and rows[0]["cost_usd"] == "2.913", "Market export lost source precision")
-    require(rows[0]["source_updated_at"] == "2026-10-25" and rows[0]["checked_at"] == "2026-10-31", "Source and verification dates conflated")
+    require(len(rows) == 1 and rows[0]["cost_usd"] == "4.175", "Market export lost source precision")
+    require(rows[0]["source_updated_at"] == "2026-11-06" and rows[0]["checked_at"] == "2026-11-15", "Source and verification dates conflated")
     page.fill("#marketSearch", "no-such-model")
     expect(page.locator("#marketTable")).to_contain_text("没有匹配的模型")
     expect(page.locator("#exportMarket")).to_be_disabled()
@@ -232,15 +232,15 @@ def check_market_ui(page, data, output):
     require(all(r["cost_usd"] == "" and r["source_updated_at"] == "" for r in rows), "Unknown source values fabricated")
     # Arena boards read from Arena's dataset: no costs, Agent Arena shows the praise/complaint signal.
     page.locator('[data-board="arena_agent"]').click()
-    expect(page.locator("#marketTable tbody tr").first).to_contain_text("Claude Opus 5.5")
-    expect(page.locator("#marketTable tbody tr").first).to_contain_text("0.209")
+    expect(page.locator("#marketTable tbody tr").first).to_contain_text("Claude Fable 5.2")
+    expect(page.locator("#marketTable tbody tr").first).to_contain_text("0.304")
     # Fixed three decimals so 0.140 and 0.139 read as the same precision.
-    expect(page.locator("#marketTable tbody tr").nth(1)).to_contain_text("0.160")
-    expect(page.locator("#marketTable tbody tr").first).to_contain_text("0.460")
+    expect(page.locator("#marketTable tbody tr").nth(1)).to_contain_text("0.195")
+    expect(page.locator("#marketTable tbody tr").first).to_contain_text("0.734")
     require(page.locator("#marketSort option[value=cost]").evaluate("o => o.disabled"), "Agent Arena has no cost")
     page.locator('[data-board="arena_webdev"]').click()
-    expect(page.locator("#boardMeta")).to_contain_text("2026-10-28")
-    # Cross-source table: same 14 models, ranks within each source, column buttons switch boards.
+    expect(page.locator("#boardMeta")).to_contain_text("2026-11-11")
+    # Cross-source table: same focus models, ranks within each source, column buttons switch boards.
     cs = data["market_snapshot"]["cross_source"]
     expect(page.locator("#crossTable tbody tr")).to_have_count(len(cs["models"]))
     expect(page.locator("#crossTable thead [data-cross-board]")).to_have_count(len(cs["columns"]))
@@ -254,7 +254,7 @@ def check_market_ui(page, data, output):
     expect(page.locator("#marketTable tbody tr")).to_have_count(10)
     page.locator('[data-board="aa5"]').click()
     expect(page.locator("#boardMethod")).to_be_visible()
-    expect(page.locator("#marketTable tbody tr").first).to_contain_text("Gemini 4 Carbon")
+    expect(page.locator("#marketTable tbody tr").first).to_contain_text("Claude Fable 5.2")
     expect(page.locator("#marketTable")).to_contain_text("+4 · 原 53")
     require(not page.locator("#marketSort option[value=cost]").evaluate("o => o.disabled"), "AA v5 cost sort disabled")
     page.select_option("#marketSort", "cost")
@@ -295,7 +295,7 @@ def check_market_ui(page, data, output):
             touch.locator('[data-scroll="latestBenchmarks"]').tap()
             touch.locator('[data-board="livebench"]').tap()
             touch.fill("#marketSearch", "Grok")
-            expect(touch.locator("#marketTable")).to_contain_text("70.1")
+            expect(touch.locator("#marketTable")).to_contain_text("67.9")
             require(touch.evaluate("document.documentElement.scrollWidth <= innerWidth"), f"Market overflow: {width}")
             touch.locator("#crossSource").scroll_into_view_if_needed()
             require(touch.evaluate("document.documentElement.scrollWidth <= innerWidth"), f"Cross-source overflow: {width}")
@@ -334,10 +334,11 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
             check_market_ui(page, data, output)
             # The default view is AA v5; the checks below pin v4.3.2 numbers, so run them on ?aa=v4.
             require(page.evaluate("document.documentElement.dataset.aa") == "v5", "AA v5 is not the default view")
+            check_v5_views(page, data, origin, output)
             page.goto(origin + "/?aa=v4", wait_until="networkidle")
             require(page.evaluate("document.documentElement.dataset.aa") == "v4", "v4.3.2 view did not load")
             expect(page.locator('[role="tab"]')).to_have_count(7)
-            expect(page.locator("#claudeCatalog tbody tr")).to_have_count(14)
+            expect(page.locator("#claudeCatalog tbody tr")).to_have_count(15)
             page.select_option("#claudeScope", "screenshot")
             expect(page.locator("#claudeCatalog tbody tr")).to_have_count(8)
             require("中文未实测" in page.locator("#overview").inner_text(), "Chinese limitation missing")
@@ -382,7 +383,6 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
             check_selection(page, data, output)
             check_overview_ui(page, data)
             check_profile_ui(page, data, output)
-            check_v5_views(page, data, origin, output)
             page.locator('[data-panel="overview"]').click()
             page.screenshot(path=str(output / "desktop.png"), full_page=True)
             page.locator('[data-panel="explorer"]').click()

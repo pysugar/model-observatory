@@ -21,6 +21,13 @@ def v5_view(data):
             "aa_capability_indexes": v5["aa_capability_indexes"], "aa_effort_evals": v5["aa_effort_evals"]}
 
 
+def check_plot_y_bounds(page, selector, top, bottom):
+    coords = page.eval_on_selector(selector, "svg => ({height:svg.viewBox.baseVal.height, ys:[...svg.querySelectorAll('circle[cy]')].map(c=>Number(c.getAttribute('cy')))})")
+    require(bool(coords["ys"]), f"No plotted points: {selector}")
+    require(all(top <= y <= coords["height"]-bottom for y in coords["ys"]),
+            f"Measured score outside plot: {selector}")
+
+
 def check_v5_views(page, data, origin, output):
     view = v5_view(data)
     page.goto(origin + "/?aa=v5", wait_until="networkidle")
@@ -33,7 +40,7 @@ def check_v5_views(page, data, origin, output):
 
     # Current and historical AA charts remain explicit; low v5 scores stay inside the plot.
     page.locator('[data-panel="explorer"]').click()
-    expect(page.locator("#explorerIntro")).to_contain_text("20 个发布版本、58 个配置")
+    expect(page.locator("#explorerIntro")).to_contain_text("23 个发布版本、73 个配置")
     expect(page.locator("#charttitle")).to_contain_text("AA v4.3.2（历史）")
     current = [r for r in view["aa_release_series"]["releases"] if r["isTrackedFamily"] and r["isCurrent"]]
     selected = sum(len(r["variants"]) for r in current)
@@ -44,19 +51,20 @@ def check_v5_views(page, data, origin, output):
         expect(page.locator("#releaseChartTitle")).to_contain_text(label)
         plotted = sum(v.get(axis) is not None and v[axis] > 0 for r in current for v in r["variants"])
         expect(page.locator("#releaseCount")).to_contain_text(f"已选 {selected} 个配置 · 可绘 {plotted} 个 · 未绘 {selected-plotted} 个")
-        expect(page.locator("#releaseMissing")).to_contain_text("Wonder Full max")
+        missing_label = "Flash 3.8 low" if axis == "outputTokensPerTask" else "Wonder Full max"
+        expect(page.locator("#releaseMissing")).to_contain_text(missing_label)
         expect(page.locator("#releaseChart .release-dot")).to_have_count(plotted)
         require(page.eval_on_selector("#releaseChart", "svg => [...svg.querySelectorAll('.release-dot circle')].every(c => Number(c.getAttribute('cy')) >= 34 && Number(c.getAttribute('cy')) <= svg.viewBox.baseVal.height - 62)"), "v5 score outside the plotted y range")
         require("未提供m" not in page.locator("#releaseChart").text_content(), "Missing time received a unit")
     page.select_option("#releaseXMetric", "costPerTask")
-    for release, text in (("gemini-4-carbon","安全合作方"), ("muse-wonder-full","Muse Code")):
+    for release, text in (("gemini-4-carbon","已开放付费 API"), ("muse-wonder-full","Muse Code")):
         page.locator(f'[data-rel-pill="{release}"]').click()
         expect(page.locator("#releaseDetail .release-availability")).to_contain_text(text)
         expect(page.locator("#releaseDetail")).to_contain_text("不是官方 token 单价或订阅扣额")
     with page.expect_download() as download:
         page.locator("#exportReleases").click()
     rows = list(csv.DictReader(io.StringIO(Path(download.value.path()).read_text(encoding="utf-8-sig"))))
-    require(all(r["aa_version"] == "v5.0" and r["aa_snapshot"] == "2026-10-31" and r["source_url"].startswith("https://") for r in rows), "Release export lost version, date or source")
+    require(all(r["aa_version"] == "v5.0" and r["aa_snapshot"] == "2026-11-15" and r["source_url"].startswith("https://") for r in rows), "Release export lost version, date or source")
     full = next(r for r in rows if r["variant_id"] == "muse-wonder-full")
     require(full["cost_per_task_usd"] == "" and "Muse Code" in full["availability_note"], "Missing-cost release export lost availability")
     page.locator('[data-panel="specs"]').click()
@@ -83,13 +91,34 @@ def check_v5_views(page, data, origin, output):
     expect(page.locator("#profileGrid")).to_contain_text("仅测单点")
     expect(page.locator("#profileAltCoverage .mp-voices")).to_have_count(0)
     page.locator('[data-panel="specs"]').click()
-    for model in ("muse-wonder-full", "gemini-4-carbon"):
+    for model in ("muse-wonder-full",):
         expect(page.locator(f'[data-cost-model="{model}"]')).to_have_attribute("data-per", "")
         expect(page.locator(f'[data-cost-model="{model}"]')).to_contain_text("暂不提供公开 API 预算")
+    # Public Carbon pricing and Ember's strict >200k boundary include cached input.
+    fields = ("inputTokens", "cachePercent", "answerTokens", "reasonTokens", "requestCount")
+    saved = {key: page.input_value("#"+key) for key in fields}
+    scenario = page.input_value("#priceScenario")
+    for key, value in zip(fields, (10000, 0, 1000, 0, 1)):
+        page.fill("#"+key, str(value))
+    carbon = page.locator('[data-cost-model="gemini-4-carbon"]')
+    page.select_option("#priceScenario", "current")
+    require(abs(float(carbon.get_attribute("data-per"))-.03) < 1e-10, "Carbon public API budget missing")
+    page.select_option("#priceScenario", "afterPromo")
+    require(abs(float(carbon.get_attribute("data-per"))-.06) < 1e-10, "Carbon post-promotion price missing")
+    page.select_option("#priceScenario", "current")
+    page.fill("#cachePercent", "100")
+    ember = page.locator('[data-cost-model="muse-ember-1.0"]')
+    for tokens, expected in ((200000, .0013), (200001, .003900012)):
+        page.fill("#inputTokens", str(tokens))
+        require(abs(float(ember.get_attribute("data-per"))-expected) < 1e-10,
+                f"Ember cached-input tier boundary drifted at {tokens}")
+    for key, value in saved.items():
+        page.fill("#"+key, value)
+    page.select_option("#priceScenario", scenario)
     page.locator('[data-panel="overview"]').click()
     expect(page.locator("#vendorCoverage .vendor-card")).to_have_count(5)
     page.select_option("#marketVendor", "Meta")
-    expect(page.locator("#marketTable tbody tr")).to_have_count(3)
+    expect(page.locator("#marketTable tbody tr")).to_have_count(6)
     expect(page.locator("#marketTable")).to_contain_text("Muse Spark 1.3")
     expect(page.locator('#marketTable a[href*="muse-spark-1-3"]')).to_have_count(1)
     page.locator("#marketReset").click()
@@ -98,12 +127,32 @@ def check_v5_views(page, data, origin, output):
     page.locator('[data-task-tab="agentic"]').click()
     expect(page.locator('[data-task-tab="agentic"]')).to_contain_text("Terminal-Bench-Science")
     require("NaN" not in page.locator("#taskEffortChart").inner_html(), "Invalid v5 task chart coordinate")
+    tasks = ("complex", "coding", "planning", "agentic", "automation", "knowledge", "intelligenceIndex")
+    for task in tasks:
+        page.locator(f'[data-task-tab="{task}"]').click()
+        for focus in ("all", "low"):
+            page.select_option("#taskEffortFocus", focus)
+            check_plot_y_bounds(page, "#taskEffortChart", 36, 62)
+        expect(page.locator("#taskEffortChart .axis-label").last).to_contain_text("AA v5 单任务加权成本")
+    page.select_option("#taskEffortFocus", "all")
+    page.locator('[data-task-tab="complex"]').click()
+    expect(page.locator("#taskEffortLegend")).to_contain_text("Meta")
+    page.locator('[data-task-pill="muse-wonder-full"]').click()
+    expect(page.locator("#taskEffortDetail")).to_contain_text("未提供耗时")
+    require("—m" not in page.locator("#taskEffortDetail").inner_text(), "Missing task time received a unit")
+    page.locator('[data-task-pill="muse-wonder-full"]').click()
+    page.locator("#taskEffortCard").screenshot(path=str(output / "v5-task-chart.png"))
 
     # Capability bump chart and its column header follow v5.
     page.locator('[data-panel="capabilities"]').click()
     expect(page.locator("#capBumpChart")).to_contain_text("AA 智能指数 v5.0")
     n_measured = sum(len(r["variants"]) for r in view["aa_release_series"]["releases"] if any(v.get("taskScores") for v in r["variants"]))
     expect(page.locator("#effortScalingChart .scaling-dot")).to_have_count(n_measured)
+    for task in tasks:
+        page.select_option("#effortScalingTask", task)
+        check_plot_y_bounds(page, "#effortScalingChart", 40, 60)
+    page.select_option("#effortScalingTask", "complex")
+    page.locator("#effortScalingChart").screenshot(path=str(output / "v5-effort-chart.png"))
 
     # Model profiles: AA rows equal the reference; models without v5 data show no AA picks.
     page.locator('[data-panel="profiles"]').click()

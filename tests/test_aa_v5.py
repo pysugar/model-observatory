@@ -1,6 +1,7 @@
 """AA Intelligence Index v5 bundle: v5-only task views, no v4.3.2 fill-ins, both versions kept apart."""
 
 from decimal import Decimal, ROUND_HALF_UP
+import importlib.util
 import json
 from pathlib import Path
 import unittest
@@ -16,14 +17,34 @@ class AaV5Tests(unittest.TestCase):
     def setUpClass(cls):
         cls.data = json.loads((ROOT / "report-data.json").read_text())
         cls.v5 = cls.data["aa_v5"]
-        cls.raw = json.loads((ROOT / "research/2026-10-31/aa-v5-series.json").read_text())
+        cls.raw = json.loads((ROOT / "research/2026-11-15/aa-v5-series.json").read_text())
+
+    def test_november_page_schema_preserves_explicit_identity_and_missing_values(self):
+        spec = importlib.util.spec_from_file_location("refresh_aa", ROOT / "research/2026-11-15/refresh_aa.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        model = {"id": "uuid-1", "slug": "explicit-variant", "name": "An unrelated display name",
+                 "capabilities": {"coding": 0}, "hleDiamond": 0,
+                 "briefcaseBreakdown": {"overall": {"elo": 1800}},
+                 "headline": {"outputSpeed": 100, "timeToFirstAnswerToken": 0}}
+        no_slug = {"id": "uuid-2", "name": "Do not infer a slug"}
+        result = module.records(json.dumps({"initialModels": [model, no_slug]}))
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]["slug"], "explicit-variant")
+        self.assertEqual(result[0]["capabilityScores"], {"coding": 0})
+        self.assertEqual(result[0]["evaluationScores"]["hleDiamond"], 0)
+        self.assertEqual(result[0]["evaluationScores"]["briefcaseElo"], 1800)
+        self.assertEqual(result[0]["timeToFirstAnswerToken"]["total"], 0)
+        missing = module.records(json.dumps({"initialModels": [{"id": "uuid-3", "slug": "missing"}]}))[0]
+        self.assertIsNone(missing["evaluationScores"]["briefcaseElo"])
+        self.assertIsNone(missing["medianOutputSpeed"])
 
     def test_versions_stay_separate(self):
         # v4.3.2 stays in the top-level keys; v5 lives in its own bundle and the page loads one of them.
         self.assertEqual(self.data["aa_release_series"]["version"], "v4.3.2")
         self.assertEqual(len(self.data["aa_release_series"]["releases"]), 30)
         self.assertEqual(self.v5["aa_release_series"]["version"], "v5.0")
-        self.assertEqual(len(self.v5["aa_release_series"]["releases"]), 20)
+        self.assertEqual(len(self.v5["aa_release_series"]["releases"]), 23)
 
     def test_unmeasured_models_are_listed_not_filled(self):
         unmeasured = {u["releaseSlug"] for u in self.v5["unmeasured"]}
@@ -38,9 +59,9 @@ class AaV5Tests(unittest.TestCase):
 
     def test_five_families_have_every_v5_evaluation(self):
         current = [r for r in self.v5["aa_release_series"]["releases"] if r["isTrackedFamily"] and r["isCurrent"]]
-        self.assertEqual(len(current), 16)
+        self.assertEqual(len(current), 19)
         variants = [v for r in current for v in r["variants"]]
-        self.assertEqual(len(variants), 54)
+        self.assertEqual(len(variants), 69)
         for v in variants:
             self.assertEqual(set(v["evalMetrics"]), set(self.raw["aa_effort_evals"]["evals"]))
             self.assertEqual(v["taskScores"], v5_task_scores(v["evalMetrics"]))
@@ -62,10 +83,10 @@ class AaV5Tests(unittest.TestCase):
         self.assertIsNone(v5_task_scores(m)["knowledge"])
         self.assertEqual(v5_task_scores(m)["coding"],40)
         meta = [r for r in self.v5["aa_release_series"]["releases"] if r["vendor"] == "Meta"]
-        self.assertEqual({r["releaseSlug"] for r in meta}, {"muse-wonder","muse-wonder-full","muse-spark-1-3"})
+        self.assertEqual({r["releaseSlug"] for r in meta}, {"muse-wonder","muse-wonder-full","muse-spark-1-3","muse-ember"})
         full = next(r for r in meta if r["releaseSlug"] == "muse-wonder-full")["variants"][0]
         self.assertIsNone(full["costPerTask"])
-        self.assertEqual(full["capabilities"], {})
+        self.assertEqual(len(full["capabilities"]), 6)  # newly published; costs remain unknown
         spark = next(r for r in meta if r["releaseSlug"] == "muse-spark-1-3")
         self.assertEqual([v["effort"] for v in spark["variants"]],["max"])
 
@@ -91,7 +112,7 @@ class AaV5Tests(unittest.TestCase):
                 self.assertAlmostEqual(row["score_exact"], variants[row["slug"]]["intelligenceIndex"], places=2)
 
     def test_v5_narrative_references(self):
-        self.assertEqual(render_claims("{{aa5:claude-opus-5-5:max:intelligenceIndex:1}}", self.data), "58.4")
+        self.assertEqual(render_claims("{{aa5:claude-opus-5-5:max:intelligenceIndex:1}}", self.data), "59.1")
         self.assertEqual(render_claims("{{aa:claude-opus-5-5:max:intelligenceIndex:1}}", self.data), "57.6")
         with self.assertRaises(ValueError):
             render_claims("{{aa5:claude-opus-5:max:intelligenceIndex:1}}", self.data)
