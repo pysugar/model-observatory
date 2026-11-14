@@ -20,6 +20,8 @@
 
 ## 当前项目状态（2026-11-15 模型与榜单刷新）
 
+[PR #39](https://github.com/pysugar/model-observatory/pull/39) 已合并并正式发布，main 合并提交为 `85ede18dbc344bd2c8f442e1a39b4db1fa808a7d`。79 项单元测试、完整 Chrome smoke、独立预览复核与正式双入口核验均通过；临时预览已清理，详见 [PR39 发布收束](RELEASES.md#2026-11-15-pr39-模型榜单与五厂顺序正式发布收束)。
+
 新增 **Claude Fable 5.2、Gemini 4 Hydrogen、Muse Ember**，Carbon 从受限观察改为公开 API 候选；Mythos 5.2 继续独立列为受限观察。规格与模型档案共 32 款，跨榜对照 22 款。同步复核主力价格、默认档位、Google 11-30 优惠期限和 Ember 严格 `>200k` 的长上下文计价，来源和限制见 [11-15 研究记录](research/2026-11-15/README.md)。
 
 AA v5 更新为 75 个榜单配置、23 个发布版本 / 73 个配置；Arena 更新到 11-11，LiveBench 切换到 11-06 新题集，Scale HLE Diamond 选录 19 项，OpenRouter 周用量截至 11-13。LiveBench 不跨题集计算涨跌；AA v4.3.2、旧专项实验和 10-29 社区声音保留各自日期。任务图按实测范围扩展纵轴，修复新成绩超出原坐标上限的问题。
