@@ -910,7 +910,7 @@ main { padding-top:35px; }
 .mp-pit { display:inline-block; font-size:10px; font-weight:700; border-radius:5px; padding:0 5px; margin:3px 3px 0 0; border:1px dashed var(--warn-line); color:var(--warn-ink); background:var(--warn-bg); }
 .mp-pit.k-regress { border-color:var(--neg); color:var(--neg); background:var(--paper); }
 .mp-pit.k-upgrade, .mp-pit.k-dominated { border-color:var(--info-line); color:var(--info-ink); background:var(--info-bg); }
-.mp-pit-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:12px 20px; }
+.mp-pit-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:12px 20px; }
 .mp-pit-group h4 { margin:6px 0 2px; font-size:15px; }
 .mp-pit-group ul { font-size:var(--fs-sm); padding-left:18px; margin:6px 0; }
 .mp-pit-group details summary { font-size:var(--fs-sm); color:var(--teal); cursor:pointer; }

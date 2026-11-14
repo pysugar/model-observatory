@@ -14,7 +14,7 @@ class ModelProfileTests(unittest.TestCase):
     def setUpClass(cls):
         cls.data = json.loads((ROOT / "report-data.json").read_text())
         cls.doc = cls.data["model_effort_profiles"]
-        cls.source = json.loads((ROOT / "research/2026-10-31/model-effort-profiles.json").read_text())
+        cls.source = json.loads((ROOT / "research/2026-11-15/model-effort-profiles.json").read_text())
 
     def test_build_embeds_the_frozen_research_file(self):
         self.assertEqual(self.doc, self.source)
@@ -150,8 +150,10 @@ class ModelProfileTests(unittest.TestCase):
         ids = {m["id"] for m in self.doc["models"]}
         for ev in self.doc["evidence"]:
             self.assertTrue(ev["url"].startswith("https://"), ev["id"])
-            self.assertEqual(ev["checkedAt"], "2026-10-24")
-            self.assertEqual(ev["verification"], "search-summary")
+            self.assertIn(ev["checkedAt"], {"2026-10-24", "2026-11-15"})
+            self.assertIn(ev["verification"], {"search-summary", "official-page", "source-page"})
+            if ev["checkedAt"] == "2026-10-24":
+                self.assertEqual(ev["verification"], "search-summary")
             self.assertTrue(set(ev["tasks"]) <= tasks and set(ev["modelIds"]) <= ids, ev["id"])
             for effort in (ev.get("efforts") or {}).values():
                 self.assertIn(effort, ["none", "minimal", "low", "medium", "high", "xhigh", "max"])

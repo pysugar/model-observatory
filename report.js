@@ -772,8 +772,8 @@
         ["OpenAI", AA_VENDOR_COLORS.OpenAI],
         ["Google", AA_VENDOR_COLORS.Google],
         ["SpaceXAI (xAI)", AA_VENDOR_COLORS.xAI],
+        ...(includeBackdropVendors || activeReleases.some(r => r.vendor === "Meta") ? [["Meta", AA_VENDOR_COLORS.Meta]] : []),
         ...(includeBackdropVendors ? [
-          ["Meta", AA_VENDOR_COLORS.Meta],
           ["Xiaomi", AA_VENDOR_COLORS.Xiaomi],
           ["DeepSeek", AA_VENDOR_COLORS.DeepSeek],
           ["Other Models", AA_VENDOR_COLORS.Other]
@@ -946,7 +946,7 @@
       yTicks: [0, 10, 20, 30, 40, 50, 60, 70],
       attractiveY: 50,
       attractiveX: 1.10,
-      subnote: "本报告任务视图（v5）：HLE-Diamond 与私有 CritPt v2 hard 子集的等权均值，不是 AA 单独发布的任务指数。Astra max {{aa5:gpt-6-astra:max:complex:1}}% 最高；Sol high {{aa5:gpt-6-1-sol:high:complex:1}}%，成本 ${{aa5:gpt-6-1-sol:high:costPerTask:2}}；Opus 5.5 low {{aa5:claude-opus-5-5:low:complex:1}}% → max {{aa5:claude-opus-5-5:max:complex:1}}%。点估计差异不证明统计显著性。",
+      subnote: "本报告任务视图（v5）：HLE-Diamond 与私有 CritPt v2 hard 子集的等权均值，不是 AA 单独发布的任务指数。Fable 5.2 max {{aa5:claude-fable-5-2:max:complex:1}}% 最高，Astra max {{aa5:gpt-6-astra:max:complex:1}}%；Sol high {{aa5:gpt-6-1-sol:high:complex:1}}%，成本 ${{aa5:gpt-6-1-sol:high:costPerTask:2}}；Opus 5.5 low {{aa5:claude-opus-5-5:low:complex:1}}% → max {{aa5:claude-opus-5-5:max:complex:1}}%。点估计差异不证明统计显著性。",
       getScore: v => v.taskScores?.complex
     },
     coding: {
@@ -988,7 +988,7 @@
       yTicks: [0, 10, 20, 30, 40, 50, 60, 70],
       attractiveY: 45,
       attractiveX: 1.10,
-      subnote: "本报告任务视图（v5）：Terminal-Bench-Science 的 70 个终端科研工作流，任务的每项测试都通过才计分；v5 不再计入 GDPval-AA，本视图改用这项长程代理评测。Astra max {{aa5:gpt-6-astra:max:agentic:1}}%、Opus 5.5 xhigh {{aa5:claude-opus-5-5:xhigh:agentic:1}}%（max {{aa5:claude-opus-5-5:max:agentic:1}}%）；Sol max {{aa5:gpt-6-1-sol:max:agentic:1}}% / ${{aa5:gpt-6-1-sol:max:costPerTask:2}}；Grok 4.7 high 只有 {{aa5:grok-4-7:high:agentic:1}}%。",
+      subnote: "本报告任务视图（v5）：Terminal-Bench-Science 的 70 个终端科研工作流，任务的每项测试都通过才计分；v5 不再计入 GDPval-AA，本视图改用这项长程代理评测。Fable 5.2 max {{aa5:claude-fable-5-2:max:agentic:1}}%、Astra max {{aa5:gpt-6-astra:max:agentic:1}}%、Opus 5.5 xhigh {{aa5:claude-opus-5-5:xhigh:agentic:1}}%（max {{aa5:claude-opus-5-5:max:agentic:1}}%）；Sol max {{aa5:gpt-6-1-sol:max:agentic:1}}% / ${{aa5:gpt-6-1-sol:max:costPerTask:2}}；Grok 4.7 high 只有 {{aa5:grok-4-7:high:agentic:1}}%。",
       getScore: v => v.taskScores?.agentic
     },
     automation: {
@@ -1002,7 +1002,7 @@
       yTicks: [0, 20, 40, 60, 80],
       attractiveY: 58,
       attractiveX: 1.10,
-      subnote: "本报告任务视图（v5）：直接展示 AutomationBench-AA 完成率。Argon high {{aa5:gemini-4-argon:high:automation:0}}% 最高，Sonnet 5.5 max {{aa5:claude-sonnet-5-5:max:automation:0}}%、Opus 5.5 max {{aa5:claude-opus-5-5:max:automation:0}}%；Sol high {{aa5:gpt-6-1-sol:high:automation:0}}%。同名档位不表示相同推理预算。",
+      subnote: "本报告任务视图（v5）：直接展示 AutomationBench-AA 完成率。Carbon high {{aa5:gemini-4-carbon:high:automation:1}}%、Argon high {{aa5:gemini-4-argon:high:automation:1}}%、Sonnet 5.5 max {{aa5:claude-sonnet-5-5:max:automation:1}}%、Opus 5.5 max {{aa5:claude-opus-5-5:max:automation:1}}%；Sol high {{aa5:gpt-6-1-sol:high:automation:1}}%。同名档位不表示相同推理预算。",
       getScore: v => v.taskScores?.automation
     },
     knowledge: {
@@ -1035,6 +1035,16 @@
     }
   };
   const TASK_DEFINITIONS = aaVersion === "v5" ? TASK_DEFINITIONS_V5 : TASK_DEFINITIONS_V4;
+  function taskPlotBounds(task, scores) {
+    const values=scores.filter(finite), step=task.yTicks.length>1 ? task.yTicks[1]-task.yTicks[0] : 10;
+    let [min,max]=task.yrange;
+    // Extend established axes when new measurements exceed them; never clip a score.
+    if(values.length && Math.min(...values)<min) min=Math.floor((Math.min(...values)-step*.1)/step)*step;
+    if(values.length && Math.max(...values)>max) max=Math.ceil((Math.max(...values)+step*.1)/step)*step;
+    const ticks=[];
+    for(let t=Math.ceil(min/step)*step;t<=max;t+=step) ticks.push(t);
+    return {range:[min,max],ticks};
+  }
   // Static tab and option labels in the template describe v4.3.2; rewrite them for v5.
   if (aaVersion === "v5") {
     const tabText = {complex:"复杂问题解决（HLE-Diamond + CritPt v2）",coding:"编程与软件工程（Terminal-Bench + FrontierCode）",
@@ -1137,9 +1147,9 @@
       const prevSc = idx > 0 ? taskDef.getScore(rel.variants[idx - 1]) : null;
       const delta = finite(sc) && finite(prevSc) ? sc - prevSc : null;
       const em = vr.evalMetrics || {};
-      return `<tr class="${vr.slug === v.slug ? "recommended-controller" : ""}"><th>${esc(vr.effort)} ${vr === best ? '<span class="badge">当前任务最佳档</span>' : ""}</th><td class="metric-value"><strong>${fmt(sc, taskDef.digits)}${taskDef.unit}</strong>${delta !== null ? `<span class="spec-detail ${delta < 0 ? "delta-negative" : "delta-positive"}">${delta > 0 ? "+" : ""}${fmt(delta, taskDef.digits)}</span>` : ""}</td><td class="metric-value">${fmt(vr.intelligenceIndex, 1)}</td>${detailEvalCells(em)}<td class="metric-value">${money(vr.costPerTask)}<span class="task-detail">${fmt(vr.timePerTaskMinutes, 2)}m · ${fmt(vr.outputTokensPerTask, 0)} tok</span></td></tr>`;
+      return `<tr class="${vr.slug === v.slug ? "recommended-controller" : ""}"><th>${esc(vr.effort)} ${vr === best ? '<span class="badge">当前任务最佳档</span>' : ""}</th><td class="metric-value"><strong>${fmt(sc, taskDef.digits)}${taskDef.unit}</strong>${delta !== null ? `<span class="spec-detail ${delta < 0 ? "delta-negative" : "delta-positive"}">${delta > 0 ? "+" : ""}${fmt(delta, taskDef.digits)}</span>` : ""}</td><td class="metric-value">${fmt(vr.intelligenceIndex, 1)}</td>${detailEvalCells(em)}<td class="metric-value">${money(vr.costPerTask)}<span class="task-detail">${finite(vr.timePerTaskMinutes) ? fmt(vr.timePerTaskMinutes, 2)+"m" : "未提供耗时"} · ${finite(vr.outputTokensPerTask) ? fmt(vr.outputTokensPerTask, 0)+" tok" : "未提供用量"}</span></td></tr>`;
     }).join("");
-    el.innerHTML = `<div class="topline"><h3><span class="swatch" style="display:inline-block;background:${rel.color};margin-right:7px"></span>${esc(rel.name)} · 全推理档位 × 主流任务实测明细（当前档位：${esc(v.effort)}）</h3><span class="tag">${esc(rel.vendor)} · ${rel.variants.length} 个已测档位 · ${v.evalSourceUrl ? link(v.evalSourceUrl, aaVersion === "v5" ? "AA 发布版本页来源" : "AA 比较页来源") : AAV.short}</span></div><div class="numbers"><div><b>${fmt(score, taskDef.digits)}${taskDef.unit}</b><span>当前维度：${esc(taskDef.shortLabel)}</span></div><div><b>${fmt(v.intelligenceIndex, 1)}</b><span>AA 智能指数</span></div><div><b>${money(v.costPerTask)}</b><span>单任务加权成本</span></div><div><b>${fmt(v.timePerTaskMinutes, 2)} 分钟</b><span>每任务推算耗时（${fmt(v.outputTokensPerTask, 0)} tok）</span></div></div><div class="table-scroll" style="margin-top:10px">${table(["推理档位","当前维度得分 / 升档差分","AA 智能指数",...DETAIL_EVAL_HEADS,"单任务成本 / 耗时 / 输出 Token"], rowsHtml)}</div>`;
+    el.innerHTML = `<div class="topline"><h3><span class="swatch" style="display:inline-block;background:${rel.color};margin-right:7px"></span>${esc(rel.name)} · 全推理档位 × 主流任务实测明细（当前档位：${esc(v.effort)}）</h3><span class="tag">${esc(rel.vendor)} · ${rel.variants.length} 个已测档位 · ${v.evalSourceUrl ? link(v.evalSourceUrl, aaVersion === "v5" ? "AA 发布版本页来源" : "AA 比较页来源") : AAV.short}</span></div><div class="numbers"><div><b>${fmt(score, taskDef.digits)}${taskDef.unit}</b><span>当前维度：${esc(taskDef.shortLabel)}</span></div><div><b>${fmt(v.intelligenceIndex, 1)}</b><span>AA 智能指数</span></div><div><b>${money(v.costPerTask)}</b><span>单任务加权成本</span></div><div><b>${finite(v.timePerTaskMinutes) ? fmt(v.timePerTaskMinutes, 2)+" 分钟" : "未提供"}</b><span>每任务推算耗时（${finite(v.outputTokensPerTask) ? fmt(v.outputTokensPerTask, 0)+" tok" : "未提供用量"}）</span></div></div><div class="table-scroll" style="margin-top:10px">${table(["推理档位","当前维度得分 / 升档差分","AA 智能指数",...DETAIL_EVAL_HEADS,"单任务成本 / 耗时 / 输出 Token"], rowsHtml)}</div>`;
   }
 
   function renderTaskEffortChart() {
@@ -1225,7 +1235,8 @@
     const lo = Math.min(0.0035, Math.min(...xs) * 0.8);
     const hi = Math.max(12, Math.max(...xs) * 1.25);
     const x = val => margin.left + (Math.log(val / lo) / Math.log(hi / lo)) * (width - margin.left - margin.right);
-    const [ymin, ymax] = taskDef.yrange;
+    const bounds = taskPlotBounds(taskDef, [...allForScale.map(taskDef.getScore), ...backdropMarket.map(p => p.score)]);
+    const [ymin, ymax] = bounds.range;
     const y = val => height - margin.bottom - ((val - ymin) / (ymax - ymin)) * (height - margin.top - margin.bottom);
 
     const parts = [`<title>${esc(taskDef.title)}</title>`];
@@ -1238,19 +1249,19 @@
       showQuadrant: true
     });
 
-    taskDef.yTicks.forEach(t => {
+    bounds.ticks.forEach(t => {
       if (t >= ymin && t <= ymax) {
         parts.push(`<line x1="${margin.left}" x2="${width - margin.right}" y1="${y(t)}" y2="${y(t)}" stroke="#e5ebe3"/><text x="${margin.left - 10}" y="${y(t) + 4}" text-anchor="end" class="tick">${t}${taskDef.unit === "%" ? "%" : ""}</text>`);
       }
     });
-    const xTicks = [0.005, 0.01, 0.02, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10];
+    const xTicks = [0.005, 0.01, 0.02, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10, 20, 50, 100];
     xTicks.filter(t => t >= lo && t <= hi).forEach(t => {
       const tx = x(t);
       const label = "$" + (t < 0.01 ? t.toFixed(3) : t < 1 ? t.toFixed(2) : t === 2.5 ? "2.5" : t.toFixed(0));
       parts.push(`<line x1="${tx}" x2="${tx}" y1="${margin.top}" y2="${height - margin.bottom}" stroke="#eef2ec" stroke-dasharray="3 3"/><text x="${tx}" y="${height - margin.bottom + 22}" text-anchor="middle" class="tick">${esc(label)}</text>`);
     });
     parts.push(`<text x="${margin.left}" y="20" class="axis-label">${esc(taskDef.yLabel)}</text>`);
-    parts.push(`<text x="${(margin.left + width - margin.right) / 2}" y="${height - 12}" text-anchor="middle" class="axis-label">Cost per Task (USD, log scale · AA v4.3.2 单任务加权成本)</text>`);
+    parts.push(`<text x="${(margin.left + width - margin.right) / 2}" y="${height - 12}" text-anchor="middle" class="axis-label">Cost per Task (USD, log scale · ${AAV.short} 单任务加权成本)</text>`);
 
     // Backdrop market models (when intelligenceIndex is active) or faint full trajectories (when a single effort is focused)
     if (showBackdrop && taskDef.key === "intelligenceIndex") {
@@ -1472,10 +1483,11 @@
     $("effortScalingScope").innerHTML=`${esc(task.shortLabel)}。原生档位是离散类别，不同模型的同名档位不等预算、不代表连续强度；不假定 non-reasoning 是每款模型的起点。${isOS?'厂商自报（provider-reported）。non-reasoning 未测，不补点。'+link(sweep.source,'发布页来源'):'缺少分数不连线。'}`;
     const width=Math.max(760,Math.round(svg.getBoundingClientRect().width || 1100)), height=440,m={left:68,right:145,top:40,bottom:60};
     const x=i=>m.left+i/Math.max(1,efforts.length-1)*(width-m.left-m.right);
-    const [min,max]=task.yrange, y=v=>height-m.bottom-(v-min)/(max-min)*(height-m.top-m.bottom);
+    const bounds=taskPlotBounds(task,models.flatMap(r=>r.points.map(p=>p.score)));
+    const [min,max]=bounds.range, y=v=>height-m.bottom-(v-min)/(max-min)*(height-m.top-m.bottom);
     svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.setAttribute('height',height);
     const parts=[`<title>各模型在已测推理档位下的成绩 · ${esc(task.shortLabel)}</title>`];
-    task.yTicks.forEach(t=>parts.push(`<line x1="${m.left}" x2="${width-m.right}" y1="${y(t)}" y2="${y(t)}" stroke="#e3e9e1"/><text x="${m.left-10}" y="${y(t)+4}" text-anchor="end" class="tick">${t}</text>`));
+    bounds.ticks.forEach(t=>parts.push(`<line x1="${m.left}" x2="${width-m.right}" y1="${y(t)}" y2="${y(t)}" stroke="#e3e9e1"/><text x="${m.left-10}" y="${y(t)+4}" text-anchor="end" class="tick">${t}</text>`));
     efforts.forEach((eff,i)=>parts.push(`<text x="${x(i)}" y="${height-35}" text-anchor="middle" class="tick">${eff}</text>`));
     parts.push(`<text x="${m.left}" y="20" class="axis-label">${esc(task.yLabel)}</text><text x="${width/2}" y="${height-10}" text-anchor="middle" class="axis-label">已测原生档位 · 离散类别 · 同名不等预算</text>`);
     const labels=[];
@@ -2472,7 +2484,7 @@
     $("boardButtons").querySelectorAll("button").forEach(button => button.addEventListener("click", () => selectMarketBoard(button.dataset.board)));
     $("marketUpdates").innerHTML = market.changes.map((change,i) => `<div class="research-update"><span class="update-index">0${i+1}</span><div><h4>${esc(change.title)}</h4><p>${esc(change.body)}</p></div></div>`).join("");
     $("priceCalendar").innerHTML = DATA.models.filter(model => model.promo_end && finite(model.future_input)).map(model => `<div class="price-event"><time datetime="${esc(model.promo_end)}">${esc(model.promo_end)}</time><b>${esc(model.name)}</b><p>输入 / 输出：${money(model.input)} / ${money(model.output)}<br>结束后 ${money(model.future_input)} / ${money(model.future_output)}<small>USD / 百万 token · ${link(model.price_source,"官方价格")}</small></p></div>`).join("");
-    $("officialChecks").innerHTML = '<span class="small">官方价格 · 各项核验日期</span>' + market.official_sources.map(source => `<a href="${esc(source.url)}" target="_blank" rel="noopener" title="${esc(source.note)}"><span aria-hidden="true">✓</span> ${esc(source.vendor)} <span class="check-date">${esc(source.checked_at)}</span><span aria-hidden="true">↗</span></a>`).join("");
+    $("officialChecks").innerHTML = '<span class="small">官方来源 · 各项核验日期</span>' + market.official_sources.map(source => `<a href="${esc(source.url)}" target="_blank" rel="noopener" title="${esc(source.note)}"><span aria-hidden="true">✓</span> ${esc(source.vendor)} <span class="check-date">${esc(source.checked_at)}</span><span aria-hidden="true">↗</span></a>`).join("");
   }
   $("marketSearch").addEventListener("input", () => {marketState.expanded=false;renderMarket();});
   ["marketVendor","marketSort"].forEach(id => $(id).addEventListener("change", () => {marketState.expanded=false;renderMarket();}));

@@ -2,6 +2,7 @@
 
 import math
 import re
+from decimal import Decimal, ROUND_HALF_UP
 
 
 def render_claims(text, data):
@@ -28,6 +29,8 @@ def render_claims(text, data):
             value = record[metric]
         if not isinstance(value, (int, float)) or not math.isfinite(value):
             raise ValueError(f"Missing or invalid narrative value: {reference}")
-        return f"{value:.{digits}f}"
+        # Match Intl.NumberFormat's default half-expand rounding in the charts.
+        rounded = Decimal(str(value)).quantize(Decimal(1).scaleb(-int(digits)), rounding=ROUND_HALF_UP)
+        return f"{rounded:.{digits}f}"
 
     return re.sub(r"\{\{(aa5|aa|row):([^{}]+)\}\}", replace, text)
