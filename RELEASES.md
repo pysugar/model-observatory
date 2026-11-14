@@ -237,3 +237,23 @@
 成本页明确区分当前 AA 与历史 v4.3.2，标题随成本 / 耗时 / Token 横轴切换；纵轴完整容纳低分配置，缺横轴型号在图旁说明，缺价单点不标为计算出的甜蜜点。Carbon / Wonder Full 直接标注访问限制；发布版本 CSV 保留指数版本、快照、来源和可用性。研究来源与限制见 [2026-10-31 研究记录](research/2026-10-31/README.md)；CI 与页面验收不等于重新运行或独立复现公开评测。
 
 本次在 Mac 本地完成实现与验证；最终源码的本地 77 项单元测试、静态构建和完整 Chrome smoke 已通过。发布后本地 `main` 已快进同步到上述合并提交，核验时工作区干净。验收记录保存在忽略目录 `test-results/pr37-release/verification.json`，同目录保留预览 / 正式产物、probe 结果及响应头记录；临时预览与 GitHub artifact 不作为永久归档入口。
+
+## 2026-11-15 PR39 模型榜单与五厂顺序正式发布收束
+
+[PR #39](https://github.com/pysugar/model-observatory/pull/39) 已于 **2026-11-15 02:33:23（Asia/Taipei）** 合并，并经既有 `release` 环境完成正式发布。以下是这次模型更新的验收记录，不自动追随后续文档发布；最新线上提交以 [version.json](https://models.localgpt.net/version.json) 为准。
+
+| 阶段 | 已完成事实 |
+| --- | --- |
+| 最终源码与合并 | PR head `9650eb0cc28b47856c107adaca325c5b69a690ad`；main merge `85ede18dbc344bd2c8f442e1a39b4db1fa808a7d` |
+| PR CI | [run 43626693647](https://github.com/pysugar/model-observatory/actions/runs/43626693647) 成功：79 项单元测试、干净构建、产物审计、Wrangler dry-run 与完整 Chrome smoke |
+| 独立预览 | [run 43627003383](https://github.com/pysugar/model-observatory/actions/runs/43627003383) 成功；base `bd80181650500217a833277ffc09becdb9ed531c`、build `4e4b65890012f601920ea831ae0301683c6930e7`；Cloudflare preview deployment `57632de5-19a1-48d0-8f1e-cfb8d85cfbbd`。下载原 CI 产物后，稳定与固定预览地址的版本、资产哈希及响应头 probe 均 PASS |
+| 合并前页面复核 | 独立只读 GUI 复核确认五厂顺序、模型及价格边界。发现并修复正文与图表舍入差异、窄屏档案卡片溢出；最终 head 上 Fable 5.2 max 的复杂推理正文及图点均为 78.4%，320px 视口扣除滚动条后的根页面 `clientWidth=scrollWidth=305`，卡片未超出容器 |
+| main CI 与正式发布 | [run 43627257719](https://github.com/pysugar/model-observatory/actions/runs/43627257719) 成功：79 项单元测试、干净构建和完整 Chrome smoke；Environment=`release`，部署使用同次 CI 的不可变产物 |
+| 正式版本与双入口 | 下载正式 CI 产物后 `publish.py check` PASS（commit `85ede18`、clean、169 行 / 32 模型 / 65 来源）。对 [models.localgpt.net](https://models.localgpt.net) 与 [独立正式验收入口](https://model-observatory.openai-proxy-local.workers.dev) 执行 `publish.py probe` 均 PASS：版本、HTML / JSON / CSV 哈希和响应头匹配原产物 |
+| 正式页面复核 | 主站显示 `release / main / 85ede18`、2026-11-15 核验日期；五厂说明和卡片均为 OpenAI / Anthropic / Google / xAI / Meta。320px 视口下根页面 `clientWidth=scrollWidth=305`，无横向溢出 |
+| Cloudflare 版本 | `2eeb14ea-a6a1-4fd0-9812-06e4bac3c840`，取自正式上传日志 |
+| 预览清理 | [run 43627258510](https://github.com/pysugar/model-observatory/actions/runs/43627258510) 成功；[原预览评论](https://github.com/pysugar/model-observatory/pull/39#issuecomment-6882154228) 已更新为清理完成 |
+
+上线内容：新增 Claude Fable 5.2、Gemini 4 Hydrogen、Muse Ember，Carbon 改为公开 API 候选；五厂速览采用 OpenAI / Anthropic / Google / xAI / Meta 顺序。AA v5 更新为 75 个榜单配置、23 个发布版本 / 73 个配置；Arena 11-11、LiveBench 11-06 新题集、Scale HLE Diamond 和 OpenRouter 11-13 同步更新。目录和模型档案共 32 款，跨榜对照 22 款；AA v4.3.2、专项历史记录和 10-29 社区声音保留各自快照。来源、价格条件与未核实项见 [11-15 研究记录](research/2026-11-15/README.md)。CI 与页面检查不等于付费复跑或独立复现公开评测。
+
+首次 PR CI 因 `ubuntu-latest` 切到 Ubuntu 26.04，与锁定的 Playwright 1.58 浏览器依赖不兼容而失败；验证任务固定为 Ubuntu 24.04 后恢复。未修改浏览器 sandbox、发布入口、生产配置或凭据。Mac 本地验证、最后预览及正式探针结果保存在忽略目录 `test-results/refresh-2026-11-15/`；临时预览和限期 CI artifact 不作为永久入口。
