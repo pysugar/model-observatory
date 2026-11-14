@@ -6,7 +6,7 @@
 
 ## 本地验证
 
-需要 Python 3.11+、Node.js 24+。CI 固定 Python 3.13 / Node 24，Python 与 npm 依赖分别锁在 `requirements-test.txt`、`package-lock.json`。
+需要 Python 3.11+、Node.js 24+。CI 验证任务固定 Ubuntu 24.04 / Python 3.13 / Node 24，Python 与 npm 依赖分别锁在 `requirements-test.txt`、`package-lock.json`。`ubuntu-latest` 切换到 26.04 后，锁定的 Playwright 1.58 无法安装对应 ffmpeg（[失败记录](https://github.com/pysugar/model-observatory/actions/runs/43625598756)）；固定受支持系统，保留浏览器 sandbox 和完整验证步骤。
 
 ```sh
 python3 -m venv .venv
