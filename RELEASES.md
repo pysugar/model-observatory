@@ -238,6 +238,25 @@
 
 本次在 Mac 本地完成实现与验证；最终源码的本地 77 项单元测试、静态构建和完整 Chrome smoke 已通过。发布后本地 `main` 已快进同步到上述合并提交，核验时工作区干净。验收记录保存在忽略目录 `test-results/pr37-release/verification.json`，同目录保留预览 / 正式产物、probe 结果及响应头记录；临时预览与 GitHub artifact 不作为永久归档入口。
 
+## 2026-11-18 PR41 GPT-6.2 与概览界面正式发布收束
+
+[PR #41](https://github.com/pysugar/model-observatory/pull/41) 已于 **2026-11-18 02:49:55（Asia/Taipei）** 合并，并经既有 `release` 环境完成正式发布。以下是这次更新的验收记录，不自动追随后续文档发布；最新线上提交以 [version.json](https://models.localgpt.net/version.json) 为准。
+
+| 阶段 | 已完成事实 |
+| --- | --- |
+| 最终源码与合并 | PR head `c188df2196eadc9d4a25472df2b3ee32192dbf62`；main merge `ba65af7370240d772a69cc9bf1801dd7b524651b` |
+| PR CI | [run 44151342032](https://github.com/pysugar/model-observatory/actions/runs/44151342032) 成功；合并前 Mac 本地另跑 79 项单元测试、`publish.py build` / `check` 与完整 Chrome smoke（1440 / 390 / 320，v4 / v5）均通过 |
+| 独立预览与复核 | 用户要求 CI 通过后直接合并。[run 44151944380](https://github.com/pysugar/model-observatory/actions/runs/44151944380) 因 PR 已关闭按设计跳过部署，交由关闭事件清理；本次没有独立预览复核，研究变化也未经独立复核者查看 |
+| main CI 与正式发布 | [run 44152063306](https://github.com/pysugar/model-observatory/actions/runs/44152063306) 成功：verify 与 deploy 两个 job 均通过；Environment=`release`，部署使用同次 CI 的不可变产物 |
+| 正式版本与双入口 | 下载正式 CI 产物后 `publish.py check` PASS（commit `ba65af7`、clean、169 行 / 34 模型 / 70 来源）。对 [models.localgpt.net](https://models.localgpt.net) 与 [独立正式验收入口](https://model-observatory.openai-proxy-local.workers.dev) 执行 `publish.py probe` 均 PASS：版本、HTML / JSON / CSV 哈希和响应头匹配原产物 |
+| 正式页面复核 | 主站页脚显示 `release · 分支 main · commit ba65af7`，页首为 2026-11-18 核验并显示“GPT-6.2 Astra / Sol 上线”入口；五厂速览 5 张卡片，GPT-6.2 Astra / Sol 与 Hydrogen 标“新”。1440 与 320 视口无横向溢出、无脚本错误。**遗留**：页脚“报告更新”文字仍写 2026-11-15，是模板中的固定文字，待后续修正 |
+| Cloudflare 版本 | `068cd292-0525-422b-80f3-19527829506c`，取自正式上传日志 |
+| 预览清理 | [run 44152065343](https://github.com/pysugar/model-observatory/actions/runs/44152065343) 成功；[原预览评论](https://github.com/pysugar/model-observatory/pull/41#issuecomment-6957666577) 已更新为清理完成 |
+
+上线内容：新增 GPT-6.2 Astra / Sol（11-17 发布）的官方规格、Standard 价格与 AA v5 五档成绩；GPT-6 Astra / 6.1 Sol 改为上一代仍可用。AA v5 更新为 71 个榜单配置、25 个发布版本 / 83 个配置，既有配置分数与费用与 11-15 一致；Sol 6.2 只有 max 有 AA 任务费用，其余档保持缺值。Arena、LiveBench、Scale、OpenRouter 尚未收录 GPT-6.2，保留 11-15 快照。目录和模型档案共 34 款，跨榜对照 24 款。界面上，五厂速览按模型分组并对齐档位、分数与费用，页首新增本期更新入口，手机端五厂卡片横向滑动、最新榜单行压缩；只有一个带费用档位的模型不再标为甜蜜点。来源与未核实项见 [11-18 研究记录](research/2026-11-18/README.md)。CI 与页面检查不等于付费复跑或独立复现公开评测。
+
+Mac 本地验证、正式产物与双入口探针结果保存在忽略目录 `test-results/refresh-2026-11-18/`；临时预览和限期 CI artifact 不作为永久入口。
+
 ## 2026-11-15 PR39 模型榜单与五厂顺序正式发布收束
 
 [PR #39](https://github.com/pysugar/model-observatory/pull/39) 已于 **2026-11-15 02:33:23（Asia/Taipei）** 合并，并经既有 `release` 环境完成正式发布。以下是这次模型更新的验收记录，不自动追随后续文档发布；最新线上提交以 [version.json](https://models.localgpt.net/version.json) 为准。
