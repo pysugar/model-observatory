@@ -2474,6 +2474,7 @@
   function renderMarketIntro() {
     $("snapshotDate").textContent = market.reviewed_at;
     $("reviewDate").textContent = `${market.reviewed_at} 核验`;
+    $("footerDate").textContent = market.reviewed_at;
     $("heroNewsText").textContent = market.changes[0]?.title || "查看本期更新";
     document.querySelector(".edition b").textContent = market.reviewed_at.slice(5).replace("-", " / ");
     $("heroStats").innerHTML = [[market.boards.length,"主流榜单"],[DATA.models.length,"规格型号"],[Object.keys(DATA.aa_effort_evals.variants).length,"已测档位"],[market.boards.reduce((n,b)=>n+b.rows.length,0),"榜单选录"]].map(([value,label]) => `<span><b>${value}</b>${label}</span>`).join("");

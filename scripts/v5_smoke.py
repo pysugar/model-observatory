@@ -117,6 +117,8 @@ def check_v5_views(page, data, origin, output):
     page.select_option("#priceScenario", scenario)
     page.locator('[data-panel="overview"]').click()
     expect(page.locator("#vendorCoverage .vendor-card")).to_have_count(5)
+    # Footer and hero dates both follow the snapshot review date, so neither goes stale on refresh.
+    expect(page.locator("#footerDate")).to_have_text(data["market_snapshot"]["reviewed_at"])
     page.select_option("#marketVendor", "Meta")
     expect(page.locator("#marketTable tbody tr")).to_have_count(6)
     expect(page.locator("#marketTable")).to_contain_text("Muse Spark 1.3")
