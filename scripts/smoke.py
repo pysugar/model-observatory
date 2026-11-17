@@ -255,7 +255,7 @@ def check_market_ui(page, data, output):
     page.locator('[data-board="aa5"]').click()
     expect(page.locator("#boardMethod")).to_be_visible()
     expect(page.locator("#marketTable tbody tr").first).to_contain_text("Claude Fable 5.2")
-    expect(page.locator("#marketTable")).to_contain_text("+4 · 原 53")
+    expect(page.locator("#marketTable")).to_contain_text("+1 · 原 58")
     require(not page.locator("#marketSort option[value=cost]").evaluate("o => o.disabled"), "AA v5 cost sort disabled")
     page.select_option("#marketSort", "cost")
     expect(page.locator("#marketTable tbody tr").first).to_contain_text("GPT-6 Luna")

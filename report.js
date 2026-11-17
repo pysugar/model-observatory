@@ -946,7 +946,7 @@
       yTicks: [0, 10, 20, 30, 40, 50, 60, 70],
       attractiveY: 50,
       attractiveX: 1.10,
-      subnote: "本报告任务视图（v5）：HLE-Diamond 与私有 CritPt v2 hard 子集的等权均值，不是 AA 单独发布的任务指数。Fable 5.2 max {{aa5:claude-fable-5-2:max:complex:1}}% 最高，Astra max {{aa5:gpt-6-astra:max:complex:1}}%；Sol high {{aa5:gpt-6-1-sol:high:complex:1}}%，成本 ${{aa5:gpt-6-1-sol:high:costPerTask:2}}；Opus 5.5 low {{aa5:claude-opus-5-5:low:complex:1}}% → max {{aa5:claude-opus-5-5:max:complex:1}}%。点估计差异不证明统计显著性。",
+      subnote: "本报告任务视图（v5）：HLE-Diamond 与私有 CritPt v2 hard 子集的等权均值，不是 AA 单独发布的任务指数。Fable 5.2 max {{aa5:claude-fable-5-2:max:complex:1}}% 最高；Astra 6.2 max {{aa5:gpt-6-2-astra:max:complex:1}}%，成本 ${{aa5:gpt-6-2-astra:max:costPerTask:2}}，不到 Fable 5.2 max 的六分之一；Sol 6.2 max {{aa5:gpt-6-2-sol:max:complex:1}}%（${{aa5:gpt-6-2-sol:max:costPerTask:2}}）；Opus 5.5 low {{aa5:claude-opus-5-5:low:complex:1}}% → max {{aa5:claude-opus-5-5:max:complex:1}}%。点估计差异不证明统计显著性。",
       getScore: v => v.taskScores?.complex
     },
     coding: {
@@ -960,7 +960,7 @@
       yTicks: [0, 10, 20, 30, 40, 50, 60],
       attractiveY: 40,
       attractiveX: 1.10,
-      subnote: "本报告任务视图（v5）：Terminal-Bench 4.0 与 Cognition 私有 FrontierCode 2.0（按维护者是否会合并评分）的等权均值，不是通用软件工程通过率。Opus 5.5 max {{aa5:claude-opus-5-5:max:coding:1}}%、Sonnet 5.5 max {{aa5:claude-sonnet-5-5:max:coding:1}}%；Sol high {{aa5:gpt-6-1-sol:high:coding:1}}%（${{aa5:gpt-6-1-sol:high:costPerTask:2}}）。Vulcan 的题集、脚手架与成本另列。",
+      subnote: "本报告任务视图（v5）：Terminal-Bench 4.0 与 Cognition 私有 FrontierCode 2.0（按维护者是否会合并评分）的等权均值，不是通用软件工程通过率。Astra 6.2 xhigh {{aa5:gpt-6-2-astra:xhigh:coding:1}}% 最高（${{aa5:gpt-6-2-astra:xhigh:costPerTask:2}}），max 反而略低（{{aa5:gpt-6-2-astra:max:coding:1}}%）；Fable 5.2 xhigh {{aa5:claude-fable-5-2:xhigh:coding:1}}%、Opus 5.5 max {{aa5:claude-opus-5-5:max:coding:1}}%；Sol 6.2 max {{aa5:gpt-6-2-sol:max:coding:1}}%（${{aa5:gpt-6-2-sol:max:costPerTask:2}}）。Vulcan 的题集、脚手架与成本另列。",
       getScore: v => v.taskScores?.coding
     },
     planning: {
@@ -988,7 +988,7 @@
       yTicks: [0, 10, 20, 30, 40, 50, 60, 70],
       attractiveY: 45,
       attractiveX: 1.10,
-      subnote: "本报告任务视图（v5）：Terminal-Bench-Science 的 70 个终端科研工作流，任务的每项测试都通过才计分；v5 不再计入 GDPval-AA，本视图改用这项长程代理评测。Fable 5.2 max {{aa5:claude-fable-5-2:max:agentic:1}}%、Astra max {{aa5:gpt-6-astra:max:agentic:1}}%、Opus 5.5 xhigh {{aa5:claude-opus-5-5:xhigh:agentic:1}}%（max {{aa5:claude-opus-5-5:max:agentic:1}}%）；Sol max {{aa5:gpt-6-1-sol:max:agentic:1}}% / ${{aa5:gpt-6-1-sol:max:costPerTask:2}}；Grok 4.7 high 只有 {{aa5:grok-4-7:high:agentic:1}}%。",
+      subnote: "本报告任务视图（v5）：Terminal-Bench-Science 的 70 个终端科研工作流，任务的每项测试都通过才计分；v5 不再计入 GDPval-AA，本视图改用这项长程代理评测。Astra 6.2 xhigh {{aa5:gpt-6-2-astra:xhigh:agentic:1}}% 最高、medium 已达 {{aa5:gpt-6-2-astra:medium:agentic:1}}%；Fable 5.2 max {{aa5:claude-fable-5-2:max:agentic:1}}%、上一代 Astra max {{aa5:gpt-6-astra:max:agentic:1}}%、Opus 5.5 xhigh {{aa5:claude-opus-5-5:xhigh:agentic:1}}%（max {{aa5:claude-opus-5-5:max:agentic:1}}%）；Sol max {{aa5:gpt-6-1-sol:max:agentic:1}}% / ${{aa5:gpt-6-1-sol:max:costPerTask:2}}；Grok 4.7 high 只有 {{aa5:grok-4-7:high:agentic:1}}%。",
       getScore: v => v.taskScores?.agentic
     },
     automation: {
@@ -1002,7 +1002,7 @@
       yTicks: [0, 20, 40, 60, 80],
       attractiveY: 58,
       attractiveX: 1.10,
-      subnote: "本报告任务视图（v5）：直接展示 AutomationBench-AA 完成率。Carbon high {{aa5:gemini-4-carbon:high:automation:1}}%、Argon high {{aa5:gemini-4-argon:high:automation:1}}%、Sonnet 5.5 max {{aa5:claude-sonnet-5-5:max:automation:1}}%、Opus 5.5 max {{aa5:claude-opus-5-5:max:automation:1}}%；Sol high {{aa5:gpt-6-1-sol:high:automation:1}}%。同名档位不表示相同推理预算。",
+      subnote: "本报告任务视图（v5）：直接展示 AutomationBench-AA 完成率。Carbon high {{aa5:gemini-4-carbon:high:automation:1}}%、Argon high {{aa5:gemini-4-argon:high:automation:1}}%、Sonnet 5.5 max {{aa5:claude-sonnet-5-5:max:automation:1}}%、Opus 5.5 max {{aa5:claude-opus-5-5:max:automation:1}}%；Astra 6.2 max {{aa5:gpt-6-2-astra:max:automation:1}}%，Sol 6.2 max {{aa5:gpt-6-2-sol:max:automation:1}}%。同名档位不表示相同推理预算。",
       getScore: v => v.taskScores?.automation
     },
     knowledge: {
@@ -1016,7 +1016,7 @@
       yTicks: [-10, 0, 10, 20, 30, 40],
       attractiveY: 30,
       attractiveX: 1.10,
-      subnote: "本报告自定义合成分（v5）：(2 × GDP.pdf + 3 × AA-Omniscience v1.1) / 5；v5 不再计入 AA-LCR，因此去掉长上下文项。Omniscience 指数在幻觉多于答对时为负，所以合成分可以低于 0。Opus 5.5 max {{aa5:claude-opus-5-5:max:knowledge:1}} 分、Astra high {{aa5:gpt-6-astra:high:knowledge:1}} 分；Luna max {{aa5:gpt-6-luna:max:knowledge:1}} 分。档位变化不证明幻觉变化的原因。",
+      subnote: "本报告自定义合成分（v5）：(2 × GDP.pdf + 3 × AA-Omniscience v1.1) / 5；v5 不再计入 AA-LCR，因此去掉长上下文项。Omniscience 指数在幻觉多于答对时为负，所以合成分可以低于 0。Fable 5.2 max {{aa5:claude-fable-5-2:max:knowledge:1}} 分、Opus 5.5 max {{aa5:claude-opus-5-5:max:knowledge:1}} 分、Astra 6.2 max {{aa5:gpt-6-2-astra:max:knowledge:1}} 分；Luna max {{aa5:gpt-6-luna:max:knowledge:1}} 分。档位变化不证明幻觉变化的原因。",
       getScore: v => v.taskScores?.knowledge
     },
     intelligenceIndex: {
@@ -1827,8 +1827,11 @@
     const best=Math.max(...vs.map(x=>x.score)), top=vs[vs.length-1], peak=vs.find(x=>x.score===best);
     const threshold=sweetThreshold(task,tol,releases);
     const pick=kneeOf(vs,threshold)||peak;
-    return {vs,best,pick,top,peak,threshold,topDrop:vs.length>1&&top.score<best-(task.elo?10:0.5),single:vs.length===1};
+    // A knee compares at least two priced efforts; with fewer, the pick is only the priced point, not a sweet spot.
+    const priced=vs.filter(x=>finite(x.cost)&&x.cost>0).length;
+    return {vs,best,pick,top,peak,threshold,topDrop:vs.length>1&&top.score<best-(task.elo?10:0.5),single:vs.length===1,priced};
   }
+  const sweetUnpricedLabel=res=>res.priced?`仅 ${res.pick.v?.effort||res.pick.effort} 有费用`:"费用未测";
   function sweetCheaper(task,pick,releases,selfSlug){
     if(!finite(pick.cost)) return null;
     let alt=null;
@@ -1901,8 +1904,8 @@
       const refs=sweetRefs(r,t,tol), refList=[refs.official?{tag:refs.official.kind,e:refs.official.effort}:null,...refs.community.map(c=>({tag:"社区",e:c.effort}))].filter(Boolean);
       const agree=refList.length&&refList.every(x=>x.e===res.pick.v.effort);
       const refLine=refList.length?`<span class="ss-refs">${refList.map(x=>`<span class="${x.e===res.pick.v.effort?"same":""}">${esc(x.tag)} ${esc(x.e)}${x.e===res.pick.v.effort?" ✓":""}</span>`).join("")}</span>`:"";
-      const flags=[agree&&refList.length>1?`<span class="ss-flag agree">共识</span>`:"",frontier?`<span class="ss-flag front">性价比前沿</span>`:"",res.topDrop?`<span class="ss-flag warn">顶档回落</span>`:"",res.single?`<span class="ss-flag info">仅测 ${esc(res.pick.v.effort)}</span>`:""].join("");
-      return `<td class="ss-cell${sel?" selected":""}${frontier?" frontier":alt?" dominated":""}" style="--heat:${heat(t,res.pick.score).toFixed(2)}" tabindex="0" role="button" aria-pressed="${sel}" data-ss-model="${esc(r.releaseSlug)}" data-ss-task="${t.key}" aria-label="${esc(`${r.shortName||r.name} ${t.label} ${res.single?"已测单点":finite(res.pick.cost)?"甜蜜点":"最高已测"} ${res.pick.v.effort}，${sweetFmt(t,res.pick.score)}，${money(res.pick.cost)}`)}"><span class="ss-top"><b class="ss-effort e-${esc(res.pick.v.effort)}">${esc(res.pick.v.effort)}</b>${sparkline(res,t)}</span><span class="ss-meta">${sweetFmt(t,res.pick.score)} · ${finite(res.pick.cost)?money(res.pick.cost):"费用未测"}</span>${refLine}${flags}</td>`;}).join("")}</tr>`).join("");
+      const flags=[agree&&refList.length>1?`<span class="ss-flag agree">共识</span>`:"",frontier?`<span class="ss-flag front">性价比前沿</span>`:"",res.topDrop?`<span class="ss-flag warn">顶档回落</span>`:"",res.single?`<span class="ss-flag info">仅测 ${esc(res.pick.v.effort)}</span>`:res.priced<2?`<span class="ss-flag info">${esc(sweetUnpricedLabel(res))}</span>`:""].join("");
+      return `<td class="ss-cell${sel?" selected":""}${frontier?" frontier":alt?" dominated":""}" style="--heat:${heat(t,res.pick.score).toFixed(2)}" tabindex="0" role="button" aria-pressed="${sel}" data-ss-model="${esc(r.releaseSlug)}" data-ss-task="${t.key}" aria-label="${esc(`${r.shortName||r.name} ${t.label} ${res.single?"已测单点":res.priced>=2?"甜蜜点":sweetUnpricedLabel(res)+"，无法选档"} ${res.pick.v.effort}，${sweetFmt(t,res.pick.score)}，${money(res.pick.cost)}`)}"><span class="ss-top"><b class="ss-effort e-${esc(res.pick.v.effort)}">${esc(res.pick.v.effort)}</b>${sparkline(res,t)}</span><span class="ss-meta">${sweetFmt(t,res.pick.score)} · ${finite(res.pick.cost)?money(res.pick.cost):"费用未测"}</span>${refLine}${flags}</td>`;}).join("")}</tr>`).join("");
     host.innerHTML=`<table class="sweet-table"><thead>${head}</thead><tbody>${body}</tbody></table>`;
     host.querySelectorAll(".ss-cell").forEach(cell=>{
       const open=()=>{sweetView.model=cell.dataset.ssModel;sweetView.task=cell.dataset.ssTask;renderSweetSpot();renderSweetDetail();host.querySelector(`[data-ss-model="${sweetView.model}"][data-ss-task="${sweetView.task}"]`)?.focus();};
@@ -1918,10 +1921,10 @@
     const all=sweetReleases(), tol=sweetTolerance[$("sweetTolerance")?.value]||sweetTolerance.balanced, res=sweetPick(r,t,tol,all), alt=sweetCheaper(t,res.pick,all,r.releaseSlug);
     const rows=res.vs.map((x,i)=>{const prev=res.vs[i-1];const ds=prev?x.score-prev.score:null,dc=prev&&finite(x.cost)&&finite(prev.cost)?x.cost-prev.cost:null;
       const dbl=finite(ds)&&finite(dc)&&prev.cost>0&&x.cost>prev.cost?ds/Math.log2(x.cost/prev.cost):null;
-      const tag=[x===res.pick?(res.single?"仅测单点":finite(x.cost)?"甜蜜点":"缺少费用，无法选档"):"",x===res.peak?"最高分":"",x===res.top&&res.topDrop?"顶档回落":""].filter(Boolean).join(" · ");
+      const tag=[x===res.pick?(res.single?"仅测单点":res.priced>=2?"甜蜜点":res.priced?"唯一有费用的档位，无法选档":"缺少费用，无法选档"):"",x===res.peak?"最高分":"",x===res.top&&res.topDrop?"顶档回落":""].filter(Boolean).join(" · ");
       return `<tr class="${x===res.pick?"is-pick":""}"><th>${esc(x.v.effort)}</th><td>${sweetFmt(t,x.score)}</td><td class="${ds>0?"delta-positive":ds<0?"delta-negative":""}">${finite(ds)?(ds>0?"+":"")+sweetFmt(t,ds):"—"}</td><td>${money(x.cost)}</td><td>${finite(dc)?(dc>0?"+":"")+money(dc):"—"}</td><td>${finite(ds)&&finite(dc)&&dc>0?sweetFmt(t,ds/dc)+" / $":"—"}</td><td class="${finite(dbl)?(dbl>=res.threshold?"delta-positive":"delta-negative"):""}">${finite(dbl)?(dbl>0?"+":"")+sweetFmt(t,dbl):"—"}</td><td>${tag||""}</td></tr>`;}).join("");
     box.innerHTML=`<h3>${esc(r.shortName||r.name)} · ${esc(t.label)}</h3><p class="small muted">${esc(t.sub)}${t.elo?"（Elo，只用于同一基准内比较）":""}</p><div class="table-scroll"><table class="sweet-detail-table"><thead><tr><th>档位</th><th>分数</th><th>比上一档</th><th>单任务成本</th><th>多花</th><th>每多花 $1 得分</th><th>成本每翻倍得分</th><th>标记</th></tr></thead><tbody>${rows}</tbody></table></div><p class="small muted">升档门槛：成本每翻一倍至少 +${sweetFmt(t,res.threshold)}（本列分差的 ${Math.round(tol.share*100)}%）。绿色表示这一步达到门槛，红色表示没有达到。</p>${(()=>{const refs=sweetRefs(r,t,tol),advice=sweetAdvice(res.pick.v.effort,refs);
-      const items=[`<li><b>${res.single?"仅测单点":finite(res.pick.cost)?"评测拐点":"最高已测"} ${esc(res.pick.v.effort)}</b>：${res.single||!finite(res.pick.cost)?"无法由此判断升档收益。":"AA 逐档数据，规则见矩阵上方。"}</li>`,
+      const items=[`<li><b>${res.single?"仅测单点":res.priced>=2?"评测拐点":res.priced?"仅此档有费用":"最高已测"} ${esc(res.pick.v.effort)}</b>：${res.single||res.priced<2?"无法由此判断升档收益。":"AA 逐档数据，规则见矩阵上方。"}</li>`,
         refs.official?`<li><b>${esc(refs.official.kind)}${refs.official.taskSpecific?"起点":"默认"} ${esc(refs.official.effort)}</b>：${esc(refs.official.note)} ${refs.official.url?link(refs.official.url,"来源"):""}</li>`:`<li><b>官方</b>：未核验到官方默认档位。</li>`,
         ...refs.community.map(c=>`<li><b>社区 · ${esc(c.label)} ${esc(c.effort)}</b>${c.n?`（n=${c.n}）`:""}：${esc(c.note)} ${c.url?link(c.url,"来源"):""}${c.rows?`<span class="task-detail">逐档通过率：${c.rows.slice().sort((a,b)=>capabilityEfforts.indexOf(a.effort)-capabilityEfforts.indexOf(b.effort)).map(x=>`${esc(x.effort)} ${fmt(x.score,1)}% / ${money(x.cost_usd)}`).join(" · ")}</span>`:""}</li>`)];
       return `<div class="ss-refs-detail"><h4>参考依据</h4><ul>${items.join("")}</ul>${advice?`<p class="ss-advice"><b>建议做法：</b>${esc(advice)}</p>`:""}</div>`;})()}${alt?`<p class="ss-alt-note">有更省的替代：<strong>${esc(alt.release.shortName||alt.release.name)} ${esc(alt.v.effort)}</strong> 得分 ${sweetFmt(t,alt.score)}，不低于当前甜蜜点，成本 ${money(alt.cost)}（当前为 ${money(res.pick.cost)}）。</p>`:""}`;
@@ -1964,7 +1967,7 @@
     const pts=points.filter(p=>finite(p.score));
     if(!pts.length) return null;
     const best=Math.max(...pts.map(p=>p.score)), peak=pts.find(p=>p.score===best), top=pts[pts.length-1];
-    return {pick:kneeOf(pts,threshold)||peak,peak,top,topDrop:pts.length>1&&top.score<best-(elo?10:0.5),single:pts.length===1,threshold};
+    return {pick:kneeOf(pts,threshold)||peak,peak,top,topDrop:pts.length>1&&top.score<best-(elo?10:0.5),single:pts.length===1,threshold,priced:pts.filter(p=>finite(p.cost)&&p.cost>0).length};
   }
   const mpSpread=values=>{const v=values.filter(finite);return v.length?Math.max(...v)-Math.min(...v):0;};
   const mpSort=pts=>pts.sort((a,b)=>mpEffortOrder.indexOf(a.effort)-mpEffortOrder.indexOf(b.effort));
@@ -2225,7 +2228,8 @@
   const mpCardPit=x=>`${x.p.effort} ${mpPitMeta[x.kind].label}`;
   // Worked example of the sweet-spot rule on one of this model's series.
   function mpExplain(a,tol){
-    const s=a.series.find(x=>x.key==="aa-ii"&&x.points.length>1)||a.series.find(x=>x.points.filter(p=>finite(p.cost)).length>1);
+    const priced=x=>x.points.filter(p=>finite(p.cost)&&p.cost>0).length>1;
+    const s=a.series.find(x=>x.key==="aa-ii"&&x.points.length>1&&priced(x))||a.series.find(priced);
     const general=`<p><b>甜蜜点是什么？</b>和“选档速查”里的甜蜜点是同一个东西，也就是<strong>边际收益拐点</strong>：从最便宜的已测档往上，每升一档看“成本每翻一倍，分数多涨多少”；只要不低于门槛就继续升，第一次低于门槛就停，停下的那一档就是甜蜜点。它回答“再多花钱还值不值”，不是“哪一档分数最高”。</p>
       <p><b>省钱 / 均衡 / 性能优先怎么定？</b>门槛 = 该评测里所有模型、所有已测档位的最高分减最低分（分差）× 比例：<strong>省钱 20%、均衡 12%、性能优先 6%</strong>。比例越小，越愿意为小幅提升多花钱，甜蜜点就越往高档走。比例是个人偏好预设，不是统计结论；成本只比较同一评测的相对费用。</p>`;
     if(!s) return general+`<p class="small muted">这款模型没有带费用的逐档曲线，无法演示计算过程。</p>`;
@@ -2283,7 +2287,7 @@
           const heat=hi===lo?0.5:(p.score-lo)/(hi-lo);
           const here=pitsAt(s,p), kinds=[...new Set(here.map(x=>x.kind))];
           const pitTags=showPits?kinds.map(k=>`<span class="mp-pit k-${k}" title="${esc(mpPitMeta[k].rule)}">${esc(mpPitMeta[k].short)}</span>`).join(""):"";
-          const marks=[r&&r.pick===p?(r.single?'<span class="mp-mark">仅测单点</span>':finite(p.cost)?'<span class="mp-mark pick" title="当前门槛下的甜蜜点">甜蜜点</span>':'<span class="mp-mark">缺少费用</span>'):"",r&&r.peak===p&&s.points.length>1&&r.pick!==p?'<span class="mp-mark peak" title="实测最高分">最高</span>':"",isStart?'<span class="mp-mark start" title="起步档">起步</span>':""].join("");
+          const marks=[r&&r.pick===p?(r.single?'<span class="mp-mark">仅测单点</span>':r.priced>=2?'<span class="mp-mark pick" title="当前门槛下的甜蜜点">甜蜜点</span>':r.priced?'<span class="mp-mark" title="其他档位缺少费用，无法计算甜蜜点">仅此档有费用</span>':'<span class="mp-mark">缺少费用</span>'):"",r&&r.peak===p&&s.points.length>1&&r.pick!==p?'<span class="mp-mark peak" title="实测最高分">最高</span>':"",isStart?'<span class="mp-mark start" title="起步档">起步</span>':""].join("");
           return `<td class="mp-cell has${r&&r.pick===p?" is-pick":""}${isStart?" is-start":""}" data-mp-effort="${esc(e)}" data-mp-pit="${kinds.join(" ")}" style="--heat:${heat.toFixed(2)}" aria-label="${esc(`${t.label} ${s.bench} ${e}：${mpFmt(s,p.score)} ${s.unit}，${finite(p.cost)?money(p.cost):"费用未测"}`)}"><span class="mp-score">${mpFmt(s,p.score)}</span><span class="mp-cost">${finite(p.cost)?money(p.cost):"费用未测"}${finite(p.time)?` · ${mpSec(p.time)}`:""}</span>${finite(dbl)?`<span class="mp-dbl ${dbl>=r.threshold?"delta-positive":"delta-negative"}" title="成本每翻一倍的得分变化">${dbl>0?"+":""}${fmt(dbl,s.digits)}/×2</span>`:""}${p.note?`<span class="task-detail">${esc(p.note)}</span>`:""}${marks}${pitTags}</td>`;
         }).join("");
         return `<tr class="mp-row${mpView.task===t.id?" selected":""}" data-mp-task="${t.id}" data-mp-series="${esc(s.key)}" data-mp-pick="${esc(r?.pick.effort||"")}">${label(s,i)}${cells}</tr>`;
@@ -2314,16 +2318,16 @@
     $("profileCards").innerHTML=(MP.taskAxis||[]).map(t=>{
       const ss=a.series.filter(s=>s.task===t.id), main=ss.find(s=>s.points.length>1)||ss.find(s=>s.points.length)||null;
       const r=main?.res[key], start=mpStart(a,t.id), ev=mpEvidence(entry.id,t.id);
-      const pick=r&&!r.single?r.pick.effort:null, thrifty=main?.res.thrifty&&!main.res.thrifty.single?main.res.thrifty.pick.effort:null, perf=main?.res.performance&&!main.res.performance.single?main.res.performance.pick.effort:null;
+      const knee=x=>x&&!x.single&&x.priced>=2?x.pick.effort:null, pick=knee(r), thrifty=knee(main?.res.thrifty), perf=knee(main?.res.performance);
       const ceil=ev.find(x=>x.efforts?.ceiling)?.efforts.ceiling;
       const rows=[
         `<div><dt>起步档</dt><dd>${start?`<b class="ss-effort e-${esc(start.effort)}">${esc(start.effort)}</b><span class="mp-kind">${esc(start.kind)}</span>`:'<span class="muted">未核验</span>'}</dd></div>`,
-        `<div><dt>甜蜜点</dt><dd>${pick?`<b class="ss-effort e-${esc(pick)}">${esc(pick)}</b><span class="mp-kind">${esc(main.bench)}</span>`:r?.single?`<span class="muted">仅测 ${esc(r.pick.effort)} 单点</span>`:'<span class="muted">无逐档实测</span>'}</dd></div>`,
+        `<div><dt>甜蜜点</dt><dd>${pick?`<b class="ss-effort e-${esc(pick)}">${esc(pick)}</b><span class="mp-kind">${esc(main.bench)}</span>`:r?.single?`<span class="muted">仅测 ${esc(r.pick.effort)} 单点</span>`:r?`<span class="muted">${r.priced?`仅 ${esc(r.pick.effort)} 有费用，无法计算`:"缺少费用，无法计算"}</span>`:'<span class="muted">无逐档实测</span>'}</dd></div>`,
         `<div><dt>降档候选</dt><dd>${thrifty&&thrifty!==pick?`<b class="ss-effort e-${esc(thrifty)}">${esc(thrifty)}</b><span class="mp-kind">省钱门槛</span>`:'<span class="muted">—</span>'}</dd></div>`,
         `<div><dt>升档上限</dt><dd>${perf&&perf!==pick?`<b class="ss-effort e-${esc(perf)}">${esc(perf)}</b><span class="mp-kind">性能优先门槛</span>`:ceil?`<b class="ss-effort e-${esc(ceil)}">${esc(ceil)}</b><span class="mp-kind">经验证据</span>`:'<span class="muted">—</span>'}</dd></div>`];
       const cardPits=showPits?pits.filter(x=>!x.config&&x.s.task===t.id):[];
       const flags=[r?.topDrop?'<span class="ss-flag warn">顶档回落</span>':"",ss.some(s=>s.points.some(p=>p.fallback))?'<span class="ss-flag info">含回退</span>':""].join("");
-      const others=ss.filter(s=>s!==main&&(s.points.length||s.unplaced)).map(s=>{const rr=s.res[key];return `<li>${esc(s.bench)}：${s.unplaced?esc(s.unplaced):rr?.single?`仅 ${esc(rr.pick.effort)} 单点 ${mpFmt(s,rr.pick.score)}${s.unit}`:`甜蜜点 <b>${esc(rr.pick.effort)}</b>（${mpFmt(s,rr.pick.score)}${s.unit}，${finite(rr.pick.cost)?money(rr.pick.cost):"费用未测"}）`} ${s.url?link(s.url,"来源"):""}</li>`;}).join("");
+      const others=ss.filter(s=>s!==main&&(s.points.length||s.unplaced)).map(s=>{const rr=s.res[key];return `<li>${esc(s.bench)}：${s.unplaced?esc(s.unplaced):rr?.single?`仅 ${esc(rr.pick.effort)} 单点 ${mpFmt(s,rr.pick.score)}${s.unit}`:rr.priced<2?`仅 ${esc(rr.pick.effort)} 有费用 ${mpFmt(s,rr.pick.score)}${s.unit}，无法计算甜蜜点`:`甜蜜点 <b>${esc(rr.pick.effort)}</b>（${mpFmt(s,rr.pick.score)}${s.unit}，${finite(rr.pick.cost)?money(rr.pick.cost):"费用未测"}）`} ${s.url?link(s.url,"来源"):""}</li>`;}).join("");
       return `<article class="mp-card${mpView.task===t.id?" selected":""}" id="profileCard-${t.id}"><header><h4>${esc(t.label)}</h4><span class="small muted">${esc(t.sub)}</span>${flags}</header><dl class="mp-ladder">${rows.join("")}</dl>
         <p class="mp-advice">${esc(mpCardAdvice(start,pick,thrifty,perf,ev,r?.single?r.pick.effort:null))}</p>
         ${others?`<ul class="mp-others">${others}</ul>`:""}
@@ -2470,6 +2474,7 @@
   function renderMarketIntro() {
     $("snapshotDate").textContent = market.reviewed_at;
     $("reviewDate").textContent = `${market.reviewed_at} 核验`;
+    $("heroNewsText").textContent = market.changes[0]?.title || "查看本期更新";
     document.querySelector(".edition b").textContent = market.reviewed_at.slice(5).replace("-", " / ");
     $("heroStats").innerHTML = [[market.boards.length,"主流榜单"],[DATA.models.length,"规格型号"],[Object.keys(DATA.aa_effort_evals.variants).length,"已测档位"],[market.boards.reduce((n,b)=>n+b.rows.length,0),"榜单选录"]].map(([value,label]) => `<span><b>${value}</b>${label}</span>`).join("");
     $("heroSignals").innerHTML = market.highlights.map(item => {
@@ -2494,13 +2499,36 @@
   document.querySelectorAll("[data-scroll]").forEach(button => button.addEventListener("click", () => {showPanel("overview");$(button.dataset.scroll)?.scrollIntoView({block:"start"});}));
   function renderVendorCoverage() {
     const board=market.boards.find(b=>b.id==="aa5");
-    const variants=DATA.aa_v5.aa_release_series.releases.flatMap(r=>r.variants.map(v=>({...v, release:r})));
-    $("vendorCoverage").innerHTML=(market.vendor_updates||[]).map(item=>`<article class="rail-card vendor-card"><h3>${esc(item.vendor)}</h3><ul>${item.slugs.map(slug=>{
-      const row=board.rows.find(r=>r.slug===slug), v=variants.find(v=>v.slug===slug);
-      const name=row?.model||v?.release.name||"Muse Spark 1.3";
-      const score=row?.score_exact??v?.intelligenceIndex, cost=row?.cost_usd??v?.costPerTask;
-      return `<li><b>${esc(name)}</b><span>${row?esc(row.configuration):v?esc(v.effort):"当前榜单缺测"} · ${finite(score)?`${fixedNum(score,2)} 分`:"未测"}${finite(cost)?` · ${money(cost)}/任务`:" · 无公开任务费用"}</span></li>`;
-    }).join("")}</ul><p>${esc(item.note)}</p>${link(item.url,"官方型号与可用性 ↗")}</article>`).join("");
+    const releases=DATA.aa_v5.aa_release_series.releases;
+    const variants=releases.flatMap(r=>r.variants.map(v=>({...v, release:r})));
+    const top=Math.max(...board.rows.map(r=>r.score_exact).filter(finite));
+    const reviewed=Date.parse(market.reviewed_at);
+    // "New" means released within the week before this edition's review date.
+    const freshDate=date=>{const t=Date.parse(date||"");return finite(t)&&reviewed-t>=0&&reviewed-t<=7*864e5?date.slice(5):null;};
+    const taskCost=v=>!finite(v)?"费用未公布":"$"+(v>=1?v.toFixed(2):v.toPrecision(3));
+    const flagInfo={"含回退":["†","含 AA 默认回退（比例未披露）"],"发布页补充":["‡","当前榜单缺此点，取自 AA 发布版本页"]};
+    const flagMark=f=>flagInfo[f]||["*",f];
+    $("vendorCoverage").innerHTML=(market.vendor_updates||[]).map(item=>{
+      const groups=[];
+      item.slugs.forEach(slug=>{
+        const row=board.rows.find(r=>r.slug===slug), v=variants.find(v=>v.slug===slug);
+        const name=row?.model||v?.release.name||"Muse Spark 1.3";
+        let group=groups.find(g=>g.name===name);
+        if(!group) groups.push(group={name,release:v?.release||releases.find(r=>r.name===name),configs:[]});
+        const parts=(row?.configuration||"").split(" · ");
+        group.configs.push({effort:v?.effort||parts[0]||"", flags:parts.slice(1).filter(Boolean), measured:Boolean(row||v),
+          score:row?.score_exact??v?.intelligenceIndex, cost:row?.cost_usd??v?.costPerTask});
+      });
+      const models=groups.map(g=>{
+        const fresh=freshDate(g.release?.releaseDate);
+        const rows=g.configs.map(c=>c.measured?`<li class="vc-row"><span class="vc-effort ss-effort e-${esc(c.effort)}">${esc(c.effort)}</span><span class="vc-meter" aria-hidden="true"><i style="width:${finite(c.score)?Math.max(4,c.score/top*100).toFixed(1):0}%"></i></span><span class="vc-score">${finite(c.score)?`<b>${fixedNum(c.score,1)}</b><small>分</small>`:"未测"}</span><span class="vc-cost${finite(c.cost)?"":" is-missing"}">${taskCost(c.cost)}${c.flags.map(f=>`<sup class="vc-mark" title="${esc(flagMark(f)[1])}">${flagMark(f)[0]}</sup>`).join("")}</span></li>`
+          :`<li class="vc-row is-missing"><span class="vc-score">当前榜单缺测</span></li>`).join("");
+        return `<div class="vc-model${fresh?" is-fresh":""}"><div class="vc-name"><span class="vc-swatch" style="background:${esc(g.release?.color||"currentColor")}"></span><b>${esc(g.name)}</b>${fresh?`<span class="vc-new" title="${esc(g.release.releaseDate)} 发布">新 · ${esc(fresh)}</span>`:""}</div><ul class="vc-rows">${rows}</ul></div>`;
+      }).join("");
+      const flags=[...new Set(groups.flatMap(g=>g.configs.flatMap(c=>c.flags)))];
+      const legend=flags.length?`<p class="vc-legend">${flags.map(f=>`${flagMark(f)[0]} ${esc(flagMark(f)[1])}`).join("；")}</p>`:"";
+      return `<article class="rail-card vendor-card" data-vendor="${esc(item.vendor)}"><header class="vc-head"><h3>${esc(item.vendor)}</h3><span>${groups.length} 款</span></header><div class="vc-cols" aria-hidden="true"><span>档位</span><span>AA 智能指数</span><span>单任务</span></div>${models}${legend}<p class="vc-note">${esc(item.note)}</p>${link(item.url,"官方型号与可用性 ↗")}</article>`;
+    }).join("");
   }
   renderVendorCoverage();renderMarketIntro();selectMarketBoard(market.boards[0].id);renderCrossSource();
   renderSweetSpot();renderReasoningCharts();renderTaskEffortChart();renderEffortScalingChart();renderPanorama();renderClaudeCatalog();renderProfiles();renderCapIndexChart();renderSpecs();renderDeltas();changeGroup("general");showPanel(location.hash.slice(1)||"overview",false);

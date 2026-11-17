@@ -12,7 +12,7 @@ from scripts.market_snapshot import merge_aa_v5, refresh_panorama
 
 ROOT = Path(__file__).resolve().parent
 RESEARCH = ROOT / "research" / "2026-10-15"
-CURRENT_RESEARCH = ROOT / "research" / "2026-11-15"
+CURRENT_RESEARCH = ROOT / "research" / "2026-11-18"
 ORIGINAL = ROOT / "archive" / "model-capability-cost-2026-10-14.html"
 NUMERIC_METRICS = {
     "Intelligence Index", "AA-Briefcase v1.1", "GDPval-AA v2.1", "AutomationBench-AA",
