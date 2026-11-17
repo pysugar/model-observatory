@@ -40,7 +40,7 @@ def check_v5_views(page, data, origin, output):
 
     # Current and historical AA charts remain explicit; low v5 scores stay inside the plot.
     page.locator('[data-panel="explorer"]').click()
-    expect(page.locator("#explorerIntro")).to_contain_text("23 个发布版本、73 个配置")
+    expect(page.locator("#explorerIntro")).to_contain_text("25 个发布版本、83 个配置")
     expect(page.locator("#charttitle")).to_contain_text("AA v4.3.2（历史）")
     current = [r for r in view["aa_release_series"]["releases"] if r["isTrackedFamily"] and r["isCurrent"]]
     selected = sum(len(r["variants"]) for r in current)
@@ -64,7 +64,7 @@ def check_v5_views(page, data, origin, output):
     with page.expect_download() as download:
         page.locator("#exportReleases").click()
     rows = list(csv.DictReader(io.StringIO(Path(download.value.path()).read_text(encoding="utf-8-sig"))))
-    require(all(r["aa_version"] == "v5.0" and r["aa_snapshot"] == "2026-11-15" and r["source_url"].startswith("https://") for r in rows), "Release export lost version, date or source")
+    require(all(r["aa_version"] == "v5.0" and r["aa_snapshot"] == "2026-11-18" and r["source_url"].startswith("https://") for r in rows), "Release export lost version, date or source")
     full = next(r for r in rows if r["variant_id"] == "muse-wonder-full")
     require(full["cost_per_task_usd"] == "" and "Muse Code" in full["availability_note"], "Missing-cost release export lost availability")
     page.locator('[data-panel="specs"]').click()

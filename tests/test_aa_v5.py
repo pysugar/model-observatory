@@ -17,10 +17,10 @@ class AaV5Tests(unittest.TestCase):
     def setUpClass(cls):
         cls.data = json.loads((ROOT / "report-data.json").read_text())
         cls.v5 = cls.data["aa_v5"]
-        cls.raw = json.loads((ROOT / "research/2026-11-15/aa-v5-series.json").read_text())
+        cls.raw = json.loads((ROOT / "research/2026-11-18/aa-v5-series.json").read_text())
 
     def test_november_page_schema_preserves_explicit_identity_and_missing_values(self):
-        spec = importlib.util.spec_from_file_location("refresh_aa", ROOT / "research/2026-11-15/refresh_aa.py")
+        spec = importlib.util.spec_from_file_location("refresh_aa", ROOT / "research/2026-11-18/refresh_aa.py")
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         model = {"id": "uuid-1", "slug": "explicit-variant", "name": "An unrelated display name",
@@ -44,7 +44,7 @@ class AaV5Tests(unittest.TestCase):
         self.assertEqual(self.data["aa_release_series"]["version"], "v4.3.2")
         self.assertEqual(len(self.data["aa_release_series"]["releases"]), 30)
         self.assertEqual(self.v5["aa_release_series"]["version"], "v5.0")
-        self.assertEqual(len(self.v5["aa_release_series"]["releases"]), 23)
+        self.assertEqual(len(self.v5["aa_release_series"]["releases"]), 25)
 
     def test_unmeasured_models_are_listed_not_filled(self):
         unmeasured = {u["releaseSlug"] for u in self.v5["unmeasured"]}
@@ -59,9 +59,13 @@ class AaV5Tests(unittest.TestCase):
 
     def test_five_families_have_every_v5_evaluation(self):
         current = [r for r in self.v5["aa_release_series"]["releases"] if r["isTrackedFamily"] and r["isCurrent"]]
-        self.assertEqual(len(current), 19)
+        self.assertEqual(len(current), 21)
         variants = [v for r in current for v in r["variants"]]
-        self.assertEqual(len(variants), 69)
+        self.assertEqual(len(variants), 79)
+        # GPT-6.2 Sol: AA published cost only for max; missing costs stay null, never inferred.
+        sol = next(r for r in current if r["releaseSlug"] == "gpt-6-2-sol")
+        self.assertEqual([v["effort"] for v in sol["variants"]], ["low", "medium", "high", "xhigh", "max"])
+        self.assertEqual([v["costPerTask"] is None for v in sol["variants"]], [True, True, True, True, False])
         for v in variants:
             self.assertEqual(set(v["evalMetrics"]), set(self.raw["aa_effort_evals"]["evals"]))
             self.assertEqual(v["taskScores"], v5_task_scores(v["evalMetrics"]))
