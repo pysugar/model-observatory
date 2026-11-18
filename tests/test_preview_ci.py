@@ -194,10 +194,25 @@ class PreviewTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "closed PR"):
                 ci.cleanup(5)
             delete.assert_not_called()
-        with patch.object(ci, "parent_exists"), patch.object(ci, "cf", side_effect=[{"id": "p"}, None, None]) as cf:
+        with patch.object(ci, "parent_exists"), patch.object(ci.time, "sleep") as sleep, \
+                patch.object(ci, "cf", side_effect=[{"id": "p"}, None, None]) as cf:
             self.assertEqual(ci.delete_preview("pr-5"), "deleted")
             self.assertEqual(cf.call_args_list[1].args, ("/previews/pr-5",))
             self.assertEqual(cf.call_args_list[1].kwargs, {"method": "DELETE"})
+            sleep.assert_called_once_with(ci.DELETE_CONFIRM_DELAYS[0])
+        # Deletion that lags behind the DELETE response is confirmed on a later read.
+        with patch.object(ci, "parent_exists"), patch.object(ci.time, "sleep") as sleep, \
+                patch.object(ci, "cf", side_effect=[{"id": "p"}, None, {"id": "p"}, {"id": "p"}, None]) as cf:
+            self.assertEqual(ci.delete_preview("pr-5"), "deleted")
+            self.assertEqual(cf.call_count, 5)
+            self.assertEqual(sleep.call_count, 3)
+        retries = len(ci.DELETE_CONFIRM_DELAYS)
+        with patch.object(ci, "parent_exists"), patch.object(ci.time, "sleep") as sleep, \
+                patch.object(ci, "cf", side_effect=[{"id": "p"}, None] + [{"id": "p"}] * retries) as cf:
+            with self.assertRaisesRegex(ValueError, "not confirmed"):
+                ci.delete_preview("pr-5")
+            self.assertEqual(cf.call_count, 2 + retries)
+            self.assertEqual(sleep.call_count, retries)
         with self.assertRaisesRegex(ValueError, "target"):
             ci.delete_preview(ci.WORKER)
         with patch.object(ci, "parent_exists"), patch.object(ci, "cf", side_effect=ValueError("HTTP 403")) as cf:

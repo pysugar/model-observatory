@@ -15,6 +15,7 @@ import stat
 import subprocess
 import sys
 import tempfile
+import time
 from urllib.error import HTTPError
 from urllib.parse import urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener, urlopen
@@ -33,6 +34,8 @@ CONTEXT = EVIDENCE / "context.json"
 RECORD = EVIDENCE / "deployment.json"
 MARKER = "<!-- model-observatory-native-preview -->"
 MAX_ZIP = 25_000_000
+# Cloudflare may still list a Preview right after DELETE; wait about 30 s in total.
+DELETE_CONFIRM_DELAYS = (2, 4, 8, 8, 8)
 require = publish.require
 
 
@@ -294,8 +297,11 @@ def delete_preview(name):
     if cf(path, missing_ok=True) is None:
         return "already-absent"
     cf(path, method="DELETE")
-    require(cf(path, missing_ok=True) is None, "Preview deletion is not confirmed")
-    return "deleted"
+    for delay in DELETE_CONFIRM_DELAYS:
+        time.sleep(delay)
+        if cf(path, missing_ok=True) is None:
+            return "deleted"
+    raise ValueError("Preview deletion is not confirmed")
 
 
 def preview_urls(result, name):
