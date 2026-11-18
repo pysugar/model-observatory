@@ -20,7 +20,9 @@
 
 ## 当前项目状态（2026-11-18 晚间 GPT-6.2 首日评测与风评）
 
-在已发布的上午版（PR41 / PR43）之上，按同日晚间的公开信息补充，活动输入改为 `research/2026-11-18-pm/`，详见 [11-18 晚间研究记录](research/2026-11-18-pm/README.md)。云端 CI、预览与发布以对应 PR 检查和后续 `RELEASES.md` 记录为准。
+[PR #44](https://github.com/pysugar/model-observatory/pull/44) 已合并并正式发布，main 合并提交为 `41663a8a28e46f9e16fc4acebca26ea111e185b0`；CI 与预览验证通过后按用户要求直接合并，未做预览页面人工复核，正式双入口核验通过，详见 [PR44 发布收束](RELEASES.md#2026-11-18-pr44-gpt-62-首日评测与风评正式发布收束)。
+
+在上午版（PR41 / PR43）之上，按同日晚间的公开信息补充，活动输入为 `research/2026-11-18-pm/`，详见 [11-18 晚间研究记录](research/2026-11-18-pm/README.md)。
 
 - **第三方评测**：AA 分数不变，补齐 Sol 6.2 五档任务费用；AA 改按 12-01 常规价计算 Carbon，任务费用升约四成（官方优惠仍至 11-30，Argon 仍按优惠价）。LiveBench 11-06 题集追加 GPT-6.2（Astra 84.9 与 Fable 5.2 并列第一，Sol 6.2 80.3 低于 6.1 Sol）；Arena WebDev / Agent 更新到 11-15，Scale 新增 Muse Ember，OpenRouter 更新到 11-17，三者都还没有 GPT-6.2。AA Coding Agent Index、Vals Terminal-Bench 与 ARC Prize 结果作为档案里的文字证据，不进计算。
 - **风评**：社区声音新增 3 条（早期测试者反馈、系统卡 Blocker Deception、HN 讨论），均对照原页；X 原帖与 Every 原文无法直接读取，按 VentureBeat 转述并注明。
@@ -30,7 +32,7 @@
 
 ## 上一期项目状态（2026-11-18 GPT-6.2 与界面优化，已正式发布）
 
-[PR #41](https://github.com/pysugar/model-observatory/pull/41) 已合并并正式发布，main 合并提交为 `ba65af7370240d772a69cc9bf1801dd7b524651b`；CI 通过后按用户要求直接合并，未做独立预览复核，正式双入口核验通过，详见 [PR41 发布收束](RELEASES.md#2026-11-18-pr41-gpt-62-与概览界面正式发布收束)。页脚“报告更新”日期仍为 11-15，待修正。
+[PR #41](https://github.com/pysugar/model-observatory/pull/41) 已合并并正式发布，main 合并提交为 `ba65af7370240d772a69cc9bf1801dd7b524651b`；CI 通过后按用户要求直接合并，未做独立预览复核，正式双入口核验通过，详见 [PR41 发布收束](RELEASES.md#2026-11-18-pr41-gpt-62-与概览界面正式发布收束)。页脚“报告更新”日期当时仍为 11-15，已由 [PR #43](https://github.com/pysugar/model-observatory/pull/43) 修正。
 
 本轮基于 `3cc37bd` 补入 11-17 发布的 **GPT-6.2 Astra / Sol**，并做一轮界面优化。活动输入改为 `research/2026-11-18/`，来源与边界见 [11-18 研究记录](research/2026-11-18/README.md)。
 
