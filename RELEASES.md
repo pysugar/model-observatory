@@ -238,6 +238,35 @@
 
 本次在 Mac 本地完成实现与验证；最终源码的本地 77 项单元测试、静态构建和完整 Chrome smoke 已通过。发布后本地 `main` 已快进同步到上述合并提交，核验时工作区干净。验收记录保存在忽略目录 `test-results/pr37-release/verification.json`，同目录保留预览 / 正式产物、probe 结果及响应头记录；临时预览与 GitHub artifact 不作为永久归档入口。
 
+## 2026-11-18 PR44 GPT-6.2 首日评测与风评正式发布收束
+
+[PR #44](https://github.com/pysugar/model-observatory/pull/44) 已于 **2026-11-18 23:21:31（Asia/Taipei）** 合并，并经既有 `release` 环境完成正式发布。以下是这次更新的验收记录，不自动追随后续文档发布；最新线上提交以 [version.json](https://models.localgpt.net/version.json) 为准。
+
+| 阶段 | 已完成事实 |
+| --- | --- |
+| 最终源码与合并 | PR head `9f6d98ff4d96d9f471bc2194a590aee2c65bd6f3`；main merge `41663a8a28e46f9e16fc4acebca26ea111e185b0` |
+| PR CI | [run 44333773386](https://github.com/pysugar/model-observatory/actions/runs/44333773386) 成功；合并前 Mac 本地另跑 79 项单元测试、`publish.py build` / `check` 与完整 Chrome smoke（1440 / 390 / 320，v4 / v5）均通过 |
+| 独立预览 | [run 44334436506](https://github.com/pysugar/model-observatory/actions/runs/44334436506) 成功，预览记录状态 `verified`；base `ef638d7654b01157bbcfd8446ab91eda812a4975`、build `f83906b3057f8f5f528b417b6dfec40028b37f51`；Cloudflare preview deployment `f40ec551-0279-4418-9856-77fd8580adeb`。按用户要求在 CI 通过后直接合并，没有做预览页面的人工复核，研究变化也未经独立复核者查看 |
+| main CI 与正式发布 | [run 44334709072](https://github.com/pysugar/model-observatory/actions/runs/44334709072) 成功：verify 与 deploy 两个 job 均通过；Environment=`release`，部署使用同次 CI 的不可变产物 |
+| 正式版本与双入口 | 下载正式 CI 产物后 `publish.py check` PASS（commit `41663a8`、clean、169 行 / 34 模型 / 70 来源）。对 [models.localgpt.net](https://models.localgpt.net) 与 [独立正式验收入口](https://model-observatory.openai-proxy-local.workers.dev) 执行 `publish.py probe` 均 PASS：版本、HTML / JSON / CSV 哈希和响应头匹配原产物 |
+| 正式页面复核 | 两个入口在 1440 与 320 视口显示 `release · 分支 main · commit 41663a8`、页脚 2026-11-18、页首“GPT-6.2 首日：评测与风评”；本期更新栏 5 条且无重复；GPT-6.2 Astra 档案显示 2 条社区声音；无横向溢出、无脚本错误。部署刚完成时 workers.dev 有一次页面加载仍返回上一版 `ef638d7`，随后连续三轮请求两个入口均为 `41663a8`，按短暂传播处理 |
+| Cloudflare 版本 | `eb59038e-ef05-4c2b-b168-6a21412cbc9e`，取自正式上传日志 |
+| 预览清理 | [run 44334713559](https://github.com/pysugar/model-observatory/actions/runs/44334713559) 成功；[原预览评论](https://github.com/pysugar/model-observatory/pull/44#issuecomment-6982872209) 已更新为清理完成 |
+
+上线内容：按 11-18 晚间公开信息补充 GPT-6.2 发布首日的第三方评测与风评。AA 分数不变，补齐 Sol 6.2 五档任务费用；AA 改按 12-01 常规价计算 Gemini 4 Carbon，任务费用升约四成（官方优惠仍至 11-30）。LiveBench 11-06 题集追加 GPT-6.2，Arena WebDev / Agent 更新至 11-15，Scale 新增 Muse Ember，OpenRouter 更新至 11-17。社区声音新增 3 条，档案新增 AA、Vals、ARC Prize 三条文字证据，均不进入计算。页面修正本期更新栏重复条目、无替代表时的社区声音显示与证据表规格行。来源与未核实项见 [11-18 晚间研究记录](research/2026-11-18-pm/README.md)。CI 与页面检查不等于付费复跑或独立复现公开评测。
+
+本地验证、正式产物、双入口探针与页面检查结果保存在忽略目录 `test-results/refresh-2026-11-18-pm/`；临时预览和限期 CI artifact 不作为永久入口。
+
+## 2026-11-18 PR43 页脚日期修正正式发布收束
+
+[PR #43](https://github.com/pysugar/model-observatory/pull/43) 于 **2026-11-18 03:10:10（Asia/Taipei）** 合并，main merge `ef638d7654b01157bbcfd8446ab91eda812a4975`（PR head `c22a5a047746accecb9a00136b41b12bd0f68c6d`）。页脚“报告更新”日期改为随市场快照核验日期填入，并加入 v5 smoke 断言。
+
+| 阶段 | 已完成事实 |
+| --- | --- |
+| PR CI 与预览 | [run 44154605913](https://github.com/pysugar/model-observatory/actions/runs/44154605913) 成功；[预览 run 44155247158](https://github.com/pysugar/model-observatory/actions/runs/44155247158) 记录状态 `verified`，deployment `9050446c-1ba8-4cc1-9d4f-15bcaa31a576`；[清理 run 44155667514](https://github.com/pysugar/model-observatory/actions/runs/44155667514) 成功 |
+| main CI 与正式发布 | [run 44155665624](https://github.com/pysugar/model-observatory/actions/runs/44155665624) 成功；Cloudflare 版本 `64caa62f-0036-435c-8c52-84ed3db94ebb` |
+| 正式核验 | 两个正式入口的 `version.json` 均为 `release / main / ef638d7`、clean；页面页脚显示 2026-11-18、无脚本错误。本次未下载产物另跑 `publish.py probe` |
+
 ## 2026-11-18 PR41 GPT-6.2 与概览界面正式发布收束
 
 [PR #41](https://github.com/pysugar/model-observatory/pull/41) 已于 **2026-11-18 02:49:55（Asia/Taipei）** 合并，并经既有 `release` 环境完成正式发布。以下是这次更新的验收记录，不自动追随后续文档发布；最新线上提交以 [version.json](https://models.localgpt.net/version.json) 为准。
@@ -249,7 +278,7 @@
 | 独立预览与复核 | 用户要求 CI 通过后直接合并。[run 44151944380](https://github.com/pysugar/model-observatory/actions/runs/44151944380) 因 PR 已关闭按设计跳过部署，交由关闭事件清理；本次没有独立预览复核，研究变化也未经独立复核者查看 |
 | main CI 与正式发布 | [run 44152063306](https://github.com/pysugar/model-observatory/actions/runs/44152063306) 成功：verify 与 deploy 两个 job 均通过；Environment=`release`，部署使用同次 CI 的不可变产物 |
 | 正式版本与双入口 | 下载正式 CI 产物后 `publish.py check` PASS（commit `ba65af7`、clean、169 行 / 34 模型 / 70 来源）。对 [models.localgpt.net](https://models.localgpt.net) 与 [独立正式验收入口](https://model-observatory.openai-proxy-local.workers.dev) 执行 `publish.py probe` 均 PASS：版本、HTML / JSON / CSV 哈希和响应头匹配原产物 |
-| 正式页面复核 | 主站页脚显示 `release · 分支 main · commit ba65af7`，页首为 2026-11-18 核验并显示“GPT-6.2 Astra / Sol 上线”入口；五厂速览 5 张卡片，GPT-6.2 Astra / Sol 与 Hydrogen 标“新”。1440 与 320 视口无横向溢出、无脚本错误。**遗留**：页脚“报告更新”文字仍写 2026-11-15，是模板中的固定文字，待后续修正 |
+| 正式页面复核 | 主站页脚显示 `release · 分支 main · commit ba65af7`，页首为 2026-11-18 核验并显示“GPT-6.2 Astra / Sol 上线”入口；五厂速览 5 张卡片，GPT-6.2 Astra / Sol 与 Hydrogen 标“新”。1440 与 320 视口无横向溢出、无脚本错误。**遗留**：页脚“报告更新”文字仍写 2026-11-15，是模板中的固定文字（后续已由 PR #43 修正）；本期更新栏把 AA 变更说明与快照第一条重复显示为两条同名条目（后续由 PR #44 修正） |
 | Cloudflare 版本 | `068cd292-0525-422b-80f3-19527829506c`，取自正式上传日志 |
 | 预览清理 | [run 44152065343](https://github.com/pysugar/model-observatory/actions/runs/44152065343) 成功；[原预览评论](https://github.com/pysugar/model-observatory/pull/41#issuecomment-6957666577) 已更新为清理完成 |
 
