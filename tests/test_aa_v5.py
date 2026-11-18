@@ -17,10 +17,10 @@ class AaV5Tests(unittest.TestCase):
     def setUpClass(cls):
         cls.data = json.loads((ROOT / "report-data.json").read_text())
         cls.v5 = cls.data["aa_v5"]
-        cls.raw = json.loads((ROOT / "research/2026-11-18/aa-v5-series.json").read_text())
+        cls.raw = json.loads((ROOT / "research/2026-11-18-pm/aa-v5-series.json").read_text())
 
     def test_november_page_schema_preserves_explicit_identity_and_missing_values(self):
-        spec = importlib.util.spec_from_file_location("refresh_aa", ROOT / "research/2026-11-18/refresh_aa.py")
+        spec = importlib.util.spec_from_file_location("refresh_aa", ROOT / "research/2026-11-18-pm/refresh_aa.py")
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         model = {"id": "uuid-1", "slug": "explicit-variant", "name": "An unrelated display name",
@@ -62,10 +62,18 @@ class AaV5Tests(unittest.TestCase):
         self.assertEqual(len(current), 21)
         variants = [v for r in current for v in r["variants"]]
         self.assertEqual(len(variants), 79)
-        # GPT-6.2 Sol: AA published cost only for max; missing costs stay null, never inferred.
+        # GPT-6.2 Sol: the morning read only had a max cost; AA filled the other four by the evening.
         sol = next(r for r in current if r["releaseSlug"] == "gpt-6-2-sol")
         self.assertEqual([v["effort"] for v in sol["variants"]], ["low", "medium", "high", "xhigh", "max"])
-        self.assertEqual([v["costPerTask"] is None for v in sol["variants"]], [True, True, True, True, False])
+        self.assertTrue(all(v["costPerTask"] > 0 for v in sol["variants"]))
+        morning = json.loads((ROOT / "research/2026-11-18/aa-v5-series.json").read_text())
+        old = next(r for r in morning["aa_release_series"]["releases"] if r["releaseSlug"] == "gpt-6-2-sol")
+        self.assertEqual([v["costPerTask"] is None for v in old["variants"]], [True, True, True, True, False])
+        # Carbon's cost rose only because AA switched to the 12-01 list price; scores are unchanged.
+        carbon = next(r for r in current if r["releaseSlug"] == "gemini-4-carbon")
+        before = next(r for r in morning["aa_release_series"]["releases"] if r["releaseSlug"] == "gemini-4-carbon")
+        self.assertEqual([v["intelligenceIndex"] for v in carbon["variants"]], [v["intelligenceIndex"] for v in before["variants"]])
+        self.assertIn("12-01 常规价", carbon["availabilityNote"])
         for v in variants:
             self.assertEqual(set(v["evalMetrics"]), set(self.raw["aa_effort_evals"]["evals"]))
             self.assertEqual(v["taskScores"], v5_task_scores(v["evalMetrics"]))

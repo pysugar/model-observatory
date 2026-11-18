@@ -14,7 +14,7 @@ class ModelProfileTests(unittest.TestCase):
     def setUpClass(cls):
         cls.data = json.loads((ROOT / "report-data.json").read_text())
         cls.doc = cls.data["model_effort_profiles"]
-        cls.source = json.loads((ROOT / "research/2026-11-18/model-effort-profiles.json").read_text())
+        cls.source = json.loads((ROOT / "research/2026-11-18-pm/model-effort-profiles.json").read_text())
 
     def test_build_embeds_the_frozen_research_file(self):
         self.assertEqual(self.doc, self.source)
@@ -117,7 +117,7 @@ class ModelProfileTests(unittest.TestCase):
             self.assertTrue(set(item["modelIds"]) <= ids, item["id"])
             self.assertTrue(item["sources"] and all(s["url"].startswith("https://") for s in item["sources"]), item["id"])
             self.assertEqual(item["verification"], "source-checked", item["id"])
-            self.assertEqual(item["checkedAt"], "2026-10-29")
+            self.assertIn(item["checkedAt"], {"2026-10-29", "2026-11-18"})
             self.assertNotIn("efforts", item)  # community voices never feed the calculations
         items = {i["id"]: i for i in doc["items"]}
         # Claims that the 10-29 source check corrected keep a visible note.

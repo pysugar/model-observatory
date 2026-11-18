@@ -2137,11 +2137,16 @@
       return `<tr data-phase="${esc(ph.id)}" data-mapped="${esc(map(ph.tier)||"")}"><th scope="row">${esc(ph.phase)}<span class="task-detail">${esc(ph.examples)}</span></th><td><b class="ss-effort e-${esc(ph.tier)}">${esc(ph.tier)}</b><span class="task-detail">常见范围 ${esc(ph.range.join("–"))}</span></td><td>${cell(ph.tier)}${lo&&hi&&lo!==hi?`<span class="task-detail">范围 ${esc(lo)}–${esc(hi)}</span>`:""}</td><td>${esc(ph.why)}<span class="task-detail">${ph.sources.map(x=>`${esc(x.type)} · ${link(x.url,x.label)}`).join(" ； ")}</span></td><td>${ph.escalate?`<span class="mp-phase-up">升：${esc(ph.escalate)}</span>`:""}${ph.downgrade?`<span class="mp-phase-down">降：${esc(ph.downgrade)}</span>`:""}</td></tr>`;}).join("")}</tbody></table>`;
     $("profilePhaseNote").textContent=DATA.community_consensus?.workPhasesNote||"";
   }
+  // Community voices stay visible even when no priced effort allows an alternatives table.
+  function mpAltCoverage(entry){
+    const cc=DATA.community_consensus, voices=mpVoices(entry.id,null,true);
+    return `<p class="small"><b>这张表看不到的：</b>${(cc?.uncoveredDimensions||[]).map(esc).join("、")}。这些维度没有带费用的公开评测，所以“更优替代”不会因为它们推荐更贵的型号。${voices.length?"下面是社区对这款模型的主流看法，只作参考，不参与计算：":"这款模型暂未整理社区主流声音。"}</p>${voices.length?mpVoiceList(voices):""}`;
+  }
   function renderProfileAlternatives(a){
     const box=$("profileAltTable"); if(!box) return;
     const efforts=mpEffortOrder.filter(e=>a.series.some(s=>s.points.some(p=>p.effort===e&&finite(p.cost))));
     const sel=$("profileAltEffort");
-    $("profileAltCoverage").innerHTML="";
+    $("profileAltCoverage").innerHTML=mpAltCoverage(a.entry);
     if(!efforts.length){sel.innerHTML="";box.innerHTML='<p class="small muted">这款模型没有带费用的实测档位，无法比较替代。</p>';$("profileAltSummary").textContent="";return;}
     // Default to the official default effort (what most calls use), then the overall sweet spot.
     if(!efforts.includes(mpAltView.effort)){const ii=a.series.find(s=>s.key==="aa-ii"),sw=ii?.res.balanced?.pick.effort;mpAltView.effort=efforts.includes(a.cat.default_effort)?a.cat.default_effort:sw&&efforts.includes(sw)?sw:efforts[0];}
@@ -2152,8 +2157,6 @@
     $("profileAltSummary").textContent=`${a.cat.name} · ${mpAltView.effort}：在 ${rows.length} 项有费用的评测里，${nC} 项能在分数不降的情况下更省钱，${nS} 项能在不加预算的情况下拿到更高分，${nT} 项不看预算时推荐换别的配置（范围：${mpAltView.scope==="all"?"目录全部活跃型号":"同厂商活跃型号"}，含本模型其它档位）。`;
     box.innerHTML=`<table class="mp-alt-table"><thead><tr><th scope="col">任务 · 评测</th><th scope="col">当前 ${esc(mpAltView.effort)}</th><th scope="col">同分最省<span class="task-detail">分数不低于当前，费用最低</span></th><th scope="col">同预算最强<span class="task-detail">费用不超过当前，分数最高</span></th><th scope="col">不限预算推荐<span class="task-detail">与最高分打平的配置里最快的</span></th></tr></thead><tbody>${rows.map(x=>{const u=x.s.unit==="%"||x.s.unit==="% 通过"?"%":" "+x.s.unit;
       return `<tr data-alt-series="${esc(x.s.key)}" data-cheaper="${x.cheaper?esc(x.cheaper.o.id+"|"+x.cheaper.q.effort):""}" data-stronger="${x.stronger?esc(x.stronger.o.id+"|"+x.stronger.q.effort):""}" data-unbounded="${esc(x.unbounded.o.id+"|"+x.unbounded.q.effort)}"><th scope="row">${esc(mpSeriesName(x.s))}</th><td>${mpFmt(x.s,x.p.score)}${esc(u)}<span class="mp-cost">${money(x.p.cost)}</span></td><td>${mpAltCell(x,x.cheaper,"cheaper",a.entry)}</td><td>${mpAltCell(x,x.stronger,"stronger",a.entry)}</td><td>${mpUnboundedCell(x,a.entry)}</td></tr>`;}).join("")}</tbody></table>`;
-    const cc=DATA.community_consensus, voices=mpVoices(a.entry.id,null,true);
-    $("profileAltCoverage").innerHTML=`<p class="small"><b>这张表看不到的：</b>${(cc?.uncoveredDimensions||[]).map(esc).join("、")}。这些维度没有带费用的公开评测，所以“更优替代”不会因为它们推荐更贵的型号。${voices.length?"下面是社区对这款模型的主流看法，只作参考，不参与计算：":"这款模型暂未整理社区主流声音。"}</p>${voices.length?mpVoiceList(voices):""}`;
   }
   function mpAnalyse(entry){
     const cat=mpCat(entry.id), efforts=mpEfforts(entry,cat), series=mpSeriesOf(entry);

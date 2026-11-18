@@ -12,7 +12,7 @@ from scripts.market_snapshot import merge_aa_v5, refresh_panorama
 
 ROOT = Path(__file__).resolve().parent
 RESEARCH = ROOT / "research" / "2026-10-15"
-CURRENT_RESEARCH = ROOT / "research" / "2026-11-18"
+CURRENT_RESEARCH = ROOT / "research" / "2026-11-18-pm"
 ORIGINAL = ROOT / "archive" / "model-capability-cost-2026-10-14.html"
 NUMERIC_METRICS = {
     "Intelligence Index", "AA-Briefcase v1.1", "GDPval-AA v2.1", "AutomationBench-AA",
@@ -282,7 +282,7 @@ def build(output_dir=ROOT):
     profiles_doc = read_json(CURRENT_RESEARCH / "model-effort-profiles.json")
     check_model_profiles(profiles_doc, catalog, multi,
                          (r["releaseSlug"] for r in aa_v5["aa_release_series"]["releases"]))
-    community_doc = read_json(ROOT / "research/2026-10-29/community-consensus.json")
+    community_doc = read_json(CURRENT_RESEARCH / "community-consensus.json")
     check_community(community_doc, profiles_doc)
     market = read_json(CURRENT_RESEARCH / "market-snapshot.json")
     refresh_panorama(multi["external_leaderboards"], market)
