@@ -1,0 +1,264 @@
+{
+  "note": "各来源独立读取；Scale未披露评测日期，OpenRouter为滚动7天token用量。Meta开放权重系列不纳入。",
+  "scale": {
+    "source_url": "https://labs.scale.com/leaderboard/hle-diamond",
+    "read_at": "2026-11-18",
+    "page_total": 21,
+    "rows": [
+      [
+        "claude-fable-5-2",
+        "Claude Fable 5.2",
+        "Anthropic",
+        72.4,
+        2.8,
+        null
+      ],
+      [
+        "gpt-6-astra",
+        "GPT-6 Astra",
+        "OpenAI",
+        60.6,
+        3.0,
+        28.1
+      ],
+      [
+        "claude-opus-5-5",
+        "Claude Opus 5.5",
+        "Anthropic",
+        55.0,
+        3.1,
+        7.1
+      ],
+      [
+        "gemini-4-argon",
+        "Gemini 4 Argon",
+        "Google",
+        53.2,
+        3.07,
+        53.3
+      ],
+      [
+        "claude-fable-5-1",
+        "Claude Fable 5.1",
+        "Anthropic",
+        51.3,
+        3.1,
+        13.8
+      ],
+      [
+        "claude-opus-5",
+        "Claude Opus 5",
+        "Anthropic",
+        38.6,
+        3.0,
+        21.5
+      ],
+      [
+        "claude-sonnet-5-5",
+        "Claude Sonnet 5.5",
+        "Anthropic",
+        37.5,
+        3.0,
+        36.8
+      ],
+      [
+        "muse-wonder-1.0",
+        "Muse Wonder 1.0",
+        "Meta",
+        37.3,
+        3.04,
+        31.1
+      ],
+      [
+        "gpt-6.1-terra",
+        "GPT-6.1 Terra",
+        "OpenAI",
+        35.7,
+        3.0,
+        32.9
+      ],
+      [
+        "gemini-3.8-flash",
+        "Gemini 3.8 Flash",
+        "Google",
+        34.3,
+        2.9,
+        57.2
+      ],
+      [
+        "gpt-6-sol",
+        "GPT-6 Sol",
+        "OpenAI",
+        33.8,
+        2.9,
+        38.8
+      ],
+      [
+        "gpt-5.6-sol",
+        "GPT-5.6 Sol",
+        "OpenAI",
+        31.2,
+        2.9,
+        53.8
+      ],
+      [
+        "muse-spark-1.3",
+        "Muse Spark 1.3",
+        "Meta",
+        25.4,
+        2.7,
+        48.2
+      ],
+      [
+        "grok-4.7",
+        "Grok 4.7",
+        "xAI",
+        23.4,
+        2.6,
+        28.9
+      ],
+      [
+        "kimi-k3",
+        "Kimi K3",
+        "Moonshot AI",
+        22.2,
+        2.6,
+        54.4
+      ],
+      [
+        "muse-ember-1.0",
+        "Muse Ember",
+        "Meta",
+        22.0,
+        2.6,
+        31.5
+      ],
+      [
+        "deepseek-v4p1-flash-1017",
+        "DeepSeek V4.1 Flash 1017",
+        "DeepSeek",
+        20.5,
+        2.5,
+        null
+      ],
+      [
+        "glm-5.3",
+        "GLM-5.3",
+        "Z.AI",
+        16.4,
+        2.3,
+        53.1
+      ],
+      [
+        "deepseek-v4-pro",
+        "DeepSeek V4 Pro",
+        "DeepSeek",
+        13.4,
+        2.1,
+        76.3
+      ],
+      [
+        "inkling",
+        "Inkling",
+        "Thinking Machines",
+        11.2,
+        2.11,
+        64.6
+      ]
+    ],
+    "source_ranks": {
+      "claude-fable-5-2": 1,
+      "gpt-6-astra": 2,
+      "claude-opus-5-5": 3,
+      "gemini-4-argon": 4,
+      "claude-fable-5-1": 5,
+      "claude-opus-5": 6,
+      "claude-sonnet-5-5": 7,
+      "muse-wonder-1.0": 8,
+      "gpt-6.1-terra": 9,
+      "gemini-3.8-flash": 10,
+      "gpt-6-sol": 11,
+      "gpt-5.6-sol": 12,
+      "muse-spark-1.3": 14,
+      "grok-4.7": 15,
+      "kimi-k3": 16,
+      "muse-ember-1.0": 17,
+      "deepseek-v4p1-flash-1017": 18,
+      "glm-5.3": 19,
+      "deepseek-v4-pro": 20,
+      "inkling": 21
+    },
+    "checked_at": "2026-11-18",
+    "sha256": "f3a6f70666c19eb43c0459e0884f2b74bd35fb7ab8c28a7142567ff4e00871b7",
+    "source_updated_at": null
+  },
+  "openrouter": {
+    "source_url": "https://openrouter.ai/rankings",
+    "read_at": "2026-11-18",
+    "usage_through": "2026-11-17",
+    "rows": [
+      [
+        "DeepSeek V4.1 Flash 1017",
+        "DeepSeek",
+        61.9,
+        "+15%"
+      ],
+      [
+        "Tencent Hy4 Flash",
+        "Tencent",
+        22.8,
+        "new"
+      ],
+      [
+        "DeepSeek V4.1 Flash",
+        "DeepSeek",
+        15.9,
+        "-6%"
+      ],
+      [
+        "Tencent Hy4",
+        "Tencent",
+        14.3,
+        "-24%"
+      ],
+      [
+        "GLM 5.3 Flash",
+        "Z.AI",
+        11.5,
+        "+2%"
+      ],
+      [
+        "GPT-6 Luna",
+        "OpenAI",
+        8.38,
+        "+19%"
+      ],
+      [
+        "Claude Opus 5.5",
+        "Anthropic",
+        7.53,
+        "+11%"
+      ],
+      [
+        "Step 5",
+        "StepFun",
+        6.57,
+        "-5%"
+      ],
+      [
+        "MiMo-V2.6-Flash",
+        "Xiaomi",
+        4.11,
+        "+44%"
+      ],
+      [
+        "GLM 5.3",
+        "Z.AI",
+        3.62,
+        "-1%"
+      ]
+    ],
+    "checked_at": "2026-11-18",
+    "sha256": "cb049de41485f684154e1581acfe369607997e9aa29d388208f616e9357c3862"
+  }
+}

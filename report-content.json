@@ -6,7 +6,7 @@
       "input_modalities": "文本、图像、音频、视频、PDF",
       "output_modalities": "文本",
       "efforts": "low / medium / high",
-      "price_checked": "2026-11-15",
+      "price_checked": "2026-11-18",
       "current": true,
       "name": "Gemini 4 Argon",
       "short": "Argon",
