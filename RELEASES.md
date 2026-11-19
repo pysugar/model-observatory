@@ -238,6 +238,24 @@
 
 本次在 Mac 本地完成实现与验证；最终源码的本地 77 项单元测试、静态构建和完整 Chrome smoke 已通过。发布后本地 `main` 已快进同步到上述合并提交，核验时工作区干净。验收记录保存在忽略目录 `test-results/pr37-release/verification.json`，同目录保留预览 / 正式产物、probe 结果及响应头记录；临时预览与 GitHub artifact 不作为永久归档入口。
 
+## 2026-11-19 PR48 Gemini 4 Neon 与多机构评测刷新正式发布收束
+
+[PR #48](https://github.com/pysugar/model-observatory/pull/48) 已于 **2026-11-19 17:19:08（Asia/Taipei）** 合并，并经既有 `release` 环境完成正式发布。以下是这次更新的验收记录，不自动追随后续文档发布；最新线上提交以 [version.json](https://models.localgpt.net/version.json) 为准。
+
+| 阶段 | 已完成事实 |
+| --- | --- |
+| 最终源码与合并 | PR head `f9b0ddad173a2be10044bb23162c4aed67837ae1`；main merge `0620a22891d7eefba18ff7f4e97a3d1b20150e35` |
+| PR CI | [run 44493830392](https://github.com/pysugar/model-observatory/actions/runs/44493830392) 成功；合并前本地 79 项单元测试、`publish.py build --require-clean` / `check` 与完整 Chrome smoke（1440 / 390 / 320 / 305，v5 / v4）均通过 |
+| 独立预览 | [run 44495105382](https://github.com/pysugar/model-observatory/actions/runs/44495105382) 成功，预览记录状态 `verified`；base `1de76095c8b55c3a6e01d92d09fd3b24a35e65c8`、build `393688cf6007ede2232dad93eb2c232222c28a12`；Cloudflare preview deployment `fea97a0d-05af-4cfc-8081-7b5c16e6b6cd`。按用户要求在 CI 通过后直接合并，未做预览页面人工复核，研究变化也未经独立复核者查看 |
+| main CI 与正式发布 | [run 44495308286](https://github.com/pysugar/model-observatory/actions/runs/44495308286) 成功：verify 与 deploy 两个 job 均通过；Environment=`release`，部署使用同次 CI 的不可变产物 `site-0620a22891d7eefba18ff7f4e97a3d1b20150e35-1` |
+| 正式版本与双入口 | 下载正式 CI 产物后独立执行 `publish.py check` PASS（commit `0620a22`、clean、169 行 / 35 模型 / 78 来源）。对 [models.localgpt.net](https://models.localgpt.net) 与 [独立正式验收入口](https://model-observatory.openai-proxy-local.workers.dev) 执行 `publish.py probe` 均 PASS：版本、HTML / JSON / CSV 哈希和响应头匹配原产物 |
+| Cloudflare 版本 | `21a559a4-8bf0-45ea-8ddb-e196fa3c0cf6`（本次上传 `index.html`、`report-data.json`、`version.json` 三个变化资产，`report-data.csv` 复用原哈希） |
+| 预览清理 | [run 44495310733](https://github.com/pysugar/model-observatory/actions/runs/44495310733) 成功，记录 `deleted`；[原预览评论](https://github.com/pysugar/model-observatory/pull/48#issuecomment-7004923575) 已更新为清理完成 |
+
+上线内容：活动输入切换至 `research/2026-11-19/`。新增 Google **Gemini 4 Neon**（1M 统一上下文、`$3 / $0.15 / $15` 全上下文统一价、`low / medium / high / xhigh`），目录与档案扩为 35 款，来源扩为 78 条；核实 GPT-5.6 Sol 优惠价延至 11-30，补入 GPT-6.2 Responses API 首条 `developer` 缓存与 Background mode 迁移规则。AA v5 刷新至 26 版 / 87 档（榜单 75 行）；Arena 官方数据集（`b9863c6`）Text / WebDev / Agent 三榜全部刷新至 11-18，跨榜对照扩为 25 款；Scale HLE Diamond 扩为 21 项并固化 SEAL HSS / MultiChallenge / RLI 专项前十；LiveBench 重读至 11-19，OpenRouter 刷新至 11-18；AA Coding Agent Index、Vals Index v2.2 与 Terminal-Bench 4.0（11-18）作为档案文字证据入库（共 28 条）。社区声音扩至 34 条（实现五厂全部主力型号 100% 覆盖），`maxEffortScenarios` 增至 10 条，概览页新增 `data-aa-version="v5"` 任务选型、四层多 Agent 分工与写作表并保留 `v4` 历史表。来源与边界见 [11-19 研究记录](research/2026-11-19/README.md)。CI 与页面检查不等于付费复跑或独立复现公开评测。
+
+本地验证、正式产物、预览与清理记录及双入口探针结果保存在忽略目录 `test-results/refresh-2026-11-19/`；临时预览和限期 CI artifact 不作为永久入口。
+
 ## 2026-11-19 PR46 预览清理删除确认重试正式发布收束
 
 [PR #46](https://github.com/pysugar/model-observatory/pull/46) 于 **2026-11-19 06:43:20（Asia/Taipei）** 合并，main merge `a6d85fd72ec43be270bd2b777030e632ef861038`（PR head `e1f8896bb8d324260bb8dcd08cfa3a29171ff7ba`）。只改 `scripts/preview_ci.py` 与对应单元测试，报告内容与数据不变。
