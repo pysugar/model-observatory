@@ -14,7 +14,7 @@ class ModelProfileTests(unittest.TestCase):
     def setUpClass(cls):
         cls.data = json.loads((ROOT / "report-data.json").read_text())
         cls.doc = cls.data["model_effort_profiles"]
-        cls.source = json.loads((ROOT / "research/2026-11-18-pm/model-effort-profiles.json").read_text())
+        cls.source = json.loads((ROOT / "research/2026-11-19/model-effort-profiles.json").read_text())
 
     def test_build_embeds_the_frozen_research_file(self):
         self.assertEqual(self.doc, self.source)
@@ -98,8 +98,7 @@ class ModelProfileTests(unittest.TestCase):
 
     def test_every_main_model_has_a_community_voice(self):
         covered = {m for item in self.data["community_consensus"]["items"] for m in item["modelIds"]}
-        baseline = json.loads((ROOT / "research/2026-10-24/model-effort-profiles.json").read_text())
-        main = {m["id"] for m in baseline["models"] if m["tier"] == "main"}
+        main = {m["id"] for m in self.doc["models"] if m["tier"] == "main"}
         self.assertEqual(main - covered, set())
 
     def test_max_effort_scenarios_are_sourced(self):
@@ -117,7 +116,7 @@ class ModelProfileTests(unittest.TestCase):
             self.assertTrue(set(item["modelIds"]) <= ids, item["id"])
             self.assertTrue(item["sources"] and all(s["url"].startswith("https://") for s in item["sources"]), item["id"])
             self.assertEqual(item["verification"], "source-checked", item["id"])
-            self.assertIn(item["checkedAt"], {"2026-10-29", "2026-11-18"})
+            self.assertIn(item["checkedAt"], {"2026-10-29", "2026-11-18", "2026-11-19"})
             self.assertNotIn("efforts", item)  # community voices never feed the calculations
         items = {i["id"]: i for i in doc["items"]}
         # Claims that the 10-29 source check corrected keep a visible note.
@@ -150,7 +149,7 @@ class ModelProfileTests(unittest.TestCase):
         ids = {m["id"] for m in self.doc["models"]}
         for ev in self.doc["evidence"]:
             self.assertTrue(ev["url"].startswith("https://"), ev["id"])
-            self.assertIn(ev["checkedAt"], {"2026-10-24", "2026-11-15", "2026-11-18"})
+            self.assertIn(ev["checkedAt"], {"2026-10-24", "2026-11-15", "2026-11-18", "2026-11-19"})
             self.assertIn(ev["verification"], {"search-summary", "official-page", "source-page"})
             if ev["checkedAt"] == "2026-10-24":
                 self.assertEqual(ev["verification"], "search-summary")

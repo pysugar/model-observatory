@@ -220,7 +220,7 @@ def check_market_ui(page, data, output):
         page.locator("#exportMarket").click()
     rows = list(csv.DictReader(io.StringIO(Path(download.value.path()).read_text(encoding="utf-8-sig"))))
     require(len(rows) == 1 and rows[0]["cost_usd"] == "4.175", "Market export lost source precision")
-    require(rows[0]["source_updated_at"] == "2026-11-06" and rows[0]["checked_at"] == "2026-11-18", "Source and verification dates conflated")
+    require(rows[0]["source_updated_at"] == "2026-11-06" and rows[0]["checked_at"] == "2026-11-19", "Source and verification dates conflated")
     page.fill("#marketSearch", "no-such-model")
     expect(page.locator("#marketTable")).to_contain_text("没有匹配的模型")
     expect(page.locator("#exportMarket")).to_be_disabled()
@@ -233,13 +233,15 @@ def check_market_ui(page, data, output):
     # Arena boards read from Arena's dataset: no costs, Agent Arena shows the praise/complaint signal.
     page.locator('[data-board="arena_agent"]').click()
     expect(page.locator("#marketTable tbody tr").first).to_contain_text("Claude Fable 5.2")
-    expect(page.locator("#marketTable tbody tr").first).to_contain_text("0.286")
-    # Fixed three decimals so 0.760 and 0.759 read as the same precision.
-    expect(page.locator("#marketTable tbody tr").nth(1)).to_contain_text("0.182")
-    expect(page.locator("#marketTable tbody tr").first).to_contain_text("0.760")
+    expect(page.locator("#marketTable tbody tr").first).to_contain_text("0.274")
+    # Fixed three decimals so 0.687 and 0.445 read as the same precision.
+    expect(page.locator("#marketTable tbody tr").nth(1)).to_contain_text("0.186")
+    expect(page.locator("#marketTable tbody tr").nth(2)).to_contain_text("Gemini 4 Neon")
+    expect(page.locator("#marketTable tbody tr").nth(2)).to_contain_text("0.184")
+    expect(page.locator("#marketTable tbody tr").first).to_contain_text("0.687")
     require(page.locator("#marketSort option[value=cost]").evaluate("o => o.disabled"), "Agent Arena has no cost")
     page.locator('[data-board="arena_webdev"]').click()
-    expect(page.locator("#boardMeta")).to_contain_text("2026-11-15")
+    expect(page.locator("#boardMeta")).to_contain_text("2026-11-18")
     # Cross-source table: same focus models, ranks within each source, column buttons switch boards.
     cs = data["market_snapshot"]["cross_source"]
     expect(page.locator("#crossTable tbody tr")).to_have_count(len(cs["models"]))
@@ -255,6 +257,8 @@ def check_market_ui(page, data, output):
     page.locator('[data-board="aa5"]').click()
     expect(page.locator("#boardMethod")).to_be_visible()
     expect(page.locator("#marketTable tbody tr").first).to_contain_text("Claude Fable 5.2")
+    expect(page.locator("#marketTable")).to_contain_text("Gemini 4 Neon")
+    page.locator("#marketMore").click()
     expect(page.locator("#marketTable")).to_contain_text("+1 · 原 58")
     require(not page.locator("#marketSort option[value=cost]").evaluate("o => o.disabled"), "AA v5 cost sort disabled")
     page.select_option("#marketSort", "cost")
