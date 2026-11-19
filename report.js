@@ -91,7 +91,7 @@
   let tocObserver=null;
   function buildPageToc(name){
     const toc=$("pageToc"), panel=$(name); if(!toc||!panel) return;
-    const targets=[...panel.querySelectorAll("[data-toc], .section-heading")].filter(el=>el.matches("[data-toc]")||!el.querySelector(".eyebrow"));
+    const targets=[...panel.querySelectorAll("[data-toc], .section-heading")].filter(el=>!el.closest(`[data-aa-version]:not([data-aa-version="${aaVersion}"])`)&&(el.matches("[data-toc]")||!el.querySelector(".eyebrow")));
     if(tocObserver) tocObserver.disconnect();
     toc.hidden=targets.length<2;
     toc.innerHTML=targets.map((el,i)=>{

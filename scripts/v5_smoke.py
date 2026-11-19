@@ -33,14 +33,18 @@ def check_v5_views(page, data, origin, output):
     page.goto(origin + "/?aa=v5", wait_until="networkidle")
     require(page.evaluate("document.documentElement.dataset.aa") == "v5", "v5 view did not load")
     expect(page.locator("#aaVersionSelect")).to_have_value("v5")
-    # Version-specific prose: only the v5 blocks are visible.
+    # Version-specific prose: only the v5 blocks are visible, and page TOC has no duplicates.
     expect(page.locator('.pitfall-list[data-aa-version="v5"]')).to_be_visible()
     expect(page.locator('.pitfall-list[data-aa-version="v4"]')).to_be_hidden()
+    expect(page.locator("#engineering-guide-v5")).to_be_visible()
+    expect(page.locator("#engineering-guide")).to_be_hidden()
+    toc_labels = page.eval_on_selector_all("#pageToc button", "bs => bs.map(b => b.textContent.trim())")
+    require(len(toc_labels) == len(set(toc_labels)), f"Duplicate v5 page TOC entries: {toc_labels}")
     require("{{" not in page.content(), "Unresolved narrative placeholder")
 
     # Current and historical AA charts remain explicit; low v5 scores stay inside the plot.
     page.locator('[data-panel="explorer"]').click()
-    expect(page.locator("#explorerIntro")).to_contain_text("25 个发布版本、83 个配置")
+    expect(page.locator("#explorerIntro")).to_contain_text("26 个发布版本、87 个配置")
     expect(page.locator("#charttitle")).to_contain_text("AA v4.3.2（历史）")
     current = [r for r in view["aa_release_series"]["releases"] if r["isTrackedFamily"] and r["isCurrent"]]
     selected = sum(len(r["variants"]) for r in current)
@@ -64,7 +68,7 @@ def check_v5_views(page, data, origin, output):
     with page.expect_download() as download:
         page.locator("#exportReleases").click()
     rows = list(csv.DictReader(io.StringIO(Path(download.value.path()).read_text(encoding="utf-8-sig"))))
-    require(all(r["aa_version"] == "v5.0" and r["aa_snapshot"] == "2026-11-18" and r["source_url"].startswith("https://") for r in rows), "Release export lost version, date or source")
+    require(all(r["aa_version"] == "v5.0" and r["aa_snapshot"] == "2026-11-19" and r["source_url"].startswith("https://") for r in rows), "Release export lost version, date or source")
     full = next(r for r in rows if r["variant_id"] == "muse-wonder-full")
     require(full["cost_per_task_usd"] == "" and "Muse Code" in full["availability_note"], "Missing-cost release export lost availability")
     page.locator('[data-panel="specs"]').click()
@@ -83,12 +87,16 @@ def check_v5_views(page, data, origin, output):
             require(expected[(model, task)] == effort, f"v5 sweet spot drifted: {preset}/{model}/{task}")
     page.select_option("#sweetTolerance", "balanced")
 
-    # Missing-cost single points remain observations, not computed sweet spots.
+    # Missing-cost single points remain observations, not computed sweet spots; voices follow the selected model.
     page.locator('[data-panel="profiles"]').click()
     page.select_option("#profileModel", "claude-opus-5-5")
     page.select_option("#profileModel", "muse-wonder-full")
     expect(page.locator("#profileGrid .mp-mark.pick")).to_have_count(0)
     expect(page.locator("#profileGrid")).to_contain_text("仅测单点")
+    expect(page.locator("#profileAltCoverage .mp-voices")).to_contain_text("Meta 闭源旗舰")
+    page.select_option("#profileModel", "gemini-4-neon")
+    expect(page.locator("#profileAltCoverage .mp-voices li").first).to_be_visible()
+    page.select_option("#profileModel", "claude-opus-4-7")
     expect(page.locator("#profileAltCoverage .mp-voices")).to_have_count(0)
     page.locator('[data-panel="specs"]').click()
     for model in ("muse-wonder-full",):
@@ -103,9 +111,16 @@ def check_v5_views(page, data, origin, output):
     carbon = page.locator('[data-cost-model="gemini-4-carbon"]')
     page.select_option("#priceScenario", "current")
     require(abs(float(carbon.get_attribute("data-per"))-.03) < 1e-10, "Carbon public API budget missing")
+    neon = page.locator('[data-cost-model="gemini-4-neon"]')
+    require(abs(float(neon.get_attribute("data-per"))-.045) < 1e-10, "Neon flat API budget missing")
     page.select_option("#priceScenario", "afterPromo")
     require(abs(float(carbon.get_attribute("data-per"))-.06) < 1e-10, "Carbon post-promotion price missing")
+    require(abs(float(neon.get_attribute("data-per"))-.045) < 1e-10, "Neon flat price should not change after promo")
     page.select_option("#priceScenario", "current")
+    page.fill("#inputTokens", "1000000")
+    page.fill("#answerTokens", "0")
+    require(abs(float(neon.get_attribute("data-per"))-3.0) < 1e-10, "Neon 1M flat input pricing drifted")
+    page.fill("#answerTokens", "1000")
     page.fill("#cachePercent", "100")
     ember = page.locator('[data-cost-model="muse-ember-1.0"]')
     for tokens, expected in ((200000, .0013), (200001, .003900012)):
@@ -196,3 +211,7 @@ def check_v5_views(page, data, origin, output):
     require(page.evaluate("document.documentElement.dataset.aa") == "v4", "Version switch did not load v4.3.2")
     require("aa=v4" in page.url, "Version switch is not reflected in the URL")
     expect(page.locator('.pitfall-list[data-aa-version="v4"]')).to_be_visible()
+    expect(page.locator("#engineering-guide")).to_be_visible()
+    expect(page.locator("#engineering-guide-v5")).to_be_hidden()
+    v4_toc = page.eval_on_selector_all("#pageToc button", "bs => bs.map(b => b.textContent.trim())")
+    require(len(v4_toc) == len(set(v4_toc)), f"Duplicate v4 page TOC entries: {v4_toc}")

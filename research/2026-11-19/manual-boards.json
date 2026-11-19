@@ -1,0 +1,416 @@
+{
+  "note": "各来源独立读取；Scale未披露评测日期，OpenRouter为滚动7天token用量。Meta开放权重系列不纳入。",
+  "scale": {
+    "source_url": "https://labs.scale.com/leaderboard/hle-diamond",
+    "read_at": "2026-11-19",
+    "page_total": 22,
+    "rows": [
+      [
+        "claude-fable-5-2",
+        "Claude Fable 5.2",
+        "Anthropic",
+        72.4,
+        2.8,
+        null
+      ],
+      [
+        "gpt-6-astra",
+        "GPT-6 Astra",
+        "OpenAI",
+        60.6,
+        3.0,
+        28.1
+      ],
+      [
+        "claude-opus-5-5",
+        "Claude Opus 5.5",
+        "Anthropic",
+        55.0,
+        3.1,
+        7.1
+      ],
+      [
+        "gemini-4-argon",
+        "Gemini 4 Argon",
+        "Google",
+        53.2,
+        3.07,
+        53.3
+      ],
+      [
+        "claude-fable-5-1",
+        "Claude Fable 5.1",
+        "Anthropic",
+        51.3,
+        3.1,
+        13.8
+      ],
+      [
+        "claude-opus-5",
+        "Claude Opus 5",
+        "Anthropic",
+        38.6,
+        3.0,
+        21.5
+      ],
+      [
+        "claude-sonnet-5-5",
+        "Claude Sonnet 5.5",
+        "Anthropic",
+        37.5,
+        3.0,
+        36.8
+      ],
+      [
+        "muse-wonder-1.0",
+        "Muse Wonder 1.0",
+        "Meta",
+        37.3,
+        3.04,
+        31.1
+      ],
+      [
+        "gpt-6.1-terra",
+        "GPT-6.1 Terra",
+        "OpenAI",
+        35.7,
+        3.0,
+        32.9
+      ],
+      [
+        "gemini-3.8-flash",
+        "Gemini 3.8 Flash",
+        "Google",
+        34.3,
+        2.9,
+        57.2
+      ],
+      [
+        "gpt-6-sol",
+        "GPT-6 Sol",
+        "OpenAI",
+        33.8,
+        2.9,
+        38.8
+      ],
+      [
+        "gpt-5.6-sol",
+        "GPT-5.6 Sol",
+        "OpenAI",
+        31.2,
+        2.9,
+        53.8
+      ],
+      [
+        "muse-spark-1.3",
+        "Muse Spark 1.3",
+        "Meta",
+        25.4,
+        2.7,
+        48.2
+      ],
+      [
+        "grok-4.7",
+        "Grok 4.7",
+        "xAI",
+        23.4,
+        2.6,
+        28.9
+      ],
+      [
+        "kimi-k3",
+        "Kimi K3",
+        "Moonshot AI",
+        22.2,
+        2.6,
+        54.4
+      ],
+      [
+        "muse-ember-1.0",
+        "Muse Ember",
+        "Meta",
+        22.0,
+        2.6,
+        31.5
+      ],
+      [
+        "deepseek-v4p1-flash-1017",
+        "DeepSeek V4.1 Flash 1017",
+        "DeepSeek",
+        20.5,
+        2.5,
+        null
+      ],
+      [
+        "minimax-m3p1-flash",
+        "MiniMax-M3.1-Flash",
+        "MiniMax",
+        20.4,
+        2.61,
+        null
+      ],
+      [
+        "glm-5.3",
+        "GLM-5.3",
+        "Z.AI",
+        16.4,
+        2.3,
+        53.1
+      ],
+      [
+        "deepseek-v4-pro",
+        "DeepSeek V4 Pro",
+        "DeepSeek",
+        13.4,
+        2.1,
+        76.3
+      ],
+      [
+        "inkling",
+        "Inkling",
+        "Thinking Machines",
+        11.2,
+        2.11,
+        64.6
+      ]
+    ],
+    "source_ranks": {
+      "claude-fable-5-2": 1,
+      "gpt-6-astra": 2,
+      "claude-opus-5-5": 3,
+      "gemini-4-argon": 4,
+      "claude-fable-5-1": 5,
+      "claude-opus-5": 6,
+      "claude-sonnet-5-5": 7,
+      "muse-wonder-1.0": 8,
+      "gpt-6.1-terra": 9,
+      "gemini-3.8-flash": 10,
+      "gpt-6-sol": 11,
+      "gpt-5.6-sol": 12,
+      "muse-spark-1.3": 14,
+      "grok-4.7": 15,
+      "kimi-k3": 16,
+      "muse-ember-1.0": 17,
+      "deepseek-v4p1-flash-1017": 18,
+      "minimax-m3p1-flash": 19,
+      "glm-5.3": 20,
+      "deepseek-v4-pro": 21,
+      "inkling": 22
+    },
+    "checked_at": "2026-11-19",
+    "sha256": "7e5b12f635b44d3c8046f399f1f0633c4b0c51b61ba3f884ef71e6edaac68a2f",
+    "source_updated_at": null
+  },
+  "openrouter": {
+    "source_url": "https://openrouter.ai/rankings",
+    "read_at": "2026-11-19",
+    "usage_through": "2026-11-18",
+    "rows": [
+      [
+        "DeepSeek V4.1 Flash 1017",
+        "DeepSeek",
+        62.1,
+        "+17%"
+      ],
+      [
+        "Tencent Hy4 Flash",
+        "Tencent",
+        46.6,
+        "new"
+      ],
+      [
+        "DeepSeek V4.1 Flash",
+        "DeepSeek",
+        16.0,
+        "-2%"
+      ],
+      [
+        "Tencent Hy4",
+        "Tencent",
+        13.0,
+        "-36%"
+      ],
+      [
+        "GLM 5.3 Flash",
+        "Z.AI",
+        10.9,
+        "-9%"
+      ],
+      [
+        "GPT-6 Luna",
+        "OpenAI",
+        8.62,
+        "+20%"
+      ],
+      [
+        "Claude Opus 5.5",
+        "Anthropic",
+        7.63,
+        "+15%"
+      ],
+      [
+        "Step 5",
+        "StepFun",
+        6.39,
+        "-7%"
+      ],
+      [
+        "MiMo-V2.6-Flash",
+        "Xiaomi",
+        4.05,
+        "+25%"
+      ],
+      [
+        "MiniMax-M3.1-Flash",
+        "MiniMax",
+        3.67,
+        "-4%"
+      ]
+    ],
+    "checked_at": "2026-11-19",
+    "sha256": "4ab99cbb86a5ff076633f9ac591e7d51cbe401e03dd99f42add09919661a4bfb"
+  },
+  "scale_extra": {
+    "hss": {
+      "source_url": "https://labs.scale.com/leaderboard/hss",
+      "checked_at": "2026-11-19",
+      "sha256": "fc2c06a5d8a395d7d3955edf13896789f8f68a3a17cf5ae6a5ff3638c086e229",
+      "top10": [
+        {
+          "model": "Gemini 4 Carbon (high)",
+          "score": "71.10 ±3.60"
+        },
+        {
+          "model": "Claude Fable 5.2 (max)",
+          "score": "59.50 ±3.80"
+        },
+        {
+          "model": "Gemini-4-Argon (high)",
+          "score": "55.40 ±4.20"
+        },
+        {
+          "model": "GPT-6-Astra (max)",
+          "score": "53.60 ±4.10"
+        },
+        {
+          "model": "GPT-6.1-Sol (max)",
+          "score": "46.60 ±3.80"
+        },
+        {
+          "model": "Claude-Opus-5.5 (xhigh)",
+          "score": "44.60 ±3.80"
+        },
+        {
+          "model": "Muse Wonder 1.0 (max)",
+          "score": "43.70 ±4.20"
+        },
+        {
+          "model": "Gemini-3.8-Flash (high)",
+          "score": "41.60 ±3.70"
+        },
+        {
+          "model": "Claude-Fable-5.1",
+          "score": "40.80 ±3.60"
+        },
+        {
+          "model": "Gemini-3.7-Flash (high)",
+          "score": "39.80 ±3.70"
+        }
+      ]
+    },
+    "multichallenge": {
+      "source_url": "https://labs.scale.com/leaderboard/multichallenge?tab=large",
+      "checked_at": "2026-11-19",
+      "sha256": "99174f8dae7cf7971137612a3c258767b7f5259b7c9aefc03bc0b24ed803eaea",
+      "top10": [
+        {
+          "model": "gpt 6.1 Sol",
+          "score": "81.95 ±4.16"
+        },
+        {
+          "model": "Gemini 4 Argon",
+          "score": "78.70 ±5.30"
+        },
+        {
+          "model": "Muse Spark",
+          "score": "75.52 ±4.05"
+        },
+        {
+          "model": "Muse Spark 1.1",
+          "score": "75.30 ±0.60"
+        },
+        {
+          "model": "Deepseek V4p1 Flash 1017",
+          "score": "74.90 ±5.30"
+        },
+        {
+          "model": "GPT 6.1 Terra",
+          "score": "74.20 ±5.40"
+        },
+        {
+          "model": "Muse Spark Open",
+          "score": "74.20 ±5.60"
+        },
+        {
+          "model": "GPT 6.2 Astra",
+          "score": "73.20 ±5.80"
+        },
+        {
+          "model": "GPT 6.2 Sol",
+          "score": "72.00 ±5.80"
+        },
+        {
+          "model": "gemini-3.1-pro-preview",
+          "score": "71.37 ±1.74"
+        }
+      ]
+    },
+    "rli": {
+      "source_url": "https://labs.scale.com/leaderboard/rli",
+      "checked_at": "2026-11-19",
+      "sha256": "2befeef555dbfe1cd34ff366f0cb6edb69c50190d84cd0f04d85e07d014095e1",
+      "top10": [
+        {
+          "model": "Fable 5.2",
+          "score": "41.25%"
+        },
+        {
+          "model": "Opus 5.5",
+          "score": "21.25%"
+        },
+        {
+          "model": "GPT 6 Astra",
+          "score": "20.83%"
+        },
+        {
+          "model": "Fable 5.1",
+          "score": "17.92%"
+        },
+        {
+          "model": "Gemini Argon 4",
+          "score": "17.08%"
+        },
+        {
+          "model": "Fable 5",
+          "score": "15.83%"
+        },
+        {
+          "model": "Deepseek V4.1 Flash",
+          "score": "9.58%"
+        },
+        {
+          "model": "Opus 4.8",
+          "score": "8.33%"
+        },
+        {
+          "model": "Codex GPT 5.5",
+          "score": "6.25%"
+        },
+        {
+          "model": "Gemini 3.8 Flash",
+          "score": "5.83%"
+        }
+      ]
+    }
+  }
+}

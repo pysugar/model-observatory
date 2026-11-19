@@ -18,7 +18,17 @@
 
 工程入口和功能决策维护在本页，跨机器协作规则见 [研究与协作边界](RESEARCH_WORKFLOW.md#当前维护入口与执行边界2026-10-26)，发布事实维护在 `RELEASES.md`。
 
-## 当前项目状态（2026-11-18 晚间 GPT-6.2 首日评测与风评）
+## 当前项目状态（2026-11-19 Gemini 4 Neon、多机构评测刷新与社区最佳实践补全）
+
+本轮基于 `1de7609`（PR #47 合并后）完成 2026-11-19 全量数据重读与报告更新，活动输入切换至 `research/2026-11-19/`（`build_report.py:CURRENT_RESEARCH`），详见 [11-19 研究记录](research/2026-11-19/README.md)。发布事实另记于 [RELEASES.md](RELEASES.md)。
+
+- **新模型与价格复核**：新增 **Google Gemini 4 Neon**（`gemini-4-neon`，2026-11-18 发布，1M 统一上下文、$3 / $0.15 / $15 全上下文统一价、`low / medium / high（默认）/ xhigh`）。目录与档案扩为 **35 款模型**，来源索引扩为 **78 条**。核实 **GPT-5.6 Sol** 优惠价（$4 / $20）官方延长至 **2026-11-30**；Carbon / Argon 优惠仍至 11-30；补充 GPT-6.2 Responses API `developer` 首条消息保缓存与 Background mode（2h −30% / 8h −40%）规则。
+- **多机构评测刷新**：AA v5 刷新为 **26 个发布版本 / 87 个配置**（五家主力 22 版 / 83 档，榜单 75 行），Neon xhigh 61.40（并列第三 / $6.44 / ~110 tok/s）、high 59.62（$3.74，GDP.pdf 33.4%）。Arena 官方数据集（`b9863c6`）**Text / WebDev / Agent 三榜全部刷新至 2026-11-18**：Text 榜 Google 包揽前三（Carbon / Argon / Neon），WebDev 榜 GPT-6.2 Astra #3 / Neon #6 / Sol 6.2 #8，Agent 榜 Fable 5.2 #1（0.2742）/ Opus 5.5 #2 / Neon #3（0.1841）；跨榜对照扩为 **25 款重点型号**。Scale HLE Diamond 扩为 21 项并固化 SEAL **HSS / MultiChallenge / Remote Labor Index（RLI）** 专项前十；LiveBench 重读 11-06 题集确认至 11-19；OpenRouter 周用量刷新至 11-18。AA Coding Agent Index（Neon 59 / Ember 46）、Vals Index v2.2（Fable 5.2 71.31% / Neon 70.87%）与 Terminal-Bench 4.0（11-18）作为档案文字证据入库（共 28 条）。
+- **社区最佳实践与界面升级**：社区声音新增 8 条原页核对条目至 **34 条 `source-checked`**，实现五厂全部当前主力型号（`tier: "main"`）**100% 覆盖**；`maxEffortScenarios` 增至 10 条（纳入 Kernel.dev 实证的 Carbon 轨迹过审与 GPT-6.2 前缀变更缓存失效），`workPhases` 补充只读 Orchestrator 规划、静态前缀缓存、跨家族异构复核与 5 轮收敛检查点。概览页新增 `data-aa-version="v5"` 版任务选型、四层多 Agent 分工与研究写作表（同时保留 `data-aa-version="v4"` 历史表格原样），`buildPageToc` 过滤非活动版本标题避免目录重复。
+
+本地验证：79 项单元测试、离线构建与 `publish.py check`、Chrome 全量 smoke（1440 / 390 / 320 / 305）均已通过；日志与截图在忽略目录 `test-results/refresh-2026-11-19/`。
+
+## 上一期项目状态（2026-11-18 晚间 GPT-6.2 首日评测与风评，已正式发布）
 
 [PR #44](https://github.com/pysugar/model-observatory/pull/44) 已合并并正式发布，main 合并提交为 `41663a8a28e46f9e16fc4acebca26ea111e185b0`；CI 与预览验证通过后按用户要求直接合并，未做预览页面人工复核，正式双入口核验通过，详见 [PR44 发布收束](RELEASES.md#2026-11-18-pr44-gpt-62-首日评测与风评正式发布收束)。
 
