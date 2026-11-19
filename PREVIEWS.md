@@ -72,7 +72,7 @@ Cloudflare token 仅进入单独的发布/清理步骤。发布先确认目标�
 
 ## 清理与失败恢复
 
-启用自动预览后，PR close/merge 触发可信 `pull_request_target: closed` 清理任务；它只运行 main 脚本，不取 PR 代码。API 再次确认 PR 已关闭，只删除指定 `pr-<编号>` 的 Preview 及其历史部署，不删除父 Worker。已经不存在时视为成功。
+启用自动预览后，PR close/merge 触发可信 `pull_request_target: closed` 清理任务；它只运行 main 脚本，不取 PR 代码。API 再次确认 PR 已关闭，只删除指定 `pr-<编号>` 的 Preview 及其历史部署，不删除父 Worker。已经不存在时视为成功。DELETE 返回后按 2、4、8、8、8 秒间隔回查（约 30 秒），确认消失才记为 `deleted`；Cloudflare 列表可能短暂滞后，30 秒后仍在才报 `Preview deletion is not confirmed`（PR46 起）。
 
 - 自动清理失败、workflow 被禁用或关闭了预览开关：手动运行同一 workflow，operation=`cleanup`，填已关闭 PR 的编号。开放 PR 会被拒绝。
 - 权限试验留下了 Preview：operation=`cleanup-smoke`，只清理固定的 `permission-smoke`。

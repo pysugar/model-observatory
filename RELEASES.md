@@ -238,6 +238,19 @@
 
 本次在 Mac 本地完成实现与验证；最终源码的本地 77 项单元测试、静态构建和完整 Chrome smoke 已通过。发布后本地 `main` 已快进同步到上述合并提交，核验时工作区干净。验收记录保存在忽略目录 `test-results/pr37-release/verification.json`，同目录保留预览 / 正式产物、probe 结果及响应头记录；临时预览与 GitHub artifact 不作为永久归档入口。
 
+## 2026-11-19 PR46 预览清理删除确认重试正式发布收束
+
+[PR #46](https://github.com/pysugar/model-observatory/pull/46) 于 **2026-11-19 06:43:20（Asia/Taipei）** 合并，main merge `a6d85fd72ec43be270bd2b777030e632ef861038`（PR head `e1f8896bb8d324260bb8dcd08cfa3a29171ff7ba`）。只改 `scripts/preview_ci.py` 与对应单元测试，报告内容与数据不变。
+
+起因：PR45 合并后的清理 [run 44338747797](https://github.com/pysugar/model-observatory/actions/runs/44338747797) 第 1 次尝试报 `Preview deletion is not confirmed`，DELETE 已成功但紧接着的回查仍列出 `pr-45`；当时预览地址已返回 404。第 2 次尝试成功，记录 `already-absent`。修复后 `delete_preview` 在 DELETE 后按 2 / 4 / 8 / 8 / 8 秒回查，约 30 秒仍未消失才失败。
+
+| 阶段 | 已完成事实 |
+| --- | --- |
+| PR CI 与预览 | [run 44410671744](https://github.com/pysugar/model-observatory/actions/runs/44410671744) verify 成功；合并前 Mac 本地 79 项单元测试通过。[预览 run 44411809034](https://github.com/pysugar/model-observatory/actions/runs/44411809034) 记录状态 `verified`，base `bd60ab1`、build `5d0f1dd`，deployment `510e1183-4120-4729-ae21-094814e7367d` |
+| main CI 与正式发布 | [run 44414261175](https://github.com/pysugar/model-observatory/actions/runs/44414261175) 成功：verify 与 deploy 两个 job 均通过；Cloudflare 版本 `ac4a7607-bbae-45ee-b782-0f011186e3dd` |
+| 正式核验 | 两个正式入口的 `version.json` 均为 `a6d85fd`、clean。本次未下载产物另跑 `publish.py probe` |
+| 预览清理 | [run 44414262520](https://github.com/pysugar/model-observatory/actions/runs/44414262520) 成功，记录 `deleted`；本次首轮回查即确认，延迟重试分支尚未在线上触发 |
+
 ## 2026-11-18 PR44 GPT-6.2 首日评测与风评正式发布收束
 
 [PR #44](https://github.com/pysugar/model-observatory/pull/44) 已于 **2026-11-18 23:21:31（Asia/Taipei）** 合并，并经既有 `release` 环境完成正式发布。以下是这次更新的验收记录，不自动追随后续文档发布；最新线上提交以 [version.json](https://models.localgpt.net/version.json) 为准。
