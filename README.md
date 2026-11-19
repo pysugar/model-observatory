@@ -30,6 +30,8 @@
 
 本地验证：79 项单元测试、离线构建与产物检查、Chrome 全量 smoke 通过；日志在忽略目录 `test-results/refresh-2026-11-18-pm/`。
 
+发布后维护（2026-11-19）：[PR #46](https://github.com/pysugar/model-observatory/pull/46) 给预览清理的删除确认加上约 30 秒回查重试，修复 PR45 清理时因 Cloudflare 列表滞后的偶发失败；报告内容不变，详见 [PR46 发布收束](RELEASES.md#2026-11-19-pr46-预览清理删除确认重试正式发布收束)。
+
 ## 上一期项目状态（2026-11-18 GPT-6.2 与界面优化，已正式发布）
 
 [PR #41](https://github.com/pysugar/model-observatory/pull/41) 已合并并正式发布，main 合并提交为 `ba65af7370240d772a69cc9bf1801dd7b524651b`；CI 通过后按用户要求直接合并，未做独立预览复核，正式双入口核验通过，详见 [PR41 发布收束](RELEASES.md#2026-11-18-pr41-gpt-62-与概览界面正式发布收束)。页脚“报告更新”日期当时仍为 11-15，已由 [PR #43](https://github.com/pysugar/model-observatory/pull/43) 修正。
