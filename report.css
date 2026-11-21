@@ -336,6 +336,9 @@ footer { border-top:1px solid var(--line); padding-top:22px; margin-top:45px; fo
 .platform-card h3 { font-size:14px; margin:0 0 6px; display:flex; align-items:center; justify-content:space-between; gap:6px; }
 .platform-card p { margin:4px 0; font-size:12px; color:var(--muted); }
 .platform-card .platform-stat { color:var(--ink); font-weight:600; margin-top:6px; display:block; }
+.cap-view-switch { display:inline-flex; flex-wrap:wrap; gap:4px; padding:4px; margin-top:14px; background:var(--soft); border-radius:9px; }
+.cap-view-switch button { background:transparent; border-color:transparent; color:var(--ink); }
+.cap-view-switch button[aria-pressed="true"] { background:var(--paper); border-color:var(--teal); color:var(--teal); font-weight:700; }
 .cap-index-tabs { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 10px; }
 .cap-index-tabs button { min-width:110px; font-size:13px; padding:7px 11px; min-height:38px; }
 .toolbar label { max-width:100%; min-width:0; }

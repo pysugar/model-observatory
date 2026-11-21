@@ -50,7 +50,9 @@ def main():
         normalized.append({**model, "slug": record["slug"], "medianOutputTokensPerSecond": model.get("outputSpeed")})
 
     series.fetch, series.records = fetch, reader.records
-    series.EVAL_RELEASES = sorted(tracked)
+    series.EVAL_RELEASES = sorted(release_slugs)
+    economics_evals, _ = series.DOMAINS_V5["economics"]
+    series.DOMAINS_V5["economics"] = (economics_evals, "知识30% · 代理知识工作30% · 推理25% · 长上下文15%")
     series.OUT = HERE / "aa-v5-series.json"
     series.main(release_metadata=releases, request_delay=0)
     result = read(series.OUT)

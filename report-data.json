@@ -27329,7 +27329,20 @@
               },
               "hasFallback": false,
               "fallbackLabel": null,
-              "isTopVariant": true
+              "isTopVariant": true,
+              "evalMetrics": {
+                "Intelligence Index": 29.89,
+                "AA-Briefcase v1.1": 1511.17,
+                "AutomationBench-AA": 58.62,
+                "GDP.pdf": 19.2,
+                "FrontierCode 2.0": 23.97,
+                "Terminal-Bench 4.0": 34.85,
+                "Terminal-Bench-Science": 5.71,
+                "CritPt v2 hard": 34.0,
+                "AA-Omniscience v1.1": -4.47,
+                "HLE-Diamond": 15.2
+              },
+              "evalSourceUrl": "https://artificialanalysis.ai/zh/models/releases/mimo-v2-6-pro"
             }
           ],
           "isTrackedFamily": false
@@ -27392,7 +27405,20 @@
               },
               "hasFallback": false,
               "fallbackLabel": null,
-              "isTopVariant": true
+              "isTopVariant": true,
+              "evalMetrics": {
+                "Intelligence Index": 27.8,
+                "AA-Briefcase v1.1": 1448.56,
+                "AutomationBench-AA": 60.37,
+                "GDP.pdf": 15.4,
+                "FrontierCode 2.0": 17.61,
+                "Terminal-Bench 4.0": 32.83,
+                "Terminal-Bench-Science": 4.76,
+                "CritPt v2 hard": 24.5,
+                "AA-Omniscience v1.1": 0.67,
+                "HLE-Diamond": 18.2
+              },
+              "evalSourceUrl": "https://artificialanalysis.ai/zh/models/releases/glm-5-3-flash"
             }
           ],
           "isTrackedFamily": false
@@ -27455,7 +27481,20 @@
               },
               "hasFallback": false,
               "fallbackLabel": null,
-              "isTopVariant": true
+              "isTopVariant": true,
+              "evalMetrics": {
+                "Intelligence Index": 26.73,
+                "AA-Briefcase v1.1": 1489.73,
+                "AutomationBench-AA": 64.05,
+                "GDP.pdf": 9.0,
+                "FrontierCode 2.0": 21.62,
+                "Terminal-Bench 4.0": 22.73,
+                "Terminal-Bench-Science": 4.29,
+                "CritPt v2 hard": 29.5,
+                "AA-Omniscience v1.1": -10.83,
+                "HLE-Diamond": 13.7
+              },
+              "evalSourceUrl": "https://artificialanalysis.ai/zh/models/releases/mimo-v2-6-flash"
             }
           ],
           "isTrackedFamily": false
@@ -27518,7 +27557,20 @@
               },
               "hasFallback": false,
               "fallbackLabel": null,
-              "isTopVariant": true
+              "isTopVariant": true,
+              "evalMetrics": {
+                "Intelligence Index": 18.88,
+                "AA-Briefcase v1.1": 1089.44,
+                "AutomationBench-AA": 21.25,
+                "GDP.pdf": 9.8,
+                "FrontierCode 2.0": 21.9,
+                "Terminal-Bench 4.0": 2.02,
+                "Terminal-Bench-Science": 0.48,
+                "CritPt v2 hard": 28.0,
+                "AA-Omniscience v1.1": -5.5,
+                "HLE-Diamond": 16.0
+              },
+              "evalSourceUrl": "https://artificialanalysis.ai/zh/models/releases/minimax-m3"
             }
           ],
           "isTrackedFamily": false
@@ -30014,7 +30066,7 @@
             "HLE-Diamond",
             "GDP.pdf"
           ],
-          "weightNote": "代理知识工作35% · 知识30% · 推理25% · 长上下文10%",
+          "weightNote": "知识30% · 代理知识工作30% · 推理25% · 长上下文15%",
           "methodologyUrl": "https://artificialanalysis.ai/methodology/capability-indices"
         }
       ],
@@ -34560,6 +34612,90 @@
             "CritPt v2 hard": 62.0,
             "AA-Omniscience v1.1": 48.5,
             "HLE-Diamond": 54.2
+          }
+        },
+        "mimo-v2-6-pro": {
+          "slug": "mimo-v2-6-pro",
+          "releaseSlug": "mimo-v2-6-pro",
+          "model": "MiMo-V2.6-Pro",
+          "vendor": "Xiaomi",
+          "effort": "unspecified",
+          "effortOrder": 3,
+          "source_url": "https://artificialanalysis.ai/zh/models/releases/mimo-v2-6-pro",
+          "metrics": {
+            "Intelligence Index": 29.89,
+            "AA-Briefcase v1.1": 1511.17,
+            "AutomationBench-AA": 58.62,
+            "GDP.pdf": 19.2,
+            "FrontierCode 2.0": 23.97,
+            "Terminal-Bench 4.0": 34.85,
+            "Terminal-Bench-Science": 5.71,
+            "CritPt v2 hard": 34.0,
+            "AA-Omniscience v1.1": -4.47,
+            "HLE-Diamond": 15.2
+          }
+        },
+        "glm-5-3-flash": {
+          "slug": "glm-5-3-flash",
+          "releaseSlug": "glm-5-3-flash",
+          "model": "GLM-5.3-Flash",
+          "vendor": "Z AI",
+          "effort": "unspecified",
+          "effortOrder": 3,
+          "source_url": "https://artificialanalysis.ai/zh/models/releases/glm-5-3-flash",
+          "metrics": {
+            "Intelligence Index": 27.8,
+            "AA-Briefcase v1.1": 1448.56,
+            "AutomationBench-AA": 60.37,
+            "GDP.pdf": 15.4,
+            "FrontierCode 2.0": 17.61,
+            "Terminal-Bench 4.0": 32.83,
+            "Terminal-Bench-Science": 4.76,
+            "CritPt v2 hard": 24.5,
+            "AA-Omniscience v1.1": 0.67,
+            "HLE-Diamond": 18.2
+          }
+        },
+        "mimo-v2-6-flash": {
+          "slug": "mimo-v2-6-flash",
+          "releaseSlug": "mimo-v2-6-flash",
+          "model": "MiMo-V2.6-Flash",
+          "vendor": "Xiaomi",
+          "effort": "unspecified",
+          "effortOrder": 3,
+          "source_url": "https://artificialanalysis.ai/zh/models/releases/mimo-v2-6-flash",
+          "metrics": {
+            "Intelligence Index": 26.73,
+            "AA-Briefcase v1.1": 1489.73,
+            "AutomationBench-AA": 64.05,
+            "GDP.pdf": 9.0,
+            "FrontierCode 2.0": 21.62,
+            "Terminal-Bench 4.0": 22.73,
+            "Terminal-Bench-Science": 4.29,
+            "CritPt v2 hard": 29.5,
+            "AA-Omniscience v1.1": -10.83,
+            "HLE-Diamond": 13.7
+          }
+        },
+        "minimax-m3": {
+          "slug": "minimax-m3",
+          "releaseSlug": "minimax-m3",
+          "model": "MiniMax-M3",
+          "vendor": "MiniMax",
+          "effort": "unspecified",
+          "effortOrder": 3,
+          "source_url": "https://artificialanalysis.ai/zh/models/releases/minimax-m3",
+          "metrics": {
+            "Intelligence Index": 18.88,
+            "AA-Briefcase v1.1": 1089.44,
+            "AutomationBench-AA": 21.25,
+            "GDP.pdf": 9.8,
+            "FrontierCode 2.0": 21.9,
+            "Terminal-Bench 4.0": 2.02,
+            "Terminal-Bench-Science": 0.48,
+            "CritPt v2 hard": 28.0,
+            "AA-Omniscience v1.1": -5.5,
+            "HLE-Diamond": 16.0
           }
         }
       }

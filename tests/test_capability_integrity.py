@@ -53,6 +53,12 @@ const raw=[{slug:'low',effort:'low',intelligenceIndex:99,costPerTask:1,evalMetri
  {slug:'high',effort:'high',intelligenceIndex:100,costPerTask:2,evalMetrics:{}}];
 assert.equal(capScore(raw[0],'eval:SciCode'),0);
 assert.equal(capScore(raw[1],'eval:SciCode'),null);
+const benchExport=capExportRows(raw,[{key:'eval:SciCode',weight:15}]);
+assert.equal(benchExport[0]['eval:SciCode_contribution_points'],0);
+assert.equal(benchExport[1]['eval:SciCode_contribution_points'],null);
+assert.equal(benchExport[1]['eval:SciCode_view_rank'],null);
+assert.equal(benchExport[0]['eval:SciCode_valid_n'],1);
+assert.equal(capContribution(70,15),10.5);
 const rawRows=effortRows(raw,'eval:SciCode','low');
 assert(rawRows.every(r=>r.cost_per_task_usd===null && r.delta_cost_usd===null));
 assert.equal(rawRows[1].score_status,'missing');

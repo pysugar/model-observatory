@@ -324,11 +324,11 @@
   <div id="computerUseEvidence" data-toc="Computer Use"></div>
   <div id="pitfallGuide" class="card" data-toc="避坑指南"></div>
 
-  <div class="card chart-card" id="capIndexCard" data-toc="六域排名">
+  <div class="card chart-card" id="capIndexCard" data-toc="能力指数对比">
     <div class="chart-header">
       <div>
-        <span class="eyebrow"><span data-aa-version="v4">AA CAPABILITY INDEXES · v4.3.2 · 6 大专业领域能力指数对比</span><span data-aa-version="v5">AA CAPABILITY INDEXES · v5 · 6 大专业领域能力指数对比</span></span>
-        <h3 id="capIndexTitle">能力指数对比：跨领域排名跃迁（Bump Chart）与单项得分</h3>
+        <span class="eyebrow">Artificial Analysis · <span data-aa-version="v4">v4.3.2</span><span data-aa-version="v5">v5</span></span>
+        <h3 id="capIndexTitle">能力指数对比</h3>
       </div>
       <div class="toolbar">
         <label>展示范围
@@ -342,16 +342,13 @@
         <button id="exportCapIndexes">导出能力指数 CSV</button>
       </div>
     </div>
-    <p class="small"><span data-aa-version="v4">本图全部为 AA v4.3.2 数据（总分与 6 个领域指数同一版本）；v5 总分排名见概览“最新榜单”的 AA 智能指数 v5 页签，v5 的领域指数尚未取得，不与本图混排。</span><span data-aa-version="v5">本图为 AA v5 数据（总分与 6 个领域指数同一版本，领域指数构成见 AA 方法页）；AA 没有用 v5 重测旧型号，含旧型号的排名见页首切换的 v4.3.2 视图。</span>图表与明细可横向滚动查看。分数直接保留 <a href="https://artificialanalysis.ai/zh/indexes" target="_blank" rel="noopener">AA 官方领域指数</a>，不是本报告任务合成分。代表档按每个发布版本的AA 智能指数 最高分选择，不保证该域最佳。活跃与兼容版本包含旧代；切换领域保持同一候选集合。纵轴为当前集合排名，不是分差；两位小数同分并列，缺测不参排、连线断开。两侧只显示模型与具体档位；各点支持悬停、Tab 聚焦与触屏点选，下方固定展示选中配置的完整 7 项分数。</p>
-    <div class="cap-index-tabs" id="capIndexTabs" role="group" aria-label="选择能力指数领域">
-      <button type="button" data-cap-tab="all" aria-pressed="true">全部 · 排名对比</button>
-      <button type="button" data-cap-tab="financeAndAccounting" aria-pressed="false">财务与会计</button>
-      <button type="button" data-cap-tab="strategyAndOps" aria-pressed="false">战略与运营</button>
-      <button type="button" data-cap-tab="legal" aria-pressed="false">法律</button>
-      <button type="button" data-cap-tab="healthcareAndMedical" aria-pressed="false">医疗与健康</button>
-      <button type="button" data-cap-tab="engineering" aria-pressed="false">工程</button>
-      <button type="button" data-cap-tab="economics" aria-pressed="false">经济学</button>
+    <div class="cap-view-switch" id="capViews" role="group" aria-label="对比指标" data-aa-version="v5">
+      <button type="button" data-cap-view="industries" aria-pressed="true">六个行业指数</button>
+      <button type="button" data-cap-view="benchmarks" aria-pressed="false">基础测试 · 科学与编程</button>
     </div>
+    <p class="small" id="capViewNote"></p>
+    <p class="small">代表档取每个发布版本的 AA 智能指数最高分。每列按当前范围单独排名，分数相同至两位小数时并列，缺测处断线。点选或聚焦数据点可查看得分和名次。</p>
+    <div class="cap-index-tabs" id="capIndexTabs" role="group" aria-label="选择排名对比或单项得分"></div>
     <div class="topline"><span id="capIndexCount" class="small" aria-live="polite"></span><span class="small">点击或 Tab 聚焦后按回车 / 空格高亮配置</span></div>
     <div class="svg-scroll"><svg id="capBumpChart" role="group" aria-label="能力指数排名与得分对比图"></svg></div>
     <p id="capPointTip" class="method-note" role="status" aria-live="polite">聚焦或点选任一指标点，查看分数、名次、有效配置与候选范围。</p>
