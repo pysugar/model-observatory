@@ -431,9 +431,16 @@
     if (!ext || !$("platformCards")) return;
     $("platformCards").innerHTML = ext.platforms.map(p => `<article class="platform-card"><h3>${link(p.url, p.name)}</h3><p><strong>核心指标：</strong>${esc(p.focus.replace("10 项综合 Intelligence Index","AA 智能指数（10 项评测）"))}</p><p><strong>成本口径：</strong>${esc(p.cost_metric)}</p><span class="platform-stat">快照：${esc(p.snapshot)}</span></article>`).join("");
     const rows = shownPanoramaRows();
-    if ($("panoramaCount")) $("panoramaCount").textContent = `${rows.length} 个在用系列 · 5 大主流评测站与生产调用横向对照`;
+    if ($("panoramaCount")) $("panoramaCount").textContent = `${rows.length} 款对照型号`;
     $("panoramaTable").innerHTML = `<table class="task-table"><caption>四大模型家族（Grok / ChatGPT / Gemini / Claude）跨平台能力与成本对照矩阵</caption><thead><tr>${["家族 / 型号与状态","Artificial Analysis (v4.3.2)","Arena.ai & LiveBench 2.0","Scale SEAL 专项表现","OpenRouter 生产用量与成本","跨榜选型与甜蜜点建议"].map(h => `<th scope="col">${h}</th>`).join("")}</tr></thead><tbody>${rows.map(r => `<tr><th scope="row">${esc(r.model)} <span class="badge">${esc(r.family)}</span><span class="task-detail">${esc(r.status)}</span></th><td data-label="Artificial Analysis (v4.3.2)"><strong>AA 智能指数：${esc(r.aa_ii)}</strong><span class="task-detail">单任务成本：${esc(r.aa_cost_task)}<br>官方六域（整体 AA 智能指数最高代表档）：${esc(r.aa_cap_highlights)}<br>${link(r.aa_cap_source_url,"AA 领域来源")}</span></td><td data-label="Arena.ai & LiveBench 2.0"><strong>Arena：${esc(r.arena)}</strong><span class="task-detail">LiveBench ${esc(r.livebench_snapshot)}：${esc(r.livebench_2)}</span></td><td data-label="Scale SEAL 专项表现">${esc(r.scale_seal)}<span class="task-detail">${esc(r.scale_snapshot)}</span></td><td data-label="OpenRouter 生产用量与成本">${esc(r.openrouter)}<span class="task-detail">截至 ${esc(r.openrouter_snapshot)} · 用量不是能力</span></td><td data-label="跨榜选型与甜蜜点建议">${esc(r.sweet_spot)}</td></tr>`).join("")}</tbody></table>`;
-    $("scaleHighlightsTable").innerHTML = table(["Scale SEAL 专项榜单","Top 1","Top 2","Top 3","Top 4"], ext.scale_highlights.map(s => `<tr><th>${link(s.source_url || "https://labs.scale.com/leaderboard", s.benchmark)}<span class="task-detail">${esc(s.checked_at || "2026-10-19")} 核验</span></th><td><strong>#1</strong> ${esc(s.top1)}</td><td><strong>#2</strong> ${esc(s.top2)}</td><td><strong>#3</strong> ${esc(s.top3)}</td><td><strong>#4</strong> ${esc(s.top4)}</td></tr>`).join(""));
+    const scaleRows = ext.scale_highlights.map(benchmark => {
+      const cells = [1, 2, 3, 4].map(position => {
+        const rank = benchmark.source_ranks?.[position - 1] ?? position;
+        return `<td><strong>#${esc(rank)}</strong> ${esc(benchmark["top" + position])}</td>`;
+      }).join("");
+      return `<tr><th>${link(benchmark.source_url, benchmark.benchmark)}<span class="task-detail">${esc(benchmark.checked_at)} 核验</span></th>${cells}</tr>`;
+    });
+    $("scaleHighlightsTable").innerHTML = table(["Scale SEAL 专项榜单", "第 1 条", "第 2 条", "第 3 条", "第 4 条"], scaleRows.join(""));
   }
   if ($("panoramaFamily")) {
     $("panoramaFamily").addEventListener("change", renderPanorama);
@@ -2491,7 +2498,10 @@
     }));
     $("boardButtons").innerHTML = market.boards.map(board => `<button data-board="${esc(board.id)}" aria-pressed="false">${esc(board.short)}</button>`).join("");
     $("boardButtons").querySelectorAll("button").forEach(button => button.addEventListener("click", () => selectMarketBoard(button.dataset.board)));
-    $("marketUpdates").innerHTML = market.changes.map((change,i) => `<div class="research-update"><span class="update-index">0${i+1}</span><div><h4>${esc(change.title)}</h4><p>${esc(change.body)}</p></div></div>`).join("");
+    $("marketUpdates").innerHTML = market.changes.map((change,i) => {
+      const sources = (change.sources || []).map(s => link(s.url, s.label)).join(" · ");
+      return `<div class="research-update"><span class="update-index">0${i+1}</span><div><h4>${esc(change.title)}</h4><p>${esc(change.body)}</p>${sources ? `<p class="small">${sources}</p>` : ""}</div></div>`;
+    }).join("");
     $("priceCalendar").innerHTML = DATA.models.filter(model => model.promo_end && finite(model.future_input)).map(model => `<div class="price-event"><time datetime="${esc(model.promo_end)}">${esc(model.promo_end)}</time><b>${esc(model.name)}</b><p>输入 / 输出：${money(model.input)} / ${money(model.output)}<br>结束后 ${money(model.future_input)} / ${money(model.future_output)}<small>USD / 百万 token · ${link(model.price_source,"官方价格")}</small></p></div>`).join("");
     $("officialChecks").innerHTML = '<span class="small">官方来源 · 各项核验日期</span>' + market.official_sources.map(source => `<a href="${esc(source.url)}" target="_blank" rel="noopener" title="${esc(source.note)}"><span aria-hidden="true">✓</span> ${esc(source.vendor)} <span class="check-date">${esc(source.checked_at)}</span><span aria-hidden="true">↗</span></a>`).join("");
   }

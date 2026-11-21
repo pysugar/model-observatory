@@ -25,13 +25,25 @@ def merge_aa_v5(snapshot, v5):
             "changes": [v5["change_note"], *snapshot["changes"]]}
 
 
-def refresh_panorama(external, snapshot):
+def refresh_panorama(external, snapshot, scale_boards):
     """Refresh only observed fields; each source retains its own date and metric."""
     boards = {board["id"]: board for board in snapshot["boards"]}
     lookups = {
         key: {CATALOG_NAMES.get(row["model"], row["model"]): row for row in boards[key]["rows"]}
         for key in ("livebench", "openrouter")
     }
+    scale_results = {}
+    for key, label in (("scale", "HLE Diamond"), ("hss", "HSS"),
+                       ("multichallenge", "MultiChallenge"), ("rli", "RLI"),
+                       ("swe_full", "SWE-Bench Full"), ("swe_hard", "SWE-Bench HARD")):
+        for result in scale_boards[key]["rows"]:
+            model, sep, details = result["model"].partition(" (")
+            configuration = (sep + details).replace(" (one-pass-agent)", "").strip()
+            score = f'{result["score"]:.2f}'
+            if result["confidenceInterval_upper"]:
+                score = f'({score} ±{result["confidenceInterval_upper"]:.2f})'
+            entry = " ".join(filter(None, (label, f'#{result["rank"]}', configuration, f"{score}%")))
+            scale_results.setdefault(CATALOG_NAMES.get(model, model), []).append(entry)
     for row in external["four_family_matrix"]:
         live = lookups["livebench"].get(row["model"])
         row["livebench_2"] = (
@@ -55,18 +67,10 @@ def refresh_panorama(external, snapshot):
             if usage else "本次周用量前十选录未收录；不表示不可用或能力较低"
         )
         row["openrouter_snapshot"] = boards["openrouter"]["source_updated_at"]
-        row["scale_snapshot"] = "2026-10-19 历史选录；新核验 HLE / HSS / MultiChallenge 见下方"
+        row["scale_snapshot"] = f'{scale_boards["scale"]["checked_at"]} 核验'
+        row["scale_seal"] = " · ".join(scale_results.get(row["model"], [])) or "本次六张专项榜未列出该型号"
         # Old cross-board recommendations relied on stale or incomparable costs.
         row["sweet_spot"] = "先按任务与原生档位查看上方选档速查，再用同一评测的成绩与费用验证；各站指标独立参考。"
-        if row["model"] == "Claude Haiku 5.5":
-            row["scale_seal"] = "MultiChallenge 67.67 ±5.34（当前页面序号 #8）"
-            row["scale_snapshot"] = "2026-10-23 核验"
-        elif row["model"] == "Gemini 4 Argon":
-            row["scale_seal"] = "HSS 55.40 ±4.20；HLE Diamond 53.20 ±3.07；MultiChallenge 78.70 ±5.30"
-            row["scale_snapshot"] = "2026-10-23 核验"
-        elif row["model"] == "Gemini 3.8 Flash":
-            row["scale_seal"] = "HSS 41.60 ±3.70（当前页面序号 #6）"
-            row["scale_snapshot"] = "2026-10-23 核验"
     updates = snapshot["scale_highlight_updates"]
     for index, update in updates.items():
         external["scale_highlights"][int(index)].update(update)

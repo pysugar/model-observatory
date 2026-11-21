@@ -1,0 +1,106 @@
+{
+  "changes": [
+    {
+      "title": "Arena 补入 GPT-6.2 的文本偏好成绩",
+      "body": "11-19 Text 榜前三为 Carbon、Argon、Neon。Astra 和 Sol 的 max 档分别列第 55 和 64。11-20 WebDev 榜上，两者分别列第 5 和 8，Qwen4-Max xhigh 列第 9。11-18 Agent 榜的前三仍为 Fable 5.2、Opus 5.5 和 Neon。",
+      "sources": [
+        {
+          "label": "Arena 官方数据集 · 本期版本",
+          "url": "https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset/tree/abbae57d7888809e8b686f8548a6f77c81fa03f4"
+        }
+      ]
+    },
+    {
+      "title": "Scale 的视觉推理与专家题各有领先模型",
+      "body": "HSS 考察从图片和视频推断隐含信息。Neon xhigh 得 75.86%，Carbon high 得 71.10%，两者的 95% 置信区间重叠。HLE Diamond 专家题上，Fable 5.2 high 得 72.40%，Astra 6.2 high 得 66.90%。两榜均沿用来源标注的 one-pass-agent 配置。",
+      "sources": [
+        {
+          "label": "Scale HSS",
+          "url": "https://labs.scale.com/leaderboard/hss"
+        },
+        {
+          "label": "Scale HLE Diamond",
+          "url": "https://labs.scale.com/leaderboard/hle-diamond"
+        }
+      ]
+    },
+    {
+      "title": "Argon 的 AA 任务费用翻倍，Google 优惠仍至 11 月底",
+      "body": "AA 已按每百万输入 / 输出 token 4 / 20 美元计算 Argon 与 Carbon 的任务费用。Argon high 的分数仍为 50.41，费用从 $4.9733 变为 $9.9466。Google 公布的两款模型优惠价仍为 $2 / $10，12 月 1 日起执行常规价。",
+      "sources": [
+        {
+          "label": "AA · Argon 发布版本",
+          "url": "https://artificialanalysis.ai/zh/models/releases/gemini-4-argon"
+        },
+        {
+          "label": "Google 官方价格",
+          "url": "https://aistudio.google.com/docs/pricing#gemini-4-argon"
+        }
+      ]
+    },
+    {
+      "title": "Epoch、METR 与 Vals 补充了真实交付证据",
+      "body": "Epoch 人工评阅四类研究工作，Fable 5.2 平均领先 Astra 17 个百分点。METR 的 TH1.1 与 TH2 合并题集显示，50% 成功率对应的人类任务时长约每 3.6 个月翻倍。Vals 11-19 行业指数中，Fable 5.2 得 71.31%，每测试 $17.94；Neon 得 70.87%，每测试 $7.40。",
+      "sources": [
+        {
+          "label": "Epoch 工作样本 · 11-17",
+          "url": "https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work"
+        },
+        {
+          "label": "METR 季度报告 · 11-20",
+          "url": "https://metr.org/blog/2026-11-20-q4-2026-capability-update/"
+        },
+        {
+          "label": "Vals Index v2.2 · 11-19",
+          "url": "https://www.vals.ai/benchmarks/vals_index"
+        }
+      ]
+    },
+    {
+      "title": "实时语音与世界模拟新增两款付费 API",
+      "body": "11-19，OpenAI 上线 GPT-Live-1.1，改善多语种转写与口音一致性，活动通话每分钟 $0.05，WebRTC 待机每分钟 $0.02。Google 同日在 Interactions API 开放 Genie 4，用文字或图片生成可交互的视听场景，视频输出约 $0.10/秒，含音频。",
+      "sources": [
+        {
+          "label": "OpenAI · GPT-Live-1.1",
+          "url": "https://developers.openai.com/api/docs/models/gpt-live-1.1"
+        },
+        {
+          "label": "Google API 发布记录",
+          "url": "https://aistudio.google.com/docs/changelog#11-19-2026"
+        }
+      ]
+    },
+    {
+      "title": "Qwen4-Max 加入对照，OpenRouter 周用量刷新",
+      "body": "阿里 11-16 发布的 Qwen4-Max 在 AA v5 得 42.89，LiveBench 得 73.1，每成功任务 $0.694。另看截至 11-20 的 OpenRouter 七日流量，DeepSeek V4.1 Flash 1017 以 62.4 万亿 token 居首，GPT-6 Luna 以 8.74 万亿列第四。",
+      "sources": [
+        {
+          "label": "阿里巴巴发布公告",
+          "url": "https://www.alibabagroup.com/en-US/document-2060139246777270272"
+        },
+        {
+          "label": "AA · Qwen4 Max",
+          "url": "https://artificialanalysis.ai/models/qwen4-max"
+        },
+        {
+          "label": "OpenRouter 周用量",
+          "url": "https://openrouter.ai/rankings"
+        }
+      ]
+    }
+  ],
+  "vendors": {
+    "Google": "Neon 在 LiveBench 得 87.4（每成功任务 $2.654），在 Scale HSS 以 xhigh 得 75.86；Carbon high 在 Arena Text 和 Scale MultiChallenge 领先。11-19 发布的 Genie 4 面向实时世界模拟，采用独立的视频输出费率。",
+    "OpenAI": "Astra / Sol 6.2 的 max 档分别列 Arena Text 第 55 / 64 和 WebDev 第 5 / 8。Scale HLE Diamond 的 high 档分别为 66.90% / 56.50%。长程任务可对照 Astra 在 LiveBench 的 84.9 分与每成功任务 $1.941。 OpenAI 的 MedChemBench 以 99 道回顾性科学题评测，Astra 6.2 xhigh 得到可得分的 84.5%。",
+    "Anthropic": "Fable 5.2 领先 AA v5、Arena WebDev / Agent 与 Vals Index。Epoch 的数据中心分析任务中，Fable 5.2 得 97.5%，Opus 5.5 得 87.5%；后者用时不到 3 小时，适合同时考察时限和交付质量。",
+    "xAI": "Grok 4.7 仍是公开 API 主力。AA v5 的 high / xhigh 分别得 35.21 / 35.49，每任务 $6.18 / $7.77。xAI 已于 11-19 停止提供 grok-build-0.1。",
+    "Meta": "Muse Ember max 在 AA v5 得 36.02，每任务约 $0.14；超过 200k 输入 token 的请求按长上下文价全量计费。Wonder Full 仍只在 Muse Code 提供，AA 缺少其公开 API 成本。"
+  },
+  "official": {
+    "Google": "Neon 每百万输入 / 缓存读取 / 输出 token 为 $3 / $0.15 / $15；Carbon 和 Argon 的 $2 / $10 优惠持续到 11-30，12-01 起为 $4 / $20。",
+    "OpenAI": "Astra / Sol 6.2 的 Standard 输入与输出价分别为 $8 / $40 和 $2 / $10。GPT-5.6 Sol 的促销持续至 11-30。",
+    "Anthropic": "Fable 5.2 输入 / 输出每百万 token 为 $8 / $40。Claude API 将于 11-30 退役 Sonnet 4.5。",
+    "Meta": "官方价格页分别列出 Wonder、Spark 1.3 与 Ember 的 Standard 费率；Ember 输入超过 200k 时整次请求计长上下文价。",
+    "xAI": "11-19 停服 grok-build-0.1。公开型号页仍列 Grok 4.7 为最新主力，Grok 4.8 暂无正式 API 条目。"
+  }
+}
