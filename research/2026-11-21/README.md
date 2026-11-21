@@ -6,7 +6,7 @@
 
 | 来源 | 本期范围与时间 | 值得关注的变化 |
 | --- | --- | --- |
-| Artificial Analysis | v5 总榜选录 76 档。发布页覆盖 26 版、87 档，其中五厂的 22 版、83 档有逐项评测。榜单未披露整体更新日。 | 以各型号最高分计，Fable 5.2 max 得 64.56，GPT-6.2 Astra max 得 62.14，Neon xhigh 得 61.40。新增跨厂参照 Qwen4 Max（42.89 分，每个加权任务 $3.2681）。[AA v5 原榜](https://artificialanalysis.ai/leaderboards/models) |
+| Artificial Analysis | v5 总榜选录 76 档。发布页覆盖 26 版、87 档，均有科学与编程的四项原始成绩。榜单未披露整体更新日。 | 以各型号最高分计，Fable 5.2 max 得 64.56，GPT-6.2 Astra max 得 62.14，Neon xhigh 得 61.40。新增跨厂参照 Qwen4 Max（42.89 分，每个加权任务 $3.2681）。[AA v5 原榜](https://artificialanalysis.ai/leaderboards/models) |
 | LiveBench 2.0 | 11-06 题集已公布 39 条成绩。报告选录 29 款，按官方七个任务套件的权重和费用文件复算。 | Neon 综合 87.4，每成功任务 $2.654。Fable 5.2 与 Astra 均显示 84.9，原精度和费用分别是 84.883／$9.850 与 84.872／$1.941。来源未披露原生档位。[成绩](https://livebench.ai/data/20261106/table.csv) · [费用](https://livebench.ai/data/20261106/cost.csv) |
 | Arena | Text Style Control（11-19）、WebDev（11-20）、Agent（11-18）全榜共有 426、161、68 条。 | Text 前三均为 high 档，依次是 Carbon、Argon、Neon。Astra 与 Sol 的 max 分别列 Text 第 55、64，WebDev 第 5、8。Fable 5.2 的 xhigh 领跑 WebDev，max 领跑 Agent。Qwen4-Max xhigh 在 WebDev 列第 9。[官方数据集固定版本](https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset/tree/abbae57d7888809e8b686f8548a6f77c81fa03f4) |
 | Scale SEAL | 六张专项榜于 11-21 读取，全榜更新日未披露。HLE Diamond 页面共 27 项，按观察站目录范围选录 26 项。 | HLE Diamond 上 Fable 5.2 high 得 72.40%，Astra high 66.90%，Sol high 56.50%。视觉推理 HSS 中 Neon xhigh 得 75.86%（±3.40 个百分点），Carbon high 得 71.10%（±3.60），95% 区间重叠。[HLE Diamond](https://labs.scale.com/leaderboard/hle-diamond) · [Humanity’s Sixth Sense](https://labs.scale.com/leaderboard/hss) |
@@ -23,6 +23,8 @@
 - **实时模型与跨厂参照。** OpenAI 11-19 开放 GPT-Live-1.1，活动通话 $0.05/分钟，WebRTC 待机 $0.02/分钟。Google 同日通过付费 API 开放 Genie 4，视频输出约 $0.10/秒（含音频）。阿里 11-16 发布的 Qwen4-Max 已进入跨榜对照。Kimi K3.1 Pro 已有官方权重分片，当前榜单据此校正开放权重标注。xAI 的 `grok-build-0.1` 已于 11-19 停服。[OpenAI 模型页](https://developers.openai.com/api/docs/models/gpt-live-1.1) · [Google 更新记录](https://aistudio.google.com/docs/changelog#11-19-2026) · [阿里巴巴公告](https://www.alibabagroup.com/en-US/document-2060139246777270272) · [Moonshot 权重](https://huggingface.co/moonshotai/Kimi-K3.1-Pro) · [xAI 发布记录](https://docs.x.ai/developers/release-notes)
 
 ## 数据与复算
+
+11 月 22 日补录 MiMo V2.6 Pro、MiMo V2.6 Flash、GLM 5.3 Flash、MiniMax-M3 的逐项成绩。四份原始发布页与本快照记录的 SHA-256 一致。科学与编程合计占 AA v5 总分的 50%，单项贡献按原始百分比乘该项权重估算。同日核对经济学指数说明，知识工作与长文档分别占 30% 和 15%。[AA 总指数方法](https://artificialanalysis.ai/methodology/intelligence-benchmarking) · [AA 行业指数方法](https://artificialanalysis.ai/methodology/capability-indexes)
 
 [AA 榜单](aa-index-v5.json) 和[发布系列](aa-v5-series.json)用 AA 的模型 UUID 匹配到具体档位。[Arena](arena.json)保存固定数据集版本和来源名次。[LiveBench](livebench.json)保存题集、权重和费用文件的指纹。[Scale 与 OpenRouter](manual-boards.json)保存每个来源的 URL、SHA-256 和原始单位。Scale 同页可能含多套数据，采集时按可见模型列表的完整顺序选取对应标签页。SWE-Bench 的并列名次按来源披露的置信区间规则保留。
 

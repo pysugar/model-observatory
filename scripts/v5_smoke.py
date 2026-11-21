@@ -10,6 +10,7 @@ import io
 from pathlib import Path
 
 from playwright.sync_api import expect
+from capability_smoke import csv_download
 from publish import require
 from sweet_spot import PRESETS, picks, profile_pitfalls, profile_series
 
@@ -26,6 +27,48 @@ def check_plot_y_bounds(page, selector, top, bottom):
     require(bool(coords["ys"]), f"No plotted points: {selector}")
     require(all(top <= y <= coords["height"]-bottom for y in coords["ys"]),
             f"Measured score outside plot: {selector}")
+
+
+def check_cap_benchmarks(page, view):
+    scope = page.locator("#capIndexScope")
+    scope.select_option("all_top")
+    selected = "gpt-6-2-astra"
+    page.locator(f'[data-cap-model="{selected}"]').click()
+    page.get_by_role("button", name="基础测试 · 科学与编程").click()
+    entries = [e for e in view["aa_capability_indexes"]["entries"] if e["isTopVariant"]]
+    measured = view["aa_effort_evals"]["variants"]
+    weights = {"Terminal-Bench-Science": 15, "CritPt v2 hard": 10, "FrontierCode 2.0": 15, "Terminal-Bench 4.0": 10}
+    config = next(e for e in entries if e["slug"] == selected)
+    chart = page.locator("#capBumpChart")
+    expect(chart.locator(".cap-denominator")).to_have_count(5)
+    exported = next(row for row in csv_download(page, "#exportCapIndexes") if row["model"] == config["name"])
+    for metric, weight in weights.items():
+        key = "eval:" + metric
+        scores = [measured[e["slug"]]["metrics"][metric] for e in entries]
+        score = measured[selected]["metrics"][metric]
+        rank = 1 + sum(s > score for s in scores if s is not None)
+        valid = sum(s is not None for s in scores)
+        node = chart.locator(f'[data-cap-id="{selected}"] [data-domain="{key}"]')
+        expect(node).to_have_attribute("data-rank", str(rank))
+        expect(node).to_have_attribute("data-valid-n", str(valid))
+        assert float(node.get_attribute("data-score")) == float(exported[key+"_score"]) == score
+        assert int(exported[key+"_view_rank"]) == rank
+        assert int(exported[key+"_weight_pct"]) == weight and exported[key+"_unit"] == "%"
+        assert abs(float(exported[key+"_contribution_points"]) - score*weight/100) < 0.0001
+    subtotal = sum(measured[selected]["metrics"][metric]*weight/100 for metric, weight in weights.items())
+    expect(page.locator("#capIndexDetail")).to_contain_text(f"{subtotal:.2f} / 50 分")
+    expect(page.locator("#capIndexDetail tbody tr")).to_have_count(5)
+    page.locator("#capShowII").uncheck()
+    expect(chart.locator(".cap-denominator")).to_have_count(4)
+    page.locator('[data-cap-tab="eval:Terminal-Bench-Science"]').click()
+    expect(chart.locator(".cap-bar")).to_have_count(len(entries))
+    expect(chart).to_contain_text("100%")
+    page.get_by_role("button", name="六个行业指数").click()
+    expect(chart.locator(".cap-denominator")).to_have_count(6)
+    expect(page.locator(f'[data-cap-model="{selected}"]')).to_have_attribute("aria-pressed","true")
+    expect(page.locator("#capIndexDetail tbody tr")).to_have_count(7)
+    page.locator("#capShowII").check()
+    scope.select_option("four_family_top")
 
 
 def check_v5_views(page, data, origin, output):
@@ -170,6 +213,7 @@ def check_v5_views(page, data, origin, output):
     # Capability bump chart and its column header follow v5.
     page.locator('[data-panel="capabilities"]').click()
     expect(page.locator("#capBumpChart")).to_contain_text("AA 智能指数 v5.0")
+    check_cap_benchmarks(page, view)
     n_measured = sum(len(r["variants"]) for r in view["aa_release_series"]["releases"] if any(v.get("taskScores") for v in r["variants"]))
     expect(page.locator("#effortScalingChart .scaling-dot")).to_have_count(n_measured)
     for task in tasks:

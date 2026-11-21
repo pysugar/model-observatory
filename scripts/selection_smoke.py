@@ -1,6 +1,7 @@
 """Rendered terminology, downloads, and prior guidance; included in release smoke."""
 import json
 import re
+import time
 from playwright.sync_api import expect
 from capability_smoke import csv_download
 
@@ -84,6 +85,8 @@ def check_selection(page, data, output):
             page.select_option('#deltaGroup','coding')
         audit_panel(page,panel)
         for name in buttons:
+            # Blink throttles a frame after ten downloads in a one-second burst.
+            time.sleep(0.12)
             rows=csv_download(page,'#'+name)
             assert rows, name
             headers=list(rows[0])

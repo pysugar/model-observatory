@@ -80,7 +80,8 @@ def build_aa_v5(doc):
             if ev:
                 var["evalMetrics"] = ev["metrics"]
                 var["evalSourceUrl"] = ev["source_url"]
-                var["taskScores"] = v5_task_scores(ev["metrics"])
+                if rel.get("isTrackedFamily", rel["isFourFamily"]):
+                    var["taskScores"] = v5_task_scores(ev["metrics"])
     variants = {v["slug"] for r in doc["aa_release_series"]["releases"] for v in r["variants"]}
     if any(e["slug"] not in variants for e in doc["aa_capability_indexes"]["entries"]):
         raise ValueError("Every v5 capability entry must match a v5 release variant")
