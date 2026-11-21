@@ -213,6 +213,9 @@ def check_market_ui(page, data, output):
     expect(page.locator("#marketTable tbody tr").first).to_contain_text("Claude Fable 5.2")
     page.screenshot(path=str(output / "refresh-desktop.png"))
     page.locator('[data-board="livebench"]').click()
+    expect(page.locator("#marketTable tbody tr").first).to_contain_text("Gemini 4 Neon")
+    expect(page.locator("#marketTable tbody tr").first).to_contain_text("87.4")
+    expect(page.locator('#marketUpdates a[href*="metr.org/blog/2026-11-20"]')).to_have_count(1)
     page.fill("#marketSearch", "Grok 4.7")
     expect(page.locator("#marketTable")).to_contain_text("67.9")
     expect(page.locator("#marketTable")).to_contain_text("$4.18")
@@ -220,7 +223,7 @@ def check_market_ui(page, data, output):
         page.locator("#exportMarket").click()
     rows = list(csv.DictReader(io.StringIO(Path(download.value.path()).read_text(encoding="utf-8-sig"))))
     require(len(rows) == 1 and rows[0]["cost_usd"] == "4.175", "Market export lost source precision")
-    require(rows[0]["source_updated_at"] == "2026-11-06" and rows[0]["checked_at"] == "2026-11-19", "Source and verification dates conflated")
+    require(rows[0]["source_updated_at"] == "2026-11-06" and rows[0]["checked_at"] == data["market_snapshot"]["reviewed_at"], "Source and verification dates conflated")
     page.fill("#marketSearch", "no-such-model")
     expect(page.locator("#marketTable")).to_contain_text("没有匹配的模型")
     expect(page.locator("#exportMarket")).to_be_disabled()
@@ -241,7 +244,7 @@ def check_market_ui(page, data, output):
     expect(page.locator("#marketTable tbody tr").first).to_contain_text("0.687")
     require(page.locator("#marketSort option[value=cost]").evaluate("o => o.disabled"), "Agent Arena has no cost")
     page.locator('[data-board="arena_webdev"]').click()
-    expect(page.locator("#boardMeta")).to_contain_text("2026-11-18")
+    expect(page.locator("#boardMeta")).to_contain_text("2026-11-20")
     # Cross-source table: same focus models, ranks within each source, column buttons switch boards.
     cs = data["market_snapshot"]["cross_source"]
     expect(page.locator("#crossTable tbody tr")).to_have_count(len(cs["models"]))

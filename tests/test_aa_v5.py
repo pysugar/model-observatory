@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 import unittest
 
-from build_report import v5_task_scores
+from build_report import CURRENT_RESEARCH, v5_task_scores
 from scripts.report_claims import render_claims
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -17,7 +17,7 @@ class AaV5Tests(unittest.TestCase):
     def setUpClass(cls):
         cls.data = json.loads((ROOT / "report-data.json").read_text())
         cls.v5 = cls.data["aa_v5"]
-        cls.raw = json.loads((ROOT / "research/2026-11-19/aa-v5-series.json").read_text())
+        cls.raw = json.loads((CURRENT_RESEARCH / "aa-v5-series.json").read_text())
 
     def test_november_page_schema_preserves_explicit_identity_and_missing_values(self):
         spec = importlib.util.spec_from_file_location("refresh_aa", ROOT / "research/2026-11-19/refresh_aa.py")

@@ -33,6 +33,9 @@ def check_v5_views(page, data, origin, output):
     page.goto(origin + "/?aa=v5", wait_until="networkidle")
     require(page.evaluate("document.documentElement.dataset.aa") == "v5", "v5 view did not load")
     expect(page.locator("#aaVersionSelect")).to_have_value("v5")
+    expect(page.locator('#marketUpdates a[href*="metr.org/blog/2026-11-20"]')).to_have_count(1)
+    full_suite = page.locator("#scaleHighlightsTable tr").filter(has=page.locator('a[href$="tab=full"]'))
+    expect(full_suite.locator("td strong")).to_have_text(["#1", "#2", "#2", "#3"])
     # Version-specific prose: only the v5 blocks are visible, and page TOC has no duplicates.
     expect(page.locator('.pitfall-list[data-aa-version="v5"]')).to_be_visible()
     expect(page.locator('.pitfall-list[data-aa-version="v4"]')).to_be_hidden()
@@ -68,7 +71,7 @@ def check_v5_views(page, data, origin, output):
     with page.expect_download() as download:
         page.locator("#exportReleases").click()
     rows = list(csv.DictReader(io.StringIO(Path(download.value.path()).read_text(encoding="utf-8-sig"))))
-    require(all(r["aa_version"] == "v5.0" and r["aa_snapshot"] == "2026-11-19" and r["source_url"].startswith("https://") for r in rows), "Release export lost version, date or source")
+    require(all(r["aa_version"] == "v5.0" and r["aa_snapshot"] == view["aa_release_series"]["snapshot"] and r["source_url"].startswith("https://") for r in rows), "Release export lost version, date or source")
     full = next(r for r in rows if r["variant_id"] == "muse-wonder-full")
     require(full["cost_per_task_usd"] == "" and "Muse Code" in full["availability_note"], "Missing-cost release export lost availability")
     page.locator('[data-panel="specs"]').click()
