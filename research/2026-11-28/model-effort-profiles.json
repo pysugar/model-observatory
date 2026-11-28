@@ -1,0 +1,1093 @@
+{
+  "checkedAt": "2026-11-28",
+  "basedOn": "060bd74（11-22 版 main）",
+  "method": "AA v5.0.2 的逐档分数与费用取自 11-28 核对的公开发布页。编程视图采用 Terminal-Bench 4.1 与 FrontierCode 2.0。v4.3.2、Vulcan、ToneBench 和 OSWorld 各用原快照。独立评测、厂商说明与社区经验逐条注明核对日期和证据类型，供选档时参考。",
+  "taskAxis": [
+    {
+      "id": "ii",
+      "label": "综合",
+      "sub": "AA 智能指数",
+      "guideTasks": []
+    },
+    {
+      "id": "coding",
+      "label": "编程",
+      "sub": "Terminal-Bench + SciCode · Vulcan 23 题",
+      "guideTasks": [
+        "daily_code",
+        "repository_bug"
+      ]
+    },
+    {
+      "id": "complex",
+      "label": "复杂推理",
+      "sub": "HLE + CritPt",
+      "guideTasks": [
+        "complex"
+      ]
+    },
+    {
+      "id": "automation",
+      "label": "工具自动化",
+      "sub": "AutomationBench",
+      "guideTasks": []
+    },
+    {
+      "id": "agentic",
+      "label": "知识工作交付",
+      "sub": "GDPval Elo",
+      "guideTasks": []
+    },
+    {
+      "id": "planning",
+      "label": "方案规划",
+      "sub": "Briefcase Elo",
+      "guideTasks": [
+        "design"
+      ]
+    },
+    {
+      "id": "knowledge",
+      "label": "长文档 · 事实",
+      "sub": "LCR / PDF / Omniscience",
+      "guideTasks": []
+    },
+    {
+      "id": "writing",
+      "label": "写作",
+      "sub": "ToneBench（英文脚本）",
+      "guideTasks": []
+    },
+    {
+      "id": "computer_use",
+      "label": "Computer Use",
+      "sub": "OSWorld（分协议）",
+      "guideTasks": []
+    }
+  ],
+  "lineNote": "line 表示同一产品线（如 Opus、Sol）。避坑指南里，同一产品线、AA 发布日期更新的型号覆盖旧型号时记为“新一代更省”，其它同家型号记为“同家其它型号更省”。",
+  "tiers": [
+    {
+      "id": "main",
+      "label": "当前主力"
+    },
+    {
+      "id": "previous",
+      "label": "上一代 · 仍可用"
+    },
+    {
+      "id": "legacy",
+      "label": "兼容旧版"
+    },
+    {
+      "id": "watch",
+      "label": "新增观察 · 访问受限"
+    }
+  ],
+  "models": [
+    {
+      "id": "claude-opus-5-5",
+      "tier": "main",
+      "line": "opus",
+      "aaRelease": "claude-opus-5-5",
+      "guidanceId": "claude-opus-5-5",
+      "cuIds": [
+        "claude-opus-5-5"
+      ]
+    },
+    {
+      "id": "claude-fable-5-1",
+      "tier": "previous",
+      "line": "fable",
+      "aaRelease": "claude-fable-5-1",
+      "guidanceId": "claude-fable-5-1",
+      "cuIds": [
+        "claude-fable-5-1"
+      ]
+    },
+    {
+      "id": "claude-sonnet-5-5",
+      "tier": "main",
+      "line": "sonnet",
+      "aaRelease": "claude-sonnet-5-5",
+      "guidanceId": "claude-sonnet-5-5",
+      "cuIds": [
+        "claude-sonnet-5-5"
+      ]
+    },
+    {
+      "id": "claude-haiku-5-5",
+      "tier": "main",
+      "line": "haiku",
+      "aaRelease": "claude-haiku-5-5",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-opus-5",
+      "tier": "previous",
+      "line": "opus",
+      "aaRelease": "claude-opus-5",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-fable-5",
+      "tier": "previous",
+      "line": "fable",
+      "aaRelease": "claude-fable-5",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-sonnet-5",
+      "tier": "previous",
+      "line": "sonnet",
+      "aaRelease": "claude-sonnet-5",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-opus-4-8",
+      "tier": "legacy",
+      "line": "opus",
+      "aaRelease": "claude-opus-4-8",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-opus-4-7",
+      "tier": "legacy",
+      "line": "opus",
+      "aaRelease": null,
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-opus-4-6",
+      "tier": "legacy",
+      "line": "opus",
+      "aaRelease": null,
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-sonnet-4-6",
+      "tier": "legacy",
+      "line": "sonnet",
+      "aaRelease": "claude-sonnet-4-6",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-opus-4-5-20251101",
+      "tier": "legacy",
+      "line": "opus",
+      "aaRelease": null,
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-haiku-4-5-20251001",
+      "tier": "legacy",
+      "line": "haiku",
+      "aaRelease": null,
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-sonnet-4-5-20250929",
+      "tier": "legacy",
+      "line": "sonnet",
+      "aaRelease": null,
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "gpt-6-astra",
+      "tier": "previous",
+      "line": "astra",
+      "aaRelease": "gpt-6-astra",
+      "guidanceId": "gpt-6-astra",
+      "cuIds": [
+        "gpt-6-astra"
+      ]
+    },
+    {
+      "id": "gpt-6.1-sol",
+      "tier": "previous",
+      "line": "sol",
+      "aaRelease": "gpt-6-1-sol",
+      "guidanceId": "gpt-6-1-sol",
+      "cuIds": [
+        "gpt-6-1-sol"
+      ]
+    },
+    {
+      "id": "gpt-6.2-astra",
+      "tier": "main",
+      "line": "astra",
+      "aaRelease": "gpt-6-2-astra",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "gpt-6.2-sol",
+      "tier": "main",
+      "line": "sol",
+      "aaRelease": "gpt-6-2-sol",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "gpt-6-luna",
+      "tier": "main",
+      "line": "luna",
+      "aaRelease": "gpt-6-luna",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "gpt-6-sol",
+      "tier": "previous",
+      "line": "sol",
+      "aaRelease": "gpt-6-sol",
+      "guidanceId": null,
+      "cuIds": [
+        "gpt-6-sol"
+      ]
+    },
+    {
+      "id": "gpt-5.6-sol",
+      "tier": "previous",
+      "line": "sol",
+      "aaRelease": "gpt-5-6-sol",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "gpt-5.6-luna",
+      "tier": "previous",
+      "line": "luna",
+      "aaRelease": "gpt-5-6-luna",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "gemini-4-argon",
+      "tier": "main",
+      "line": "argon",
+      "aaRelease": "gemini-4-argon",
+      "guidanceId": "gemini-4-argon",
+      "cuIds": [
+        "gemini-4-argon"
+      ]
+    },
+    {
+      "id": "gemini-3.8-flash",
+      "tier": "main",
+      "line": "flash",
+      "aaRelease": "gemini-3-8-flash",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "gemini-3.5-flash-lite",
+      "tier": "main",
+      "line": "flash-lite",
+      "aaRelease": "gemini-3-5-flash-lite",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "grok-4-7",
+      "tier": "main",
+      "line": "grok",
+      "aaRelease": "grok-4-7",
+      "guidanceId": "grok-4-7",
+      "cuIds": []
+    },
+    {
+      "id": "muse-wonder-1.0",
+      "tier": "main",
+      "line": "wonder",
+      "aaRelease": "muse-wonder",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "muse-wonder-full",
+      "tier": "watch",
+      "line": "wonder-full",
+      "aaRelease": "muse-wonder-full",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "muse-spark-1.3",
+      "tier": "main",
+      "line": "spark",
+      "aaRelease": "muse-spark-1-3",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "gpt-6.1-terra",
+      "tier": "main",
+      "line": "terra",
+      "aaRelease": "gpt-6-1-terra",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "gemini-4-carbon",
+      "tier": "main",
+      "line": "carbon",
+      "aaRelease": "gemini-4-carbon",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "claude-fable-5-2",
+      "tier": "main",
+      "line": "fable",
+      "aaRelease": "claude-fable-5-2",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "gemini-4-hydrogen",
+      "tier": "main",
+      "line": "hydrogen",
+      "aaRelease": "gemini-4-hydrogen",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "muse-ember-1.0",
+      "tier": "main",
+      "line": "ember",
+      "aaRelease": "muse-ember",
+      "guidanceId": null,
+      "cuIds": []
+    },
+    {
+      "id": "gemini-4-neon",
+      "tier": "main",
+      "line": "neon",
+      "aaRelease": "gemini-4-neon",
+      "guidanceId": null,
+      "cuIds": []
+    }
+  ],
+  "evidence": [
+    {
+      "id": "opus55-coding-ladder",
+      "modelIds": [
+        "claude-opus-5-5"
+      ],
+      "tasks": [
+        "coding"
+      ],
+      "kind": "社区经验",
+      "statement": "实践指南把 medium（默认）作为日常编码要先打败的基线；medium 漏东西时升 high；xhigh 只留给已测出收益的长时 agent 任务。另提醒 Opus 5.5 在 xhigh / max 下每轮思考比 Opus 5 更多。",
+      "action": "编码从 medium 起步，按交付缺口逐级升档，xhigh 前先在自己的任务上对比。",
+      "efforts": {
+        "start": "medium",
+        "ceiling": "xhigh"
+      },
+      "url": "https://claudefa.st/blog/guide/development/opus-5-5-best-practices",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "opus55-vs-opus5",
+      "modelIds": [
+        "claude-opus-5-5",
+        "claude-opus-5"
+      ],
+      "tasks": [
+        "coding"
+      ],
+      "kind": "厂商自报（转述）",
+      "statement": "据实践指南转述 Anthropic 发布说明：Terminal-Bench 4.0 上 Opus 5.5 默认档已超过 Opus 5 max，费用约为五分之一。",
+      "action": "从 Opus 5 迁移时，先用 Opus 5.5 默认档对照原来的 max 配置，而不是直接沿用 max。",
+      "url": "https://claudefa.st/blog/guide/development/opus-5-5-best-practices",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "opus5-start-conflict",
+      "modelIds": [
+        "claude-opus-5"
+      ],
+      "tasks": [
+        "coding",
+        "automation",
+        "agentic"
+      ],
+      "kind": "官方建议（转述）",
+      "statement": "两份 Anthropic 文档的说法不一致：effort 参考页建议从默认 high 起步，高要求 agent 任务升 xhigh；同期的 prompting 指南称编码与 agent 工作仍推荐从 xhigh 起步。第三方分析称 max 在三项官方 agent 编码评测中有两项低于 xhigh，且贵 12–15%（差距约 1 分，接近噪声）。",
+      "action": "编码 / agent 任务在 high 与 xhigh 间做配对对比；没有实测收益不用 max。",
+      "efforts": {
+        "start": "high",
+        "ceiling": "xhigh"
+      },
+      "url": "https://gabrielmoraru.com/opus-5-xhigh-vs-max-effort/",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "sonnet55-defaults",
+      "modelIds": [
+        "claude-sonnet-5-5"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "官方建议（转述）",
+      "statement": "多份第三方文章转述 Sonnet 5.5 发布说明：Claude 应用与 Claude Code 默认 medium，API 默认 high。",
+      "action": "比较不同入口的结果时先确认实际 effort，别把 Claude Code 的 medium 当成 API 的 high。",
+      "url": "https://www.eesel.ai/de/blog/claude-sonnet-5-5-test",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "sonnet55-max-trap",
+      "modelIds": [
+        "claude-sonnet-5-5"
+      ],
+      "tasks": [
+        "coding"
+      ],
+      "kind": "第三方评测（转述）",
+      "statement": "转述 AA Coding Agent Index（Claude Code 环境）：max 68、xhigh 63，单任务 $14.19 对 $3.33，max 输出 token 约 4.8 倍。另有评测转述 Anthropic FrontierCode 脚注：xhigh 52.1%、max 46.2%，max 更常触发超时或越界修改。",
+      "action": "编码 agent 优先试 xhigh；max 只在配对实测有收益、且预算和超时都放宽时使用。",
+      "efforts": {
+        "ceiling": "xhigh",
+        "avoid": "max"
+      },
+      "url": "https://www.eesel.ai/de/blog/claude-sonnet-5-5-test",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "fable51-official",
+      "modelIds": [
+        "claude-fable-5-1"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "官方建议（检索摘要）",
+      "statement": "Fable 5.1 prompting 指南：从默认 high 起步，再用自己的评测测 low / medium / xhigh / max；medium 大致追平 Fable 5 且更便宜；xhigh / max 可能耗时很长或触达 max_tokens，需预留输出空间。档位名称在不同模型间不对应同样的思考量，换代要重测。",
+      "action": "默认 high；质量稳定的任务试降到 medium；升到 xhigh / max 前先放大 max_tokens 与超时。",
+      "efforts": {
+        "start": "high"
+      },
+      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "haiku55-xhigh",
+      "modelIds": [
+        "claude-haiku-5-5"
+      ],
+      "tasks": [
+        "coding",
+        "computer_use"
+      ],
+      "kind": "厂商自报（转述）",
+      "statement": "转述 Haiku 5.5 系统卡：FrontierCode 1.1 max 46.4%、xhigh 45.8%；OSWorld 2.1 max 72.4%、xhigh 67.6%，单次尝试约 $0.61 对 $0.28。默认档 medium。",
+      "action": "编码先用 xhigh；Computer Use 若要最后几个百分点再上 max，并按约两倍费用做预算。",
+      "efforts": {
+        "ceiling": "xhigh"
+      },
+      "url": "https://apidog.com/blog/claude-haiku-5-5-benchmarks/",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "sol61-official",
+      "modelIds": [
+        "gpt-6.1-sol"
+      ],
+      "tasks": [
+        "coding",
+        "planning",
+        "complex"
+      ],
+      "kind": "官方建议（转述）",
+      "statement": "使用指南转述 OpenAI 文档：预期会反复修改的复杂技术工作用 medium；要打磨成品或基于冲突证据做决策用 xhigh；先用默认档，任务需要更深规划时再升。OpenAI 发布图表中 DeepSWE v1.1 high 档 75.2%、约 $0.65 / 任务。",
+      "action": "迭代型工作 medium；一次性交付或决策文档试 xhigh；仓库修复参考 high。",
+      "efforts": {
+        "start": "medium",
+        "ceiling": "xhigh"
+      },
+      "url": "https://flaviocopes.com/gpt-6-1-sol/",
+      "via": "https://aicatchup.com/news/openai-gpt-6-1-sol",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "gpt56-migration",
+      "modelIds": [
+        "gpt-5.6-sol",
+        "gpt-5.6-luna"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "官方建议（检索摘要）",
+      "statement": "OpenAI GPT-5.6 迁移指南：从 GPT-5.5 / 5.4 迁来时保留原 effort 作为基线，再比较低一档；原来用 none 的保留 none 作延迟基线，工作流需要推理或工具时加测 low；新接入以 medium 起步，延迟敏感用 low。",
+      "action": "先沿用旧档位，再试低一档；none 只在延迟优先的简单调用中保留。",
+      "efforts": {
+        "start": "medium"
+      },
+      "url": "https://developers.openai.com/api/docs/guides/gpt-5.6",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "astra-default-flat",
+      "modelIds": [
+        "gpt-6-astra"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "第三方评测（转述）",
+      "statement": "默认档说法冲突：LLM Stats 称 API 默认 low，另有指南称 medium，目录记为“按端点明确设置”。Hex DataBench 转述各档分数大致持平（约 52–55），单任务费用从约 $0.85（low）升到 $2.11（max）。",
+      "action": "调用时显式写明 effort；数据分析类任务先比较 low 与 medium，再决定是否升档。",
+      "url": "https://llm-stats.com/blog/research/gpt-6-astra-launch",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "luna6-latency",
+      "modelIds": [
+        "gpt-6-luna"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "第三方评测（转述）",
+      "statement": "模型目录转述 AA：GPT 6 Luna 的最高分依赖 max，困难题平均约 109 秒；每任务输出约 5.1 万 token，高于 GPT 5.6 Luna 的约 4.1 万。延迟敏感调用建议 low / medium。",
+      "action": "作子 agent 或批处理时先 low / medium；只有难题再升档，并按 token 量估费用。",
+      "efforts": {
+        "start": "low"
+      },
+      "url": "https://unifically.com/models/gpt-6-luna",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "argon-single-point",
+      "modelIds": [
+        "gemini-4-argon"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "第三方评测原页",
+      "statement": "本期AA v5已测Argon medium / high；此前10-24仅有high的观察不再描述当前覆盖。low仍缺同协议成绩。",
+      "action": "默认medium起步；比较medium与high的具体任务收益。",
+      "efforts": {
+        "start": "medium"
+      },
+      "url": "https://artificialanalysis.ai/zh/models/releases/gemini-4-argon",
+      "verification": "source-page",
+      "checkedAt": "2026-11-15"
+    },
+    {
+      "id": "flash38-cost-conflict",
+      "modelIds": [
+        "gemini-3.8-flash"
+      ],
+      "tasks": [
+        "ii"
+      ],
+      "kind": "第三方评测（转述）",
+      "statement": "第三方文章转述 AA 优惠价下单任务约 low $0.24 / medium $0.41 / high $0.58，与历史v4.3.2冻结的AA逐档值（medium $0.931、high $1.243）不一致，口径或价格时点可能不同。Google 指南默认 medium。",
+      "action": "预算以本报告冻结值为准，并留意 12-31 优惠结束后的价格变化。",
+      "url": "https://apidog.com/blog/gemini-3-8-flash-thinking-levels/",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "grok47-cursorbench",
+      "modelIds": [
+        "grok-4-7"
+      ],
+      "tasks": [
+        "coding"
+      ],
+      "kind": "第三方评测（转述）",
+      "statement": "CursorBench 4.0（Cursor 自家 harness，费用按 token × 公开价计算）：xhigh 46.3%、$6.01 / 任务；medium $3.49、high $4.69；low 33.1%、$1.58 只见于二手转述。所引AA约46分属于历史v4口径；本期v5 high / xhigh见逐档表。",
+      "action": "编码默认 high；只有在自己的仓库测出 xhigh 收益时才升档。",
+      "efforts": {
+        "start": "high",
+        "ceiling": "high"
+      },
+      "url": "https://cursor.com/en/cursorbench",
+      "via": "https://www.respan.ai/articles/grok-4.7-vs-opus-5.5",
+      "verification": "search-summary",
+      "checkedAt": "2026-10-24"
+    },
+    {
+      "id": "fable52-effort",
+      "modelIds": [
+        "claude-fable-5-2"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "官方指南",
+      "statement": "API默认high；Claude应用和Claude Code默认medium。支持low至max五档，思考始终开启。",
+      "action": "API从high起步；困难长任务验证xhigh收益；max用于探测上限，别照搬5.1档位。",
+      "efforts": {
+        "start": "high"
+      },
+      "url": "https://platform.claude.com/docs/en/build-with-claude/effort",
+      "verification": "official-page",
+      "checkedAt": "2026-11-15"
+    },
+    {
+      "id": "carbon-public-effort",
+      "modelIds": [
+        "gemini-4-carbon"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "官方指南",
+      "statement": "Carbon已公开付费API，支持low / medium / high，默认medium。本期AA已测三档。",
+      "action": "以medium起步，难题比较high；长输出需另核long decode条件。",
+      "efforts": {
+        "start": "medium"
+      },
+      "url": "https://aistudio.google.com/docs/whats-new-gemini-4-carbon",
+      "verification": "official-page",
+      "checkedAt": "2026-11-15"
+    },
+    {
+      "id": "hydrogen-effort",
+      "modelIds": [
+        "gemini-4-hydrogen"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "官方指南",
+      "statement": "支持low / medium / high / xhigh，默认high；1M共享窗口，同步输出64k。",
+      "action": "默认high作任务基线；先验收再降档，最难任务测试xhigh。",
+      "efforts": {
+        "start": "high"
+      },
+      "url": "https://aistudio.google.com/docs/whats-new-gemini-4-hydrogen",
+      "verification": "official-page",
+      "checkedAt": "2026-11-15"
+    },
+    {
+      "id": "ember-effort",
+      "modelIds": [
+        "muse-ember-1.0"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "官方指南",
+      "statement": "支持minimal至max，默认max；本期AA只测xhigh / max。",
+      "action": "已测两档可比较；更低档无公开同协议曲线，不补值。注意>200k整次三倍价。",
+      "efforts": {
+        "start": "max"
+      },
+      "url": "https://dev.meta.ai/docs/muse-ember",
+      "verification": "official-page",
+      "checkedAt": "2026-11-15"
+    },
+    {
+      "id": "gpt62-effort",
+      "modelIds": [
+        "gpt-6.2-astra",
+        "gpt-6.2-sol"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "官方指南",
+      "statement": "GPT-6.2 支持 low / medium / high / xhigh / max，API 拒绝 none；迁移指南建议新集成从 medium 起步，原用 none / minimal 的改 low；未写明 API 默认档位。",
+      "action": "从 medium 起步；复杂长任务再比较 high / xhigh 的收益。AA 现已补齐 Sol 6.2 与 Astra 6.2 全部五档任务费用。",
+      "efforts": {
+        "start": "medium"
+      },
+      "url": "https://developers.openai.com/api/docs/guides/latest-model?model=gpt-6.2-astra",
+      "verification": "official-page",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "gpt62-aa-coding-agent",
+      "modelIds": [
+        "gpt-6.2-astra",
+        "gpt-6.2-sol"
+      ],
+      "tasks": [
+        "coding"
+      ],
+      "kind": "第三方评测原页",
+      "statement": "AA 发布分析：Coding Agent Index（Codex，max）上 Astra 6.2 与 GPT-6 Astra 持平；Sol 6.2 比 6.1 Sol 低 3 分，主要来自 SWE-Atlas-QnA-AA 下降 14 分，回答更常遗漏关键事实。同文：智能指数 Astra 62、Sol 57，多个档位在单任务成本前沿上。",
+      "action": "编码代理场景别默认 Sol 6.2 优于 6.1；代码问答、仓库理解类任务尤其要先回归。",
+      "url": "https://artificialanalysis.ai/articles/openai-has-the-2-model-in-the-intelligence-index-with-the-release-of-gpt-6-2-astra-and-gpt-6-2-sol",
+      "verification": "source-page",
+      "checkedAt": "2026-11-18"
+    },
+    {
+      "id": "gpt62-vals-terminal",
+      "modelIds": [
+        "gpt-6.2-astra",
+        "gpt-6.2-sol",
+        "gemini-4-neon",
+        "gemini-4-carbon",
+        "gemini-4-hydrogen",
+        "claude-fable-5-2",
+        "claude-opus-5-5",
+        "muse-ember-1.0",
+        "claude-haiku-5-5"
+      ],
+      "tasks": [
+        "coding"
+      ],
+      "kind": "第三方评测原页",
+      "statement": "Vals AI Terminal-Bench 4.0（Mini-SWE-agent，页面更新 11-19）：Fable 5.2（$14.56，55m）与 Opus 5.5（$12.04，1h04m）并列 65.15%；Astra 6.2 63.13%（$4.69，34m）与 Carbon 63.13%（$7.45，45m）并列；Gemini 4 Neon 61.62%（$6.42，36m）；Sol 6.2 60.61%（$1.13，23m）；Hydrogen 54.04%（$7.56）；Muse Ember 39.39%（$0.22，26m）高于 Haiku 5.5（36.36%，$3.12）。页面未注明档位，与 AA 的 Terminal-Bench 子项口径不同。",
+      "action": "终端编码任务上 Neon 与 Astra 6.2 速度明显快于 Claude 与 Carbon；预算敏感优先 Sol 6.2（$1.13）或子任务用 Ember（$0.22）。",
+      "url": "https://www.vals.ai/benchmarks/terminal-bench-4",
+      "verification": "source-page",
+      "checkedAt": "2026-11-21"
+    },
+    {
+      "id": "gpt62-arc-agi",
+      "modelIds": [
+        "gpt-6.2-astra",
+        "gpt-6.2-sol"
+      ],
+      "tasks": [
+        "complex",
+        "agentic"
+      ],
+      "kind": "第三方评测原页",
+      "statement": "ARC Prize 在 11-17 公布的 ARC-AGI-3 公共演示结果中，Astra max 在标准框架为 70.3%，在 Provider Adapter 为 99.8%。Sol max 对应为 54.9% 和 98.2%。Astra max 的 ARC-AGI-2 为 95.8%。",
+      "action": "对照相同框架与档位。Provider Adapter 允许跨请求延续推理状态。",
+      "url": "https://arcprize.org/results/openai-gpt-6-2",
+      "verification": "source-page",
+      "checkedAt": "2026-11-21"
+    },
+    {
+      "id": "neon-effort",
+      "modelIds": [
+        "gemini-4-neon"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "官方指南",
+      "statement": "Google AI Studio 官方文档（11-18）：支持 low / medium / high（默认）/ xhigh 四档，统一 1M 上下文（64k 同步输出 / 1M long decode），全窗口平价 $3 / $0.15 / $15（无免费层）。定位介于 Hydrogen 与 Carbon 之间，支持单独使用或与 Hydrogen 协同。",
+      "action": "从默认 high 起步（AA v5 已达 59.6 分 / $3.74，GDP.pdf 33.4%）；高难工程与科学问题再试 xhigh（61.4 分 / $6.44）。",
+      "efforts": {
+        "start": "high"
+      },
+      "url": "https://aistudio.google.com/docs/whats-new-gemini-4-neon",
+      "verification": "official-page",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "neon-aa-coding-agent",
+      "modelIds": [
+        "gemini-4-neon",
+        "gemini-4-carbon",
+        "claude-fable-5-2",
+        "claude-opus-5-5"
+      ],
+      "tasks": [
+        "coding",
+        "planning",
+        "knowledge"
+      ],
+      "kind": "第三方评测原页",
+      "statement": "AA 11-18 发布分析：Antigravity CLI 下 Neon xhigh 在 Coding Agent Index 达 59（$6.86/任务），高于 Carbon high（55），与 Claude Code 下的 Fable 5.2 xhigh（58 / $15.47）和 Opus 5.5 max（58 / $12.61）相当但成本减半。AA-Briefcase 呈现质量 1771 Elo 居首；GDP.pdf 在 high 档达 33.4%（高于 xhigh 的 28.0% 与 Carbon high 的 28.4%）；输出速度 ~110 tok/s，单任务 21.5 分钟（较 Carbon 37.1 分钟快约 40%）。",
+      "action": "编码代理与 PDF/演示交付优先对比 Neon high / xhigh；PDF 解析不必盲目从 high 升到 xhigh。",
+      "url": "https://artificialanalysis.ai/articles/gemini-4-neon-intelligence-gain",
+      "verification": "source-page",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "vals-index-v22",
+      "modelIds": [
+        "claude-fable-5-2",
+        "gemini-4-neon",
+        "claude-sonnet-5-5",
+        "gpt-6.2-astra",
+        "muse-wonder-full"
+      ],
+      "tasks": [
+        "planning",
+        "agentic",
+        "coding"
+      ],
+      "kind": "第三方评测原页",
+      "statement": "Vals Index v2.2 的 11-21 榜单按美国行业 GDP 权重汇总金融、编程、法律与税务。Fable 5.2 得 70.06%（每测试 $17.94），Sonnet 5.5 得 69.45%（$16.18），Neon 得 69.23%（$7.40）。Astra 6.2 以 66.27% 排第八。",
+      "action": "专业代理先按行业子项选，再用 Vals 的每测试花费核算相同口径的预算。",
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "verification": "source-page",
+      "checkedAt": "2026-11-28"
+    },
+    {
+      "id": "scale-seal-rli-hss",
+      "modelIds": [
+        "claude-fable-5-2",
+        "claude-opus-5-5",
+        "gpt-6-astra"
+      ],
+      "tasks": [
+        "agentic"
+      ],
+      "kind": "第三方评测原页",
+      "statement": "Scale Remote Labor Index 衡量远程项目自动化率。11-21 读取的 Fable 5.2 为 41.25%，Opus 5.5 为 21.25%，GPT-6 Astra 为 20.83%。",
+      "action": "以端到端项目的交付和验收为目标时参考 RLI。",
+      "url": "https://labs.scale.com/leaderboard/rli",
+      "verification": "source-page",
+      "checkedAt": "2026-11-21"
+    },
+    {
+      "id": "ember-aa-coding",
+      "modelIds": [
+        "muse-ember-1.0",
+        "claude-haiku-5-5",
+        "gpt-6-luna"
+      ],
+      "tasks": [
+        "coding",
+        "automation",
+        "knowledge"
+      ],
+      "kind": "第三方评测原页",
+      "statement": "AA 11-09 评测分析：Muse Ember max（$0.14/任务）与 xhigh（$0.12）双双站上 AA 智能指数成本前沿，以约三分之一费用追平 Haiku 5.5 max（36 分 / $0.41）；Muse Code 下 Coding Agent Index 达 46（高于 Haiku 37、Luna 31）；AutomationBench 68.1%。但 FrontierCode 2.0 仅 27.2%（低于 Haiku 34.9%），且 AA-Omniscience 拒答 64%（准确率 21.1%、幻觉率 17.4% 仅 Haiku 一半）。",
+      "action": "高吞吐自动化、路由与结构化提取优先试用 Ember；复杂仓库修改和闭卷知识问答勿替代中大型模型。",
+      "url": "https://artificialanalysis.ai/articles/meta-s-muse-ember-is-the-cheapest-model-scoring-36-on-the-intelligence-index",
+      "verification": "source-page",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "gpt62-api-migration",
+      "modelIds": [
+        "gpt-6.2-astra",
+        "gpt-6.2-sol"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "官方指南",
+      "statement": "OpenAI GPT-6.2 官方迁移与提示指南（11-19 核验）：Responses API 改为将顶层 instructions 附加在 input 之后，可复用系统提示须改放 input 首条 developer 消息才能命中 prompt caching；中途编辑历史前缀或降级模型会丢弃已缓存推理项，导致质量下滑与 token 浪费；不支持 Flex，改用 2h（−30%）/ 8h（−40%）后台完成窗口。",
+      "action": "接入 GPT-6.2 时把静态提示放进首条 developer 消息并保持前缀不可变；删除旧版“保持简洁”提示，显式授权持续执行到验证完成并要求自包含终稿。",
+      "url": "https://developers.openai.com/api/docs/guides/latest-model?model=gpt-6.2-astra",
+      "verification": "official-page",
+      "checkedAt": "2026-11-19"
+    },
+    {
+      "id": "neon-livebench",
+      "modelIds": [
+        "gemini-4-neon",
+        "claude-fable-5-2",
+        "gpt-6.2-astra"
+      ],
+      "tasks": [
+        "agentic",
+        "coding"
+      ],
+      "kind": "第三方评测原页",
+      "statement": "LiveBench 2.0 的 11-06 题集已补入 Neon。Neon 综合得分 87.4（每成功任务 $2.654），长程代理 82.6、浏览器 95.6。Fable 5.2 与 Astra 6.2 显示分均为 84.9，每成功任务分别为 $9.850 和 $1.941。原表未注明推理档位。",
+      "action": "按成功交付预算比较这三款。若需落实到具体档位，用同一批业务任务复验。",
+      "url": "https://livebench.ai/",
+      "verification": "source-page",
+      "checkedAt": "2026-11-21"
+    },
+    {
+      "id": "neon-scale-hss",
+      "modelIds": [
+        "gemini-4-neon",
+        "gemini-4-carbon",
+        "gemini-4-hydrogen",
+        "gpt-6.2-astra"
+      ],
+      "tasks": [
+        "complex",
+        "knowledge"
+      ],
+      "kind": "第三方评测原页",
+      "statement": "Scale HSS 的 one-pass-agent 多模态题中，Neon xhigh 以 75.86 ±3.40 的点估计居首，Carbon high 为 71.10 ±3.60，两者置信区间重叠。",
+      "action": "用自己的图像或视频检验两档对空间关系和事件先后的判断，并逐题核对。",
+      "url": "https://labs.scale.com/leaderboard/hss",
+      "verification": "source-page",
+      "checkedAt": "2026-11-21"
+    },
+    {
+      "id": "gpt62-scale-hle",
+      "modelIds": [
+        "claude-fable-5-2",
+        "gpt-6.2-astra",
+        "gpt-6.2-sol",
+        "gemini-4-neon"
+      ],
+      "tasks": [
+        "complex",
+        "knowledge"
+      ],
+      "kind": "第三方评测原页",
+      "statement": "Scale HLE Diamond 的 1,000 道专家题中，one-pass-agent 的 high 档准确率为 Fable 5.2 72.40%、Astra 6.2 66.90%、Neon 65.30%、Sol 6.2 56.50%。Astra 与 Neon 的 95% 区间重叠。",
+      "action": "比较同档、同脚手架的专家题准确率。校准误差另看，Fable 5.2 该项尚无公开数值。",
+      "url": "https://labs.scale.com/leaderboard/hle-diamond",
+      "verification": "source-page",
+      "checkedAt": "2026-11-28"
+    },
+    {
+      "id": "scale-multichallenge",
+      "modelIds": [
+        "gemini-4-carbon",
+        "gpt-6.1-sol",
+        "gpt-6.2-astra",
+        "gpt-6.2-sol"
+      ],
+      "tasks": [
+        "agentic",
+        "planning"
+      ],
+      "kind": "第三方评测原页",
+      "statement": "Scale MultiChallenge 大模型组采用 one-pass-agent。Carbon high 为 85.90 ±4.40，GPT-6.1 Sol high 为 81.95 ±4.16。Astra 6.2 与 Sol 6.2 的 high 档分别为 73.20 ±5.80 和 72.00 ±5.80。",
+      "action": "有多轮约束的工作流保留一组长对话，验证模型在后续轮次能否遵守早先要求。",
+      "url": "https://labs.scale.com/leaderboard/multichallenge?tab=large",
+      "verification": "source-page",
+      "checkedAt": "2026-11-21"
+    },
+    {
+      "id": "vals-excel-v11",
+      "modelIds": [
+        "claude-fable-5-2",
+        "gemini-4-carbon",
+        "gemini-4-neon",
+        "gpt-6.2-astra"
+      ],
+      "tasks": [
+        "knowledge",
+        "planning"
+      ],
+      "kind": "第三方评测原页",
+      "statement": "Vals 11-19 的 Excel 财务建模 v1.1 中，Fable 5.2 为 77.38%（每测试 $6.67），Carbon 为 76.47%（$5.76），Neon 为 76.46%（$3.82），Astra 6.2 为 76.03%（$2.80）。",
+      "action": "预算有限时可同时试 Neon 与 Astra，按公式、引用和最终财务结果逐项验收。",
+      "url": "https://www.vals.ai/benchmarks/emb-v1-1",
+      "verification": "source-page",
+      "checkedAt": "2026-11-21"
+    },
+    {
+      "id": "epoch-work-20261117",
+      "modelIds": [
+        "claude-fable-5-2",
+        "claude-opus-5-5",
+        "gpt-6.2-astra"
+      ],
+      "tasks": [
+        "planning",
+        "knowledge",
+        "writing"
+      ],
+      "kind": "第三方评测原页",
+      "statement": "Epoch 11-17 公布四类研究工作的人工评阅。Astra 6.2 平均 65%，比 Fable 5.2 低 17 个百分点。数据中心分析一项中，Fable 5.2 与 Opus 5.5 分别得 97.5% 和 87.5%，均达到该机构的外包交付水平，仍需编辑。",
+      "action": "给研究报告设定受众和引用要求，并由人审核图像标注、估算依据与主要结论。",
+      "url": "https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work",
+      "verification": "source-page",
+      "checkedAt": "2026-11-21"
+    },
+    {
+      "id": "metr-th2-20261120",
+      "modelIds": [
+        "claude-fable-5-1",
+        "claude-opus-5-5",
+        "gpt-6-astra"
+      ],
+      "tasks": [
+        "agentic",
+        "coding"
+      ],
+      "kind": "第三方评测原页",
+      "statement": "METR 11-20 季报在 TH1.1 与 TH2 合并样本上估计，前沿系统的 50% 成功率时间跨度约每 3.6 个月翻倍。横轴是人类完成同类任务的时间。缺少明确反馈的任务中，专家判断仍占优。",
+      "action": "按反馈能否自动验证划分长任务，用人工审查补足开放式判断。该趋势只描述这组系统与题集。",
+      "url": "https://metr.org/blog/2026-11-20-q4-2026-capability-update/",
+      "verification": "source-page",
+      "checkedAt": "2026-11-21"
+    },
+    {
+      "id": "argon-aa-pricing",
+      "modelIds": [
+        "gemini-4-argon",
+        "gemini-4-carbon"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "第三方评测原页",
+      "statement": "Argon high 在 AA v5.0.2 得 50.51 分，每加权任务 $7.0616。AA 按每百万输入 / 输出 token $4 / $20 估算 Argon 与 Carbon。Google 的 $2 / $10 优惠价适用至 11-30。",
+      "action": "读评测图时使用 AA 的单任务费用，估算当月 API 账单时使用官方在生效日期内的价格。",
+      "url": "https://artificialanalysis.ai/zh/models/releases/gemini-4-argon",
+      "verification": "source-page",
+      "checkedAt": "2026-11-28"
+    },
+    {
+      "id": "openai-medchembench",
+      "modelIds": [
+        "gpt-6.2-astra",
+        "gpt-6-astra",
+        "gpt-6.1-sol"
+      ],
+      "tasks": [
+        "complex",
+        "knowledge"
+      ],
+      "kind": "厂商公开评测",
+      "statement": "OpenAI 11-20 发布 MedChemBench。99 道回顾性科学推理题中，同为 xhigh 档的 GPT-6.2 Astra、GPT-6 Astra、GPT-6.1 Sol 分别取得可得分的 84.5%、83.3%、82.0%。",
+      "action": "此处衡量对已发表材料的单次无工具作答。解读结果时须考虑模型可能见过原始材料。",
+      "url": "https://openai.com/index/introducing-medchembench/",
+      "verification": "official-page",
+      "checkedAt": "2026-11-21"
+    },
+    {
+      "id": "arc-neon-semi-private",
+      "modelIds": [
+        "gemini-4-neon"
+      ],
+      "tasks": [
+        "complex"
+      ],
+      "kind": "第三方评测原页",
+      "statement": "ARC Prize 的半私有集上，Neon medium 在 ARC-AGI-1 / 2 得 98.5% / 93.8%。medium 有一题、high 有八题未完成。因 API 响应耗时，xhigh 在两套题上、ARC-AGI-3 在全部档位上均未能完成测试。",
+      "action": "对照 ARC 成绩时保留题集和推理档。超时记录单列。",
+      "url": "https://arcprize.org/results/google-gemini-4-neon",
+      "verification": "source-page",
+      "checkedAt": "2026-11-28"
+    },
+    {
+      "id": "gpt62-chat-access",
+      "modelIds": [
+        "gpt-6.2-sol"
+      ],
+      "tasks": [
+        "all"
+      ],
+      "kind": "官方指南",
+      "statement": "11-23 开始向付费 ChatGPT 的 Chat 标签页推出日常对话版 GPT-6.2 Sol。此次产品更新只涉及 Chat。",
+      "action": "查 API 成本与档位时使用通用 Sol 端点记录。",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "verification": "official-page",
+      "checkedAt": "2026-11-28"
+    }
+  ],
+  "marketWatch": []
+}

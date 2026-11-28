@@ -26,7 +26,7 @@ class MarketSnapshotTests(unittest.TestCase):
         self.assertEqual(self.snapshot, merge_aa_v5(raw, v5))
         self.assertEqual([b["id"] for b in raw["boards"]],
                          ["aa", "arena", "arena_webdev", "arena_agent", "livebench", "scale", "openrouter"])
-        self.assertEqual(sum(len(b["rows"]) for b in raw["boards"]), 221)
+        self.assertEqual(sum(len(b["rows"]) for b in raw["boards"]), 233)
         for board in raw["boards"]:
             self.assertEqual(urlsplit(board["source_url"]).scheme, "https")
             self.assertTrue(board["selection"] and board["cost_basis"])
@@ -41,7 +41,7 @@ class MarketSnapshotTests(unittest.TestCase):
         self.assertIsNone(boards["scale"]["source_updated_at"])
         self.assertEqual(boards["livebench"]["source_updated_at"], "2026-11-06")
         self.assertEqual(boards["livebench"]["checked_at"], CURRENT_RESEARCH.name)
-        self.assertEqual(raw["reviewed_at"], "2026-11-21")
+        self.assertEqual(raw["reviewed_at"], CURRENT_RESEARCH.name)
         self.assertEqual(boards["aa"]["checked_at"], "2026-10-23")  # the frozen v4.3.2 board keeps its date
 
     def test_new_sources_match_their_raw_files(self):
@@ -57,12 +57,12 @@ class MarketSnapshotTests(unittest.TestCase):
             self.assertEqual(src["score"], row["score"], row["model"])
             self.assertEqual(src["votes"], row["votes"], row["model"])
         agent = boards["arena_agent"]
-        self.assertEqual(agent["source_updated_at"], "2026-11-18")
+        self.assertEqual(agent["source_updated_at"], "2026-11-22")
         self.assertEqual(agent["rows"][0]["model"], "Claude Fable 5.2")
-        self.assertAlmostEqual(agent["rows"][0]["praise"], 0.6872, places=4)
+        self.assertAlmostEqual(agent["rows"][0]["praise"], 0.6866, places=4)
         self.assertTrue(agent["fixed_precision"])  # small IPS values keep three decimals on screen
-        self.assertEqual(boards["arena_webdev"]["source_updated_at"], "2026-11-20")
-        self.assertEqual(boards["arena"]["source_updated_at"], "2026-11-19")
+        self.assertEqual(boards["arena_webdev"]["source_updated_at"], "2026-11-23")
+        self.assertEqual(boards["arena"]["source_updated_at"], "2026-11-22")
         # LiveBench Overall: long agentic x2, coding and design x1.5, the rest x1.
         live = json.loads((folder / "livebench.json").read_text())
         fable = next(r for r in live["rows"] if r["slug"] == "claude-fable-5.1")
@@ -71,37 +71,47 @@ class MarketSnapshotTests(unittest.TestCase):
         self.assertEqual(round(overall, 1), 84.0)
         neon = boards["livebench"]["rows"][0]
         self.assertEqual((neon["model"], neon["score"], neon["cost_usd"]), ("Gemini 4 Neon", 87.4, 2.654))
-        self.assertEqual(len(boards["scale"]["rows"]), 26)
+        self.assertEqual(len(boards["scale"]["rows"]), 32)
         manual = json.loads((folder / "manual-boards.json").read_text())
-        source_by_rank = {r["rank"]: r for r in manual["scale"]["rows"]}
-        for row in boards["scale"]["rows"]:
-            source = source_by_rank[row["source_rank"]]
+        in_scope = [r for r in manual["scale"]["rows"] if not r["model"].startswith("Muse Spark Open ")]
+        for row, source in zip(boards["scale"]["rows"], in_scope, strict=True):
+            self.assertEqual(row["source_rank"], source["rank"])
             self.assertEqual((row["score"], row["interval"], row["calibration_error"]),
                              (source["score"], source["confidenceInterval_upper"], source["calibrationError"]))
-            effort = source["model"].split("(one-pass-agent)")[1].strip() or "未注明档位"
-            self.assertEqual(row["configuration"], effort + " · one-pass-agent")
+            effort = source["model"].rsplit(" ", 1)[-1]
+            framework = "one-pass-agent" if "(one-pass-agent)" in source["model"] else "未注明代理框架"
+            self.assertEqual(row["configuration"], f"{effort} · {framework}")
         self.assertEqual(raw["scale_highlight_updates"]["0"]["top1"], "Gemini 4 Neon xhigh (75.86 ±3.40)")
         full = raw["scale_highlight_updates"]["2"]
         self.assertEqual(full["source_ranks"], [1, 2, 2, 3])
         self.assertIn("Claude Fable 5.1 (Claude Code) high", full["top3"])
         self.assertEqual(raw["scale_highlight_updates"]["3"]["top1"], "Claude Opus 5 (Claude Code) xhigh (98.00%)")
-        self.assertEqual(boards["openrouter"]["source_updated_at"], "2026-11-20")
+        self.assertEqual(boards["openrouter"]["source_updated_at"], "2026-11-27")
 
     def test_cross_source_ranks_stay_within_each_source(self):
         cs = self.snapshot["cross_source"]
         board_ids = {b["id"] for b in self.snapshot["boards"]}
         self.assertTrue({c["id"] for c in cs["columns"]} <= board_ids)
-        self.assertEqual(len(cs["models"]), 26)
+        self.assertEqual(len(cs["models"]), 30)
         for col in cs["columns"]:
             ranks = sorted(m["cells"][col["id"]]["rank"] for m in cs["models"] if col["id"] in m["cells"])
-            self.assertEqual(ranks, list(range(1, col["covered"] + 1)), col["id"])
+            self.assertEqual(len(ranks), col["covered"])
+            for i, rank in enumerate(ranks, 1):
+                if i == 1 or rank != ranks[i-2]:
+                    self.assertEqual(rank, i, col["id"])
         by = {m["model"]: m for m in cs["models"]}
+        for name in ("Claude Opus 5.5", "Gemini 4 Argon", "Gemini 4 Hydrogen"):
+            self.assertEqual(by[name]["cells"]["scale"]["rank"], 8)
+        self.assertEqual(by["Claude Fable 5.1"]["cells"]["scale"]["rank"], 11)
+        self.assertEqual([by[m]["cells"]["livebench"]["rank"] for m in ("Claude Fable 5.2", "GPT-6.2 Astra")], [2, 3])
+        self.assertNotIn("openrouter", by["Tencent Hy4"]["cells"])
+        self.assertEqual(set(by["Hy4 flash"]["cells"]), {"openrouter"})
         self.assertEqual(by["Claude Fable 5.2"]["cells"]["arena_agent"]["rank"], 1)
         self.assertEqual(by["Claude Fable 5.2"]["cells"]["scale"]["rank"], 1)
         self.assertEqual(by["DeepSeek V4.1 Flash 1017"]["cells"]["openrouter"]["rank"], 1)
         self.assertNotIn("scale", by["Muse Wonder Full"]["cells"])  # absent, not ranked last
         self.assertEqual(set(by["GPT-6.2 Astra"]["cells"]), {"aa5", "arena", "arena_webdev", "arena_agent", "livebench", "scale"})
-        self.assertEqual(set(by["Gemini 4 Neon"]["cells"]), {"aa5", "arena", "arena_webdev", "arena_agent", "livebench"})
+        self.assertEqual(set(by["Gemini 4 Neon"]["cells"]), {"aa5", "arena", "arena_webdev", "arena_agent", "livebench", "scale"})
         self.assertEqual(by["Gemini 4 Neon"]["cells"]["livebench"]["rank"], 1)
         self.assertEqual(set(by["Qwen4-Max"]["cells"]), {"aa5", "arena_webdev", "arena_agent", "livebench"})
         self.assertTrue(by["Kimi K3.1 Pro"]["open_weights"])
@@ -122,7 +132,7 @@ class MarketSnapshotTests(unittest.TestCase):
         v5 = boards["aa5"]
         self.assertEqual(v5["checked_at"], CURRENT_RESEARCH.name)
         argon = next(r for r in v5["rows"] if r["model"] == "Gemini 4 Argon")
-        self.assertEqual(argon["cost_usd"], 9.9466)  # AA uses the December list price.
+        self.assertEqual(argon["cost_usd"], 7.0616)  # AA uses the December list price.
         retail = next(m for m in self.data["models"] if m["id"] == "gemini-4-argon")
         self.assertEqual((retail["input"], retail["output"], retail["promo_end"]), (2, 10, "2026-11-30"))
         self.assertIn("12-01", v5["note"])
@@ -136,7 +146,7 @@ class MarketSnapshotTests(unittest.TestCase):
         rows = {(r["model"], r["configuration"].split(" · 开放权重")[0]): r for r in v5["rows"]}
         for row in v5["rows"]:
             # Displayed whole numbers round half up from the source's exact value.
-            self.assertEqual(row["score"], int(Decimal(str(row["score_exact"])).quantize(Decimal("1"), ROUND_HALF_UP)))
+            self.assertEqual(row["score"], int(Decimal(str(row["score_raw"])).quantize(Decimal("1"), ROUND_HALF_UP)))
             self.assertTrue(row["cost_usd"] is None or row["cost_usd"] > 0)
             self.assertEqual(len(row["evals"]), 10)
             key = (row["model"], row["configuration"].split(" · 开放权重")[0])
@@ -155,7 +165,7 @@ class MarketSnapshotTests(unittest.TestCase):
         self.assertEqual(rows[("Claude Opus 5.5", "max · 含回退")]["cost_usd"], 10.0364)
         self.assertIsNone(rows[("Muse Wonder Full", "max")]["cost_usd"])
         self.assertEqual(self.snapshot["highlights"][0]["board_id"], "aa5")
-        self.assertEqual(self.snapshot["changes"][0]["title"], "Gemini 4 Neon 登上 LiveBench 首位")
+        self.assertEqual(self.snapshot["changes"][0]["title"], "AA 更新编程评分，终端任务切换至 Terminal-Bench 4.1")
         titles = [c["title"] for c in self.snapshot["changes"]]
         self.assertEqual(len(titles), len(set(titles)))  # the AA note must not repeat a snapshot change
 
@@ -163,12 +173,13 @@ class MarketSnapshotTests(unittest.TestCase):
         rows = {r["model"]:r for r in self.data["external_leaderboards"]["four_family_matrix"]}
         self.assertIn("RLI #2 21.25%", rows["Claude Opus 5.5"]["scale_seal"])
         self.assertIn("MultiChallenge #15 high (67.67 ±5.34)%", rows["Claude Haiku 5.5"]["scale_seal"])
+        self.assertIn("HLE Diamond #24 high · 未注明代理框架", rows["Grok 4.7"]["scale_seal"])
         self.assertIn("未列出", rows["Gemini 3.5 Flash-Lite"]["scale_seal"])
-        self.assertEqual({r["scale_snapshot"] for r in rows.values()}, {"2026-11-21 核验"})
+        self.assertEqual({r["scale_snapshot"] for r in rows.values()}, {CURRENT_RESEARCH.name + " 核验"})
         self.assertIn("67.9 · $4.175/成功任务", rows["Grok 4.7"]["livebench_2"])
         self.assertIn("68.9 · $1.264/成功任务", rows["Claude Haiku 5.5"]["livebench_2"])
-        self.assertIn("7.25T tokens", rows["Claude Opus 5.5"]["openrouter"])
-        self.assertIn("1519.6 ±5.1", rows["Gemini 4 Argon"]["arena"])
+        self.assertIn("6.36T tokens", rows["Claude Opus 5.5"]["openrouter"])
+        self.assertIn("1519.8 ±5.0", rows["Gemini 4 Argon"]["arena"])
         self.assertEqual(len(self.data["rows"]), 169)
         self.assertEqual(self.data["aa_effort_evals"]["fetched_at"],
                          json.loads((ROOT / "research/2026-10-20/aa-effort-evals.json").read_text())["fetched_at"])
@@ -190,7 +201,7 @@ assert.equal(marketRows(zero,'','all','score')[0].score,0);
 assert.equal(marketExportRows(boards.scale,boards.scale.rows)[0].cost_usd,null);
 assert.equal(marketExportRows(boards.scale,boards.scale.rows)[0].source_updated_at,null);
 assert.equal(marketExportRows(boards.livebench,boards.livebench.rows)[0].source_updated_at,'2026-11-06');
-assert.equal(marketExportRows(boards.livebench,boards.livebench.rows)[0].checked_at,'2026-11-21');
+assert.equal(marketExportRows(boards.livebench,boards.livebench.rows)[0].checked_at,data.market_snapshot.reviewed_at);
 assert.equal(marketExportRows(boards.livebench,boards.livebench.rows)[0].configuration,'页面未注明档位');
 const grok=data.models.find(m=>m.id==='grok-4-7'),haiku=data.models.find(m=>m.id==='claude-haiku-5-5');
 assert(!usesLongContextPrice(grok,199999));

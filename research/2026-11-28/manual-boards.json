@@ -1,0 +1,1692 @@
+{
+  "scale": {
+    "source_url": "https://labs.scale.com/leaderboard/hle-diamond",
+    "checked_at": "2026-11-28",
+    "source_updated_at": null,
+    "sha256": "2c423eec57a3cf88591069d61dafdacffa3e1c3b069ee31f7f13ef8973fc3b3e",
+    "page_total": 33,
+    "rows": [
+      {
+        "model": "Claude Fable 5.2 (one-pass-agent) high",
+        "version": "anthropic/claude-fable-5-2",
+        "rank": 1,
+        "score": 72.4,
+        "confidenceInterval_upper": 2.8,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "GPT 6.2 Astra (one-pass-agent) high",
+        "version": "openai/gpt-6.2-astra",
+        "rank": 2,
+        "score": 66.9,
+        "confidenceInterval_upper": 2.9,
+        "calibrationError": 21.6,
+        "company": "openai"
+      },
+      {
+        "model": "Gemini 4 Neon (one-pass-agent) high",
+        "version": "gemini/gemini-4-neon",
+        "rank": 3,
+        "score": 65.3,
+        "confidenceInterval_upper": 2.89,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "Gemini 4 Carbon (one-pass-agent) high",
+        "version": "gemini/gemini-4-carbon",
+        "rank": 4,
+        "score": 63.2,
+        "confidenceInterval_upper": 2.93,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "GPT 6 Astra (one-pass-agent) high",
+        "version": "",
+        "rank": 5,
+        "score": 60.6,
+        "confidenceInterval_upper": 3,
+        "calibrationError": 28.1,
+        "company": "openai"
+      },
+      {
+        "model": "GPT 6.2 Sol (one-pass-agent) high",
+        "version": "openai/gpt-6.2-sol",
+        "rank": 6,
+        "score": 56.5,
+        "confidenceInterval_upper": 3.1,
+        "calibrationError": 29.7,
+        "company": "openai"
+      },
+      {
+        "model": "GPT 6.1 Sol (one-pass-agent) high",
+        "version": "openai/gpt-6.1-sol",
+        "rank": 7,
+        "score": 53.6,
+        "confidenceInterval_upper": 3.1,
+        "calibrationError": 34,
+        "company": "openai"
+      },
+      {
+        "model": "Claude Opus 5.5 high",
+        "version": "anthropic/claude-opus-5-5",
+        "rank": 8,
+        "score": 53.2,
+        "confidenceInterval_upper": 3.07,
+        "calibrationError": 4.7,
+        "company": "anthropic"
+      },
+      {
+        "model": "Gemini 4 Argon (one-pass-agent) high",
+        "version": "gemini-4-argon",
+        "rank": 8,
+        "score": 53.2,
+        "confidenceInterval_upper": 3.07,
+        "calibrationError": 53.3,
+        "company": "google"
+      },
+      {
+        "model": "Gemini 4 Hydrogen (one-pass-agent) high",
+        "version": "gemini/gemini-4-hydrogen",
+        "rank": 8,
+        "score": 53.2,
+        "confidenceInterval_upper": 3.07,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "Claude Fable 5.1 (one-pass-agent) high",
+        "version": "",
+        "rank": 11,
+        "score": 51.3,
+        "confidenceInterval_upper": 3.1,
+        "calibrationError": 13.8,
+        "company": "anthropic"
+      },
+      {
+        "model": "Claude Opus 5 (one-pass-agent) high",
+        "version": "",
+        "rank": 12,
+        "score": 38.6,
+        "confidenceInterval_upper": 3,
+        "calibrationError": 21.5,
+        "company": "anthropic"
+      },
+      {
+        "model": "Muse Wonder 1.0 (one-pass-agent) xhigh",
+        "version": "muse-wonder-1.0",
+        "rank": 13,
+        "score": 37.3,
+        "confidenceInterval_upper": 3.04,
+        "calibrationError": 31.1,
+        "company": "meta"
+      },
+      {
+        "model": "GPT 6.1 Terra (one-pass-agent) high",
+        "version": "openai/gpt-6.1-terra",
+        "rank": 14,
+        "score": 35.7,
+        "confidenceInterval_upper": 3,
+        "calibrationError": 32.9,
+        "company": "openai"
+      },
+      {
+        "model": "Gemini 3.8 Flash high",
+        "version": "gemini/gemini-3.8-flash",
+        "rank": 15,
+        "score": 34.2,
+        "confidenceInterval_upper": 3,
+        "calibrationError": 58.7,
+        "company": "google"
+      },
+      {
+        "model": "Claude Sonnet 5.5 high",
+        "version": "claude-sonnet-5-5",
+        "rank": 16,
+        "score": 34,
+        "confidenceInterval_upper": 2.99,
+        "calibrationError": 16.7,
+        "company": "anthropic"
+      },
+      {
+        "model": "GPT 6 Sol (one-pass-agent) high",
+        "version": "",
+        "rank": 17,
+        "score": 33.8,
+        "confidenceInterval_upper": 2.9,
+        "calibrationError": 38.8,
+        "company": "openai"
+      },
+      {
+        "model": "GPT 5.6 Sol (one-pass-agent) high",
+        "version": "",
+        "rank": 18,
+        "score": 31.2,
+        "confidenceInterval_upper": 2.9,
+        "calibrationError": 53.8,
+        "company": "openai"
+      },
+      {
+        "model": "Kimi K3.1 Pro (one-pass-agent) high",
+        "version": "fireworks_ai/kimi-k3p1-pro",
+        "rank": 19,
+        "score": 29.7,
+        "confidenceInterval_upper": 2.8,
+        "calibrationError": null,
+        "company": "moonshot"
+      },
+      {
+        "model": "Muse Spark Open (one-pass-agent) high",
+        "version": "muse-spark-open",
+        "rank": 20,
+        "score": 28,
+        "confidenceInterval_upper": 2.86,
+        "calibrationError": 32.5,
+        "company": "meta"
+      },
+      {
+        "model": "Muse Spark 1.3 (one-pass-agent) high",
+        "version": "",
+        "rank": 21,
+        "score": 25.4,
+        "confidenceInterval_upper": 2.7,
+        "calibrationError": 48.2,
+        "company": "meta"
+      },
+      {
+        "model": "Muse Ember 1.0 high",
+        "version": "meta_ai/muse-ember-1.0",
+        "rank": 22,
+        "score": 22.5,
+        "confidenceInterval_upper": 2.69,
+        "calibrationError": 29.1,
+        "company": "meta"
+      },
+      {
+        "model": "Kimi K3 (one-pass-agent) high",
+        "version": "",
+        "rank": 23,
+        "score": 22.2,
+        "confidenceInterval_upper": 2.6,
+        "calibrationError": 54.4,
+        "company": "moonshot"
+      },
+      {
+        "model": "Grok 4.7 high",
+        "version": "xai/grok-4.7",
+        "rank": 24,
+        "score": 21.7,
+        "confidenceInterval_upper": 2.66,
+        "calibrationError": 30.4,
+        "company": "xai"
+      },
+      {
+        "model": "Qwen 3.8 Max (one-pass-agent) high",
+        "version": "fireworks_ai/accounts/fireworks/models/qwen3p8-max",
+        "rank": 25,
+        "score": 21.3,
+        "confidenceInterval_upper": 2.65,
+        "calibrationError": null,
+        "company": "alibaba"
+      },
+      {
+        "model": "Claude Haiku 5.5 (one-pass-agent) high",
+        "version": "anthropic/claude-haiku-5-5",
+        "rank": 26,
+        "score": 21.1,
+        "confidenceInterval_upper": 2.5,
+        "calibrationError": 18.4,
+        "company": "anthropic"
+      },
+      {
+        "model": "DeepSeek V4.1 Flash (one-pass-agent) high",
+        "version": "fireworks_ai/deepseek-v4p1-flash-1017",
+        "rank": 27,
+        "score": 20.5,
+        "confidenceInterval_upper": 2.5,
+        "calibrationError": null,
+        "company": "deepseek"
+      },
+      {
+        "model": "MiniMax M3.1 Flash (one-pass-agent) high",
+        "version": "fireworks_ai/minimax-m3p1-flash",
+        "rank": 28,
+        "score": 20.4,
+        "confidenceInterval_upper": 2.61,
+        "calibrationError": null,
+        "company": "minimax"
+      },
+      {
+        "model": "GLM 5.3 high",
+        "version": "fireworks_ai/glm-5p3",
+        "rank": 29,
+        "score": 18,
+        "confidenceInterval_upper": 2.5,
+        "calibrationError": 48.7,
+        "company": "zai"
+      },
+      {
+        "model": "GLM 5.3 Flash high",
+        "version": "fireworks_ai/glm-5p3-flash",
+        "rank": 30,
+        "score": 16.8,
+        "confidenceInterval_upper": 2.44,
+        "calibrationError": 54.7,
+        "company": "zai"
+      },
+      {
+        "model": "DeepSeek V4 Pro (one-pass-agent) high",
+        "version": "",
+        "rank": 31,
+        "score": 13.4,
+        "confidenceInterval_upper": 2.1,
+        "calibrationError": 76.3,
+        "company": "deepseek"
+      },
+      {
+        "model": "Inkling (one-pass-agent) xhigh",
+        "version": "inkling",
+        "rank": 32,
+        "score": 11.2,
+        "confidenceInterval_upper": 2.11,
+        "calibrationError": 64.6,
+        "company": "thinkingmachines"
+      },
+      {
+        "model": "Nemotron 3.5 Super VL (one-pass-agent) medium",
+        "version": "ai-infra-nemotron/nemotron-3-5-super-vl",
+        "rank": 33,
+        "score": 5.8,
+        "confidenceInterval_upper": 1.62,
+        "calibrationError": null,
+        "company": "nvidia"
+      }
+    ]
+  },
+  "hss": {
+    "source_url": "https://labs.scale.com/leaderboard/hss",
+    "checked_at": "2026-11-28",
+    "source_updated_at": null,
+    "sha256": "1f7821cb143894d51c7dfbaa2538547c4ede99fcd65448c21ca3c16f65b400f3",
+    "page_total": 38,
+    "rows": [
+      {
+        "model": "Gemini 4 Neon (one-pass-agent) xhigh",
+        "version": "xhigh",
+        "rank": 1,
+        "score": 75.86,
+        "confidenceInterval_upper": 3.4,
+        "calibrationError": null,
+        "company": "Google"
+      },
+      {
+        "model": "Gemini 4 Carbon (one-pass-agent) high",
+        "version": "high",
+        "rank": 2,
+        "score": 71.1,
+        "confidenceInterval_upper": 3.6,
+        "calibrationError": null,
+        "company": "Google"
+      },
+      {
+        "model": "Gemini 4 Hydrogen (one-pass-agent) xhigh",
+        "version": "xhigh",
+        "rank": 3,
+        "score": 63.35,
+        "confidenceInterval_upper": 3.7,
+        "calibrationError": null,
+        "company": "Google"
+      },
+      {
+        "model": "GPT 6.2 Astra (one-pass-agent) xhigh",
+        "version": "xhigh",
+        "rank": 4,
+        "score": 63.22,
+        "confidenceInterval_upper": 3.9,
+        "calibrationError": null,
+        "company": "OpenAI"
+      },
+      {
+        "model": "Claude Fable 5.2 (one-pass-agent) max",
+        "version": "max",
+        "rank": 5,
+        "score": 59.5,
+        "confidenceInterval_upper": 3.8,
+        "calibrationError": null,
+        "company": "Anthropic"
+      },
+      {
+        "model": "GPT 6.2 Sol (one-pass-agent) xhigh",
+        "version": "xhigh",
+        "rank": 6,
+        "score": 56.83,
+        "confidenceInterval_upper": 3.9,
+        "calibrationError": null,
+        "company": "OpenAI"
+      },
+      {
+        "model": "Gemini 4 Argon (one-pass-agent) high",
+        "version": "",
+        "rank": 7,
+        "score": 55.4,
+        "confidenceInterval_upper": 4.2,
+        "calibrationError": null,
+        "company": "Google"
+      },
+      {
+        "model": "GPT 6 Astra (one-pass-agent) max",
+        "version": "",
+        "rank": 8,
+        "score": 53.6,
+        "confidenceInterval_upper": 4.1,
+        "calibrationError": null,
+        "company": "OpenAI"
+      },
+      {
+        "model": "GPT 6.1 Sol (one-pass-agent) max",
+        "version": "",
+        "rank": 9,
+        "score": 46.6,
+        "confidenceInterval_upper": 3.8,
+        "calibrationError": null,
+        "company": "OpenAI"
+      },
+      {
+        "model": "Claude Opus 5.5 (one-pass-agent) xhigh",
+        "version": "",
+        "rank": 10,
+        "score": 44.6,
+        "confidenceInterval_upper": 3.8,
+        "calibrationError": null,
+        "company": "Anthropic"
+      },
+      {
+        "model": "Muse Wonder 1.0 (one-pass-agent) max",
+        "version": "",
+        "rank": 11,
+        "score": 43.7,
+        "confidenceInterval_upper": 4.2,
+        "calibrationError": null,
+        "company": "Meta"
+      },
+      {
+        "model": "Gemini 3.8 Flash (one-pass-agent) high",
+        "version": "",
+        "rank": 12,
+        "score": 41.6,
+        "confidenceInterval_upper": 3.7,
+        "calibrationError": null,
+        "company": "Google"
+      },
+      {
+        "model": "Claude Fable 5.1 (one-pass-agent) xhigh",
+        "version": "",
+        "rank": 13,
+        "score": 40.8,
+        "confidenceInterval_upper": 3.6,
+        "calibrationError": null,
+        "company": "Anthropic"
+      },
+      {
+        "model": "Gemini 3.7 Flash (one-pass-agent) high",
+        "version": "",
+        "rank": 14,
+        "score": 39.8,
+        "confidenceInterval_upper": 3.7,
+        "calibrationError": null,
+        "company": "Google"
+      },
+      {
+        "model": "Muse Spark 1.3 (one-pass-agent) max",
+        "version": "",
+        "rank": 15,
+        "score": 37.4,
+        "confidenceInterval_upper": 3.5,
+        "calibrationError": null,
+        "company": "Meta"
+      },
+      {
+        "model": "Claude Fable 5 (one-pass-agent) max",
+        "version": "",
+        "rank": 16,
+        "score": 34.5,
+        "confidenceInterval_upper": 3.7,
+        "calibrationError": null,
+        "company": "Anthropic"
+      },
+      {
+        "model": "Inkling 2 Small (one-pass-agent) xhigh",
+        "version": "",
+        "rank": 17,
+        "score": 33.3,
+        "confidenceInterval_upper": 4.2,
+        "calibrationError": null,
+        "company": "Thinking Machines"
+      },
+      {
+        "model": "Kimi K3.1 Pro (one-pass-agent) max",
+        "version": "max",
+        "rank": 18,
+        "score": 33.2,
+        "confidenceInterval_upper": 3.4,
+        "calibrationError": null,
+        "company": "Moonshot"
+      },
+      {
+        "model": "Qwen 3.8 Max (one-pass-agent) max",
+        "version": "",
+        "rank": 19,
+        "score": 33,
+        "confidenceInterval_upper": 3.6,
+        "calibrationError": null,
+        "company": "Alibaba"
+      },
+      {
+        "model": "Gemini 3.5 Flash (one-pass-agent) high",
+        "version": "",
+        "rank": 20,
+        "score": 32.6,
+        "confidenceInterval_upper": 3.4,
+        "calibrationError": null,
+        "company": "Google"
+      },
+      {
+        "model": "Gemini 3.6 Flash (one-pass-agent) high",
+        "version": "",
+        "rank": 21,
+        "score": 31.9,
+        "confidenceInterval_upper": 3.4,
+        "calibrationError": null,
+        "company": "Google"
+      },
+      {
+        "model": "GPT 6 Sol (one-pass-agent) max",
+        "version": "",
+        "rank": 22,
+        "score": 31.2,
+        "confidenceInterval_upper": 3.4,
+        "calibrationError": null,
+        "company": "OpenAI"
+      },
+      {
+        "model": "Qwen 3.8 Flash (one-pass-agent) max",
+        "version": "",
+        "rank": 23,
+        "score": 30.9,
+        "confidenceInterval_upper": 3.3,
+        "calibrationError": null,
+        "company": "Alibaba"
+      },
+      {
+        "model": "Claude Opus 5 (one-pass-agent) max",
+        "version": "",
+        "rank": 24,
+        "score": 30.5,
+        "confidenceInterval_upper": 3.5,
+        "calibrationError": null,
+        "company": "Anthropic"
+      },
+      {
+        "model": "DeepSeek V4.1 Flash (one-pass-agent) max",
+        "version": "max",
+        "rank": 25,
+        "score": 30.1,
+        "confidenceInterval_upper": 3.3,
+        "calibrationError": null,
+        "company": "DeepSeek"
+      },
+      {
+        "model": "GPT 5.6 Sol (one-pass-agent) max",
+        "version": "",
+        "rank": 26,
+        "score": 30,
+        "confidenceInterval_upper": 3.3,
+        "calibrationError": null,
+        "company": "OpenAI"
+      },
+      {
+        "model": "Muse Spark Open (one-pass-agent) max",
+        "version": "max",
+        "rank": 27,
+        "score": 29.6,
+        "confidenceInterval_upper": 3.3,
+        "calibrationError": null,
+        "company": "Meta"
+      },
+      {
+        "model": "GLM 5.3 Flash (one-pass-agent) max",
+        "version": "",
+        "rank": 28,
+        "score": 26.8,
+        "confidenceInterval_upper": 3,
+        "calibrationError": null,
+        "company": "Z.ai"
+      },
+      {
+        "model": "Kimi K3 (one-pass-agent) max",
+        "version": "",
+        "rank": 29,
+        "score": 25.5,
+        "confidenceInterval_upper": 3.1,
+        "calibrationError": null,
+        "company": "Moonshot"
+      },
+      {
+        "model": "MiMo-v2.6-Flash (one-pass-agent) high",
+        "version": "",
+        "rank": 30,
+        "score": 25.4,
+        "confidenceInterval_upper": 2.9,
+        "calibrationError": null,
+        "company": "Xiaomi"
+      },
+      {
+        "model": "MiMo-v2.6-Pro (one-pass-agent) high",
+        "version": "",
+        "rank": 31,
+        "score": 25.2,
+        "confidenceInterval_upper": 2.9,
+        "calibrationError": null,
+        "company": "Xiaomi"
+      },
+      {
+        "model": "Claude Sonnet 5 (one-pass-agent) max",
+        "version": "",
+        "rank": 32,
+        "score": 24.8,
+        "confidenceInterval_upper": 3.2,
+        "calibrationError": null,
+        "company": "Anthropic"
+      },
+      {
+        "model": "Nemotron 3.5 Super VL (one-pass-agent) max",
+        "version": "max",
+        "rank": 33,
+        "score": 24.7,
+        "confidenceInterval_upper": 3.7,
+        "calibrationError": null,
+        "company": "NVIDIA"
+      },
+      {
+        "model": "Muse Spark 1.2 (one-pass-agent) xhigh",
+        "version": "",
+        "rank": 34,
+        "score": 24.5,
+        "confidenceInterval_upper": 3.1,
+        "calibrationError": null,
+        "company": "Meta"
+      },
+      {
+        "model": "Claude Opus 4.8 (one-pass-agent) max",
+        "version": "",
+        "rank": 35,
+        "score": 23.5,
+        "confidenceInterval_upper": 3.2,
+        "calibrationError": null,
+        "company": "Anthropic"
+      },
+      {
+        "model": "GPT 5.6 Terra (one-pass-agent) max",
+        "version": "",
+        "rank": 36,
+        "score": 22.7,
+        "confidenceInterval_upper": 3.2,
+        "calibrationError": null,
+        "company": "OpenAI"
+      },
+      {
+        "model": "GPT 5.6 Luna (one-pass-agent) max",
+        "version": "",
+        "rank": 37,
+        "score": 21.6,
+        "confidenceInterval_upper": 3.2,
+        "calibrationError": null,
+        "company": "OpenAI"
+      },
+      {
+        "model": "GPT 6 Luna (one-pass-agent) max",
+        "version": "",
+        "rank": 38,
+        "score": 21,
+        "confidenceInterval_upper": 3,
+        "calibrationError": null,
+        "company": "OpenAI"
+      }
+    ]
+  },
+  "multichallenge": {
+    "source_url": "https://labs.scale.com/leaderboard/multichallenge?tab=large",
+    "checked_at": "2026-11-28",
+    "source_updated_at": null,
+    "sha256": "da8a7dbc5b8279855be426f1cee49b7897c27d29d29c3a5202c0094133d85e15",
+    "page_total": 41,
+    "rows": [
+      {
+        "model": "Gemini 4 Carbon (one-pass-agent) high",
+        "version": "gemini/gemini-4-carbon",
+        "rank": 1,
+        "score": 85.9,
+        "confidenceInterval_upper": 4.4,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "GPT 6.1 Sol (one-pass-agent) high",
+        "version": "gpt-6.1-sol",
+        "rank": 2,
+        "score": 81.95,
+        "confidenceInterval_upper": 4.16,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Gemini 4 Hydrogen (one-pass-agent) high",
+        "version": "gemini/gemini-4-hydrogen",
+        "rank": 3,
+        "score": 80.6,
+        "confidenceInterval_upper": 5,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "Claude Fable 5.2 (one-pass-agent) high",
+        "version": "claude-fable-5-2",
+        "rank": 4,
+        "score": 80.4,
+        "confidenceInterval_upper": 5.1,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Gemini 4 Argon (one-pass-agent) high",
+        "version": "gemini/gemini-4-argon",
+        "rank": 5,
+        "score": 78.7,
+        "confidenceInterval_upper": 5.3,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "Muse Spark (one-pass-agent)",
+        "version": "",
+        "rank": 6,
+        "score": 75.52,
+        "confidenceInterval_upper": 4.05,
+        "calibrationError": null,
+        "company": "meta"
+      },
+      {
+        "model": "Muse Spark 1.1 (one-pass-agent)",
+        "version": "",
+        "rank": 7,
+        "score": 75.3,
+        "confidenceInterval_upper": 0.6,
+        "calibrationError": null,
+        "company": "meta"
+      },
+      {
+        "model": "DeepSeek V4.1 Flash (one-pass-agent) high",
+        "version": "fireworks_ai/deepseek-v4p1-flash-1017",
+        "rank": 8,
+        "score": 74.9,
+        "confidenceInterval_upper": 5.3,
+        "calibrationError": null,
+        "company": "deepseek"
+      },
+      {
+        "model": "GPT 6.1 Terra (one-pass-agent) high",
+        "version": "openai/gpt-6.1-terra",
+        "rank": 9,
+        "score": 74.2,
+        "confidenceInterval_upper": 5.4,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Muse Spark Open (one-pass-agent) high",
+        "version": "fireworks_ai/muse-spark-open",
+        "rank": 9,
+        "score": 74.2,
+        "confidenceInterval_upper": 5.6,
+        "calibrationError": null,
+        "company": "meta"
+      },
+      {
+        "model": "GPT 6.2 Astra (one-pass-agent) high",
+        "version": "openai/gpt-6.2-astra",
+        "rank": 11,
+        "score": 73.2,
+        "confidenceInterval_upper": 5.8,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "GPT 6.2 Sol (one-pass-agent) high",
+        "version": "openai/gpt-6.2-sol",
+        "rank": 12,
+        "score": 72,
+        "confidenceInterval_upper": 5.8,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Gemini 3.1 Pro (one-pass-agent)",
+        "version": "",
+        "rank": 13,
+        "score": 71.37,
+        "confidenceInterval_upper": 1.7366,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "GPT 5.4 Pro (one-pass-agent)",
+        "version": "",
+        "rank": 14,
+        "score": 69.23,
+        "confidenceInterval_upper": 3.0513,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Claude Haiku 5.5 (one-pass-agent) high",
+        "version": "claude-haiku-5-5",
+        "rank": 15,
+        "score": 67.67,
+        "confidenceInterval_upper": 5.34,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Gemini 3 Pro (one-pass-agent)",
+        "version": "",
+        "rank": 16,
+        "score": 65.67,
+        "confidenceInterval_upper": 2.1967,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "GPT 5.1 (one-pass-agent) max",
+        "version": "",
+        "rank": 17,
+        "score": 63.41,
+        "confidenceInterval_upper": 2.1057,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "GPT 5 (one-pass-agent) max",
+        "version": "",
+        "rank": 18,
+        "score": 63.19,
+        "confidenceInterval_upper": 1.6297,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "o3-pro (one-pass-agent) high",
+        "version": "",
+        "rank": 19,
+        "score": 62.4,
+        "confidenceInterval_upper": 2.4921,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Kimi K2.5 (one-pass-agent)",
+        "version": "",
+        "rank": 20,
+        "score": 61.39,
+        "confidenceInterval_upper": 0.4635,
+        "calibrationError": null,
+        "company": "moonshot"
+      },
+      {
+        "model": "Gemini 3.1 Flash-Lite (one-pass-agent)",
+        "version": "",
+        "rank": 21,
+        "score": 60.61,
+        "confidenceInterval_upper": 0.3795,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "GPT 5 mini (one-pass-agent) max",
+        "version": "",
+        "rank": 22,
+        "score": 58.99,
+        "confidenceInterval_upper": 4.0688,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Claude Opus 4.5 (one-pass-agent) max",
+        "version": "",
+        "rank": 23,
+        "score": 58.97,
+        "confidenceInterval_upper": 0.4229,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Claude Opus 4 (one-pass-agent) max",
+        "version": "",
+        "rank": 24,
+        "score": 58.62,
+        "confidenceInterval_upper": 0.7712,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Claude Opus 4.1 (one-pass-agent) max",
+        "version": "",
+        "rank": 25,
+        "score": 57.2,
+        "confidenceInterval_upper": 0.952,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Claude Sonnet 4 (one-pass-agent) max",
+        "version": "",
+        "rank": 26,
+        "score": 57.11,
+        "confidenceInterval_upper": 0.8057,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "o3 (one-pass-agent) high",
+        "version": "",
+        "rank": 27,
+        "score": 56.62,
+        "confidenceInterval_upper": 3.3212,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Claude Opus 4.6 (one-pass-agent)",
+        "version": "",
+        "rank": 28,
+        "score": 56.02,
+        "confidenceInterval_upper": 1.08,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Kimi K2 Thinking (one-pass-agent)",
+        "version": "",
+        "rank": 29,
+        "score": 55.42,
+        "confidenceInterval_upper": 1.877,
+        "calibrationError": null,
+        "company": "moonshot"
+      },
+      {
+        "model": "Claude Sonnet 4.5 (one-pass-agent) max",
+        "version": "",
+        "rank": 30,
+        "score": 55.32,
+        "confidenceInterval_upper": 1.4746,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Gemini 2.5 Pro (one-pass-agent)",
+        "version": "",
+        "rank": 31,
+        "score": 53.62,
+        "confidenceInterval_upper": 1.3178,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "Claude 3.7 Sonnet (one-pass-agent) max",
+        "version": "",
+        "rank": 32,
+        "score": 51.58,
+        "confidenceInterval_upper": 3.0655,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "GPT 5.1 (one-pass-agent)",
+        "version": "",
+        "rank": 33,
+        "score": 51.23,
+        "confidenceInterval_upper": 1.7891,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Claude Haiku 4.5 (one-pass-agent) max",
+        "version": "",
+        "rank": 34,
+        "score": 50.49,
+        "confidenceInterval_upper": 2.036,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "DeepSeek V3.1 (one-pass-agent)",
+        "version": "",
+        "rank": 35,
+        "score": 46.1,
+        "confidenceInterval_upper": 1.11,
+        "calibrationError": null,
+        "company": "deepseek"
+      },
+      {
+        "model": "gpt-oss-120b (one-pass-agent)",
+        "version": "",
+        "rank": 36,
+        "score": 45.34,
+        "confidenceInterval_upper": 2.1519,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "o4-mini (one-pass-agent) high",
+        "version": "",
+        "rank": 37,
+        "score": 44.9,
+        "confidenceInterval_upper": 0.8828,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Qwen3-235B-A22B (one-pass-agent)",
+        "version": "",
+        "rank": 38,
+        "score": 41.22,
+        "confidenceInterval_upper": 1.7903,
+        "calibrationError": null,
+        "company": "alibaba"
+      },
+      {
+        "model": "GPT-4.1 (one-pass-agent)",
+        "version": "",
+        "rank": 39,
+        "score": 39.43,
+        "confidenceInterval_upper": 0.9393,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Claude Opus 4.6 (one-pass-agent) max",
+        "version": "",
+        "rank": 40,
+        "score": 37.15,
+        "confidenceInterval_upper": 2.16,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Gemini 2.0 Flash (one-pass-agent)",
+        "version": "",
+        "rank": 41,
+        "score": 36.35,
+        "confidenceInterval_upper": 0.7769,
+        "calibrationError": null,
+        "company": "google"
+      }
+    ]
+  },
+  "rli": {
+    "source_url": "https://labs.scale.com/leaderboard/rli",
+    "checked_at": "2026-11-28",
+    "source_updated_at": null,
+    "sha256": "923126797199f0a841ab6dc4649a2a4f03d7c7af8407461e35483e132f6a5144",
+    "page_total": 24,
+    "rows": [
+      {
+        "model": "Claude Fable 5.2",
+        "version": "",
+        "rank": 1,
+        "score": 41.25,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Claude Opus 5.5",
+        "version": "",
+        "rank": 2,
+        "score": 21.25,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "GPT 6 Astra",
+        "version": "",
+        "rank": 3,
+        "score": 20.83,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Gemini 4 Carbon",
+        "version": "",
+        "rank": 4,
+        "score": 20,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "Claude Fable 5.1",
+        "version": "",
+        "rank": 5,
+        "score": 17.92,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Gemini 4 Argon",
+        "version": "",
+        "rank": 6,
+        "score": 17.08,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "Claude Fable 5 (Claude Code)",
+        "version": "",
+        "rank": 7,
+        "score": 15.83,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "DeepSeek V4.1 Flash",
+        "version": "",
+        "rank": 8,
+        "score": 9.58,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "deepseek"
+      },
+      {
+        "model": "Claude Opus 4.8 (Claude Code)",
+        "version": "",
+        "rank": 9,
+        "score": 8.33,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "GPT 5.5 (Codex)",
+        "version": "",
+        "rank": 10,
+        "score": 6.25,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Gemini 3.8 Flash",
+        "version": "",
+        "rank": 11,
+        "score": 5.83,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "Claude Opus 4.6 (Cowork)",
+        "version": "",
+        "rank": 13,
+        "score": 4.17,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Claude Opus 4.5 max",
+        "version": "",
+        "rank": 14,
+        "score": 3.75,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Manus 1.6 Max (Manus)",
+        "version": "",
+        "rank": 15,
+        "score": 2.92,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "manus"
+      },
+      {
+        "model": "GPT 5.2 medium",
+        "version": "",
+        "rank": 16,
+        "score": 2.5,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Manus 1.0 (Manus)",
+        "version": "",
+        "rank": 16,
+        "score": 2.5,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "manus"
+      },
+      {
+        "model": "Manus 1.5 (Manus)",
+        "version": "",
+        "rank": 16,
+        "score": 2.5,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "manus"
+      },
+      {
+        "model": "Claude Sonnet 4.5",
+        "version": "",
+        "rank": 19,
+        "score": 2.08,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "GPT 5.2",
+        "version": "",
+        "rank": 19,
+        "score": 2.08,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "GPT 5 (OpenHands)",
+        "version": "",
+        "rank": 21,
+        "score": 1.67,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "ChatGPT agent (ChatGPT)",
+        "version": "",
+        "rank": 22,
+        "score": 1.25,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Gemini 3 Pro",
+        "version": "",
+        "rank": 22,
+        "score": 1.25,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "Gemini 2.5 Pro 06-05 (OpenHands)",
+        "version": "",
+        "rank": 24,
+        "score": 0.83,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "Gemini 3.7 Flash",
+        "version": "",
+        "rank": 122,
+        "score": 5,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "google"
+      }
+    ]
+  },
+  "swe_full": {
+    "source_url": "https://labs.scale.com/leaderboard/swe_bench_pro_public_v2?tab=full",
+    "checked_at": "2026-11-28",
+    "source_updated_at": null,
+    "sha256": "13024c32ca8e430432b4e8b0d5ea384de28bafd0584efa3014fba4c8424751bf",
+    "page_total": 18,
+    "rows": [
+      {
+        "model": "Claude Opus 5 (Claude Code) xhigh",
+        "version": "",
+        "rank": 1,
+        "score": 99.4,
+        "confidenceInterval_upper": 0.4,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Gemini 4 Argon (mini-swe-agent) high",
+        "version": "openai/gemini/gemini-4-argon",
+        "rank": 2,
+        "score": 99.22,
+        "confidenceInterval_upper": 0.45,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "Claude Fable 5.1 (Claude Code) high",
+        "version": "",
+        "rank": 2,
+        "score": 99.1,
+        "confidenceInterval_upper": 0.5,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Kimi K3 (mini-swe-agent) max",
+        "version": "",
+        "rank": 3,
+        "score": 97.7,
+        "confidenceInterval_upper": 0.9,
+        "calibrationError": null,
+        "company": "moonshot"
+      },
+      {
+        "model": "Inkling 2 Small (mini-swe-agent) xhigh",
+        "version": "",
+        "rank": 4,
+        "score": 97.66,
+        "confidenceInterval_upper": 1.46,
+        "calibrationError": null,
+        "company": "thinkingmachines"
+      },
+      {
+        "model": "GPT 6 Astra (Codex) high",
+        "version": "",
+        "rank": 5,
+        "score": 96.9,
+        "confidenceInterval_upper": 1.1,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Muse Wonder 1.0 (mini-swe-agent) xhigh",
+        "version": "openai/meta_ai/muse-wonder-1.0",
+        "rank": 5,
+        "score": 96.73,
+        "confidenceInterval_upper": 1.12,
+        "calibrationError": null,
+        "company": "meta"
+      },
+      {
+        "model": "MiniMax M3.1 Flash (mini-swe-agent) xhigh",
+        "version": "openai/fireworks_ai/minimax-m3p1-flash",
+        "rank": 6,
+        "score": 96.57,
+        "confidenceInterval_upper": 1.16,
+        "calibrationError": null,
+        "company": "minimax"
+      },
+      {
+        "model": "GPT 6.1 Sol (mini-swe-agent) xhigh",
+        "version": "gpt-6.1-sol",
+        "rank": 6,
+        "score": 96.11,
+        "confidenceInterval_upper": 1.24,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Claude Sonnet 5.5 (mini-swe-agent) xhigh",
+        "version": "anthropic/claude-sonnet-5-5",
+        "rank": 7,
+        "score": 95.79,
+        "confidenceInterval_upper": 1.3,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "GLM 5.3 (mini-swe-agent) max",
+        "version": "",
+        "rank": 7,
+        "score": 95.6,
+        "confidenceInterval_upper": 1.3,
+        "calibrationError": null,
+        "company": "zai"
+      },
+      {
+        "model": "GPT 5.6 Sol (Codex) xhigh",
+        "version": "",
+        "rank": 8,
+        "score": 95.5,
+        "confidenceInterval_upper": 1.4,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Muse Spark Open (mini-swe-agent) xhigh",
+        "version": "openai/fireworks_ai/muse-spark-open",
+        "rank": 8,
+        "score": 95.02,
+        "confidenceInterval_upper": 1.43,
+        "calibrationError": null,
+        "company": "meta"
+      },
+      {
+        "model": "Gemini 3.8 Flash (mini-swe-agent) high",
+        "version": "",
+        "rank": 9,
+        "score": 94.86,
+        "confidenceInterval_upper": 1.46,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "Claude Sonnet 5 (Claude Code) xhigh",
+        "version": "",
+        "rank": 10,
+        "score": 93.15,
+        "confidenceInterval_upper": 1.71,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "GPT 5.6 Terra (Codex) xhigh",
+        "version": "",
+        "rank": 11,
+        "score": 92.37,
+        "confidenceInterval_upper": 1.81,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Inkling (mini-swe-agent) xhigh",
+        "version": "",
+        "rank": 12,
+        "score": 89.88,
+        "confidenceInterval_upper": 2.1,
+        "calibrationError": null,
+        "company": "thinkingmachines"
+      },
+      {
+        "model": "Claude Haiku 5.5 (mini-swe-agent) high",
+        "version": "claude-haiku-5-5",
+        "rank": 13,
+        "score": 87.23,
+        "confidenceInterval_upper": 2.36,
+        "calibrationError": null,
+        "company": "anthropic"
+      }
+    ]
+  },
+  "swe_hard": {
+    "source_url": "https://labs.scale.com/leaderboard/swe_bench_pro_public_v2?tab=hard",
+    "checked_at": "2026-11-28",
+    "source_updated_at": null,
+    "sha256": "0d807b8ec94dacc1df250ae86f26b66b02da0dcc1417a207319f42ff3759222f",
+    "page_total": 18,
+    "rows": [
+      {
+        "model": "Claude Opus 5 (Claude Code) xhigh",
+        "version": "",
+        "rank": 1,
+        "score": 98,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Claude Fable 5.1 (Claude Code) high",
+        "version": "",
+        "rank": 2,
+        "score": 92.2,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Gemini 4 Argon (mini-swe-agent) high",
+        "version": "openai/gemini/gemini-4-argon",
+        "rank": 3,
+        "score": 92.16,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "GPT 6 Astra (Codex) high",
+        "version": "",
+        "rank": 4,
+        "score": 90.2,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Muse Wonder 1.0 (mini-swe-agent) xhigh",
+        "version": "openai/meta_ai/muse-wonder-1.0",
+        "rank": 4,
+        "score": 90.2,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "meta"
+      },
+      {
+        "model": "Claude Sonnet 5 (Claude Code) xhigh",
+        "version": "",
+        "rank": 6,
+        "score": 88.2,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Kimi K3 (mini-swe-agent) max",
+        "version": "",
+        "rank": 6,
+        "score": 88.2,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "moonshot"
+      },
+      {
+        "model": "GPT 5.6 Terra (Codex) xhigh",
+        "version": "",
+        "rank": 8,
+        "score": 86.3,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Inkling 2 Small (mini-swe-agent) xhigh",
+        "version": "",
+        "rank": 8,
+        "score": 86.27,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "thinkingmachines"
+      },
+      {
+        "model": "MiniMax M3.1 Flash (mini-swe-agent) xhigh",
+        "version": "openai/fireworks_ai/minimax-m3p1-flash",
+        "rank": 9,
+        "score": 84.31,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "minimax"
+      },
+      {
+        "model": "GLM 5.3 (mini-swe-agent) max",
+        "version": "",
+        "rank": 10,
+        "score": 84.3,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "zai"
+      },
+      {
+        "model": "GPT 5.6 Sol (Codex) xhigh",
+        "version": "",
+        "rank": 11,
+        "score": 82.4,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "openai"
+      },
+      {
+        "model": "Muse Spark Open (mini-swe-agent) xhigh",
+        "version": "openai/fireworks_ai/muse-spark-open",
+        "rank": 12,
+        "score": 82.35,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "meta"
+      },
+      {
+        "model": "Claude Sonnet 5.5 (mini-swe-agent) xhigh",
+        "version": "anthropic/claude-sonnet-5-5",
+        "rank": 13,
+        "score": 70.59,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Gemini 3.8 Flash (mini-swe-agent) high",
+        "version": "",
+        "rank": 14,
+        "score": 58.8,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "google"
+      },
+      {
+        "model": "Inkling (mini-swe-agent) xhigh",
+        "version": "",
+        "rank": 15,
+        "score": 56.9,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "thinkingmachines"
+      },
+      {
+        "model": "Claude Haiku 5.5 (mini-swe-agent) high",
+        "version": "claude-haiku-5-5",
+        "rank": 16,
+        "score": 52.94,
+        "confidenceInterval_upper": 13.01,
+        "calibrationError": null,
+        "company": "anthropic"
+      },
+      {
+        "model": "Claude Haiku 4.5 (Claude Code) xhigh",
+        "version": "",
+        "rank": 17,
+        "score": 25.5,
+        "confidenceInterval_upper": 0,
+        "calibrationError": null,
+        "company": "anthropic"
+      }
+    ]
+  },
+  "openrouter": {
+    "source_url": "https://openrouter.ai/rankings",
+    "usage_through": "2026-11-27",
+    "checked_at": "2026-11-28",
+    "sha256": "9293bbd560101048173926aba3fd98c7b23c6de7ffad792118b734b20f04ce97",
+    "rows": [
+      {
+        "source_rank": 1,
+        "model": "DeepSeek V4.1 Flash 1017",
+        "vendor": "DeepSeek",
+        "score": 83.1,
+        "change": "+33%",
+        "byok_capped": false
+      },
+      {
+        "source_rank": 2,
+        "model": "Hy4 flash",
+        "vendor": "Tencent",
+        "score": 38.7,
+        "change": ">999%",
+        "byok_capped": true
+      },
+      {
+        "source_rank": 3,
+        "model": "DeepSeek V4.1 Flash",
+        "vendor": "DeepSeek",
+        "score": 13.9,
+        "change": "-11%",
+        "byok_capped": false
+      },
+      {
+        "source_rank": 4,
+        "model": "GLM 5.3 Flash",
+        "vendor": "Z.AI",
+        "score": 13.2,
+        "change": "+22%",
+        "byok_capped": false
+      },
+      {
+        "source_rank": 5,
+        "model": "GPT-6 Luna",
+        "vendor": "OpenAI",
+        "score": 7.42,
+        "change": "-15%",
+        "byok_capped": false
+      },
+      {
+        "source_rank": 6,
+        "model": "Claude Opus 5.5",
+        "vendor": "Anthropic",
+        "score": 6.36,
+        "change": "-12%",
+        "byok_capped": false
+      },
+      {
+        "source_rank": 7,
+        "model": "Kimi K3.1 Pro",
+        "vendor": "Moonshot AI",
+        "score": 4.85,
+        "change": "+37%",
+        "byok_capped": false
+      },
+      {
+        "source_rank": 8,
+        "model": "MiniMax-M3.1-Flash",
+        "vendor": "MiniMax",
+        "score": 4.73,
+        "change": "+15%",
+        "byok_capped": false
+      },
+      {
+        "source_rank": 9,
+        "model": "Nemotron 3 Ultra (free)",
+        "vendor": "NVIDIA",
+        "score": 4.27,
+        "change": "+20%",
+        "byok_capped": false
+      },
+      {
+        "source_rank": 10,
+        "model": "GLM 5.3",
+        "vendor": "Z.AI",
+        "score": 4.16,
+        "change": "+23%",
+        "byok_capped": false
+      }
+    ]
+  }
+}

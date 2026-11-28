@@ -3,9 +3,20 @@
 import math
 import re
 from decimal import Decimal, ROUND_HALF_UP
+from html import escape
 
 
 def render_claims(text, data):
+    if "{{edition:" in text:
+        market = data["market_snapshot"]
+        boards = {b["id"]: b for b in market["boards"]}
+        reviewed = market["reviewed_at"]
+        edition = {"date": reviewed, "issue": reviewed[5:].replace("-", " / "), "headline": market["changes"][0]["title"],
+                   "aa_count": len(boards["aa5"]["rows"]), "hle_count": len(boards["scale"]["rows"])}
+        for key in ("arena", "arena_webdev", "arena_agent", "openrouter"):
+            edition[key] = boards[key]["source_updated_at"][5:]
+        text = re.sub(r"\{\{edition:(\w+)\}\}", lambda m: escape(str(edition[m[1]])), text)
+
     def replace(match):
         kind, reference = match.groups()
         parts = reference.split(":")

@@ -4,7 +4,7 @@
   // AA Intelligence Index version. v5 is the default; v4.3.2 keeps the older models AA did
   // not re-run. One version is loaded per page view, so no chart mixes the two.
   const AA_VERSIONS = {
-    v5:{label:"v5.0",short:"AA v5",evalsLabel:"9 项评测"},
+    v5:{label:DATA.aa_v5.version,short:"AA v5",evalsLabel:"9 项评测"},
     v4:{label:"v4.3.2",short:"AA v4.3.2",evalsLabel:"10 项评测"}
   };
   const aaVersion = (() => {
@@ -359,9 +359,15 @@
     const future=$("priceScenario").value === "afterPromo";
     const costs=shownModels().map(m => {
       let prices={input:m.input,cached:m.cached,output:m.output},note="核验日 Standard";
-      if(future && finite(m.future_input)){prices={input:m.future_input,cached:m.future_cached,output:m.future_output};note=`优惠 ${m.promo_end} 结束后`;}
-      if(usesLongContextPrice(m,input)){prices={input:m.tier_input,cached:m.tier_cached,output:m.tier_output};note=`prompt ${m.tier_inclusive ? "≥" : ">"}${fmt(m.tier_threshold,0)}；整次升档`;}
-      const over=m.api_available === false ? "暂不提供公开 API 预算" : ![prices.input,prices.cached,prices.output].every(finite) ? "未公开完整 API 定价" : finite(m.max_output) && answer+reason > m.max_output ? "超出同步输出上限" : finite(m.context) && (input > m.context || m.context_kind === "shared" && input+answer+reason > m.context) ? "超出上下文窗口" : null;
+      if (future && m.promo_end) {
+        prices={input:m.future_input,cached:m.future_cached,output:m.future_output};
+        note=`优惠 ${m.promo_end} 结束后`;
+      } else if (usesLongContextPrice(m,input)) {
+        prices={input:m.tier_input,cached:m.tier_cached,output:m.tier_output};
+        note=`prompt ${m.tier_inclusive ? "≥" : ">"}${fmt(m.tier_threshold,0)}；整次升档`;
+      }
+      const missingPrice = future && m.promo_end ? "优惠结束后费率待公布" : "未公开完整 API 定价";
+      const over=m.api_available === false ? "暂不提供公开 API 预算" : ![prices.input,prices.cached,prices.output].every(finite) ? missingPrice : finite(m.max_output) && answer+reason > m.max_output ? "超出同步输出上限" : finite(m.context) && (input > m.context || m.context_kind === "shared" && input+answer+reason > m.context) ? "超出上下文窗口" : null;
       const per=over ? null : (input*(1-cache/100)*prices.input+input*cache/100*prices.cached+(answer+reason)*prices.output)/1e6;
       return {m,prices,note,over,per,total:per === null ? null : per*count};
     }).sort((a,b) => (a.total ?? Infinity)-(b.total ?? Infinity));
@@ -514,7 +520,7 @@
         previous_measured_effort:previous?.effort ?? null, selected:e.slug === selectedSlug,
         representative_by_overall_ii:!!e.isTopVariant,
         best_for_metric:finite(score) && capPrecision(score) === capPrecision(best),
-        fallback:e.fallbackLabel || "", source_url:key.startsWith("eval:") ? (finite(score) ? e.evalSourceUrl || null : null) : e.sourceUrl || null, evidence_type:key==="eval:Terminal-Bench 4.0" ? "model + agent; exact AA configuration; harness not archived" : "exact model + effort", version:capVersionLabel, evaluation_date:null, harness:null, budget:null, confidence_interval:null,
+        fallback:e.fallbackLabel || "", source_url:key.startsWith("eval:") ? (finite(score) ? e.evalSourceUrl || null : null) : e.sourceUrl || null, evidence_type:key==="eval:Terminal-Bench 4.1" ? "model + agent; exact AA configuration; harness not archived" : "exact model + effort", version:capVersionLabel, evaluation_date:null, harness:null, budget:null, confidence_interval:null,
         raw_unit:key.startsWith("eval:") ? "%" : "index points", collected_at:"2026-10-19", attempts:null, snapshot:"2026-10-19", cost_scope:"AA 智能指数加权单任务成本；非子评测专属费用"};
     });
   }
@@ -527,7 +533,7 @@
     {key:"eval:Terminal-Bench-Science", label:"Terminal-Bench-Science", shortLabel:"科研终端任务", weight:15},
     {key:"eval:CritPt v2 hard", label:"CritPt v2 Hard", shortLabel:"物理难题", weight:10},
     {key:"eval:FrontierCode 2.0", label:"FrontierCode 2.0", shortLabel:"代码库编程", weight:15},
-    {key:"eval:Terminal-Bench 4.0", label:"Terminal-Bench 4.0", shortLabel:"终端执行", weight:10}
+    {key:"eval:Terminal-Bench 4.1", label:"Terminal-Bench 4.1", shortLabel:"终端执行", weight:10}
   ];
   const capEntries = DATA.aa_capability_indexes.entries.map(e => {
     const ev = DATA.aa_effort_evals.variants[e.slug];
@@ -687,7 +693,7 @@
   }
 
   // Same-release, same-snapshot official effort evidence in the reasoning tab.
-  const reasoningEvals = aaVersion === "v5" ? ["HLE-Diamond", "CritPt v2 hard", "Terminal-Bench 4.0", "FrontierCode 2.0", "Terminal-Bench-Science"] : ["Humanity's Last Exam", "CritPt", "Terminal-Bench 4.0", "SciCode"];
+  const reasoningEvals = aaVersion === "v5" ? ["HLE-Diamond", "CritPt v2 hard", "Terminal-Bench 4.1", "FrontierCode 2.0", "Terminal-Bench-Science"] : ["Humanity's Last Exam", "CritPt", "Terminal-Bench 4.0", "SciCode"];
   const effortView = {selectedSlug:null};
   function renderReasoningCharts() {
     const cap=DATA.aa_capability_indexes;
@@ -1017,15 +1023,15 @@
     coding: {
       key: "coding",
       shortLabel: "编程与软件工程",
-      title: "编程与软件工程能力（Terminal-Bench 4.0 + FrontierCode 2.0）vs. 单任务成本（对数刻度）",
-      yLabel: "编程与软件工程得分（Terminal-Bench 4.0 + FrontierCode 2.0 均值 · %）",
+      title: "编程与软件工程能力（Terminal-Bench 4.1 + FrontierCode 2.0）vs. 单任务成本（对数刻度）",
+      yLabel: "编程与软件工程得分（Terminal-Bench 4.1 + FrontierCode 2.0 均值 · %）",
       unit: "%",
       digits: 1,
       yrange: [0, 60],
       yTicks: [0, 10, 20, 30, 40, 50, 60],
       attractiveY: 40,
       attractiveX: 1.10,
-      subnote: "本报告任务视图（v5）：Terminal-Bench 4.0 与 Cognition 私有 FrontierCode 2.0（按维护者是否会合并评分）的等权均值，不是通用软件工程通过率。Astra 6.2 xhigh {{aa5:gpt-6-2-astra:xhigh:coding:1}}% 最高（${{aa5:gpt-6-2-astra:xhigh:costPerTask:2}}），max 反而略低（{{aa5:gpt-6-2-astra:max:coding:1}}%）；Fable 5.2 xhigh {{aa5:claude-fable-5-2:xhigh:coding:1}}%、Opus 5.5 max {{aa5:claude-opus-5-5:max:coding:1}}%；Sol 6.2 max {{aa5:gpt-6-2-sol:max:coding:1}}%（${{aa5:gpt-6-2-sol:max:costPerTask:2}}）。Vulcan 的题集、脚手架与成本另列。",
+      subnote: "本报告任务视图（v5）：Terminal-Bench 4.1 与 Cognition 私有 FrontierCode 2.0（按维护者是否会合并评分）的等权均值，不是通用软件工程通过率。Astra 6.2 xhigh {{aa5:gpt-6-2-astra:xhigh:coding:1}}% 最高（${{aa5:gpt-6-2-astra:xhigh:costPerTask:2}}），max 反而略低（{{aa5:gpt-6-2-astra:max:coding:1}}%）；Fable 5.2 xhigh {{aa5:claude-fable-5-2:xhigh:coding:1}}%、Opus 5.5 max {{aa5:claude-opus-5-5:max:coding:1}}%；Sol 6.2 max {{aa5:gpt-6-2-sol:max:coding:1}}%（${{aa5:gpt-6-2-sol:max:costPerTask:2}}）。Vulcan 的题集、脚手架与成本另列。",
       getScore: v => v.taskScores?.coding
     },
     planning: {
@@ -1114,7 +1120,7 @@
   if (aaVersion === "v5") {
     const tabText = {complex:"复杂问题解决（HLE-Diamond + CritPt v2）",coding:"编程与软件工程（Terminal-Bench + FrontierCode）",
       agentic:"长程科研代理（Terminal-Bench-Science）",knowledge:"文档与知识抗幻觉（PDF + Omniscience）",intelligenceIndex:"AA 智能指数（v5 · 9 项）"};
-    const optionText = {complex:"复杂问题解决（HLE-Diamond 50% + CritPt v2 hard 50% · 百分点）",coding:"编程与软件工程（Terminal-Bench 4.0 + FrontierCode 2.0 · 百分点）",
+    const optionText = {complex:"复杂问题解决（HLE-Diamond 50% + CritPt v2 hard 50% · 百分点）",coding:"编程与软件工程（Terminal-Bench 4.1 + FrontierCode 2.0 · 百分点）",
       agentic:"长程科研代理（Terminal-Bench-Science · 通过率 %）",knowledge:"文档与知识抗幻觉（GDP.pdf + AA-Omniscience v1.1）",intelligenceIndex:"AA 智能指数（v5）"};
     document.querySelectorAll("[data-task-tab]").forEach(btn => { if (tabText[btn.dataset.taskTab]) btn.textContent = tabText[btn.dataset.taskTab]; });
     document.querySelectorAll("#effortScalingTask option").forEach(o => { if (optionText[o.value]) o.textContent = optionText[o.value]; });
@@ -1124,7 +1130,7 @@
     ? ["复杂问题：HLE-Diamond / CritPt v2","编程工程：Terminal / FrontierCode","规划与代理：Briefcase / TB-Science / AutoBench","知识与文档：GDP.pdf / Omniscience v1.1"]
     : ["复杂问题：HLE / CritPt","编程工程：Terminal / SciCode","规划与代理：Briefcase / GDPval / AutoBench","知识与文档：LCR / PDF / Omniscience"];
   const detailEvalCells = em => (aaVersion === "v5"
-    ? [`${pct(em["HLE-Diamond"])} / ${pct(em["CritPt v2 hard"])}`, `${pct(em["Terminal-Bench 4.0"])} / ${pct(em["FrontierCode 2.0"])}`,
+    ? [`${pct(em["HLE-Diamond"])} / ${pct(em["CritPt v2 hard"])}`, `${pct(em["Terminal-Bench 4.1"])} / ${pct(em["FrontierCode 2.0"])}`,
        `${fmt(em["AA-Briefcase v1.1"], 0)} / ${pct(em["Terminal-Bench-Science"])} / ${pct(em["AutomationBench-AA"])}`, `${pct(em["GDP.pdf"])} / ${fmt(em["AA-Omniscience v1.1"], 0)}`]
     : [`${pct(em["Humanity's Last Exam"])} / ${pct(em["CritPt"])}`, `${pct(em["Terminal-Bench 4.0"])} / ${pct(em["SciCode"])}`,
        `${fmt(em["AA-Briefcase v1.1"], 0)} / ${fmt(em["GDPval-AA v2.1"], 0)} / ${pct(em["AutomationBench-AA"])}`, `${pct(em["AA-LCR v1.1"])} / ${pct(em["GDP.pdf"])} / ${fmt(em["AA-Omniscience"], 0)}`]
@@ -1832,7 +1838,15 @@
   }
 
   const types=[...new Set(DATA.sources.map(s => s.type))];
-  $("sourceList").innerHTML=types.map(type => `<div class="source-group"><h3>${esc(type)}</h3>${DATA.sources.filter(s => s.type === type).map(s => `<div class="source-item"><span class="source-id">${s.id}</span><div>${link(s.url,s.title)}<p>${esc(s.note)}</p><p>${esc(s.status)} · ${s.accessed}</p></div></div>`).join("")}</div>`).join("");
+  const sourcesByDate = [...DATA.sources].sort((a,b) => b.accessed.localeCompare(a.accessed));
+  $("sourceList").innerHTML = types.map(type => {
+    const rows = sourcesByDate.filter(s => s.type === type).map(s => {
+      const status = s.status.replace(/^本次已读/, "已读").replace(/^本次检索/, "当日检索");
+      const dates = [s.source_updated_at && `来源更新 ${s.source_updated_at}`, `核对 ${s.accessed}`].filter(Boolean);
+      return `<div class="source-item"><span class="source-id">${esc(s.id)}</span><div>${link(s.url,s.title)}<p>${esc(s.note)}</p><p>${esc(dates.join(" · "))} · ${esc(status)}</p></div></div>`;
+    });
+    return `<div class="source-group"><h3>${esc(type)}</h3>${rows.join("")}</div>`;
+  }).join("");
   $("integrityNote").textContent=`原记录 ${DATA.meta.original_rows} 条＋新增 ${DATA.rows.length-DATA.meta.original_rows} 条＝${DATA.rows.length} 条；AA分项 ${DATA.aa_profiles.length} 个配置。ToneBench SHA256：${DATA.meta.tonebench_sha256}`;
   // Personal effort sweet-spot matrix: lowest-cost measured effort within a tolerance of each model's best score.
   const sweetTasks=aaVersion==="v5" ? [
@@ -2445,7 +2459,7 @@
           if (finite(a.cost_usd) && a.cost_usd !== b.cost_usd) return a.cost_usd - b.cost_usd;
         }
         if (finite(a.score) !== finite(b.score)) return finite(a.score) ? -1 : 1;
-        return (b.score_exact ?? b.score ?? 0) - (a.score_exact ?? a.score ?? 0);
+        return (b.score_raw ?? b.score_exact ?? b.score ?? 0) - (a.score_raw ?? a.score_exact ?? a.score ?? 0);
       });
   }
   function marketExportRows(board, rows) {
@@ -2496,7 +2510,7 @@
     $("boardCostBasis").textContent = board.cost_basis;
     const method = board.methodology;
     $("boardMethod").hidden = !method;
-    $("boardMethodBody").innerHTML = method ? `<p>${esc(method.previous_version)} → ${esc(method.version)}，发布：${esc(method.released)}。${esc(method.private_share)}</p><table class="method-weights"><caption class="sr">${esc(board.metric)} 分类与权重</caption><thead><tr><th scope="col">类别</th><th scope="col">评测与权重</th></tr></thead><tbody>${method.categories.map(c => `<tr><th scope="row">${esc(c.name)} <small>${c.weight}%</small></th><td>${c.evals.map(([name,w]) => `${esc(name)} <small>${w}%</small>`).join("；")}</td></tr>`).join("")}</tbody></table><p>移除：${method.removed.map(esc).join("、")}。旧版：${esc(method.previous_weights)}</p>${method.reading.map(text => `<p>${esc(text)}</p>`).join("")}<p class="small">待补：${board.pending.map(esc).join(" ")}</p><p class="small">${link(method.announcement_url,"v5 发布说明")} · ${link(method.methodology_url,"方法页")}</p>` : "";
+    $("boardMethodBody").innerHTML = method ? `<p>${esc(method.previous_version)} → ${esc(method.version)}。v5 系列首发于 ${esc(method.released)}。${esc(method.private_share)}</p><table class="method-weights"><caption class="sr">${esc(board.metric)} 分类与权重</caption><thead><tr><th scope="col">类别</th><th scope="col">评测与权重</th></tr></thead><tbody>${method.categories.map(c => `<tr><th scope="row">${esc(c.name)} <small>${c.weight}%</small></th><td>${c.evals.map(([name,w]) => `${esc(name)} <small>${w}%</small>`).join("；")}</td></tr>`).join("")}</tbody></table><p>移除：${method.removed.map(esc).join("、")}。旧版：${esc(method.previous_weights)}</p>${method.reading.map(text => `<p>${esc(text)}</p>`).join("")}<p class="small">待补：${board.pending.map(esc).join(" ")}</p><p class="small">${link(method.announcement_url,"v5 发布说明")} · ${link(method.methodology_url,"方法页")}</p>` : "";
     $("marketSort").options[0].textContent = board.id === "openrouter" ? "用量从高到低" : "分数从高到低";
     $("marketSort").options[1].disabled = !board.cost_label;
     const costHeader = board.cost_label ? `${esc(board.cost_label)}<small>USD / ${board.id === "livebench" ? "成功任务" : "任务"}</small>` : "费用<small>本视图未提供</small>";
@@ -2560,7 +2574,13 @@
       const sources = (change.sources || []).map(s => link(s.url, s.label)).join(" · ");
       return `<div class="research-update"><span class="update-index">0${i+1}</span><div><h4>${esc(change.title)}</h4><p>${esc(change.body)}</p>${sources ? `<p class="small">${sources}</p>` : ""}</div></div>`;
     }).join("");
-    $("priceCalendar").innerHTML = DATA.models.filter(model => model.promo_end && finite(model.future_input)).map(model => `<div class="price-event"><time datetime="${esc(model.promo_end)}">${esc(model.promo_end)}</time><b>${esc(model.name)}</b><p>输入 / 输出：${money(model.input)} / ${money(model.output)}<br>结束后 ${money(model.future_input)} / ${money(model.future_output)}<small>USD / 百万 token · ${link(model.price_source,"官方价格")}</small></p></div>`).join("");
+    $("priceCalendar").innerHTML = DATA.models.filter(model => model.promo_end)
+      .sort((a,b) => a.promo_end.localeCompare(b.promo_end))
+      .map(model => {
+        const next = finite(model.future_input) && finite(model.future_output)
+          ? `结束后 ${money(model.future_input)} / ${money(model.future_output)}` : "结束后费率待公布";
+        return `<div class="price-event"><time datetime="${esc(model.promo_end)}">${esc(model.promo_end)}</time><b>${esc(model.name)}</b><p>输入 / 输出 ${money(model.input)} / ${money(model.output)}<br>${next}<small>USD / 百万 token · ${link(model.price_source,"官方价格")}</small></p></div>`;
+      }).join("");
     $("officialChecks").innerHTML = '<span class="small">官方来源 · 各项核验日期</span>' + market.official_sources.map(source => `<a href="${esc(source.url)}" target="_blank" rel="noopener" title="${esc(source.note)}"><span aria-hidden="true">✓</span> ${esc(source.vendor)} <span class="check-date">${esc(source.checked_at)}</span><span aria-hidden="true">↗</span></a>`).join("");
   }
   $("marketSearch").addEventListener("input", () => {marketState.expanded=false;renderMarket();});

@@ -39,6 +39,10 @@ def refresh_panorama(external, snapshot, scale_boards):
         for result in scale_boards[key]["rows"]:
             model, sep, details = result["model"].partition(" (")
             configuration = (sep + details).replace(" (one-pass-agent)", "").strip()
+            if not sep:
+                name, _, effort = model.rpartition(" ")
+                if effort in {"low", "medium", "high", "xhigh", "max"}:
+                    model, configuration = name, effort + " · 未注明代理框架"
             score = f'{result["score"]:.2f}'
             if result["confidenceInterval_upper"]:
                 score = f'({score} ±{result["confidenceInterval_upper"]:.2f})'

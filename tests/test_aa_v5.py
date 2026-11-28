@@ -43,7 +43,7 @@ class AaV5Tests(unittest.TestCase):
         # v4.3.2 stays in the top-level keys; v5 lives in its own bundle and the page loads one of them.
         self.assertEqual(self.data["aa_release_series"]["version"], "v4.3.2")
         self.assertEqual(len(self.data["aa_release_series"]["releases"]), 30)
-        self.assertEqual(self.v5["aa_release_series"]["version"], "v5.0")
+        self.assertEqual(self.v5["aa_release_series"]["version"], "v5.0.2")
         self.assertEqual(len(self.v5["aa_release_series"]["releases"]), 26)
 
     def test_unmeasured_models_are_listed_not_filled(self):
@@ -73,14 +73,19 @@ class AaV5Tests(unittest.TestCase):
         morning = json.loads((ROOT / "research/2026-11-18/aa-v5-series.json").read_text())
         old = next(r for r in morning["aa_release_series"]["releases"] if r["releaseSlug"] == "gpt-6-2-sol")
         self.assertEqual([v["costPerTask"] is None for v in old["variants"]], [True, True, True, True, False])
-        # Carbon's cost rose only because AA switched to the 12-01 list price; scores are unchanged.
+        # Before the November regrade, Carbon's price basis changed with the score held constant.
         carbon = next(r for r in current if r["releaseSlug"] == "gemini-4-carbon")
         before = next(r for r in morning["aa_release_series"]["releases"] if r["releaseSlug"] == "gemini-4-carbon")
-        self.assertEqual([v["intelligenceIndex"] for v in carbon["variants"]], [v["intelligenceIndex"] for v in before["variants"]])
+        nov21 = json.loads((ROOT / "research/2026-11-21/aa-v5-series.json").read_text())
+        earlier_carbon = next(r for r in nov21["aa_release_series"]["releases"] if r["releaseSlug"] == "gemini-4-carbon")
+        self.assertEqual(carbon["variants"][-1]["intelligenceIndex"], 60.13)
+        self.assertEqual([v["intelligenceIndex"] for v in earlier_carbon["variants"]], [v["intelligenceIndex"] for v in before["variants"]])
         self.assertIn("12-01 常规价", carbon["availabilityNote"])
         for v in variants:
             self.assertEqual(set(v["evalMetrics"]), set(self.raw["aa_effort_evals"]["evals"]))
             self.assertEqual(v["taskScores"], v5_task_scores(v["evalMetrics"]))
+            self.assertIn("Terminal-Bench 4.1", v["evalMetrics"])
+            self.assertNotIn("Terminal-Bench 4.0", v["evalMetrics"])
             self.assertNotIn("SciCode", v["evalMetrics"])
             self.assertNotIn("GDPval-AA v2.1", v["evalMetrics"])
 
@@ -106,11 +111,20 @@ class AaV5Tests(unittest.TestCase):
         spark = next(r for r in meta if r["releaseSlug"] == "muse-spark-1-3")
         self.assertEqual([v["effort"] for v in spark["variants"]],["max"])
 
+    def test_terminal_bench_41_uses_its_own_measurements(self):
+        metrics = {name: None for name in self.raw["aa_effort_evals"]["evals"]}
+        metrics.update({"FrontierCode 2.0": 30, "Terminal-Bench 4.0": 90, "Terminal-Bench 4.1": 50})
+        self.assertEqual(v5_task_scores(metrics)["coding"], 40)
+        metrics["Terminal-Bench 4.1"] = None
+        self.assertIsNone(v5_task_scores(metrics)["coding"])
+
     def test_rounding_capabilities_and_top_variant(self):
         variants = {v["slug"]: v for r in self.v5["aa_release_series"]["releases"] for v in r["variants"]}
         for v in variants.values():
-            expected = int(Decimal(str(v["intelligenceIndex"])).quantize(Decimal("1"), ROUND_HALF_UP))
+            expected = int(Decimal(str(v["intelligenceIndexRaw"])).quantize(Decimal("1"), ROUND_HALF_UP))
             self.assertEqual(v["intelligenceIndexRounded"], expected)
+        flash = variants["gemini-3-8-flash-low"]
+        self.assertEqual((flash["intelligenceIndex"], flash["intelligenceIndexRounded"]), (22.50, 22))
         self.assertEqual(variants["claude-opus-5-5-low"]["intelligenceIndexRounded"], 35)
         for rel in self.v5["aa_release_series"]["releases"]:
             top = [v for v in rel["variants"] if v["isTopVariant"]]
@@ -125,7 +139,12 @@ class AaV5Tests(unittest.TestCase):
         board = next(b for b in self.data["market_snapshot"]["boards"] if b["id"] == "aa5")
         for row in board["rows"]:
             if row["slug"] in variants:
-                self.assertAlmostEqual(row["score_exact"], variants[row["slug"]]["intelligenceIndex"], places=2)
+                variant = variants[row["slug"]]
+                self.assertEqual(row["score_exact"], variant["intelligenceIndex"])
+                self.assertEqual(row["score_raw"], variant["intelligenceIndexRaw"])
+                terminal = row["evals"]["Terminal-Bench 4.1"]
+                self.assertEqual(round(terminal * 100, 2) if terminal is not None else None,
+                                 variant["evalMetrics"]["Terminal-Bench 4.1"])
 
     def test_v5_narrative_references(self):
         self.assertEqual(render_claims("{{aa5:claude-opus-5-5:max:intelligenceIndex:1}}", self.data), "59.1")

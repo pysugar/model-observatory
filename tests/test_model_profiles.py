@@ -150,7 +150,7 @@ class ModelProfileTests(unittest.TestCase):
         ids = {m["id"] for m in self.doc["models"]}
         for ev in self.doc["evidence"]:
             self.assertTrue(ev["url"].startswith("https://"), ev["id"])
-            self.assertIn(ev["checkedAt"], {"2026-10-24", "2026-11-15", "2026-11-18", "2026-11-19", CURRENT_RESEARCH.name})
+            self.assertIn(ev["checkedAt"], {"2026-10-24", "2026-11-15", "2026-11-18", "2026-11-19", "2026-11-21", CURRENT_RESEARCH.name})
             self.assertIn(ev["verification"], {"search-summary", "official-page", "source-page"})
             if ev["checkedAt"] == "2026-10-24":
                 self.assertEqual(ev["verification"], "search-summary")

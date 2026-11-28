@@ -37,7 +37,7 @@ def check_cap_benchmarks(page, view):
     page.get_by_role("button", name="基础测试 · 科学与编程").click()
     entries = [e for e in view["aa_capability_indexes"]["entries"] if e["isTopVariant"]]
     measured = view["aa_effort_evals"]["variants"]
-    weights = {"Terminal-Bench-Science": 15, "CritPt v2 hard": 10, "FrontierCode 2.0": 15, "Terminal-Bench 4.0": 10}
+    weights = {"Terminal-Bench-Science": 15, "CritPt v2 hard": 10, "FrontierCode 2.0": 15, "Terminal-Bench 4.1": 10}
     config = next(e for e in entries if e["slug"] == selected)
     chart = page.locator("#capBumpChart")
     expect(chart.locator(".cap-denominator")).to_have_count(5)
@@ -76,7 +76,7 @@ def check_v5_views(page, data, origin, output):
     page.goto(origin + "/?aa=v5", wait_until="networkidle")
     require(page.evaluate("document.documentElement.dataset.aa") == "v5", "v5 view did not load")
     expect(page.locator("#aaVersionSelect")).to_have_value("v5")
-    expect(page.locator('#marketUpdates a[href*="metr.org/blog/2026-11-20"]')).to_have_count(1)
+    expect(page.locator('#marketUpdates a[href*="arcprize.org/results/google-gemini-4-neon"]')).to_have_count(1)
     full_suite = page.locator("#scaleHighlightsTable tr").filter(has=page.locator('a[href$="tab=full"]'))
     expect(full_suite.locator("td strong")).to_have_text(["#1", "#2", "#2", "#3"])
     # Version-specific prose: only the v5 blocks are visible, and page TOC has no duplicates.
@@ -114,7 +114,7 @@ def check_v5_views(page, data, origin, output):
     with page.expect_download() as download:
         page.locator("#exportReleases").click()
     rows = list(csv.DictReader(io.StringIO(Path(download.value.path()).read_text(encoding="utf-8-sig"))))
-    require(all(r["aa_version"] == "v5.0" and r["aa_snapshot"] == view["aa_release_series"]["snapshot"] and r["source_url"].startswith("https://") for r in rows), "Release export lost version, date or source")
+    require(all(r["aa_version"] == data["aa_v5"]["version"] and r["aa_snapshot"] == view["aa_release_series"]["snapshot"] and r["source_url"].startswith("https://") for r in rows), "Release export lost version, date or source")
     full = next(r for r in rows if r["variant_id"] == "muse-wonder-full")
     require(full["cost_per_task_usd"] == "" and "Muse Code" in full["availability_note"], "Missing-cost release export lost availability")
     page.locator('[data-panel="specs"]').click()
@@ -152,6 +152,8 @@ def check_v5_views(page, data, origin, output):
     fields = ("inputTokens", "cachePercent", "answerTokens", "reasonTokens", "requestCount")
     saved = {key: page.input_value("#"+key) for key in fields}
     scenario = page.input_value("#priceScenario")
+    scope = page.input_value("#specScope")
+    page.select_option("#specScope", "all")
     for key, value in zip(fields, (10000, 0, 1000, 0, 1)):
         page.fill("#"+key, str(value))
     carbon = page.locator('[data-cost-model="gemini-4-carbon"]')
@@ -159,9 +161,14 @@ def check_v5_views(page, data, origin, output):
     require(abs(float(carbon.get_attribute("data-per"))-.03) < 1e-10, "Carbon public API budget missing")
     neon = page.locator('[data-cost-model="gemini-4-neon"]')
     require(abs(float(neon.get_attribute("data-per"))-.045) < 1e-10, "Neon flat API budget missing")
+    sol56 = page.locator('[data-cost-model="gpt-5.6-sol"]')
+    require(abs(float(sol56.get_attribute("data-per"))-.06) < 1e-10, "Sol promo price missing")
     page.select_option("#priceScenario", "afterPromo")
     require(abs(float(carbon.get_attribute("data-per"))-.06) < 1e-10, "Carbon post-promotion price missing")
     require(abs(float(neon.get_attribute("data-per"))-.045) < 1e-10, "Neon flat price should not change after promo")
+    expect(sol56).to_have_attribute("data-per", "")
+    page.fill("#inputTokens", "300000")
+    expect(sol56).to_have_attribute("data-per", "")
     page.select_option("#priceScenario", "current")
     page.fill("#inputTokens", "1000000")
     page.fill("#answerTokens", "0")
@@ -176,10 +183,20 @@ def check_v5_views(page, data, origin, output):
     for key, value in saved.items():
         page.fill("#"+key, value)
     page.select_option("#priceScenario", scenario)
+    page.select_option("#specScope", scope)
     page.locator('[data-panel="overview"]').click()
     expect(page.locator("#vendorCoverage .vendor-card")).to_have_count(5)
     # Footer and hero dates both follow the snapshot review date, so neither goes stale on refresh.
     expect(page.locator("#footerDate")).to_have_text(data["market_snapshot"]["reviewed_at"])
+    factbook = "https://www.modelfactbook.com/"
+    referral = "?utm_source=model-observatory&utm_medium=referral&utm_content="
+    for selector, path in (("#crossSource", "model-family-checkpoint-version/" + referral + "cross-source"),
+                           ("#evidence", "how-to-read-a-model-card/" + referral + "evidence"), ("footer", "")):
+        link = page.locator(selector).locator(f'a[href="{factbook}{path}"]')
+        expect(link).to_have_count(1)
+        expect(link).to_have_attribute("target", "_blank")
+    page.locator("#heroNews").click()
+    expect(page.locator("#editionUpdates")).to_be_in_viewport()
     page.select_option("#marketVendor", "Meta")
     expect(page.locator("#marketTable tbody tr")).to_have_count(6)
     expect(page.locator("#marketTable")).to_contain_text("Muse Spark 1.3")
@@ -212,7 +229,7 @@ def check_v5_views(page, data, origin, output):
 
     # Capability bump chart and its column header follow v5.
     page.locator('[data-panel="capabilities"]').click()
-    expect(page.locator("#capBumpChart")).to_contain_text("AA 智能指数 v5.0")
+    expect(page.locator("#capBumpChart")).to_contain_text("AA 智能指数 " + data["aa_v5"]["version"])
     check_cap_benchmarks(page, view)
     n_measured = sum(len(r["variants"]) for r in view["aa_release_series"]["releases"] if any(v.get("taskScores") for v in r["variants"]))
     expect(page.locator("#effortScalingChart .scaling-dot")).to_have_count(n_measured)
