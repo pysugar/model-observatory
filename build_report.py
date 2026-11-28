@@ -12,7 +12,7 @@ from scripts.market_snapshot import merge_aa_v5, refresh_panorama
 
 ROOT = Path(__file__).resolve().parent
 RESEARCH = ROOT / "research" / "2026-10-15"
-CURRENT_RESEARCH = ROOT / "research" / "2026-11-21"
+CURRENT_RESEARCH = ROOT / "research" / "2026-11-28"
 COMMUNITY_RESEARCH = ROOT / "research" / "2026-11-19"
 ORIGINAL = ROOT / "archive" / "model-capability-cost-2026-10-14.html"
 NUMERIC_METRICS = {
@@ -58,12 +58,13 @@ def bind_panorama_capabilities(multi):
 
 def v5_task_scores(m):
     """Task views on v5 evaluations only; v5 dropped SciCode, GDPval-AA and AA-LCR."""
+    terminal = "Terminal-Bench 4.1" if "Terminal-Bench 4.1" in m else "Terminal-Bench 4.0"
     def weighted(*components):
         return (None if any(m.get(key) is None for key, _ in components) else
                 round(sum(m[key] * weight for key, weight in components) / sum(w for _, w in components), 2))
     return {
         "complex": weighted(("HLE-Diamond", 1), ("CritPt v2 hard", 1)),
-        "coding": weighted(("Terminal-Bench 4.0", 1), ("FrontierCode 2.0", 1)),
+        "coding": weighted((terminal, 1), ("FrontierCode 2.0", 1)),
         "planning": m["AA-Briefcase v1.1"],
         "agentic": m["Terminal-Bench-Science"],
         "automation": m["AutomationBench-AA"],

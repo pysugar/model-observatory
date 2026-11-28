@@ -215,7 +215,7 @@ def check_market_ui(page, data, output):
     page.locator('[data-board="livebench"]').click()
     expect(page.locator("#marketTable tbody tr").first).to_contain_text("Gemini 4 Neon")
     expect(page.locator("#marketTable tbody tr").first).to_contain_text("87.4")
-    expect(page.locator('#marketUpdates a[href*="metr.org/blog/2026-11-20"]')).to_have_count(1)
+    expect(page.locator('#marketUpdates a[href*="arcprize.org/results/google-gemini-4-neon"]')).to_have_count(1)
     page.fill("#marketSearch", "Grok 4.7")
     expect(page.locator("#marketTable")).to_contain_text("67.9")
     expect(page.locator("#marketTable")).to_contain_text("$4.18")
@@ -238,13 +238,13 @@ def check_market_ui(page, data, output):
     expect(page.locator("#marketTable tbody tr").first).to_contain_text("Claude Fable 5.2")
     expect(page.locator("#marketTable tbody tr").first).to_contain_text("0.274")
     # Fixed three decimals so 0.687 and 0.445 read as the same precision.
-    expect(page.locator("#marketTable tbody tr").nth(1)).to_contain_text("0.186")
+    expect(page.locator("#marketTable tbody tr").nth(1)).to_contain_text("0.191")
     expect(page.locator("#marketTable tbody tr").nth(2)).to_contain_text("Gemini 4 Neon")
-    expect(page.locator("#marketTable tbody tr").nth(2)).to_contain_text("0.184")
+    expect(page.locator("#marketTable tbody tr").nth(2)).to_contain_text("0.183")
     expect(page.locator("#marketTable tbody tr").first).to_contain_text("0.687")
     require(page.locator("#marketSort option[value=cost]").evaluate("o => o.disabled"), "Agent Arena has no cost")
     page.locator('[data-board="arena_webdev"]').click()
-    expect(page.locator("#boardMeta")).to_contain_text("2026-11-20")
+    expect(page.locator("#boardMeta")).to_contain_text("2026-11-23")
     # Cross-source table: same focus models, ranks within each source, column buttons switch boards.
     cs = data["market_snapshot"]["cross_source"]
     expect(page.locator("#crossTable tbody tr")).to_have_count(len(cs["models"]))
@@ -414,6 +414,11 @@ def smoke(site, origin, output, channel=None, cloudflare=False):
                 expect(page.locator("#opusEvidenceTable tbody tr")).to_have_count(len(view["rows"]))
             page.locator('[data-panel="evidence"]').click()
             expect(page.locator("#sourceList .source-item")).to_have_count(len(data["sources"]))
+            for group in page.locator("#sourceList .source-group").all():
+                kind = group.locator("h3").inner_text()
+                sources = sorted((s for s in data["sources"] if s["type"] == kind),
+                                 key=lambda s: s["accessed"], reverse=True)
+                expect(group.locator(".source-id")).to_have_text([s["id"] for s in sources])
             footer = page.locator("#build-info")
             expect(footer).to_have_count(1)
             expect(footer).to_contain_text(json.loads((site / "version.json").read_text())["deployment"]["build_sha"][:7])

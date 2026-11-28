@@ -1,0 +1,70 @@
+{
+  "changes": [
+    {
+      "title": "GLM-5.4 开放 Coding Plan，Inkling 2 新增独立成绩",
+      "body": "智谱 11 月 23 日发布 GLM-5.4，支持 1M 上下文、128K 输出，模型 API 待安全评估完成后开放，权重也在后续计划中。本期 AA 总榜尚无其综合分。Thinking Machines 的开放权重型号 Inkling 2 Small 和 Mini 已进入 LiveBench 的 11-06 题集，分别为 62.8 分（每成功任务 $0.295）和 54.9 分（$0.158）。",
+      "sources": [
+        {"label": "智谱发布公告", "url": "https://z.ai/blog/glm-5.4"},
+        {"label": "GLM-5.4 规格与访问", "url": "https://docs.z.ai/guides/llm/glm-5.4"},
+        {"label": "Inkling 2 Mini 模型卡", "url": "https://thinkingmachines.ai/model-card/inkling-2-mini/"},
+        {"label": "LiveBench 2.0", "url": "https://livebench.ai/"}
+      ]
+    },
+    {
+      "title": "GPT-6.2 新增聊天版本与医疗专用配置",
+      "body": "11 月 23 日，面向日常对话调校的 Sol 版本开始向 ChatGPT 付费层推出。24 日，Responses API 增加四个 Healthcare 配置，涵盖 6.2 Astra、6.2 Sol、6 Astra 和 6.1 Sol。观测站的通用榜单仍按各评测实际使用的端点标注。",
+      "sources": [
+        {"label": "ChatGPT 发布记录", "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes"},
+        {"label": "OpenAI API 更新日志", "url": "https://developers.openai.com/api/docs/changelog"}
+      ]
+    },
+    {
+      "title": "Neon 新增专家题和抽象推理成绩",
+      "body": "Scale HLE Diamond 的 one-pass-agent 测试中，Neon high 得 65.30%（95% 区间 ±2.89 个百分点），与 Astra 6.2 high 的 66.90%（±2.90）区间重叠。ARC Prize 的半私有集上，Neon medium 在 ARC-AGI-1 / 2 分别得 98.5% / 93.8%，该档有一题未完成。ARC-AGI-3 各档均因 API 响应耗时未能完成。",
+      "sources": [
+        {"label": "Scale HLE Diamond", "url": "https://labs.scale.com/leaderboard/hle-diamond"},
+        {"label": "ARC Prize · Gemini 4 Neon", "url": "https://arcprize.org/results/google-gemini-4-neon"}
+      ]
+    },
+    {
+      "title": "行业工作与真实代理会话给出不同排序",
+      "body": "Vals 11-21 行业指数前三为 Fable 5.2（70.06%）、Sonnet 5.5（69.45%）、Neon（69.23%），每测试分别为 $17.94、$16.18、$7.40。Arena 11-22 Agent 榜的前三则是 Fable 5.2 max、Opus 5.5 max、Neon high，Astra 6.2 max 列第七。",
+      "sources": [
+        {"label": "Vals Index v2.2", "url": "https://www.vals.ai/benchmarks/vals_index"},
+        {"label": "Arena 本期固定数据集", "url": "https://huggingface.co/datasets/lmarena-ai/leaderboard-dataset/tree/4e9c2f140324df03c630a1fe91aaeacfb241f1ca"}
+      ]
+    },
+    {
+      "title": "腾讯 Hy4 与 Hy4 flash 分列",
+      "body": "Hy4 在 AA 总榜得 34.57 分，每个加权任务 $1.0311。Hy4 flash 在 OpenRouter 截至 11-27 的七日用量为 38.7 万亿 token，列第二。来源星号表示部分日期的自带密钥流量触及计数上限。同期榜首 DeepSeek V4.1 Flash 1017 为 83.1 万亿 token。",
+      "sources": [
+        {"label": "AA · Hy4", "url": "https://artificialanalysis.ai/zh/models/releases/tencent-hy4"},
+        {"label": "腾讯 · Hy4 flash 模型卡", "url": "https://huggingface.co/tencent/Hy4-flash"},
+        {"label": "OpenRouter 周用量与统计口径", "url": "https://openrouter.ai/rankings"}
+      ]
+    },
+    {
+      "title": "11 月底的价格与退役日期",
+      "body": "Gemini 4 Argon 和 Carbon 的 Standard 输入 / 输出优惠至 11-30，为每百万 token $2 / $10，12-01 起为 $4 / $20。GPT-5.6 Sol 的 $4 / $20 优惠也至 11-30，官方模型页尚未给出后续费率。Anthropic 将于 11-30 在 Claude API 退役 Sonnet 4.5，迁移目标为 Sonnet 5.5。",
+      "sources": [
+        {"label": "Google 定价", "url": "https://aistudio.google.com/docs/pricing"},
+        {"label": "OpenAI · GPT-5.6 Sol", "url": "https://developers.openai.com/api/docs/models/gpt-5.6-sol"},
+        {"label": "Claude API 生命周期", "url": "https://platform.claude.com/docs/en/about-claude/model-deprecations"}
+      ]
+    }
+  ],
+  "vendors": {
+    "OpenAI": "Astra 6.2 max 在 AA v5.0.2 得 62.19 分，每个加权任务 $3.9979。Arena Agent 的 Astra / Sol 6.2 max 分列第 7 / 11。11-23 的 ChatGPT 对话版本与 11-24 的医疗配置各有独立用途。",
+    "Anthropic": "Fable 5.2 max 在 AA v5.0.2 得 64.77 分，每任务 $26.5386。Fable 5.2 和 Sonnet 5.5 在 Vals 行业指数居前两位。Arena 的 WebDev 榜首为 Fable xhigh，Agent 榜首为 Fable max。",
+    "Google": "Neon 在 LiveBench 得 87.4 分，每成功任务 $2.654。专家题可看 Scale HLE Diamond 的 high 档（65.30%），视觉推理可看 HSS 的 xhigh 档（75.86%）。Carbon high 仍领跑 Arena 文本榜。",
+    "xAI": "Grok 4.7 high / xhigh 在 AA v5.0.2 分别得 35.18 / 35.37 分，每个加权任务 $6.18 / $7.77。API 的长上下文价从 200k 输入 token 起适用。",
+    "Meta": "Muse Ember max 在 AA v5.0.2 得 36.09 分，每个加权任务 $0.1359。API 输入超过 200k 时整次请求按长上下文价计算。Wonder Full 通过 Muse Code 提供，公开 API 预算缺值。"
+  },
+  "official": {
+    "OpenAI": "Astra / Sol 6.2 的 Standard 输入 / 输出价分别为 $8 / $40 和 $2 / $10。GPT-5.6 Sol 的优惠至 11-30。",
+    "Anthropic": "Fable 5.2 的 Standard 输入 / 输出价为 $8 / $40。Sonnet 4.5 在 Claude API 的退役日为 11-30。",
+    "Google": "Neon 输入 / 缓存读取 / 输出为 $3 / $0.15 / $15。Carbon 和 Argon 的 $2 / $10 优惠价至 11-30，12-01 起为 $4 / $20。",
+    "xAI": "公开文本 API 目录列出 Grok 4.7。低于 200k 输入时，输入 / 缓存读取 / 输出为 $2 / $0.50 / $6。",
+    "Meta": "Standard 价格表列出 Wonder、Spark 1.3 与 Ember。Ember 以 200k 输入 token 为常规价上限。"
+  }
+}

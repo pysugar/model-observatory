@@ -18,7 +18,16 @@
 
 工程入口和功能决策维护在本页，跨机器协作规则见 [研究与协作边界](RESEARCH_WORKFLOW.md#当前维护入口与执行边界2026-10-26)，发布事实维护在 `RELEASES.md`。
 
-## 当前研究版（2026-11-21）
+## 当前研究版（2026-11-28）
+
+本期覆盖 **35 款目录模型、30 款跨榜对照型号和 103 条索引来源**。八张榜单共选录 312 行，含保留原日期的 AA v4.3.2 历史榜。可直接打开[离线观测站](model-capability-cost.html)，或查看[本期来源、日期和复算方法](research/2026-11-28/README.md)。
+
+- AA 更新至 v5.0.2。终端任务采用 Terminal-Bench 4.1，FrontierCode-AA 2.0 也重新评分。编程任务图、逐档比较、选型文字和 CSV 已按新成绩重新计算。
+- 新增 GLM-5.4 的发布与访问范围、GPT-6.2 聊天与医疗配置，以及 Inkling 2 Small / Mini 的独立成绩。腾讯 Hy4 的能力分和 Hy4 flash 的平台用量分别列在对应型号下。
+- Arena、LiveBench、Scale SEAL、Vals、ARC Prize 和 OpenRouter 各自保留评测日期、范围与单位。跨榜对照按原始精度排名，同分并列，缺测留空。
+- 价格日历与预算工具区分 Google 已公布的 12 月价格和 GPT-5.6 Sol 尚待公布的费率。跨榜对照与证据页分别链接到 Model Factbook 的型号辨识与模型卡阅读指南。
+
+## 上一期研究版（2026-11-21）
 
 从[离线观察站](model-capability-cost.html)查看本轮变化。报告覆盖 **35 款目录模型、26 款跨榜对照型号、94 条索引来源**。本期新增的模型档案证据包括 LiveBench、Scale、Vals、Epoch、METR 和 OpenAI 的 MedChemBench。榜单日期、协议、费用单位、采集脚本及复算入口见 [11-21 研究记录](research/2026-11-21/README.md)。
 
@@ -156,15 +165,15 @@ Artificial Analysis 于 2026-10-27 发布智能指数 v5：约 60% 权重改用�
 
 | 功能 / 数据结构 | 冻结输入与渲染入口 | 回归入口 |
 | --- | --- | --- |
-| 最新榜单、跨榜对照、官方价格日期提醒、主题选择 | [market-snapshot.json](research/2026-11-21/market-snapshot.json)（`research/2026-11-21/build_snapshot.py` 由各来源输入生成，含 `cross_source`）+ [aa-index-v5.json](research/2026-11-21/aa-index-v5.json)（`scripts/market_snapshot.py:merge_aa_v5` 插入 AA v5 页签）→ `market_snapshot`；`scripts/market_snapshot.py:refresh_panorama` 同步全景；`report.js:renderMarket` / `marketRows` / `marketExportRows` / `renderMarketIntro` / `renderCrossSource`；价格日历来自目录 `promo_end` / `future_*` | [test_market_snapshot.py](tests/test_market_snapshot.py)、`scripts/smoke.py:check_market_ui` |
+| 最新榜单、跨榜对照、官方价格日期提醒、主题选择 | [market-snapshot.json](research/2026-11-28/market-snapshot.json)（`research/2026-11-28/build_snapshot.py` 由各来源输入生成，含 `cross_source`）+ [aa-index-v5.json](research/2026-11-28/aa-index-v5.json)（`scripts/market_snapshot.py:merge_aa_v5` 插入 AA v5 页签）→ `market_snapshot`；`scripts/market_snapshot.py:refresh_panorama` 同步全景；`report.js:renderMarket` / `marketRows` / `marketExportRows` / `renderMarketIntro` / `renderCrossSource`；价格日历来自目录 `promo_end` / `future_*` | [test_market_snapshot.py](tests/test_market_snapshot.py)、`scripts/smoke.py:check_market_ui` |
 | 既有记录、AA 代表配置、Opus 独立证据 | `research/2026-10-15/aa-pair-*.json`、[tonebench-leaderboard.json](research/2026-10-15/tonebench-leaderboard.json)、[arena-web-extract.json](research/2026-10-15/arena-web-extract.json)；`research/2026-10-16/claude-catalog/claude-supplement.json`、`research/2026-10-16/opus55-coding-supplement.json`；后者进入 `opus_coding_evidence` | `tests/test_publish.py`、`scripts/smoke.py`；历史复算入口见下文 |
-| AA v5 发布系列、六域与逐档评测（默认视图） | [aa-v5-series.json](research/2026-11-21/aa-v5-series.json) → `aa_v5`（`build_report.py:build_aa_v5` / `v5_task_scores`）；`report.js` 顶部按版本装入，`TASK_DEFINITIONS_V5`、`sweetTasks`、档案任务轴随版本切换 | [test_aa_v5.py](tests/test_aa_v5.py)、[v5_smoke.py](scripts/v5_smoke.py) |
+| AA v5 发布系列、六域与逐档评测（默认视图） | [aa-v5-series.json](research/2026-11-28/aa-v5-series.json) → `aa_v5`（`build_report.py:build_aa_v5` / `v5_task_scores`）；`report.js` 顶部按版本装入，`TASK_DEFINITIONS_V5`、`sweetTasks`、档案任务轴随版本切换 | [test_aa_v5.py](tests/test_aa_v5.py)、[v5_smoke.py](scripts/v5_smoke.py) |
 | AA 六域、发布系列与五站全景 | [multi-benchmark-supplement.json](research/2026-10-19/multi-benchmark-supplement.json) → `aa_capability_indexes`、`aa_release_series`、`external_leaderboards`；`build_report.py:bind_panorama_capabilities`，`report.js:renderCapIndexChart` / `renderCapDetail`，计算/CSV 共用 `capScore` / `capRanking` / `capExportRows` | [test_capability_integrity.py](tests/test_capability_integrity.py)、[capability_smoke.py](scripts/capability_smoke.py) |
 | 44 配置底层子评测 | [aa-effort-evals.json](research/2026-10-20/aa-effort-evals.json) → `aa_effort_evals` 及精确 variant 的 `evalMetrics` / `evalSourceUrl`；构建中另保留并标注派生 `taskScores`；`effortRows` / `renderReasoningCharts`、`renderEffortScalingChart` | `tests/test_report_claims.py`、`tests/test_capability_integrity.py`、`scripts/capability_smoke.py`、`scripts/scaling_smoke.py` |
 | 原生档位建议 | [task-effort-guidance.json](research/2026-10-20/task-effort-guidance.json) → `task_effort_guidance`；`renderTaskAdvice`（`#taskEffortAdvice`） | [test_selection_guidance.py](tests/test_selection_guidance.py)、[selection_smoke.py](scripts/selection_smoke.py) |
 | 第三方方法导航、实战证据卡 | [practical-evidence.json](research/2026-10-20/practical-evidence.json) → `practical_evidence`；`report.js` 中 `#practicalEvidence`，静态说明 `report.template.html:#benchmarkGuide` | `scripts/capability_smoke.py`、`scripts/selection_smoke.py` |
 | 选档速查矩阵、官方/社区参考、避坑清单、象限分界 | `aa_release_series` 逐档数据 + `task_effort_guidance` + 编码行（Vulcan）；`report.js:renderSweetSpot` / `sweetPick` / `kneeOf` / `sweetRefs`，`taskQuadrant`；避坑数字用 `{{aa:…}}` 构建时解析；Python 参考实现 [sweet_spot.py](scripts/sweet_spot.py) | [test_sweet_spot.py](tests/test_sweet_spot.py)、`scripts/smoke.py:check_overview_ui` |
-| 模型档案（单模型 × 任务 × 档位、选档卡、避坑指南、深链） | [model-effort-profiles.json](research/2026-11-21/model-effort-profiles.json) → `model_effort_profiles`（构建校验 `build_report.py:check_model_profiles`）；`report.js:renderModelProfile` / `mpSeries` / `mpPick` / `mpStart` / `mpExplain` / `mpPitfalls` / `mpAlternatives`，AA 行复用 `upperHull` / `kneeOf` / `sweetThreshold`；Python 参考 `scripts/sweet_spot.py:profile_series` / `profile_pitfalls` | [test_model_profiles.py](tests/test_model_profiles.py)、`scripts/smoke.py:check_profile_ui` |
+| 模型档案（单模型 × 任务 × 档位、选档卡、避坑指南、深链） | [model-effort-profiles.json](research/2026-11-28/model-effort-profiles.json) → `model_effort_profiles`（构建校验 `build_report.py:check_model_profiles`）；`report.js:renderModelProfile` / `mpSeries` / `mpPick` / `mpStart` / `mpExplain` / `mpPitfalls` / `mpAlternatives`，AA 行复用 `upperHull` / `kneeOf` / `sweetThreshold`；Python 参考 `scripts/sweet_spot.py:profile_series` / `profile_pitfalls` | [test_model_profiles.py](tests/test_model_profiles.py)、`scripts/smoke.py:check_profile_ui` |
 | Computer Use、限定协议替代组合、三张经验卡 | [computer-use-evidence.json](research/2026-10-20/computer-use-evidence.json) → `computer_use_evidence`；`renderComputerUseEvidence`、`renderPitfallGuide` / `renderObservedConfig`；同一 `renderEffortScalingChart` 切换 OpenAI 曲线；`scalingRows` / `scalingPath`、`osworldSweepPoints` / `observedAlternatives` 负责差分、缺档和限定范围计算 | [test_computer_use.py](tests/test_computer_use.py)、[scaling_smoke.py](scripts/scaling_smoke.py) |
 
 建议记录含 `modelId`、`nativeEffort`、`taskType`、`evidenceType`、`sourceUrl`、`checkedAt`、`caveats` 和已知时的 `sampleSize` / `harness`；`support` 将官方支持与任务经验映射分开。Computer Use 使用 `openaiSweep`、`anthropicMax`、`geminiReference`、`grokReference`、`pitfallExperience`、`pitfallReminders` 独立分组。来源 URL、版本、统计量、原生档位与未知协议字段应随记录保存；未知保持 null，不借用相邻来源补齐。
@@ -217,7 +226,7 @@ python3 validate_report.py
 
 ## 当前功能决策与不可回归边界
 
-- **最新榜单**：序号仅表示当前筛选的排列位置，来源排名另列；AA 保留公开榜单舍入精度，含回退配置显式标记。LiveBench 的每成功任务成本与 AA 的加权单任务成本不同；Arena（文本 / WebDev / Agent）、Scale 与 OpenRouter 本视图不提供费用。跨榜对照的名次只在 本期选定的 26 款型号之间、每个来源内部排列，不能相加或平均。来源更新日期未知保留 null。OpenRouter 是周 token 用量热度，free 版本独立，不是能力或用户数；保留 CC BY 4.0 归属。
+- **最新榜单**：序号仅表示当前筛选的排列位置，来源排名另列；AA 保留公开榜单舍入精度，含回退配置显式标记。LiveBench 的每成功任务成本与 AA 的加权单任务成本不同；Arena（文本 / WebDev / Agent）、Scale 与 OpenRouter 本视图不提供费用。跨榜对照的名次只在当期选定的型号之间、每个来源内部排列，不能相加或平均。来源更新日期未知保留 null。OpenRouter 是周 token 用量热度，free 版本独立，不是能力或用户数；保留 CC BY 4.0 归属。
 - **AA v5 与 v4.3.2**：全站由页首“AA 指数版本”切换，默认 v5；页面加载时只装入一套 AA 数据（`report.js` 顶部按 `?aa=` / 本地偏好选择 `DATA.aa_v5` 或 v4.3.2），切换即整页重载，任何图表都不混用两版分数或费用。按数字写的文案分版本维护：模板里用 `data-aa-version="v4|v5"` 成对书写，v5 数字用 `{{aa5:…}}` 占位符在构建时解析；JS 里 `TASK_DEFINITIONS_V5`、`sweetTasks`、档案任务轴按版本切换。AA 没有用 v5 重测的旧型号在 v5 视图中显示未测，不用 v4.3.2 填补。最新榜单的 v5 页签（`fetch_aa_v5.py`）与发布版本数据（`fetch_aa_v5_releases.py`）分别重建，单元测试核对两者分数一致。“较 v4.3.2”只看排序变化；开放权重下滑只作为与刷榜担忧相符的观察，不下定论。
 - **价格边界**：`tier_inclusive=true` 用于 Grok 4.7 的 ≥200k 整次计费；其余已有 `tier_threshold` 默认严格大于，不能统一改成含边界。本轮价格复核不自动改变未复核的模型生命周期、原生档位或评测协议。
 - **术语与排名**：用户可见文字和 CSV 表头统一“AA 智能指数”，不用裸缩写 II。内部字段和原始引用不盲目重命名。代表配置按该版整体最高分选取，不等于每个子领域最佳；按来源精度并列（1、1、3），分母为有效样本，当前筛选排名与来源全球排名分开。
